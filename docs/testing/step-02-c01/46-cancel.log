@@ -1,0 +1,4 @@
+curl_exit=28 (28 = client timeout as designed)
+--- inst2 log: expect a 499 entry for the cancelled PATCH ---
+{"time":"2026-10-25T00:08:46.157196+07:00","level":"WARN","msg":"http_request","method":"PATCH","path":"/api/v1/users/01a16ee1-5ce0-7ead-b78e-f8a6d657d0cc","route":"/api/v1/users/:id","status":499,"latency":2002556791,"remote_ip":"127.0.0.1","request_id":"MwXElwHslLRITFwMydGbBCglNsKAizdq"}
+count_499_entries=1

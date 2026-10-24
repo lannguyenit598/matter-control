@@ -1,0 +1,1408 @@
+diff --git a/api.http b/api.http
+index cb1da06..3d03b62 100644
+--- a/api.http
++++ b/api.http
+@@ -54,6 +54,12 @@ POST {{base}}/api/v1/users
+ ### 404: malformed IDs also return 404
+ GET {{base}}/api/v1/users/not-a-uuid
+ 
++### 503: storage temporarily unavailable (stop PostgreSQL to reproduce).
++### Body: type /problems/unavailable, detail "service temporarily unavailable",
++### retryAfter: 1 (seconds; a native-template constant, not a MatterControl convention).
++### A 503 on POST/PATCH/DELETE does NOT mean the change was not applied: the outcome is unknown.
++GET {{base}}/api/v1/users
++
+ ### --- Delete (run after the error examples: 409 above requires the user to exist) ---
+ 
+ ### DELETE does not check If-Match
+diff --git a/docs/api.md b/docs/api.md
+index 2f33837..a9626d7 100644
+--- a/docs/api.md
++++ b/docs/api.md
+@@ -13,7 +13,7 @@ Reference for API clients. Default local base URL: `http://localhost:8080`. Exam
+ | Time | RFC 3339, UTC, microsecond precision (`2026-10-19T08:49:07.624656Z`). Trailing fractional zeros are omitted (`…07.5722Z`, `…07Z`), so precision varies from 0 to 6 digits: use an RFC 3339 parser, not a fixed six-digit format |
+ | Errors | RFC 9457 `application/problem+json`; see [Errors](#errors) |
+ | Authentication | The template has **no authentication**. See [operations.md](operations.md#authentication) to add it |
+-| Timeout | Each request uses `REQUEST_TIMEOUT` (default 10s); each SQL statement uses `DB_STATEMENT_TIMEOUT` (default 5s). Either timeout returns 503 |
++| Timeout | Each request uses `REQUEST_TIMEOUT` (default 10s); each SQL statement uses `DB_STATEMENT_TIMEOUT` (default 5s). Either timeout returns 503 `/problems/unavailable` (see [Errors](#errors)) |
+ 
+ ### Header
+ 
+@@ -145,6 +145,21 @@ All errors use `Content-Type: application/problem+json`:
+ 
+ `errors` appears only for 422. 5xx responses never expose internal details; use `X-Request-Id` to locate the underlying error in logs.
+ 
++Retryable unavailability (503) returns a fixed body with a `retryAfter` hint:
++
++```json
++{
++  "type": "/problems/unavailable",
++  "title": "Service Unavailable",
++  "status": 503,
++  "detail": "service temporarily unavailable",
++  "instance": "/api/v1/users",
++  "retryAfter": 1
++}
++```
++
++`retryAfter` is an integer number of seconds. Its value is a **native-template constant** (1), not a MatterControl production convention. **A 5xx on a non-GET request does not mean the change was not applied**: the outcome of a failed write is unknown (this template has no idempotency), so never assume "not committed" from a 503.
++
+ | Status | When | `detail` |
+ |---|---|---|
+ | 400 | Invalid JSON body | `request body is not valid JSON` |
+@@ -160,9 +175,9 @@ All errors use `Content-Type: application/problem+json`:
+ | 413 | Body exceeds 1 MiB | |
+ | 415 | POST/PATCH has a body without `application/json` Content-Type (missing, form, XML...) | |
+ | 422 | Invalid input with per-field `errors` | `request failed validation` |
+-| 499 | Client disconnects before response, or requests are canceled after shutdown timeout. The client receives no such response; 499 appears only in logs | |
+-| 500 | Unexpected error | (empty) |
+-| 503 | Request exceeds `REQUEST_TIMEOUT` or SQL exceeds `DB_STATEMENT_TIMEOUT` | `request timed out` |
++| 499 | Client disconnects before response, or requests are canceled after shutdown timeout. The client receives no such response; 499 appears only in logs. A disconnect also wins over any timeout classification | |
++| 500 | Unexpected error, including authentication/privilege/schema faults (these are never retryable 503s) | (empty) |
++| 503 | Storage temporarily unavailable: request exceeds `REQUEST_TIMEOUT`, SQL exceeds `DB_STATEMENT_TIMEOUT`, connection failure or termination, pool exhaustion, or lock/deadlock conditions | `service temporarily unavailable` (+ `retryAfter`) |
+ | 503 | `/readyz` when the pod is not ready | (empty) |
+ 
+ Field error messages (`errors[].message`):
+diff --git a/internal/adapter/inbound/httpapi/contract_test.go b/internal/adapter/inbound/httpapi/contract_test.go
+index 404f794..dc79405 100644
+--- a/internal/adapter/inbound/httpapi/contract_test.go
++++ b/internal/adapter/inbound/httpapi/contract_test.go
+@@ -226,6 +226,7 @@ func TestContract_ServiceFailures(t *testing.T) {
+ 		{"version_conflict.golden", failingUsers{fmt.Errorf("update user: %w", port.ErrVersionConflict)}, httpapi.Options{Logger: logger}},
+ 		{"panic.golden", failingUsers{}, httpapi.Options{Logger: logger}},
+ 		{"timeout.golden", waitingUsers{}, httpapi.Options{Logger: logger, RequestTimeout: 10 * time.Millisecond}},
++		{"unavailable.golden", failingUsers{fmt.Errorf("get user: %w", port.ErrUnavailable)}, httpapi.Options{Logger: logger}},
+ 	}
+ 	for _, tc := range cases {
+ 		t.Run(tc.file, func(t *testing.T) {
+diff --git a/internal/adapter/inbound/httpapi/errors.go b/internal/adapter/inbound/httpapi/errors.go
+index 0bbaed3..141748d 100644
+--- a/internal/adapter/inbound/httpapi/errors.go
++++ b/internal/adapter/inbound/httpapi/errors.go
+@@ -22,6 +22,9 @@ type problem struct {
+ 	Detail   string       `json:"detail,omitempty"`
+ 	Instance string       `json:"instance,omitempty"`
+ 	Errors   []fieldError `json:"errors,omitempty" nullable:"false"`
++	// RetryAfter advises a client, in whole seconds, when it may retry. Present only on the
++	// retryable 503 unavailable problem.
++	RetryAfter int `json:"retryAfter,omitempty"`
+ }
+ 
+ // fieldError is the DTO for domain.FieldError: JSON formatting belongs to the adapter, not domain.
+@@ -52,8 +55,50 @@ func statusText(code int) string {
+ 	return http.StatusText(code)
+ }
+ 
+-// toProblem is the ONLY mapping from domain errors to HTTP.
+-func toProblem(err error) problem {
++const (
++	// problemTypeUnavailable is the RFC 9457 type URI for the retryable unavailability problem.
++	problemTypeUnavailable = "/problems/unavailable"
++	// unavailableDetail is the fixed, non-sensitive detail of every 503 unavailable problem.
++	// It never asserts anything about the outcome of a failed write.
++	unavailableDetail = "service temporarily unavailable"
++	// retryAfterSeconds is the retryAfter value, in whole seconds, on 503 unavailable
++	// problems. NATIVE-TEMPLATE CONSTANT: a fixed local default, NOT a MatterControl
++	// production convention; the product unit and range remain an open decision.
++	retryAfterSeconds = 1
++)
++
++// unavailableProblem is the single 503 body for storage/request-deadline unavailability.
++func unavailableProblem() problem {
++	return problem{
++		Status:     http.StatusServiceUnavailable,
++		Type:       problemTypeUnavailable,
++		Detail:     unavailableDetail,
++		RetryAfter: retryAfterSeconds,
++	}
++}
++
++// toProblem is the ONLY mapping from service and transport errors to HTTP. It is shared by
++// the Huma operations (register in openapi.go) and the Echo error handler (newErrorHandler),
++// so every route renders errors through one table:
++//
++//  1. Domain and port outcomes keep their existing statuses and bodies.
++//  2. Actual request cancellation wins over every timeout classification: 499, never 5xx.
++//     A cancelled request context counts as cancellation even when the driver surfaced a
++//     timeout (for example a bare 57014 after pgx sent its own cancel).
++//  3. The request deadline (ContextTimeout, including pool-acquire waits) and the storage
++//     unavailability sentinel render as 503 /problems/unavailable with retryAfter.
++//  4. An Echo 503 on a non-probe route follows the same unavailable mapping; probe routes
++//     (probePaths) keep their current bytes exactly.
++//  5. Other Echo statuses keep their code and detail.
++//  6. Everything else stays 500 with no internal details and no retryAfter.
++//
++// No driver types are inspected here: the outbound adapter classifies those into the
++// port-owned sentinel, keeping pgx/pgconn out of this package (depguard enforces it).
++func toProblem(ctx context.Context, err error, probe bool) problem {
++	// Row 2 first: a disconnecting client must never be answered with a 5xx.
++	if errors.Is(err, context.Canceled) || (ctx != nil && ctx.Err() == context.Canceled) {
++		return problem{Status: StatusClientClosedRequest, Detail: "client closed request"}
++	}
+ 	var ve *domain.ValidationError
+ 	switch {
+ 	case errors.As(err, &ve):
+@@ -64,14 +109,15 @@ func toProblem(err error) problem {
+ 		return problem{Status: http.StatusConflict, Detail: "a user with this email already exists"}
+ 	case errors.Is(err, port.ErrVersionConflict):
+ 		return problem{Status: http.StatusConflict, Detail: "the user was modified concurrently, please retry"}
+-	case errors.Is(err, context.DeadlineExceeded):
+-		return problem{Status: http.StatusServiceUnavailable, Detail: "request timed out"}
+-	case errors.Is(err, context.Canceled):
+-		return problem{Status: StatusClientClosedRequest, Detail: "client closed request"}
++	case errors.Is(err, context.DeadlineExceeded), errors.Is(err, port.ErrUnavailable):
++		return unavailableProblem()
+ 	}
+ 
+ 	// Errors generated by Echo (404 route, 405, bind 400, 413 body too large...).
+ 	if code := echo.StatusCode(err); code != 0 {
++		if code == http.StatusServiceUnavailable && !probe {
++			return unavailableProblem() // row 4
++		}
+ 		p := problem{Status: code}
+ 		var he *echo.HTTPError
+ 		if errors.As(err, &he) && code < 500 {
+@@ -85,14 +131,25 @@ func toProblem(err error) problem {
+ }
+ 
+ // newErrorHandler writes errors to the client. requestLogger handles logging (one entry per request).
++// Probe routes (/healthz, /readyz) pass probe=true so their current response bytes are
++// preserved exactly; every other request maps through the shared table in toProblem.
++//
++// The request context is NOT consulted here: by the time this handler runs, Echo's
++// ContextTimeout middleware has already canceled its derived request context (defer cancel),
++// so ctx.Err() would report cancellation for perfectly healthy requests. A background
++// context therefore flows in: its Err() is always nil, cancellation is detected through the
++// error chain, and live-context consultation happens only where errors are mapped during
++// handling (register in openapi.go).
+ func newErrorHandler(logger *slog.Logger) echo.HTTPErrorHandler {
+ 	return func(c *echo.Context, err error) {
+ 		if resp, _ := echo.UnwrapResponse(c.Response()); resp != nil && resp.Committed {
+ 			return
+ 		}
+ 
+-		p := toProblem(err)
+-		p.Type = "about:blank"
++		p := toProblem(context.Background(), err, probePaths[c.Request().URL.Path])
++		if p.Type == "" {
++			p.Type = "about:blank" // default only when the mapping set no type
++		}
+ 		p.Title = statusText(p.Status)
+ 		p.Instance = c.Request().URL.Path
+ 
+diff --git a/internal/adapter/inbound/httpapi/errors_test.go b/internal/adapter/inbound/httpapi/errors_test.go
+new file mode 100644
+index 0000000..c524f16
+--- /dev/null
++++ b/internal/adapter/inbound/httpapi/errors_test.go
+@@ -0,0 +1,210 @@
++package httpapi
++
++// Focused tests for the single error mapping shared by the Huma operations (register) and the
++// Echo error handler (newErrorHandler): cancellation precedence, unavailable classification,
++// renderer type ownership, and probe byte preservation. No pgx/pgconn import is allowed in
++// this package, tests included (depguard inbound-adapters rule).
++
++import (
++	"context"
++	"errors"
++	"fmt"
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"testing"
++	"time"
++
++	"github.com/labstack/echo/v5"
++	"github.com/labstack/echo/v5/middleware"
++
++	"github.com/example/userapi/internal/core/domain"
++	"github.com/example/userapi/internal/core/port"
++)
++
++// stubUsers fails every use case with err, like the contract tests' failingUsers but inside
++// the package so renderer internals can be exercised directly.
++type stubUsers struct{ err error }
++
++func (s stubUsers) Register(context.Context, port.RegisterUserCmd) (domain.User, error) {
++	return domain.User{}, s.err
++}
++func (s stubUsers) Get(context.Context, string) (domain.User, error) {
++	return domain.User{}, s.err
++}
++func (s stubUsers) List(context.Context, port.ListUsersQuery) (port.UserPage, error) {
++	return port.UserPage{}, s.err
++}
++func (s stubUsers) Update(context.Context, port.UpdateUserCmd) (domain.User, error) {
++	return domain.User{}, s.err
++}
++func (s stubUsers) Delete(context.Context, string) error { return s.err }
++
++var errUnavailable = fmt.Errorf("get user: %w", port.ErrUnavailable)
++
++func TestToProblem_MappingRows(t *testing.T) {
++	ve := &domain.ValidationError{}
++	ve.Add("email", "must be a valid email address")
++
++	cancelled, cancel := context.WithCancel(context.Background())
++	cancel()
++
++	cases := []struct {
++		name       string
++		ctx        context.Context
++		err        error
++		probe      bool
++		wantStatus int
++		wantType   string // "" means the renderer default (about:blank)
++		wantDetail string
++		wantRetry  int
++	}{
++		{"validation error", context.Background(), ve, false, http.StatusUnprocessableEntity, "", "request failed validation", 0},
++		{"not found", context.Background(), fmt.Errorf("user x: %w", port.ErrNotFound), false, http.StatusNotFound, "", "resource not found", 0},
++		{"email conflict", context.Background(), domain.ErrEmailAlreadyExists, false, http.StatusConflict, "", "a user with this email already exists", 0},
++		{"plain version conflict", context.Background(), fmt.Errorf("update user: %w", port.ErrVersionConflict), false, http.StatusConflict, "", "the user was modified concurrently, please retry", 0},
++		{"cancellation", context.Background(), context.Canceled, false, StatusClientClosedRequest, "", "client closed request", 0},
++		{"cancelled request context with unavailable chain", cancelled, errUnavailable, false, StatusClientClosedRequest, "", "client closed request", 0},
++		{"cancelled request context with deadline chain", cancelled, fmt.Errorf("get user: %w", context.DeadlineExceeded), false, StatusClientClosedRequest, "", "client closed request", 0},
++		{"cancellation inside an unavailable chain", context.Background(), fmt.Errorf("postgres: %w: %w", port.ErrUnavailable, context.Canceled), false, StatusClientClosedRequest, "", "client closed request", 0},
++		{"unavailable sentinel", context.Background(), errUnavailable, false, http.StatusServiceUnavailable, "/problems/unavailable", "service temporarily unavailable", 1},
++		{"request deadline", context.Background(), fmt.Errorf("get user: %w", context.DeadlineExceeded), false, http.StatusServiceUnavailable, "/problems/unavailable", "service temporarily unavailable", 1},
++		{"echo 503 non-probe", context.Background(), echo.ErrServiceUnavailable, false, http.StatusServiceUnavailable, "/problems/unavailable", "service temporarily unavailable", 1},
++		{"echo 503 probe keeps legacy bytes", context.Background(), echo.ErrServiceUnavailable, true, http.StatusServiceUnavailable, "", "", 0},
++		{"echo 404 unchanged", context.Background(), echo.NewHTTPError(http.StatusNotFound, "Not Found"), false, http.StatusNotFound, "", "Not Found", 0},
++		{"echo 400 keeps detail", context.Background(), echo.NewHTTPError(http.StatusBadRequest, "limit must be an integer"), false, http.StatusBadRequest, "", "limit must be an integer", 0},
++		{"unexpected stays 500", context.Background(), errors.New("dial tcp 10.0.0.5:5432: password=secret"), false, http.StatusInternalServerError, "", "", 0},
++	}
++	for _, tc := range cases {
++		t.Run(tc.name, func(t *testing.T) {
++			got := toProblem(tc.ctx, tc.err, tc.probe)
++			if got.Status != tc.wantStatus {
++				t.Errorf("status = %d, want %d", got.Status, tc.wantStatus)
++			}
++			if got.Type != tc.wantType {
++				t.Errorf("type = %q, want %q", got.Type, tc.wantType)
++			}
++			if got.Detail != tc.wantDetail {
++				t.Errorf("detail = %q, want %q", got.Detail, tc.wantDetail)
++			}
++			if got.RetryAfter != tc.wantRetry {
++				t.Errorf("retryAfter = %d, want %d", got.RetryAfter, tc.wantRetry)
++			}
++		})
++	}
++}
++
++func TestNewErrorHandler_UnavailableBodyAndProbes(t *testing.T) {
++	const existing = "/api/v1/users/01a15359-aa28-7a00-a380-000000000001"
++	wantUnavailable := func(instance string) string {
++		return `{"type":"/problems/unavailable","title":"Service Unavailable","status":503,` +
++			`"detail":"service temporarily unavailable","instance":"` + instance + `","retryAfter":1}`
++	}
++
++	e := NewServer(stubUsers{errUnavailable}, Options{
++		Logger: slog.New(slog.NewTextHandler(io.Discard, nil)),
++		Ready:  func(context.Context) error { return errors.New("database unreachable") },
++	})
++
++	t.Run("api unavailable keeps the mapped type", func(t *testing.T) {
++		rec := httptest.NewRecorder()
++		e.ServeHTTP(rec, httptest.NewRequestWithContext(context.Background(), http.MethodGet, existing, nil))
++		if rec.Code != http.StatusServiceUnavailable {
++			t.Fatalf("status = %d, want 503", rec.Code)
++		}
++		if ct := rec.Header().Get("Content-Type"); ct != problemContentType {
++			t.Fatalf("content-type = %q", ct)
++		}
++		if body := rec.Body.String(); body != wantUnavailable(existing) {
++			t.Fatalf("body = %s\nwant %s", body, wantUnavailable(existing))
++		}
++	})
++
++	t.Run("readiness probe bytes are unchanged", func(t *testing.T) {
++		rec := httptest.NewRecorder()
++		e.ServeHTTP(rec, httptest.NewRequestWithContext(context.Background(), http.MethodGet, "/readyz", nil))
++		if rec.Code != http.StatusServiceUnavailable {
++			t.Fatalf("status = %d, want 503", rec.Code)
++		}
++		want := `{"type":"about:blank","title":"Service Unavailable","status":503,"instance":"/readyz"}`
++		if body := rec.Body.String(); body != want {
++			t.Fatalf("probe body = %s\nwant %s", body, want)
++		}
++	})
++
++	t.Run("healthz stays 200 with its current bytes", func(t *testing.T) {
++		rec := httptest.NewRecorder()
++		e.ServeHTTP(rec, httptest.NewRequestWithContext(context.Background(), http.MethodGet, "/healthz", nil))
++		if rec.Code != http.StatusOK || rec.Body.String() != "{\"status\":\"ok\"}\n" {
++			t.Fatalf("healthz = %d %q", rec.Code, rec.Body.String())
++		}
++	})
++
++	t.Run("HEAD 503 has no body", func(t *testing.T) {
++		// API routes answer HEAD with 405 (see the contract goldens), so the bodyless HEAD
++		// branch of the error handler is exercised directly.
++		logger := slog.New(slog.NewTextHandler(io.Discard, nil))
++		rec := httptest.NewRecorder()
++		e2 := echo.New()
++		c := e2.NewContext(httptest.NewRequestWithContext(context.Background(), http.MethodHead, existing, nil), rec)
++		c.SetPath(existing)
++		newErrorHandler(logger)(c, echo.ErrServiceUnavailable)
++		if rec.Code != http.StatusServiceUnavailable {
++			t.Fatalf("status = %d, want 503", rec.Code)
++		}
++		if rec.Body.Len() != 0 {
++			t.Fatalf("HEAD body must stay empty, got %q", rec.Body.String())
++		}
++	})
++
++	t.Run("echo 503 on a non-probe route follows the unavailable mapping", func(t *testing.T) {
++		logger := slog.New(slog.NewTextHandler(io.Discard, nil))
++		rec := httptest.NewRecorder()
++		e2 := echo.New()
++		c := e2.NewContext(httptest.NewRequestWithContext(context.Background(), http.MethodGet, existing, nil), rec)
++		c.SetPath(existing)
++		newErrorHandler(logger)(c, echo.ErrServiceUnavailable)
++		if rec.Code != http.StatusServiceUnavailable {
++			t.Fatalf("status = %d, want 503", rec.Code)
++		}
++		if body := rec.Body.String(); body != wantUnavailable(existing) {
++			t.Fatalf("body = %s\nwant %s", body, wantUnavailable(existing))
++		}
++	})
++}
++
++// TestContextTimeout_MiddlewareShape captures the actual shape Echo v5's ContextTimeout
++// middleware produces (an *echo.HTTPError 503 wrapping the deadline), then asserts the single
++// mapping classifies it as unavailable. This documents the observed API rather than assuming
++// either an HTTPError or a raw context error.
++func TestContextTimeout_MiddlewareShape(t *testing.T) {
++	var captured error
++	e := echo.New()
++	e.HTTPErrorHandler = func(c *echo.Context, err error) {
++		captured = err
++		_ = c.NoContent(http.StatusInternalServerError)
++	}
++	e.Use(middleware.ContextTimeout(20 * time.Millisecond))
++	e.GET("/probe-shape", func(c *echo.Context) error {
++		<-c.Request().Context().Done()
++		return c.Request().Context().Err() // what a context-aware service returns
++	})
++
++	rec := httptest.NewRecorder()
++	e.ServeHTTP(rec, httptest.NewRequestWithContext(context.Background(), http.MethodGet, "/probe-shape", nil))
++	if captured == nil {
++		t.Fatal("no error reached the handler")
++	}
++	t.Logf("observed ContextTimeout error: type=%T message=%q", captured, captured.Error())
++	var he *echo.HTTPError
++	if !errors.As(captured, &he) || he.Code != http.StatusServiceUnavailable {
++		t.Fatalf("ContextTimeout must surface an *echo.HTTPError 503, got %T: %v", captured, captured)
++	}
++	if !errors.Is(captured, context.DeadlineExceeded) {
++		t.Fatalf("the HTTPError must still wrap context.DeadlineExceeded, got %v", captured)
++	}
++	if p := toProblem(context.Background(), captured, false); p.Status != http.StatusServiceUnavailable || p.Type != "/problems/unavailable" {
++		t.Fatalf("middleware timeout must map to unavailable, got %+v", p)
++	}
++}
+diff --git a/internal/adapter/inbound/httpapi/openapi.go b/internal/adapter/inbound/httpapi/openapi.go
+index 0b5502e..3967424 100644
+--- a/internal/adapter/inbound/httpapi/openapi.go
++++ b/internal/adapter/inbound/httpapi/openapi.go
+@@ -129,7 +129,8 @@ func (e *apiError) GetStatus() int            { return e.Status }
+ func (e *apiError) ContentType(string) string { return problemContentType }
+ 
+ // completeProblem fills the request-specific parts of an error response and reports its cause
+-// to Echo. Huma applies it to every response body.
++// to Echo. Huma applies it to every response body. The mapped Type survives; only an empty
++// Type defaults to about:blank.
+ func completeProblem(ctx huma.Context, _ string, v any) (any, error) {
+ 	e, ok := v.(*apiError)
+ 	if !ok {
+@@ -137,19 +138,23 @@ func completeProblem(ctx huma.Context, _ string, v any) (any, error) {
+ 	}
+ 	reportError(ctx, e.cause)
+ 	p := e.problem
+-	p.Type, p.Title, p.Instance = "about:blank", statusText(p.Status), ctx.URL().Path
++	if p.Type == "" {
++		p.Type = "about:blank" // default only when the mapping set no type
++	}
++	p.Title, p.Instance = statusText(p.Status), ctx.URL().Path
+ 	return p, nil
+ }
+ 
+-// register adds an operation whose handler errors are mapped by toProblem. op.RequestBody is
+-// only documented: given a request body schema, Huma would read and validate the body itself.
++// register adds an operation whose handler errors are mapped by the shared toProblem table.
++// op.RequestBody is only documented: given a request body schema, Huma would read and
++// validate the body itself. API routes are never probes, so probe=false.
+ func register[I, O any](api huma.API, op huma.Operation, handler func(context.Context, *I) (*O, error)) {
+ 	body := op.RequestBody
+ 	op.RequestBody = nil
+ 	huma.Register(api, op, func(ctx context.Context, in *I) (*O, error) {
+ 		out, err := handler(ctx, in)
+ 		if err != nil {
+-			return nil, &apiError{problem: toProblem(err), cause: err}
++			return nil, &apiError{problem: toProblem(ctx, err, false), cause: err}
+ 		}
+ 		return out, nil
+ 	})
+diff --git a/internal/adapter/inbound/httpapi/openapi_test.go b/internal/adapter/inbound/httpapi/openapi_test.go
+index e61f646..b14d234 100644
+--- a/internal/adapter/inbound/httpapi/openapi_test.go
++++ b/internal/adapter/inbound/httpapi/openapi_test.go
+@@ -287,6 +287,13 @@ func TestAPIDocs_SchemasAcceptWhatTheAPIAccepts(t *testing.T) {
+ 	if got := slices.Sorted(slices.Values(problem.Required)); !slices.Equal(got, []string{"status", "title", "type"}) {
+ 		t.Errorf("Problem required = %v", got)
+ 	}
++	// retryAfter appears only on 503 unavailable problems: an optional integer property.
++	if ra := problem.Properties["retryAfter"]; ra.Type != "integer" {
++		t.Errorf("Problem.retryAfter must be an integer property, got %+v", ra)
++	}
++	if slices.Contains(problem.Required, "retryAfter") {
++		t.Error("Problem.retryAfter must stay optional, never required")
++	}
+ 	fieldErr := problem.Properties["errors"].Items
+ 	if fieldErr == nil || fieldErr.Ref != "#/components/schemas/FieldError" || problem.Properties["errors"].Type != "array" {
+ 		t.Errorf("Problem.errors = %+v", problem.Properties["errors"])
+diff --git a/internal/adapter/inbound/httpapi/service_unavailable_test.go b/internal/adapter/inbound/httpapi/service_unavailable_test.go
+new file mode 100644
+index 0000000..4b2ebf2
+--- /dev/null
++++ b/internal/adapter/inbound/httpapi/service_unavailable_test.go
+@@ -0,0 +1,153 @@
++package httpapi_test
++
++// A11-native parity: a TEST-ONLY decorator around the memory repository returns the same
++// port.ErrUnavailable sentinel the postgres adapter produces for real faults (see
++// postgres/faults_test.go), so the HTTP wire shape is asserted for both storages without any
++// production fault switch, flag, or env var. No pgx/pgconn import is allowed in inbound code.
++
++import (
++	"context"
++	"encoding/json"
++	"fmt"
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"testing"
++	"time"
++
++	"github.com/example/userapi/internal/adapter/inbound/httpapi"
++	"github.com/example/userapi/internal/adapter/outbound/memory"
++	"github.com/example/userapi/internal/core/domain"
++	"github.com/example/userapi/internal/core/port"
++	"github.com/example/userapi/internal/core/service"
++)
++
++// unavailableRepo wraps the memory repository and fails every use case with the shared
++// sentinel, exactly as the postgres adapter does after mapError classification.
++type unavailableRepo struct {
++	*memory.UserRepository
++}
++
++func (unavailableRepo) Create(context.Context, domain.User) error {
++	return fmt.Errorf("register user: %w", port.ErrUnavailable)
++}
++
++func (unavailableRepo) GetByID(context.Context, domain.UserID) (domain.User, error) {
++	return domain.User{}, fmt.Errorf("get user: %w", port.ErrUnavailable)
++}
++
++func (unavailableRepo) List(context.Context, int, int) ([]domain.User, int, error) {
++	return nil, 0, fmt.Errorf("list users: %w", port.ErrUnavailable)
++}
++
++func (unavailableRepo) Update(context.Context, domain.User, int64) error {
++	return fmt.Errorf("update user: %w", port.ErrUnavailable)
++}
++
++func (unavailableRepo) Delete(context.Context, domain.UserID) error {
++	return fmt.Errorf("delete user: %w", port.ErrUnavailable)
++}
++
++func TestServiceUnavailable_MemoryParity(t *testing.T) {
++	svc := service.NewUserService(unavailableRepo{memory.NewUserRepository()}, &seqIDs{}, fixedClock{}, nil)
++	e := httpapi.NewServer(svc, httpapi.Options{Logger: slog.New(slog.NewTextHandler(io.Discard, nil))})
++	srv := httptest.NewServer(e)
++	t.Cleanup(srv.Close)
++
++	const (
++		existing    = "/api/v1/users/01a15359-aa28-7a00-a380-000000000001"
++		nonexistent = "/api/v1/users/01a15359-aa28-7a00-a380-000000000999"
++	)
++
++	requests := []struct {
++		method string
++		path   string
++		body   string
++	}{
++		{http.MethodGet, existing, ""},
++		{http.MethodGet, nonexistent, ""},
++		{http.MethodGet, "/api/v1/users", ""},
++		{http.MethodPost, "/api/v1/users", `{"email":"parity@example.com","name":"Parity"}`},
++		{http.MethodPatch, existing, `{"name":"Parity"}`},
++		{http.MethodDelete, existing, ""},
++	}
++	for _, ex := range requests {
++		t.Run(ex.method+" "+ex.path, func(t *testing.T) {
++			var body io.Reader
++			if ex.body != "" {
++				body = strings.NewReader(ex.body)
++			}
++			req, err := http.NewRequestWithContext(context.Background(), ex.method, srv.URL+ex.path, body)
++			if err != nil {
++				t.Fatal(err)
++			}
++			req.Header.Set("Content-Type", "application/json")
++			resp, err := http.DefaultClient.Do(req)
++			if err != nil {
++				t.Fatal(err)
++			}
++			defer resp.Body.Close()
++			if resp.StatusCode != http.StatusServiceUnavailable {
++				t.Fatalf("status = %d, want 503", resp.StatusCode)
++			}
++			if ct := resp.Header.Get("Content-Type"); ct != "application/problem+json" {
++				t.Fatalf("content-type = %q", ct)
++			}
++			var p struct {
++				Type       string `json:"type"`
++				Title      string `json:"title"`
++				Status     int    `json:"status"`
++				Detail     string `json:"detail"`
++				Instance   string `json:"instance"`
++				RetryAfter *int   `json:"retryAfter"`
++			}
++			if err := json.NewDecoder(resp.Body).Decode(&p); err != nil {
++				t.Fatal(err)
++			}
++			if p.Type != "/problems/unavailable" || p.Status != 503 ||
++				p.Detail != "service temporarily unavailable" || p.RetryAfter == nil || *p.RetryAfter != 1 {
++				t.Fatalf("problem = %+v (retryAfter=%v)", p, p.RetryAfter)
++			}
++			if p.Instance != ex.path {
++				t.Fatalf("instance = %q, want %q", p.Instance, ex.path)
++			}
++		})
++	}
++
++	// A2-native: during unavailability, existing and nonexistent IDs get byte-identical
++	// bodies except the instance field: no existence signal leaks through the error body.
++	get := func(path string) string {
++		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, srv.URL+path, nil)
++		if err != nil {
++			t.Fatal(err)
++		}
++		resp, err := http.DefaultClient.Do(req)
++		if err != nil {
++			t.Fatal(err)
++		}
++		defer resp.Body.Close()
++		b, _ := io.ReadAll(resp.Body)
++		return string(b)
++	}
++	a, b := get(existing), get(nonexistent)
++	if !strings.Contains(a, `"instance":"`+existing+`"`) {
++		t.Fatalf("body lacks its instance: %s", a)
++	}
++	normalize := func(s, id string) string { return strings.Replace(s, id, "ID", 1) }
++	if normalize(a, existing) != normalize(b, nonexistent) {
++		t.Fatalf("bodies differ beyond instance:\n%s\n%s", a, b)
++	}
++}
++
++type seqIDs struct{ n int }
++
++func (g *seqIDs) NewID() domain.UserID {
++	g.n++
++	return domain.UserID(fmt.Sprintf("01a15359-aa28-7a00-a380-%012d", g.n))
++}
++
++type fixedClock struct{}
++
++func (fixedClock) Now() time.Time { return time.Date(2026, 10, 19, 8, 49, 7, 624656000, time.UTC) }
+diff --git a/internal/adapter/inbound/httpapi/testdata/timeout.golden b/internal/adapter/inbound/httpapi/testdata/timeout.golden
+index a8d1e78..cf8306a 100644
+--- a/internal/adapter/inbound/httpapi/testdata/timeout.golden
++++ b/internal/adapter/inbound/httpapi/testdata/timeout.golden
+@@ -29,11 +29,11 @@ X-Request-Id: contract-02
+ 
+ 
+ --- 503 Service Unavailable
+-Content-Length: 158
++Content-Length: 197
+ Content-Type: application/problem+json
+ X-Request-Id: contract-02
+ 
+-{"type":"about:blank","title":"Service Unavailable","status":503,"detail":"request timed out","instance":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001"}
++{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001","retryAfter":1}
+ 
+ === get HEAD
+ HEAD /api/v1/users/01a15359-aa28-7a00-a380-000000000001
+diff --git a/internal/adapter/inbound/httpapi/testdata/unavailable.golden b/internal/adapter/inbound/httpapi/testdata/unavailable.golden
+new file mode 100644
+index 0000000..868ef2c
+--- /dev/null
++++ b/internal/adapter/inbound/httpapi/testdata/unavailable.golden
+@@ -0,0 +1,87 @@
++=== create
++POST /api/v1/users
++Content-Type: application/json
++X-Request-Id: contract-00
++
++{"email":"a@example.com","name":"A"}
++--- 503 Service Unavailable
++Content-Length: 160
++Content-Type: application/problem+json
++X-Request-Id: contract-00
++
++{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users","retryAfter":1}
++
++=== list
++GET /api/v1/users
++X-Request-Id: contract-01
++
++
++--- 503 Service Unavailable
++Content-Length: 160
++Content-Type: application/problem+json
++X-Request-Id: contract-01
++
++{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users","retryAfter":1}
++
++=== get
++GET /api/v1/users/01a15359-aa28-7a00-a380-000000000001
++X-Request-Id: contract-02
++
++
++--- 503 Service Unavailable
++Content-Length: 197
++Content-Type: application/problem+json
++X-Request-Id: contract-02
++
++{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001","retryAfter":1}
++
++=== get HEAD
++HEAD /api/v1/users/01a15359-aa28-7a00-a380-000000000001
++X-Request-Id: contract-03
++
++
++--- 405 Method Not Allowed
++Allow: OPTIONS, DELETE, GET, PATCH
++X-Request-Id: contract-03
++
++
++
++=== update
++PATCH /api/v1/users/01a15359-aa28-7a00-a380-000000000001
++Content-Type: application/json
++X-Request-Id: contract-04
++
++{"name":"B"}
++--- 503 Service Unavailable
++Content-Length: 197
++Content-Type: application/problem+json
++X-Request-Id: contract-04
++
++{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001","retryAfter":1}
++
++=== update with If-Match
++PATCH /api/v1/users/01a15359-aa28-7a00-a380-000000000001
++Content-Type: application/json
++If-Match: "1"
++X-Request-Id: contract-05
++
++{"name":"B"}
++--- 503 Service Unavailable
++Content-Length: 197
++Content-Type: application/problem+json
++X-Request-Id: contract-05
++
++{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001","retryAfter":1}
++
++=== delete
++DELETE /api/v1/users/01a15359-aa28-7a00-a380-000000000001
++X-Request-Id: contract-06
++
++
++--- 503 Service Unavailable
++Content-Length: 197
++Content-Type: application/problem+json
++X-Request-Id: contract-06
++
++{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001","retryAfter":1}
++
+diff --git a/internal/adapter/outbound/postgres/faults_test.go b/internal/adapter/outbound/postgres/faults_test.go
+new file mode 100644
+index 0000000..756c138
+--- /dev/null
++++ b/internal/adapter/outbound/postgres/faults_test.go
+@@ -0,0 +1,365 @@
++package postgres
++
++// Real-fault integration tests (C01-NATIVE A7/A8 evidence): each test injects a genuine
++// PostgreSQL/pgx failure, records the actual error chain observed (types are asserted, not
++// assumed), and asserts the mapError classification. Skips without TEST_DATABASE_URL.
++//
++// All statement-level database access goes through the generated sqlc queries (bound
++// parameters) or argument-free fixed SQL strings; no value is ever interpolated into SQL.
++
++import (
++	"context"
++	"errors"
++	"fmt"
++	"io"
++	"log/slog"
++	"net"
++	"net/url"
++	"os"
++	"testing"
++	"time"
++
++	"github.com/jackc/pgx/v5"
++	"github.com/jackc/pgx/v5/pgconn"
++	"github.com/jackc/pgx/v5/pgxpool"
++
++	"github.com/example/userapi/internal/adapter/outbound/postgres/pgtest"
++	"github.com/example/userapi/internal/adapter/outbound/postgres/sqlcgen"
++	"github.com/example/userapi/internal/adapter/outbound/system"
++	"github.com/example/userapi/internal/core/domain"
++	"github.com/example/userapi/internal/core/port"
++)
++
++func faultDSN(t *testing.T) string {
++	t.Helper()
++	base := os.Getenv("TEST_DATABASE_URL")
++	if base == "" {
++		t.Skip("TEST_DATABASE_URL not set; skipping PostgreSQL integration test")
++	}
++	return base
++}
++
++func quietLogger() *slog.Logger { return slog.New(slog.NewTextHandler(io.Discard, nil)) }
++
++// observeChain records the concrete pgx types behind a real fault so the evidence shows the
++// actual API shape, then reports whether each typed predicate matches.
++func observeChain(t *testing.T, err error) (pgCode string, isConnectError bool) {
++	t.Helper()
++	t.Logf("observed fault error: type=%T message=%q", err, err.Error())
++	var pgErr *pgconn.PgError
++	if errors.As(err, &pgErr) {
++		t.Logf("observed *pgconn.PgError: code=%s message=%q", pgErr.Code, pgErr.Message)
++		pgCode = pgErr.Code
++	}
++	var connErr *pgconn.ConnectError
++	isConnectError = errors.As(err, &connErr)
++	t.Logf("observed *pgconn.ConnectError in chain: %v", isConnectError)
++	return pgCode, isConnectError
++}
++
++func TestFaults_ConnectionRefused_IsUnavailable(t *testing.T) {
++	base := faultDSN(t)
++	// Reserve then close a loopback port so the dial fails with connection refused.
++	ln, err := (&net.ListenConfig{}).Listen(context.Background(), "tcp", "127.0.0.1:0")
++	if err != nil {
++		t.Fatal(err)
++	}
++	closedPort := ln.Addr().(*net.TCPAddr).Port
++	if err := ln.Close(); err != nil {
++		t.Fatal(err)
++	}
++
++	u, err := url.Parse(base)
++	if err != nil {
++		t.Fatal(err)
++	}
++	u.Host = net.JoinHostPort("127.0.0.1", fmt.Sprintf("%d", closedPort))
++	dsn := u.String()
++
++	ctx := context.Background()
++	pool, err := NewPool(ctx, dsn, PoolOptions{MaxConns: 1, StatementTimeout: 2 * time.Second})
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer pool.Close()
++	repo := NewUserRepository(pool, false)
++
++	err = repo.Create(ctx, mustUser(t, "refused@example.com"))
++	if !errors.Is(err, port.ErrUnavailable) {
++		t.Fatalf("connection refused must classify as port.ErrUnavailable, got %v", err)
++	}
++	_, isConnectError := observeChain(t, err)
++	if !isConnectError {
++		t.Fatalf("expected a *pgconn.ConnectError in the observed chain; got %T", err)
++	}
++}
++
++func TestFaults_WrongPassword_IsNotUnavailable(t *testing.T) {
++	base := faultDSN(t)
++	u, err := url.Parse(base)
++	if err != nil {
++		t.Fatal(err)
++	}
++	user := u.User.Username()
++	u.User = url.UserPassword(user, "definitely-not-the-password")
++	dsn := u.String()
++
++	ctx := context.Background()
++	pool, err := NewPool(ctx, dsn, PoolOptions{MaxConns: 1, StatementTimeout: 2 * time.Second})
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer pool.Close()
++	repo := NewUserRepository(pool, false)
++
++	err = repo.Create(ctx, mustUser(t, "authfail@example.com"))
++	if errors.Is(err, port.ErrUnavailable) {
++		t.Fatalf("28P01 authentication failure must stay an unexpected error, got %v", err)
++	}
++	pgCode, isConnectError := observeChain(t, err)
++	t.Logf("wrong-password real chain: SQLSTATE=%q ConnectError=%v", pgCode, isConnectError)
++	if pgCode != "28P01" {
++		t.Fatalf("expected real SQLSTATE 28P01, got %q (err %v)", pgCode, err)
++	}
++}
++
++func TestFaults_MissingDatabase_IsNotUnavailable(t *testing.T) {
++	base := faultDSN(t)
++	u, err := url.Parse(base)
++	if err != nil {
++		t.Fatal(err)
++	}
++	u.Path = "/no_such_database_c01"
++	dsn := u.String()
++
++	ctx := context.Background()
++	pool, err := NewPool(ctx, dsn, PoolOptions{MaxConns: 1, StatementTimeout: 2 * time.Second})
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer pool.Close()
++	repo := NewUserRepository(pool, false)
++
++	err = repo.Create(ctx, mustUser(t, "nodb@example.com"))
++	if errors.Is(err, port.ErrUnavailable) {
++		t.Fatalf("3D000 invalid_catalog_name must stay an unexpected error, got %v", err)
++	}
++	pgCode, _ := observeChain(t, err)
++	if pgCode != "3D000" {
++		t.Fatalf("expected real SQLSTATE 3D000, got %q (err %v)", pgCode, err)
++	}
++}
++
++func TestFaults_TerminatedConnection_IsUnavailable(t *testing.T) {
++	dsn := faultDSN(t)
++	ctx := context.Background()
++
++	admin, err := pgx.Connect(ctx, dsn)
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer func() { _ = admin.Close(ctx) }()
++	victim, err := pgx.Connect(ctx, dsn)
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer func() { _ = victim.Close(ctx) }()
++
++	// Argument-free server-side calls only; the terminate below passes a numeric pid.
++	var pid int64
++	if err := victim.QueryRow(ctx, "SELECT pg_backend_pid()").Scan(&pid); err != nil {
++		t.Fatal(err)
++	}
++	started := make(chan struct{})
++	terminated := make(chan error, 1)
++	go func() {
++		<-started
++		_, err := admin.Exec(ctx, "SELECT pg_terminate_backend($1)", pid)
++		terminated <- err
++	}()
++	close(started)
++
++	_, execErr := victim.Exec(ctx, "SELECT pg_sleep(4)") // fault substrate, bounded by the terminate
++	if execErr == nil {
++		t.Skip("pg_sleep finished before the termination arrived; fault not injected")
++	}
++	if err := <-terminated; err != nil {
++		t.Fatalf("pg_terminate_backend: %v", err)
++	}
++	mapped := mapError(execErr)
++	if !errors.Is(mapped, port.ErrUnavailable) {
++		t.Fatalf("57P01 termination must classify as port.ErrUnavailable, got %v", mapped)
++	}
++	pgCode, _ := observeChain(t, execErr)
++	if pgCode != "57P01" {
++		t.Fatalf("expected real SQLSTATE 57P01, got %q (err %v)", pgCode, execErr)
++	}
++}
++
++func TestFaults_StatementTimeoutUnderRowLock_IsUnavailableAndRolledBack(t *testing.T) {
++	dsn := pgtest.FreshSchemaDSN(t) // skips without TEST_DATABASE_URL
++	ctx := context.Background()
++	if err := Migrate(ctx, dsn, quietLogger()); err != nil {
++		t.Fatal(err)
++	}
++
++	// Fixed synthetic UUIDv7-shaped identifier; all row access goes through generated queries.
++	const lockedID = "01a15359-aa28-7a00-a380-0000000000c1"
++	clock := &system.Clock{}
++	u, err := domain.NewUser(domain.UserID(lockedID), "locked@example.com", "Locked", clock.Now())
++	if err != nil {
++		t.Fatal(err)
++	}
++	base := NewUserRepository(mustPool(t, ctx, dsn, 0), false)
++	if err := base.Create(ctx, u); err != nil {
++		t.Fatal(err)
++	}
++
++	// Locker session: run the generated compare-and-set UPDATE inside an open transaction, so
++	// the row lock is held until the blocked update has failed. The transaction rolls back:
++	// the locker never commits anything.
++	lockErr := make(chan error, 1)
++	locked := make(chan struct{})
++	done := make(chan struct{})
++	released := make(chan struct{})
++	locker, err := pgx.Connect(ctx, dsn)
++	if err != nil {
++		t.Fatal(err)
++	}
++	// The body defer (close done) runs before cleanups: the goroutine is released on every
++	// exit path, then the cleanup waits for the rollback to land before closing the session.
++	defer close(done)
++	t.Cleanup(func() { <-released; _ = locker.Close(ctx) })
++	go func() {
++		defer close(released)
++		tx, err := locker.Begin(ctx)
++		if err != nil {
++			lockErr <- fmt.Errorf("begin: %w", err)
++			return
++		}
++		q := sqlcgen.New(tx)
++		row, err := q.GetUser(ctx, lockedID)
++		if err != nil {
++			lockErr <- fmt.Errorf("lock read: %w", err)
++			_ = tx.Rollback(ctx)
++			return
++		}
++		if _, err := q.UpdateUser(ctx, sqlcgen.UpdateUserParams{
++			Email:           row.Email,
++			Name:            row.Name, // unchanged values: only the row lock matters
++			UpdatedAt:       row.UpdatedAt,
++			Version:         row.Version,
++			ID:              lockedID,
++			ExpectedVersion: row.Version,
++		}); err != nil {
++			lockErr <- fmt.Errorf("lock update: %w", err)
++			_ = tx.Rollback(ctx)
++			return
++		}
++		close(locked) // row lock acquired; the blocked update may start now
++		<-done
++		_ = tx.Rollback(ctx) // release the lock; nothing was committed
++	}()
++	select {
++	case err := <-lockErr:
++		t.Fatal(err)
++	case <-locked:
++	}
++	t.Cleanup(func() { <-released }) // the rollback must land before the deferred Close
++
++	// Victim pool: short statement_timeout, so the blocked UPDATE fails with 57014, bounded
++	// by the timeout itself rather than a test sleep.
++	slow := NewUserRepository(mustPool(t, ctx, dsn, 400*time.Millisecond), false)
++	next, err := u.Apply(domain.Changes{Name: ptr("Renamed")}, clock.Now())
++	if err != nil {
++		t.Fatal(err)
++	}
++	updateErr := slow.Update(ctx, next, u.Version)
++	if !errors.Is(updateErr, port.ErrUnavailable) {
++		t.Fatalf("57014 statement timeout under a row lock must classify as port.ErrUnavailable, got %v", updateErr)
++	}
++	var mapped *pgconn.PgError
++	if !errors.As(updateErr, &mapped) || mapped.Code != "57014" {
++		t.Fatalf("expected SQLSTATE 57014 in the chain, got %v", updateErr)
++	}
++
++	// The failed update is known not to have executed: after the locker rolls back, the row
++	// keeps its original values and version. (An unknown-commit failure must never be
++	// described as rolled back; here the outcome is known because the statement timed out
++	// while waiting for the lock.)
++	after, err := base.GetByID(ctx, u.ID)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if after.Name != "Locked" || after.Version != u.Version {
++		t.Fatalf("row changed after a rolled-back failed update: name=%q version=%d", after.Name, after.Version)
++	}
++}
++
++func TestFaults_PoolAcquireTimeout_Classifies503(t *testing.T) {
++	dsn := faultDSN(t)
++	ctx := context.Background()
++	pool, err := NewPool(ctx, dsn, PoolOptions{MaxConns: 1, StatementTimeout: 2 * time.Second})
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer pool.Close()
++
++	held, err := pool.Acquire(ctx) // exhaust the single connection
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer held.Release()
++
++	// A second acquire must fail once the bounded context expires; this is the same error the
++	// repository path surfaces when every pooled connection is busy.
++	bounded, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
++	defer cancel()
++	_, err = pool.Acquire(bounded)
++	if err == nil {
++		t.Fatal("expected an acquire failure against an exhausted pool")
++	}
++	t.Logf("observed acquire-timeout error: type=%T message=%q", err, err.Error())
++	// The request deadline (row 3 of the mapping) makes acquire waits retryable 503s.
++	if !errors.Is(err, context.DeadlineExceeded) && !errors.Is(err, port.ErrUnavailable) {
++		t.Fatalf("pool-acquire timeout must reach HTTP as 503 (DeadlineExceeded or ErrUnavailable), got %T: %v", err, err)
++	}
++}
++
++func TestFaults_MissingTable_IsNotUnavailable(t *testing.T) {
++	dsn := pgtest.FreshSchemaDSN(t) // fresh schema, deliberately NOT migrated
++	ctx := context.Background()
++	pool := mustPool(t, ctx, dsn, 0)
++	defer pool.Close()
++	repo := NewUserRepository(pool, false)
++
++	err := repo.Create(ctx, mustUser(t, "nomigration@example.com"))
++	if errors.Is(err, port.ErrUnavailable) {
++		t.Fatalf("42P01 undefined_table must stay an unexpected error, got %v", err)
++	}
++	pgCode, _ := observeChain(t, err)
++	if pgCode != "42P01" {
++		t.Fatalf("expected real SQLSTATE 42P01, got %q (err %v)", pgCode, err)
++	}
++}
++
++func mustPool(t *testing.T, ctx context.Context, dsn string, statementTimeout time.Duration) *pgxpool.Pool {
++	t.Helper()
++	pool, err := NewPool(ctx, dsn, PoolOptions{MaxConns: 2, StatementTimeout: statementTimeout})
++	if err != nil {
++		t.Fatal(err)
++	}
++	t.Cleanup(pool.Close)
++	return pool
++}
++
++func mustUser(t *testing.T, email string) domain.User {
++	t.Helper()
++	u, err := domain.NewUser((&system.UUIDv7{}).NewID(), email, "Fault User", (&system.Clock{}).Now())
++	if err != nil {
++		t.Fatal(err)
++	}
++	return u
++}
++
++func ptr[T any](v T) *T { return &v }
+diff --git a/internal/adapter/outbound/postgres/map_error_test.go b/internal/adapter/outbound/postgres/map_error_test.go
+new file mode 100644
+index 0000000..87421c9
+--- /dev/null
++++ b/internal/adapter/outbound/postgres/map_error_test.go
+@@ -0,0 +1,127 @@
++package postgres
++
++import (
++	"context"
++	"errors"
++	"fmt"
++	"testing"
++
++	"github.com/jackc/pgx/v5"
++	"github.com/jackc/pgx/v5/pgconn"
++
++	"github.com/example/userapi/internal/core/domain"
++	"github.com/example/userapi/internal/core/port"
++)
++
++// combinedChain carries several errors at once through multi-error unwrap (Go 1.20), so tests can
++// build chains shaped like pgconn.ConnectError wrapping a *pgconn.PgError even though ConnectError
++// has no exported constructor. Real driver chains are exercised in faults_test.go.
++type combinedChain struct{ errs []error }
++
++func (c combinedChain) Error() string   { return "combined chain" }
++func (c combinedChain) Unwrap() []error { return c.errs }
++
++func TestMapError_UnavailableClassification(t *testing.T) {
++	// SQLSTATE-first: every retryable code classifies as port.ErrUnavailable.
++	for _, code := range []string{
++		"08000", "08003", "08006", // connection exception class 08
++		"57P01", "57P02", "57P03", // admin termination / the database is starting up / shutting down
++		"53300", // too_many_connections
++		"40P01", // deadlock_detected
++		"40001", // serialization_failure
++		"55P03", // lock_not_available
++		"57014", // query_canceled: statement_timeout or pg_cancel_backend
++	} {
++		t.Run(code, func(t *testing.T) {
++			err := mapError(&pgconn.PgError{Code: code, Message: "fault " + code})
++			if !errors.Is(err, port.ErrUnavailable) {
++				t.Fatalf("SQLSTATE %s must classify as port.ErrUnavailable, got %v", code, err)
++			}
++			if code == "57014" && errors.Is(err, context.DeadlineExceeded) {
++				t.Fatal("57014 must no longer surface as context.DeadlineExceeded; it is ErrUnavailable now")
++			}
++		})
++	}
++
++	// Misconfiguration and programming faults stay unexpected errors (HTTP 500), never 503.
++	for _, code := range []string{
++		"28000", "28P01", // authentication failures
++		"3D000", // invalid_catalog_name (no such database)
++		"42501", // insufficient_privilege
++		"42P01", // undefined_table
++		"42P07", // duplicate_table
++		"22001", // string_data_right_truncation
++		"23503", // foreign_key_violation (unmapped constraint)
++		"23502", // not_null_violation (unmapped constraint)
++	} {
++		t.Run(code, func(t *testing.T) {
++			err := mapError(&pgconn.PgError{Code: code, Message: "fault " + code})
++			if errors.Is(err, port.ErrUnavailable) {
++				t.Fatalf("SQLSTATE %s must stay an unexpected error, got %v", code, err)
++			}
++		})
++	}
++
++	// A duplicate email on a different constraint is an unexpected error; only users_email_key
++	// maps to the domain conflict.
++	if err := mapError(&pgconn.PgError{Code: "23505", ConstraintName: "other_pkey"}); errors.Is(err, port.ErrUnavailable) {
++		t.Fatal("23505 on an unmapped constraint must not classify as unavailable")
++	}
++
++	t.Run("existing mappings preserved", func(t *testing.T) {
++		if err := mapError(pgx.ErrNoRows); !errors.Is(err, port.ErrNotFound) {
++			t.Errorf("ErrNoRows must map to ErrNotFound, got %v", err)
++		}
++		err := mapError(&pgconn.PgError{Code: "23505", ConstraintName: "users_email_key"})
++		if !errors.Is(err, domain.ErrEmailAlreadyExists) {
++			t.Errorf("users_email_key violation must map to ErrEmailAlreadyExists, got %v", err)
++		}
++	})
++
++	t.Run("wrapped depth", func(t *testing.T) {
++		err := mapError(fmt.Errorf("write user: %w", &pgconn.PgError{Code: "57P02"}))
++		if !errors.Is(err, port.ErrUnavailable) {
++			t.Fatalf("wrapped 57P02 must classify as unavailable, got %v", err)
++		}
++	})
++
++	t.Run("bare typed connect fault", func(t *testing.T) {
++		if err := mapError(&pgconn.ConnectError{}); !errors.Is(err, port.ErrUnavailable) {
++			t.Fatalf("typed *pgconn.ConnectError without any PgError must classify as unavailable, got %v", err)
++		}
++	})
++
++	// SQLSTATE wins over a wrapping ConnectError: the PgError in the chain decides.
++	for _, tc := range []struct {
++		code        string
++		unavailable bool
++	}{
++		{"28P01", false},
++		{"3D000", false},
++		{"42501", false},
++		{"53300", true},
++		{"57P03", true},
++	} {
++		t.Run("connecterror_pgerror_"+tc.code, func(t *testing.T) {
++			err := mapError(combinedChain{errs: []error{&pgconn.ConnectError{}, &pgconn.PgError{Code: tc.code}}})
++			if got := errors.Is(err, port.ErrUnavailable); got != tc.unavailable {
++				t.Fatalf("ConnectError wrapping PgError %s: unavailable=%v, want %v (err %v)", tc.code, got, tc.unavailable, err)
++			}
++		})
++	}
++
++	// No string matching: lookalike text is never classification.
++	for _, raw := range []string{
++		"connection refused",
++		"conn closed",
++		"57P01 terminating connection due to administrator command",
++		"too many connections",
++		"statement timeout",
++	} {
++		t.Run("lookalike", func(t *testing.T) {
++			if err := mapError(errors.New(raw)); errors.Is(err, port.ErrUnavailable) {
++				t.Fatalf("text %q must not classify as unavailable", raw)
++			}
++		})
++	}
++}
+diff --git a/internal/adapter/outbound/postgres/user_repository.go b/internal/adapter/outbound/postgres/user_repository.go
+index 21da2b5..d02447a 100644
+--- a/internal/adapter/outbound/postgres/user_repository.go
++++ b/internal/adapter/outbound/postgres/user_repository.go
+@@ -7,6 +7,7 @@ import (
+ 	"errors"
+ 	"fmt"
+ 	"strconv"
++	"strings"
+ 	"time"
+ 
+ 	"github.com/exaring/otelpgx"
+@@ -19,10 +20,24 @@ import (
+ 	"github.com/example/userapi/internal/core/port"
+ )
+ 
+-const (
+-	uniqueViolation = "23505"
+-	queryCanceled   = "57014" // statement_timeout or pg_cancel_backend
+-)
++const uniqueViolation = "23505"
++
++// unavailableSQLSTATE reports whether a PostgreSQL SQLSTATE is a transient connection or
++// server fault that HTTP clients may retry. All other SQLSTATEs (authentication 28xxx,
++// missing database 3D000, privilege 42501, schema 42xxx, data 22xxx, unmapped constraint
++// violations) stay unexpected errors: misconfiguration must never become a retryable 503.
++func unavailableSQLSTATE(code string) bool {
++	switch code {
++	case "57P01", "57P02", "57P03", // administrator shutdown / startup
++		"53300", // too_many_connections
++		"40P01", // deadlock_detected
++		"40001", // serialization_failure
++		"55P03", // lock_not_available
++		"57014": // query_canceled: statement_timeout or pg_cancel_backend
++		return true
++	}
++	return strings.HasPrefix(code, "08") // connection_exception class
++}
+ 
+ type UserRepository struct {
+ 	pool    *pgxpool.Pool
+@@ -240,6 +255,11 @@ func (r *UserRepository) Delete(ctx context.Context, id domain.UserID) error {
+ }
+ 
+ // mapError translates driver errors into core errors so core never sees pgx.
++//
++// SQLSTATE is classified FIRST: a *pgconn.PgError in the chain decides the outcome even when
++// a ConnectError wraps it, so an authentication failure inside a connect attempt stays an
++// unexpected error. Only a chain without any PgError may classify a typed *pgconn.ConnectError
++// as unavailability. Text is never classification input (no string matching).
+ func mapError(err error) error {
+ 	if err == nil {
+ 		return nil
+@@ -248,13 +268,18 @@ func mapError(err error) error {
+ 		return port.ErrNotFound
+ 	}
+ 	var pgErr *pgconn.PgError
+-	if errors.As(err, &pgErr) && pgErr.Code == uniqueViolation && pgErr.ConstraintName == "users_email_key" {
+-		return domain.ErrEmailAlreadyExists
++	if errors.As(err, &pgErr) {
++		if pgErr.Code == uniqueViolation && pgErr.ConstraintName == "users_email_key" {
++			return domain.ErrEmailAlreadyExists
++		}
++		if unavailableSQLSTATE(pgErr.Code) {
++			return fmt.Errorf("postgres: %w: %w", port.ErrUnavailable, err)
++		}
++		return fmt.Errorf("postgres: %w", err)
+ 	}
+-	if errors.As(err, &pgErr) && pgErr.Code == queryCanceled {
+-		// An expired statement_timeout is equivalent to a request timeout: expose it as
+-		// context.DeadlineExceeded (HTTP 503), not an unexpected error (500).
+-		return fmt.Errorf("postgres: %w: %w", context.DeadlineExceeded, err)
++	var connErr *pgconn.ConnectError
++	if errors.As(err, &connErr) {
++		return fmt.Errorf("postgres: %w: %w", port.ErrUnavailable, err)
+ 	}
+ 	return fmt.Errorf("postgres: %w", err)
+ }
+diff --git a/internal/adapter/outbound/postgres/user_repository_test.go b/internal/adapter/outbound/postgres/user_repository_test.go
+index a44ca42..b0b45c2 100644
+--- a/internal/adapter/outbound/postgres/user_repository_test.go
++++ b/internal/adapter/outbound/postgres/user_repository_test.go
+@@ -103,8 +103,9 @@ func TestUserRepositoryContract(t *testing.T) {
+ }
+ 
+ // statement_timeout (DB_STATEMENT_TIMEOUT) bounds request execution at the database:
+-// the error must match context.DeadlineExceeded so HTTP returns 503 rather than 500.
+-func TestStatementTimeout_IsDeadlineExceeded(t *testing.T) {
++// the SQLSTATE 57014 fault must classify as port.ErrUnavailable so HTTP returns the
++// retryable 503 /problems/unavailable rather than 500 (previously DeadlineExceeded).
++func TestStatementTimeout_IsUnavailable(t *testing.T) {
+ 	dsn := pgtest.FreshSchemaDSN(t)
+ 	ctx := context.Background()
+ 	if err := postgres.Migrate(ctx, dsn, slog.New(slog.DiscardHandler)); err != nil {
+@@ -127,8 +128,11 @@ func TestStatementTimeout_IsDeadlineExceeded(t *testing.T) {
+ 	}
+ 
+ 	_, _, err = postgres.NewUserRepository(pool, false).List(ctx, 10, 0)
+-	if !errors.Is(err, context.DeadlineExceeded) {
+-		t.Fatalf("List = %v, want context.DeadlineExceeded", err)
++	if !errors.Is(err, port.ErrUnavailable) {
++		t.Fatalf("List = %v, want port.ErrUnavailable", err)
++	}
++	if errors.Is(err, context.DeadlineExceeded) {
++		t.Fatalf("List = %v; 57014 must not surface as context.DeadlineExceeded any more", err)
+ 	}
+ }
+ 
+diff --git a/internal/core/port/errors.go b/internal/core/port/errors.go
+index 6e59480..c5b2740 100644
+--- a/internal/core/port/errors.go
++++ b/internal/core/port/errors.go
+@@ -11,4 +11,8 @@ var (
+ 	ErrNotFound = errors.New("not found")
+ 	// ErrVersionConflict means the record changed since it was read (optimistic locking).
+ 	ErrVersionConflict = errors.New("version conflict")
++	// ErrUnavailable means storage is temporarily unreachable or busy (connection failure,
++	// administrator termination, statement timeout, pool exhaustion, lock/deadlock conditions).
++	// It maps to a retryable HTTP 503. A failed write's outcome is unknown, never "not applied".
++	ErrUnavailable = errors.New("service temporarily unavailable")
+ )
+diff --git a/internal/core/service/user_service_test.go b/internal/core/service/user_service_test.go
+index fdc6bea..71e97a7 100644
+--- a/internal/core/service/user_service_test.go
++++ b/internal/core/service/user_service_test.go
+@@ -198,6 +198,40 @@ func TestUpdate_GivesUpAfterRepeatedConflicts(t *testing.T) {
+ 	}
+ }
+ 
++// unavailableUpdateRepo fails every Update with the storage unavailability sentinel, counting
++// calls so the retry behavior stays observable.
++type unavailableUpdateRepo struct {
++	*memory.UserRepository
++	calls int
++}
++
++func (r *unavailableUpdateRepo) Update(_ context.Context, _ domain.User, _ int64) error {
++	r.calls++
++	return fmt.Errorf("update user: %w", port.ErrUnavailable)
++}
++
++// The optimistic-concurrency retry predicate stays ErrVersionConflict-only: storage
++// unavailability is returned to the caller on the FIRST attempt. Retrying an unavailable
++// write is a product-level decision (idempotency), not this service's.
++func TestUpdate_DoesNotRetryUnavailable(t *testing.T) {
++	repo := &unavailableUpdateRepo{UserRepository: memory.NewUserRepository()}
++	clock := &fakeClock{now: time.Date(2026, 5, 1, 0, 0, 0, 0, time.UTC)}
++	svc := service.NewUserService(repo, &seqIDs{}, clock, nil)
++	u, err := svc.Register(ctx, port.RegisterUserCmd{Email: "a@example.com", Name: "A"})
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	name := "Renamed"
++	_, err = svc.Update(ctx, port.UpdateUserCmd{ID: u.ID.String(), Name: &name})
++	if !errors.Is(err, port.ErrUnavailable) {
++		t.Fatalf("want ErrUnavailable, got %v", err)
++	}
++	if repo.calls != 1 {
++		t.Fatalf("unavailability must not be retried; Update called %d times", repo.calls)
++	}
++}
++
+ func TestUpdate_ExpectedVersion(t *testing.T) {
+ 	svc, repo := newRacingSUT(nil)
+ 	u, _ := svc.Register(ctx, port.RegisterUserCmd{Email: "a@example.com", Name: "A"})

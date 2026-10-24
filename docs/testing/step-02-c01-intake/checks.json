@@ -1,0 +1,207 @@
+{
+  "task": "MC-002-BE-C01 intake",
+  "collector": "Codex PM artifact checks, not owner execution",
+  "timestamp_utc": "2026-10-24T17:29:21.043466+00:00",
+  "governance_base": "b43dc53e5efefcb904fa111f7ec1972387171de6",
+  "backend_base": "d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b",
+  "backend_head": "fd747ae11aad05bd98737bc91f6bd19894fd72e7",
+  "backend_branch": "task/MC-002-be-c01",
+  "changed_files": [
+    "api.http",
+    "docs/api.md",
+    "internal/adapter/inbound/httpapi/contract_test.go",
+    "internal/adapter/inbound/httpapi/errors.go",
+    "internal/adapter/inbound/httpapi/errors_test.go",
+    "internal/adapter/inbound/httpapi/openapi.go",
+    "internal/adapter/inbound/httpapi/openapi_test.go",
+    "internal/adapter/inbound/httpapi/service_unavailable_test.go",
+    "internal/adapter/inbound/httpapi/testdata/timeout.golden",
+    "internal/adapter/inbound/httpapi/testdata/unavailable.golden",
+    "internal/adapter/outbound/postgres/faults_test.go",
+    "internal/adapter/outbound/postgres/map_error_test.go",
+    "internal/adapter/outbound/postgres/user_repository.go",
+    "internal/adapter/outbound/postgres/user_repository_test.go",
+    "internal/core/port/errors.go",
+    "internal/core/service/user_service_test.go"
+  ],
+  "diff_sha256": "06c1cee57f5cbc2fd83d42cdcca67192c62d883065852de3ef3196a89cef5bdd",
+  "source_tree_clean": true,
+  "binary_sha256": "b7b74d5a214225244a2f8586696b41c4609d2ae63d2fb536468b96ebc3967563",
+  "protected_files_unchanged": 59,
+  "exports": [
+    {
+      "name": "11-red-maperror.log",
+      "bytes": 3246,
+      "sha256": "f4804f1cdb3d523f2ff571b7e570db478360a0f852556f42d41df86f176400dc",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "21-fixture-manifest.log",
+      "bytes": 942,
+      "sha256": "67792d75fbe8603b83e78ac0b9f82124e6b6ad2a7d4e2b4e61a271fd93331dd9",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "30-make-check-meta.txt",
+      "bytes": 881,
+      "sha256": "f99a435c1f93b4fc58538d7d8f35adde703036919960b8d8c37cea2a83013c6d",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "31-make-check.stdout.log",
+      "bytes": 1178,
+      "sha256": "ac39cf7322c0a3f355b53a533385c4ea60ae1ad51f25ab589a8fa0c4883845d8",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "32-make-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "33-json-meta.txt",
+      "bytes": 160,
+      "sha256": "621bff66ffd7a6f9d05d292ae0acc9436d611fa49c3673143b33d5a0db467cd1",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "34-gotest.stdout.json",
+      "bytes": 274237,
+      "sha256": "27ce2d86302db4a01d90081177c203c2a3c88965674717affc310f6893818d9b",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "35-gotest.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "36-json-parse-summary.txt",
+      "bytes": 1237,
+      "sha256": "2b7c7f77bfb3db6c925224d6f61398495446e2123134717da19a96024b213639",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "41-normal-ops.log",
+      "bytes": 603,
+      "sha256": "e96c15a88cae5280d7cb1875e7b44b79827872a5f24d98f73148d76368853401",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "42-outage.log",
+      "bytes": 3235,
+      "sha256": "549ed8877a2546c92aaaac5440b9d1f4cf45be7fbb967c68b1a6a32e43652d2e",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "43-a14-logs.log",
+      "bytes": 1201,
+      "sha256": "f18783dc85ecda725f8cecc471d4fa9452d2d8ff4777f8fa6b557609ba293ed4",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "44-api2.stdout.log",
+      "bytes": 1749,
+      "sha256": "723a5550c3eb17aa3d34e4a56677d8d3c198bf427ccb88a7833113f12ccb506e",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "45-pool-exhaustion.log",
+      "bytes": 1335,
+      "sha256": "5e3a02af128e61d32abded985af13ba6301a180d36ced614802aa6d5a5646e7d",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "46-cancel.log",
+      "bytes": 420,
+      "sha256": "e883a748c968f490917c64507de5f110c70307d5b74534e82962bf6691d4ba3b",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "47-final-state.log",
+      "bytes": 418,
+      "sha256": "0e123da741885a8aec61d63a59ec6b3023de7b4b54288f31c5bdcdbf8c16d2a6",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "48-redaction.txt",
+      "bytes": 358,
+      "sha256": "6b8574667fe103e994900e82b922a51463033d6238177e2779b1692bb9d3b0ca",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "49-sha256.txt",
+      "bytes": 2714,
+      "sha256": "353407a1e1d6de0238fbb51fb80981306cbf8037edd645c50568a5134f9b4eb4",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "49b-gov-export-hashes.txt",
+      "bytes": 1545,
+      "sha256": "10140cb244c5008f43daa84caf16fd69ce7f5a6f87479dfbee0d085b4b14696a",
+      "matches_tmp_original": true
+    }
+  ],
+  "tmp_matched_files": 19,
+  "master_manifest_entries": 32,
+  "master_manifest_unexported_names": [
+    "10-red-run.log",
+    "10-red-run.stderr.log",
+    "10-red-run.stdout.log",
+    "12-green-run1.log",
+    "13-green-run2.log",
+    "14-golden-update.log",
+    "15-green-full.log",
+    "40-api1-start.log",
+    "40-api1.stdout.log",
+    "44-api2-start.log",
+    "45-lock-holder.out",
+    "45-reqA.out",
+    "45-reqB.out",
+    "46-cancel.out",
+    "46-lock2.out"
+  ],
+  "export_payload_hashes_verified": 17,
+  "jsonl_lines": 1189,
+  "named_terminal_counts": {
+    "pass": 278
+  },
+  "named_skips": [],
+  "duplicate_named_terminal_events": [],
+  "package_terminal_counts": {
+    "skip": 5,
+    "pass": 11
+  },
+  "count_limit": "named parent/subtest events, not independent leaf cases",
+  "goldens": [
+    {
+      "file": "timeout.golden",
+      "unchanged": false
+    },
+    {
+      "file": "unexpected_error.golden",
+      "unchanged": true
+    },
+    {
+      "file": "panic.golden",
+      "unchanged": true
+    },
+    {
+      "file": "version_conflict.golden",
+      "unchanged": true
+    },
+    {
+      "file": "user_api.golden",
+      "unchanged": true
+    }
+  ],
+  "secret_pattern_matches": [],
+  "privacy_limit": "common patterns checked; exact fixture-value scan owner-asserted, no Config.Env read or whole-host search",
+  "runtime_replay": false,
+  "excluded_untouched_paths": [
+    ".mimosa/",
+    "docs/testing/step-02-c01/.mimosa/"
+  ]
+}

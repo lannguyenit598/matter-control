@@ -1,0 +1,19 @@
+2026-10-24T17:00:32Z
+Name=/mc002be-c01-pg-20261024T1700Z
+Id=32700f064266f2257f66cdda74ac08bd8ba90aa0f8306ac8deeab1d57f44e287
+Image=postgres:18-alpine
+Labels={"org.mattercontrol.poc":"mc002be-c01"}
+Memory=536870912
+NanoCpus=1000000000
+PidsLimit=128
+Ports={"5432/tcp":[{"HostIp":"127.0.0.1","HostPort":"15457"}]}
+Networks=mc002be-c01-net 
+Mounts=volume:3809fde32271ff53d9ea4803febd84d57b86b3facda92fb0cedfd00ae5f6c352:/var/lib/postgresql 
+Health=healthy
+StartedAt=2026-10-24T17:00:14.386641Z
+RepoDigests=["postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873"]
+NetId=c8dec94458becab0ec93a44d9ccca18e18664e44ebc33f9eacb462edd582f777 Driver=bridge
+0
+Pre-assignment verification OK: fresh empty target (docker exec, no credentials in argv). DSN form: postgres://mc002bec01:REDACTED@127.0.0.1:15457/mc002be_c01?sslmode=disable; fresh per-run credential, no shell tracing, not reused.
+HOST_PORT_OPEN
+2026-10-24T17:00:32Z

@@ -5,7 +5,7 @@ Codex orchestrates; the named external owners retain engineering responsibility.
 | Assignment | Actual execution / current state | Next packet |
 |---|---|---|
 | Claude architecture | Actual authored/corrected15 files; independent document review PASS; no runtime certification | Existing architecture and exact final manifests; review any architecture-impacting owner finding before ADR edits |
-| ZCode MC-002-BE / C01 | R01/R02 CLOSED; new C01-NATIVE task PREPARED / WAITING_MANUAL_DISPATCH after actual Claude clarification | [Complete C01 prompt](handoffs/MC-002-BE-C01-ZCODE-PROMPT.md); preserve original worktree/evidence; C01-PRODUCT stays OPEN |
+| ZCode MC-002-BE / C01 | R01/R02 CLOSED; actual C01 fd747ae returned, REWORK_REQUIRED after actual Claude review | [C01 correction prompt](handoffs/MC-002-BE-C01-ZCODE-REWORK-PROMPT.md); new bounded manual dispatch, preserve baseline/owner evidence; PRODUCT stays OPEN |
 | Antigravity MC-002-FE | User returned manual local Node baseline:99unit/9E2E/build logs; source clean/pinned. Headless limitation remains historical route evidence | [Frontend intake](../reviews/step-02-frontend-intake.md); documentary corrections applied, final independent recheck PASS_WITH_LIMITATIONS (all7 actionable findings resolved); no whole-product/runtime-adapter approval |
 | OpenCode MC-002-VERIFY-021 | Actual review and final recheck PASS_WITH_LIMITATIONS,3Low closed, no replay | step-02-execution-report.md / step-02-poc-validation.md; actual returned report required |
 | OpenDesign | NOT_STARTED | Step03 not authorized |
@@ -27,3 +27,5 @@ The focused ZCode R01/R02 handoff has now been executed, returned and independen
 Only C01-NATIVE needs the next ZCode manual paste; no acknowledgement/execution yet. Antigravity native baseline is VERIFIED with limitations, no new baseline prompt. OpenCode implementation QA waits for actual C01 diff/tests; document-scope handoff review is separate. [Current matrix](../ai-sdlc/step-02-remaining-gates.md) supersedes historical waiting/rework labels. Integration remains PENDING until C01-native and compatible approved scope/API/auth dependencies pass. No whole C01 or MC-002 closure.
 
 Actual OpenCode handoff review/recheck returned PASS_WITH_LIMITATIONS and closed all three prompt precision findings; the amended C01 prompt is ready for manual paste. This does not dispatch it or verify implementation. Evidence: ../reviews/step-02-2-opencode-handoff-recheck.md.
+
+Current actual implementation reviews: OpenCode source CHANGES_REQUIRED (F1test/F5docs/F6rule), evidence PASS_WITH_LIMITATIONS; actual Claude accepts current production behavior and dispositions M1 NOT_REACHABLE on existing probes. No native acceptance before correctedhead/checks/QA. [Intake](../reviews/step-02-c01-intake.md) records evidence qualifications and exact review identity. MC-002-BE-C01-R1 manual rework is the next action; older original-prompt waiting labels above are historical.

@@ -1,0 +1,127 @@
+{
+  "info": {
+    "id": "ses_e9112661bffe00EBWQOXGOITu9",
+    "projectID": "56512bc17ede1f94831e6c5716d9c01aa1a12b0d",
+    "agent": "plan",
+    "cost": 0,
+    "tokens": {
+      "input": 60866,
+      "output": 2668,
+      "reasoning": 10495,
+      "cache": {
+        "read": 4352,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1792862427731,
+      "updated": 1792862653186,
+      "idle": 1792862653190
+    },
+    "title": "[redacted:session-title:ses_e9112661bffe00EBWQOXGOITu9]",
+    "location": {
+      "directory": "/[redacted:session-directory:ses_e9112661bffe00EBWQOXGOITu9]"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_16eed9a5a001LCgEICJfHV6Bmv",
+      "time": {
+        "created": 1792862427738
+      },
+      "type": "agent-switched",
+      "agent": "plan",
+      "previous": "plan"
+    },
+    {
+      "id": "msg_16eed9a55001Yoai9RbZuogIeK",
+      "time": {
+        "created": 1792862427881
+      },
+      "text": "[redacted:synthetic:msg_16eed9a55001Yoai9RbZuogIeK]",
+      "type": "synthetic"
+    },
+    {
+      "id": "msg_16eed9a59001JtbBEoqQQwGUxz",
+      "time": {
+        "created": 1792862427881
+      },
+      "text": "[redacted:text:msg_16eed9a59001JtbBEoqQQwGUxz]",
+      "files": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_16eed9aed001vcPRE1fGbDQSUA",
+      "time": {
+        "created": 1792862427889,
+        "streamed": 1792862653078,
+        "completed": 1792862653186
+      },
+      "type": "assistant",
+      "agent": "plan",
+      "model": {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "[redacted:reasoning:msg_16eed9aed001vcPRE1fGbDQSUA]",
+          "native": {
+            "redacted": "reasoning-native:msg_16eed9aed001vcPRE1fGbDQSUA"
+          },
+          "time": {
+            "created": 1792862432155,
+            "completed": 1792862653064
+          }
+        },
+        {
+          "type": "text",
+          "text": "[redacted:text:msg_16eed9aed001vcPRE1fGbDQSUA]"
+        }
+      ],
+      "snapshot": {
+        "start": "587ce011b2a30af5c957564e2fae4def890091a2",
+        "end": "5db341fb064fea91dc034f9239120a0c8f30e9c3",
+        "files": [
+          "docs/ai-sdlc/project-status.md",
+          "docs/ai-sdlc/risk-register.md",
+          "docs/ai-sdlc/step-02-remaining-gates.md",
+          "docs/architecture/backend-audit.md",
+          "docs/architecture/technical-poc.md",
+          "docs/implementation/agent-handoffs.md",
+          "docs/implementation/handoffs/MC-002-BE-C01-ZCODE-PROMPT.md",
+          "docs/implementation/handoffs/MC-002-BE-C01-ZCODE-REWORK-PROMPT.md",
+          "docs/implementation/tasks/MC-002-BE-C01.md",
+          "docs/implementation/tasks/MC-002.md",
+          "docs/testing/step-02-c01-intake/opencode-evidence-input-manifest.json",
+          "docs/testing/step-02-c01-intake/opencode-evidence-input.txt.gz",
+          "docs/testing/step-02-c01-intake/owner-event-selection.json",
+          "docs/testing/step-02-c01-intake/owner-terminal-and-fault-events.jsonl",
+          "docs/testing/step-02-c01-verification.md"
+        ]
+      },
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 60866,
+        "output": 2668,
+        "reasoning": 10495,
+        "cache": {
+          "read": 4352,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_16ef10b06001JxB1hD6etaDDro",
+      "time": {
+        "created": 1792862653190
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

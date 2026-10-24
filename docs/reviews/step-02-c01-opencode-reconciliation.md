@@ -1,0 +1,28 @@
+**Task MC-002-C01 — OpenCode independent packet-only reconciliation.** Agent identity: OpenCode role on GLM-5.3-Flash Free. I ran no tools, no shell, no file access, no hash recomputation; scope is exactly the supplied snapshots. No files created or modified.
+
+## E-01 — enumeration and arithmetic (CLOSED, reconciled)
+
+**Exact httpapi terminal file: 96 lines independently enumerated**, every line `Action:"pass"`, Package `github.com/example/userapi/internal/adapter/inbound/httpapi`, all within 00:05:43.88–00:05:44.59 +07:00 (inside the attestable run window). Named breakdown counted: 16 `TestToProblem_MappingRows` (parent+15 subtests), 6 `TestNewErrorHandler_UnavailableBodyAndProbes` (parent+5), 6 `TestContract_ServiceFailures` (parent+5), 6 `TestServiceUnavailable_MemoryParity` (parent+5... enumerated exactly), 12 `TestErrorResponses` (parent+11), 6 `TestClientIP_TrustedProxies` (parent+4 + 2 top-levels), 16 `TestRequestBody_OnlyJSONIsAccepted` (parent+15), 4 `TestRequestBody_BadRequestDetail` (parent+3), plus single-event tests — **96 named events, 0 fail, 0 named skip, no duplicates.**
+
+**Sum check:** the other 10 packages in `e01-reconciliation.json` recount to 10+2+84+10+14+6+15+3+20+18 = **182**. 96 + 182 = **278 = `named_total`** ✓. Raw and selected per-package tables are identical, both summing 278. My prior packet-based count of 89 httpapi / 271 total was short exactly those 7 httpapi events; the exact terminal file and the claimed 315-line selection both carry 96/278, so the retained-file record is internally coherent. The mechanism of the earlier 89 remains unknown: **packet-transmission truncation stays NOT_PROVEN and is not asserted.**
+
+**E-01 disposition: CLOSED.** Counts 96/278 verified against exact bytes; the 281→278-style correction is recorded as a reviewer-enumeration discrepancy against under-delivered packet bytes, superseded by `httpapi-terminal-exact.jsonl` as the file of record. No runtime replay needed (per prior verdict).
+
+## E-02 / E-04 — CLOSED as documentary qualifications
+
+- **E-02 (HTTP 57014):** current intake already states it: both PATCHes ≈3.001s with Echo-wrapped `context deadline exceeded` → 503; **HTTP 57014 = NOT_RUN**; 57014 proven only at PostgreSQL/unit level. I require no additional text beyond that correction; raw owner logs/report stay retained-unchanged and the corrected document governs. Any future HTTP-57014 claim needs a fresh bounded replay with capture-complete wrappers.
+- **E-04 (HTTP 42P01 / A8):** likewise closed documentary: composed mapping evidence (fresh-schema 42P01 observed, generic-error→500 tested); **no HTTP 42P01 sample exists**; the startup-guard "impossible" claim is withdrawn/qualified (post-startup schema drift can still reach HTTP). No additional text required.
+
+## E-03 — remains PENDING (unchanged)
+
+F1 (`map_error_test.go` cause-preservation subtest), F5 (`docs/api.md` 499 wording), F6 (rule-sentence replacement in `persistence.md`), then `make check` + `go test -race -json` on the new head with full argv/UTC/exit wrappers, followed by OpenCode review of the corrected head. **No NATIVE_PASS** until that completes. Not waived.
+
+## M1 source disposition — recorded
+
+Not confirmed; **NOT_REACHABLE_ON_CURRENT_ROUTES** stands as recorded: `toProblem` consults row-2 cancellation and the `DeadlineExceeded`/`ErrUnavailable` switch before the `echo.StatusCode`/`!probe` branch; `/healthz` returns nil; `/readyz` returns the bare unwrapped sentinel, which `ContextTimeout`'s default handler does not wrap, so the probe guard yields legacy bytes. Qualification retained: this depends on Echo v5 `HTTPError.Wrap` keeping the chain `Unwrap`-reachable (source not in packet), and probe-byte preservation is scoped to current probe handlers only — a future cause-returning `Ready` handler would render row 2/3 by design. **No owner change beyond F1/F5/F6.** F2/Echo-context adjudication remains Claude Code's, untouched.
+
+## Verdict and status
+
+**PASS_WITH_LIMITATIONS narrowed to closure:** E-01 CLOSED; E-02/E-04 CLOSED documentary; E-03 PENDING; M1 acknowledged as not requiring change. **Status stays IN_REVIEW / C01-NATIVE_NOT_YET_ACCEPTED / C01-PRODUCT_OPEN; R01, R02 CLOSED; MC-002 OPEN;** no Step 03 / integration / Cloudflare / cost closure; no approval invented.
+
+**Skipped:** everything (no tools/runtime/replay/hash: zero tool calls). **Remaining risk:** E03 corrected-head checks still outstanding; A3/A9 remain owner-attested composition; product cases A4/A5/A6/A11-product/A12/A14-policy/A15 and `retryAfter`/`Retry-After` decisions remain open.

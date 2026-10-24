@@ -28,3 +28,7 @@ OpenCode PASS_WITH_LIMITATIONS applies to native template characterization, with
 ## Focused recheck accepted
 
 Actual ZCode rerun supplies880 valid JSON events:205 named test/subtest pass,0fail/0namedskip,11 tested packages and5 package-level no-test skips;4 separate invalid-config/migrate argv/exit/output pairs close the missing evidence. Actual OpenCode session ses_e91610e71ffeC42yXslkK7ke8v returned PASS_WITH_LIMITATIONS with R01/R02 CLOSED. Source/binary unchanged, hashes verified by Codex; no replay by Codex/reviewer. This supersedes earlier R01/R02-rework labels above, without retroactively changing old nonverbose logs. C01 remains a future product-conformance obligation. [Closure](../reviews/step-02-backend-r01-r02-closure.md).
+
+## C01 source return at fd747ae
+
+Actual ZCode16-file change implements typed SQLSTATE-first unavailability and shared503mapping; source clean, baseline preserved. Codex checked artifacts and ran66focusednamedpass events/noDB. Actual Claude architecture review accepts production behavior/context deviation but withholds NATIVE_PASS pending F1test/F5docs/F6rule edits; [verbatim review](../reviews/step-02-c01-claude-implementation-review.md). Current state REWORK_REQUIRED/IN_REVIEW, no product conformance. [Intake](../reviews/step-02-c01-intake.md) distinguishes real57014test evidence from mislabelled HTTPdeadline logs. Independent OpenCode findings and owner correction remain separately tracked.

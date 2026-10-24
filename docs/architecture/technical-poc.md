@@ -45,3 +45,7 @@ Final R01/R02 artifact review closes both owner evidence gaps with PASS_WITH_LIM
 ## Step02.2 current gates
 
 [Remaining-gate matrix](../ai-sdlc/step-02-remaining-gates.md) distinguishes independently reviewed native backend/frontend and tiny tooling restore from unfinished product/runtime checks. R01/R02 remain CLOSED, no reruns. Actual Claude has authorized a narrowly scoped native C01 implementation envelope with SQLSTATE-first precedence and native-only retryAfter1; [contract](../testing/step-02-c01-verification.md), PREPARED / WAITING_MANUAL_DISPATCH to actual ZCode. No C01 code/tests yet. [Integration plan](../testing/step-02-integration-poc.md) remains PENDING for compatible scope/API/auth. Full transaction/object/access/recovery and exact Workers adapter/quota PoCs remain NOT_RUN. Current public docs are refreshed, not runtime proof.
+
+## C01 implementation return and corrective boundary
+
+Actual fd747ae owner source/test/runtime return is available; no longer merely prepared. Actual Claude CHANGES_REQUIRED before native acceptance, despite conforming production logic. [Intake](../reviews/step-02-c01-intake.md), [bounded test/doc correction handoff](../implementation/handoffs/MC-002-BE-C01-ZCODE-REWORK-PROMPT.md). Codex66focusednamedpasses were noDB checks; no runtime pool57014assertion is inferred from3sdeadline logs. POC-02-01 remains native-characterization scope, C01-NATIVE pending correctedhead/QA, full product/adapter/integration/recovery/cloud/cost gates unchanged.

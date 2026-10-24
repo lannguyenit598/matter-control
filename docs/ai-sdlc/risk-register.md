@@ -59,7 +59,7 @@ Manual Antigravity baseline ran despite the separate headless command-permission
 
 | ID | Evidence / unresolved risk | Impact | Owner | Required closure | State |
 |---|---|---|---|---|---|
-| R-029 | Actual template DB-down UserAPI500/about:blank vs MatterControl503 unavailable+retryAfter | High against future product conformance | ZCode / Claude / OpenCode | Step02.2 C01-NATIVE contract DISPATCH_READY from actual Claude: SQLSTATE-first typed classification, context cancellation precedence, both renderers; no blanket500 conversion | NATIVE_WAITING_MANUAL_DISPATCH / PRODUCT_OPEN; no implementation yet |
+| R-029 | Actual template DB-down UserAPI500/about:blank vs MatterControl503 unavailable+retryAfter | High against future product conformance | ZCode / Claude / OpenCode | Step02.2 C01-NATIVE contract DISPATCH_READY from actual Claude: SQLSTATE-first typed classification, context cancellation precedence, both renderers; no blanket500 conversion | NATIVE_REWORK_REQUIRED at fd747ae / PRODUCT_OPEN; F1/F5/F6 correction and new-head QA pending |
 | R-030 | Initial logs lacked per-test skips and paired invalid-config evidence; actual focused owner recheck now supplies both | Medium / Observed | ZCode / OpenCode | Codex18/18 export/hash/event checks; actual OpenCode R01/R02 PASS, closure report and exact packet retained | CLOSED_R01_R02_ONLY; no product-conformance waiver |
 
 One actual disposable test credential occurred in original migrate shell trace. Original exact task log and exported copy were sanitized after original-hash guard, no value exported to reviewers/Git; historical versus stored hashes retained. No global auth/credential change or resource deletion. Future fixtures must use new credentials and no tracing. Metadata package/run-count/SQL-label/health notes corrected; actual correction review verified M01..M05; R01/R02 remain open. Current read-only host inspection shows retained DB stopped and no API/DB listeners.
@@ -69,3 +69,7 @@ R01/R02 final closure supersedes earlier pending/rework descriptions in this rec
 ## Step02.2 current qualification
 
 R-030 remains CLOSED. Native frontend actual final recheck PASS_WITH_LIMITATIONS already resolved documentary findings; no new baseline rerun. R-028 remains OPEN: no Task/User alias or anonymous auth bypass; integration plan PENDING. R-027 tiny restore is verified tooling only, no cadence/full-product proof. Hyperdrive advisory-lock/session-state limitations and unverified driver/migration path add candidate-specific evidence to R-019, not a conclusion every topology is impossible. R-001/002/018/020/021 retain cloud/identity/retention/quota/cost gates. [Current matrix](step-02-remaining-gates.md).
+
+## C01 actual implementation intake — current
+
+R-029 remains OPEN: fd747ae production code returned; actual Claude says production conforms but requires F1cause-preservation regression, F5docs499wording and F6stale57014rule correction before native acceptance. Codex66focusednamedpasses/noDB is independent limited verification, not full QA or production proof. Owner HTTP pool labels claim4s57014 while actual logs show both3sdeadlines; [intake](../reviews/step-02-c01-intake.md) preserves raw bytes and qualifies claims. Native correction manual handoff prepared; PRODUCT_OPEN. R-030/R01/R02 stay CLOSED, R-028integration and R-027fullrecovery unchanged.
