@@ -189,3 +189,34 @@ For every row: specification task MC-001; Architecture = [Claude handoff](../arc
 JTBD cross-links: [JTBD register](../product/jtbd.md) includes additional FR relationships beyond each FR primary BR above. P1/P2 remain deferred with original IDs; no new implementation task is implied. RULE-to-OBD authority is defined in business-rules.md and open-business-decisions.md.
 
 Workflow AC-161..163 are cross-JTBD acceptance for BR-001..007 / JTBD-01..07. For each workflow, capture a checkpoint at each named stage: accepted mutation/state/proof → history → Grid/Control Room → scoped delta/export; attribute failures to the corresponding FR, rather than report only one overall screen PASS.
+
+## Step 02 architecture chain — MC-002
+
+This table supersedes the historical PENDING_STEP_02 placeholders above for artifact availability only. Actual Claude Code authored the candidate; actual OpenCode round1 returned CHANGES_REQUIRED (5High/9Medium). All mappings remain **REWORK_REQUIRED / NOT_APPROVED** until correction and independent re-review. [Execution](../reviews/step-02-execution.md), [review](../reviews/step-02-review.md), [PoC ledger](../architecture/technical-poc.md). No implementation tasks or product/runtime acceptance are created by this mapping.
+
+| FR / P0 capability | Claude candidate architecture | Acceptance / validation handoff |
+|---|---|---|
+| FR-001 / P0-01 | [Typed contexts](../architecture/domain-model.md), [data](../architecture/data-model.md) | AC-101/121/159; ZCode contract tests, NOT_RUN |
+| FR-002 / P0-02 | [Milestone/dependency engine](../architecture/dependency-engine.md) | AC-102/141; multi-prerequisite and re-block checks, NOT_RUN |
+| FR-003 / P0-03 | [Read models](../architecture/system-architecture.md), [state](../architecture/state-machine.md) | AC-103/144; scoped available actions, NOT_RUN |
+| FR-004 / P0-04 | [Domain](../architecture/domain-model.md), [filings](../architecture/filing-model.md) | AC-104/130; waiting context vs completion, NOT_RUN |
+| FR-005 / P0-05 | [Dependency engine](../architecture/dependency-engine.md), [transaction ADR](../architecture/adr/ADR-002-transaction-and-concurrency.md) | AC-105/122..125/146; POC-02-04, NOT_RUN |
+| FR-006 / P0-06 | [Evidence model](../architecture/evidence-model.md) | AC-106/127; M:N claim and criterion scope, NOT_RUN |
+| FR-007 / P0-07 | [Evidence](../architecture/evidence-model.md), [security](../architecture/security-architecture.md) | AC-107/121/126/127/140; expiry/verdict/self-verification, NOT_RUN |
+| FR-008 / P0-08 | [Data/history](../architecture/data-model.md), [API receipts](../architecture/api-contracts.md) | AC-108/136/149/153; POC-02-04/07, NOT_RUN |
+| FR-009 / P0-09 | [System views](../architecture/system-architecture.md), [frontend ADR](../architecture/adr/ADR-003-frontend-runtime.md) | AC-109/137; POC-02-03/06 and later UX test, NOT_RUN |
+| FR-010 / P0-10 | [State selectors](../architecture/state-machine.md), [access](../architecture/security-architecture.md) | AC-110/144/147; cross-user scoping, NOT_RUN |
+| FR-011 / P0-11 | [API revisions](../architecture/api-contracts.md), [frontend ADR](../architecture/adr/ADR-003-frontend-runtime.md) | AC-111/139/150; POC-02-03/04, NOT_RUN |
+| FR-012 / P0-12 | [Bulk contracts](../architecture/api-contracts.md) | AC-112/133/139; preview binding and partial results, NOT_RUN |
+| FR-013 / P0-13 | [Import contracts](../architecture/api-contracts.md), [data](../architecture/data-model.md) | AC-113/131/132/148; atomic connected groups/retry, NOT_RUN |
+| FR-014 / P0-14 | [Export/API](../architecture/api-contracts.md), [security](../architecture/security-architecture.md) | AC-114/147/148; POC-02-05, NOT_RUN |
+| FR-015 / P0-15 | [Document lineage](../architecture/document-lineage.md) | AC-115/128; explicit promotion/current rights, POC-02-05, NOT_RUN |
+| FR-016 / P0-16 | [Filing cycles](../architecture/filing-model.md) | AC-116/129/145; reopen/negative outcomes/new proof, NOT_RUN |
+| FR-017 / P0-17 | [Typed external context](../architecture/domain-model.md) | AC-117/130; cross-Matter references rejected, NOT_RUN |
+| FR-018 / P0-18 | [Security](../architecture/security-architecture.md), [data](../architecture/data-model.md) | AC-118/134/135/140/147/149/158; effective owner/revocation, NOT_RUN |
+| FR-019 / P0-19 | [Deterministic brief](../architecture/system-architecture.md), [history](../architecture/data-model.md) | AC-119/138; recorded/effective time interpretation still gated, NOT_RUN |
+| FR-020 / P0-20 | [Five axes](../architecture/state-machine.md), [dependencies](../architecture/dependency-engine.md) | AC-120/121/139/142/143/160; boundary/invalid-transition checks, NOT_RUN |
+
+The full capability IDs in this table are REQ-MC-P0-01..20, unchanged. NFR-001/002/004/005/012/013 map to security, data and transaction contracts; NFR-003/009 to API/retry/bulk contracts; NFR-006/008 to system/runtime ADRs, [Cloudflare feasibility](../architecture/cloudflare-feasibility.md), [full budget](../deployment/free-tier-budget.md) and POC-02-06; NFR-007/010/011 to state/API time semantics plus later owner frontend/UX validation; NFR-014 to POC-02-07 and provider/retention/RPO/RTO approval. All runtime NFR evidence remains NOT_RUN. AC-161/162/163 span the same design files; their per-stage integration ownership is under architecture rework F-13 and must be independently re-reviewed.
+
+Step02 §6 invariant coverage: axes1..5 → state-machine; dependency satisfaction/propagation/cycles6..8 → dependency-engine; proof lifecycle/M:N9..10 → evidence-model; lineage11 → document-lineage; filings12 → filing-model; history/brief13..14 → data-model/system-architecture; bulk/import/export15..16 → api-contracts; authorization/concurrency/audit17..19 → security-architecture/data-model/ADR-002; P1/P2 extension20 → domain-model/system-architecture. This is a document location map, not proof the candidate satisfies those invariants. Review defects, owner audits, PoCs and PO approvals remain gates; Step03 is NOT_READY.

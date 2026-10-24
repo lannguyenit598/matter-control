@@ -1,8 +1,8 @@
 # Project Status Dashboard
 
-As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-001](../implementation/tasks/MC-001.md), authorized by [Step 01](step-01-request.md).
+As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md). Step01 closure remains recorded.
 
-**Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: READY_FOR_ASSIGNMENT / NOT_AUTHORIZED_TO_START / NOT_DISPATCHED.**
+**Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: REWORK_REQUIRED / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
 
 | Area | Current state | Evidence / next gate |
 |---|---|---|
@@ -15,9 +15,9 @@ As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-001](../imple
 | UX | Requirements specified; no UI created | Control Room/Grid, 50–200 rows, ~10-second comprehension target not proven |
 | Open decisions | OBD-02..08/10/11 approved B (OBD-08 B/B); OBD-01 previously resolved | DEC-016/017; numeric workload/retention/RPO/RTO explicitly deferred to Step 02; feasibility remains UNVERIFIED |
 | Step 01 independent testability review | PASS, round 2 | Actual OpenCode opencode/big-pickle review; all 10 findings resolved; exact hashes and returned reports in REV-01 |
-| Architecture handoff | READY_FOR_ASSIGNMENT / NOT_DISPATCHED | Claude Code retains Step 02 ownership; no architecture designed/dispatched |
+| Architecture execution | AUTHORED / REWORK_REQUIRED | Actual Claude15-file candidate received; actual OpenCode round1 CHANGES_REQUIRED (5High/9Medium); correction dispatched after named-packet approval |
 | Infrastructure | UNVERIFIED | Go/Echo/PostgreSQL/Cloudflare Free Tier and $0 workload envelope unresolved; no substitution |
-| Product code / runtime tests / design / deployment | NOT_STARTED | Explicit Step 01 stop condition |
+| Full product implementation / high-fidelity UI / production deployment | NOT_STARTED / NOT_AUTHORIZED | Explicit Step02 stop; technical PoCs follow architecture direction |
 | Git | Local Markdown artifacts only | No push/PR; exact revision in commit history |
 
 ## Step 01 quality gate
@@ -38,4 +38,10 @@ As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-001](../imple
 
 Step 00A twelve exit criteria passed at 20f12fe; its structural/semantic report remains historical evidence. Actual independent baseline review now supports MC-00A closure only, not new Step 01 rule approval. MC-000 bootstrap governance still IN_REVIEW.
 
-Product Requirements Approval Gate passed by explicit human answers on 2026-10-24; [approval and closure](step-01-approval.md), DEC-016/017. MC-001 DONE covers documentation only. Current stop is awaiting a separate Step 02 assignment; do not auto-start architecture, coding, UI or deployment. Numeric workload/retention/RPO/RTO deferral is approved; values/feasibility and downstream release evidence remain open. Original A/B archival is not a gate.
+Product Requirements Approval Gate passed by explicit human answers on 2026-10-24; [approval and closure](step-01-approval.md), DEC-016/017. MC-001 DONE covers documentation only. Step02 is explicitly assigned by the current directive; stop at Architecture Approval Gate. No automatic full implementation, Step03/UI or production deploy. Numeric workload/retention/RPO/RTO deferral is approved; values/feasibility and downstream release evidence remain open. Original A/B archival is not a gate.
+
+## Step 02 live execution
+
+Step01 gate VERIFIED PASS at 54e1db5 with DEC-016/017. Actual Claude Code2.1.309 / claude-opus-5-5 returned15 candidate architecture files (exit0, session1c8baae5-6a1d-41b4-8167-9df678811b4c). Actual OpenCode2.1.4 / opencode/big-pickle independently reviewed the authorized30-file packet (exit0, sessions e929198d8ffeFwkVV16SNbAFYR) and returned CHANGES_REQUIRED:5High,9Medium,noCritical. MC-002 is REWORK_REQUIRED; Claude correction packet32 snapshots/366547 bytes was specifically approved by PO and dispatched; result pending. [Execution](../reviews/step-02-execution.md), [review](../reviews/step-02-review.md).
+
+Codex source inventory pins Go/Next template SHAs; owner audits are ZCode ATTEMPT_FAILED / WAITING_FOR_ZCODE and Antigravity PREPARED / WAITING_FOR_ANTIGRAVITY. Cloudflare and additional provider evidence leave native Go/PostgreSQL hosting, frontend runtime, identity, storage, workload and recovery unresolved. No $0 deployment claim, PoC, build or restore result. Tooling/CI plans remain documents. Architecture Approval Gate NOT_PASSED; Step03 NOT_READY and not started.

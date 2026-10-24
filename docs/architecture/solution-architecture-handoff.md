@@ -1,6 +1,6 @@
 # Solution Architecture Handoff — Step 02
 
-Sender/requirements owner: Codex — BA/PM. Receiver: **Claude Code — Solution Architect**. Status: **READY_FOR_ASSIGNMENT / NOT_AUTHORIZED_TO_START / NOT_DISPATCHED**. Requirements subject `572835a21bda764901a11aaea3c06b88750b2883`; baseline `20f12fe`. Pin this requirements commit plus the approval-record commit before any separately authorized Step 02 work. No architecture work authorized by this packet alone.
+Sender/requirements owner: Codex — BA/PM. Receiver: **Claude Code — Solution Architect**. Status: **DISPATCHED / RESPONSE_PENDING**, MC-002 under the explicit [Step 02 request](../ai-sdlc/step-02-request.md). Requirements subject `572835a21bda764901a11aaea3c06b88750b2883`; baseline `20f12fe`. Pin this requirements commit plus the approval-record commit before any separately authorized Step 02 work. Architecture is now authorized by the Step 02 directive; only actual Claude Code is the architect.
 
 ## Authority and inputs
 
@@ -38,4 +38,4 @@ Open inputs: tenant/matter/user/concurrency envelope; document sizes/version gro
 
 When Step 02 is explicitly assigned: acknowledge task, tool identity, exact input revision, PO decision status and allowed paths. Return requirement-linked alternatives, feasibility evidence, architecture/API/data/security contracts and ADRs for material decisions. Identify unresolved conflicts and affected FR/NFR/AC; do not silently lower P0, erase guard conditions or infer legal sufficiency. Human approves architecture/cost trade-offs. OpenDesign designs detailed UX at Step 03. ZCode/Antigravity implement only later approved contracts; OpenCode independently validates.
 
-Current deliverable is an input packet, not schema, hosting topology, chosen service, deployed architecture or external handoff acknowledgement. Step 02 readiness: **READY_FOR_ASSIGNMENT / NOT_AUTHORIZED_TO_START / NOT_DISPATCHED**. Product Requirements Approval Gate passed; independent review findings resolved. Separate Step 02 assignment is still required.
+This remains the approved requirements input handoff. Actual Claude has returned a candidate architecture, linked in system-architecture.md; actual OpenCode round1 returned CHANGES_REQUIRED. MC-002 is REWORK_REQUIRED and Claude correction is dispatched. No hosting topology/provider/cost approval or deployed architecture is inferred. Product Requirements Approval Gate passed; architecture/cost approvals and runtime validation remain separate. See ../reviews/step-02-execution.md and ../reviews/step-02-review.md.

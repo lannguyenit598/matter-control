@@ -24,3 +24,19 @@ Scale: impact/probability = High/Medium/Low; priority is qualitative until workl
 | R-018 | Retention, recovery, workload and latency/SLA budgets unspecified | High / Confirmed | PO + Codex + Claude | DEC-017 explicitly defers numeric workload/retention/RPO/RTO; OBD-09/10/11 measurements and lifecycle details remain gated before commitments/release | OPEN downstream validation |
 
 No residual risk has been silently accepted. Unknown probability is not low probability. Tool readiness, architecture/cost feasibility and independent review risks remain open for their respective gates; none blocks starting Step 01 business analysis. Original A/B comparison remains unperformed and optional; approved prompt context is the valid baseline.
+
+## Step 02 directly observed risks
+
+| ID | Evidence / unresolved risk | Impact | Owner | Required closure | State |
+|---|---|---|---|---|---|
+| R-019 | Pinned Go template is native net/http/Echo/pgx; no Worker entrypoint or verified native origin/provider | High | Claude architecture / Codex cloud / ZCode runtime | Proposed runtime ADR, PO major trade-off if constraints conflict, actual candidate PoC and full service budget | OPEN architecture gate |
+| R-020 | Template backend has no auth; frontend resolver is integration stub and shared-token fallback cannot establish per-user Matter identity | High | Claude security / owner engineers / OpenCode | Identity/authorization architecture, no shared-principal bypass, revocation and indirect-access negative tests | OPEN; template capability gap, not production incident |
+| R-021 | Next16.4.2 cache/partial-prefetch/server behavior has no verified Cloudflare adapter; live guide recommends vinext beta | High | Claude / Antigravity / Codex | Version-pinned candidate decision and real build/runtime/feature tests without dropping approved behavior | OPEN compatibility gate |
+| R-022 | ZCode audit exits1 on missing provider config; Antigravity direct agent execution not verified | Medium | Codex + respective owners | Structured handoff and actual returned owner reports; no config/auth bypass or impersonation | OPEN owner validation gate |
+
+Step02 source/feasibility evidence does not close R-001/002/005/006/017/018 runtime, cost or lifecycle gates. Step01 approval remains valid; numeric deferral did not invent workload/recovery targets. Original independent review is revision-scoped. No paid/production action or template mutation has occurred.
+
+| ID | Evidence / unresolved risk | Impact | Owner | Required closure | State |
+|---|---|---|---|---|---|
+| R-023 | Actual OpenCode round1 found5High/9Medium defects in candidate FK scope, receipt authorization/unknown outcomes, Filing reopen proof, typed graph totality and read consistency | High | Claude Code / OpenCode | Targeted architecture correction, finding-by-finding disposition and independent re-review; preserve approved RULE-003 | REWORK_REQUIRED |
+| R-024 | Codex additionally found temporal boundary/milestone/verdict/discriminator/effective-owner and provenance inconsistencies | High | Claude Code / Codex / OpenCode | Correct normative contracts and reporting; exact manifests, not invented hash examples; no unsupported runtime claim | REWORK_REQUIRED |

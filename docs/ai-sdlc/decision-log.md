@@ -27,3 +27,13 @@ APPROVED_INPUT is evidence from the supplied request, not an approval of all gen
 |---|---|---|---|---|---|
 | DEC-016 | 2026-10-24 | Approve all recommendation B choices for OBD-02..08/10/11 (OBD-08 B/B), exact subject 572835a | Human Product Owner | APPROVED / RECORDED | [Direct human answer and scope](step-01-approval.md); MC-001 DONE / Step 01 COMPLETED; no behavioral edits, no Step 02 start |
 | DEC-017 | 2026-10-24 | Defer numeric workload, retention period and RPO/RTO to Step 02 feasibility | Human Product Owner | DEFERRAL_APPROVED / VALUES_PENDING | [Direct human answer](step-01-approval.md); values require approval before commitments/release; no cost/stack/retention/lifecycle guarantee |
+
+## Step 02 assignment and packet authorization
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| DEC-018 | 2026-10-24 | Start Step02 with Claude architect, Codex cloud/orchestration, external owner audits and independent QA; stop Architecture Approval Gate | Human Product Owner | APPROVED_ASSIGNMENT | step-02-request.md; approved constraints retained; no production/Step03/full implementation |
+| DEC-019 | 2026-10-24 | Send exact prepared162-snapshot (~795KB) Step02 packet to Claude Code/Anthropic | Human Product Owner | APPROVED_NAMED_PACKET_EGRESS | Direct reply “Cho phép gửi packet Step 02 này tới Claude Code/Anthropic”; step-02-input-manifest.json; all tools/MCP disabled; initial automatic egress rejection resolved |
+
+| DEC-020 | 2026-10-24 | Send named30-snapshot (~338KB) Step02 architecture review packet through configured OpenCode provider | Human Product Owner | APPROVED_NAMED_PACKET_EGRESS | Direct reply “Cho phép gửi packet review Step 02 này qua OpenCode”; actual round1 CHANGES_REQUIRED; tools denied |
+| DEC-021 | 2026-10-24 | Send prepared32-snapshot (~367KB) Step02 correction packet to Claude Code/Anthropic | Human Product Owner | APPROVED_NAMED_PACKET_EGRESS | Direct reply “Cho phép gửi packet sửa Step 02 này tới Claude Code/Anthropic”; hash527f5378…f87db53; initial new-payload auto-review rejection resolved; tools/MCP disabled |
