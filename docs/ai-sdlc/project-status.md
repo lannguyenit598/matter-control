@@ -8,7 +8,7 @@ As of 2026-10-24, Asia/Ho_Chi_Minh. Owner: Codex.
 |---|---|---|
 | Product positioning | APPROVED_INPUT; discovery closed | Product baseline + original request |
 | Governance artifacts | Prepared, awaiting Human review | REV-00 |
-| Local Git source of truth | Initialized; local baseline only | Git history; no remote configured |
+| Local Git source of truth | Committed locally; branch/worktree isolation tested | Git history + DOC-05; no remote configured |
 | Agent instructions | Root AGENTS.md and CLAUDE.md prepared | Format sources in capability matrix; loaders untested |
 | External agent task round trips | 0 successful | Claude auth failure; ZCode provider failure; other routes unverified/blocked |
 | OpenDesign | BLOCKED | Invalid arm64 signature; MCP absent |

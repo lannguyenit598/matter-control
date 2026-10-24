@@ -124,4 +124,4 @@ Context7 resolve-library-id preceded query-docs for Claude Code, OpenCode, Antig
 
 External agent task attempts: Claude Code and ZCode, both failed before a workspace read result. OpenCode help/version succeeded only with isolated XDG directories. No external agent completed a task; no API/MCP route was promoted to production-ready orchestration.
 
-No new integrations installed, no global config edited, no cloud/account permissions changed, no credential files read/exported and no production action taken. Bounded subprocess probes are actual CLI attempts, not successful handoffs. Raw private agent logs were not copied into the repository.
+No new integrations installed, no global config edited, no cloud/account permissions changed and no production action taken. Codex did not inspect or export credential-file contents; the existing CLI authentication mechanisms were left unchanged. Bounded subprocess probes are actual CLI attempts, not successful handoffs. Raw private agent logs were not copied into the repository.
