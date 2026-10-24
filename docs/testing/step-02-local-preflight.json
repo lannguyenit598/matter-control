@@ -1,0 +1,128 @@
+{
+  "task_id": "MC-002-CLOUD",
+  "kind": "READ_ONLY_LOCAL_PREFLIGHT",
+  "authority": "DEC-023 H5 local; not owner audit or product PoC",
+  "checked_at_utc": "2026-10-24T13:58:24.346953+00:00",
+  "invocations": [
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "Docker version 29.8.2, build 7fc2dff",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "docker",
+        "compose",
+        "version",
+        "--short"
+      ],
+      "exit_code": 0,
+      "stdout": "5.6.0",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "go",
+        "version"
+      ],
+      "exit_code": 0,
+      "stdout": "go version go1.27.3 darwin/arm64",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "node",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "v24.22.1",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "12.11.2",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "docker",
+        "context",
+        "inspect",
+        "--format",
+        "{{json .Endpoints.docker.Host}}"
+      ],
+      "exit_code": 0,
+      "stdout": "\"unix:///Users/nguyenvanlan/.docker/run/docker.sock\"",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "version",
+        "--format",
+        "{{json .Server.Version}}"
+      ],
+      "exit_code": 0,
+      "stdout": "\"29.8.2\"",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "info",
+        "--format",
+        "{\"ServerVersion\":{{json .ServerVersion}},\"NCPU\":{{json .NCPU}},\"MemTotal\":{{json .MemTotal}},\"OSType\":{{json .OSType}},\"Architecture\":{{json .Architecture}}}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ServerVersion\":\"29.8.2\",\"NCPU\":10,\"MemTotal\":8319504384,\"OSType\":\"linux\",\"Architecture\":\"aarch64\"}",
+      "stderr": ""
+    }
+  ],
+  "paths": {
+    "docker": "/usr/local/bin/docker",
+    "go": "/opt/homebrew/bin/go",
+    "node": "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node",
+    "pnpm": "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/pnpm",
+    "psql": null,
+    "wrangler": null
+  },
+  "socket_exists": true,
+  "socket_is_socket": true,
+  "daemon_status": "REACHABLE",
+  "mutations": "NONE: no app launch, context change, container/image/volume/network creation, DB connection, source edit, dependency install or cloud call",
+  "poc_result": "NOT_RUN",
+  "environment": "Host read-only probe after sandbox socket permission failure; no daemon restart or permission/configuration repair",
+  "documentation_sources": [
+    "https://github.com/docker/cli/blob/master/docs/reference/commandline/context_inspect.md",
+    "https://github.com/docker/cli/blob/master/docs/reference/commandline/docker.md"
+  ],
+  "scope_note": "Context7 /docker/cli resolved and queried before probe. Explicit local unix endpoint pinned for daemon queries; no remote context contacted. Allocated CPU/memory is not free capacity or application benchmark."
+}

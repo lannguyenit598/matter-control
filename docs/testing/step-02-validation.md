@@ -54,3 +54,9 @@ ZCode earlier packaged plan audit failed missing provider config; later both own
 ## Gate outcome
 
 MC-002 **WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED / NOT_DONE**. Architecture documents have independent PASS, but owner audits, required PoCs, major decisions and deployment/cost/recovery evidence remain open. Runtime product ACs remain NOT_RUN. Stop at Architecture Approval Gate; Step03 NOT_READY. Numeric receipt condition and reporting qualifications are recorded in the Codex-owned budget/approval/review records; original agent reports remain preserved.
+
+## H5 continuation checks — after DEC-023..025
+
+PO explicitly approved H5, W1 measurement inputs, local RPO24h/RTO8h test targets and ARCH-Q3/Q5. [Decision record](../ai-sdlc/step-02-local-approval.md). These close those decision prerequisites only; earlier pending labels are historical for this subset. Remaining deployment/policy approval gates are not closed.
+
+Read-only local preflight: sandbox failed Docker socket access; host probe of the same explicitly local Unix endpoint succeeded without configuration/permission repair. Docker/Compose/Go/Node/pnpm versions and selected daemon CPU/memory/architecture are recorded in [JSON evidence](step-02-local-preflight.json). All host probe commands exit0. No owner app rerun, container/image/network/volume created, DB connected, migration/build/test/PoC or cloud action. Architecture15 hashes still equal the independently reviewed subject. Static continuation checks cover approval links/status and protected files, not runtime behavior.

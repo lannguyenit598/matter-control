@@ -1,6 +1,8 @@
 # Step 02 Architecture Approval Packet — Pending
 
-Owner: Codex orchestration/cloud; architecture author: actual Claude Code. Requirements subject572835a, PO approval54e1db5, task MC-002. **No decision in this packet is approved.** Independent review round1 CHANGES_REQUIRED was corrected; actual OpenCode round2 and final targeted review returned PASS_DOCUMENT_ONLY. [Final report](../reviews/step-02-opencode-final-result.md), [disposition](../reviews/step-02-review.md). Step02 is not DONE, and Step03 is not authorized by approving an individual item here.
+**Current partial decision record:** PO has approved H5 local validation, W1 local measurement/restore targets and ARCH-Q3/Q5 under DEC-023..025. [Exact approved scope and remaining gates](step-02-local-approval.md). Proposal wording below is preserved as the decision subject; it is superseded only for those named items. Overall architecture/deployment and other options remain unapproved.
+
+Owner: Codex orchestration/cloud; architecture author: actual Claude Code. Requirements subject572835a, PO approval54e1db5, task MC-002. **Partial decisions recorded above; no blanket architecture approval.** Independent review round1 CHANGES_REQUIRED was corrected; actual OpenCode round2 and final targeted review returned PASS_DOCUMENT_ONLY. [Final report](../reviews/step-02-opencode-final-result.md), [disposition](../reviews/step-02-review.md). Step02 is not DONE, and Step03 is not authorized by approving an individual item here.
 
 ## 1. Logical candidate
 

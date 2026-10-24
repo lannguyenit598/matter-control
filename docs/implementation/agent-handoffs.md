@@ -34,3 +34,7 @@ Task MC-002-FE. Owner Antigravity. Input repository https://github.com/lannguyen
 ## OpenCode verification contract
 
 Review actual returned architecture and Codex feasibility/source evidence against approved FR/RULE/AC. Check domain invariants, concurrency/cycle/expiry/audit/revocation, M:N criterion/evidence links, version/filing lineage, deterministic history, API/data/security, hosting/cost claims and test reproducibility. Return severity with exact evidence, owner, impact, correction and PASS/CHANGES_REQUIRED/BLOCKED. Do not approve PO trade-offs or run unapproved cloud actions. PoC smoke/runtime validation occurs only when a candidate and safe environment exist. Preserve raw report and manifest.
+
+## H5 continuation — decisions recorded, owner execution still blocked
+
+DEC-023..025 approve H5 local technical validation, W1/local restore targets and ARCH-Q3/Q5. [Approval](../ai-sdlc/step-02-local-approval.md). Codex checked local Docker/Compose/toolchain reachability read-only; [actual commands/output](../testing/step-02-local-preflight.json). No container/database created and no owner build/audit/PoC run. Existing signature failures remain the last integrity evidence; no app recheck or execution without evidence of an official reinstall. Owner handoffs are prepared and conditional on that verification, including the GUI fallback described above.

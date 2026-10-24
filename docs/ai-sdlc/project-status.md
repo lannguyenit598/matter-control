@@ -15,8 +15,8 @@ As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002](../imple
 | UX | Requirements specified; no UI created | Control Room/Grid, 50–200 rows, ~10-second comprehension target not proven |
 | Open decisions | OBD-02..08/10/11 approved B (OBD-08 B/B); OBD-01 previously resolved | DEC-016/017; numeric workload/retention/RPO/RTO explicitly deferred to Step 02; feasibility remains UNVERIFIED |
 | Step 01 independent testability review | PASS, round 2 | Actual OpenCode opencode/big-pickle review; all 10 findings resolved; exact hashes and returned reports in REV-01 |
-| Architecture execution | AUTHORED / IN_REVIEW | Actual Claude15-file candidate received; actual OpenCode round1 CHANGES_REQUIRED (5High/9Medium); 134 corrections applied; authorized OpenCode round2 dispatched |
-| Infrastructure | UNVERIFIED | Go/Echo/PostgreSQL/Cloudflare Free Tier and $0 workload envelope unresolved; no substitution |
+| Architecture execution | AUTHORED / CORRECTED / DOCUMENT_REVIEW_PASS | Actual Claude15-file candidate,134+30 corrections; actual OpenCode round2/final PASS_DOCUMENT_ONLY; exact final manifests; overall PO architecture approval remains pending |
+| Infrastructure | H5_LOCAL_APPROVED / DEPLOYMENT_UNVERIFIED | DEC-023..025: H5 and W1/restore local targets approved, ARCH-Q3/Q5 accepted; Docker local reachable; owner-tool gates remain |
 | Full product implementation / high-fidelity UI / production deployment | NOT_STARTED / NOT_AUTHORIZED | Explicit Step02 stop; technical PoCs follow architecture direction |
 | Git | Local documentation and evidence manifests | No push/PR; exact revision in commit history |
 
@@ -46,3 +46,9 @@ Product Requirements Approval Gate passed by explicit human answers on 2026-10-2
 Step01 gate VERIFIED PASS at54e1db5, approved behavior572835a, DEC-016/017. Actual Claude Code2.1.309 / claude-opus-5-5 authored15 architecture files and returned134+30 exact replacements. Actual OpenCode2.1.4 round1 (opencode/big-pickle) returned CHANGES_REQUIRED, followed by round2 and final (opencode/glm-5.3-flash-free) PASS_DOCUMENT_ONLY. Final session ses_e92505488ffe3ySTAWXz7qxG2c exit0; no High/Medium reported;2Low notes dispositioned in [review](../reviews/step-02-review.md). Models come from exported metadata; Codex made no model/provider/global setting change. [Delivery report](../reviews/step-02-delivery.md), [execution](../reviews/step-02-execution.md), [concrete approval packet](step-02-approval-packet.md).
 
 ZCode and Antigravity both fail deep/strict arm64 app-signature verification and are BLOCKED_TOOL_INTEGRITY until official reinstall verifies. No GUI launch/repair/bypass; owner audits and critical PoCs remain NOT_RUN. Codex source inventory is not owner execution. Hosting/native Go/PostgreSQL, exact frontend runtime, identity, object storage, workload/retention/recovery and interpretation choices remain gated; no complete $0 deployment has been verified. MC-002 WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED, NOT_DONE. Step03 NOT_READY / NOT_STARTED. No product implementation, production deploy, cloud/account/billing mutation or template change.
+
+## Step 02 PO continuation — local validation approved
+
+Direct PO answers on2026-10-24 approve H5 local technical validation, W1 measurement envelope, local RPO24h/RTO8h exercise targets and ARCH-Q3/Q5 interpretations (DEC-023..025). [Exact approval](step-02-local-approval.md). Do not re-request these approvals. Hosting, provider, adapter, identity, storage, retention, import/export demand and production commitments remain open; this is not blanket architecture approval or Step02 closure.
+
+Codex read-only local preflight: Docker Engine29.8.2 reachable through the selected local Unix socket, Compose5.6.0, Linux/aarch64,10 allocated CPUs and8319504384 allocated memory bytes; Go1.27.3, Node24.22.1, pnpm12.11.2. [Commands and outputs](../testing/step-02-local-preflight.json). No container/DB/volume/network created; no owner app rerun, dependency install, cloud call, build or PoC. Owner-tool integrity remains blocked from the last verified signature failures; no official reinstall has been reported.

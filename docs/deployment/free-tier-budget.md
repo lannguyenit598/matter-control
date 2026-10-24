@@ -1,6 +1,6 @@
 # Free Tier Budget and Workload Gate — Step 02
 
-Owner: Codex. Date: 2026-10-24. Status: **UNVERIFIED / NO_APPROVED_WORKLOAD_OR_FULL_SERVICE_BILL**. $0/month is a goal conditional on complete service inventory, quotas, measured demand and account eligibility. DEC-017 allowed deferral, not approval of unspecified values. No subscription/account/budget was changed.
+Owner: Codex. Date: 2026-10-24. Status: **DEPLOYMENT_UNVERIFIED / W1_LOCAL_TARGETS_APPROVED / NO_FULL_SERVICE_BILL**. $0/month is a goal conditional on complete service inventory, quotas, measured demand and account eligibility. DEC-017 allowed deferral, not approval of unspecified values. No subscription/account/budget was changed.
 
 ## Dated public allowances
 
@@ -22,16 +22,16 @@ When Workers Caching is enabled, current Workers pricing can charge cache-served
 
 ## Workload inputs to resolve in this step
 
-No counts are silently selected. PO and Claude/Codex must validate the following before a $0 or performance claim; technical preparation can continue without inventing them.
+DEC-024 explicitly approves the W1 local measurement envelope and RPO24h/RTO8h local restore targets; exact scope is in ../ai-sdlc/step-02-local-approval.md. Values are test inputs, not measured capacity or production targets. Remaining quantities below still need definition/measurement before any $0 or performance claim.
 
 | Dimension | Required quantities / evidence | Current state |
 |---|---|---|
-| Tenancy / activity | Workspaces, active matters/users, simultaneous users, peak/day requests including SSR/API/actions/polling, shared-account background usage | NOT_DEFINED |
-| Legal graph | Rows per Matter and total, edge density/depth, worst-case fan-out/reopen/expiry work, concurrent writers | Only approved 50–200-row UX target; not total capacity |
+| Tenancy / activity | Workspaces, active matters/users, simultaneous users, peak/day requests including SSR/API/actions/polling, shared-account background usage | W1 local envelope approved; daily/peak request rates undefined |
+| Legal graph | Rows per Matter and total, edge density/depth, worst-case fan-out/reopen/expiry work, concurrent writers | W1 local ≤300 records/Matter approved; graph density/depth/fan-out still undefined |
 | Persistence | Statement/row counts, transactions, indexes, idempotency and history growth, DB host limits/sleep/connectivity | UNMEASURED; provider absent |
 | Documents | Version count, mean/max bytes, churn, staging/orphan data, approved retention/hold, backup copies | RETENTION_VALUES_DEFERRED; no deletion to force budget |
 | Imports / exports | Frequency, rows/file and compressed/uncompressed byte ceilings, CPU/memory and retry amplification | UNMEASURED |
-| Recovery / availability | Approved RPO/RTO, backup destination/keys/copies, restore duration/data-loss measurements, support expectations | VALUES_DEFERRED; no recovery PASS |
+| Recovery / availability | Approved RPO/RTO, backup destination/keys/copies, restore duration/data-loss measurements, support expectations | Local RPO24h/RTO8h approved; production objectives/retention open, no recovery PASS |
 | Delivery / ancillary | Builds/minutes/artifact retention, domains, email/identity/monitoring/scanning, transfer and third-party spend | NO_COMPLETE_INVENTORY |
 
 ## Reproducible evaluation model

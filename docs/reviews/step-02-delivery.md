@@ -29,3 +29,7 @@ Protected25 product/requirements files unchanged, allowed paths, JSON, links, no
 Next status: **WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED**, never automatic DONE. [Concrete decision packet](../ai-sdlc/step-02-approval-packet.md) separates local validation strategy, hosting exceptions, workload/recovery targets and unresolved provider/interpretation choices. Official owner-app reinstall and successful signature verification are prerequisites to audit/PoC execution, independently of PO design acceptance.
 
 Skipped: product builds/tests, DDL execution, technical PoCs, Mermaid rendering, cloud/account/billing checks and deployment. Remaining risk: invalid owner-app signatures block execution; document consistency cannot prove runtime invariants, security, restore objectives or a $0 production system.
+
+## Continuation after PO decisions
+
+DEC-023..025 now approve H5 local, W1/local restore targets and ARCH-Q3/Q5; [exact scope](../ai-sdlc/step-02-local-approval.md). The prior pending statements apply only to decisions not covered there. Codex read-only infrastructure preflight confirms a reachable local Docker29.8.2 daemon and Compose5.6.0; [exact outputs](../testing/step-02-local-preflight.json). No product/owner/runtime PoC result is inferred. Current blocker remains official owner-tool integrity and actual owner audits/isolated PoCs; deployment/provider/retention and other remaining approvals stay open. MC-002 remains NOT_DONE; Step03 not started.
