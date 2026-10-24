@@ -38,5 +38,7 @@ Step02 source/feasibility evidence does not close R-001/002/005/006/017/018 runt
 
 | ID | Evidence / unresolved risk | Impact | Owner | Required closure | State |
 |---|---|---|---|---|---|
-| R-023 | Actual OpenCode round1 found5High/9Medium defects in candidate FK scope, receipt authorization/unknown outcomes, Filing reopen proof, typed graph totality and read consistency | High | Claude Code / OpenCode | Targeted architecture correction, finding-by-finding disposition and independent re-review; preserve approved RULE-003 | REWORK_REQUIRED |
-| R-024 | Codex additionally found temporal boundary/milestone/verdict/discriminator/effective-owner and provenance inconsistencies | High | Claude Code / Codex / OpenCode | Correct normative contracts and reporting; exact manifests, not invented hash examples; no unsupported runtime claim | REWORK_REQUIRED |
+| R-023 | Actual OpenCode round1 found5High/9Medium defects in candidate FK scope, receipt authorization/unknown outcomes, Filing reopen proof, typed graph totality and read consistency | High | Claude Code / OpenCode | Targeted architecture correction, finding-by-finding disposition and independent re-review; preserve approved RULE-003 | DOCUMENT_CORRECTED_AND_REVIEWED; runtime tests NOT_RUN |
+| R-024 | Codex additionally found temporal boundary/milestone/verdict/discriminator/effective-owner and provenance inconsistencies | High | Claude Code / Codex / OpenCode | Correct normative contracts and reporting; exact manifests, not invented hash examples; no unsupported runtime claim | DOCUMENT_CORRECTED_AND_REVIEWED; runtime tests NOT_RUN |
+
+| R-025 | Both ZCode.app and Antigravity.app fail deep/strict codesign verification on arm64 (exit1); GUI fallback unsafe | High | Human installer / respective vendors; Codex records evidence | Official reinstall, successful verification, actual owner acknowledgement and audit; no self-sign/permission bypass | BLOCKED_TOOL_INTEGRITY |

@@ -1,0 +1,67 @@
+{
+  "governance_base": "54e1db541157706dee9037b23f630faf59249c27",
+  "protected_files_unchanged": 25,
+  "changed_paths": 55,
+  "local_links_resolved": 174,
+  "allowed_paths": "PASS",
+  "json": "PASS",
+  "whitespace": "PASS",
+  "authored_markdown_table_columns": "PASS",
+  "verbatim_external_report_table_warnings": [
+    [
+      "docs/reviews/step-02-opencode-round2-result.md",
+      77,
+      4,
+      3
+    ],
+    [
+      "docs/reviews/step-02-opencode-round2-result.md",
+      78,
+      4,
+      3
+    ],
+    [
+      "docs/reviews/step-02-opencode-round2-result.md",
+      79,
+      4,
+      3
+    ],
+    [
+      "docs/reviews/step-02-opencode-round2-result.md",
+      80,
+      4,
+      3
+    ],
+    [
+      "docs/reviews/step-02-opencode-round2-result.md",
+      81,
+      4,
+      3
+    ],
+    [
+      "docs/reviews/step-02-opencode-round2-result.md",
+      82,
+      4,
+      3
+    ],
+    [
+      "docs/reviews/step-02-opencode-round2-result.md",
+      83,
+      4,
+      3
+    ]
+  ],
+  "code_fences": "PASS",
+  "rework_output_hashes": "PASS",
+  "P0_trace_rows": 20,
+  "architecture_runtime_invariants": "NOT_RUN; document review separate",
+  "build_DDL_PoC_restore_deploy": "NOT_RUN",
+  "Mermaid_rendering": "NOT_RUN",
+  "checked_at_utc": "2026-10-24T11:45:14.890123+00:00",
+  "commands": [
+    "rtk proxy python3 /tmp/mc02_validate_final.py (temporary standard-library assertions)",
+    "rtk git diff --check",
+    "rtk git diff --cached --check (commit preparation)"
+  ],
+  "scope_note": "Assertions concern saved documentation, hashes and protected inputs; not executed product behavior. Final architecture15 hashes also equal independent final review transport hashes."
+}

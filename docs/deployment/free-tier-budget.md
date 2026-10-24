@@ -44,4 +44,6 @@ A candidate passes cost evaluation only if each selected mandatory service has a
 
 ## Cost controls — proposal, not installed
 
+Numeric admission for the idempotency receipt policy (final review Low R3-2, TB-06/TB-13): approved values must satisfy **`receiptRetention > maxCommandDuration + allowedSkew`**, leaving a positive key-age window. Record units, the chosen margin and the DB-deadline/clock/late-arrival PoC results before accepting configuration. No values are selected here. This is receipt retention, distinct from legal history/document retention. TB-06/TB-13 cannot close on numeric approval alone while this condition or the required PoC is missing.
+
 Pin plan/runtime/dependency versions in the candidate manifest; never activate paid plans automatically. Propose alerts/headroom and file/import/rate/resource bounds after workload approval. Rate rejection should be explicit, retry-safe and fail-closed; do not bypass access control or delete retained legal history on quota pressure. Budget alerts may lag and are not hard caps. No cloud resource or billing adjustment is authorized or performed by this document.

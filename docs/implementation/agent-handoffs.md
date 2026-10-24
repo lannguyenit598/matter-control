@@ -4,12 +4,18 @@ Owner: Codex. Source: step-02-request.md. Requirement baseline: 54e1db5; approve
 
 | Assignment | Owner | Current evidence | State |
 |---|---|---|---|
-| MC-002-ARCH architecture | Claude Code | CLI 2.1.309; real packet-only synthetic acknowledgement MC02-ARCH-20261024 on host; no tools used; actual model claude-opus-5-5 | EXECUTED / correction134 edits applied to13 files / IN_REVIEW |
-| MC-002-BE backend audit | ZCode | Bundled CLI 0.17.0 read-only plan audit invocation exits 1: built-in provider configuration unavailable | ATTEMPT_FAILED / WAITING_FOR_ZCODE |
-| MC-002-FE frontend audit | Antigravity | App 2.26.0, IDE 2.5.5 present; no PATH command or exposed direct agent MCP; IDE launcher alone does not prove autonomous task API | PREPARED / WAITING_FOR_ANTIGRAVITY |
+| MC-002-ARCH architecture | Claude Code | CLI 2.1.309; real packet-only synthetic acknowledgement MC02-ARCH-20261024 on host; no tools used; actual model claude-opus-5-5 | EXECUTED /15 files +134+30 corrections / DOCUMENT_REVIEW_PASS / NOT_APPROVED |
+| MC-002-BE backend audit | ZCode | Bundled CLI 0.17.0 read-only plan audit invocation exits 1: built-in provider configuration unavailable | BLOCKED_TOOL_INTEGRITY / WAITING_FOR_OFFICIAL_REINSTALL |
+| MC-002-FE frontend audit | Antigravity | App 2.26.0, IDE 2.5.5 present; no PATH command or exposed direct agent MCP; IDE launcher alone does not prove autonomous task API | BLOCKED_TOOL_INTEGRITY / WAITING_FOR_OFFICIAL_REINSTALL |
 | MC-002-CLOUD feasibility | Codex | Pinned read-only source snapshots, Context7/current official docs; no cloud resources activated | IN_PROGRESS |
-| MC-002-QA verification | OpenCode | CLI2.1.4 / opencode/big-pickle; authorized30-file Step02 packet; exit0, session ses_e929198d8ffeFwkVV16SNbAFYR;5High9Medium | round1 CHANGES_REQUIRED / authorized round2 DISPATCHED, verdict pending |
+| MC-002-QA verification | OpenCode | CLI2.1.4 / opencode/big-pickle; authorized30-file Step02 packet; exit0, session ses_e929198d8ffeFwkVV16SNbAFYR;5High9Medium | round1 CHANGES_REQUIRED; round2+final PASS_DOCUMENT_ONLY; actual final model opencode/glm-5.3-flash-free |
 | MC-002-UX consultation | OpenDesign | Optional consultation only; no high-fidelity UI assignment | NOT_REQUIRED_YET / NOT_DISPATCHED |
+
+### Owner-route safety update — 2026-10-24
+
+Before considering GUI fallbacks, Codex ran `rtk proxy codesign --verify --deep --strict --verbose=2 /Applications/ZCode.app` and the same command for `/Applications/Antigravity.app`. **Both exit1: invalid signature (code or signature have been modified), architecture arm64.** No GUI was launched and no signature was repaired, bypassed or retried. Earlier version/help/provider-config probes predate this finding and are presence evidence only, not a safe runnable route now.
+
+MC-002-BE and MC-002-FE are **BLOCKED_TOOL_INTEGRITY / WAITING_FOR_OFFICIAL_REINSTALL**. Contracts below remain prepared, but do not open/execute either app or its bundled CLI until an official reinstall passes signature verification. Do not self-sign, remove quarantine, disable checks or modify global provider/auth settings. A separate verified official route may be used if one is supplied; none is established here. These actual safety failures add to, rather than replace, missing owner-audit and PoC evidence.
 
 ## Claude architecture contract — direct and manual fallback
 

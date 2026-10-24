@@ -278,7 +278,7 @@ Illustrative arithmetic only (not measurement, not a capacity claim): W1 at roug
 | Retention policy conflicts with brief reproducibility | Medium / High | Fail honestly when inputs purged; PO policy | OPEN (TB-06) |
 | Owner audits (ZCode, Antigravity) not executed | Certain / High | Explicit handoffs; findings here are source interpretation only | OPEN (TB-10) |
 | Last-effective-OWNER guard blocks an urgent workspace revocation | Medium / High | Fail-closed guard; transfer first; break-glass only by PO decision | OPEN (ARCH-Q4) |
-| Idempotency finality and brief sealing need a DB-enforced transaction deadline | Medium / Medium | `transaction_timeout` or equivalent; verify in P-BE-2 | OPEN (TB-13) |
+| Brief sealing and receipt key-age/purge margin need a DB-enforced transaction deadline (no idempotency final-absence promise) | Medium / Medium | `transaction_timeout` or equivalent; verify in P-BE-2 | OPEN (TB-13) |
 
 ## 14. Explicit non-decisions
 

@@ -23,26 +23,34 @@ All fourteen Step02 §4 input paths exist at the entry baseline. PRD/SRS, rules,
 | docs/product/three-golden-workflows.md | 2c7b27af29e45d3870564b215fd7b9dd5b2134b380722525b8852342f13393b0 |
 | docs/ai-sdlc/requirements-traceability.md | 97365345e49068ac0790e53e50cc09dc815b9441368b2544e81ae4b060f04aae |
 
-## Current checks
+## Final checks and acceptance
 
-| Check | Evidence | Result |
+| Check | Actual evidence | Result |
 |---|---|---|
-| Requirements authorization | Direct approval record DEC-016/017 and Step02 request | PASS, document entry only |
-| Approved specifications unchanged | Byte comparison of all docs/product and docs/requirements files with 54e1db5 | PASS |
-| Exact Claude egress subject |162 snapshots,794810 bytes, packet hash and per-file manifest | PASS; human named-packet approval recorded |
-| Public source pinning | Backend d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b, frontend3e5a642479acb789eb210e73fba956f3e85082e3; both temporary snapshots clean | PASS, source only |
-| Official-source assertions | Eight quota tables, D1 SQLite identity and source auth/adapter integration gaps checked using Python standard-library assertions | PASS, no account/runtime inference |
-| Architecture response / invariants / API/data |15 actual Claude candidate files;134 corrections applied to13 files | AUTHORED / IN_REVIEW |
-| Independent architecture/security review | Actual OpenCode authorized30-file round1, exit0 | CHANGES_REQUIRED:5High9Medium |
-| Technical PoCs / build / smoke / restore | No architecture candidate selected, owner/environment gates open | NOT_RUN |
-| Local links / allowed paths / JSON |147 changed-file links resolve;45 changed paths in permitted scope; manifest JSON parses | PASS for corrected pre-review snapshot |
-| Markdown tables / architecture semantics | Table column checks now pass; substantive corrections await independent review | IN_REVIEW |
-| Whitespace | git diff --check exit0; staged/full snapshot check follows commit preparation | PASS for tracked diff; final check pending |
+| Requirements authorization | DEC-016/017 at54e1db5; exact25 protected product/requirements files byte-equal to baseline | PASS, documentation only |
+| Artifact/author identity | Actual Claude Code2.1.309 / claude-opus-5-5 authored15 files;134+30 exact edits materialized with unique old-text matches | PASS; final narrative undercount29 qualified by actual30 |
+| Public source pinning | Backendd024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b, frontend3e5a642479acb789eb210e73fba956f3e85082e3; read-only source snapshots | PASS source-only; owner audits not inferred |
+| Independent review | Actual OpenCode round1 CHANGES_REQUIRED → round2/final PASS_DOCUMENT_ONLY; final session ses_e92505488ffe3ySTAWXz7qxG2c / opencode/glm-5.3-flash-free, exit0 | PASS document review; no High/Medium reported,2Low notes dispositioned |
+| Current normative subject |15 current stored hashes match final Claude output manifest and32-snapshot final OpenCode input manifest | PASS; no normative architecture edit after final review |
+| Scope / JSON / links | All changed paths allowed, JSON manifests parse, local Markdown file targets resolve | PASS; section anchors not validated |
+| Tables / fences / whitespace | Authored/normative table columns consistent; code fences balanced; no trailing whitespace | PASS; seven malformed rows in verbatim round2 external report retained as cosmetic warnings |
+| P0 traceability |20 explicit FR/P0 rows and all20 invariant document locations | PASS location mapping only, not runtime behavior |
+| Mermaid | Seven blocks, balanced fences; renderer not verified/installed | Syntax/visual rendering NOT_RUN |
+| Cloudflare claims | Dated official-source quota/identity assertions and actual source constraints; complete native origin/DB/service budget absent | Source assertions PASS; $0 feasibility UNVERIFIED |
+| Owner tool integrity | Deep/strict codesign verification of ZCode.app and Antigravity.app each exit1 invalid arm64 signature | BLOCKED_TOOL_INTEGRITY; no GUI launch, repair or bypass |
+| Owner audits / builds / DDL / technical PoCs / smoke / restore / deployed quotas | No safe verified owner route or selected/approved runtime/environment/workload | NOT_RUN; not waived |
+| PO architecture/topology/provider/identity/storage/workload/retention/recovery/interpretations | Concrete decision packet prepared; no approval inferred from egress consent | WAITING_APPROVAL |
+
+[Machine-readable static results](step-02-static-checks.json). Checks run with Python standard-library assertions (exact byte/hash/path/JSON/table/file-link/fence checks) plus git diff --check and final staged whitespace verification. Check script is temporary validation tooling, not a shipped product feature. Transport/input/output manifests and actual returned reports are versioned; raw streams remain temporary and are not treated as successful output until a final result arrives. Seven raw-review formatting warnings do not change architecture content or hide an implementation failure.
 
 ## Actual tool identities and limits
 
-Codex collected source and cloud evidence. Claude Code2.1.309 real route probe succeeded on host after sandbox authentication failure; actual default model reported claude-opus-5-5. Full named packet dispatched with tools/MCP disabled after specific human authorization; 15-file candidate received, correction dispatched. ZCode plan audit failed missing packaged provider config; Antigravity presence is not an executed audit. Neither is impersonated by Codex or a subagent. Actual OpenCode round1 verdict is CHANGES_REQUIRED, provider/model verified by exported metadata. Tool failures and current statuses are in agent-handoffs.md and step-02-sources.md.
+Claude architecture session1c8baae5-6a1d-41b4-8167-9df678811b4c; large correction3110fb7c-d15a-4daf-8760-ade72486f61d; final narrow correctiond3d1d13e-3e7e-4dad-a366-0aea84af9f37. All actual modelUsage identifies claude-opus-5-5; tools/MCP denied except internal structured-output schema helper. One900-second transport timeout returned no result; no patch applied, process completion checked before retry. Retry then completed successfully with an internal output-limit continuation. No auth/provider/global setting was changed.
+
+OpenCode round1 model opencode/big-pickle; round2/final opencode/glm-5.3-flash-free, verified from exports. No model flag/provider setting was changed by Codex. Final process exit0/166.77s and exported outcome=succeeded. No reviewer ran tools or recomputed hashes. [Final result](../reviews/step-02-opencode-final-result.md), [disposition](../reviews/step-02-review.md), [execution](../reviews/step-02-execution.md), [delivery](../reviews/step-02-delivery.md).
+
+ZCode earlier packaged plan audit failed missing provider config; later both owner app signatures failed, blocking any further packaged execution or GUI fallback until an official reinstall verifies. Neither owner is impersonated. No full product implementation, high-fidelity UI, production deploy, cloud/account/billing mutation or Step03 start.
 
 ## Gate outcome
 
-Step02 IN_REVIEW, not DONE. Stop remains Architecture Approval Gate; pending architecture correction/re-review, owner validation, critical PoCs, independent security/technical review and unresolved architecture/runtime/cost/workload decisions prevent a completion claim. No full product implementation, high-fidelity UI, production deploy, cloud/account/billing mutation or Step03 start. Runtime product ACs remain NOT_RUN.
+MC-002 **WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED / NOT_DONE**. Architecture documents have independent PASS, but owner audits, required PoCs, major decisions and deployment/cost/recovery evidence remain open. Runtime product ACs remain NOT_RUN. Stop at Architecture Approval Gate; Step03 NOT_READY. Numeric receipt condition and reporting qualifications are recorded in the Codex-owned budget/approval/review records; original agent reports remain preserved.

@@ -35,7 +35,7 @@ Additional official sources: [Claude CLI](https://code.claude.com/docs/en/cli-re
 | rtk --version | 1.0.1, exit 0 | Proxy availability |
 | claude --version / --help | 2.1.309, exit 0 | Installed flags checked, not a design result |
 | Claude synthetic packet-only route | Sandbox result is_error=true “Not logged in”; host retry exit 0, real acknowledgement MC02-ARCH-20261024 | Existing host auth works; no login/config change; no general file/write route proven |
-| Claude actual Step 02 packet | Explicit human authorization after initial automatic egress rejection; 162 SHA256-pinned snapshots, ~795 KB | Full architecture run exit0,15 files received; OpenCode CHANGES_REQUIRED; correction dispatched after further named-packet approval; read-only transport, tools/MCP disabled; exact input-manifest.json retained |
+| Claude actual Step 02 packet | Explicit human authorization after initial automatic egress rejection; 162 SHA256-pinned snapshots, ~795 KB | Full architecture exit0,15 files; actual134-edit correction received/applied, round2 document review PASS with residual findings; final narrow correction exit0,30 edits on8 files and final independent PASS_DOCUMENT_ONLY under DEC-022; read-only transport, tools/MCP disabled; exact input-manifest.json retained |
 | GitHub connector | Both repo fetch calls returned Unknown tool | Connector metadata exists but route unavailable; no data fetched through it |
 | Git source fetch | Sandbox DNS failed; host ls-remote/clone exit 0 and pinned HEADs verified | Disposable source snapshots, no dependency scripts or template changes |
 | ZCode help / actual audit attempt | CLI0.17.0 help exit0; plan audit exit1, missing built-in provider config | No completed owner audit; no global/provider repair |
@@ -47,3 +47,11 @@ Additional official sources: [Claude CLI](https://code.claude.com/docs/en/cli-re
 ## Actual Claude transport
 
 Command argument array: rtk proxy claude -p --output-format json --tools "" --restricted --strict-mcp-config --mcp-config '{"mcpServers":{}}' --disable-slash-commands --no-chrome --no-session-persistence --json-schema <prepared schema>. Packet passed over stdin; no shell substitution. The no-session-persistence flag means a timeout cannot be safely represented as resumable; inspect output and collect evidence before any repeat. Restricted mode is a process option, not a credential/provider change. No permissions bypass is used. Model identity is taken from returned modelUsage, not guessed from the CLI name.
+
+## Later actual evidence
+
+- Claude correction session3110fb7c-d15a-4daf-8760-ade72486f61d, claude-opus-5-5, exit0/success,134 edits on13 files; original timeout and retry/continuation recorded in step-02-execution.md.
+- OpenCode round2 session ses_e925d49fdffeSMIfB3Oj123T0f, exit0,240.174s, document PASS with1Medium2Low. Export identifies actual model **opencode/glm-5.3-flash-free**, unlike round1 opencode/big-pickle. No model flag/provider/global configuration was changed by Codex; record each actual route rather than assuming a stable model from a CLI label.
+- Before any GUI fallback, rtk proxy codesign --verify --deep --strict --verbose=2 /Applications/ZCode.app and /Applications/Antigravity.app each exited1: invalid signature (code or signature have been modified), architecture arm64. No launch, repair, re-sign, quarantine bypass or further bundled-CLI execution after this finding. Owner routes BLOCKED_TOOL_INTEGRITY until an official reinstall verifies.
+
+Final narrow Claude session d3d1d13e-3e7e-4dad-a366-0aea84af9f37 / claude-opus-5-5 exit0,200456ms,30 edits (narrative says29, qualified). Final OpenCode session ses_e92505488ffe3ySTAWXz7qxG2c / opencode/glm-5.3-flash-free exit0,166.77s, outcome=succeeded, PASS_DOCUMENT_ONLY; input32 snapshots406313 bytes, exact manifests retained. No High/Medium reported;2Low recording/numeric-admission notes handled in step-02-review.md. All PoCs/build/DDL/restore/cost checks remain NOT_RUN.

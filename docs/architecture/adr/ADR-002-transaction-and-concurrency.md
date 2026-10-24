@@ -62,7 +62,7 @@ Port: `MatterUnitOfWork.Execute(ctx, matterID, fn)`; implementations: PostgreSQL
 | R12 Last two owners demote each other | Zero owners | Lock + deferred last-owner trigger | Concurrent demotion | AC-158 |
 | R13 Grant vs workspace revocation vs command | Lock inversion; grant to revoked user | §1a order; grants hold workspace row FOR SHARE | Three-session barrier test | AC-147, AC-158 |
 | R14 Workspace revocation of last effective OWNER | Matter without effective owner | Effective-owner guard + trigger on both membership tables | Concurrent revoke + demote | AC-158 |
-| R15 Same key in flight twice | Duplicate effect; false "never committed" | Replay check after scope lock; receipt PK; 404 not final | Barrier before COMMIT | AC-153 |
+| R15 Same key in flight twice | Duplicate effect; false "never committed" | Replay check after scope lock; receipt PK; key age checked at `t_cmd`; no final-absence promise | Barrier before COMMIT; delayed original released after the retry committed (NOT_RUN) | AC-153 |
 | R16 Boundary during a command | Ambiguous state | Linearized at `t_cmd`; next write/worker materializes; reads evaluate purely | Clock injected between lock and commit | AC-126 |
 | R17 Unbound preview commit | Other actor/expired/altered preview applied | Binding check before rows | API race test | AC-133 |
 

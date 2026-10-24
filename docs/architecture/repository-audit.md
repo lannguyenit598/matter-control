@@ -53,3 +53,7 @@ ZCode and Antigravity must return their actual audits and version/build/runtime 
 | Shared token fallback | [src/lib/api/backend.ts:25](https://github.com/lannguyenit598/nextjs-atomic-starter/blob/3e5a642479acb789eb210e73fba956f3e85082e3/src/lib/api/backend.ts#L25) |
 | Demo/REST switch | [src/features/tasks/services/task-repository.ts:9](https://github.com/lannguyenit598/nextjs-atomic-starter/blob/3e5a642479acb789eb210e73fba956f3e85082e3/src/features/tasks/services/task-repository.ts#L9) |
 | Dynamic request boundary | [src/app/(app)/dashboard/page.tsx:31](https://github.com/lannguyenit598/nextjs-atomic-starter/blob/3e5a642479acb789eb210e73fba956f3e85082e3/src/app/(app)/dashboard/page.tsx#L31) |
+
+## Owner execution safety gate
+
+Before GUI fallback on2026-10-24, exact deep/strict codesign verification of /Applications/ZCode.app and /Applications/Antigravity.app each exited1 with invalid arm64 signature (code or signature modified). Neither app was launched, repaired or bypassed. Earlier CLI presence/provider failure is historical, not current integrity clearance. Both owner audits and their PoCs are BLOCKED_TOOL_INTEGRITY pending official reinstall and successful signature verification; prepared handoffs remain available. Codex source inspection and Claude document review do not replace those owner audits.

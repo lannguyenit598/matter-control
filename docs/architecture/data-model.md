@@ -37,7 +37,7 @@
 | `document_versions.content_object_id` | `content_objects UNIQUE (matter_id, id)` |
 | `filing_submissions (matter_id, filing_id, cycle_no)`; items → submission | `filing_cycles UNIQUE (matter_id, filing_id, cycle_no)`; `filing_submissions UNIQUE (matter_id, id)` |
 | observation evidence links, signature evidence | `evidence UNIQUE (matter_id, id)` |
-| `import_row_mappings`, bulk/import outcome tables, `export_artifacts`, `brief_generations`, `command_receipts.matter_id` | `matters(id)`; typed `(matter_id, record_id)` FKs where a record kind is fixed |
+| `import_row_mappings`, bulk/import outcome tables, `export_artifacts`, `brief_generations`, `command_receipts.matter_id`, `command_receipt_matters.represented_matter_id` | `matters(id)`; typed `(matter_id, record_id)` FKs where a record kind is fixed |
 
 ## 2. Access and matter core (DDL sketch)
 
@@ -163,7 +163,7 @@ CREATE TABLE evidence (id UUID PRIMARY KEY, matter_id UUID NOT NULL,
   valid_from TIMESTAMPTZ, valid_until TIMESTAMPTZ, CHECK (valid_until IS NULL OR valid_from IS NULL OR valid_from < valid_until),
   CHECK (CASE kind WHEN 'DOCUMENT_VERSION' THEN document_version_id IS NOT NULL
                    WHEN 'EXTERNAL_REFERENCE' THEN document_version_id IS NULL AND external_reference IS NOT NULL
-                   ELSE document_version_id IS NULL END),
+                   WHEN 'OBSERVATION' THEN document_version_id IS NULL ELSE false END),
   submitted_by UUID NOT NULL, submitted_at TIMESTAMPTZ NOT NULL, withdrawn_at TIMESTAMPTZ, withdrawn_reason TEXT,
   CHECK (num_nonnulls(withdrawn_at, withdrawn_reason) IN (0, 2)), revision BIGINT NOT NULL DEFAULT 1,
   UNIQUE (matter_id, id), UNIQUE (matter_id, id, submitted_by));
@@ -174,7 +174,7 @@ CREATE TABLE evidence_claims (id UUID PRIMARY KEY, matter_id UUID NOT NULL,
   component_key TEXT,  -- NULL = implicit single component; trigger claim_component_shape: NULL iff revision declares none
   FOREIGN KEY (matter_id, criterion_revision_id, component_key)
     REFERENCES criterion_components (matter_id, criterion_revision_id, key),  -- unchecked only when NULL
-  revision BIGINT NOT NULL DEFAULT 1,  -- CAS target for assess/revoke/dispute;             -- '' = implicit single component
+  revision BIGINT NOT NULL DEFAULT 1,  -- CAS target for assess/revoke/dispute
   claimed_by UUID NOT NULL, claimed_at TIMESTAMPTZ NOT NULL,
   UNIQUE NULLS NOT DISTINCT (evidence_id, criterion_revision_id, component_key),
   UNIQUE (matter_id, id), UNIQUE (matter_id, id, evidence_submitter_id, claimed_by));
@@ -195,6 +195,10 @@ CREATE TABLE evidence_assessments (id UUID PRIMARY KEY, matter_id UUID NOT NULL,
 CREATE UNIQUE INDEX one_current_assessment ON evidence_assessments (claim_id, subject_epoch) WHERE superseded_by_id IS NULL;
 -- trigger assessment_epoch_current (insert): subject_epoch = current proof_epoch of the claim's subject
 --   (claim → criterion revision → evidence requirement → node/filing); epochs only rise under the same matter lock
+-- trigger assessment_version_consistent (insert): assessed_document_version_id IS NOT DISTINCT FROM the claim's
+--   evidence.document_version_id (evidence is immutable), and evidence.kind = 'DOCUMENT_VERSION' when the claim's
+--   criterion revision has version_rule <> 'NONE'; trigger claim_version_rule_kind (evidence_claims insert) applies
+--   the same kind rule at claim time (evidence-model §2 rule 4)
 CREATE TABLE evidence_disputes (id UUID PRIMARY KEY, matter_id UUID NOT NULL, assessment_id UUID NOT NULL,
   FOREIGN KEY (matter_id, assessment_id) REFERENCES evidence_assessments (matter_id, id),
   CHECK (num_nonnulls(resolved_by, outcome, rationale, resolved_at) IN (0, 4)), UNIQUE (matter_id, id),
@@ -224,6 +228,7 @@ Proof notes:
 CREATE TABLE domain_events (matter_id UUID NOT NULL REFERENCES matters, seq BIGINT NOT NULL,
   id UUID NOT NULL UNIQUE, type TEXT NOT NULL, schema_version INT NOT NULL,
   actor_kind TEXT NOT NULL CHECK (actor_kind IN ('USER','SYSTEM_CLOCK')), actor_id UUID,
+  CHECK (CASE actor_kind WHEN 'USER' THEN actor_id IS NOT NULL WHEN 'SYSTEM_CLOCK' THEN actor_id IS NULL ELSE false END),
   target_kind TEXT NOT NULL, target_id UUID NOT NULL,
   effective_at TIMESTAMPTZ NOT NULL, recorded_at TIMESTAMPTZ NOT NULL, CHECK (effective_at <= recorded_at),
   cause_seq BIGINT, correlation_id UUID, command_key UUID, reason TEXT,
@@ -242,8 +247,14 @@ CREATE TABLE command_receipts (actor_id UUID NOT NULL, idempotency_key UUID NOT 
   committed_at TIMESTAMPTZ NOT NULL, purge_after TIMESTAMPTZ NOT NULL,
   PRIMARY KEY (actor_id, idempotency_key));
 CREATE INDEX command_receipts_purge ON command_receipts (purge_after);
--- inserted only inside the command's own transaction (visible receipt ⇔ committed outcome); read only through
--- re-authorized replay/operations paths (api-contracts §1); purged by retention role after purge_after (TB-06)
+CREATE TABLE command_receipt_matters (actor_id UUID NOT NULL, idempotency_key UUID NOT NULL,
+  represented_matter_id UUID NOT NULL REFERENCES matters,
+  FOREIGN KEY (actor_id, idempotency_key) REFERENCES command_receipts,
+  PRIMARY KEY (actor_id, idempotency_key, represented_matter_id));
+-- one row per Matter represented in the stored response (incl. a MATTER scope and a Matter created under WORKSPACE scope)
+-- both inserted only inside the command's own transaction (visible receipt ⇔ committed outcome); read only through
+-- replay/operations paths that require current read access to the scope AND every represented Matter (api-contracts §1);
+-- purge_after = committed_at + receiptRetention; purged (with its matter rows) by retention role after purge_after (TB-06)
 CREATE TABLE security_audit_events (id UUID PRIMARY KEY, occurred_at TIMESTAMPTZ NOT NULL, actor_id UUID,
   operation TEXT NOT NULL, outcome TEXT NOT NULL, requested_resource_kind TEXT, requested_id_hash BYTEA,
   client_ip INET, request_id TEXT);   -- no titles, filenames, content; separate grant
@@ -263,7 +274,8 @@ SELECT greatest(clock_timestamp(), $last_recorded_at) AS t_cmd;   -- captured on
 SELECT status FROM workspace_memberships WHERE workspace_id=$w AND user_id=$u FOR SHARE;
 SELECT role, status FROM matter_memberships WHERE matter_id=$m AND user_id=$u FOR SHARE;
 SELECT request_hash, scope_kind, matter_id, response FROM command_receipts WHERE actor_id=$u AND idempotency_key=$k;  -- replay check
--- replay only if hash equal AND authorization above passed; ApplyBoundaries(upTo = t_cmd) (SYSTEM_CLOCK events);
+-- replay only if hash equal AND authorization above passed AND the caller can currently read every
+-- command_receipt_matters Matter (else uniform 404); key age checked at t_cmd (api-contracts §1); ApplyBoundaries(upTo = t_cmd) (SYSTEM_CLOCK events);
 -- load typed rows (missing typed row → abort, 503); CAS revisions; decide in Go core at t_cmd
 UPDATE <typed rows> SET …, revision = revision + 1 WHERE id=$id AND revision=$expected;  -- 0 rows → 412
 -- derived recompute writes; INSERT domain_events with seq = event_seq+1..n, recorded_at = t_cmd
@@ -299,5 +311,6 @@ If `INSERT domain_events` fails, the transaction aborts: no mutation without his
 | DM-09 | Graph node without typed child → commit rejected; edge to it cannot commit | NFR-005 |
 | DM-10 | Second current assessment for (claim, epoch) → unique violation; stale `subject_epoch` → trigger rejects | AC-124, AC-157 |
 | DM-11 | Workspace revocation of last effective OWNER → rejected without matter detail; after transfer → succeeds | AC-158, AC-135 |
-| DM-12 | Replay/operations after revocation → uniform 404; receipt invisible before commit | AC-147, AC-153 |
+| DM-12 | Replay/operations after revocation → uniform 404; Workspace OWNER who lost membership of a Matter created by `POST /workspaces/{ws}/matters` → uniform 404 on replay and operations; receipt invisible before commit | AC-147, AC-153 |
 | DM-13 | Read at `asOf ≥ next_boundary_at`, no worker: equals post-materialization state; read issues no write | AC-126 |
+| DM-14 | Direct SQL assessment whose `assessed_document_version_id` differs from the evidence version (or is non-NULL for non-document evidence) → trigger rejects; claim of OBSERVATION/EXTERNAL_REFERENCE evidence on a CURRENT_AUTHORITATIVE/FIXED revision → trigger rejects | AC-127, AC-128, NFR-005 |

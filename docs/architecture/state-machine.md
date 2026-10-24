@@ -110,10 +110,10 @@ Time changes facts without a command: validity start/expiry (RULE-007), due cros
 |---|---|---|
 | Due-soon start | `due_at − 48h` | nonterminal Requirement/Action/Filing with due |
 | Overdue start | `due_at + 1µs` (first instant with `due_at < asOf`; at `asOf = due_at` the state is DUE_SOON) | nonterminal |
-| Validity start | future `evidence.valid_from` | non-withdrawn evidence with a current, non-revoked, current-epoch ACCEPTED assessment |
+| Validity start | future `evidence.valid_from` | non-withdrawn evidence with a current, non-revoked, current-epoch ACCEPTED assessment, **in any subject execution state** (incl. COMPLETED/CANCELLED Requirement/Action, approved/completed Filing) |
 | Validity end | `min(valid_until, effective_until)` (half-open) | same |
 
-Terminal objects contribute nothing. `next_boundary_at` is recomputed from scratch after any write touching a contributing input.
+The *nonterminal* qualifier applies only to the two due rows (RULE-009: terminal → ON_TRACK). Validity rows are not filtered by execution: a COMPLETED Requirement/Action or approved/completed Filing whose accepted proof reaches its validity end loses satisfaction at that instant, and its verification, proof-gated downstream readiness, milestone readiness and attention change (RULE-007, AC-126). Pure reads (§6.2), materialization (§6.4) and `next_boundary_at` use this same population. `next_boundary_at` is recomputed from scratch after any write touching a contributing input.
 
 **6.4 Materialization.** `ApplyBoundaries(matter, upTo)` runs only inside a matter write transaction: every command with `upTo = t_cmd` before its own logic, and the boundary worker with its own `t_cmd` (selected via index on `next_boundary_at`). For each distinct instant b in `(boundaries_applied_until, upTo]` ascending, all inputs at b are processed together and recomputed. Material events (`assessment.expired`, `node.timing_boundary_crossed`, derived changes) get `effective_at = b`, `recorded_at = t_cmd`, actor `SYSTEM_CLOCK`, ordered by (b, kind, target ID). Then `boundaries_applied_until = upTo`. Idempotent: retries/concurrent workers serialize on the lock and find nothing left.
 
@@ -135,5 +135,5 @@ All combinations of independent axes are representable; the following are explic
 | Verification precedence | Generated criteria/claim/assessment fixtures; zero-criteria; partial components; dispute precedence; applicability sequence | AC-127, AC-157, AC-160 |
 | Timing boundaries | T−1s, T, T+48h, T+48h+1s, none, terminal late; same instant in two zones | AC-142, AC-152 |
 | Attention precedence | Critical chain + overdue; remove critical; escalation add/remove; no manual NORMAL | AC-143 |
-| Boundary materialization | Reads at `valid_until`−1µs/`valid_until`, `due_at`/`due_at`+1µs and future `valid_from` with no worker and no write: state correct and read issues no write; later write materializes events (`effective_at` = boundary, `recorded_at` = `t_cmd`); clock injected between lock and commit (linearization at `t_cmd`) | AC-126, AC-142 |
+| Boundary materialization | Reads at `valid_until`−1µs/`valid_until`, `due_at`/`due_at`+1µs and future `valid_from` with no worker and no write: state correct and read issues no write; later write materializes events (`effective_at` = boundary, `recorded_at` = `t_cmd`); clock injected between lock and commit (linearization at `t_cmd`); COMPLETED+VERIFIED upstream (and an approved Filing) whose sole accepted proof reaches `valid_until`: execution unchanged, verification UNVERIFIED, proof-gated downstream BLOCKED, milestone not ready, EXPIRED attention reason, instant present in `next_boundary_at` | AC-126, AC-142, AC-102 |
 | Derived override rejection | API attempts to set dependency/verification/timing/attention fields → 422 unknown/forbidden field | AC-160 |

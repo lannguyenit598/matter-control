@@ -28,7 +28,7 @@ In all options the identity provider only authenticates. `users` maps `(issuer, 
 ## 3. Authorization
 
 - `core/policy` encodes the approved permission matrix as a table: `Can(actor, operation, scope) → Allow | Deny(reason)`. Unknown operations are denied by default. Each inbound use case declares its operation constant; a unit test asserts every registered operation has a matrix row (no unguarded endpoint).
-- Evaluated **inside the command transaction** after the matter lock with memberships read `FOR SHARE` (data-model §7), in the global lock order ([ADR-002 §1a](adr/ADR-002-transaction-and-concurrency.md)), so revocation and writes are causally ordered. Matter ownership means *effective* ownership (data-model §2). Reads authorize inside their snapshot. Replays and `GET /operations/{key}` re-run current read authorization on the receipt scope before returning any stored body.
+- Evaluated **inside the command transaction** after the matter lock with memberships read `FOR SHARE` (data-model §7), in the global lock order ([ADR-002 §1a](adr/ADR-002-transaction-and-concurrency.md)), so revocation and writes are causally ordered. Matter ownership means *effective* ownership (data-model §2). Reads authorize inside their snapshot. Replays and `GET /operations/{key}` re-run current read authorization on the receipt scope and on every Matter represented in the stored body (data-model §6 `command_receipt_matters`) before returning any stored body; Workspace OWNER alone never passes the Matter check.
 - Workspace OWNER grants no matter access (AC-118). Assignment and owner fields never grant access. Import/bulk cannot touch memberships or verifier designations.
 - Verification independence: policy + DB CHECK (evidence-model §3).
 - **Uniform not-found**: if the caller lacks workspace or matter membership, every resource returns the same `404 /problems/not-found` body (no title, count or existence signal); `403` is used only when the caller is a member of that matter and lacks the role. Search, counts, My Actions and exports are computed only over matters with active membership.
@@ -44,7 +44,7 @@ In all options the identity provider only authenticates. `users` maps `(issuer, 
 | History | Same-matter membership; security audit separate and restricted to operators |
 | Next.js caching | Matter data rendered dynamically per request (`connection()` / no `'use cache'` on user-scoped data); `revalidatePath` only invalidates; no shared cache entries keyed without user |
 | Staged uploads | Single-key, short-lived write grant or API streaming; commit re-authorizes |
-| Idempotent replay / operations lookup | Receipt bound to actor and scope; replay only after current authorization, else uniform 404; hash includes path scope, so no cross-matter echo |
+| Idempotent replay / operations lookup | Receipt bound to actor, scope and represented Matters; replay only after current authorization for all of them, else uniform 404; hash includes path scope, so no cross-matter echo |
 | Bulk/import previews | Bound to actor, matter, expiry, digest; commit re-authorizes per row/group; no detail for inaccessible IDs |
 
 ## 5. Threat model (STRIDE summary)
@@ -88,7 +88,7 @@ Residual stolen-token window is accepted only by PO decision. Under F1/F2/F4 tok
 | Membership safeguards | Last owner, cross-workspace grant, imported role | AC-158 |
 | Leakage | Byte-identical 404 for nonexistent vs inaccessible; no counts in My Actions/export filenames | AC-118, AC-135 |
 | Spreadsheet | Formula-leading text round trip; macro/link ignored | AC-148 |
-| Replay and reconciliation | Replay after revocation → 404; different scope same key → 422; in-flight duplicates → one effect; expired key → 422/410; 404 never treated as final | AC-147, AC-153 |
+| Replay and reconciliation | Replay after revocation → 404; different scope same key → 422; in-flight duplicates → one effect; expired key → 422/410; 404 never treated as final; delayed original after same-key commit → replay; Workspace OWNER without membership of a Matter created by a workspace-scoped command → 404 on replay/operations | AC-147, AC-153 |
 | Lock order and effective owner | Grant vs workspace revoke vs commands under barriers; 40P01 → retryable 503; last effective OWNER guard leaks nothing | AC-147, AC-158 |
 | Preview binding | Commit by other actor/matter, after expiry, altered digest | AC-133, AC-147 |
 | Direct-SQL scope | Cross-matter proof/document/graph inserts; DM-08 lint | AC-135 |

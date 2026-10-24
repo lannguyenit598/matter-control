@@ -1,10 +1,10 @@
 # Step 02 Architecture Approval Packet — Pending
 
-Owner: Codex orchestration/cloud; architecture author: actual Claude Code. Requirements subject572835a, PO approval54e1db5, task MC-002. **No decision in this packet is approved.** Independent architecture round1 is CHANGES_REQUIRED; correction/re-review precede logical architecture approval. Step02 is not DONE, and Step03 is not authorized by approving an individual item here.
+Owner: Codex orchestration/cloud; architecture author: actual Claude Code. Requirements subject572835a, PO approval54e1db5, task MC-002. **No decision in this packet is approved.** Independent review round1 CHANGES_REQUIRED was corrected; actual OpenCode round2 and final targeted review returned PASS_DOCUMENT_ONLY. [Final report](../reviews/step-02-opencode-final-result.md), [disposition](../reviews/step-02-review.md). Step02 is not DONE, and Step03 is not authorized by approving an individual item here.
 
 ## 1. Logical candidate
 
-[System](../architecture/system-architecture.md), [domain](../architecture/domain-model.md), [state](../architecture/state-machine.md), [proof](../architecture/evidence-model.md), [API](../architecture/api-contracts.md), [data](../architecture/data-model.md), [security](../architecture/security-architecture.md). Typed domain, five independent axes, PostgreSQL transaction/history/receipt boundary, explicit document promotion and numbered Filing cycles are Claude's candidate. [Review disposition](../reviews/step-02-review.md) must identify the exact corrected subject and independent verdict before approval; current findings are not waived by this packet. Approved product rules remain unchanged.
+[System](../architecture/system-architecture.md), [domain](../architecture/domain-model.md), [state](../architecture/state-machine.md), [proof](../architecture/evidence-model.md), [API](../architecture/api-contracts.md), [data](../architecture/data-model.md), [security](../architecture/security-architecture.md). Typed domain, five independent axes, PostgreSQL transaction/history/receipt boundary, explicit document promotion and numbered Filing cycles are Claude's candidate. Exact corrected subject:15 stored hashes in [final output manifest](../tooling/step-02-claude-final-output-manifest.json); independently reviewed32 snapshots in [final review input](../tooling/step-02-opencode-final-input-manifest.json). Approved product rules remain unchanged. This review supports a logical-design decision only; missing owner/runtime/cost evidence remains explicit.
 
 ## 2. Runtime and next validation strategy
 
@@ -26,6 +26,10 @@ For a first local restore exercise only, Codex proposes measuring against **RPO2
 Retention options remain R-A (retain history/versions until a disposition policy is approved) or R-B (explicit period after closure plus hold/erasure requirements). Neither is a numeric retention commitment. PO must supply or approve the actual policy before storage growth, erasure behavior or a production budget can be accepted. W1 and the recovery proposals may be approved independently of cloud/provider activation.
 
 ## 4. Decisions that remain evidence-gated
+
+ARCH-Q3 requires a PO interpretation: Claude proposes that the main Status Brief window uses **recorded time**, with effective dates and late-recorded changes shown separately; using effective time instead changes the report contract. ARCH-Q5 requires confirmation that an Approval after Filing reopen uses an outcome-evidence record created after reopen and a new independent assessment in the new proof epoch; it does not by itself require the external authority to reissue its decision. Neither interpretation is approved here. ARCH-Q1 keeps literal RULE-003, ARCH-Q2's stricter uploader exclusion is not adopted, and ARCH-Q4's emergency ownerless exception is not adopted; changing those baseline behaviors requires a separate explicit policy decision.
+
+Numeric receipt admission: `receiptRetention > maxCommandDuration + allowedSkew`, with a positive margin and required deadline/late-arrival PoC. Values and legal-document/history retention remain separately unapproved. See [budget gate](../deployment/free-tier-budget.md).
 
 Frontend vinext/OpenNext/static/native-Node choice ([ADR-003](../architecture/adr/ADR-003-frontend-runtime.md)); identity provider; object storage and any R2 billing step; receipt/audit retention; brief recorded-vs-effective interpretation; stricter verifier exclusions, if desired. No provider/adapter choice is recommended before owner PoCs. Do not bundle unresolved choices into a blanket architecture approval. Any proposal conflicting with approved RULE-003 requires a separate business change request, not an architecture reinterpretation.
 

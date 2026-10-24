@@ -24,3 +24,7 @@ Owner: Codex; date 2026-10-24. No new tools installed, login initiated or global
 | Relevant local skills | Skill | Codex and technical owners | Cloud/Go/frontend/review guidance | Supplied skill catalog; cloudflare-workers SKILL.md read | Static guidance may be stale; no tool/runtime proof | No install and no implied authority for deploy | No new service; underlying tools may cost | APPLIED cloudflare-workers; others NOT_INVOKED | Keep minimal; no speculative plugin installs |
 
 No tool recommendation bypasses owner roles, Step02 approval, secret handling or a failed permission boundary. Runtime/adapter choices and additional integrations are proposals until scoped and approved; the minimal current set is existing Git/rtk, Context7/official docs, actual Claude CLI, returned review route and Markdown diagrams.
+
+## Current owner-tool integrity gate
+
+Subsequent deep/strict codesign checks on2026-10-24 returned exit1 invalid arm64 signature for both ZCode.app and Antigravity.app. Earlier executable/version presence is not integrity clearance. Do not launch either app or its bundled CLI; no self-sign/repair/quarantine bypass. Owner audits and PoCs wait for official reinstall and successful verification. Actual command/error evidence is in step-02-sources.md and ../implementation/agent-handoffs.md.
