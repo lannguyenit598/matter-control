@@ -1,6 +1,6 @@
 # MC-002-BE-C01 — ZCode Bounded Rework
 
-Status: **PREPARED / WAITING_MANUAL_DISPATCH**, not executed. Actual original owner return is fd747ae; this is a new corrective assignment, not a repeat of R01/R02. Codex records the bounded rule-file scope extension authorized by actual Claude's implementation review. Independent findings are linked from the current intake before dispatch.
+Current status: **EXECUTED_AND_RETURNED / VERIFIED_ACCEPTED** at52b60a4 after actual OpenCode review. Do not resend this completed R1 assignment. Preparation-time status was PREPARED / WAITING_MANUAL_DISPATCH. Actual original owner return is fd747ae; this is a new corrective assignment, not a repeat of R01/R02. Codex records the bounded rule-file scope extension authorized by actual Claude's implementation review. Independent findings are linked from the current intake before dispatch.
 
 --- BEGIN ZCODE REWORK PROMPT ---
 

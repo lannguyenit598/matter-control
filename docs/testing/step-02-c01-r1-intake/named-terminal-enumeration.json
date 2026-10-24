@@ -1,0 +1,1140 @@
+{
+  "github.com/example/userapi/internal/adapter/outbound/memory": [
+    {
+      "test": "TestUserRepositoryContract/create_then_get",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/get_missing_returns_ErrUserNotFound",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/duplicate_email_on_create",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/list_paginates_in_creation_order_with_total",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/update_changes_data_and_frees_old_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/update_to_taken_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/update_missing",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/update_with_stale_version_is_rejected_and_changes_nothing",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/delete",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/adapter/outbound/system": [
+    {
+      "test": "TestClock_IsUTCWithMicrosecondPrecision",
+      "action": "pass"
+    },
+    {
+      "test": "TestUUIDv7_FormatUniqueAndMonotonic",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/adapter/outbound/postgres": [
+    {
+      "test": "TestFaults_ConnectionRefused_IsUnavailable",
+      "action": "pass"
+    },
+    {
+      "test": "TestFaults_WrongPassword_IsNotUnavailable",
+      "action": "pass"
+    },
+    {
+      "test": "TestFaults_MissingDatabase_IsNotUnavailable",
+      "action": "pass"
+    },
+    {
+      "test": "TestFaults_TerminatedConnection_IsUnavailable",
+      "action": "pass"
+    },
+    {
+      "test": "TestFaults_StatementTimeoutUnderRowLock_IsUnavailableAndRolledBack",
+      "action": "pass"
+    },
+    {
+      "test": "TestFaults_PoolAcquireTimeout_Classifies503",
+      "action": "pass"
+    },
+    {
+      "test": "TestFaults_MissingTable_IsNotUnavailable",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/08000",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/08003",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/08006",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/57P01",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/57P02",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/57P03",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/53300",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/40P01",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/40001",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/55P03",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/57014",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/28000",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/28P01",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/3D000",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/42501",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/42P01",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/42P07",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/22001",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/23503",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/23502",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/existing_mappings_preserved",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/wrapped_depth",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/bare_typed_connect_fault",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/cancelled_connect_keeps_the_cause_for_inbound_499",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/connecterror_pgerror_28P01",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/connecterror_pgerror_3D000",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/connecterror_pgerror_42501",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/connecterror_pgerror_53300",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/connecterror_pgerror_57P03",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/lookalike",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/lookalike#01",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/lookalike#02",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/lookalike#03",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification/lookalike#04",
+      "action": "pass"
+    },
+    {
+      "test": "TestMapError_UnavailableClassification",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_OneEventPerSuccessfulWrite",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_DisabledWritesNothing",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_IsAtomicWithTheWrite",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_CarriesTraceContextButNotBaggage",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutboxSource_ProcessInOrderAndOnlyMarksOnSuccess",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutboxSource_ConcurrentRelaysDoNotShareMessages",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutboxSource_PurgeDeletesOnlyPublished",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutboxSource_MarksEachMessageByItsOwnResult",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_EventOrderFollowsCommitOrder",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_NoEventWhenNothingChanges",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_UpdateAndDeleteAreAtomicWithTheirEvents",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutbox_WriteAndEventShareOneTransaction",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepository_CanceledContext",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutboxSource_PurgeDeletesAtMostLimit",
+      "action": "pass"
+    },
+    {
+      "test": "TestOutboxSource_PurgeChunkTimeoutKeepsEarlierChunks",
+      "action": "pass"
+    },
+    {
+      "test": "TestMigrations_PendingIndexExcludesParkedRows",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/create_then_get",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/get_missing_returns_ErrUserNotFound",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/duplicate_email_on_create",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/list_paginates_in_creation_order_with_total",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/update_changes_data_and_frees_old_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/update_to_taken_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/update_missing",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/update_with_stale_version_is_rejected_and_changes_nothing",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox/delete",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/without_outbox",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/create_then_get",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/get_missing_returns_ErrUserNotFound",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/duplicate_email_on_create",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/list_paginates_in_creation_order_with_total",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/update_changes_data_and_frees_old_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/update_to_taken_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/update_missing",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/update_with_stale_version_is_rejected_and_changes_nothing",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox/delete",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/with_outbox",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract/concurrent_updates_are_never_lost",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserRepositoryContract",
+      "action": "pass"
+    },
+    {
+      "test": "TestStatementTimeout_IsUnavailable",
+      "action": "pass"
+    },
+    {
+      "test": "TestPendingMigrations_EmptySchema",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewPool_DefaultsIdleInTransactionTimeout",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewPool_KeepsExplicitIdleInTransactionTimeout",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewPool_LeavesIdleInTransactionTimeoutUnsetByDefault",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/adapter/inbound/httpapi": [
+    {
+      "test": "TestToProblem_MappingRows/validation_error",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/not_found",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/email_conflict",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/plain_version_conflict",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/cancellation",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/cancelled_request_context_with_unavailable_chain",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/cancelled_request_context_with_deadline_chain",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/cancellation_inside_an_unavailable_chain",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/unavailable_sentinel",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/request_deadline",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/echo_503_non-probe",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/echo_503_probe_keeps_legacy_bytes",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/echo_404_unchanged",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/echo_400_keeps_detail",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows/unexpected_stays_500",
+      "action": "pass"
+    },
+    {
+      "test": "TestToProblem_MappingRows",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewErrorHandler_UnavailableBodyAndProbes/api_unavailable_keeps_the_mapped_type",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewErrorHandler_UnavailableBodyAndProbes/readiness_probe_bytes_are_unchanged",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewErrorHandler_UnavailableBodyAndProbes/healthz_stays_200_with_its_current_bytes",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewErrorHandler_UnavailableBodyAndProbes/HEAD_503_has_no_body",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewErrorHandler_UnavailableBodyAndProbes/echo_503_on_a_non-probe_route_follows_the_unavailable_mapping",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewErrorHandler_UnavailableBodyAndProbes",
+      "action": "pass"
+    },
+    {
+      "test": "TestContextTimeout_MiddlewareShape",
+      "action": "pass"
+    },
+    {
+      "test": "TestHumaAdapter_Contract",
+      "action": "pass"
+    },
+    {
+      "test": "TestHumaAdapter_StatusAfterCommitIsNotWritten",
+      "action": "pass"
+    },
+    {
+      "test": "TestContract_UserAPI",
+      "action": "pass"
+    },
+    {
+      "test": "TestContract_ServiceFailures/unexpected_error.golden",
+      "action": "pass"
+    },
+    {
+      "test": "TestContract_ServiceFailures/version_conflict.golden",
+      "action": "pass"
+    },
+    {
+      "test": "TestContract_ServiceFailures/panic.golden",
+      "action": "pass"
+    },
+    {
+      "test": "TestContract_ServiceFailures/timeout.golden",
+      "action": "pass"
+    },
+    {
+      "test": "TestContract_ServiceFailures/unavailable.golden",
+      "action": "pass"
+    },
+    {
+      "test": "TestContract_ServiceFailures",
+      "action": "pass"
+    },
+    {
+      "test": "TestTracingAndRequestScopedLogs",
+      "action": "pass"
+    },
+    {
+      "test": "TestAccessLogOmitsQueryString",
+      "action": "pass"
+    },
+    {
+      "test": "TestTracing_EveryOperationIsNamedByRoute",
+      "action": "pass"
+    },
+    {
+      "test": "TestAccessLog_ServerErrorIsLoggedOnceWithoutLeaking",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIDocs_EnabledServesSpecAndDocsOutsideAPIMiddleware",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIDocs_SpecDescribesTheUserAPI",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIDocs_SchemasAcceptWhatTheAPIAccepts",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIDocs_EveryDocumentedOperationIsRouted",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIDocs_ServersAreIndependent",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIDocs_ConcurrentRequestsShareOneDocument",
+      "action": "pass"
+    },
+    {
+      "test": "TestServiceUnavailable_MemoryParity/GET_/api/v1/users/01a15359-aa28-7a00-a380-000000000001",
+      "action": "pass"
+    },
+    {
+      "test": "TestServiceUnavailable_MemoryParity/GET_/api/v1/users/01a15359-aa28-7a00-a380-000000000999",
+      "action": "pass"
+    },
+    {
+      "test": "TestServiceUnavailable_MemoryParity/GET_/api/v1/users",
+      "action": "pass"
+    },
+    {
+      "test": "TestServiceUnavailable_MemoryParity/POST_/api/v1/users",
+      "action": "pass"
+    },
+    {
+      "test": "TestServiceUnavailable_MemoryParity/PATCH_/api/v1/users/01a15359-aa28-7a00-a380-000000000001",
+      "action": "pass"
+    },
+    {
+      "test": "TestServiceUnavailable_MemoryParity/DELETE_/api/v1/users/01a15359-aa28-7a00-a380-000000000001",
+      "action": "pass"
+    },
+    {
+      "test": "TestServiceUnavailable_MemoryParity",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserCRUDFlow",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/validation",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/duplicate_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/malformed_json",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/unknown_id",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/garbage_id",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/patch_garbage_id",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/delete_garbage_id",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/bad_limit",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/offset_too_deep",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/unknown_route",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses/method_not_allowed",
+      "action": "pass"
+    },
+    {
+      "test": "TestErrorResponses",
+      "action": "pass"
+    },
+    {
+      "test": "TestHealthAndReadiness",
+      "action": "pass"
+    },
+    {
+      "test": "TestClientCanceledRequest_Is499AndNotLoggedAsError",
+      "action": "pass"
+    },
+    {
+      "test": "TestProbesAreNotLogged",
+      "action": "pass"
+    },
+    {
+      "test": "TestClientIP_TrustedProxies/no_proxy_config_ignores_XFF",
+      "action": "pass"
+    },
+    {
+      "test": "TestClientIP_TrustedProxies/trusted_LB_uses_XFF",
+      "action": "pass"
+    },
+    {
+      "test": "TestClientIP_TrustedProxies/spoofed_hop_before_client_is_ignored",
+      "action": "pass"
+    },
+    {
+      "test": "TestClientIP_TrustedProxies/untrusted_peer_cannot_spoof",
+      "action": "pass"
+    },
+    {
+      "test": "TestClientIP_TrustedProxies",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIMiddleware_AppliesToAPIOnly",
+      "action": "pass"
+    },
+    {
+      "test": "TestETagAndIfMatch",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/json-ish_typo_POST",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/json-ish_typo_PATCH",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/missing_POST",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/missing_PATCH",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/form_POST",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/form_PATCH",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/multipart_POST",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/multipart_PATCH",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/xml_POST",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/xml_PATCH",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/text_POST",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/text_PATCH",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/merge-patch_POST",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted/merge-patch_PATCH",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_OnlyJSONIsAccepted",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_BadRequestDetail/syntax_error",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_BadRequestDetail/wrong_field_type",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_BadRequestDetail/not_an_object",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_BadRequestDetail",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestBody_TooLargeWithoutContentLength",
+      "action": "pass"
+    },
+    {
+      "test": "TestRequestID_ClientValueIsSanitized",
+      "action": "pass"
+    },
+    {
+      "test": "TestAPIMiddleware_RunsOncePerAPIRequest",
+      "action": "pass"
+    },
+    {
+      "test": "TestCreate_RejectsNULInName",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate_RejectsNULInName",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/adapter/outbound/kafka": [
+    {
+      "test": "TestSink_AuthenticatesWithSASL/SCRAM-SHA-256",
+      "action": "pass"
+    },
+    {
+      "test": "TestSink_AuthenticatesWithSASL/SCRAM-SHA-512",
+      "action": "pass"
+    },
+    {
+      "test": "TestSink_AuthenticatesWithSASL/PLAIN",
+      "action": "pass"
+    },
+    {
+      "test": "TestSink_AuthenticatesWithSASL",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewSink_RejectsUnknownSASLMechanism",
+      "action": "pass"
+    },
+    {
+      "test": "TestSink_ConnectsOverTLSWithACAFile",
+      "action": "pass"
+    },
+    {
+      "test": "TestTLSConfig_RejectsUnreadableCAFile",
+      "action": "pass"
+    },
+    {
+      "test": "TestSink_PublishesWithKeyAndHeaders",
+      "action": "pass"
+    },
+    {
+      "test": "TestSink_PublishFailsWhenBrokerIsDown",
+      "action": "pass"
+    },
+    {
+      "test": "TestSink_ClassifiesRejectedRecordsAsPermanent",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/core/domain": [
+    {
+      "test": "TestNewUser_NormalizesInput",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation/empty_both",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation/bad_email",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation/display-name_form_rejected",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation/name_too_long",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation/unicode_name_at_limit_is_ok",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation/NUL_in_name",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation/name_only_NUL",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Validation",
+      "action": "pass"
+    },
+    {
+      "test": "TestApply",
+      "action": "pass"
+    },
+    {
+      "test": "TestUserID_Valid",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUser_Email",
+      "action": "pass"
+    },
+    {
+      "test": "TestEmailFromStore_DoesNotRevalidate",
+      "action": "pass"
+    },
+    {
+      "test": "TestNULInName_IsRejected",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/config": [
+    {
+      "test": "TestLoad_Defaults",
+      "action": "pass"
+    },
+    {
+      "test": "TestLoad_Errors",
+      "action": "pass"
+    },
+    {
+      "test": "TestLoad_Postgres",
+      "action": "pass"
+    },
+    {
+      "test": "TestLoad_KafkaEvents",
+      "action": "pass"
+    },
+    {
+      "test": "TestLoad_KafkaSecurity",
+      "action": "pass"
+    },
+    {
+      "test": "TestLoad_APIDocsEnabled",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/core/service": [
+    {
+      "test": "TestRegister",
+      "action": "pass"
+    },
+    {
+      "test": "TestGet_InvalidIDIsNotFound",
+      "action": "pass"
+    },
+    {
+      "test": "TestGet_NotFoundCarriesContext",
+      "action": "pass"
+    },
+    {
+      "test": "TestList_ClampsPaging",
+      "action": "pass"
+    },
+    {
+      "test": "TestList_RejectsDeepOffset",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate_ConcurrentWriteIsNotLost",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate_GivesUpAfterRepeatedConflicts",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate_DoesNotRetryUnavailable",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate_ExpectedVersion",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate_LogsRetriesThroughInjectedLogger",
+      "action": "pass"
+    },
+    {
+      "test": "TestNewUserService_NilLoggerIsSafe",
+      "action": "pass"
+    },
+    {
+      "test": "TestUpdate_EmptyPatchIsNoOp",
+      "action": "pass"
+    },
+    {
+      "test": "TestInvalidIDsAreNotFoundForEveryUseCase",
+      "action": "pass"
+    },
+    {
+      "test": "TestDelete",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/observability": [
+    {
+      "test": "TestContextHandler_AddsContextAttrsAndTraceIDs",
+      "action": "pass"
+    },
+    {
+      "test": "TestContextHandler_NoContextNoExtraAttrs",
+      "action": "pass"
+    },
+    {
+      "test": "TestEnabled",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/app": [
+    {
+      "test": "TestGraphs_ResolveEveryDependency/api/postgres",
+      "action": "pass"
+    },
+    {
+      "test": "TestGraphs_ResolveEveryDependency/relay/kafka",
+      "action": "pass"
+    },
+    {
+      "test": "TestGraphs_ResolveEveryDependency/api/memory",
+      "action": "pass"
+    },
+    {
+      "test": "TestGraphs_ResolveEveryDependency",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_DrainsBeforeClosingListener",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_FailsFastWhenAddressInUse",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_CanceledBeforeStartReturnsPromptly",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_RejectsUnknownStorage",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_CancelsInFlightRequestsWhenDrainTimesOut",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_RefusesToStartWithPendingMigrations",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_DeliversEventsWrittenByTheAPI",
+      "action": "pass"
+    },
+    {
+      "test": "TestRunRelay_RefusesWhenEventsAreDisabled",
+      "action": "pass"
+    },
+    {
+      "test": "TestRunRelay_RejectsUnknownSink",
+      "action": "pass"
+    },
+    {
+      "test": "TestRunRelay_PassesSASLCredentialsToKafka",
+      "action": "pass"
+    },
+    {
+      "test": "TestRunRelay_ServesHealthWhileRunning",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_HookOrder",
+      "action": "pass"
+    },
+    {
+      "test": "TestRunRelay_HookOrder",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_SignalAbortsStartupWaitingOnDatabase",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_ServesAPIDocsOnlyWhenEnabled",
+      "action": "pass"
+    },
+    {
+      "test": "TestRun_PostgresRejectsNULInName",
+      "action": "pass"
+    }
+  ],
+  "github.com/example/userapi/internal/outbox": [
+    {
+      "test": "TestNextPurge/failure_retries_after_a_minute",
+      "action": "pass"
+    },
+    {
+      "test": "TestNextPurge/rows_remain_continues_next_iteration",
+      "action": "pass"
+    },
+    {
+      "test": "TestNextPurge/partial_chunk_or_nothing_deleted_waits_an_hour",
+      "action": "pass"
+    },
+    {
+      "test": "TestNextPurge",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PublishesEverythingInOrder",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_RetriesAfterSinkFailure",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_FinishesInFlightBatchOnShutdown",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PurgesPublishedMessagesOlderThanRetention",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PurgesWhileBacklogNeverDrains",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PermanentFailureIsParkedAndDoesNotBlockOthers",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PartialTransientFailureOnlyRetriesTheFailedMessage",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_HealthFollowsLoopProgress",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PurgeDrainsBacklogInBoundedTurns",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PurgeRunsWithinBudgetAndBeats",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_ShutdownDuringPurgeReturnsPromptly",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PublishLeavesTimeToRecordResults",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_ShutdownDuringPurgeStartsNoNewBatch",
+      "action": "pass"
+    },
+    {
+      "test": "TestRelay_PurgeBudgetExhaustedAfterProgressContinuesNextIteration",
+      "action": "pass"
+    }
+  ]
+}

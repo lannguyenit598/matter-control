@@ -8,7 +8,7 @@ Both original native template baselines have actual returned evidence and indepe
 
 | Order | Owner / work | Input / output / passing evidence | State |
 |---|---|---|---|
-| 1 | ZCode, then OpenCode: C01-NATIVE | Exact new source diff and native accepted error/probe/persistence evidence | WAITING_MANUAL_DISPATCH |
+| 1 | ZCode, then OpenCode: C01-NATIVE | Corrected52b60a4 independently accepted PASS_WITH_LIMITATIONS; native scope only | SATISFIED_NATIVE_SCOPE |
 | 2 | Claude + PO: decide scope of H5 integration | Explicit choice of transport-only harness versus defer to product API/auth; approved request/response/error/session contract and allowed paths, no Task/User alias | WAITING_DECISION |
 | 3 | Codex environment; owners acknowledge | New labelled/capped loopback-only fixture, verified empty DB before assigning DSN; pinned source/heads; synthetic inputs; owned process groups/ports | NOT_PREPARED pending2 |
 | 4 | Antigravity + ZCode implement only approved seam | Next→real REST→Go→real PostgreSQL; session behavior under exact agreed scope; no mock presented as end-to-end | NOT_RUN |
@@ -22,3 +22,5 @@ Local execution after dependencies pass must bind127.0.0.1, verify unused ports,
 Completion requires actual connected-chain evidence and independent review against the chosen scope. It cannot close full product authorization, W1 capacity, Cloudflare or cost gates. No integration commands/tests have run in this step.
 
 Skipped: integration scaffolding/execution until contract and identity boundaries are decided. Risk: either pretending the domains match or weakening fail-closed auth would manufacture a misleading PASS.
+
+C01-native prerequisite is now satisfied within its accepted scope; the next missing prerequisite is still the explicit integration-scope/API/auth decision (row2). No automatic execution/transport alias/auth bypass is authorized. [Native closure](../reviews/step-02-c01-native-closure.md).

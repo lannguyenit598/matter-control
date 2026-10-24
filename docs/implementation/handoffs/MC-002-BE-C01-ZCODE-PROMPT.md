@@ -1,6 +1,6 @@
 # MC-002-BE-C01 — Complete ZCode Manual Dispatch Prompt
 
-Current status: **EXECUTED_AND_RETURNED at fd747ae / REWORK_REQUIRED**; use the linked R1 correction prompt, not this original assignment. Preparation-time status was PREPARED / WAITING_MANUAL_DISPATCH. Codex prepared this contract under Step02.2 at governance `f0f82a6`. Actual Claude Code returned DISPATCH_READY for C01-NATIVE, then confirmed SQLSTATE-first wrapped-error precedence. No implementation acknowledgement or test result exists yet. Direct ZCode CLI packaging remains unavailable; the provider config is still absent at both recorded locations. This is not a signature failure or permission to repair global settings.
+Current status: **EXECUTED_AND_RETURNED at fd747ae, CORRECTED_AND_NATIVE_ACCEPTED at52b60a4**; original and R1 assignments are complete within native scope. Do not redispatch either prompt; PRODUCT_OPEN. Preparation-time status was PREPARED / WAITING_MANUAL_DISPATCH. Codex prepared this contract under Step02.2 at governance `f0f82a6`. Actual Claude Code returned DISPATCH_READY for C01-NATIVE, then confirmed SQLSTATE-first wrapped-error precedence. No implementation acknowledgement or test result exists yet. Direct ZCode CLI packaging remains unavailable; the provider config is still absent at both recorded locations. This is not a signature failure or permission to repair global settings.
 
 Copy everything between BEGIN and END into actual ZCode with the local workspace accessible.
 

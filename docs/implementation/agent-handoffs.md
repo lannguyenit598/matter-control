@@ -5,7 +5,7 @@ Codex orchestrates; the named external owners retain engineering responsibility.
 | Assignment | Actual execution / current state | Next packet |
 |---|---|---|
 | Claude architecture | Actual authored/corrected15 files; independent document review PASS; no runtime certification | Existing architecture and exact final manifests; review any architecture-impacting owner finding before ADR edits |
-| ZCode MC-002-BE / C01 | R01/R02 CLOSED; actual C01 fd747ae returned, REWORK_REQUIRED after actual Claude review | [C01 correction prompt](handoffs/MC-002-BE-C01-ZCODE-REWORK-PROMPT.md); new bounded manual dispatch, preserve baseline/owner evidence; PRODUCT stays OPEN |
+| ZCode MC-002-BE / C01 | R01/R02 CLOSED; corrected52b60a4 C01-NATIVE independently accepted PASS_WITH_LIMITATIONS; PRODUCT_OPEN | [Native closure](../reviews/step-02-c01-native-closure.md); no more native rework/redispatch; retain product/integration/architecture gates |
 | Antigravity MC-002-FE | User returned manual local Node baseline:99unit/9E2E/build logs; source clean/pinned. Headless limitation remains historical route evidence | [Frontend intake](../reviews/step-02-frontend-intake.md); documentary corrections applied, final independent recheck PASS_WITH_LIMITATIONS (all7 actionable findings resolved); no whole-product/runtime-adapter approval |
 | OpenCode MC-002-VERIFY-021 | Actual review and final recheck PASS_WITH_LIMITATIONS,3Low closed, no replay | step-02-execution-report.md / step-02-poc-validation.md; actual returned report required |
 | OpenDesign | NOT_STARTED | Step03 not authorized |
@@ -29,3 +29,7 @@ Only C01-NATIVE needs the next ZCode manual paste; no acknowledgement/execution 
 Actual OpenCode handoff review/recheck returned PASS_WITH_LIMITATIONS and closed all three prompt precision findings; the amended C01 prompt is ready for manual paste. This does not dispatch it or verify implementation. Evidence: ../reviews/step-02-2-opencode-handoff-recheck.md.
 
 Current actual implementation reviews: OpenCode source CHANGES_REQUIRED (F1test/F5docs/F6rule), evidence PASS_WITH_LIMITATIONS; actual Claude accepts current production behavior and dispositions M1 NOT_REACHABLE on existing probes. No native acceptance before correctedhead/checks/QA. [Intake](../reviews/step-02-c01-intake.md) records evidence qualifications and exact review identity. MC-002-BE-C01-R1 manual rework is the next action; older original-prompt waiting labels above are historical.
+
+## C01 corrected native slice accepted — current
+
+Actual ZCode R1 return52b60a4 contains exactly F1test/F5docs/F6rule changes; actual OpenCode sessionses_e90ff024dffeuJ1Kmcnp6qicY9, exit0, PASS_WITH_LIMITATIONS accepts C01-NATIVE and closes F1/F5/F6/E-03/F8. Current state NATIVE_PASS / PRODUCT_OPEN, no more ZCode rework or reassurance rerun. [Closure and exact limitations](../reviews/step-02-c01-native-closure.md). Owner279namedpass/0fail/0namedskip full suite and Codex2namedpass committed-head F1 check are distinct from reviewer packet-only verification; no DB replay by Codex/OpenCode. Original self-hash-list defects are preserved and resolved by a separately verified canonical inventory. Earlier rework/waiting labels above are historical. Integration/API/auth scope, full product/recovery/Cloudflare/cost and Architecture Approval Gate remain OPEN; MC-002 not DONE, Step03 not started.

@@ -1,6 +1,6 @@
 # MC-002-BE — Backend Owner Audit and PoC Status
 
-Owner: actual ZCode, not Codex. Priority P0; requirements FR-001..020, NFR-001..014, RULE-001..021 and AC-101..163 remain approved. Status: **LOCAL_NATIVE_TEMPLATE_REVIEW_PASS_WITH_LIMITATIONS / R01_R02_CLOSED / PRODUCT_CONFORMANCE_UNVERIFIED**. Dependencies: trusted owner route, isolated test target, pinned source and H5 scope. Reviewer: OpenCode; architecture impact: Claude Code.
+Owner: actual ZCode, not Codex. Priority P0; requirements FR-001..020, NFR-001..014, RULE-001..021 and AC-101..163 remain approved. Status: **LOCAL_NATIVE_TEMPLATE_REVIEW_PASS_WITH_LIMITATIONS / R01_R02_CLOSED / C01_NATIVE_PASS_AT_52b60a4 / PRODUCT_CONFORMANCE_UNVERIFIED**. Dependencies: trusted owner route, isolated test target, pinned source and H5 scope. Reviewer: OpenCode; architecture impact: Claude Code.
 
 Pinned input: /tmp/mattercontrol-step02-backend at d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b, origin https://github.com/lannguyenit598/go-hexa-template. Codex source inventory is in [repository audit](repository-audit.md), not a ZCode completion. Go1.26.0, Echo5.4.0/Huma2.39.1, pgx5.11/Goose3.28, native net/http/Fx lifecycle, User domain, sqlc migrations and absent auth are source findings. No MatterControl implementation exists.
 
@@ -32,3 +32,7 @@ Actual ZCode rerun supplies880 valid JSON events:205 named test/subtest pass,0fa
 ## C01 source return at fd747ae
 
 Actual ZCode16-file change implements typed SQLSTATE-first unavailability and shared503mapping; source clean, baseline preserved. Codex checked artifacts and ran66focusednamedpass events/noDB. Actual Claude architecture review accepts production behavior/context deviation but withholds NATIVE_PASS pending F1test/F5docs/F6rule edits; [verbatim review](../reviews/step-02-c01-claude-implementation-review.md). Current state REWORK_REQUIRED/IN_REVIEW, no product conformance. [Intake](../reviews/step-02-c01-intake.md) distinguishes real57014test evidence from mislabelled HTTPdeadline logs. Independent OpenCode findings and owner correction remain separately tracked.
+
+## C01 corrected native slice accepted — current
+
+Actual ZCode R1 return52b60a4 contains exactly F1test/F5docs/F6rule changes; actual OpenCode sessionses_e90ff024dffeuJ1Kmcnp6qicY9, exit0, PASS_WITH_LIMITATIONS accepts C01-NATIVE and closes F1/F5/F6/E-03/F8. Current state NATIVE_PASS / PRODUCT_OPEN, no more ZCode rework or reassurance rerun. [Closure and exact limitations](../reviews/step-02-c01-native-closure.md). Owner279namedpass/0fail/0namedskip full suite and Codex2namedpass committed-head F1 check are distinct from reviewer packet-only verification; no DB replay by Codex/OpenCode. Original self-hash-list defects are preserved and resolved by a separately verified canonical inventory. Earlier rework/waiting labels above are historical. Integration/API/auth scope, full product/recovery/Cloudflare/cost and Architecture Approval Gate remain OPEN; MC-002 not DONE, Step03 not started.

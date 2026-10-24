@@ -1,6 +1,6 @@
 # Project Status Dashboard
 
-As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
+As of 2026-10-25 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
 
 **Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: IN_REVIEW / WAITING_APPROVAL / REMAINING_FEASIBILITY_OPEN / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
 
@@ -89,3 +89,7 @@ Step02.2 independent handoff-document review/recheck has now returned actual Ope
 Actual ZCode returned clean source fd747ae from d024e3e,16files, owner JSON1189lines/278namedpass/0fail/0namedskip (parents/subtests),11pkgpass+5no-test. Codex verified19exports and unchanged59protected inputs, then independently ran7focusedfunctions/66namedpasses withoutDB. Actual Claude reviewed source, accepted Echo/Huma context split and cancellation-first deviation, and returned CHANGES_REQUIRED for one cause-preservation test plus two doc/rule edits. [Current intake](../reviews/step-02-c01-intake.md), [bounded correction handoff](../implementation/handoffs/MC-002-BE-C01-ZCODE-REWORK-PROMPT.md). C01-NATIVE REWORK_REQUIRED/IN_REVIEW, not accepted; C01-PRODUCT OPEN. Native test success does not override required corrections. R01/R02 remain CLOSED; frontend/restore accepted scopes unchanged; integration/cloud/cost/full recovery and overall architecture approval still open. No Step03/deploy/paid activity.
 
 Current actual implementation reviews: OpenCode source CHANGES_REQUIRED (F1test/F5docs/F6rule), evidence PASS_WITH_LIMITATIONS; actual Claude accepts current production behavior and dispositions M1 NOT_REACHABLE on existing probes. No native acceptance before correctedhead/checks/QA. [Intake](../reviews/step-02-c01-intake.md) records evidence qualifications and exact review identity. MC-002-BE-C01-R1 manual rework is the next action; older original-prompt waiting labels above are historical.
+
+## C01 corrected native slice accepted — current
+
+Actual ZCode R1 return52b60a4 contains exactly F1test/F5docs/F6rule changes; actual OpenCode sessionses_e90ff024dffeuJ1Kmcnp6qicY9, exit0, PASS_WITH_LIMITATIONS accepts C01-NATIVE and closes F1/F5/F6/E-03/F8. Current state NATIVE_PASS / PRODUCT_OPEN, no more ZCode rework or reassurance rerun. [Closure and exact limitations](../reviews/step-02-c01-native-closure.md). Owner279namedpass/0fail/0namedskip full suite and Codex2namedpass committed-head F1 check are distinct from reviewer packet-only verification; no DB replay by Codex/OpenCode. Original self-hash-list defects are preserved and resolved by a separately verified canonical inventory. Earlier rework/waiting labels above are historical. Integration/API/auth scope, full product/recovery/Cloudflare/cost and Architecture Approval Gate remain OPEN; MC-002 not DONE, Step03 not started.
