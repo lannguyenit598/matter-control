@@ -1,0 +1,17 @@
+2026-10-24T14:54:04Z
+Name=/mc002be-pg-20261024T1454Z
+Id=a34a25df7d341e6522f245f7d4157d4ba97dbf7d39f469a3c1f5b696e4766faf
+Image=postgres:18-alpine
+ImageDigest=sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+Labels={"org.mattercontrol.poc":"mc002be"}
+Memory=536870912
+NanoCpus=1000000000
+PidsLimit=128
+Ports={"5432/tcp":[{"HostIp":"127.0.0.1","HostPort":"15455"}]}
+Networks=mc002be-poc-net 
+Mounts=volume:45f0a3abfa47bdf9d11c3db720732a50caaff531279272bb12167bce3b489312:/var/lib/postgresql 
+Health=healthy
+StartedAt=2026-10-24T14:53:45.339660333Z
+RepoDigests=["postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873"]
+NetId=20344aedfb01c34e2ae93fa4f2ece2b6c11d4733e0e263bfb01c8302771dbaa0 Driver=bridge Internal=false
+2026-10-24T14:54:04Z

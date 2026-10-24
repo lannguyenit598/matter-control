@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl backend documentary corrections recheck",
+    "--file",
+    "/tmp/mc002be-recheck-input.txt",
+    "Recheck M01..M05 documentary corrections and actual Claude disposition only. R01/R02 remain open; no tools."
+  ],
+  "exit": 0,
+  "elapsed_seconds": 65.90610098838806,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "runtime_replay": false,
+  "session_id": "ses_e9176fa1dffedPMAvkCsrMBY3K",
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "outcome": "succeeded",
+  "tool_messages": [],
+  "verdict": "M01_M05_CORRECTIONS_VERIFIED_DOCUMENTARY_ONLY",
+  "r01_r02": "OPEN_NOT_RUN_REWORK_REQUIRED",
+  "c01": "ACTUAL_CLAUDE_DISPOSITION_RECORDED_IMPLEMENTATION_OBLIGATION",
+  "raw_output_sha256": "1cfbe12f6dc3c1a99b2ba3c6da345afe969845e78e5fc85d53c8a089a6e3e966"
+}

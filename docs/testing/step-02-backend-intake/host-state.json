@@ -1,0 +1,76 @@
+{
+  "checked_at_utc": "2026-10-24T15:19:41.767107+00:00",
+  "scope": "read-only host inventory; no Config.Env/credentials read or DB/process started",
+  "checks": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "uname",
+        "-srmp"
+      ],
+      "exit": 0,
+      "stdout": "Darwin 27.0.0 arm64 arm\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .Name}} {{json .State}} {{json .Config.Labels}} {{json .HostConfig.PortBindings}} {{json .Mounts}}",
+        "mc002be-pg-20261024T1454Z"
+      ],
+      "exit": 0,
+      "stdout": "\"a34a25df7d341e6522f245f7d4157d4ba97dbf7d39f469a3c1f5b696e4766faf\" \"/mc002be-pg-20261024T1454Z\" {\"Dead\":false,\"Error\":\"\",\"ExitCode\":0,\"FinishedAt\":\"2026-10-24T15:00:23.490731629Z\",\"Health\":{\"FailingStreak\":0,\"Log\":[{\"End\":\"2026-10-24T15:00:15.0211185Z\",\"ExitCode\":0,\"Output\":\"/var/run/postgresql:5432 - accepting connections\\n\",\"Start\":\"2026-10-24T15:00:14.996018541Z\"},{\"End\":\"2026-10-24T15:00:17.058694376Z\",\"ExitCode\":0,\"Output\":\"/var/run/postgresql:5432 - accepting connections\\n\",\"Start\":\"2026-10-24T15:00:17.027101167Z\"},{\"End\":\"2026-10-24T15:00:19.094610168Z\",\"ExitCode\":0,\"Output\":\"/var/run/postgresql:5432 - accepting connections\\n\",\"Start\":\"2026-10-24T15:00:19.063425877Z\"},{\"End\":\"2026-10-24T15:00:21.131251753Z\",\"ExitCode\":0,\"Output\":\"/var/run/postgresql:5432 - accepting connections\\n\",\"Start\":\"2026-10-24T15:00:21.098297003Z\"},{\"End\":\"2026-10-24T15:00:23.168537379Z\",\"ExitCode\":0,\"Output\":\"/var/run/postgresql:5432 - accepting connections\\n\",\"Start\":\"2026-10-24T15:00:23.134272337Z\"}],\"Status\":\"unhealthy\"},\"OOMKilled\":false,\"Paused\":false,\"Pid\":0,\"Restarting\":false,\"Running\":false,\"StartedAt\":\"2026-10-24T14:59:15.671043625Z\",\"Status\":\"exited\"} {\"org.mattercontrol.poc\":\"mc002be\"} {\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15455\"}]} [{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"\",\"Name\":\"45f0a3abfa47bdf9d11c3db720732a50caaff531279272bb12167bce3b489312\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/45f0a3abfa47bdf9d11c3db720732a50caaff531279272bb12167bce3b489312/_data\",\"Type\":\"volume\"}]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "image",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .Size}} {{json .Config.Labels}}",
+        "mc002be/userapi:poc-d024e3e-20261024"
+      ],
+      "exit": 0,
+      "stdout": "\"sha256:5d401294715c383b1defb8a79cd6b99d17c662ad5b4994355bd973608b9c18a3\" 43159930 {\"org.mattercontrol.poc\":\"mc002be\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18091",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:15455",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

@@ -53,3 +53,13 @@ Step02 source/feasibility evidence does not close R-001/002/005/006/017/018 runt
 ## Frontend returned-evidence qualification
 
 Manual Antigravity baseline ran despite the separate headless command-permission limit. OpenCode found documentary evidence overclaims (historical cleanup versus warnings, network-count assertions, manifest provenance/timestamps and binding scope). Codex corrected the documentation; original logs retained. Later host inspection finds no listeners on the four test ports. Final independent recheck pending; no source bug or full-product security proof is inferred. R-021 Cloudflare adapter and R-028 integration/auth gaps remain open. See ../reviews/step-02-frontend-intake.md.
+
+
+## Backend native PoC findings
+
+| ID | Evidence / unresolved risk | Impact | Owner | Required closure | State |
+|---|---|---|---|---|---|
+| R-029 | Actual template DB-down UserAPI returns500/about:blank, approved MatterControl requires503 unavailable+retryAfter | High against future product conformance | ZCode implementation / Claude architecture / OpenCode QA | Actual Claude confirms unchanged-contract implementation obligation; future assigned typed outbound classification and contract/idempotency/current-auth tests, no blanket500 conversion | OPEN; characterized native baseline not invalidated, no product-conformance PASS |
+| R-030 | Nonverbose test logs cannot establish zero skips; invalid-config log lacks argv/error pairs | Medium | ZCode / OpenCode | Focused owner JSON/verbose rerun against fresh disposable DB, paired invalid-config captures; actual independent recheck | EVIDENCE_REWORK_REQUIRED_R01_R02 |
+
+One actual disposable test credential occurred in original migrate shell trace. Original exact task log and exported copy were sanitized after original-hash guard, no value exported to reviewers/Git; historical versus stored hashes retained. No global auth/credential change or resource deletion. Future fixtures must use new credentials and no tracing. Metadata package/run-count/SQL-label/health notes corrected; actual correction review verified M01..M05; R01/R02 remain open. Current read-only host inspection shows retained DB stopped and no API/DB listeners.

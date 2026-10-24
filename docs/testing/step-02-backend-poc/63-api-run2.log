@@ -1,0 +1,11 @@
+2026-10-24T14:58:47Z
+{"time":"2026-10-24T21:58:47.071958+07:00","level":"INFO","msg":"starting userapi","addr":"127.0.0.1:18091","storage":"postgres","version":"d024e3e","otel":false}
+### GET after restart (expect version 2, updated name)
+HTTP/1.1 200 OK
+Content-Type: application/json
+Etag: "2"
+X-Request-Id: BeuqilARqKwNfAcixIxOwgzmxIVkylfU
+Date: Sat, 24 Oct 2026 14:58:49 GMT
+Content-Length: 202
+
+{"id":"01a16e6b-25fd-72e6-8217-1eb9a1ed6644","email":"alice.poc@example.test","name":"Alice Poc Updated","created_at":"2026-10-24T14:57:58.269191Z","updated_at":"2026-10-24T14:58:25.0931Z","version":2}

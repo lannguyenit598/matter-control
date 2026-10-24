@@ -1,0 +1,279 @@
+{
+  "task": "MC-002-BE-INTAKE",
+  "collector": "Codex PM/DevOps; no runtime replay",
+  "base": "9d317c3b7b71b51eb856dd559b27e77c48b8f67a",
+  "checked_at_utc": "2026-10-24T15:20:50.937526+00:00",
+  "sources": [
+    {
+      "path": "/tmp/mattercontrol-step02-backend",
+      "head": "d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b",
+      "branch": "main",
+      "status": "",
+      "origin": "https://github.com/lannguyenit598/go-hexa-template"
+    },
+    {
+      "path": "/tmp/mattercontrol-step021-backend",
+      "head": "d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b",
+      "branch": "task/MC-002-be-poc",
+      "status": "",
+      "origin": "https://github.com/lannguyenit598/go-hexa-template"
+    }
+  ],
+  "binary_bytes": 42186050,
+  "binary_sha256": "ff973fb7883c16898e5cfef6bb4e80df0252abc17ff5235c52fdc7ebabd9ad03",
+  "files": [
+    {
+      "file": "10-download.log",
+      "source_path": "/tmp/mc002be-evidence/10-download.log",
+      "source_bytes": 58,
+      "source_sha256": "219fad8b77a2e65db0d0285ca605aa58ada2de499a618228528e06c3827dc4f7",
+      "stored_bytes": 58,
+      "stored_sha256": "219fad8b77a2e65db0d0285ca605aa58ada2de499a618228528e06c3827dc4f7",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "11-build.log",
+      "source_path": "/tmp/mc002be-evidence/11-build.log",
+      "source_bytes": 152,
+      "source_sha256": "efd4aa36919dd7de51bd159e06fe913db70a4e5de13bce8206c262f8ad4efcd8",
+      "stored_bytes": 152,
+      "stored_sha256": "efd4aa36919dd7de51bd159e06fe913db70a4e5de13bce8206c262f8ad4efcd8",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "20-pg-container.log",
+      "source_path": "/tmp/mc002be-evidence/20-pg-container.log",
+      "source_bytes": 787,
+      "source_sha256": "1291104b3508867b88a50ee8f9c4372eeafdb4a5a748ae0c92a1f38bf694da06",
+      "stored_bytes": 787,
+      "stored_sha256": "1291104b3508867b88a50ee8f9c4372eeafdb4a5a748ae0c92a1f38bf694da06",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "30-migrate-run1.log",
+      "source_path": "/tmp/mc002be-evidence/30-migrate-run1.log",
+      "source_bytes": 1128,
+      "source_sha256": "2cb4869a05fd0a2bd6a3beb105d70ce11e412e47eeb2d7d16582ccf46e896d97",
+      "stored_bytes": 1128,
+      "stored_sha256": "044672e7551dcf608726b532c4fbe0be7cf41d32450854e03976679ab1c1ae2f",
+      "credential_redactions": 1,
+      "kind": "log"
+    },
+    {
+      "file": "31-migrate-run2.log",
+      "source_path": "/tmp/mc002be-evidence/31-migrate-run2.log",
+      "source_bytes": 63,
+      "source_sha256": "33d9aeaad7cbe8dd22686c7f607bc228f3b13abe2736fa3b192f09d47cfbc771",
+      "stored_bytes": 63,
+      "stored_sha256": "33d9aeaad7cbe8dd22686c7f607bc228f3b13abe2736fa3b192f09d47cfbc771",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "32-schema-state.log",
+      "source_path": "/tmp/mc002be-evidence/32-schema-state.log",
+      "source_bytes": 189,
+      "source_sha256": "963a1c9e57a97000827facd863b80e1852801c3473a03e60103f92b84f923566",
+      "stored_bytes": 189,
+      "stored_sha256": "963a1c9e57a97000827facd863b80e1852801c3473a03e60103f92b84f923566",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "40-make-test.log",
+      "source_path": "/tmp/mc002be-evidence/40-make-test.log",
+      "source_bytes": 1176,
+      "source_sha256": "91601591f0632d2c0bc97d491b10f2cf0f4b1150fce7df93b876e63423612968",
+      "stored_bytes": 1176,
+      "stored_sha256": "91601591f0632d2c0bc97d491b10f2cf0f4b1150fce7df93b876e63423612968",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "41-make-check.log",
+      "source_path": "/tmp/mc002be-evidence/41-make-check.log",
+      "source_bytes": 1238,
+      "source_sha256": "443e8ea3dc36523c6e8d1244260f0fb34accb82972353000fbac6533b3d68969",
+      "stored_bytes": 1238,
+      "stored_sha256": "443e8ea3dc36523c6e8d1244260f0fb34accb82972353000fbac6533b3d68969",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "50-docker-build.log",
+      "source_path": "/tmp/mc002be-evidence/50-docker-build.log",
+      "source_bytes": 8761,
+      "source_sha256": "1e9a589e69ce46d0812140b75a9f930b6c1877cb0a79ae326d1ee98e58b73704",
+      "stored_bytes": 8761,
+      "stored_sha256": "1e9a589e69ce46d0812140b75a9f930b6c1877cb0a79ae326d1ee98e58b73704",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "51-image-manifest.log",
+      "source_path": "/tmp/mc002be-evidence/51-image-manifest.log",
+      "source_bytes": 230,
+      "source_sha256": "9480dbcbac23b979cad08ccf315310d3806df4a6f6cbbfc3ed5a16b2f1bc852d",
+      "stored_bytes": 230,
+      "stored_sha256": "9480dbcbac23b979cad08ccf315310d3806df4a6f6cbbfc3ed5a16b2f1bc852d",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "60-api-run1.log",
+      "source_path": "/tmp/mc002be-evidence/60-api-run1.log",
+      "source_bytes": 669,
+      "source_sha256": "5852d2be03555c13bc4a83ea4f4cd2289065c052fe9cb1852be7fcbb100ff16c",
+      "stored_bytes": 669,
+      "stored_sha256": "5852d2be03555c13bc4a83ea4f4cd2289065c052fe9cb1852be7fcbb100ff16c",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "60-api-run1.pid",
+      "source_path": "/tmp/mc002be-evidence/60-api-run1.pid",
+      "source_bytes": 6,
+      "source_sha256": "e0716dcd75c954ad5773a438b77e3015d9373309f5265249e414a5761a6b47f7",
+      "stored_bytes": 6,
+      "stored_sha256": "e0716dcd75c954ad5773a438b77e3015d9373309f5265249e414a5761a6b47f7",
+      "credential_redactions": 0,
+      "kind": "pid record"
+    },
+    {
+      "file": "60-api-run1.stdout.log",
+      "source_path": "/tmp/mc002be-evidence/60-api-run1.stdout.log",
+      "source_bytes": 2489,
+      "source_sha256": "7a3cd31e8e7e56ec8139c89b5b2cb222a33ac28e8ed0163618c45f564ce042e0",
+      "stored_bytes": 2489,
+      "stored_sha256": "7a3cd31e8e7e56ec8139c89b5b2cb222a33ac28e8ed0163618c45f564ce042e0",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "61-api-checks.log",
+      "source_path": "/tmp/mc002be-evidence/61-api-checks.log",
+      "source_bytes": 3881,
+      "source_sha256": "73156cc92edbd7c02d27ef3d90ee4bde1ea880b6595c818bae634c08c99b08d6",
+      "stored_bytes": 3881,
+      "stored_sha256": "73156cc92edbd7c02d27ef3d90ee4bde1ea880b6595c818bae634c08c99b08d6",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "62-db-state-during-api.log",
+      "source_path": "/tmp/mc002be-evidence/62-db-state-during-api.log",
+      "source_bytes": 6,
+      "source_sha256": "c1af9a83a8702d63cc512abf367636bb0ca3c7098c32a05f149e72592dee332e",
+      "stored_bytes": 6,
+      "stored_sha256": "c1af9a83a8702d63cc512abf367636bb0ca3c7098c32a05f149e72592dee332e",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "63-api-run2.log",
+      "source_path": "/tmp/mc002be-evidence/63-api-run2.log",
+      "source_bytes": 609,
+      "source_sha256": "ff6cf5adedd1108d1280b275d37066456f67048a40c5086667e342d29910d072",
+      "stored_bytes": 609,
+      "stored_sha256": "ff6cf5adedd1108d1280b275d37066456f67048a40c5086667e342d29910d072",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "63-api-run2.pid",
+      "source_path": "/tmp/mc002be-evidence/63-api-run2.pid",
+      "source_bytes": 6,
+      "source_sha256": "1e81762cbf766e17a1946f5eb927872067b6eb5ee611f44f667ccfcf0c2f6baa",
+      "stored_bytes": 6,
+      "stored_sha256": "1e81762cbf766e17a1946f5eb927872067b6eb5ee611f44f667ccfcf0c2f6baa",
+      "credential_redactions": 0,
+      "kind": "pid record"
+    },
+    {
+      "file": "63-api-run2.stdout.log",
+      "source_path": "/tmp/mc002be-evidence/63-api-run2.stdout.log",
+      "source_bytes": 1575,
+      "source_sha256": "35a6ec8a57ad15202d1da82ef3ebb65d01efb6ea393faf464fa4719aa0b7de6e",
+      "stored_bytes": 1575,
+      "stored_sha256": "35a6ec8a57ad15202d1da82ef3ebb65d01efb6ea393faf464fa4719aa0b7de6e",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "64-db-down.log",
+      "source_path": "/tmp/mc002be-evidence/64-db-down.log",
+      "source_bytes": 2286,
+      "source_sha256": "4cf3a39233363818d8a24fa377b19fa7a5c9836bb3cc1bc113f1527a83310ce2",
+      "stored_bytes": 2286,
+      "stored_sha256": "4cf3a39233363818d8a24fa377b19fa7a5c9836bb3cc1bc113f1527a83310ce2",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "65-invalid-config.log",
+      "source_path": "/tmp/mc002be-evidence/65-invalid-config.log",
+      "source_bytes": 63,
+      "source_sha256": "57b89a5d2027fe29c5950bffae8dc3b447492cbab6dd7baa913f748bd53b2b7a",
+      "stored_bytes": 63,
+      "stored_sha256": "57b89a5d2027fe29c5950bffae8dc3b447492cbab6dd7baa913f748bd53b2b7a",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "66-pending-guard.log",
+      "source_path": "/tmp/mc002be-evidence/66-pending-guard.log",
+      "source_bytes": 320,
+      "source_sha256": "e38e63374843a2a56d843403a92b248775f72fb5cd7cd9c52ed367fd9f5a8089",
+      "stored_bytes": 320,
+      "stored_sha256": "e38e63374843a2a56d843403a92b248775f72fb5cd7cd9c52ed367fd9f5a8089",
+      "credential_redactions": 0,
+      "kind": "log"
+    },
+    {
+      "file": "70-cleanup-state.log",
+      "source_path": "/tmp/mc002be-evidence/70-cleanup-state.log",
+      "source_bytes": 81,
+      "source_sha256": "252f2062193cea2a84f1979219b31c28814d399b49d578710f992d166115040e",
+      "stored_bytes": 81,
+      "stored_sha256": "252f2062193cea2a84f1979219b31c28814d399b49d578710f992d166115040e",
+      "credential_redactions": 0,
+      "kind": "log"
+    }
+  ],
+  "test_package_counts": {
+    "40-make-test.log": {
+      "ok_packages": 11,
+      "no_test_packages": 5,
+      "per_test_skip_counts": "UNVERIFIED; neither -v nor -json output retained"
+    },
+    "41-make-check.log": {
+      "ok_packages": 11,
+      "no_test_packages": 5,
+      "per_test_skip_counts": "UNVERIFIED; neither -v nor -json output retained"
+    }
+  },
+  "redaction": "one actual local test DB password found in30-migrate-run1.log shell trace. Exported copy redacts it; original private /tmp file not exported. Source/stored hashes distinguish byte change. No evidence it entered Git or an external packet.",
+  "observations": [
+    "make test and make check exit0;11 ok packages and5 no-test packages each, not13 ok",
+    "Nonverbose go test output cannot prove absolute zero skipped tests; PG package ran and owner supplied disposable DSN",
+    "Invalid-config log has3 exit1 markers without command/error pairs; exact messages are owner assertions",
+    "Migration log run1 applies1..6; persisted rows0..6; run2 exit0 no apply lines; third run not separately retained",
+    "Runtime data-path DB-down500 vs approved MC503 unavailable+retryAfter is a confirmed template integration gap, not a changed contract",
+    "Owner report says escalated to Claude but no actual Claude return yet; actual architect review pending",
+    "Read-only host sees exact retained PG container exited0 and exact image ID; no listener18091/15455; no resources altered",
+    "Owner claim no credentials in retained logs is false for original30 file; only sanitized exports enter review/Git",
+    "FreshSchemaDSN does not prove every test isolates; shared-table synthetic race residue explicitly recorded"
+  ],
+  "proposed_status": "IN_REVIEW pending actual independent QA and Claude finding disposition",
+  "local_redaction_followup": {
+    "files": [
+      "30-migrate-run1.log"
+    ],
+    "action": "Original task log sanitized in place after original-hash guard; all nonsecret evidence retained; no container/global credential change",
+    "original_value_exported": false
+  },
+  "egress_scope": "Codex packets/Git contain only sanitized exports; original ZCode session transport was not audited"
+}

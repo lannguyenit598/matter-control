@@ -5,7 +5,7 @@ Codex orchestrates; the named external owners retain engineering responsibility.
 | Assignment | Actual execution / current state | Next packet |
 |---|---|---|
 | Claude architecture | Actual authored/corrected15 files; independent document review PASS; no runtime certification | Existing architecture and exact final manifests; review any architecture-impacting owner finding before ADR edits |
-| ZCode MC-002-BE | Host app valid; CLI0.17.0 synthetic task exits1 missing packaged provider config; no owner audit/build | [FULL manual prompt](handoffs/MC-002-ZCODE-PROMPT.md), PREPARED / WAITING_MANUAL_DISPATCH |
+| ZCode MC-002-BE | Manual native PoC returned; actual QA PASS_WITH_LIMITATIONS for characterization, R01/R02 evidence still open; actual Claude C01 disposition returned | [Focused recheck prompt](handoffs/MC-002-ZCODE-RECHECK-PROMPT.md), PREPARED / WAITING_MANUAL_DISPATCH for2 rechecks; not full acceptance |
 | Antigravity MC-002-FE | User returned manual local Node baseline:99unit/9E2E/build logs; source clean/pinned. Headless limitation remains historical route evidence | [Frontend intake](../reviews/step-02-frontend-intake.md); documentary corrections applied, final independent recheck PASS_WITH_LIMITATIONS (all7 actionable findings resolved); no whole-product/runtime-adapter approval |
 | OpenCode MC-002-VERIFY-021 | Actual review and final recheck PASS_WITH_LIMITATIONS,3Low closed, no replay | step-02-execution-report.md / step-02-poc-validation.md; actual returned report required |
 | OpenDesign | NOT_STARTED | Step03 not authorized |
@@ -16,3 +16,6 @@ Return task ID, actual tool/model/version, source/base/head/worktree/changed pat
 
 
 Frontend manual dispatch is now received; do not resend/rerun the original baseline prompt without a new reason. Existing requirement that both owner outputs and compatible approved integration seams precede integration is unchanged. Backend return intake is separate.
+
+
+Backend return now received and reviewed in step-02-backend-intake.md. Headless packaged-provider limitation remains historical route evidence, not a claim manual engineering never ran. Do not resend full baseline work: only R01/R02 need owner execution. Future503 implementation stays separate; no source change or integration scaffold approved by this receipt.
