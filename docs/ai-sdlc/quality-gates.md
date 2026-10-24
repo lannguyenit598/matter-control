@@ -10,7 +10,7 @@ A task is DONE only when all acceptance criteria pass with revision-specific evi
 
 For documentation-only bootstrap: structure, required fields, links and consistency are checked; code/runtime tests are N/A. Human review is still pending, so MC-000 is IN_REVIEW.
 
-For Step 00A: product direction and P0 baseline are already approved by direct PO instruction; do not request them again. Full source gate requires both A/B read and reconciled, original JTBD preserved, domain/priority/workflow conflicts identified and Step 01 inputs ready. Missing sources cannot be waived by an author structural PASS. Clarification work for Step 01 is distinct from approval of a material change.
+For Step 00A: product direction and P0 baseline are already approved by direct PO instruction; do not request them again. The [Step 00A.1 directive](step-00a1-request.md) replaces the former original-file gate: original A/B archival is optional. Stage completion requires the 12 criteria below; independent review remains Pending and is reported separately. This PO-defined stage gate permits Step 01 readiness while the documentation task stays IN_REVIEW; it does not waive the task DONE/independent review rule. Clarification work for Step 01 is distinct from approval of a material change.
 
 ## Gates
 
@@ -38,3 +38,20 @@ Select checks by actual change and risk; no meaningless tests that duplicate tri
 ## Exceptions
 
 Codex records exception ID, rationale, impacted requirements, risk, compensating evidence, owner and expiry. Human must approve material exceptions; never waive the explicit prohibition on self-approval, credentials in Git, or unapproved production release.
+
+## Step 00A exit criteria — SRC-00A1
+
+1. Official product identity confirmed.
+2. Canonical Product Context exists.
+3. Domain terminology documented.
+4. Seven JTBD preserved.
+5. Five State Dimensions documented.
+6. P0/P1/P2 capability baseline documented.
+7. Three Golden Workflows documented.
+8. Project Atlas specification created.
+9. Requirements Delta Analysis recorded.
+10. Open Business Decisions tracked.
+11. Risk Register updated.
+12. Step 01 input artifacts are usable.
+
+Evidence: [current validation](../testing/step-00a-validation.md). Structural checks and author semantic review are separate from independent review. Unformalized rules are TO_BE_ANALYZED_IN_STEP_01. Only a missing product-direction or approved-scope decision preventing BA constitutes a Step 01 context blocker; none was identified in this closure.

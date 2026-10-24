@@ -1,8 +1,8 @@
 # Project Atlas — Acquisition & Corporate Restructuring
 
-**SYNTHETIC_PROPOSAL / specification only.** Không phải dataset gốc từ Document A (chưa có), không phải seed code hoặc legal advice. Mọi tổ chức, người, sự kiện và deadline bên dưới đều hư cấu, không mô phỏng quy định của jurisdiction cụ thể.
+**SYNTHETIC_PROPOSAL / specification only.** Không phải bản khôi phục dataset gốc từ Document A, không phải seed code hoặc legal advice. Mọi tổ chức, người, sự kiện và deadline bên dưới đều hư cấu, không mô phỏng quy định của jurisdiction cụ thể.
 
-Source: SRC-00A / Task 6 quy định quy mô và tình huống. Các ID/quan hệ/nội dung mẫu do Codex đề xuất để chuẩn bị acceptance cases; domain rules vẫn phải chốt ở Step 01.
+Source: SRC-00A / Task 6 và SRC-00A1 §5.10 quy định quy mô và tình huống. Các ID/quan hệ/nội dung mẫu do Codex đề xuất để chuẩn bị acceptance cases; domain rules vẫn phải chốt ở Step 01.
 
 ## 1. Fixture frame
 
@@ -175,7 +175,7 @@ Snapshot baseline T-1 có DOC-03 v2 current/chưa review v3; DOC-05 v1 current/c
 | EVT-05 | 2026-06-14T16:00:00+07:00 | U-03 | Receipt added; FIL-02 enters Authority Review; RQ-10 PARTIALLY_VERIFIED | EV-10, EP-03 |
 | EVT-06 | 2026-06-15T08:00:00+07:00 | U-03 | First signature receipt; AC-06 COMPLETED; RQ-06 PARTIALLY_VERIFIED | EV-06, DOC-03 v3 |
 
-Baseline clarification: RQ-05 trước EVT-02 là COMPLETED/UNVERIFIED; AC-06 trước EVT-06 IN_PROGRESS; RQ-06 trước EVT-06 UNVERIFIED; RQ-10 trước EVT-05 UNVERIFIED, execution IN_PROGRESS. Đây là narrative snapshots, không phải replay implementation.
+Baseline clarification: FIL-02 tại T-1 là Package Preparation, IN_PROGRESS/UNVERIFIED; AC-10 tại T-1 IN_PROGRESS, chuyển WAITING khi nhận receipt/đợi authority tại EVT-05. RQ-05 trước EVT-02 là COMPLETED/UNVERIFIED; AC-06 trước EVT-06 IN_PROGRESS; RQ-06 trước EVT-06 UNVERIFIED; RQ-10 trước EVT-05 UNVERIFIED, execution IN_PROGRESS. Đây là narrative snapshots, không phải replay implementation.
 
 Candidate delta brief T-1 → T0: DD review completed; agreement version changed/reviewed but not fully signed; filing receipt received and waiting authority. RQ-04 vẫn là unresolved blocker được hiển thị dưới mục outstanding, **không gọi là newly created**. Cùng phạm vi/baseline/T0 phải cho cùng nội dung nghiệp vụ; formatting/order policy cần Step 01.
 
@@ -183,17 +183,17 @@ Candidate delta brief T-1 → T0: DD review completed; agreement version changed
 
 | Test ID | Tình huống / candidate expected observation | P0 coverage |
 |---|---|---|
-| AT-STATE | RQ-01 Completed + Verified khác RQ-02 Completed + Unverified; AC-04 Waiting vẫn READY, AC-05 Waiting + BLOCKED | 01, 05, 07 |
+| AT-STATE | RQ-01 Completed + Verified khác RQ-02 Completed + Unverified; AC-04 Waiting vẫn READY, AC-05 Waiting + BLOCKED | 01, 05, 07, 20 |
 | AT-BLOCK | Critical chain đủ bốn cạnh, blocker nguồn RQ-04 và milestone context nhìn thấy | 02, 03, 05, 09 |
 | AT-EVIDENCE | ER-02/04 missing khác attachment có sẵn; EV-06 thiếu chữ ký không thành VERIFIED | 06, 07, 15 |
-| AT-TIME | RQ-04/AC-04 OVERDUE tại T0; AC-05 DUE_SOON theo fixture; attention không bị gộp timing | 09, 11 |
+| AT-TIME | RQ-04/AC-04 OVERDUE tại T0; AC-05 DUE_SOON theo fixture; attention không bị gộp timing | 09, 11, 20 |
 | AT-DOC | DOC-03 v2 superseded, v3 current/partially signed; evidence giữ version reference | 15 |
 | AT-FILING | FIL-02 chờ EP-03 với receipt nhưng chưa approval; FIL-01 chưa nộp | 04, 16, 17 |
 | AT-HISTORY | Version, review, receipt và execution changes có actor/time/context | 08 |
 | AT-BRIEF | Delta T-1/T0 deterministic; thay đổi mới tách khỏi outstanding blocker | 19 |
-| AT-UX | Control Room nêu exceptions; Grid bulk edit hai Action hợp lệ; My Actions theo actor, contextual detail và keyboard; không tự ghi COMPLETED hàng loạt vượt rules | 03, 04, 09, 10, 11, 12 |
+| AT-UX | Control Room nêu exceptions; Grid bulk edit hai Action hợp lệ; inline editing một record; My Actions theo actor, contextual detail, keyboard và giảm context switching; không tự ghi COMPLETED hàng loạt vượt rules | 03, 04, 09, 10, 11, 12 |
 | AT-IO | Excel/CSV import specimen của cùng 24 records có typed IDs/relations; specimen lỗi reference/duplicate phải có phản hồi theo rule Step 01; Excel export giữ các state axes và version context | 01, 13, 14 |
-| AT-ROLE | Actor được phép xem/sửa/verify/export theo role matrix Step 01; actor ngoài quyền bị từ chối, không lộ dữ liệu qua Grid/export/brief | 18 |
+| AT-ROLE | Owner assignment có thể truy vết; My Actions phản ánh đúng người phụ trách; actor được phép xem/sửa/verify/export theo role matrix Step 01; actor ngoài quyền bị từ chối, không lộ dữ liệu qua Grid/export/brief | 18 |
 | AT-GW | Mở rộng snapshot bằng scenario progression để đi hết GW-01/02/03; snapshot T0 chưa chứng minh final resolution/approval | Toàn workflows |
 
 AT-UX/IO/ROLE là specification cho thao tác kiểm thử, chưa có UI, files import/export, quyền runtime hoặc kết quả PASS. DISPUTED/CANCELLED cũng chưa có positive fixture; Step 01 bổ sung negative/edge coverage, không nói Atlas đã bao phủ mọi transition.

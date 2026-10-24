@@ -4,13 +4,13 @@
 
 MatterControl is the Control Plane for High-Stakes Legal Work and the System of Operational Truth for Complex Legal Matters. Initial vertical: Transactions & Corporate Legal Work. Discovery is closed; do not reopen positioning.
 
-This repository holds governance and versioned evidence. The Product Owner has explicitly authorized Step 00A: Canonical Product Context, superseding the earlier proposed technical audit. Apply the Step 00 operating model. Product direction and the P0/P1/P2 capability baseline are approved inputs; do not ask for their approval again. Documents A/B are confirmed missing: never invent their contents or claim both briefs consolidated. Preserve Requirement versus Action and independent state axes. Step 00A permits product documentation only: no code, solution architecture, high-fidelity UI or deployment. Raise only real semantic, release-criteria or infrastructure trade-offs for additional approval.
+This repository holds governance and versioned evidence. The Product Owner has explicitly authorized Step 00A: Canonical Product Context, superseding the earlier proposed technical audit. Apply the Step 00 operating model. Product direction and the P0/P1/P2 capability baseline are approved inputs; do not ask for their approval again. Step 00A.1 confirms approved prompts as valid initial product context; originals A/B never existed in this initially empty repository/workspace. Archival is optional, not a Step 01 gate; never invent originals or claim direct verification. See docs/product/context-provenance.md. Preserve Requirement versus Action and independent state axes. Step 00A permits product documentation only: no code, solution architecture, high-fidelity UI or deployment. Raise only real semantic, release-criteria or infrastructure trade-offs for additional approval.
 
 ## Start and execution
 
 Read docs/ai-sdlc/project-status.md, your assigned task in docs/implementation/tasks/, and its input artifacts. Confirm actual repository, branch, base commit and allowed paths before work. Never overwrite existing changes. One owner per task; use isolated branches/worktrees when parallel work is authorized. Do not create additional agents merely because roles are listed here.
 
-Every task must record requirement IDs, owner, priority, scope, dependencies, inputs, outputs, acceptance criteria, tests, reviewer and completion evidence. Use BACKLOG → READY → IN_PROGRESS → IN_REVIEW → TESTING → DONE, with BLOCKED / REWORK_REQUIRED / WAITING_APPROVAL where appropriate. A report is not a completed review; no DONE without evidence and an independent reviewer.
+Every task must record requirement IDs, owner, priority, scope, dependencies, inputs, outputs, acceptance criteria, tests, reviewer and completion evidence. Use BACKLOG → READY → IN_PROGRESS → IN_REVIEW → TESTING → DONE, with BLOCKED / REWORK_REQUIRED / WAITING_APPROVAL where appropriate. A report is not a completed review; no DONE without evidence and an independent reviewer. Step 00A stage completion and Step 01 readiness follow the revised PO exit criteria; MC-00A remains IN_REVIEW while independent review is Pending.
 
 ## Official roles
 

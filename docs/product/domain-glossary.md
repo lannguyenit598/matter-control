@@ -1,7 +1,7 @@
 # Domain Glossary
 
-Source: SRC-00A / Task 1, 2, 3, 5; source documents A/B MISSING.
-**Định nghĩa bên dưới là WORKING_INTERPRETATION của BA, chưa reconcile với toàn văn legal addendum.** Đây là mô hình ngôn ngữ nghiệp vụ, không phải schema/API/architecture.
+Source: SRC-00A / Task 1, 2, 3, 5; validated against SRC-00A1 §5.3. [Provenance](context-provenance.md).
+**Định nghĩa bên dưới là diễn giải BA đã rà soát theo approved prompt context; rules chi tiết cần Step 01. Không direct verify A/B.** Đây là mô hình ngôn ngữ nghiệp vụ, không phải schema/API/architecture.
 
 | Thuật ngữ | Nghĩa làm việc | Ranh giới cần giữ | Baseline tier |
 |---|---|---|---|
@@ -39,4 +39,4 @@ Source: SRC-00A / Task 1, 2, 3, 5; source documents A/B MISSING.
 
 GW-01/GW-03 có Signature, GW-02 có Finding; Control Room có decisions; Atlas có partially signed document, 2 open decisions, findings và risk. Vì thế P0 phải biểu diễn được những tình huống này ở mức tối thiểu. Đây không phải chấp thuận triển khai toàn bộ signature tracking, structured decision engine hoặc advanced findings/risks của P1.
 
-Mức tối thiểu cụ thể chưa có A/B; ghi tại OBD-03. Không loại các tình huống P0, cũng không kéo trọn mô hình P1 vào MVP.
+Mức tối thiểu cụ thể là TO_BE_ANALYZED_IN_STEP_01 tại OBD-03. Không loại các tình huống P0, cũng không kéo trọn mô hình P1 vào MVP.

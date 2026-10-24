@@ -33,9 +33,9 @@ Detailed MVP success metrics and release dates are not set in this bootstrap. Co
 | Milestone | Deliverable | Exit condition | Current state |
 |---|---|---|---|
 | M0 / Step 00 | Governance and capability baseline | Structural checks plus Human review | IN_REVIEW |
-| M0A / Step 00A | Canonical Product Context under explicit PO instruction | Both briefs reconciled; baseline, workflows, dataset and Step 01 inputs documented | BLOCKED on missing A/B; partial artifacts prepared |
+| M0A / Step 00A | Canonical Product Context under explicit PO instruction | Twelve SRC-00A1 exit criteria; approved prompt context, workflows, dataset and usable Step 01 inputs | COMPLETED; MC-00A task IN_REVIEW, independent review Pending |
 | M1 | Approved requirements and architecture/design | Relevant quality gates pass | Not scheduled |
 | M2 | Implemented and verified MVP | Traceability, tests and independent review | Not scheduled |
 | M3 | Approved release and observation | Human go/no-go and release evidence | Not scheduled |
 
-Step 00A scope is now defined by the [Product Owner request](step-00a-request.md) and [rebaseline](scope-rebaseline.md), replacing the earlier unapproved technical-audit proposal. Product direction and all P0 capabilities are already approved; missing A/B source inputs do not reopen product discovery.
+Step 00A scope is now defined by the [Product Owner request](step-00a-request.md) and [rebaseline](scope-rebaseline.md), replacing the earlier unapproved technical-audit proposal. Product direction and all P0 capabilities are already approved; original A/B archival is optional under Step 00A.1 and does not block Step 01.

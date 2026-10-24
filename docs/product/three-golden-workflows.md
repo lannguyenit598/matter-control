@@ -52,6 +52,8 @@ Atlas: WS-05/06, FIL-01/02, DOC-05, EP-03. P0 chính: 01–09, 15–19.
 
 ## Common acceptance dimensions
 
+REQ-MC-P0-20 (Separate State Dimensions) áp dụng xuyên suốt cả ba workflows, trace AT-STATE/AT-TIME trong Atlas.
+
 Mỗi workflow cần test execution/verification separation, dependencies, overdue/missing evidence, permissions, history, contextual navigation và deterministic delta. Các bước signature, payment, transfer là việc theo dõi vận hành; không mặc định sản phẩm tự ký, chuyển tiền hoặc nộp hồ sơ qua API bên ngoài.
 
 | Mức | Coverage cần công khai |

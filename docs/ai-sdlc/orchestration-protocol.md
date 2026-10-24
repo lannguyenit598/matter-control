@@ -56,4 +56,4 @@ On unavailable tool, auth, packaging or permission error: retain the error evide
 
 ## Step 00 boundary
 
-No external task completed successfully during bootstrap. No GUI task was dispatched. The Product Owner subsequently authorized Step 00A as Canonical Product Context; see scope-rebaseline.md. That authorization does not dispatch external agents or approve architecture/deployment. Full A/B consolidation remains blocked on missing sources.
+No external task completed successfully during bootstrap. No GUI task was dispatched. The Product Owner subsequently authorized Step 00A as Canonical Product Context; see scope-rebaseline.md. That authorization does not dispatch external agents or approve architecture/deployment. Step 00A.1 accepts approved prompts as the baseline and makes original archival optional. Direct A/B comparison is unperformed, not a Step 01 blocker; see context-provenance.md in docs/product/.

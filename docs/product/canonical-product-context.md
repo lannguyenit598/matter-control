@@ -1,7 +1,7 @@
 # MatterControl — Canonical Product Context
 
 Owner: Codex — BA / Product Requirements Owner / PM. Date: 2026-10-24.
-**Status: PARTIAL_SOURCE_BASELINE. Product direction và capability baseline được chấp thuận; việc hợp nhất A/B chưa hoàn tất vì thiếu cả hai nguồn.**
+**Status: VALIDATED_AGAINST_APPROVED_PROMPT_CONTEXT. Step 00A: COMPLETED; Step 01: READY_FOR_BUSINESS_ANALYSIS.**
 
 ## 1. Provenance và quyền ưu tiên
 
@@ -9,11 +9,11 @@ Owner: Codex — BA / Product Requirements Owner / PM. Date: 2026-10-24.
 |---|---|---|
 | SRC-00 | [Step 00](../ai-sdlc/step-00-request.md) | Identity, vertical, templates, Cloudflare constraints và team |
 | SRC-00A | [Step 00A](../ai-sdlc/step-00a-request.md) | Chỉ thị hiện hành; P0/P1/P2 và product direction đã được PO chấp thuận |
-| SRC-A | [Document A](source-brief.md) | MISSING; không có full text để đọc hoặc trích dẫn |
-| SRC-B | [Document B](product-reality-addendum.md) | MISSING; PO quy định B ưu tiên A về legal semantics và capability priorities |
-| SRC-CHAT-01 | Trả lời của PO trong chat: “chưa có” | Xác nhận thiếu A/B; không phải yêu cầu bỏ gate hợp nhất |
+| SRC-A | [Document A](source-brief.md) | ORIGINAL_BRIEFS_NOT_IN_REPOSITORY_BY_DESIGN; không trực tiếp verify bản gốc |
+| SRC-B | [Document B](product-reality-addendum.md) | ORIGINAL_BRIEFS_NOT_IN_REPOSITORY_BY_DESIGN; B ưu tiên A về legal semantics/capability priorities khi đối chiếu bổ sung |
+| SRC-00A1 | [Step 00A.1](../ai-sdlc/step-00a1-request.md) | PRODUCT_CONTEXT_PROVIDED_VIA_APPROVED_PROMPTS; xác nhận nguồn hợp lệ, seven JTBD và exit criteria |
 
-Phân biệt: **APPROVED_INPUT** = nội dung trực tiếp từ chỉ thị; **WORKING_INTERPRETATION** = diễn giải BA cần reconcile; **SYNTHETIC_PROPOSAL** = fixture/acceptance example; **UNRESOLVED** = thiếu thông tin. Không coi mọi câu trong tài liệu này là trích dẫn từ A/B.
+Phân biệt: **APPROVED_INPUT** = nội dung trực tiếp từ chỉ thị; **WORKING_INTERPRETATION** = diễn giải BA; rules chi tiết cần Step 01; **SYNTHETIC_PROPOSAL** = fixture/acceptance example; **UNRESOLVED** = thiếu thông tin. Không coi mọi câu trong tài liệu này là trích dẫn từ A/B.
 
 ## 2. Product identity — APPROVED_INPUT
 
@@ -26,9 +26,21 @@ Phân biệt: **APPROVED_INPUT** = nội dung trực tiếp từ chỉ thị; **
 
 ## 3. JTBD và operational thesis
 
-**Core JTBD nguyên bản: UNRESOLVED — cần Document A.** Không tự viết một JTBD mới rồi gán là bản đã được chấp thuận.
+Seven Core JTBD dưới đây là APPROVED_INPUT từ SRC-00A1 §5.2, không gán ngược cho bản gốc A. Trace IDs tham chiếu [capability register](../requirements/p0-p1-p2-priorities.md); AT-* là acceptance candidates trong Atlas, chưa chạy.
 
-Diễn giải vận hành từ positioning hiện có: đội legal/transaction cần biết matter đang ở đâu, việc nào cần làm tiếp, đang chờ ai/điều gì, phụ thuộc nào gây chặn, bằng chứng nào còn thiếu, quyết định nào cần xử lý và điều gì đã thay đổi. Đây là WORKING_INTERPRETATION, không thay thế core JTBD.
+| ID | Approved JTBD | Capability trace | Atlas candidate |
+|---|---|---|---|
+| JTBD-01 | Understand current state. | REQ-MC-P0-09, REQ-MC-P0-20 | AT-STATE, AT-TIME, AT-UX |
+| JTBD-02 | Identify blockers. | REQ-MC-P0-05, REQ-MC-P0-09 | AT-BLOCK |
+| JTBD-03 | Know the next action. | REQ-MC-P0-03, REQ-MC-P0-10 | AT-UX |
+| JTBD-04 | Track dependencies. | REQ-MC-P0-05 | AT-STATE, AT-BLOCK |
+| JTBD-05 | Prove completion. | REQ-MC-P0-01, REQ-MC-P0-06, REQ-MC-P0-07, REQ-MC-P0-15 | AT-EVIDENCE, AT-DOC |
+| JTBD-06 | Preserve history. | REQ-MC-P0-08, REQ-MC-P0-15 | AT-HISTORY |
+| JTBD-07 | Report progress. | REQ-MC-P0-14, REQ-MC-P0-19 | AT-IO, AT-BRIEF |
+
+Core value: understand current matter state, identify blockers, know next actions, track dependencies, understand Waiting On, verify evidence, track decisions, preserve change history, generate status updates và reduce operational uncertainty.
+
+MatterControl không phải generic task manager, legal-themed Jira, spreadsheet replacement đơn thuần, virtual data room, legal AI chatbot hoặc generic workflow builder.
 
 Các nguyên tắc trực tiếp từ SRC-00A: operational state thesis; evidence-based verification; deterministic reporting; Event History; Requirement khác Action; không dùng generic metadata blob thay domain semantics. COMPLETED không mặc định đồng nghĩa VERIFIED.
 
@@ -42,7 +54,7 @@ Các tập giá trị dưới đây là APPROVED_INPUT; mô tả ý nghĩa là W
 |---|---|---|
 | Execution State | NOT_STARTED / IN_PROGRESS / WAITING / COMPLETED / CANCELLED | Tiến độ thực thi; làm rõ đối tượng áp dụng, quyền chuyển, reopen và cancellation propagation |
 | Verification State | NOT_REQUIRED / UNVERIFIED / PARTIALLY_VERIFIED / VERIFIED / DISPUTED | Mức chứng minh so với tiêu chí; ai xác minh, tính đầy đủ, dispute và version nào được công nhận |
-| Dependency State | READY / BLOCKED | Sẵn sàng theo điều kiện tiên quyết; ưu tiên computed, chưa chốt AND/OR, cycle, override hay loại gate |
+| Dependency State | READY / BLOCKED | Sẵn sàng theo điều kiện tiên quyết; phải được xác định bằng business logic, không chỉ trang trí UI; AND/OR, cycle, override và loại gate cần Step 01 |
 | Timing State | ON_TRACK / DUE_SOON / OVERDUE | Quan hệ với mốc thời gian; cần timezone, ngưỡng due-soon, ngày không có deadline và calendar rules |
 | Attention State | NORMAL / ATTENTION / CRITICAL | Mức cần chú ý; cần công thức, quyền override và ảnh hưởng từ blocker/risk |
 
@@ -61,12 +73,12 @@ Ví dụ fixture: COMPLETED + UNVERIFIED; WAITING + READY (chờ bên ngoài, kh
 
 ## 6. Capability / workflow / UX baseline
 
-Full Operational MVP bao gồm toàn bộ **19 P0 capabilities**, và ba acceptance targets:
+Full Operational MVP bao gồm toàn bộ **20 P0 capabilities**, và ba acceptance targets:
 [GW-01 Transaction / Restructuring, GW-02 Due Diligence, GW-03 Regulatory Filing](three-golden-workflows.md).
 
-Control Room phục vụ comprehension, exception management, blockers, milestones và decisions. Operational Grid phục vụ execution, dữ liệu dày, bulk edit, import/export và power users. My Actions, Waiting On, contextual details, Dependency View, document version awareness và Delta-based Status Brief bổ trợ nhau.
+Matter Control Room giúp Manager hiểu current matter state, critical blockers, next actions, Waiting On, upcoming milestones, missing evidence, decisions và recent changes. Operational Grid giúp Contributor xử lý nhiều records, bulk actions, inline editing, import trackers, export tables, keyboard navigation và giảm context switching. My Actions, Waiting On, contextual details, Dependency View, document version awareness và Delta-based Status Brief bổ trợ nhau.
 
-Desktop-first; mobile hỗ trợ thao tác phù hợp, không mặc định full parity. Ưu tiên usability, correctness và keyboard efficiency. Chưa thiết kế high-fidelity UI hoặc chọn component/layout. Không biến sản phẩm thành generic task tracker hay dashboard chỉ để trình diễn.
+Desktop-first; responsive/mobile hỗ trợ workflows phù hợp, không mặc định full parity. UX quality là hiểu công việc nhanh hơn và giảm sai sót; không đo bằng số animation. Ưu tiên usability, correctness và keyboard efficiency. Chưa thiết kế high-fidelity UI hoặc chọn component/layout. Không biến sản phẩm thành generic task tracker hay dashboard chỉ để trình diễn.
 
 ## 7. Milestones phát hành sản phẩm
 
@@ -89,7 +101,6 @@ Chưa xác minh feasibility. Go/PostgreSQL xuất hiện trong yêu cầu delta;
 ## 9. Readiness / giới hạn
 
 [Project Atlas](project-atlas-dataset.md) là specification tổng hợp synthetic, không phải nội dung được khôi phục từ A.
-[Delta analysis](../requirements/requirements-delta-analysis.md) hiện là khung đối chiếu, không phải kết luận đã so sánh hai nguồn.
+[Delta analysis](../requirements/requirements-delta-analysis.md) ghi delta theo approved prompts; không phải kết luận đã so sánh trực tiếp A/B.
 
-**Step 01: PARTIAL_INPUTS_AVAILABLE; full entry gate BLOCKED bởi SRC-A/SRC-B.**
-Có thể dùng baseline đã chấp thuận để chuẩn bị danh sách câu hỏi; chưa được nói core JTBD và hai briefs đã consolidated. Các quyết định chi tiết được phân loại ở [open decisions](../requirements/open-business-decisions.md).
+**Step 01: READY_FOR_BUSINESS_ANALYSIS.** Các inputs đã đáp ứng exit criteria SRC-00A1; không có blocker product direction/approved scope. [Provenance](context-provenance.md) ghi rõ originals optional và chưa direct verification A/B. Rules chi tiết là TO_BE_ANALYZED_IN_STEP_01 trong [open decisions](../requirements/open-business-decisions.md); technical design ở Step 02. Independent review Pending không được trình bày là đã pass. Dừng tại readiness, không tự thực hiện Step 01.

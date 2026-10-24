@@ -22,24 +22,24 @@ Future rows must link actual test cases/results, PR/reviewer decisions and relea
 
 ## Step 00A artifact traceability
 
-Source: SRC-00A; task: [MC-00A](../implementation/tasks/MC-00A.md); tests: [S00A report](../testing/step-00a-validation.md); review: [REV-00A](../reviews/step-00a-review.md) NOT_RUN. Runtime release: N/A, documentation only.
+Source: SRC-00A + SRC-00A1; task: [MC-00A](../implementation/tasks/MC-00A.md); tests: [S00A report](../testing/step-00a-validation.md); review: [REV-00A](../reviews/step-00a-review.md) NOT_RUN. Runtime release: N/A, documentation only.
 
 | Requirement | Artifact | Check | Remaining gate |
 |---|---|---|---|
-| REQ-S00A-001 | source-brief.md | S00A-01 / S00A-SOURCE | A missing; full-text intake blocked |
-| REQ-S00A-002 | product-reality-addendum.md | S00A-01 / S00A-SOURCE | B missing; full-text intake blocked |
-| REQ-S00A-003 | canonical-product-context.md | S00A-02 / S00A-SOURCE | JTBD/reconciliation blocked |
-| REQ-S00A-004 | domain-glossary.md + canonical state axes | S00A-02 / S00A-DOMAIN | Legal-source reconciliation blocked |
-| REQ-S00A-005 | three-golden-workflows.md | S00A-04 | Detailed criteria Step 01; execution NOT_RUN |
-| REQ-S00A-006 | project-atlas-dataset.md | S00A-05 | Synthetic proposal; no runtime fixtures/tests |
-| REQ-S00A-007 | requirements-delta-analysis.md | S00A-06 / S00A-SOURCE | Actual comparison blocked |
-| REQ-S00A-008 | p0-p1-p2-priorities.md | S00A-03 | No implementation acceptance yet |
-| REQ-S00A-009 | open-business-decisions.md | S00A-06 | Decisions/clarifications remain open |
-| REQ-S00A-010 | scope-rebaseline.md + status/risk/decision records | S00A-07 | Full Step 01 entry NOT_READY |
+| REQ-S00A-001 | source-brief.md + context-provenance.md | S00A1-01 / S00A1-SEM | Original A archival optional, not directly verified |
+| REQ-S00A-002 | product-reality-addendum.md + context-provenance.md | S00A1-01 / S00A1-SEM | Original B archival optional, not directly verified |
+| REQ-S00A-003 | canonical-product-context.md | S00A1-02 / S00A1-SEM | Seven JTBD traced below and in canonical §3; rules Step 01 |
+| REQ-S00A-004 | domain-glossary.md + canonical state axes | S00A1-02 / S00A1-SEM | Detailed domain rules Step 01 |
+| REQ-S00A-005 | three-golden-workflows.md | S00A1-04 | Detailed criteria Step 01; execution NOT_RUN |
+| REQ-S00A-006 | project-atlas-dataset.md | S00A1-05 | Synthetic proposal; no runtime fixtures/tests |
+| REQ-S00A-007 | requirements-delta-analysis.md | S00A1-06 / S00A1-SEM | Prompt-based delta recorded; original comparison optional |
+| REQ-S00A-008 | p0-p1-p2-priorities.md | S00A1-03 | No implementation acceptance yet |
+| REQ-S00A-009 | open-business-decisions.md | S00A1-06 | Decisions/clarifications remain open |
+| REQ-S00A-010 | scope-rebaseline.md + status/risk/decision records | S00A1-07 / S00A1-SEM | Stage COMPLETED; Step 01 READY_FOR_BUSINESS_ANALYSIS |
 
 ## P0 capability to candidate acceptance
 
-For every row: source = SRC-00A Task 3; specification task = MC-00A; implementation task = NOT_PLANNED (Step 00A forbids code); test results = NOT_RUN; review = REV-00A pending; runtime release evidence = PENDING, no product release.
+For every row: source = SRC-00A Task 3 + SRC-00A1 §5; specification task = MC-00A; implementation task = NOT_PLANNED (Step 00A forbids code); test results = NOT_RUN; review = REV-00A pending; runtime release evidence = PENDING, no product release.
 
 | Capability requirement | Atlas acceptance candidate | Workflow / UX context |
 |---|---|---|
@@ -60,7 +60,10 @@ For every row: source = SRC-00A Task 3; specification task = MC-00A; implementat
 | REQ-MC-P0-15 | AT-DOC / AT-EVIDENCE | Document/version awareness |
 | REQ-MC-P0-16 | AT-FILING / AT-GW | GW-03 filing lifecycle |
 | REQ-MC-P0-17 | AT-FILING | External party waiting |
-| REQ-MC-P0-18 | AT-ROLE | Simple roles and permissions |
+| REQ-MC-P0-18 | AT-ROLE | Simple roles, ownership and permissions |
 | REQ-MC-P0-19 | AT-BRIEF | Delta-based Status Brief |
+| REQ-MC-P0-20 | AT-STATE / AT-TIME | All workflows; five independent dimensions |
 
-P1/P2 baseline IDs: all 14 REQ-MC-P1 and 7 REQ-MC-P2 rows in the priority register trace to SRC-00A Task 3 and MC-00A/S00A-03 for faithful classification. Implementation tasks, product tests, implementation reviews and release evidence are DEFERRED because these capabilities are outside the approved P0 MVP. REV-00A still covers their documentation. No inferred DONE status.
+P1/P2 baseline IDs: all 14 REQ-MC-P1 and 7 REQ-MC-P2 rows in the priority register trace to SRC-00A Task 3 and SRC-00A1 §5.6/5.7 and MC-00A/S00A1-03 for faithful classification. Implementation tasks, product tests, implementation reviews and release evidence are DEFERRED because these capabilities are outside the approved P0 MVP. REV-00A still covers their documentation. No inferred DONE status.
+
+Seven JTBD trace: [canonical §3](../product/canonical-product-context.md) maps JTBD-01..07 to stable REQ-MC IDs and Atlas candidates. Source SRC-00A1 §5.2 → MC-00A → S00A1-02 / S00A1-SEM → REV-00A Pending; no implementation task or runtime release claimed.

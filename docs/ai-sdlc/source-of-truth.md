@@ -19,7 +19,7 @@ Git is the canonical record for text, instructions, contracts, exported design m
 
 Empty future domains contain README boundaries, not invented implementation documents.
 
-Root AGENTS.md is the shared project instruction source; CLAUDE.md adds architect-specific context. Structured task files are the canonical task status records; project-status.md is a derived dashboard and must match them.
+Root AGENTS.md is the shared project instruction source; CLAUDE.md adds architect-specific context. Structured task files are the canonical task status records; project-status.md is a derived dashboard and must match them. Stage completion/readiness is distinct from task DONE: per SRC-00A1, Step 00A is COMPLETED while MC-00A remains IN_REVIEW pending independent review. [Context provenance](../product/context-provenance.md) identifies approved prompts as the valid initial product source; original A/B archival is optional.
 
 The two supplied template repositories remain separate sources. Pin their exact commits in a separately assigned technical baseline task; Step 00A now consolidates product context. A cross-repository task records every repo/head in its return packet; release manifests identify the complete tested combination.
 
