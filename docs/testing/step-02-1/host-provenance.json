@@ -1,0 +1,145 @@
+{
+  "task_id": "MC-002-RECOVERY",
+  "checked_at_utc": "2026-10-24T14:08:22.838467+00:00",
+  "environment": "host verification, no product executable run",
+  "checks": [
+    {
+      "target": "/Applications/ZCode.app",
+      "command": [
+        "rtk",
+        "proxy",
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "--verbose=2",
+        "/Applications/ZCode.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "--prepared:/Applications/ZCode.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/.\n--prepared:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper.app\n--prepared:/Applications/ZCode.app/Contents/Frameworks/Squirrel.framework/Versions/Current/.\n--validated:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper.app\n--validated:/Applications/ZCode.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/.\n--prepared:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper (GPU).app\n--validated:/Applications/ZCode.app/Contents/Frameworks/Squirrel.framework/Versions/Current/.\n--validated:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper (GPU).app\n--prepared:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper (Plugin).app\n--prepared:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper (Renderer).app\n--validated:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper (Plugin).app\n--prepared:/Applications/ZCode.app/Contents/Frameworks/Mantle.framework/Versions/Current/.\n--validated:/Applications/ZCode.app/Contents/Frameworks/ZCode Helper (Renderer).app\n--validated:/Applications/ZCode.app/Contents/Frameworks/Mantle.framework/Versions/Current/.\n--prepared:/Applications/ZCode.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/.\n--prepared:/Applications/ZCode.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Helpers/chrome_crashpad_handler\n--validated:/Applications/ZCode.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Helpers/chrome_crashpad_handler\n--validated:/Applications/ZCode.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/.\n/Applications/ZCode.app: valid on disk\n/Applications/ZCode.app: satisfies its Designated Requirement\n"
+    },
+    {
+      "target": "/Applications/ZCode.app",
+      "command": [
+        "rtk",
+        "proxy",
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Applications/ZCode.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Executable=/Applications/ZCode.app/Contents/MacOS/ZCode\nIdentifier=dev.zcode.app\nFormat=app bundle with Mach-O thin (arm64)\nCodeDirectory v=20500 size=441 flags=0x10000(runtime) hashes=3+7 location=embedded\nVersionPlatform=1\nVersionMin=786432\nVersionSDK=1704448\nHash type=sha256 size=32\nCandidateCDHash sha256=ee1a0dcefab5ebc612bec3494d3d208ec2242f9b\nCandidateCDHashFull sha256=ee1a0dcefab5ebc612bec3494d3d208ec2242f9ba7453b50cefeed777151bd33\nHash choices=sha256\nCMSDigest=ee1a0dcefab5ebc612bec3494d3d208ec2242f9ba7453b50cefeed777151bd33\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=16384\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=ee1a0dcefab5ebc612bec3494d3d208ec2242f9b\nSignature size=9075\nAuthority=Developer ID Application: Beijing Knowledge Atlas Technology Joint Stock Company Limited (8A5X4JJ39T)\nAuthority=Developer ID Certification Authority\nAuthority=Apple Root CA\nTimestamp=23 Oct 2026 at 09:57:01\nInfo.plist entries=34\nTeamIdentifier=8A5X4JJ39T\nRuntime Version=26.2.0\nSealed Resources version=2 rules=13 files=1060\nInternal requirements count=1 size=176\nTotal signatures=1\nChosen signature=1\n"
+    },
+    {
+      "target": "/Applications/ZCode.app",
+      "command": [
+        "rtk",
+        "proxy",
+        "spctl",
+        "--assess",
+        "--type",
+        "execute",
+        "--verbose=4",
+        "/Applications/ZCode.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/Applications/ZCode.app: accepted\nsource=Notarized Developer ID\n"
+    },
+    {
+      "target": "/Applications/Antigravity.app",
+      "command": [
+        "rtk",
+        "proxy",
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "--verbose=2",
+        "/Applications/Antigravity.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "--prepared:/Applications/Antigravity.app/Contents/Frameworks/Squirrel.framework/Versions/Current/.\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper.app\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper.app\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper (Plugin).app\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Squirrel.framework/Versions/Current/.\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/Mantle.framework/Versions/Current/.\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper (Plugin).app\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper (GPU).app\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper (Renderer).app\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Mantle.framework/Versions/Current/.\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper (GPU).app\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Antigravity Helper (Renderer).app\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/.\n--validated:/Applications/Antigravity.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/.\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/.\n--prepared:/Applications/Antigravity.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Helpers/chrome_crashpad_handler\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Helpers/chrome_crashpad_handler\n--validated:/Applications/Antigravity.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/.\n/Applications/Antigravity.app: valid on disk\n/Applications/Antigravity.app: satisfies its Designated Requirement\n"
+    },
+    {
+      "target": "/Applications/Antigravity.app",
+      "command": [
+        "rtk",
+        "proxy",
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Applications/Antigravity.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Executable=/Applications/Antigravity.app/Contents/MacOS/Antigravity\nIdentifier=com.google.antigravity\nFormat=app bundle with Mach-O thin (arm64)\nCodeDirectory v=20500 size=450 flags=0x10000(runtime) hashes=3+7 location=embedded\nVersionPlatform=1\nVersionMin=851968\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=4f064044190be262528cda2cd9f76001d190676f\nCandidateCDHashFull sha256=4f064044190be262528cda2cd9f76001d190676f9b4b09c8caba846ba584d501\nHash choices=sha256\nCMSDigest=4f064044190be262528cda2cd9f76001d190676f9b4b09c8caba846ba584d501\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=16384\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=4f064044190be262528cda2cd9f76001d190676f\nSignature size=8991\nAuthority=Developer ID Application: Google LLC (EQHXZ8M8AV)\nAuthority=Developer ID Certification Authority\nAuthority=Apple Root CA\nTimestamp=23 Oct 2026 at 05:08:30\nNotarization Ticket=stapled\nInfo.plist entries=33\nTeamIdentifier=EQHXZ8M8AV\nRuntime Version=26.5.0\nSealed Resources version=2 rules=13 files=361\nInternal requirements count=1 size=184\nTotal signatures=1\nChosen signature=1\n"
+    },
+    {
+      "target": "/Applications/Antigravity.app",
+      "command": [
+        "rtk",
+        "proxy",
+        "spctl",
+        "--assess",
+        "--type",
+        "execute",
+        "--verbose=4",
+        "/Applications/Antigravity.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/Applications/Antigravity.app: accepted\nsource=Notarized Developer ID\n"
+    },
+    {
+      "target": "/Users/nguyenvanlan/.local/bin/agy",
+      "command": [
+        "rtk",
+        "proxy",
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "--verbose=2",
+        "/Users/nguyenvanlan/.local/bin/agy"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/Users/nguyenvanlan/.local/bin/agy: valid on disk\n/Users/nguyenvanlan/.local/bin/agy: satisfies its Designated Requirement\n"
+    },
+    {
+      "target": "/Users/nguyenvanlan/.local/bin/agy",
+      "command": [
+        "rtk",
+        "proxy",
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/nguyenvanlan/.local/bin/agy"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Executable=/Users/nguyenvanlan/.local/bin/agy\nIdentifier=cli\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20500 size=374767 flags=0x10000(runtime) hashes=11706+2 location=embedded\nVersionPlatform=1\nVersionMin=786432\nVersionSDK=1704960\nHash type=sha256 size=32\nCandidateCDHash sha256=69fbe465793ec4b87482438f1d6d184bcfe4db9d\nCandidateCDHashFull sha256=69fbe465793ec4b87482438f1d6d184bcfe4db9df11809d67d90407b92a29d4a\nHash choices=sha256\nCMSDigest=69fbe465793ec4b87482438f1d6d184bcfe4db9df11809d67d90407b92a29d4a\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=136331264\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=69fbe465793ec4b87482438f1d6d184bcfe4db9d\nSignature size=8990\nAuthority=Developer ID Application: Google LLC (EQHXZ8M8AV)\nAuthority=Developer ID Certification Authority\nAuthority=Apple Root CA\nTimestamp=24 Oct 2026 at 08:50:03\nInfo.plist=not bound\nTeamIdentifier=EQHXZ8M8AV\nRuntime Version=26.4.0\nSealed Resources=none\nInternal requirements count=1 size=164\nTotal signatures=1\nChosen signature=1\n"
+    },
+    {
+      "target": "/Users/nguyenvanlan/.local/bin/agy",
+      "command": [
+        "rtk",
+        "proxy",
+        "spctl",
+        "--assess",
+        "--type",
+        "execute",
+        "--verbose=4",
+        "/Users/nguyenvanlan/.local/bin/agy"
+      ],
+      "exit_code": 3,
+      "stdout": "",
+      "stderr": "/Users/nguyenvanlan/.local/bin/agy: rejected (the code is valid but does not seem to be an app)\n"
+    }
+  ]
+}

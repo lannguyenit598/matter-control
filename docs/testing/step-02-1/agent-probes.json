@@ -1,0 +1,50 @@
+{
+  "task_id": "MC-002-RECOVERY",
+  "timestamp_utc": "2026-10-24T14:09:50.639664+00:00",
+  "cwd": "/tmp/mattercontrol-step021-agent-probe",
+  "synthetic_only": true,
+  "invocations": [
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "/Users/nguyenvanlan/.local/bin/agy",
+        "--mode",
+        "plan",
+        "--sandbox",
+        "--disable-slash-commands",
+        "--output-format",
+        "json",
+        "--print-timeout",
+        "45s",
+        "-p",
+        "Synthetic connectivity probe only. Do not read files, call tools, inspect settings, or perform work. Reply exactly MC021-AGY-ACK."
+      ],
+      "exit_code": 0,
+      "elapsed_s": 8.647,
+      "stdout": "{\"conversation_id\":\"846c789b-d526-47be-9dfe-a59d7db07f93\",\"status\":\"SUCCESS\",\"response\":\"MC021-AGY-ACK\\n\",\"duration_seconds\":4.510169,\"num_turns\":1,\"usage\":{\"input_tokens\":14441,\"output_tokens\":107,\"thinking_tokens\":98,\"cache_read_tokens\":0,\"total_tokens\":14548}}\n",
+      "stderr": "warning: --mode plan has no effect while slash command expansion is disabled.\n"
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "node",
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "--cwd",
+        "/tmp/mattercontrol-step021-agent-probe",
+        "--mode",
+        "plan",
+        "--disallowed-tools",
+        "Bash Edit Write Read Glob Grep WebFetch WebSearch ToolSearch",
+        "--json",
+        "-p",
+        "Synthetic connectivity probe only. No tools or files. Reply exactly MC021-ZCODE-ACK."
+      ],
+      "exit_code": 1,
+      "elapsed_s": 0.322,
+      "stdout": "",
+      "stderr": "\u65e0\u6cd5\u5b9a\u4f4d CLI ZCode Built-in Provider Config\uff1a/Applications/ZCode.app/Contents/Resources/glm/provider/zcode-builtin.json, /config/provider/zcode-builtin.json\n"
+    }
+  ]
+}

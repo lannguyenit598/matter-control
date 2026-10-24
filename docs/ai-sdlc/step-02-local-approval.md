@@ -10,10 +10,10 @@ Recorded by Codex on2026-10-24 Asia/Ho_Chi_Minh. Task MC-002. Subject: [approval
 
 No approval is inferred for H1/H2/H3 topology, a frontend adapter/migration, identity provider, object storage or billing step, numeric legal/history/receipt retention, import/export frequency/row/byte limits, production RPO/RTO/SLA, or the entire logical architecture/Step02 closure. ARCH-Q1 literal RULE-003 remains unchanged; stricter uploader exclusion ARCH-Q2 and emergency ownerless exception ARCH-Q4 remain unadopted alternatives. Existing business-rule approvals are not reopened.
 
-## Execution prerequisites that remain
+## Execution prerequisites and later correction
 
-- ZCode and Antigravity failed deep/strict arm64 app-signature verification in the previous execution record. Neither is launched or rechecked absent evidence of an official reinstall. Their backend/frontend owner audits and PoCs remain blocked; Codex does not substitute itself for those owners.
-- Codex may inspect local infrastructure readiness within H5. Presence of Docker/Go/Node executables is not a running isolated environment or successful PoC. Before any database test, identify a fresh task-specific disposable target; never reuse an existing database based only on a name or default context.
-- Restore and workload evidence remain NOT_RUN until actual owner/environment prerequisites are met. Numeric receipt admission must satisfy receiptRetention > maxCommandDuration + allowedSkew with a positive margin and actual deadline/late-arrival tests; no values selected by these answers.
+Step02.1 host verification supersedes the earlier sandbox-only failed-signature conclusion: both apps now verify, no reinstall/security bypass occurred. ZCode CLI lacks packaged provider config; Antigravity supplied-source audit returned, runtime permissions/handoff still pending. See ../tooling/step-02-1-recovery.md.
+
+Before every DB test identify a new task-specific disposable target; never reuse an important DB or default context. The synthetic tooling restore passed separately; owner build/runtime and full product recovery remain NOT_RUN. Numeric receipt admission still requires receiptRetention > maxCommandDuration + allowedSkew and a positive window with actual deadline/late-arrival tests; no values selected by these answers.
 
 Status: **H5_LOCAL_APPROVED / W1_LOCAL_TARGETS_APPROVED / ARCH-Q3_Q5_ACCEPTED**. MC-002 remains **OWNER_VALIDATION_BLOCKED / WAITING_REMAINING_APPROVALS**, not DONE. Source architecture remains unchanged; this dated approval record supersedes its proposal labels only for the decisions above.

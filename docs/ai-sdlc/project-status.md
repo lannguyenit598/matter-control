@@ -1,6 +1,6 @@
 # Project Status Dashboard
 
-As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md). Step01 closure remains recorded.
+As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
 
 **Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
 
@@ -45,10 +45,17 @@ Product Requirements Approval Gate passed by explicit human answers on 2026-10-2
 
 Step01 gate VERIFIED PASS at54e1db5, approved behavior572835a, DEC-016/017. Actual Claude Code2.1.309 / claude-opus-5-5 authored15 architecture files and returned134+30 exact replacements. Actual OpenCode2.1.4 round1 (opencode/big-pickle) returned CHANGES_REQUIRED, followed by round2 and final (opencode/glm-5.3-flash-free) PASS_DOCUMENT_ONLY. Final session ses_e92505488ffe3ySTAWXz7qxG2c exit0; no High/Medium reported;2Low notes dispositioned in [review](../reviews/step-02-review.md). Models come from exported metadata; Codex made no model/provider/global setting change. [Delivery report](../reviews/step-02-delivery.md), [execution](../reviews/step-02-execution.md), [concrete approval packet](step-02-approval-packet.md).
 
-ZCode and Antigravity both fail deep/strict arm64 app-signature verification and are BLOCKED_TOOL_INTEGRITY until official reinstall verifies. No GUI launch/repair/bypass; owner audits and critical PoCs remain NOT_RUN. Codex source inventory is not owner execution. Hosting/native Go/PostgreSQL, exact frontend runtime, identity, object storage, workload/retention/recovery and interpretation choices remain gated; no complete $0 deployment has been verified. MC-002 WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED, NOT_DONE. Step03 NOT_READY / NOT_STARTED. No product implementation, production deploy, cloud/account/billing mutation or template change.
+Fresh host verification corrects the earlier sandbox-only integrity blocker: both installed apps pass codesign and Gatekeeper; no reinstall is required by current evidence. ZCode CLI remains blocked by missing packaged provider config. Antigravity CLI1.4.7 returned a supplied-source frontend audit using requested gemini-3.8-flash-high / effort high, exit0; no engineering PoC ran. [Recovery evidence](../tooling/step-02-1-recovery.md). Runtime owner tasks are PREPARED / WAITING_MANUAL_DISPATCH. Codex completed a tiny synthetic PostgreSQL tooling restore; product restore and integration remain NOT_RUN. Overall MC-002 is NOT_DONE; Architecture Approval Gate remains NOT_PASSED. No production, paid/cloud activation, Step03 or product source changes.
 
 ## Step 02 PO continuation — local validation approved
 
 Direct PO answers on2026-10-24 approve H5 local technical validation, W1 measurement envelope, local RPO24h/RTO8h exercise targets and ARCH-Q3/Q5 interpretations (DEC-023..025). [Exact approval](step-02-local-approval.md). Do not re-request these approvals. Hosting, provider, adapter, identity, storage, retention, import/export demand and production commitments remain open; this is not blanket architecture approval or Step02 closure.
 
-Codex read-only local preflight: Docker Engine29.8.2 reachable through the selected local Unix socket, Compose5.6.0, Linux/aarch64,10 allocated CPUs and8319504384 allocated memory bytes; Go1.27.3, Node24.22.1, pnpm12.11.2. [Commands and outputs](../testing/step-02-local-preflight.json). No container/DB/volume/network created; no owner app rerun, dependency install, cloud call, build or PoC. Owner-tool integrity remains blocked from the last verified signature failures; no official reinstall has been reported.
+Codex read-only local preflight: Docker Engine29.8.2 reachable through the selected local Unix socket, Compose5.6.0, Linux/aarch64,10 allocated CPUs and8319504384 allocated memory bytes; Go1.27.3, Node24.22.1, pnpm12.11.2. [Commands and outputs](../testing/step-02-local-preflight.json). That earlier preflight created no resources. Step02.1 created two new pairs (four total) of network-isolated synthetic PostgreSQL containers across the initial drill and corrected recheck, stopping each after evidence capture, without volumes or port exposure. No backend/frontend dependency install/build/runtime PoC or cloud mutation occurred.
+
+## Step02.1 current result
+
+Completed: repository/approval preservation, host provenance correction, actual Antigravity supplied-source audit, synthetic PostgreSQL tooling restore and complete manual owner prompts. [Execution report](step-02-execution-report.md); [validation](../testing/step-02-poc-validation.md). Backend/frontend runtime and Next→Go→PG integration NOT_RUN; full product recovery and Cloudflare production/cost remain UNVERIFIED. Existing architecture document review is not a runtime gate waiver. Actual new-evidence OpenCode review and final recheck both PASS_WITH_LIMITATIONS; all3Low closed, no new High/Medium/Low. This is document/evidence review without independent runtime replay.
+
+
+Final Antigravity capability probe confirms RunCommand is auto-denied in headless mode; exit0/empty SUCCESS did not execute even the requested synthetic Git read. No global permission workaround was applied. Manual runtime dispatch remains required.

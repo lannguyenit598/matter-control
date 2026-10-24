@@ -33,3 +33,7 @@ Skipped: product builds/tests, DDL execution, technical PoCs, Mermaid rendering,
 ## Continuation after PO decisions
 
 DEC-023..025 now approve H5 local, W1/local restore targets and ARCH-Q3/Q5; [exact scope](../ai-sdlc/step-02-local-approval.md). The prior pending statements apply only to decisions not covered there. Codex read-only infrastructure preflight confirms a reachable local Docker29.8.2 daemon and Compose5.6.0; [exact outputs](../testing/step-02-local-preflight.json). No product/owner/runtime PoC result is inferred. Current blocker remains official owner-tool integrity and actual owner audits/isolated PoCs; deployment/provider/retention and other remaining approvals stay open. MC-002 remains NOT_DONE; Step03 not started.
+
+## Step02.1 current-status correction
+
+The earlier app-integrity/reinstall and all-PoCs-NOT_RUN conclusions in this historical record are superseded in scope by [fresh host recovery evidence](../tooling/step-02-1-recovery.md). Both owner apps validate on the host without reinstall/bypass. ZCode still lacks packaged CLI provider config; actual Antigravity supplied-source audit returned, owner runtime PoCs remain pending. Codex completed a separate tiny synthetic PostgreSQL tooling restore; product recovery/Cloudflare/cost remain unverified. Current result and independent review: ../ai-sdlc/step-02-execution-report.md. Historical raw external reports are preserved verbatim.

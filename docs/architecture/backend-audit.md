@@ -1,0 +1,9 @@
+# MC-002-BE — Backend Owner Audit and PoC Status
+
+Owner: actual ZCode, not Codex. Priority P0; requirements FR-001..020, NFR-001..014, RULE-001..021 and AC-101..163 remain approved. Status: **PREPARED / WAITING_MANUAL_DISPATCH**. Dependencies: trusted owner route, isolated test target, pinned source and H5 scope. Reviewer: OpenCode; architecture impact: Claude Code.
+
+Pinned input: /tmp/mattercontrol-step02-backend at d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b, origin https://github.com/lannguyenit598/go-hexa-template. Codex source inventory is in [repository audit](repository-audit.md), not a ZCode completion. Go1.26.0, Echo5.4.0/Huma2.39.1, pgx5.11/Goose3.28, native net/http/Fx lifecycle, User domain, sqlc migrations and absent auth are source findings. No MatterControl implementation exists.
+
+Host codesign and Gatekeeper now PASS for ZCode3.16.3. Earlier sandbox failures do not establish damaged installation or a need to reinstall. CLI0.17.0 help succeeds, but the actual synthetic invocation exits1 before a model run because packaged zcode-builtin.json is missing. No provider file was created and no login/global setting changed. [Host/probe evidence](../testing/step-02-1/host-provenance.json), [actual probe](../testing/step-02-1/agent-probes.json).
+
+Required owner work: dependency resolution, build/test/container, new disposable PostgreSQL/migrations, health/readiness/User API, startup/restart/failure/environment checks. All remain **NOT_RUN**. PostgreSQL tests must use a newly verified disposable target; inspect helpers and source hooks before execution. Do not start the default Compose database blindly. The full [manual prompt](../implementation/handoffs/MC-002-ZCODE-PROMPT.md) specifies inputs, commands, allowed worktree, outputs and acceptance. Return exact logs/diff/source SHA before IN_REVIEW; no DONE from this preparatory record.

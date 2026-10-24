@@ -28,3 +28,7 @@ No tool recommendation bypasses owner roles, Step02 approval, secret handling or
 ## Current owner-tool integrity gate
 
 Subsequent deep/strict codesign checks on2026-10-24 returned exit1 invalid arm64 signature for both ZCode.app and Antigravity.app. Earlier executable/version presence is not integrity clearance. Do not launch either app or its bundled CLI; no self-sign/repair/quarantine bypass. Owner audits and PoCs wait for official reinstall and successful verification. Actual command/error evidence is in step-02-sources.md and ../implementation/agent-handoffs.md.
+
+## Step02.1 current-status correction
+
+The earlier app-integrity/reinstall and all-PoCs-NOT_RUN conclusions in this historical record are superseded in scope by [fresh host recovery evidence](step-02-1-recovery.md). Both owner apps validate on the host without reinstall/bypass. ZCode still lacks packaged CLI provider config; actual Antigravity supplied-source audit returned, owner runtime PoCs remain pending. Codex completed a separate tiny synthetic PostgreSQL tooling restore; product recovery/Cloudflare/cost remain unverified. Current result and independent review: ../ai-sdlc/step-02-execution-report.md. Historical raw external reports are preserved verbatim.

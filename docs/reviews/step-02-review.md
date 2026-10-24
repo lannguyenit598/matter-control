@@ -23,3 +23,7 @@ Architecture Approval Gate NOT_PASSED; owner apps ZCode/Antigravity have invalid
 - Historical round2 finality wording is superseded by the final API contract and this final report; original review stays preserved. Round2 returned7 malformed table rows (missing Class cell); these are retained verbatim as external-report formatting warnings, not silently repaired or counted as normative architecture failures.
 
 Current MC-002 status **WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED**, not DONE. ZCode/Antigravity invalid app signatures require official reinstall/verification; owner audits and all critical PoCs remain NOT_RUN. Hosting/frontend/identity/storage/workload/retention/recovery/interpretation decisions require PO action and evidence. Step03 NOT_READY, no implementation/deployment.
+
+## Step02.1 current-status correction
+
+The earlier app-integrity/reinstall and all-PoCs-NOT_RUN conclusions in this historical record are superseded in scope by [fresh host recovery evidence](../tooling/step-02-1-recovery.md). Both owner apps validate on the host without reinstall/bypass. ZCode still lacks packaged CLI provider config; actual Antigravity supplied-source audit returned, owner runtime PoCs remain pending. Codex completed a separate tiny synthetic PostgreSQL tooling restore; product recovery/Cloudflare/cost remain unverified. Current result and independent review: ../ai-sdlc/step-02-execution-report.md. Historical raw external reports are preserved verbatim.

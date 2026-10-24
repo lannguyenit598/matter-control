@@ -1,0 +1,51 @@
+{
+  "command": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.1 Low findings recheck",
+    "--file",
+    "/tmp/mattercontrol-step021-opencode-recheck-input.txt",
+    "Review supplied corrections F1/F2/F3 and revised drill evidence only, no tools. Return concise verdict and limits."
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 32.207361936569214,
+  "permission_override": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "session_id": "ses_e91acdd14ffedn9CdMVHx7nsPU",
+  "outcome": "succeeded",
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "findings": {
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "info": 3
+  },
+  "closed": [
+    "F1",
+    "F2",
+    "F3"
+  ],
+  "tool_messages": 0,
+  "scope": "supplied-document/evidence consistency, no independent runtime replay",
+  "raw_output_sha256": "a35771bf50e782e1aa8c536912dad24a9d2639858d17731c04e14a162050df13"
+}

@@ -1,0 +1,45 @@
+{
+  "command": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.1 evidence verification",
+    "--file",
+    "/tmp/mattercontrol-step021-opencode-input.txt",
+    "Review supplied evidence and manual handoffs only; no tools. Return verdict, actual review limits and actionable findings."
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 159.3956310749054,
+  "permission_override": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "session_id": "ses_e91b1f9a5ffe1zY7Ix4zxMwma3",
+  "outcome": "succeeded",
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "findings": {
+    "high": 0,
+    "medium": 0,
+    "low": 3,
+    "info": 2
+  },
+  "tool_messages": 0,
+  "transport_note": "First invocation inherited non-secret launcher stdin (~1KB) in addition to attached packet; final recheck closes stdin explicitly. Session snapshots observed concurrent Codex doc edits, not reviewer tool writes.",
+  "user_input_sha256": "3ab25779f5b59f678478c691f5e7fe6cfa4024dbcfdec1e05dd4596c45886792"
+}

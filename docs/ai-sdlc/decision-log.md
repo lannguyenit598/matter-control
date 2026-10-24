@@ -46,3 +46,10 @@ APPROVED_INPUT is evidence from the supplied request, not an approval of all gen
 | DEC-023 | 2026-10-24 | Approve H5 isolated local technical PoCs with synthetic data after owner-tool integrity verification | Human Product Owner | APPROVED_LOCAL_ONLY | Direct reply “Phê duyệt H5 local”; [scope](step-02-local-approval.md); no cloud/paid/production/full implementation/Step03 approval |
 | DEC-024 | 2026-10-24 | Approve W1 measurement envelope and local restore targets RPO24h/RTO8h | Human Product Owner | APPROVED_LOCAL_TEST_INPUTS | Direct reply “Duyệt W1 và mục tiêu restore local”; [exact values](step-02-local-approval.md); no measured capacity or production guarantee; retention/import limits remain open |
 | DEC-025 | 2026-10-24 | Accept ARCH-Q3 recorded-time Brief window and ARCH-Q5 post-reopen evidence/new proof-epoch assessment interpretation | Human Product Owner | ACCEPTED_INTERPRETATIONS | Direct reply “Chấp nhận cả hai diễn giải”; [exact scope](step-02-local-approval.md); no authority-reissue requirement or unrelated policy exception |
+
+## Step02.1 explicit authority
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| DEC-026 | 2026-10-24 | Continue MC-002 with agent provenance/recovery, owner audits/local PoCs, Codex synthetic restore, independent verification and full manual prompts when needed | Human Product Owner | APPROVED_ASSIGNMENT | step-02-1-request.md; no full product/UI/production/paid activation; gate stays open if feasibility unresolved |
+| DEC-027 | 2026-10-24 | Send exact14-snapshot58203-byte frontend audit packet to Antigravity/Google; select Gemini3.8Flash with thinkingHIGH | Human Product Owner | APPROVED_NAMED_PACKET_AND_MODEL | Direct answer “có và chọn model là gemini 3.8 flash với thinking là HIGH”; actual available slug gemini-3.8-flash-high and effort high pinned; no global setting change or blanket new-payload permission |

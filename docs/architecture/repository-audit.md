@@ -57,3 +57,7 @@ ZCode and Antigravity must return their actual audits and version/build/runtime 
 ## Owner execution safety gate
 
 Before GUI fallback on2026-10-24, exact deep/strict codesign verification of /Applications/ZCode.app and /Applications/Antigravity.app each exited1 with invalid arm64 signature (code or signature modified). Neither app was launched, repaired or bypassed. Earlier CLI presence/provider failure is historical, not current integrity clearance. Both owner audits and their PoCs are BLOCKED_TOOL_INTEGRITY pending official reinstall and successful signature verification; prepared handoffs remain available. Codex source inspection and Claude document review do not replace those owner audits.
+
+## Step02.1 superseding owner-status record
+
+The earlier installation-integrity/reinstall conclusion above is historical and superseded by host verification in ../tooling/step-02-1-recovery.md: both apps valid, app Gatekeeper accepted. Source snapshots remain clean/pinned. Actual Antigravity supplied-source audit returned; full checkout/build/runtime not run. ZCode CLI still lacks packaged provider config, so manual backend assignment prepared. Current owner records: backend-audit.md and frontend-audit.md; full prompts in ../implementation/handoffs/. No Codex inventory is promoted to owner engineering completion.
