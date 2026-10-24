@@ -1,6 +1,6 @@
 # Technical PoC Ledger — Step 02
 
-Owner: Codex coordination. Status: **PLANNED / NOT_RUN**; Claude candidate independently document-reviewed; H5 local and W1/restore targets approved under DEC-023..025; owner engineering dispatch and candidate environment instantiation pending. Step02 §9 permits necessary technical PoCs after Claude direction; no business features, production deploy or paid service activation. No code/config scaffold has been created merely to make a planned check appear executed.
+Owner: Codex coordination. Current status: **NATIVE_BASELINES_VERIFIED_WITH_LIMITATIONS / C01_NATIVE_WAITING_MANUAL_DISPATCH / REMAINING_PRODUCT_AND_CLOUD_POC_NOT_RUN**. Claude candidate independently document-reviewed; H5 local and W1/restore targets approved under DEC-023..025. Historical overlays below retain their original checkpoint scope. Step02 §9 permits necessary technical PoCs after Claude direction; no business features, production deploy or paid service activation. No code/config scaffold has been created merely to make a planned check appear executed.
 
 | PoC | Owner | Candidate / purpose | Required evidence and passing condition | Current gate |
 |---|---|---|---|---|
@@ -41,3 +41,7 @@ Antigravity returned native Node template install/build/unit99/E2E9 evidence; Co
 Actual ZCode native build/migrations/package-race runs/UserAPI/CAS/restart/DB-down recovery evidence exists; actual OpenCode characterization PASS_WITH_LIMITATIONS does not close R01/R02. Actual Claude C01 confirms future503 unavailable problem mapping under unchanged contracts; no source fix made. POC-02-01 evidence scope is native template only, remaining acceptance evidence in rework. Product transaction graph/object/access/full recovery and Cloudflare adapter/quotas remain NOT_RUN. See ../reviews/step-02-backend-intake.md and focused owner recheck handoff.
 
 Final R01/R02 artifact review closes both owner evidence gaps with PASS_WITH_LIMITATIONS; current record ../reviews/step-02-backend-r01-r02-closure.md. Native backend characterization and frontend local baseline acceptance do not close product graph/object/access/full-recovery, adapter/quotas, C01 or integration/Cloudflare/cost gates. No additional baseline rerun is needed.
+
+## Step02.2 current gates
+
+[Remaining-gate matrix](../ai-sdlc/step-02-remaining-gates.md) distinguishes independently reviewed native backend/frontend and tiny tooling restore from unfinished product/runtime checks. R01/R02 remain CLOSED, no reruns. Actual Claude has authorized a narrowly scoped native C01 implementation envelope with SQLSTATE-first precedence and native-only retryAfter1; [contract](../testing/step-02-c01-verification.md), PREPARED / WAITING_MANUAL_DISPATCH to actual ZCode. No C01 code/tests yet. [Integration plan](../testing/step-02-integration-poc.md) remains PENDING for compatible scope/API/auth. Full transaction/object/access/recovery and exact Workers adapter/quota PoCs remain NOT_RUN. Current public docs are refreshed, not runtime proof.

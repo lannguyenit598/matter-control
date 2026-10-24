@@ -1,11 +1,11 @@
 # MC-002 — Agent Handoffs
 
-Codex orchestrates; the named external owners retain engineering responsibility. Current authority: Step02.1/DEC-026, H5/W1/restore targets DEC-023..025; approved behavior572835a. No Step03/product/production/paid action.
+Codex orchestrates; the named external owners retain engineering responsibility. Current authority: Step02.2 request, prior Step02.1/DEC-026 and H5/W1/restore targets DEC-023..025; approved behavior572835a. No Step03/product/production/paid action.
 
 | Assignment | Actual execution / current state | Next packet |
 |---|---|---|
 | Claude architecture | Actual authored/corrected15 files; independent document review PASS; no runtime certification | Existing architecture and exact final manifests; review any architecture-impacting owner finding before ADR edits |
-| ZCode MC-002-BE | Native characterization reviewed; actual focused return independently PASS_WITH_LIMITATIONS, R01/R02 CLOSED; actual Claude C01 disposition retained | [Final recheck closure](../reviews/step-02-backend-r01-r02-closure.md); no further manual R01/R02 dispatch needed; no product-conformance approval |
+| ZCode MC-002-BE / C01 | R01/R02 CLOSED; new C01-NATIVE task PREPARED / WAITING_MANUAL_DISPATCH after actual Claude clarification | [Complete C01 prompt](handoffs/MC-002-BE-C01-ZCODE-PROMPT.md); preserve original worktree/evidence; C01-PRODUCT stays OPEN |
 | Antigravity MC-002-FE | User returned manual local Node baseline:99unit/9E2E/build logs; source clean/pinned. Headless limitation remains historical route evidence | [Frontend intake](../reviews/step-02-frontend-intake.md); documentary corrections applied, final independent recheck PASS_WITH_LIMITATIONS (all7 actionable findings resolved); no whole-product/runtime-adapter approval |
 | OpenCode MC-002-VERIFY-021 | Actual review and final recheck PASS_WITH_LIMITATIONS,3Low closed, no replay | step-02-execution-report.md / step-02-poc-validation.md; actual returned report required |
 | OpenDesign | NOT_STARTED | Step03 not authorized |
@@ -21,3 +21,9 @@ Frontend manual dispatch is now received; do not resend/rerun the original basel
 Backend return now received and reviewed in step-02-backend-intake.md. Headless packaged-provider limitation remains historical route evidence, not a claim manual engineering never ran. Do not resend full baseline work: only R01/R02 need owner execution. Future503 implementation stays separate; no source change or integration scaffold approved by this receipt.
 
 The focused ZCode R01/R02 handoff has now been executed, returned and independently reviewed; its earlier waiting/manual-dispatch status is superseded. Do not send it again absent a new issue. Both owner local baseline returns are available; C01 and a compatible approved integration/auth seam remain separate assignments/gates, not an automatic integration launch.
+
+## Step02.2 current handoff
+
+Only C01-NATIVE needs the next ZCode manual paste; no acknowledgement/execution yet. Antigravity native baseline is VERIFIED with limitations, no new baseline prompt. OpenCode implementation QA waits for actual C01 diff/tests; document-scope handoff review is separate. [Current matrix](../ai-sdlc/step-02-remaining-gates.md) supersedes historical waiting/rework labels. Integration remains PENDING until C01-native and compatible approved scope/API/auth dependencies pass. No whole C01 or MC-002 closure.
+
+Actual OpenCode handoff review/recheck returned PASS_WITH_LIMITATIONS and closed all three prompt precision findings; the amended C01 prompt is ready for manual paste. This does not dispatch it or verify implementation. Evidence: ../reviews/step-02-2-opencode-handoff-recheck.md.

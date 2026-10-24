@@ -1,0 +1,46 @@
+{
+  "source": "/tmp/mattercontrol-step021-backend/internal/adapter/inbound/httpapi/user_handler.go",
+  "revision": "d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b",
+  "sha256": "aa66c697f626b1c3cfc531e188ab4c1c10f225d6a4a926e58f9e7cee7f2736c3",
+  "excerpts": [
+    {
+      "start_line": 90,
+      "lines": [
+        "\t\tif v, err := strconv.ParseInt(s, 10, 64); err == nil && v > 0 && strconv.FormatInt(v, 10) == s {",
+        "\t\t\treturn v, nil",
+        "\t\t}",
+        "\t}",
+        "\treturn 0, errPreconditionFailed",
+        "}",
+        "",
+        "var errPreconditionFailed = echo.NewHTTPError(http.StatusPreconditionFailed, \"If-Match does not match the current version of the resource\")",
+        "",
+        "// bindJSON reads JSON into target. Unlike echo.BindBody, it accepts only application/json (BindBody"
+      ]
+    },
+    {
+      "start_line": 311,
+      "lines": [
+        "\tif in.err != nil {",
+        "\t\treturn nil, in.err",
+        "\t}",
+        "\tu, err := h.users.Update(ctx, port.UpdateUserCmd{",
+        "\t\tID:              in.ID,",
+        "\t\tEmail:           in.body.Email,",
+        "\t\tName:            in.body.Name,",
+        "\t\tExpectedVersion: in.expected,",
+        "\t})",
+        "\tif err != nil {",
+        "\t\t// With If-Match, a version conflict means the precondition failed (412).",
+        "\t\t// Without If-Match, conflicts remaining after service retries become 409 (see toProblem).",
+        "\t\tif in.expected != 0 && errors.Is(err, port.ErrVersionConflict) {",
+        "\t\t\treturn nil, errPreconditionFailed",
+        "\t\t}",
+        "\t\treturn nil, err",
+        "\t}",
+        "\treturn newUserOutput(u), nil"
+      ]
+    }
+  ],
+  "inspection_only": true
+}

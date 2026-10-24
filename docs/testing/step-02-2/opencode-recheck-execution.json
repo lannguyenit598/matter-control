@@ -1,0 +1,63 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.2 C01 handoff recheck",
+    "--file",
+    "/tmp/mc002-step022-opencode-recheck-input.txt",
+    "Review exact supplied Step02.2 handoff documents only, no tools or runtime. Return scoped verdict and findings."
+  ],
+  "exit": 0,
+  "start_utc": "2026-10-24T16:26:19.329722+00:00",
+  "end_utc": "2026-10-24T16:26:42.867841+00:00",
+  "elapsed_seconds": 23.53794920800283,
+  "session_id": "ses_e9143f5cbffeJ6W5FdO1UPWzy1",
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "scope": "document handoff review only; no C01 implementation accepted",
+  "runtime_replay": false,
+  "stdout_sha256": "2c2850f40882f20566337152fe185a218c827df60533380c00ad17e7049937df",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e9143f5cbffeJ6W5FdO1UPWzy1"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "event_types": [
+    "step_start",
+    "text"
+  ],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "findings": {
+    "1": "CLOSED",
+    "2": "CLOSED",
+    "3": "CLOSED"
+  },
+  "implementation_verified": false,
+  "packet_snapshot_count": 7,
+  "raw_narrative_typo": "Opening says four while listing seven; exact manifest and packet contain7 snapshots."
+}
