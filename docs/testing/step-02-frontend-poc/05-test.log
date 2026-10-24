@@ -1,0 +1,36 @@
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/mattercontrol-step021-frontend
+
+ ✓ src/lib/auth.test.ts (5 tests) 87ms
+ ✓ src/lib/api/backend.test.ts (3 tests) 67ms
+ ✓ src/lib/api/http-client.test.ts (9 tests) 47ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts (7 tests) 221ms
+ ✓ src/features/tasks/actions.test.ts (16 tests) 17ms
+ ✓ src/features/tasks/components/task-filters.test.tsx (4 tests) 282ms
+ ✓ src/components/molecules/confirmation-dialog.test.tsx (6 tests) 326ms
+ ✓ src/features/tasks/services/demo-task-repository.test.ts (6 tests) 861ms
+   ✓ demo task repository (6)
+     ✓ caps the shared demo store 796ms
+ ✓ src/lib/env.test.ts (8 tests) 99ms
+ ✓ src/features/tasks/schemas.test.ts (13 tests) 12ms
+ ✓ src/features/tasks/components/task-form.test.tsx (5 tests) 674ms
+   ✓ TaskForm (5)
+     ✓ validates on the client before calling the server 314ms
+ ✓ src/components/molecules/dialog.test.tsx (3 tests) 139ms
+ ✓ src/components/atoms/button.test.tsx (4 tests) 166ms
+ ✓ src/components/organisms/data-table.test.tsx (2 tests) 97ms
+ ✓ src/features/tasks/components/task-form-dialog.test.tsx (1 test) 218ms
+ ✓ src/components/molecules/pagination.test.tsx (4 tests) 70ms
+ ✓ src/components/molecules/form-field.test.tsx (2 tests) 75ms
+ ✓ src/components/molecules/search-input.test.tsx (1 test) 78ms
+
+ Test Files  18 passed (18)
+      Tests  99 passed (99)
+   Start at  21:52:53
+   Duration  3.05s (environment 57%, tests 17%, setup 12%, import 9%, transform 5%)
+
+Environment  jsdom was created 18 times · 12.09s total, 57% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

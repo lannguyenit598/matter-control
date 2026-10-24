@@ -48,3 +48,8 @@ Step02 source/feasibility evidence does not close R-001/002/005/006/017/018 runt
 | R-026 | Frontend supplied-source audit proposes destructive cleanup and unsupported CPU/ID/export claims | High | Codex / OpenCode / Antigravity | Preserve raw report; frontend-audit.md rejects unsafe recipes and marks unproven claims; safe pinned manual worktree prompt replaces advice | DISPOSITIONED; runtime independent verification pending |
 | R-027 | Tiny single-DB restore could be mistaken for product recovery or RPO cadence | High | Codex / OpenCode | One manual archive, known omitted marker, measured scope/elapsed only; product DB/blob/history/access and cadence remain untested | OPEN product recovery gate |
 | R-028 | Frontend Task contract and fail-closed auth do not match Go User API | High | Owner engineers / Claude | Passing individual PoCs first; approved minimal integration seam and session strategy; no resource alias/wildcard auth | OPEN integration gate |
+
+
+## Frontend returned-evidence qualification
+
+Manual Antigravity baseline ran despite the separate headless command-permission limit. OpenCode found documentary evidence overclaims (historical cleanup versus warnings, network-count assertions, manifest provenance/timestamps and binding scope). Codex corrected the documentation; original logs retained. Later host inspection finds no listeners on the four test ports. Final independent recheck pending; no source bug or full-product security proof is inferred. R-021 Cloudflare adapter and R-028 integration/auth gaps remain open. See ../reviews/step-02-frontend-intake.md.

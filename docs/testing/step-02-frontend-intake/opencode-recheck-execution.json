@@ -1,0 +1,49 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl frontend evidence correction recheck",
+    "--file",
+    "/tmp/mc002-fe-recheck-input.txt",
+    "Recheck frontend documentary corrections FE-VERIFY-01..07 only. No tools or runtime replay. Return verdict and dispositions."
+  ],
+  "exit": 0,
+  "elapsed_seconds": 50.8780620098114,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "session_id": "ses_e9187093cffe0GgVrhsyCHzO3F",
+  "outcome": "succeeded",
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "resolved_findings": [
+    "FE-VERIFY-01",
+    "FE-VERIFY-02",
+    "FE-VERIFY-03",
+    "FE-VERIFY-04",
+    "FE-VERIFY-05",
+    "FE-VERIFY-06",
+    "FE-VERIFY-07"
+  ],
+  "tool_messages": [],
+  "scope": "H5 local template documentary evidence only; no runtime replay",
+  "raw_output_sha256": "67872ce696f07f48634e8e6d5bf5ee9e0363ee6eb2f49966e60065dc16ac2a20"
+}

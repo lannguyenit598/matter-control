@@ -1,0 +1,394 @@
+Viewed SKILL.md:1-66
+Viewed antigravity-tools.md:1-24
+Viewed SKILL.md:1-121
+Ran command: `rtk --version && rtk git status && rtk git rev-parse HEAD`
+Ran command: `rtk git log -n 5 --oneline`
+Ran command: `rtk git show --stat 4a6b8f9`
+Viewed MC-002-ANTIGRAVITY-PROMPT.md:1-22
+Viewed agent-handoffs.md:1-16
+Viewed step-02-1-antigravity-result.md:1-100
+Viewed step-02-1-antigravity-result.md:101-213
+Viewed step-02-local-approval.md:1-20
+Viewed frontend-audit.md:1-24
+Ran command: `rtk proxy node -v && rtk proxy pnpm -v`
+Ran command: `rtk proxy ls -la /tmp/mattercontrol-step02* 2>&1`
+Ran command: `rtk proxy ls -d /tmp/mattercontrol*frontend* 2>&1`
+Ran command: `rtk git -C /tmp/mattercontrol-step02-frontend remote -v && rtk git -C /tmp/mattercontrol-step02-frontend status && rtk git -C /tmp/mattercontrol-step02-frontend rev-parse HEAD && rtk git -C /tmp/mattercontrol-step02-frontend branch -a`
+Ran command: `rtk git -C /tmp/mattercontrol-step02-frontend worktree list`
+Ran command: `rtk proxy ls -la docs/testing`
+Viewed MC-002.md:1-35
+Viewed step-02-1-request.md:1-100
+Viewed technical-poc.md:1-32
+Viewed ADR-003-frontend-runtime.md:1-40
+Viewed api-contracts.md:1-60
+Viewed security-architecture.md:96-96
+Viewed security-architecture.md:1-95
+Viewed repository-audit.md:1-60
+Viewed step-02-1-recovery.md:1-29
+Created task.md
+Ran command: `rtk git -C /tmp/mattercontrol-step02-frontend worktree add -b task/MC-002-fe-poc /tmp/mattercontrol-step021-frontend 3e5a642479acb789eb210e73fba956f3e85082e3`
+Ran command: `rtk git -C /tmp/mattercontrol-step021-frontend status && rtk git -C /tmp/mattercontrol-step021-frontend rev-parse HEAD`
+Viewed AGENTS.md:1-100
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/AGENTS.md`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/package.json`
+Ran command: `rtk proxy ls -la /tmp/mattercontrol-step021-frontend/pnpm-lock.yaml`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/next.config.ts`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/src/lib/auth-provider.ts && echo "---" && rtk proxy cat /tmp/mattercontrol-step021-frontend/src/lib/auth.ts`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/src/lib/api/backend.ts && echo "---" && rtk proxy cat /tmp/mattercontrol-step021-frontend/src/features/tasks/services/task-repository.ts`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/src/features/tasks/services/rest-task-repository.ts && echo "---" && rtk proxy cat /tmp/mattercontrol-step021-frontend/src/features/tasks/schemas.ts`
+Ran command: `rtk proxy mkdir -p docs/testing/step-02-frontend-poc`
+Ran command: `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend --version`
+Ran command: `bash -c "set -o pipefail; echo 'pipefail test' 2>&1 | tee docs/testing/step-02-frontend-poc/test.log"`
+Ran command: `rtk proxy rm -f docs/testing/step-02-frontend-poc/test.log`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend install --frozen-lockfile 2>&1 | tee docs/testing/step-02-frontend-poc/01-pnpm-install.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+Ran command: `rtk git -C /tmp/mattercontrol-step021-frontend status`
+Ran command: `rtk proxy ls -d /tmp/mattercontrol-step021-frontend/node_modules && rtk proxy du -sh /tmp/mattercontrol-step021-frontend/node_modules && rtk git -C /tmp/mattercontrol-step021-frontend diff pnpm-lock.yaml`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend typecheck 2>&1 | tee docs/testing/step-02-frontend-poc/02-typecheck.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend lint 2>&1 | tee docs/testing/step-02-frontend-poc/03-lint.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+
+I have launched `rtk proxy pnpm lint` in the isolated worktree `/tmp/mattercontrol-step021-frontend` and am waiting for the background process to complete.
+
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend format:check 2>&1 | tee docs/testing/step-02-frontend-poc/04-format-check.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend test 2>&1 | tee docs/testing/step-02-frontend-poc/05-test.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend agents:check 2>&1 | tee docs/testing/step-02-frontend-poc/06-agents-check.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend build 2>&1 | tee docs/testing/step-02-frontend-poc/07-build.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend build-storybook 2>&1 | tee docs/testing/step-02-frontend-poc/08-build-storybook.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+Ran command: `lsof -i :3088 || echo "Port 3088 is free" && lsof -i :3089 || echo "Port 3089 is free"`
+Ran command: `bash -c "set -o pipefail
+LOG=\"docs/testing/step-02-frontend-poc/09-production-start.log\"
+exec > >(tee \"\$LOG\") 2>&1
+
+echo \"=== STEP 3: Production Build Startup, Route & Lifecycle Exercise ===\"
+echo \"UTC Start: \$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"
+
+PORT1=3088
+PORT2=3089
+
+# Verify port is free
+if lsof -i :\$PORT1 >/dev/null 2>&1; then
+  echo \"ERROR: Port \$PORT1 is in use\"
+  exit 1
+fi
+echo \"Verified port \$PORT1 is free.\"
+
+echo \"Starting production Next.js server on port \$PORT1 (API_MODE=demo, AUTH_ALLOW_ANONYMOUS=false)...\"
+API_MODE=demo AUTH_ALLOW_ANONYMOUS=false rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend start -p \$PORT1 > /tmp/next-server-3088.log 2>&1 &
+SERVER_PID=\$!
+echo \"Launched server with PID: \$SERVER_PID\"
+
+# Wait for server to be ready
+READY=0
+for i in {1..30}; do
+  if curl -s -o /dev/null http://127.0.0.1:\$PORT1/dashboard; then
+    READY=1
+    echo \"Server became ready on port \$PORT1 in \$i iterations.\"
+    break
+  fi
+  sleep 1
+done
+
+if [ \$READY -ne 1 ]; then
+  echo \"ERROR: Server failed to start on port \$PORT1 within 30s. Logs:\"
+  cat /tmp/next-server-3088.log
+  kill \$SERVER_PID 2>/dev/null || true
+  exit 1
+fi
+
+echo \"--- Testing Route 1: GET / (Root redirect) ---\"
+curl -s -i http://127.0.0.1:\$PORT1/ | head -n 15
+
+echo \"--- Testing Route 2: GET /dashboard (Dashboard page) ---\"
+curl -s -i http://127.0.0.1:\$PORT1/dashboard | head -n 35
+
+echo \"--- Testing Route 3: GET /tasks (Task list page) ---\"
+curl -s -i http://127.0.0.1:\$PORT1/tasks | head -n 35
+
+echo \"--- Testing Route 4: GET /nonexistent-path-for-test-404 (Not found handling) ---\"
+curl -s -i http://127.0.0.1:\$PORT1/nonexistent-path-for-test-404 | head -n 25
+
+echo \"Stopping first server process (PID \$SERVER_PID)...\"
+kill \$SERVER_PID
+wait \$SERVER_PID 2>/dev/null || true
+echo \"First server process stopped.\"
+
+# Verify port 3088 is released
+sleep 1
+if lsof -i :\$PORT1 >/dev/null 2>&1; then
+  echo \"WARNING: Port \$PORT1 still occupied after kill.\"
+else
+  echo \"Verified port \$PORT1 released.\"
+fi
+
+echo \"--- Testing Server Restart on Port \$PORT2 ---\"
+if lsof -i :\$PORT2 >/dev/null 2>&1; then
+  echo \"ERROR: Port \$PORT2 is in use\"
+  exit 1
+fi
+echo \"Verified port \$PORT2 is free.\"
+
+API_MODE=demo AUTH_ALLOW_ANONYMOUS=false rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend start -p \$PORT2 > /tmp/next-server-3089.log 2>&1 &
+SERVER_PID2=\$!
+echo \"Launched second server with PID: \$SERVER_PID2\"
+
+READY2=0
+for i in {1..30}; do
+  if curl -s -o /dev/null http://127.0.0.1:\$PORT2/dashboard; then
+    READY2=1
+    echo \"Restarted server ready on port \$PORT2 in \$i iterations.\"
+    break
+  fi
+  sleep 1
+done
+
+if [ \$READY2 -ne 1 ]; then
+  echo \"ERROR: Second server failed to start on port \$PORT2. Logs:\"
+  cat /tmp/next-server-3089.log
+  kill \$SERVER_PID2 2>/dev/null || true
+  exit 1
+fi
+
+echo \"--- Testing Route on restarted server: GET /dashboard ---\"
+curl -s -i http://127.0.0.1:\$PORT2/dashboard | head -n 20
+
+echo \"Stopping restarted server process (PID \$SERVER_PID2)...\"
+kill \$SERVER_PID2
+wait \$SERVER_PID2 2>/dev/null || true
+echo \"Restarted server stopped.\"
+
+sleep 1
+if lsof -i :\$PORT2 >/dev/null 2>&1; then
+  echo \"WARNING: Port \$PORT2 still occupied after kill.\"
+else
+  echo \"Verified port \$PORT2 released.\"
+fi
+
+echo \"UTC End: \$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"
+echo \"Exit Code: 0\"
+"`
+Ran command: `lsof -i :3088 ; lsof -i :3089`
+Ran command: `rtk proxy head -n 45 docs/testing/step-02-frontend-poc/09-production-start.log`
+Ran command: `rtk grep "Route 4" docs/testing/step-02-frontend-poc/09-production-start.log -A 10`
+Ran command: `rtk grep "Route 1" docs/testing/step-02-frontend-poc/09-production-start.log -A 10`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/playwright.config.ts`
+Ran command: `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend exec playwright --version && ls -la ~/Library/Caches/ms-playwright 2>&1`
+Ran command: `lsof -i :3095 || echo "Port 3095 is free"`
+Ran command: `rtk proxy ls -la /tmp/mattercontrol-step021-frontend/e2e`
+Ran command: `bash -c "set -o pipefail; echo 'UTC Start: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); CI=true PORT=3095 rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend test:e2e 2>&1 | tee docs/testing/step-02-frontend-poc/10-playwright.log; EXIT=\$?; echo 'UTC End: ' \$(date -u +'%Y-%m-%dT%H:%M:%SZ'); echo \"Exit Code: \$EXIT\"; exit \$EXIT"`
+
+I have launched the Playwright test suite (`CI=true PORT=3095 rtk proxy pnpm test:e2e`) on an unused port and am waiting for the execution to complete.
+
+Ran command: `lsof -i :3095 || echo "Port 3095 is free"`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/src/lib/env.ts`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/src/app/\(app\)/dashboard/page.tsx && echo "---" && rtk proxy cat /tmp/mattercontrol-step021-frontend/src/app/\(app\)/tasks/page.tsx`
+Ran command: `rtk proxy cat /tmp/mattercontrol-step021-frontend/src/lib/auth.test.ts && echo "---" && rtk proxy cat /tmp/mattercontrol-step021-frontend/src/lib/api/backend.test.ts`
+Ran command: `lsof -i :3096 || echo "Port 3096 is free"`
+Ran command: `bash -c "set -o pipefail
+LOG=\"docs/testing/step-02-frontend-poc/11-rest-negative.log\"
+exec > >(tee \"\$LOG\") 2>&1
+
+echo \"=== STEP 5: REST Mode Fail-Closed Verification ===\"
+echo \"UTC Start: \$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"
+
+PORT=3096
+
+# Verify port is free
+if lsof -i :\$PORT >/dev/null 2>&1; then
+  echo \"ERROR: Port \$PORT is in use\"
+  exit 1
+fi
+echo \"Verified port \$PORT is free.\"
+
+echo \"Starting production Next.js server on port \$PORT (API_MODE=rest, API_BASE_URL=http://127.0.0.1:8080, AUTH_ALLOW_ANONYMOUS=false)...\"
+API_MODE=rest API_BASE_URL=http://127.0.0.1:8080 AUTH_ALLOW_ANONYMOUS=false rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend start -p \$PORT > /tmp/next-server-3096.log 2>&1 &
+SERVER_PID=\$!
+echo \"Launched server with PID: \$SERVER_PID\"
+
+# Wait for server to be ready
+READY=0
+for i in {1..30}; do
+  if curl -s -o /dev/null http://127.0.0.1:\$PORT/dashboard; then
+    READY=1
+    echo \"Server became ready on port \$PORT in \$i iterations.\"
+    break
+  fi
+  sleep 1
+done
+
+if [ \$READY -ne 1 ]; then
+  echo \"ERROR: Server failed to start on port \$PORT within 30s. Logs:\"
+  cat /tmp/next-server-3096.log
+  kill \$SERVER_PID 2>/dev/null || true
+  exit 1
+fi
+
+echo \"--- Querying GET /dashboard in REST mode (no auth session) ---\"
+DASH_RES=\$(curl -s http://127.0.0.1:\$PORT/dashboard)
+echo \"Dashboard response snippet containing 'Sign-in required':\"
+echo \"\$DASH_RES\" | grep -C 2 \"Sign-in required\" || echo \"NOT FOUND\"
+
+echo \"--- Querying GET /tasks in REST mode (no auth session) ---\"
+TASKS_RES=\$(curl -s http://127.0.0.1:\$PORT/tasks)
+echo \"Tasks response snippet containing 'Sign-in required':\"
+echo \"\$TASKS_RES\" | grep -C 2 \"Sign-in required\" || echo \"NOT FOUND\"
+
+echo \"--- Server Log Output (checking for auth warning) ---\"
+cat /tmp/next-server-3096.log
+
+echo \"Stopping server process (PID \$SERVER_PID)...\"
+kill \$SERVER_PID
+wait \$SERVER_PID 2>/dev/null || true
+echo \"Server process stopped.\"
+
+sleep 1
+if lsof -i :\$PORT >/dev/null 2>&1; then
+  echo \"WARNING: Port \$PORT still occupied after kill.\"
+else
+  echo \"Verified port \$PORT released.\"
+fi
+
+echo \"UTC End: \$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"
+echo \"Exit Code: 0\"
+"`
+Ran command: `lsof -i :3096`
+Ran command: `rtk proxy ls -la docs/testing/step-02-frontend-poc/`
+Ran command: `rtk git -C /tmp/mattercontrol-step021-frontend status`
+Ran command: `rtk git -C /tmp/mattercontrol-step02-frontend status`
+Ran command: `rtk proxy shasum -a 256 docs/testing/step-02-frontend-poc/*.log`
+Created manifest.json
+Created step-02-frontend-poc.md
+Viewed frontend-audit.md:1-24
+Edited frontend-audit.md
+Ran command: `rtk git status`
+Ran command: `rtk git diff docs/architecture/frontend-audit.md`
+Edited task.md
+
+# MC-002-FE: Frontend Technical Owner PoC Execution & Validation Report
+
+- **Task ID:** `MC-002-FE` (Priority P0)
+- **Agent Identity & Role:** Antigravity (Frontend Technical Owner)
+- **Model Selected:** Gemini 3.8 Flash (High) (CLI slug `gemini-3.8-flash-high`, effort high)
+- **Host App & Tool Versions:** Antigravity 2.26.0 / agy CLI 1.4.7, Node.js `v24.22.1`, pnpm `12.11.2`, rtk `1.0.1`, macOS Darwin 24.6.0 arm64
+- **Working Directory (CWD):** `/Users/nguyenvanlan/Documents/code/pet-projects/matter-control`
+- **Governance Branch / Base:** [`task/MC-002-solution-architecture`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control) (continuation base `2000d9435a7a3d405cb89e92ea72610f09b1f1cf`, HEAD `4a6b8f9c0b50a81930cb2edc0806c57dbda8cd99`)
+- **Assigned Scope:** Baseline technical PoC (`P-FE-1`) of pinned Next.js starter template under local Node runtime (DEC-023 H5 approved), audit finding validation and corrections, REST fail-closed negative case, adapter limitations assessment, and generation of verifiable evidence artifacts.
+- **Reviewer:** OpenCode
+- **Proposed Task Status:** **`IN_REVIEW`** (Step 02 remains open; Step 03 is not started)
+
+---
+
+## 1. Source Provenance & Worktree Isolation
+
+- **Source Repository:** `https://github.com/lannguyenit598/nextjs-atomic-starter`
+- **Pinned Commit:** `3e5a642479acb789eb210e73fba956f3e85082e3`
+- **Base Snapshot:** `/tmp/mattercontrol-step02-frontend` (verified clean, origin matched, HEAD matched, preserved strictly read-only)
+- **Isolated Worktree:** Verified `/tmp/mattercontrol-step021-frontend` and branch `task/MC-002-fe-poc` were unused; created clean isolated worktree at `3e5a642479acb789eb210e73fba956f3e85082e3` via `rtk git -C /tmp/mattercontrol-step02-frontend worktree add -b task/MC-002-fe-poc /tmp/mattercontrol-step021-frontend 3e5a642479acb789eb210e73fba956f3e85082e3`.
+- **Pre-Install Inspection:** Inspected `AGENTS.md` (unidirectional Atomic Design import hierarchy, Server-first App Router, Zod validation, fail-closed auth) and `package.json` (engines `^22.23.4 || ^24.22.1 || >=26.12.1`, lifecycle script `prepare: husky`). Node 24.22.1 and pnpm 12.11.2 matched without modification.
+
+---
+
+## 2. Technical PoC Execution Matrix (P-FE-1 Baseline)
+
+All commands were run with `rtk proxy` prefixes, strictly bounded to `/tmp/mattercontrol-step021-frontend` via `--dir`, and captured with bash `set -o pipefail` to ensure non-zero exit codes are never masked by `tee`.
+
+| Step | Check / Operation | Exact Command | UTC Start / End | Exit Code | Result | Evidence Artifact & SHA-256 |
+|---|---|---|---|---|---|---|
+| **1** | Frozen Dependency Install | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend install --frozen-lockfile` | `2026-10-24T14:50:09Z` / `14:50:11Z` | `0` | **PASS** | [`01-pnpm-install.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/01-pnpm-install.log)<br>`28e686f3fe48e2f01bd89b37827eabbbfae698866c12f8117b565fda27bec893` |
+| **2.1** | Static Typecheck | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend typecheck` | `2026-10-24T14:50:45Z` / `14:50:48Z` | `0` | **PASS** | [`02-typecheck.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/02-typecheck.log)<br>`99d7c2179cdd316467c51f37901025a0753453664d741214ba56fc631fa6c0bc` |
+| **2.2** | ESLint Code Quality | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend lint` | `2026-10-24T14:50:54Z` / `14:51:11Z` | `0` | **PASS** | [`03-lint.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/03-lint.log)<br>`050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1` |
+| **2.3** | Prettier Format Check | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend format:check` | `2026-10-24T14:51:51Z` / `14:51:52Z` | `0` | **PASS** | [`04-format-check.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/04-format-check.log)<br>`1d66faad74f5e8709353f7288592866bd3a9095da1174a916e7aa632949971e2` |
+| **2.4** | Vitest Unit/Component Tests | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend test` | `2026-10-24T14:52:52Z` / `14:52:56Z` | `0` | **PASS** | [`05-test.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/05-test.log)<br>`9ff92dd7720a3c5ef17681d9227ffb22bb0172536c979f45359eee43ff6df8f2` |
+| **2.5** | Agent Rules Check | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend agents:check` | `2026-10-24T14:53:19Z` / `14:53:19Z` | `0` | **PASS** | [`06-agents-check.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/06-agents-check.log)<br>`491f4a4bdb8b7c87f65de72867b64bd78362251e44fd47fd1a1b8693e757950c` |
+| **2.6** | Production Next.js Build | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend build` | `2026-10-24T14:53:31Z` / `14:53:37Z` | `0` | **PASS** | [`07-build.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/07-build.log)<br>`44054c0d7c514e2a12e58262cb0dc8e4a54bf767eb5ddc7aa5c0594d3fc534d6` |
+| **2.7** | Storybook Static Build | `rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend build-storybook` | `2026-10-24T14:53:44Z` / `14:53:55Z` | `0` | **PASS** | [`08-build-storybook.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/08-build-storybook.log)<br>`d32d63a9631e830cc227b0cbcafaddd0b519554fdcf280c55ef1d442e54392a8` |
+| **3** | Production Startup & Routes | Production start on port 3088 & restarted on port 3089 (`API_MODE=demo`, `AUTH_ALLOW_ANONYMOUS=false`) | `2026-10-24T14:55:09Z` / `14:55:14Z` | `0` | **PASS** | [`09-production-start.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/09-production-start.log)<br>`acf6b215d2210489f247f060852a0c71ec110930d433f9ae1911e39e8aac0396` |
+| **4** | Playwright E2E Tests | `CI=true PORT=3095 rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend test:e2e` | `2026-10-24T14:56:52Z` / `14:57:06Z` | `0` | **PASS** | [`10-playwright.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/10-playwright.log)<br>`73f53f4f97065e661c8f8c79ca33746a9cdccce174ecfbdceb7ee1941d32692c` |
+| **5** | REST Fail-Closed Security | Production start on port 3096 (`API_MODE=rest`, `API_BASE_URL=http://127.0.0.1:8080`, `AUTH_ALLOW_ANONYMOUS=false`) | `2026-10-24T14:57:53Z` / `14:57:58Z` | `0` | **PASS** | [`11-rest-negative.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/11-rest-negative.log)<br>`3bb6a567efb66b4ec2d8f7d6ec7d33bb9584707a3e763de59267529cf40cb23b` |
+
+---
+
+## 3. Key Observations & Verifications
+
+1. **Dependency Lifecycle & Lockfile Invariance:**
+   - `pnpm-lock.yaml` diff: **0 lines changed** (lockfile strictly respected).
+   - Git tracked working tree diff: **0 files changed**.
+   - Lifecycle hook: `prepare: husky` completed normally. Local dependencies (544 packages, 668MB) were populated into `node_modules` from the local store.
+2. **Unit & Component Testing:**
+   - Vitest executed 18 test suites: **99 passed (100%)**, 0 failures in 3.05s. Tests cover `auth`, `backendRequest`, `http-client`, `restTaskRepository`, `actions`, `schemas`, `env`, and Atomic components (`Button`, `Dialog`, `DataTable`, `Pagination`).
+3. **Production Next.js Build:**
+   - Next.js 16.4.2 compiled cleanly in 2.5s using Turbopack with `cacheComponents: true` and `partialPrefetching: true`. Generated static segments (`/_not-found`) and Partial Prerendering dynamic streaming segments (`/dashboard`, `/tasks`).
+4. **Production Server Startup & Routing (`API_MODE=demo`):**
+   - Verified on unused ports 3088 and 3089.
+   - `GET /` returned `HTTP/1.1 307 Temporary Redirect` to `/dashboard`.
+   - `GET /dashboard` returned `HTTP/1.1 200 OK` with full security headers (`Content-Security-Policy`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Permissions-Policy`, `Referrer-Policy: strict-origin-when-cross-origin`) and partial prerender streaming header `x-nextjs-prerender: 1`.
+   - `GET /tasks` returned `HTTP/1.1 200 OK`.
+   - `GET /nonexistent-path-for-test-404` returned `HTTP/1.1 404 Not Found`.
+   - Owned process stopped cleanly; port 3088 released; restarted on port 3089 cleanly; port 3089 released.
+   - *Boundary:* Demo mode demonstrates local template runtime integrity; it does **not** prove Go connectivity or PostgreSQL persistence.
+5. **Playwright E2E (`CI=true PORT=3095`):**
+   - Ran against production build on verified unused port 3095 using existing headless Chromium binary (`Chromium 1248` in `~/Library/Caches/ms-playwright/`).
+   - All 9 E2E tests in `security.spec.ts` and `tasks.spec.ts` **passed (100%)** in 13.7s. Port 3095 was released.
+6. **REST Fail-Closed Negative Case (`API_MODE=rest`, port 3096):**
+   - When `resolveSession()` returns `null` and `AUTH_ALLOW_ANONYMOUS=false`, both `/dashboard` and `/tasks` render the fail-closed `<EmptyState>`:
+     - Title: `"Sign-in required"`
+     - Description: `"You need to be signed in to see this page."`
+   - Zero outbound requests dispatched to `API_BASE_URL`; zero credentials leaked.
+   - Server emitted expected log warning: `[auth] No authentication provider configured: all REST data access is denied. Implement resolveSession() in src/lib/auth-provider.ts.`
+   - Process stopped cleanly; port 3096 released.
+
+---
+
+## 4. Formal Corrections to Earlier Audit Claims
+
+In accordance with instructions, the following claims from [`step-02-1-antigravity-result.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/reviews/step-02-1-antigravity-result.md) are formally corrected:
+
+1. **Unmeasured SSR CPU Range:**
+   - *Previous claim:* "Workers Free provides 10 ms CPU per request. Standard SSR with session handling and complex React 19 component trees typically consumes 10–20 ms CPU, risking Cloudflare Error 1102."
+   - *Correction:* This was an unmeasured assertion based on generic Cloudflare documentation notes. No empirical CPU profiling was conducted on this template or its routes under Cloudflare Workers. Cloudflare adapter candidate remains untested and unmeasured.
+2. **Unsupported Identifier Regex Incompatibility:**
+   - *Previous claim:* "URL paths restricted by `taskIdSchema` (`^[A-Za-z0-9_-]{1,100}$`). Domain IDs depend on backend UUID/int representations. Validation Hazard. Incompatible ID representations will abort at the frontend boundary."
+   - *Correction:* Regex `^[A-Za-z0-9_-]{1,100}$` permits standard UUIDs (such as RFC 9562 UUIDv7 or UUIDv4, e.g. `0192e23b-6e9f-7b71-91ea-42b7e199db1c`), integer IDs, and alphanumeric slugs up to 100 characters. The regex alone does not prove an identifier representation mismatch. The real mismatch is domain semantics (`/tasks` vs `/api/v1/users`).
+3. **Overstated Static Export Impossibility & Secret Leakage:**
+   - *Previous claim:* "Static Export Fallback (F3): Running `output: 'export'` breaks Next.js Server Actions, server-side session resolution, PPR, and `backendRequest()`. It would force moving authentication tokens and backend access into client-side code, violating the secure server-secret boundary."
+   - *Correction:* While static export cannot run the existing Server Actions or server-only `backendRequest()` unchanged, a static SPA architecture does not *inherently* require leaking server secrets or shared tokens. With proper architectural redesign (e.g., OIDC Authorization Code + PKCE, in-memory short-lived tokens, strict CSP without unsafe-inline, and exact CORS allowlisting as documented in Security Architecture §6.1), client-side auth can be designed securely without shared API secrets. However, such redesign would require formal PO approval and security review, which has not occurred.
+4. **Rejection of Unsafe `rm -rf` and Shallow Clone Recipe:**
+   - *Previous advice:* Section 9 proposed executing `rm -rf` on the target directory followed by `git clone --depth 1` and checking out a SHA.
+   - *Correction:* `rm -rf` is unsafe and risks destroying concurrent work. Pinned sources must not be fetched as latest; instead, isolated git worktrees at exact pinned commit SHAs without deleting existing paths must be used, aborting if the target exists.
+5. **Correction of Zero Dependency Writes Claim:**
+   - *Previous claim:* "Zero local dependencies or lockfile updates may be written."
+   - *Correction:* Inaccurate assertion. `pnpm install` necessarily writes local dependencies to `node_modules` (544 packages, 668MB). The correct guarantee is that the lockfile is respected without mutation (`--frozen-lockfile`) and git tracked files remain clean.
+6. **Rejection of Shell Pipelines Hiding Exit Codes:**
+   - *Correction:* In shell commands piping into `tee`, `set -o pipefail` must be enforced so any failing command in the pipeline triggers a non-zero exit code.
+
+---
+
+## 5. Local Node Runtime vs. Cloudflare Candidates (ADR-003)
+
+- **Local Node Runtime (H5 approved scope):** **PASS**. Fully verified on macOS Darwin arm64 under Node 24.22.1 / pnpm 12.11.2 across build, unit tests, E2E tests, Storybook, production server execution, and fail-closed security.
+- **F1 (vinext on Workers):** **UNTESTED / NOT_RUN**. Vinext is not installed. Compatibility with Next 16.4.2 `cacheComponents: true`, `partialPrefetching: true`, and `connection()` is unverified.
+- **F2 (OpenNext on Workers):** **UNTESTED / NOT_RUN**. OpenNext is not installed. Experimental PPR and `"use cache"` compatibility under Cloudflare Workers execution constraints remain unverified.
+- **F3 (Static Export SPA):** **BLOCKED / REDESIGN REQUIRED**. Incompatible with template's existing Server Actions, server-side session resolution, and PPR. Requires deliberate architectural redesign and security review per Security Architecture §6.1.
+- **F4 (Co-hosted Node Server):** **COMPATIBLE ARCHITECTURALLY**. Fully compatible with template code (verified by local Node 24 PoC). Requires container hosting (ADR-001 H1/H2 exception), not Cloudflare Workers serverless.
+
+---
+
+## 6. Concrete Contract Seams & Integration Blockers
+
+1. **Domain Incoherence:** The frontend template models `/tasks`, `/tasks/stats`, `/tasks/:id` with envelope `{ items: Task[], total, page, pageSize }`. The Go backend template (`go-hexa-template`) exposes only `/api/v1/users` and has zero task or matter endpoints. No endpoint aliasing or unauthorized mapping may be fabricated.
+2. **Missing Auth Middleware in Go Backend:** Frontend in REST mode requires an authenticated session with user `accessToken` or service `API_TOKEN`. Go backend inbound HTTP adapter explicitly has no authentication middleware (`internal/adapter/inbound/httpapi/server.go:34`).
+3. **Integration Boundary:** Full Next.js → Go → PostgreSQL integration must remain blocked until:
+   - Both owners (Antigravity and ZCode) achieve passing isolated PoCs.
+   - A minimal compatible contract and auth seam are formally specified and approved by Claude Code / Codex.
+
+---
+
+## 7. Artifact Manifest & Next Steps
+
+All generated artifacts are recorded in the governance repository:
+- Manifest: [`docs/testing/step-02-frontend-poc/manifest.json`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc/manifest.json)
+- Full Validation Report: [`docs/testing/step-02-frontend-poc.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc.md)
+- Execution Logs: [`docs/testing/step-02-frontend-poc/*.log`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-frontend-poc) (11 raw logs with UTC start/end, exit codes, and stdout/stderr)
+- Status Update: [`docs/architecture/frontend-audit.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/architecture/frontend-audit.md) updated to reflect `PO_C_EXECUTED / IN_REVIEW`.
+
+**Task Delivery Status:**
+- Proposed Status: **`IN_REVIEW`** (Assigned Reviewer: OpenCode).
+- Gate Confirmation: Task MC-002 remains open; Step 02 is **NOT DONE**; Step 03 is **NOT STARTED**.

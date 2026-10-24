@@ -1,0 +1,58 @@
+{
+  "checked_at_utc": "2026-10-24T15:05:01.627741+00:00",
+  "environment": "host read-only process inventory",
+  "checks": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:3088",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:3089",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:3095",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:3096",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

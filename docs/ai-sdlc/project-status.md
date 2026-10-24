@@ -59,3 +59,8 @@ Completed: repository/approval preservation, host provenance correction, actual 
 
 
 Final Antigravity capability probe confirms RunCommand is auto-denied in headless mode; exit0/empty SUCCESS did not execute even the requested synthetic Git read. No global permission workaround was applied. Manual runtime dispatch remains required.
+
+
+## Frontend manual handoff received — current intake
+
+The user returned actual Antigravity MC-002-FE local template execution evidence after4a6b8f9; earlier frontend runtime-NOT_RUN/manual-waiting statements above describe the prior checkpoint and are superseded for this native Node baseline only. Original source and isolated worktree remain clean at3e5a642. All11 log hashes match. Logs show99unit/9E2E passes and successful Next/Storybook builds; no Cloudflare adapter/Go integration/production proof. Actual OpenCode review returned CHANGES_REQUIRED for documentary evidence overclaims; Codex corrected report/manifest provenance and scope without re-running tests or changing source. Final independent recheck PASS_WITH_LIMITATIONS, all7 actionable findings resolved. [Intake](../reviews/step-02-frontend-intake.md). Backend artifacts are present but outside this frontend-only intake; no backend acceptance is inferred. MC-002 and Architecture Approval Gate remain open; Step03 not started.

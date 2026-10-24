@@ -29,3 +29,8 @@ Codex local preflight PASS: Docker29.8.2/Compose5.6.0 daemon reachable via pinne
 The current recovery record is ../tooling/step-02-1-recovery.md; historical app integrity failures no longer gate execution. ZCode CLI config and frontend runtime dispatch still require manual owner work. Both full prompts are PREPARED / WAITING_MANUAL_DISPATCH. Actual Antigravity supplied-source audit returned; no install/build/runtime/integration PoC ran. POC-02-01..07 remain NOT_RUN at product scope.
 
 Codex separately executed TOOLING-RESTORE-021: tiny new network-isolated PostgreSQL source/target,100 records/100 links, archive/list/restore/integrity and corrupt-input/PK/FK/CHECK negative checks passed. Restore-only0.04121s, provisioning-through-read1.16291s. This does not close POC-02-07 full DB/blob/history/access recovery, W1 capacity, scheduled RPO or production RTO. Exact evidence and review status: ../testing/step-02-poc-validation.md. No native build or local restore establishes Cloudflare compatibility or $0 cost.
+
+
+## Frontend native-baseline return after manual dispatch
+
+Antigravity returned native Node template install/build/unit99/E2E9 evidence; Codex verified all11 log hashes and clean pinned source. Actual OpenCode requested documentary corrections, with runtime rerun explicitly unnecessary; recheck PASS_WITH_LIMITATIONS (all7 actionable findings resolved). This supersedes frontend native-baseline NOT_RUN only. POC-02-03 exact Cloudflare adapter/feature/runtime matrix remains NOT_RUN/UNSELECTED. Source/REST unit evidence and fail-closed render do not establish a live integration or measured zero-outbound guarantee. Full ledger/quality gate is not waived. Current intake: ../reviews/step-02-frontend-intake.md.
