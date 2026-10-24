@@ -1,6 +1,6 @@
 # MatterControl Product Requirements Document
 
-Owner: Codex — Business Analyst / PM. Baseline: `20f12fe` + [Step 01 directive](../ai-sdlc/step-01-request.md). Status: **DRAFT_FOR_PRODUCT_REQUIREMENTS_APPROVAL**. Product direction and 20/14/7 scope already approved; detailed rules/permissions/NFR targets marked proposed need approval. Independent reviews are separate from author checks.
+Owner: Codex — Business Analyst / PM. Baseline: `20f12fe` + [Step 01 directive](../ai-sdlc/step-01-request.md). Status: **APPROVED_BY_PO**, 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Detailed policy/permissions and acceptance protocol approved; numeric budgets remain deferred/pending validation. Independent reviews are separate from author checks.
 
 ## 1. Product Vision
 
@@ -62,7 +62,7 @@ Condition ≠ work; criterion ≠ proof; completion ≠ verification; waiting �
 | BR-006 | Retain attributable domain changes, previous document versions and corrections; restrict history access with matter scope | JTBD-06 | FR-008, FR-015 | AC-108, AC-128, AC-136, AC-149 |
 | BR-007 | Generate authorized meaningful tables and deterministic delta drafts with baseline/as-of and outstanding work distinguished | JTBD-07 | FR-014, FR-019 | AC-114, AC-119, AC-138, AC-148 |
 
-BR scope is approved meaning; specific proposed RULE policies behind the FR/AC require OBD approval. Requirements are product behavior, not API endpoint or database entity lists.
+BR scope and specific RULE policies behind the FR/AC are approved under the recorded OBD decisions. Requirements are product behavior, not API endpoint or database entity lists.
 
 ## 13. UX Requirements
 
@@ -72,14 +72,14 @@ Desktop-first; responsive secondary reading, review and simple updates rather th
 
 ## 14. Success Criteria
 
-All P0 and three end-to-end workflow contracts must pass with test evidence. Approximately 10-second manager comprehension is a target, not proven; sample/protocol threshold in AC-137 is proposed. Track task time/errors for dense work before asserting productivity gain. NFR/security/recovery budgets must be accepted and measured; no invented SLA, ROI or legal compliance guarantee.
+All P0 and three end-to-end workflow contracts must pass with test evidence. Approximately 10-second manager comprehension is a target, not proven; sample/protocol threshold in AC-137 is PO-approved; execution remains NOT_RUN. Track task time/errors for dense work before asserting productivity gain. NFR/security/recovery budgets must be accepted and measured; no invented SLA, ROI or legal compliance guarantee.
 
 ## 15. Risks and Assumptions
 
-[Open decisions](open-business-decisions.md) contains alternatives, risk, recommendation and approval status for all OBDs. Critical gates: proof authority/reversal, dependency/waiver/readiness, filing semantics, membership, document authority/retention and reporting boundaries. Atlas is synthetic and has demonstration assumptions, not approved production policy. [Risk register](../ai-sdlc/risk-register.md) retains confidentiality, tool review and Go/Echo/PostgreSQL/Cloudflare Free Tier/$0 feasibility uncertainty. No real legal documents used.
+[Open decisions](open-business-decisions.md) contains alternatives, risk, recommendation and approval status for all OBDs. Approved policy: proof authority/reversal, dependency/waiver/readiness, filing semantics, membership, document authority and reporting boundaries. Numeric retention/workload/RPO/RTO are explicitly deferred; other measurement/lifecycle gates remain downstream. Atlas is synthetic and has demonstration assumptions, not approved production policy. [Risk register](../ai-sdlc/risk-register.md) retains confidentiality, tool review and Go/Echo/PostgreSQL/Cloudflare Free Tier/$0 feasibility uncertainty. No real legal documents used.
 
 ## 16. Explicit Non-Goals and Approval Boundary
 
-Not a generic task manager, legal-themed Jira, simple spreadsheet replacement, virtual data room, legal AI chatbot or generic workflow builder. No legal advice, automated payment/transfer/e-sign/e-filing promise. P1/P2 are not automatically P0. Step 01 creates requirements only; no solution schema/hosting architecture, UI, product code or deployment. Stop at Product Requirements Approval Gate; no automatic Step 02. [Architecture handoff](../architecture/solution-architecture-handoff.md) separates approved inputs from conditional proposals.
+Not a generic task manager, legal-themed Jira, simple spreadsheet replacement, virtual data room, legal AI chatbot or generic workflow builder. No legal advice, automated payment/transfer/e-sign/e-filing promise. P1/P2 are not automatically P0. Step 01 creates requirements only; no solution schema/hosting architecture, UI, product code or deployment. Stop at Product Requirements Approval Gate; no automatic Step 02. [Architecture handoff](../architecture/solution-architecture-handoff.md) identifies approved requirements and deferred numeric/feasibility inputs.
 
 Cross-JTBD end-to-end acceptance: AC-161 (GW-01), AC-162 (GW-02) and AC-163 (GW-03) integrate BR-001..007 / JTBD-01..07 across state comprehension, blockers, actions, proof, history and reporting. Full contract ownership is in the workflow rows of requirements-traceability.md.

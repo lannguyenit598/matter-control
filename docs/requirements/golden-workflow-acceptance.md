@@ -1,6 +1,6 @@
 # Golden Workflow Acceptance Specifications
 
-Owner: Codex. Status: DRAFT_FOR_PO_APPROVAL / NOT_RUN. Sequences are APPROVED_INPUT; guards and policies are PROPOSED per RULE/OBD. Tests must exercise persisted business behavior, permissions, history and state readback across views; mock screens alone do not pass. Synthetic Atlas at `20f12fe` is a starting context, not a completed workflow fixture.
+Owner: Codex. Status: APPROVED_BY_PO / NOT_RUN, 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Sequences are APPROVED_INPUT; guards and policies are approved per RULE/OBD. Tests must exercise persisted business behavior, permissions, history and state readback across views; mock screens alone do not pass. Synthetic Atlas at `20f12fe` is a starting context, not a completed workflow fixture.
 
 ## GW-01 — Transaction / Restructuring
 
@@ -17,7 +17,7 @@ Owner: Codex. Status: DRAFT_FOR_PO_APPROVAL / NOT_RUN. Sequences are APPROVED_IN
 - Outputs: traceable closing readiness and remaining gaps, exact document lineage, attributable payment/transfer assertions, filing status, post-closing proof, deterministic draft delta.
 - Event History: approval/proof decision, version/promotion, signature observation, dependency impact, completion/verification/reversal, milestone definition/readiness, filing cycle and handover events.
 - P0 minimum: basic linked decisions, signature observations, filing and entity context; P1 compatibility: keep exact version/party/decision references for future advanced tracking without implementing it.
-- Test target: synthetic progression extends Atlas RQ-04→AC-05→AC-07→AC-08→AC-09. Under proposed RULE-006 use distinct submitter/verifier; existing Atlas self-review is not a valid approval fixture. Define gates explicitly under RULE-003. AC-161 plus AC-102/107/115/121/123/124/128/140/141.
+- Test target: synthetic progression extends Atlas RQ-04→AC-05→AC-07→AC-08→AC-09. Under approved RULE-006 use distinct submitter/verifier; existing Atlas self-review is not a valid approval fixture. Define gates explicitly under RULE-003. AC-161 plus AC-102/107/115/121/123/124/128/140/141.
 
 ## GW-02 — Due Diligence
 

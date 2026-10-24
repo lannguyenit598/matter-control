@@ -59,3 +59,5 @@ Evidence: [current validation](../testing/step-00a-validation.md). Structural ch
 ## Step 01 — Product Requirements Approval Gate
 
 Source: step-01-request.md §21/23. PRD/SRS must specify all 20 P0 and trace seven JTBD; domain/rules/states, three workflow paths, permission matrix and measurable AC/NFR protocols must be coherent. Every critical OBD needs resolution or a concrete approval gate; prepared packet does not equal approval. MC-001 cannot be DONE with unapproved critical business policy. Independent QA testability review is separate from author structure/semantic checks and from PO approval. Claude handoff must separate approved inputs from proposals; no automatic Step 02. See project-status.md and step-01-validation.md under docs/testing for evidence.
+
+Current Step 01 outcome (2026-10-24): PASSED for documentation after explicit PO approval of recommendations at 572835a and accepted numeric deferral; [approval record](step-01-approval.md). MC-001 DONE; actual REV-01 round 2 PASS remains revision-scoped. Step 02 requires a separate assignment. Downstream runtime/release gates are retained.

@@ -6,4 +6,4 @@ Future assigned work: system/domain boundaries, API contracts, data and security
 
 Step 00A now establishes canonical product context and explicitly excludes solution architecture. Actual template/hosting feasibility remains an open risk for a later scoped audit, not a settled stack decision.
 
-Step 01: [Solution Architecture Handoff](solution-architecture-handoff.md) is prepared, conditional on Product Requirements Approval Gate. It preserves Claude ownership and records unresolved feasibility; it is not authorization or an implemented architecture.
+Step 01: [Solution Architecture Handoff](solution-architecture-handoff.md) is ready for assignment after explicit PO approval of Step 01; Step 02 remains NOT_AUTHORIZED_TO_START / NOT_DISPATCHED. It preserves Claude ownership and records unresolved feasibility; it is not authorization or an implemented architecture.

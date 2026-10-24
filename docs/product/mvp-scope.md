@@ -1,10 +1,10 @@
 # MVP Scope and Release Boundaries
 
-Source: approved [capability register](../requirements/p0-p1-p2-priorities.md), Step 01. Owner: Codex. Status: scope APPROVED_INPUT; detailed acceptance DRAFT_FOR_APPROVAL.
+Source: approved [capability register](../requirements/p0-p1-p2-priorities.md), Step 01. Owner: Codex. Status: scope APPROVED_INPUT; detailed acceptance APPROVED_BY_PO, 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md).
 
 All 20 REQ-MC-P0 entries remain in full MVP. [SRS](../requirements/srs.md) maps each stable capability to FR-001..020; no capability is dropped because of implementation or hosting difficulty. The 14 P1 and 7 P2 entries retain their existing IDs and priorities.
 
-| Boundary | P0 minimum / proposal requiring OBD-03 confirmation | Deferred depth |
+| Boundary | P0 minimum / approved OBD-03 boundary | Deferred depth |
 |---|---|---|
 | Legal records | Typed Requirement/Action, basic Decision/Finding/Risk linked to matter and follow-up | P1 structured decisions, advanced findings/risks; P2 intelligence |
 | Entity | Referenced participant/entity label and context | P1 master/temporal relations/ownership provenance; P2 beneficial ownership graph |

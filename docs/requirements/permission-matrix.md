@@ -1,8 +1,8 @@
-# Proposed MVP Permission Matrix
+# MVP Permission Matrix
 
-Owner: Codex. **PROPOSED / OBD-08 + OBD-02, WAITING_PO_APPROVAL.** OWNER/EDITOR/VIEWER are proposed roles from Step 01, not approved production authorization. Personas do not grant roles. This matrix defines behavior, not auth provider/schema.
+Owner: Codex. **APPROVED_BY_PO / OBD-08 + OBD-02**, 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md). OWNER/EDITOR/VIEWER policy is approved; production enforcement remains unimplemented and unverified. Personas do not grant roles. This matrix defines behavior, not auth provider/schema.
 
-Scope rule: active Workspace membership AND explicit Matter membership AND role permission. Workspace-level membership administration uses Workspace OWNER; matter-level operations use role on that Matter. Workspace OWNER does not automatically read confidential matters. No document-specific ACL engine proposed in P0: documents/evidence/history inherit their Matter boundary, including sensitive metadata. If narrower document access is required, PO must resolve OBD-08 before freezing this matrix; do not claim protection that is not specified.
+Scope rule: active Workspace membership AND explicit Matter membership AND role permission. Workspace-level membership administration uses Workspace OWNER; matter-level operations use role on that Matter. Workspace OWNER does not automatically read confidential matters. No document-specific ACL engine proposed in P0: documents/evidence/history inherit their Matter boundary, including sensitive metadata. The PO approved this Matter-level boundary, including VIEWER export; any later narrower document access requires a new approved change. Do not claim protection that is not specified.
 
 Legend: Yes = scoped authorized operation; No = denied; Conditional = stated guard in row. All writes require current revision and attributable history. VIEWER can only access information already visible in their matter scope.
 

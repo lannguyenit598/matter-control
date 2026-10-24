@@ -1,6 +1,6 @@
 # Product Definition
 
-Owner: Codex — BA. Status: DRAFT_FOR_PRODUCT_REQUIREMENTS_APPROVAL. Source: [Step 01](../ai-sdlc/step-01-request.md), baseline `20f12fe`. Product identity/scope remain approved; new detailed policy is proposed until the decision gate is accepted.
+Owner: Codex — BA. Status: APPROVED_BY_PO (2026-10-24; subject 572835a; DEC-016). Source: [Step 01](../ai-sdlc/step-01-request.md), baseline `20f12fe`. Product identity/scope remain approved; detailed policy is approved by the explicit decision recorded in docs/ai-sdlc/step-01-approval.md.
 
 MatterControl — **Control Plane for High-Stakes Legal Work**.
 

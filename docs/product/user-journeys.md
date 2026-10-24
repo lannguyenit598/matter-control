@@ -1,6 +1,6 @@
 # User Journeys
 
-Owner: Codex. Status: DRAFT_FOR_REQUIREMENTS_APPROVAL. Journeys describe user goals; they are not screen layouts or implementation tasks. Persona permissions follow permission-matrix.md; external parties do not automatically have accounts.
+Owner: Codex. Status: APPROVED_BY_PO (2026-10-24; subject 572835a; DEC-016). Journeys describe user goals; they are not screen layouts or implementation tasks. Persona permissions follow permission-matrix.md; external parties do not automatically have accounts.
 
 | Journey | Trigger / persona | Steps and decisions | Success / exception | Trace |
 |---|---|---|---|---|

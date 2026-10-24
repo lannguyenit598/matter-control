@@ -1,6 +1,6 @@
 # Software Requirements Specification
 
-Owner: Codex — BA. Status: **DRAFT_FOR_PRODUCT_REQUIREMENTS_APPROVAL**. Source: Step 01 and approved capability baseline `20f12fe`. Functional scope is approved; detailed behaviors below are proposals wherever they reference a proposed RULE/OBD. No implementation/architecture selected.
+Owner: Codex — BA. Status: **APPROVED_BY_PO**, 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Source: Step 01 and capability baseline `20f12fe`. Functional scope and linked policy are approved; missing numeric budgets remain deferred/pending validation. No implementation/architecture selected.
 
 ## Contract conventions
 
@@ -342,7 +342,7 @@ Parent: REQ-MC-P0-18. Business: BR-001. Persona: Transaction Owner. Story: US-01
 | Contract field | Requirement |
 |---|---|
 | Business purpose | Giữ confidential matters trong phạm vi người có trách nhiệm |
-| Inputs | Active workspace/matter membership, proposed roles, assignment/verifier designation |
+| Inputs | Active workspace/matter membership, approved roles, assignment/verifier designation |
 | Outputs | Enforced allow/deny per operation with access audit |
 | Functional behavior | Apply matrix to all paths; no cross-workspace leakage; membership revocation takes effect; no implicit grant by ownership field |
 | Business rules | RULE-017, RULE-006, RULE-018 |

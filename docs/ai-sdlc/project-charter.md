@@ -34,7 +34,7 @@ Detailed MVP success metrics and release dates are not set in this bootstrap. Co
 |---|---|---|---|
 | M0 / Step 00 | Governance and capability baseline | Structural checks plus Human review | IN_REVIEW |
 | M0A / Step 00A | Canonical Product Context under explicit PO instruction | Twelve SRC-00A1 exit criteria; approved prompt context, workflows, dataset and usable Step 01 inputs | COMPLETED; MC-00A DONE for 20f12fe after OpenCode independent PASS |
-| M1 / Step 01 then Step 02/03 | Approved requirements then architecture/design | Product Requirements Approval Gate before later phase authorization | Step 01 packet prepared, WAITING_APPROVAL; architecture/design NOT_STARTED |
+| M1 / Step 01 then Step 02/03 | Approved requirements then architecture/design | Product Requirements Approval Gate before later phase authorization | Step 01 COMPLETED / approved at 572835a (DEC-016/017); architecture/design NOT_STARTED |
 | M2 | Implemented and verified MVP | Traceability, tests and independent review | Not scheduled |
 | M3 | Approved release and observation | Human go/no-go and release evidence | Not scheduled |
 

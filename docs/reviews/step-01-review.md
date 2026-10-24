@@ -31,7 +31,7 @@ Process-only environment: `OPENCODE_PERMISSION={"*":"deny"}`, `OPENCODE_DISABLE_
 
 Round 1 session `ses_e92d7534effetgWXziJXn90ULM`: CHANGES_REQUIRED, four Medium and six Low, no Critical/High. Round 2 session `ses_e92d149b4ffeK2J2m80AqX5v3d`: **PASS**, all ten resolved and no new real contradictions found. Actual reports serve as receiver acknowledgement and completed review evidence. Codex verified all eleven reviewed file hashes before updating the traceability review-status label from PENDING to PASS after receipt. Nine files remain byte-identical; the traceability status-only change and one trailing blank-line cleanup are recorded below. The FR prerequisite graph is acyclic.
 
-## Gate and limits
+## Gate and limits at review time (historical, before PO approval)
 
 This is independent document testability review, not execution of acceptance tests, approval of legal policy, architecture review or production validation. All product ACs remain NOT_RUN. NFR numeric budgets and infrastructure/template feasibility remain open. Reviewer did not independently hash files or inspect repository history; local author checks provide that evidence separately.
 
@@ -42,3 +42,7 @@ This is independent document testability review, not execution of acceptance tes
 `docs/ai-sdlc/requirements-traceability.md` review-status change after round 2: `independent testability review REV-01 = **PENDING**` became `independent testability review REV-01 = **PASS (round 2; document testability only)**`. No requirement, acceptance criterion or mapping changed. Final SHA256: `fd656d3a0db3d0335445214c13954fec48606788e0d53514b76dc6b1f4824ce0`. Reversing that exact status-label substitution reproduces the reviewed hash. The returned report manifest intentionally retains the original reviewed hash.
 
 Staged whitespace validation also removed one final empty line from `docs/requirements/user-stories.md`; no text changed. Final SHA256: `5a8eb75aec49f1675e57cd324660adf7b53f07b273b83ea9a076f537b3ddf348`. Adding that single newline reproduces the reviewed hash. These two administrative/formatting deltas do not alter reviewed requirements.
+
+## Subsequent Product Owner approval
+
+On 2026-10-24 the human explicitly approved the recommendations at 572835a and numeric deferral; [approval/closure record](../ai-sdlc/step-01-approval.md). MC-001 is now DONE for documentation; this supersedes the historical WAITING_APPROVAL gate above. The behavioral recommendations reviewed in round 2 were accepted without semantic changes. Approval/status/provenance labels were updated; no fresh reviewer run or runtime PASS is claimed. Round 1/2 reports and original manifests remain unchanged. Material future behavioral changes invalidate affected prior conclusions and require review; Step 02 remains unassigned/unstarted.

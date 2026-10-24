@@ -1,6 +1,6 @@
 # User Stories
 
-Owner: Codex. Status: DRAFT_FOR_APPROVAL. Each story is P0; detailed proposed policy follows linked RULE/OBD gates. AC definitions are in acceptance-criteria.md; no executed tests implied. Dependencies are directional contract/test-setup prerequisites from SRS; related/co-required links describe mutual integration, not a delivery schedule.
+Owner: Codex. Status: APPROVED_BY_PO, 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Each story is P0; detailed policy follows approved RULE/OBD decisions. AC definitions are in acceptance-criteria.md; no executed tests implied. Dependencies are directional contract/test-setup prerequisites from SRS; related/co-required links describe mutual integration, not a delivery schedule.
 
 ## US-001 — Requirement vs Action
 
@@ -195,7 +195,7 @@ Owner: Codex. Status: DRAFT_FOR_APPROVAL. Each story is P0; detailed proposed po
 - Persona: Transaction Owner. Priority: P0.
 - Description: As a Transaction Owner, I want apply matrix to all paths; no cross-workspace leakage; membership revocation takes effect; no implicit grant by ownership field, so that giữ confidential matters trong phạm vi người có trách nhiệm.
 - Business value: Giữ confidential matters trong phạm vi người có trách nhiệm.
-- Dependencies: no other FR; active scoped membership and proposed policy fixture; policy: RULE-017, RULE-006, RULE-018.
+- Dependencies: no other FR; active scoped membership and approved policy fixture; policy: RULE-017, RULE-006, RULE-018.
 - Related / co-required: All FR read/write surfaces; no demo auth acceptance.
 - Acceptance criteria: AC-118, AC-134, AC-135, AC-140, AC-147, AC-149.
 - Negative scenarios: Uniform inaccessible/not-found; no leaked metadata; unauthorized write no domain change. Unauthorized/stale changes must preserve prior value and return attributable failure, not false success.

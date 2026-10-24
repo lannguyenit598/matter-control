@@ -1,6 +1,6 @@
 # Jobs to Be Done
 
-Owner: Codex. Seven JTBD APPROVED_INPUT from Step 00A.1/01. Detailed contracts remain pending PO approval where proposed rules apply. [PRD](../requirements/prd.md) defines BR; [SRS](../requirements/srs.md), [stories](../requirements/user-stories.md) and [AC](../requirements/acceptance-criteria.md) provide testable detail.
+Owner: Codex. Seven JTBD APPROVED_INPUT from Step 00A.1/01. Detailed policy contracts are PO-approved on 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Numeric budgets retain their downstream gates. [PRD](../requirements/prd.md) defines BR; [SRS](../requirements/srs.md), [stories](../requirements/user-stories.md) and [AC](../requirements/acceptance-criteria.md) provide testable detail.
 
 | JTBD | Approved job | Business requirement | Functional scope | UX outcome | Acceptance |
 |---|---|---|---|---|---|

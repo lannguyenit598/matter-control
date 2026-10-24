@@ -20,3 +20,10 @@
 | DEC-015 | 2026-10-24 | Close MC-00A for 20f12fe after actual OpenCode PASS and DoD evidence assessment | Codex records evidence | DONE_BASELINE_ONLY | REV-00A returned result; no Critical/High, advisory findings disposition; Step 01 proposals not covered |
 
 APPROVED_INPUT is evidence from the supplied request, not an approval of all generated documents. Later decisions need context, options, consequences, approver and source/revision. Architecture ADRs will live under docs/architecture/ when assigned.
+
+## Step 01 Product Owner decisions — closure
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| DEC-016 | 2026-10-24 | Approve all recommendation B choices for OBD-02..08/10/11 (OBD-08 B/B), exact subject 572835a | Human Product Owner | APPROVED / RECORDED | [Direct human answer and scope](step-01-approval.md); MC-001 DONE / Step 01 COMPLETED; no behavioral edits, no Step 02 start |
+| DEC-017 | 2026-10-24 | Defer numeric workload, retention period and RPO/RTO to Step 02 feasibility | Human Product Owner | DEFERRAL_APPROVED / VALUES_PENDING | [Direct human answer](step-01-approval.md); values require approval before commitments/release; no cost/stack/retention/lifecycle guarantee |
