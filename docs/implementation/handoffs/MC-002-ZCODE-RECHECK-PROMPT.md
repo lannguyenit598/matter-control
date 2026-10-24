@@ -1,4 +1,6 @@
-# MC-002-BE — ZCode Evidence Recheck (copy and paste)
+# MC-002-BE — ZCode Evidence Recheck (historical executed handoff)
+
+Status: EXECUTED_AND_RETURNED; actual OpenCode R01/R02 closure PASS_WITH_LIMITATIONS. See ../../reviews/step-02-backend-r01-r02-closure.md. This retained instruction is not a new dispatch; do not rerun it without a new issue.
 
 You are actual ZCode, backend owner. Continue MC-002-BE only for OpenCode findings MC002BE-R01/R02. Priority P0; FR/NFR/RULE/AC baseline unchanged. Acknowledge actual tool/model, repository/base, scope and blockers. This is a focused evidence recheck, not permission to implement product features or the500→503 fix.
 

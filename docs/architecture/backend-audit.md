@@ -1,6 +1,6 @@
 # MC-002-BE — Backend Owner Audit and PoC Status
 
-Owner: actual ZCode, not Codex. Priority P0; requirements FR-001..020, NFR-001..014, RULE-001..021 and AC-101..163 remain approved. Status: **TEMPLATE_CHARACTERIZATION_PASS_WITH_LIMITATIONS / R01_R02_REWORK_REQUIRED**. Dependencies: trusted owner route, isolated test target, pinned source and H5 scope. Reviewer: OpenCode; architecture impact: Claude Code.
+Owner: actual ZCode, not Codex. Priority P0; requirements FR-001..020, NFR-001..014, RULE-001..021 and AC-101..163 remain approved. Status: **LOCAL_NATIVE_TEMPLATE_REVIEW_PASS_WITH_LIMITATIONS / R01_R02_CLOSED / PRODUCT_CONFORMANCE_UNVERIFIED**. Dependencies: trusted owner route, isolated test target, pinned source and H5 scope. Reviewer: OpenCode; architecture impact: Claude Code.
 
 Pinned input: /tmp/mattercontrol-step02-backend at d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b, origin https://github.com/lannguyenit598/go-hexa-template. Codex source inventory is in [repository audit](repository-audit.md), not a ZCode completion. Go1.26.0, Echo5.4.0/Huma2.39.1, pgx5.11/Goose3.28, native net/http/Fx lifecycle, User domain, sqlc migrations and absent auth are source findings. No MatterControl implementation exists.
 
@@ -24,3 +24,7 @@ Findings added by execution (for Claude Code architecture review):
 ## Actual independent intake and architect disposition
 
 OpenCode PASS_WITH_LIMITATIONS applies to native template characterization, with two acceptance lines still in rework: R01 per-test skip enumeration and R02 paired invalid-config argv/error logs. The package counts are11 ok+5 no-test, not13. Actual Claude review confirms500-vs503 /problems/unavailable+retryAfter is a future implementation gap under unchanged architecture; no ADR/source change or waiver. Core/port-owned unavailability classification must keep concrete driver types out of inbound, preserve500 for unexpected faults and preserve unknown-commit/idempotency/current-auth semantics. Detailed acceptance tests remain NOT_RUN. One original local test credential in a shell trace was redacted from export and original task log before commit. [Intake](../reviews/step-02-backend-intake.md), [Claude return](../reviews/step-02-backend-claude-disposition.md). Native build/race suite is not a race-instrumented production binary or proof of Workers behavior.
+
+## Focused recheck accepted
+
+Actual ZCode rerun supplies880 valid JSON events:205 named test/subtest pass,0fail/0namedskip,11 tested packages and5 package-level no-test skips;4 separate invalid-config/migrate argv/exit/output pairs close the missing evidence. Actual OpenCode session ses_e91610e71ffeC42yXslkK7ke8v returned PASS_WITH_LIMITATIONS with R01/R02 CLOSED. Source/binary unchanged, hashes verified by Codex; no replay by Codex/reviewer. This supersedes earlier R01/R02-rework labels above, without retroactively changing old nonverbose logs. C01 remains a future product-conformance obligation. [Closure](../reviews/step-02-backend-r01-r02-closure.md).

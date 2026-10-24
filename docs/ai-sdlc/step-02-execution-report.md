@@ -53,3 +53,7 @@ Final dispatch boundary check: Antigravity conversation b9174f44-a511-4ab6-8f3b-
 
 
 Git staged whitespace check: five expected warnings confined to the preserved Antigravity Markdown response (four Markdown hard breaks and its blank EOF). Authored paths pass the separate check; raw output was not silently normalized.
+
+## Final focused owner-evidence return after74fbdec
+
+Actual ZCode R01/R02 rerun is returned and independently reviewed PASS_WITH_LIMITATIONS, both findings CLOSED. Codex verified18/18 /tmp-to-governance byte identities,17 payload hashes,880 valid JSON events,205 named pass/0fail/0namedskip (including parent/subtest results),11tested+5no-test packages,4 paired exit1 config/migrate captures, clean pinned source/binary and read-only stopped resource state. No runtime replay or source change by Codex. [Current closure](../reviews/step-02-backend-r01-r02-closure.md). Older owner-manual-waiting/evidence-rework statements in this report describe earlier checkpoints. No more R01/R02 owner dispatch required. MC-002 remains open; C01/integration/full-product/Cloudflare/cost/release gates remain unverified or unapproved.

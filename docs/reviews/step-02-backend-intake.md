@@ -36,3 +36,7 @@ Skipped: backend runtime replay, per-test rerun, invalid-config rerun, container
 
 
 Final actual OpenCode documentary recheck: session ses_e9176fa1dffedPMAvkCsrMBY3K, opencode/glm-5.3-flash-free, exit0/outcome succeeded. [Verbatim return](step-02-backend-opencode-recheck.md), [execution](../testing/step-02-backend-intake/opencode-recheck-execution.json). M01..M05 verified; actual Claude disposition correctly bounded. R01/R02 remain OPEN / NOT_RUN / REWORK_REQUIRED; characterization verdict is not upgraded to full acceptance. A nonblocking Echo-status wording nit is qualified above; no source change or test rerun.
+
+## Superseding final R01/R02 evidence closure
+
+This file records the initial intake/correction checkpoints. Actual ZCode focused recheck has now returned and actual OpenCode session ses_e91610e71ffeC42yXslkK7ke8v returned PASS_WITH_LIMITATIONS: R01 PASS/CLOSED, R02 PASS/CLOSED. [Current closure](step-02-backend-r01-r02-closure.md). Earlier EVIDENCE_REWORK_REQUIRED/manual-waiting/open labels here are historical, not current. The recheck raw artifacts retain their hashes;205 named pass/0fail/0namedskip and4 exit1 command/error pairs are now supported. C01 remains an unchanged-contract future implementation obligation; no product/integration/production/cost gate closed.

@@ -35,3 +35,7 @@ Final actual reviewer: OpenCode2.1.4 / opencode/glm-5.3-flash-free, session ses_
 
 
 Supplemental final capability probe (outside independent review snapshots): [Antigravity tool denial](step-02-1/antigravity-tool-probe.json), conversation b9174f44-a511-4ab6-8f3b-da986e09b79a. A single synthetic Git-read command was auto-denied by headless command permission; CLI exit0/JSON SUCCESS is not counted as execution. No global allow-rule or bypass used. Owner runtime remains WAITING_MANUAL_DISPATCH.
+
+## Final R01/R02 closure
+
+Actual focused ZCode artifacts now close the backend per-test skip and invalid-config evidence gaps. Codex hash/JSON/message verification and actual independent OpenCode PASS_WITH_LIMITATIONS are recorded in ../reviews/step-02-backend-r01-r02-closure.md. R01/R02 are CLOSED; old NOT_RUN/open descriptions above apply to earlier checkpoints. Codex/reviewer did not replay tests. Product C01, integration, critical product PoCs, full recovery, production/Cloudflare and cost remain distinct unfinished gates.

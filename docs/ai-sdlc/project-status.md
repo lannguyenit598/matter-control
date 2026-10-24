@@ -2,7 +2,7 @@
 
 As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
 
-**Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: WAITING_APPROVAL / OWNER_VALIDATION_BLOCKED / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
+**Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: IN_REVIEW / WAITING_APPROVAL / REMAINING_FEASIBILITY_OPEN / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
 
 | Area | Current state | Evidence / next gate |
 |---|---|---|
@@ -71,3 +71,9 @@ The user returned actual Antigravity MC-002-FE local template execution evidence
 ZCode returned the native backend template PoC on clean/pinned d024e3e with build/migrations/race-package runs/container image/API/CAS/persistence/DB-down/recovery/guard evidence. Codex verified binary hash and read-only retained resource identity; no replay. Actual OpenCode PASS_WITH_LIMITATIONS covers template characterization, with R01 per-test skip enumeration and R02 invalid-config argv/error evidence still requiring owner rechecks. Metadata/privacy corrections were applied; actual correction recheck verified M01..M05; R01/R02 remain open. Actual Claude confirms C01 data-path500 vs product503 unavailable+retryAfter is a future implementation obligation under unchanged contracts, not an ADR waiver. [Backend intake](../reviews/step-02-backend-intake.md).
 
 Frontend native baseline remains independently accepted with limits. Receiving both returns does not authorize integration: backend verification gaps and the compatible API/auth seam remain unresolved. MC-002 remains NOT_DONE / EVIDENCE_REWORK_REQUIRED / WAITING_REMAINING_APPROVALS; production/Cloudflare/cost/full recovery and Step03 remain gated. Prior backend NOT_RUN/manual-waiting checkpoint statements above are superseded only for this returned native characterization.
+
+## R01/R02 final evidence closure — current state
+
+Actual ZCode focused recheck returned at governance74fbdec; Codex verified18/18 byte-identical exports versus /tmp originals,17 payload hashes,880 valid JSON events,205 named pass/0fail/0namedskip (parents/subtests included),11 test-bearing packages plus5 no-test packages, and4 paired config/migrate errors with exit1. Source/binary unchanged. Actual OpenCode session ses_e91610e71ffeC42yXslkK7ke8v / opencode/glm-5.3-flash-free returned PASS_WITH_LIMITATIONS, R01 PASS/CLOSED and R02 PASS/CLOSED. [Closure](../reviews/step-02-backend-r01-r02-closure.md).
+
+This supersedes R01/R02-open/manual-waiting statements in prior checkpoints above. Backend native template evidence and frontend native baseline have independent scoped review; no owner recheck remains for these two findings. Do not rerun accepted baselines without a new defect. MC-002 remains open for C01 future implementation obligation, compatible API/auth integration seam, remaining product-critical PoCs and architecture/Cloudflare/cost/PO gates. No product, production or Step03 approval.

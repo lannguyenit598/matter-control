@@ -1,0 +1,64 @@
+{
+  "checked_at_utc": "2026-10-24T15:53:44.623306+00:00",
+  "scope": "read-only owned resource identity/state; no Config.Env or database access, no start/stop/mutation",
+  "checks": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .Name}} {{json .State.Running}} {{json .State.ExitCode}} {{json .State.StartedAt}} {{json .State.FinishedAt}} {{json .Config.Labels}} {{json .HostConfig.PortBindings}} {{json .HostConfig.Memory}} {{json .HostConfig.NanoCpus}} {{json .HostConfig.PidsLimit}}",
+        "mc002be-recheck-pg-20261024T1539Z"
+      ],
+      "exit": 0,
+      "stdout": "\"970007bbc363bb0b14da40fb6feadd763049ec9cd6660de5c52a5a6f764a893d\" \"/mc002be-recheck-pg-20261024T1539Z\" false 0 \"2026-10-24T15:39:43.723562378Z\" \"2026-10-24T15:42:01.287533053Z\" {\"org.mattercontrol.poc\":\"mc002be-recheck\"} {\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15456\"}]} 536870912 1000000000 128\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .Name}} {{json .State.Running}} {{json .State.ExitCode}} {{json .State.StartedAt}} {{json .State.FinishedAt}} {{json .Config.Labels}} {{json .HostConfig.PortBindings}} {{json .HostConfig.Memory}} {{json .HostConfig.NanoCpus}} {{json .HostConfig.PidsLimit}}",
+        "mc002be-pg-20261024T1454Z"
+      ],
+      "exit": 0,
+      "stdout": "\"a34a25df7d341e6522f245f7d4157d4ba97dbf7d39f469a3c1f5b696e4766faf\" \"/mc002be-pg-20261024T1454Z\" false 0 \"2026-10-24T14:59:15.671043625Z\" \"2026-10-24T15:00:23.490731629Z\" {\"org.mattercontrol.poc\":\"mc002be\"} {\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15455\"}]} 536870912 1000000000 128\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:15456",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18091",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl backend R01 R02 closure review",
+    "--file",
+    "/tmp/mc002be-r01-r02-review-input.txt",
+    "Review exact returned R01/R02 evidence and return explicit closure verdict. No tools or runtime replay; no product/Cloudflare approval."
+  ],
+  "exit": 0,
+  "elapsed_seconds": 102.87005019187927,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "runtime_replay": false,
+  "session_id": "ses_e91610e71ffeC42yXslkK7ke8v",
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "outcome": "succeeded",
+  "tool_messages": [],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "closed_findings": {
+    "MC002BE-R01": "PASS",
+    "MC002BE-R02": "PASS"
+  },
+  "full_MC002": "NOT_DONE",
+  "c01": "OPEN separate implementation obligation",
+  "raw_output_sha256": "838db39e34b935001546971cf3242c676d9b09492455a4ef38a0d9dbbfc4af01"
+}
