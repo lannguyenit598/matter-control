@@ -40,3 +40,7 @@ Source: SRC-00A / Task 1, 2, 3, 5; validated against SRC-00A1 §5.3. [Provenance
 GW-01/GW-03 có Signature, GW-02 có Finding; Control Room có decisions; Atlas có partially signed document, 2 open decisions, findings và risk. Vì thế P0 phải biểu diễn được những tình huống này ở mức tối thiểu. Đây không phải chấp thuận triển khai toàn bộ signature tracking, structured decision engine hoặc advanced findings/risks của P1.
 
 Mức tối thiểu cụ thể là TO_BE_ANALYZED_IN_STEP_01 tại OBD-03. Không loại các tình huống P0, cũng không kéo trọn mô hình P1 vào MVP.
+
+## Step 01 relationship clarification — proposed access detail
+
+Workspace/Membership: Membership is the active relationship granting participation in a Workspace and separately a Matter; it is not an External Party or Entity and assignment alone grants no access. This clarifies a requested access relationship, not a forced change to the baseline concept count. Workspace contains Matter contexts; a Matter can organize Requirements/Actions into Workstreams and explicitly designate milestone prerequisites. Requirements can have zero/multiple Actions and Evidence Requirements; proof addresses exact criteria/versions. Filing retains its own stage/observations linked to these records. Detailed relationships/permissions are proposed in SRS and permission-matrix.md, subject to OBD-08; no schema selected.

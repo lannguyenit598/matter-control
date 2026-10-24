@@ -10,7 +10,7 @@ A task is DONE only when all acceptance criteria pass with revision-specific evi
 
 For documentation-only bootstrap: structure, required fields, links and consistency are checked; code/runtime tests are N/A. Human review is still pending, so MC-000 is IN_REVIEW.
 
-For Step 00A: product direction and P0 baseline are already approved by direct PO instruction; do not request them again. The [Step 00A.1 directive](step-00a1-request.md) replaces the former original-file gate: original A/B archival is optional. Stage completion requires the 12 criteria below; independent review remains Pending and is reported separately. This PO-defined stage gate permits Step 01 readiness while the documentation task stays IN_REVIEW; it does not waive the task DONE/independent review rule. Clarification work for Step 01 is distinct from approval of a material change.
+For Step 00A: product direction and P0 baseline are already approved by direct PO instruction; do not request them again. The [Step 00A.1 directive](step-00a1-request.md) replaces the former original-file gate: original A/B archival is optional. Stage completion requires the 12 criteria below; independent review was Pending at that baseline and was reported separately (actual REV-00A now PASS; MC-00A DONE for 20f12fe). This PO-defined stage gate permitted Step 01 readiness while the documentation task was IN_REVIEW; it does not waive the task DONE/independent review rule. Clarification work for Step 01 is distinct from approval of a material change.
 
 ## Gates
 
@@ -55,3 +55,7 @@ Codex records exception ID, rationale, impacted requirements, risk, compensating
 12. Step 01 input artifacts are usable.
 
 Evidence: [current validation](../testing/step-00a-validation.md). Structural checks and author semantic review are separate from independent review. Unformalized rules are TO_BE_ANALYZED_IN_STEP_01. Only a missing product-direction or approved-scope decision preventing BA constitutes a Step 01 context blocker; none was identified in this closure.
+
+## Step 01 — Product Requirements Approval Gate
+
+Source: step-01-request.md §21/23. PRD/SRS must specify all 20 P0 and trace seven JTBD; domain/rules/states, three workflow paths, permission matrix and measurable AC/NFR protocols must be coherent. Every critical OBD needs resolution or a concrete approval gate; prepared packet does not equal approval. MC-001 cannot be DONE with unapproved critical business policy. Independent QA testability review is separate from author structure/semantic checks and from PO approval. Claude handoff must separate approved inputs from proposals; no automatic Step 02. See project-status.md and step-01-validation.md under docs/testing for evidence.

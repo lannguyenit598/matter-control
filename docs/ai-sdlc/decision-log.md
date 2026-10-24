@@ -15,4 +15,8 @@
 | DEC-011 | 2026-10-24 | Approved prompts are valid initial context; originals never in initial empty repo/workspace, archival optional | Human | APPROVED_INPUT | SRC-00A1 §2/7; context-provenance.md; no direct A/B verification claimed |
 | DEC-012 | 2026-10-24 | Explicit seven JTBD, refined capability names/coverage and twelve revised exit criteria | Human | APPROVED_INPUT / APPLIED | SRC-00A1 §5/10/11; preserve IDs, add P0-20; Step 00A COMPLETED, Step 01 READY_FOR_BUSINESS_ANALYSIS; task IN_REVIEW, independent review Pending |
 
+| DEC-013 | 2026-10-24 | Authorize Step 01 BA with Codex ownership; stop at Product Requirements Approval Gate | Human | APPROVED_INPUT | step-01-request.md; no architecture/code/UI/deploy or automatic Step 02 |
+| DEC-014 | 2026-10-24 | Send explicitly named baseline and Step 01 documentation packets to configured OpenCode/provider for independent reviews | Human | APPROVED_EGRESS_FOR_NAMED_PACKETS | Explicit chat replies; no real legal data/credentials; read-only review, no blanket external publishing permission |
+| DEC-015 | 2026-10-24 | Close MC-00A for 20f12fe after actual OpenCode PASS and DoD evidence assessment | Codex records evidence | DONE_BASELINE_ONLY | REV-00A returned result; no Critical/High, advisory findings disposition; Step 01 proposals not covered |
+
 APPROVED_INPUT is evidence from the supplied request, not an approval of all generated documents. Later decisions need context, options, consequences, approver and source/revision. Architecture ADRs will live under docs/architecture/ when assigned.

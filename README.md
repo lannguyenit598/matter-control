@@ -7,6 +7,9 @@ Vertical ban đầu: Transactions & Corporate Legal Work. Product Discovery đã
 
 Đây là repository quản trị AI SDLC, chưa chứa product implementation. Bộ bootstrap được tạo ngày 2026-10-24 (Asia/Ho_Chi_Minh); nội dung quản trị mới ở trạng thái chờ review, không phải quyết định kiến trúc đã được phê duyệt.
 
+- [Step 01 PRD](docs/requirements/prd.md)
+- [Step 01 SRS](docs/requirements/srs.md)
+- [Product Requirements Approval Packet](docs/requirements/open-business-decisions.md)
 - [Canonical Product Context — validated prompt baseline](docs/product/canonical-product-context.md)
 - [Approved P0/P1/P2 capabilities](docs/requirements/p0-p1-p2-priorities.md)
 - [Project Atlas synthetic dataset specification](docs/product/project-atlas-dataset.md)
@@ -22,4 +25,4 @@ Vertical ban đầu: Transactions & Corporate Legal Work. Product Discovery đã
 - [Source-of-truth structure](docs/ai-sdlc/source-of-truth.md)
 - [Verification evidence](docs/tooling/verification-2026-10-24.md)
 
-Step 00A: COMPLETED theo exit criteria được PO sửa ở Step 00A.1. Step 01: READY_FOR_BUSINESS_ANALYSIS; chưa tự bắt đầu. [Context provenance](docs/product/context-provenance.md) ghi approved prompts là nguồn hợp lệ; chưa direct verify A/B. MC-00A còn IN_REVIEW, independent review Pending. Không code, thiết kế solution architecture/high-fidelity UI hoặc deploy. Xem [scope rebaseline](docs/ai-sdlc/scope-rebaseline.md).
+Step 00A COMPLETED; MC-00A DONE cho baseline 20f12fe sau review độc lập OpenCode PASS. Step 01 đã có bộ requirements, đang WAITING_PRODUCT_REQUIREMENTS_APPROVAL; MC-001 WAITING_APPROVAL. [Architecture handoff](docs/architecture/solution-architecture-handoff.md) đã chuẩn bị nhưng chưa bắt đầu Step 02. [Provenance](docs/product/context-provenance.md) giữ approved prompts là nguồn hợp lệ. Không có product code, architecture/UI design hoặc deploy.

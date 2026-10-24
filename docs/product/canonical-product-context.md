@@ -1,5 +1,7 @@
 # MatterControl — Canonical Product Context
 
+Current Step 01 work: [PRD](../requirements/prd.md), [proposed rules/decisions](../requirements/open-business-decisions.md) and [project status](../ai-sdlc/project-status.md). The Step 00A readiness/review statements below describe the baseline at 20f12fe; actual baseline review has since returned PASS. New Step 01 policy remains pending PO approval.
+
 Owner: Codex — BA / Product Requirements Owner / PM. Date: 2026-10-24.
 **Status: VALIDATED_AGAINST_APPROVED_PROMPT_CONTEXT. Step 00A: COMPLETED; Step 01: READY_FOR_BUSINESS_ANALYSIS.**
 

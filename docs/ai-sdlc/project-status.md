@@ -1,50 +1,41 @@
 # Project Status Dashboard
 
-As of 2026-10-24, Asia/Ho_Chi_Minh. Owner: Codex.
+As of 2026-10-24 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-001](../implementation/tasks/MC-001.md), authorized by [Step 01](step-01-request.md).
 
-**Step 00A: COMPLETED. Step 01: READY_FOR_BUSINESS_ANALYSIS. MC-00A task: IN_REVIEW; independent review: Pending (NOT_RUN).**
+**Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: WAITING_PRODUCT_REQUIREMENTS_APPROVAL. MC-001: WAITING_APPROVAL. Step 02: HANDOFF_PREPARED / NOT_AUTHORIZED_TO_START.**
 
-Authority: [SRC-00A1](step-00a1-request.md), correcting the historical b5224ce source gate. Stage completion follows the twelve revised exit criteria; task DONE still requires independent review.
-
-| Area | State | Evidence / next action |
+| Area | Current state | Evidence / next gate |
 |---|---|---|
-| Product identity / discovery | APPROVED_INPUT; discovery closed | SRC-00 and SRC-00A |
-| Operating model | Adopted for use by explicit Step 00A instruction | No independent review of all Step 00 evidence inferred |
-| Step 00A scope | Canonical Product Context; old technical-audit proposal superseded | [Rebaseline](scope-rebaseline.md) |
-| Document A / B | ORIGINAL_BRIEFS_NOT_IN_REPOSITORY_BY_DESIGN | [Provenance](../product/context-provenance.md): archival optional; no direct original-file verification |
-| Canonical product context | PRODUCT_CONTEXT_PROVIDED_VIA_APPROVED_PROMPTS | Validated against approved prompt context; seven JTBD documented and traced |
-| Capability priorities | 20 P0 / 14 P1 / 7 P2 APPROVED_INPUT | No P0 removed or full P1/P2 pulled into MVP |
-| Domain and state semantics | 19 definitions checked against prompt context; five approved state vocabularies | Detailed rules/guard conditions TO_BE_ANALYZED_IN_STEP_01 |
-| Golden Workflows | Three approved sequences documented | Detailed scenarios are candidates, not executed acceptance tests |
-| Atlas | Synthetic specification prepared | 6 WS, 3 milestones, 24 RQ/AC, 7 edges, 5 docs/10 versions, 3 parties, 2 filings |
-| Delta analysis | PROMPT_BASED_DELTA_RECORDED | Eight original axes + four closure deltas; no direct A/B comparison claimed |
-| Local Git / remote | Local versioned documentation; no configured remote | No push or PR |
-| External-agent readiness | Still no successful workspace task handoff | [User-reported follow-up](../tooling/follow-up-evidence.md) supersedes some startup observations |
-| OpenDesign | User reports valid signature and MCP registered/enabled | Live MCP/daemon round trip not verified |
-| Architecture / code / high-fidelity UI / deployment | NOT_STARTED in Step 00A | Explicit stop condition |
-| Cloudflare Free Tier / $0 | UNVERIFIED | Constraint preserved; no solution/cost claim |
+| Identity / direction / scope | APPROVED_INPUT, unchanged | Seven JTBD; 20 P0 / 14 P1 / 7 P2; three workflows |
+| Source provenance | Approved prompts valid; originals optional | context-provenance.md; no direct A/B verification claimed |
+| Step 00A independent review | PASS_WITH_LIMITATIONS, no Critical/High | Actual OpenCode opencode/big-pickle review of 11 exact snapshots at 20f12fe; review/result under docs/reviews |
+| PRD / SRS | Authored, pending PO approval | 7 BR, 20 FR, 14 NFR; all P0 specified |
+| Domain / state / business policy | Approved meaning retained; detailed rules PROPOSED | 21 RULE entries, five axis transitions and permission matrix; OBD approval required |
+| Stories / acceptance | Authored, runtime NOT_RUN | 20 US; 63 AC including 18 priority scenario categories and three end-to-end workflow contracts |
+| UX | Requirements specified; no UI created | Control Room/Grid, 50–200 rows, ~10-second comprehension target not proven |
+| Open decisions | OBD-01 resolved; critical proposals WAITING_PO_APPROVAL | OBD-02..08/10/11; OBD-09 technical validation deferred, workload/retention/recovery values open |
+| Step 01 independent testability review | PASS, round 2 | Actual OpenCode opencode/big-pickle review; all 10 findings resolved; exact hashes and returned reports in REV-01 |
+| Architecture handoff | Prepared, conditional | Claude Code retains Step 02 ownership; no architecture designed/dispatched |
+| Infrastructure | UNVERIFIED | Go/Echo/PostgreSQL/Cloudflare Free Tier and $0 workload envelope unresolved; no substitution |
+| Product code / runtime tests / design / deployment | NOT_STARTED | Explicit Step 01 stop condition |
+| Git | Local Markdown artifacts only | No push/PR; exact revision in commit history |
 
-## Step 00A exit criteria / Step 01 input gate
+## Step 01 quality gate
 
-All results below are documentation baseline results, not runtime acceptance. Detailed structural checks and author semantic review are separate in [validation](../testing/step-00a-validation.md).
+| Criterion | Documentation assessment | Approval/evidence gate |
+|---|---|---|
+| Clear PRD / complete SRS | Prepared | PO requirements approval; author validation report |
+| 20 P0 coverage / 7 JTBD trace | Prepared | Full traceability checks; no scope cut |
+| Domain consistency / critical rules | Specified with proposal labels | OBD-02..08/11 not self-approved |
+| Three testable workflows | Main/alternate/exception paths, proof/history and AC | Product runtime tests NOT_RUN |
+| Permission matrix | OWNER/EDITOR/VIEWER and every requested operation | OBD-08 and independent verification policy approval |
+| Measurable AC / NFR | Concrete expected outcomes; missing benchmark values explicit | OBD-09/10/11 and later measurements |
+| Critical open decisions | Alternatives/risks/recommendations/approval gates recorded | WAITING_APPROVAL; Step 01 not DONE |
+| Architecture handoff / traceability | Prepared with approved vs proposed separation | Step 02 not started; downstream design/tasks/tests explicitly pending |
+| Independent testability review | PASS for pinned round 2 snapshot | All 10 findings resolved; document review only, no policy approval or runtime proof |
 
-| Exit criterion | Result / evidence |
-|---|---|
-| Official product identity confirmed | PASS — canonical context §2, unchanged |
-| Canonical Product Context exists | PASS — approved prompt baseline and provenance |
-| Domain terminology documented | PASS — 19 distinct concepts; Requirement/Action and criterion/Evidence retained |
-| Seven JTBD preserved | PASS — canonical context §3 with capability/Atlas trace |
-| Five State Dimensions documented | PASS — exact approved values; dependency requires business logic |
-| P0/P1/P2 baseline documented | PASS — 20 / 14 / 7, semantic coverage reviewed; no promotion |
-| Three Golden Workflows documented | PASS — exact sequences; detailed rules deferred |
-| Project Atlas specification created | PASS — synthetic counts, nine required situations and explicit assumptions |
-| Requirements Delta Analysis recorded | PASS — prompt-based delta; no direct-original comparison claim |
-| Open Business Decisions tracked | PASS — OBD-01 resolved; OBD-02..11 TO_BE_ANALYZED_IN_STEP_01 |
-| Risk Register updated | PASS — incorrect source blocker R-011 closed; downstream risks retained |
-| Step 01 input artifacts usable | PASS — READY_FOR_BUSINESS_ANALYSIS; no missing direction/scope decision |
+## Continuity and stop
 
-## Next actions and stop
+Step 00A twelve exit criteria passed at 20f12fe; its structural/semantic report remains historical evidence. Actual independent baseline review now supports MC-00A closure only, not new Step 01 rule approval. MC-000 bootstrap governance still IN_REVIEW.
 
-Step 01 may be assigned using the canonical context, glossary, capability register, workflows, Atlas, delta, decisions and risk register. This closure does not automatically start it. Independent review remains Pending in [REV-00A](../reviews/step-00a-review.md); MC-00A is IN_REVIEW, not DONE. Historical MC-000 remains IN_REVIEW.
-
-No external agent was dispatched. No code, solution architecture, UI or deployment was performed. Tooling round trips, template audit and Cloudflare feasibility remain downstream work, not blockers to business analysis. Optional original archival is not an action required from the PO to unlock Step 01.
+Current stop is Product Requirements Approval Gate. PO reviews the concrete OBD recommendations and required policy inputs. Do not auto-start Step 02, coding, UI or deployment. If review finds Critical/High, resolve or block affected requirements; no baseline issue is inferred solely from tool timeout. Original A/B archival is not a gate.
