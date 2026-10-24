@@ -10,10 +10,10 @@
 |---|---|
 | Base | `/api/v1`; JSON only; resources addressed by UUIDv7; matter scope in path `/matters/{matterId}/…` or derived from the resource and validated |
 | Authentication | `Authorization: Bearer <user access token>` on every `/api/v1` route; no shared service token for user data (TB-04) |
-| Revisions | Every mutable resource returns `revision` and strong `ETag: "<revision>"` (template format). **All mutations require `If-Match`**; missing → `428 precondition-required` (stricter than template, where absent If-Match meant "no precondition"). Commands touching secondary resources pass `expectedRevisions: {id: revision}` |
-| Idempotency | `Idempotency-Key` (UUID, client-generated per user intent) required on every non-GET. Receipt `(actor, key) → request hash, status, body` stored in the same transaction. Same key + same hash → original response with `Idempotent-Replayed: true`; same key + different hash → `422 idempotency-key-reuse` |
-| Unknown outcome | `GET /api/v1/operations/{idempotencyKey}` → `200 {status: COMMITTED, response}` or `404` (never committed; safe to resubmit with same key) |
-| Provenance | Every read and command response includes `asOf` (RFC 3339 with offset), `sourceRevision` (matter event sequence) and, for commands, `eventSeqs[]` |
+| Revisions | Every mutable resource returns `revision` and strong `ETag: "<revision>"` (template format). `If-Match` is required **iff** the endpoint's CAS scope in §1.1 names a target (stricter than template, where absent If-Match meant "no precondition"): missing → `428 precondition-required`; mismatch → `412 stale-revision`; sent to a scope-none endpoint → `400 precondition-not-applicable`. Further revisioned inputs go in `expectedRevisions: {id: revision}` exactly where §1.1 requires |
+| Idempotency | `Idempotency-Key` (UUIDv7, one per user intent) required on every non-GET. Receipt `(actor, key) → scope (matter or workspace), request hash, status, body` is inserted **only in the command's own transaction**: visible receipt ⇔ committed 2xx; failures leave none. Hash = SHA-256(method, route template, path params incl. scope, canonical body, If-Match/If-None-Match, expectedRevisions). Replay check runs **after** the scope lock and current authorization: same hash + caller still has read access to the scope → stored response, `Idempotent-Replayed: true`; no access → uniform 404 (stored body never returned); different hash → `422 idempotency-key-reuse`. Same-key duplicates serialize on the scope lock; the second replays, or executes once if the first aborted. Key time older than `receiptRetention − maxCommandDuration` or beyond allowed future skew → `422 idempotency-key-expired`. Receipts purged only by the retention role after `purge_after` (TB-06). Bulk commit/import confirm use outcome records (§3.6, §3.7) |
+| Unknown outcome | `GET /api/v1/operations/{idempotencyKey}` (own keys) re-runs current read authorization on the receipt scope → `200 {status: COMMITTED, response, asOf}`; key past retention → `410 idempotency-key-expired` (reconcile via `GET /matters/{m}/events?commandKey=`); otherwise uniform `404`, meaning only *no committed outcome visible to you as of `asOf`* — **not** "never committed" (it may be in flight, or access lost). Safe action: resubmit with the **same** key. Absence is final only after `maxCommandDuration` (server-published, DB-enforced transaction deadline, TB-13) since the original was sent |
+| Provenance | Every response includes `asOf` (RFC 3339 with offset; server-captured database-clock instant — snapshot start for reads, `t_cmd` for commands, state-machine §6.1; a client `asOf` on current-state views → 422), `sourceRevision` (matter event sequence visible to the response), `historyMaterializedThrough` and, for commands, `eventSeqs[]` |
 | Time input | Instants must include an offset; date-only input requires `timezone` and is resolved server-side; ambiguous/nonexistent local times rejected (AC-152) |
 | Derived fields | Read-only; any attempt to send `dependencyState`, `verificationState`, `timingState`, `attentionState` → `422` |
 | Pagination | Keyset (`after`, `limit` ≤ 200 default 100) |
@@ -38,8 +38,36 @@
 | 412 | `/problems/stale-criterion-revision` | Assessment for superseded criterion | `currentCriterionRevisionId` |
 | 422 | `/problems/validation` | Field validation | `errors[] {field, message}` |
 | 422 | `/problems/idempotency-key-reuse` | — | — |
+| 422 | `/problems/idempotency-key-expired` | Key older than retention window or beyond future skew | — |
+| 410 | `/problems/idempotency-key-expired` | Operations lookup past retention | — |
+| 400 | `/problems/precondition-not-applicable` | If-Match on a scope-none endpoint | — |
+| 409 | `/problems/preview-mismatch` | `previewDigest` differs | — |
+| 410 | `/problems/preview-expired` | Bulk/import preview past `expiresAt` | — |
 | 428 | `/problems/precondition-required` | Missing If-Match | — |
 | 503 | `/problems/unavailable` | DB/boundary/evaluator unavailable; never default READY/zero | `retryAfter` |
+
+### 1.1 Revision preconditions (CAS scope) by endpoint
+
+Normative: `If-Match` is required iff a target is named below; `expectedRevisions` keys exactly as listed. A route test asserts every operation has exactly one row. Missing `If-Match`/`If-None-Match` where required → 428; mismatch → 412 with `currentRevision`.
+
+| Endpoints | `If-Match` target | Other preconditions |
+|---|---|---|
+| Creations: `POST /workspaces/{ws}/matters`; `POST /matters/{m}/requirements`, `/actions`, `/milestones`, `/documents`, `/filings`, `/external-parties`, entity refs, decisions, findings, risks, `/evidence`; `POST /evidence/{id}/claims`; version uploads, upload `:commit`, external versions; signature observations; verifier designation; requirement–action link/unlink; previews, imports, exports, status briefs | none | claims: `criterionRevisionId` current (412 `stale-criterion-revision`); links/designations are set operations (409 `duplicate`); upload commit guarded by `PENDING → COMMITTED` |
+| Node `PATCH`, execution transitions/corrections, critical escalations/`:clear`, verification applicability | node revision | corrections: `correctsEventSeq` |
+| `POST /waits/{id}:resolve` | waiting-on revision | — |
+| `POST /matters/{m}/dependency-edges` | downstream node revision | `expectedRevisions{upstreamId}`; edge add/remove/replace bumps downstream revision |
+| `POST /dependency-edges/{id}:remove`, `:replace-gate` | edge revision | reason |
+| Milestone prerequisite `PUT`/`:remove`, milestone `PATCH` | milestone revision | reason |
+| `POST /matters/{m}/evidence-requirements` | none | `expectedRevisions{subjectId}` |
+| `POST /evidence-requirements/{id}/revisions` | evidence-requirement revision | `expectedCurrentRevisionId`, `expectedRevisions{subjectId}` |
+| `POST /evidence/{id}:withdraw` | evidence revision | reason |
+| Assessment, assessment `:revoke`, dispute raise/resolve | revision of the claim concerned | `criterionRevisionId` current, `expectedSubjectEpoch`. A claim has one criterion revision and hence one subject, so shared evidence never needs multi-subject CAS |
+| `POST /documents/{id}:promote` | document revision | `expectedCurrentVersionId` |
+| Filing observations, `:cancel`, `:reopen`, `/corrections` | filing revision | `expectedCycleNo` when a cycle is named |
+| Membership `PUT` (matter/workspace) | membership revision, or `If-None-Match: *` to create | — |
+| Membership/designation `:revoke` | that revision | reason |
+| Party/context `PATCH`, `:inactivate` | that record's revision | — |
+| `POST /bulk-edits/{id}:commit`, `POST /imports/{id}:confirm` | none | `previewDigest`; row revisions are those bound in the preview |
 
 ## 2. Endpoint catalogue
 
@@ -64,6 +92,7 @@ Roles: O = Matter OWNER, E = EDITOR, V = VIEWER, WO = Workspace OWNER, DV = desi
 | `POST /waits/{id}:resolve` | O,E | `waiting.resolved` | AC-130 |
 | `POST /matters/{m}/dependency-edges` | O,E | `edge.added` + derived | AC-105, AC-125 |
 | `POST /dependency-edges/{id}:remove` | O,E | `edge.removed` + derived | AC-146 |
+| `POST /dependency-edges/{id}:replace-gate` | O,E | `edge.removed` + `edge.added` + derived (one txn, reason) | AC-105, AC-146 |
 | `POST /matters/{m}/milestones`, `PUT /milestones/{id}/prerequisites/{reqId}`, `:remove`, `PATCH` (critical) | O | milestone events | AC-102, AC-141 |
 | `GET /milestones/{id}/readiness` | O,E,V | — | AC-102 |
 | `POST /nodes/{id}/critical-escalations` / `:clear` | O | `node.escalation_changed` | AC-143 |
@@ -78,15 +107,15 @@ Roles: O = Matter OWNER, E = EDITOR, V = VIEWER, WO = Workspace OWNER, DV = desi
 | `GET /document-versions/{id}/content` | O,E,V | security audit only on denial | AC-147 |
 | `POST /document-versions/{id}/signature-observations` | O,E | `signature.observed` | AC-161 |
 | `POST /matters/{m}/filings`, `POST /filings/{id}/observations` | O,E | `filing.*` | AC-116, AC-129 |
-| `POST /filings/{id}:cancel`, `:reopen`, `/corrections` | O | `filing.*` | AC-145 |
+| `POST /filings/{id}:cancel`, `:reopen`, `/corrections` | O | `filing.*`; reopen adds `subject.proof_epoch_advanced` | AC-145 |
 | `POST /matters/{m}/external-parties`, `PATCH`, `:inactivate`; entity refs; decisions; findings; risks | O,E | typed events | AC-117, AC-159 |
 | `POST /matters/{m}/bulk-edits:preview`, `POST /bulk-edits/{id}:commit` | O,E | `bulk.row_applied` per row | AC-112, AC-133 |
 | `POST /matters/{m}/imports`, `GET /imports/{id}`, `POST /imports/{id}:confirm` | O,E | `import.group_applied` per group | AC-113, AC-131, AC-132 |
 | `POST /matters/{m}/exports`, `GET /exports/{id}/content` | O,E,V | export audit (no payload) | AC-114, AC-147, AC-148 |
 | `POST /matters/{m}/status-briefs:generate` | O,E,V | generation provenance record | AC-119, AC-138 |
-| `GET /matters/{m}/events?after=&limit=&targetId=` | O,E,V | — | AC-108, AC-136 |
+| `GET /matters/{m}/events?after=&limit=&targetId=&commandKey=` | O,E,V | — | AC-108, AC-136, AC-153 |
 | any `PUT/PATCH/DELETE /…/events/*` | none | always 405; no route | AC-149 |
-| `GET /operations/{idempotencyKey}` | caller's own keys | — | AC-153 |
+| `GET /operations/{idempotencyKey}` | caller's own keys AND current read access to the receipt scope | — | AC-147, AC-153 |
 
 ## 3. Representative contracts
 
@@ -144,18 +173,20 @@ POST /api/v1/matters/{m}/evidence   Idempotency-Key: …   (If-Match on subject 
 → 201 { "evidence": {…, "submittedBy": "U1"}, "claims": [{"id":"k1", "status":"PENDING_REVIEW"}, {"id":"k2",…}] }
 ```
 
-Creation-type commands (no prior resource) do not require If-Match; they still require Idempotency-Key.
+Evidence submission has CAS scope *none* (§1.1): it creates records and changes no revisioned target; each claim's `criterionRevisionId` must be current. It still requires Idempotency-Key.
 
 ### 3.4 Assessment
 
 ```json
-POST /api/v1/evidence-claims/k1/assessments   If-Match: "<subject revision>"   Idempotency-Key: …
+POST /api/v1/evidence-claims/k1/assessments   If-Match: "<claim revision>"   Idempotency-Key: …
 { "verdict": "ACCEPTED", "rationale": "Signature block complete on page 41",
-  "criterionRevisionId": "cr-5", "assessedDocumentVersionId": "v2", "effectiveUntil": null }
+  "criterionRevisionId": "cr-5", "assessedDocumentVersionId": "v2", "effectiveUntil": null,
+  "expectedSubjectEpoch": 0 }
 → 201 { "assessment": {…, "reviewer": "U2"}, "subject": { "verification": "PARTIALLY_VERIFIED", … },
         "derivedChanges": [ … downstream READY … ] }
 → 403 /problems/self-verification | /problems/verifier-not-designated
-→ 412 /problems/stale-criterion-revision
+→ 412 /problems/stale-criterion-revision | /problems/stale-revision (claim revision or subject epoch moved)
+→ 409 /problems/guard-failed (open dispute on current assessment)
 ```
 
 ### 3.5 Promotion
@@ -174,19 +205,36 @@ POST /api/v1/documents/{d}:promote   If-Match: "4"   Idempotency-Key: …
 POST /api/v1/matters/{m}/bulk-edits:preview   Idempotency-Key: …
 { "ids": ["a1","a2","a3"], "patch": { "dueAt": "2026-07-01T17:00:00+07:00" } }
 → 200 { "previewId": "bp-1", "rows": [ { "id": "a1", "kind": "ACTION", "revision": 4,
-          "before": {"dueAt": "…"}, "after": {"dueAt": "…"}, "valid": true } … ], "expiresAt": "…" }
-POST /api/v1/bulk-edits/bp-1:commit   Idempotency-Key: …
+          "before": {"dueAt": "…"}, "after": {"dueAt": "…"}, "valid": true } … ], "expiresAt": "…", "previewDigest": "sha256:…" }
+POST /api/v1/bulk-edits/bp-1:commit   Idempotency-Key: …   { "previewDigest": "sha256:…" }
 → 200 { "summary": {"applied": 1, "failed": 2},
         "results": [ {"id":"a1","status":"APPLIED","revision":5,"eventSeq":420},
                      {"id":"a2","status":"STALE","currentRevision":6},
                      {"id":"a3","status":"FORBIDDEN"} ], "correlationId": "bp-1" }
 ```
 
-Allowed patch fields only: `title`, `description`, `ownerUserId`, `dueAt` (RULE-013). Preview stores IDs + revisions (not a domain mutation). Each row commits in its own matter-locked transaction with its preview revision; rows the caller cannot see are rejected as `NOT_FOUND` without detail. Retry with the same key replays; a new key with `onlyFailed: true` retries failed rows.
+Allowed patch fields only: `title`, `description`, `ownerUserId`, `dueAt` (RULE-013). Preview is not a domain mutation. It persists `{matterId, actorId, rows[(id, kind, revision)], canonical patch, expiresAt}` with `previewDigest = SHA-256(matterId, actorId, sorted rows, canonical patch)`. IDs that are invisible or outside the matter are listed as `NOT_FOUND` without detail.
+
+Commit binding, checked before any row:
+- caller = preview actor with current matter read access, else uniform 404;
+- `asOf < expiresAt`, else `410 preview-expired`;
+- digest equal, else `409 preview-mismatch`.
+
+Each row then runs its own matter-locked transaction: current EDITOR/OWNER authorization, CAS against the preview revision, apply, events (`correlationId = previewId`), outcome record `(previewId, rowId)`. Failures (`STALE`, `FORBIDDEN`, `NOT_FOUND`, `INVALID`) commit only the outcome record, never a domain event. A row that already has an outcome returns it unchanged, so a retry on the same preview never reapplies (unknown-outcome recovery).
+
+Retrying failed rows needs a new preview: `POST /matters/{m}/bulk-edits:preview {fromPreviewId, onlyFailed: true}` reads current revisions of the failed rows only, so successful rows are excluded (AC-133). Expiry value unapproved (TB-06).
 
 ### 3.7 Import
 
-`POST /matters/{m}/imports` (multipart: file ≤ size limit TBD, `sourceId`, `mapping`, `timezone`) → `201 {importId, status: PREVIEW_READY, rows[], groups[{groupId, rowKeys[], valid, errors[]}], duplicateKeys[]}`; zero domain mutations. `POST /imports/{id}:confirm {groupIds[]}` → per-group `{status: APPLIED | REJECTED | CONFLICT | ALREADY_APPLIED, records[]}`. Idempotency per row: unique `(matter, sourceId, rowKey)` with content hash; same hash → `ALREADY_APPLIED` with existing IDs and no new events; different hash → `CONFLICT` (AC-132).
+`POST /matters/{m}/imports` (multipart: file ≤ size limit TBD, `sourceId`, `mapping`, `timezone`) → `201 {importId, status: PREVIEW_READY, rows[], groups[{groupId, rowKeys[], valid, errors[]}], duplicateKeys[], expiresAt, previewDigest}`; zero domain mutations.
+
+A *connected group* is a connected component of the undirected graph whose vertices are file rows and whose edges are within-file references (links, dependency edges, row-to-row subjects). References to existing records are validated but do not join groups.
+
+`POST /imports/{id}:confirm {groupIds[], previewDigest}` uses the same actor/matter/expiry/digest binding as bulk commit and returns per group `{status: APPLIED | REJECTED | CONFLICT | ALREADY_APPLIED, records[]}`.
+
+**Each group is exactly one matter-locked transaction, all rows or none.** Inside it, every row is re-validated against current state (types, scoped references, revisions of referenced records, permission, and a cycle check of the group's edges together with the existing graph). Any failure rejects the whole group with row/field causes, so no orphan link or partial group commits (AC-131).
+
+Idempotency: unique `(matter, sourceId, rowKey)` with content hash. All rows already mapped with the same hash → `ALREADY_APPLIED` with existing IDs and no new events. Any differing hash, or a mix of mapped and unmapped rows → `CONFLICT` requiring explicit reconciliation (AC-132). Group outcomes are recorded per `(importId, groupId)`, so retries return the same result.
 
 ### 3.8 Status brief
 
@@ -203,7 +251,7 @@ POST /api/v1/matters/{m}/status-briefs:generate   Idempotency-Key: …
   "lateRecordedAffectingWindow": [ { "eventSeq": 405, "recordedAt": "after t2", "effectiveAt": "within window" } ] }
 ```
 
-`t1 > t2` → 422. Same inputs + same `sourceRevisionAtT2` always yield identical `changes` and `outstandingAtT2` (semantics in data-model §8). `format: xlsx` returns the same content as a formula-safe workbook. No issued/snapshot lifecycle (P1).
+`t1 > t2` or `t2 > asOf` → 422. Same window + same `sourceRevisionAtT2` yield identical `changes` and `outstandingAtT2`; a window not yet sealed (`t2 > asOf − maxCommandDuration`) returns `provisional: true` (data-model §8). `format: xlsx` returns the same content as a formula-safe workbook. No issued/snapshot lifecycle (P1).
 
 ### 3.9 History
 
@@ -215,4 +263,4 @@ Server Actions call these endpoints through `backendRequest`, forwarding the use
 
 ## 5. Contract tests
 
-Golden HTTP files (template `testdata/*.golden` pattern) per endpoint covering: success, each problem type, missing If-Match, idempotent replay, key reuse, VIEWER write (AC-134), cross-workspace ID (AC-135, uniform 404 byte-identical to nonexistent), derived-field write rejection (AC-160).
+Golden HTTP files (template `testdata/*.golden` pattern) per endpoint covering: success, each problem type, missing If-Match, idempotent replay, key reuse, VIEWER write (AC-134), cross-workspace ID (AC-135, uniform 404 byte-identical to nonexistent), derived-field write rejection (AC-160). Also: generated check that every route has one §1.1 scope (428/412/400 per scope); replay after revocation → uniform 404; operations 404 never asserted as "never committed"; bulk/import binding problems; client `asOf` rejected on current views.

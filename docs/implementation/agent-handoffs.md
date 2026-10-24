@@ -4,11 +4,11 @@ Owner: Codex. Source: step-02-request.md. Requirement baseline: 54e1db5; approve
 
 | Assignment | Owner | Current evidence | State |
 |---|---|---|---|
-| MC-002-ARCH architecture | Claude Code | CLI 2.1.309; real packet-only synthetic acknowledgement MC02-ARCH-20261024 on host; no tools used; actual model claude-opus-5-5 | EXECUTED / ARCHITECTURE_AUTHORED / REWORK_REQUIRED; correction dispatched |
+| MC-002-ARCH architecture | Claude Code | CLI 2.1.309; real packet-only synthetic acknowledgement MC02-ARCH-20261024 on host; no tools used; actual model claude-opus-5-5 | EXECUTED / correction134 edits applied to13 files / IN_REVIEW |
 | MC-002-BE backend audit | ZCode | Bundled CLI 0.17.0 read-only plan audit invocation exits 1: built-in provider configuration unavailable | ATTEMPT_FAILED / WAITING_FOR_ZCODE |
 | MC-002-FE frontend audit | Antigravity | App 2.26.0, IDE 2.5.5 present; no PATH command or exposed direct agent MCP; IDE launcher alone does not prove autonomous task API | PREPARED / WAITING_FOR_ANTIGRAVITY |
 | MC-002-CLOUD feasibility | Codex | Pinned read-only source snapshots, Context7/current official docs; no cloud resources activated | IN_PROGRESS |
-| MC-002-QA verification | OpenCode | CLI2.1.4 / opencode/big-pickle; authorized30-file Step02 packet; exit0, session ses_e929198d8ffeFwkVV16SNbAFYR;5High9Medium | REVIEWED / CHANGES_REQUIRED; re-review pending |
+| MC-002-QA verification | OpenCode | CLI2.1.4 / opencode/big-pickle; authorized30-file Step02 packet; exit0, session ses_e929198d8ffeFwkVV16SNbAFYR;5High9Medium | round1 CHANGES_REQUIRED / authorized round2 DISPATCHED, verdict pending |
 | MC-002-UX consultation | OpenDesign | Optional consultation only; no high-fidelity UI assignment | NOT_REQUIRED_YET / NOT_DISPATCHED |
 
 ## Claude architecture contract — direct and manual fallback

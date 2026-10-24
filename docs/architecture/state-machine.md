@@ -14,7 +14,7 @@
 | Timing | Requirement, Action, Filing | Never | No; computed f(due, asOf, execution); boundary events recorded | `engine/timing` |
 | Attention | Requirement, Action, Filing; Matter/Milestone roll-ups | Only OWNER escalation input | No; computed f(inputs) with reasons; boundary/derived changes recorded | `engine/attention` |
 
-Persisting dependency and verification is a performance and auditability choice; both are recomputed in the same transaction as every causal input, so the stored value is never ahead of or behind committed inputs. Timing and attention depend on the clock, so they are computed at read with an explicit `asOf` and their *material* transitions are recorded through the boundary fence (§6), not on every refresh.
+Persisting dependency and verification is a performance and auditability choice; both are recomputed in the same transaction as every causal input, so the stored value is never ahead of or behind committed inputs at its materialization instant; a response uses it only inside its validity interval (§6.2), otherwise it evaluates purely. Timing and attention depend on the clock, so they are computed at read with an explicit `asOf` and their *material* transitions are recorded through boundary materialization (§6), not on every refresh.
 
 ## 2. Execution transitions (Requirement/Action)
 
@@ -44,9 +44,9 @@ Implementation: a single table `allowedExecution map[from]map[to]Guard` in `doma
 | Waiting payload | request body validated; creates `waiting_on` row atomically |
 | Revision | `If-Match` equals current node revision |
 
-Side effects (same transaction): reopen sets `proof_epoch = proof_epoch + 1` (so verification becomes UNVERIFIED unless applicability is NOT_REQUIRED), clears `completed_at` into history, and triggers downstream readiness recompute. Cancel never satisfies an edge (gate requires COMPLETED). No transition creates, accepts or revokes any assessment — **completion never verifies** (AC-101, AC-121).
+Side effects (same transaction): reopen sets `proof_epoch = proof_epoch + 1`, `proof_epoch_opened_at = t_cmd` and emits `subject.proof_epoch_advanced` (earlier-epoch assessments stop counting; verification becomes UNVERIFIED unless applicability is NOT_REQUIRED), clears `completed_at` into history, and triggers downstream readiness recompute. Filing reopen applies the same epoch rule (filing-model §4). Cancel never satisfies an edge (gate requires COMPLETED). No transition creates, accepts or revokes any assessment — **completion never verifies** (AC-101, AC-121).
 
-Corrections: `execution-corrections` command (OWNER, reason, `correctsEventSeq`) appends `node.execution_corrected` with corrected effective time or state assertion; original event untouched (AC-136). A correction that would change derived states triggers the same recompute.
+Corrections: `execution-corrections` command (OWNER, reason, `correctsEventSeq`) appends `node.execution_corrected` with corrected effective time or state assertion; original event untouched (AC-136). A corrected effective time must be ≤ the correction's own `t_cmd`; future-effective assertions → `422 validation` (matches `CHECK (effective_at <= recorded_at)`). A correction that would change derived states triggers the same recompute.
 
 ## 3. Verification aggregate
 
@@ -54,9 +54,9 @@ Pure function, evaluated after every proof-affecting change and at boundaries:
 
 ```
 aggregate(subject, asOf):
-  if subject.applicability == NOT_REQUIRED: candidate = NOT_REQUIRED  (still DISPUTED if open dispute on applicable criterion — none exist by guard)
+  if subject is an Action/Filing with proof_required = false: return NOT_APPLICABLE   // axis absent; not NOT_REQUIRED
   crit = applicable mandatory criteria (current revisions) of subject
-  if any open dispute on a current-epoch accepted assessment of crit: return DISPUTED
+  if any open dispute on the current (non-superseded, non-revoked) ACCEPTED assessment, current epoch, of a claim on c ∈ crit: return DISPUTED
   if applicability == NOT_REQUIRED: return NOT_REQUIRED
   if len(crit) == 0: return UNVERIFIED            // no vacuous VERIFIED
   sat = criteria fully satisfied at asOf; part = criteria with ≥1 satisfied mandatory component
@@ -71,7 +71,7 @@ Applicability transitions (OWNER only): `UNVERIFIED → NOT_REQUIRED` requires z
 
 ## 4. Dependency
 
-READY iff every active incoming edge is satisfied; satisfied(edge u→n) = `dep(u)=READY ∧ exec(u)=COMPLETED ∧ (gate=COMPLETION ∨ ver(u)=VERIFIED)`. Recursion is through `dep(u)`. Full algorithm: [dependency-engine.md](dependency-engine.md).
+READY iff every active incoming edge is satisfied; satisfied(edge u→n) = `dep(u)=READY ∧ exec(u)=COMPLETED ∧ (gate=COMPLETION ∨ ver(u)=VERIFIED)`. Recursion is through `dep(u)`. `ver(u) = NOT_REQUIRED` never satisfies a proof gate (RULE-003 names VERIFIED only); the order-independent fail-closed handling is in dependency-engine §2. Milestone readiness (RULE-008) is a separate predicate that accepts NOT_REQUIRED. Full algorithm: [dependency-engine.md](dependency-engine.md).
 
 ## 5. Timing and attention
 
@@ -94,16 +94,34 @@ attention(node, asOf):
 
 The 48-hour window is inclusive at both ends (AC-142: T and T+48h are DUE_SOON; T+48h+1s ON_TRACK; T−1s OVERDUE). OWNER escalation can add CRITICAL; nothing can remove a derived CRITICAL cause, and there is no "force NORMAL" command (AC-143). Critical-chain membership is defined in dependency-engine §5.
 
-## 6. Boundary fence (time-driven transitions)
+## 6. Time: clock capture, pure evaluation, boundary materialization
 
-Time-dependent facts change without a command: proof expiry (RULE-007), due crossings (DUE_SOON/OVERDUE) and the attention changes they cause.
+Time changes facts without a command: validity start/expiry (RULE-007), due crossings (RULE-009) and the verification, readiness, milestone and attention changes they cause.
 
-- Each Matter stores `next_boundary_at` = minimum future instant among: active accepted assessment `effective_until`, evidence `valid_until`, nonterminal `due_at − 48h` and `due_at`, filing due instants; and `boundaries_applied_until`.
-- **Before any command or read** with `asOf ≥ next_boundary_at`, the service runs `ApplyBoundaries(matter, upTo=asOf)` inside the matter write transaction: for each boundary instant in ascending order it records events with `effective_at = boundary instant`, `recorded_at = now`, actor `SYSTEM_CLOCK`, recomputes verification aggregates and downstream readiness, and advances the fence.
-- A boundary trigger (ADR-001 dependent) calls the same operation for idle matters so history reflects expiry promptly even if nobody reads; correctness does not depend on it.
-- If boundaries cannot be applied (database unavailable or read-only), the read returns `503 unavailable` instead of pre-expiry state.
+**6.1 Clock capture.** One `Clock` port; production reads the database clock (`clock_timestamp()`, µs) inside the transaction, so all app instances share one time source; tests inject time (NFR-012).
+- Read: `asOf` is read in the first statement of the REPEATABLE READ READ ONLY snapshot together with `matters.event_seq` (`sourceRevision`). Current-state views reject a client `asOf`; historical state is available only via the brief fold (data-model §8).
+- Command: after the matter lock, `t_cmd = greatest(clock, matters.last_recorded_at)` captured once; guards, catch-up, `recorded_at` and default `effective_at` all use it. Per-matter monotonic even if the clock steps back.
 
-This gives "expiry cannot wait for a screen visit" (AC-126) a mechanical guarantee: no response can be produced at `asOf` without boundaries ≤ `asOf` applied.
+**6.2 Pure evaluation.** Timing, attention, component validity, verification aggregate, readiness, milestone readiness and critical-chain membership are functions of (committed inputs, instant). A response equals f(inputs visible in its snapshot, `asOf`). Stored derived values are a materialization valid on `[boundaries_applied_until, next_boundary_at)`; a read uses them only if `asOf` lies in that interval, otherwise it recomputes in memory from the snapshot. Reads never write or lock, so expiry takes effect at its instant for every read even if no write or worker ran (AC-126).
+
+**6.3 Boundary set** (instants > `boundaries_applied_until`; `next_boundary_at` = minimum or NULL):
+
+| Source | Instant | Population |
+|---|---|---|
+| Due-soon start | `due_at − 48h` | nonterminal Requirement/Action/Filing with due |
+| Overdue start | `due_at + 1µs` (first instant with `due_at < asOf`; at `asOf = due_at` the state is DUE_SOON) | nonterminal |
+| Validity start | future `evidence.valid_from` | non-withdrawn evidence with a current, non-revoked, current-epoch ACCEPTED assessment |
+| Validity end | `min(valid_until, effective_until)` (half-open) | same |
+
+Terminal objects contribute nothing. `next_boundary_at` is recomputed from scratch after any write touching a contributing input.
+
+**6.4 Materialization.** `ApplyBoundaries(matter, upTo)` runs only inside a matter write transaction: every command with `upTo = t_cmd` before its own logic, and the boundary worker with its own `t_cmd` (selected via index on `next_boundary_at`). For each distinct instant b in `(boundaries_applied_until, upTo]` ascending, all inputs at b are processed together and recomputed. Material events (`assessment.expired`, `node.timing_boundary_crossed`, derived changes) get `effective_at = b`, `recorded_at = t_cmd`, actor `SYSTEM_CLOCK`, ordered by (b, kind, target ID). Then `boundaries_applied_until = upTo`. Idempotent: retries/concurrent workers serialize on the lock and find nothing left.
+
+**6.5 Linearization (explicit).** A command is linearized at `t_cmd`. If a boundary b falls in (t_cmd, commit), the command still commits as of `t_cmd`, and b is materialized by the next write/worker; reads at `asOf ≥ b` already reflect b via 6.2. A read is linearized at its snapshot: it reflects exactly the commits visible there (named by `sourceRevision`) evaluated at `asOf`, and does not claim to include every event with `recorded_at ≤ asOf`. Nothing is claimed atomic with respect to wall-clock crossing.
+
+**6.6 Late recording.** Without writes or the worker, boundary events are recorded late (`recorded_at > effective_at`); history shows both. Responses carry `historyMaterializedThrough`; lag never changes the returned state.
+
+**6.7 Unavailable.** `503` if the database or snapshot fails or the engine detects an invariant violation (e.g., node without typed row, missing current criterion revision). A command whose catch-up fails aborts entirely and is retryable with the same Idempotency-Key. Lag alone is not unavailability.
 
 ## 7. Allowed combinations
 
@@ -117,5 +135,5 @@ All combinations of independent axes are representable; the following are explic
 | Verification precedence | Generated criteria/claim/assessment fixtures; zero-criteria; partial components; dispute precedence; applicability sequence | AC-127, AC-157, AC-160 |
 | Timing boundaries | T−1s, T, T+48h, T+48h+1s, none, terminal late; same instant in two zones | AC-142, AC-152 |
 | Attention precedence | Critical chain + overdue; remove critical; escalation add/remove; no manual NORMAL | AC-143 |
-| Boundary fence | Read at `valid_until`−1µs vs `valid_until` with no background trigger; history effective vs recorded time | AC-126 |
+| Boundary materialization | Reads at `valid_until`−1µs/`valid_until`, `due_at`/`due_at`+1µs and future `valid_from` with no worker and no write: state correct and read issues no write; later write materializes events (`effective_at` = boundary, `recorded_at` = `t_cmd`); clock injected between lock and commit (linearization at `t_cmd`) | AC-126, AC-142 |
 | Derived override rejection | API attempts to set dependency/verification/timing/attention fields → 422 unknown/forbidden field | AC-160 |

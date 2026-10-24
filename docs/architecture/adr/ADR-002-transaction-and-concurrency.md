@@ -9,10 +9,21 @@
 1. **Matter-scoped single writer.** Every mutating command runs in one PostgreSQL transaction (READ COMMITTED) whose first statement locks the matter row `FOR UPDATE`. All graph, proof, state and history changes of that matter serialize at this point.
 2. **Record revision CAS** on the rows the client read (`If-Match` / `expectedRevisions`), reusing the template's version compare-and-set, so stale commands fail with 412 instead of overwriting (RULE-018).
 3. **Authorization inside the transaction** with `FOR SHARE` on workspace and matter membership rows; revocation is causally ordered with writes.
-4. **Synchronous derived-state propagation** in the same transaction: dependency, verification aggregate, milestone readiness, critical chain; plus the boundary fence for time-driven changes.
+4. **Synchronous derived-state propagation** in the same transaction: dependency, verification aggregate, milestone readiness, critical chain; every command first materializes boundaries up to its captured instant `t_cmd`. Reads never write; they evaluate time-derived state purely at `asOf` (state-machine §6).
 5. **History and idempotency receipt in the same transaction**; per-matter monotonic `seq` and nondecreasing `recorded_at`.
 6. **Reads** use REPEATABLE READ READ ONLY snapshots carrying `sourceRevision`.
 7. **No event bus.** The template outbox remains off; no Kafka.
+
+### 1a. Global lock order
+
+Locks are taken only in this order, skipping unneeded levels:
+1. `workspaces` row — `FOR SHARE` for matter creation and matter-membership changes; `FOR UPDATE` for workspace-membership changes.
+2. `matters` rows `FOR UPDATE`, ascending id when several (workspace revocation: every matter where the target is an ACTIVE member).
+3. `workspace_memberships`.
+4. `matter_memberships`, then `verifier_designations`.
+5. Typed rows, history inserts, then receipts/outcome records.
+
+Domain commands start at level 2. Levels 1–4 are acquired only by `MatterUnitOfWork`/`WorkspaceUnitOfWork`, never by service code. Implicit FK key-share locks always fall on parent rows at an earlier or equal level; P-BE-2 must verify this. The order **reduces** deadlock risk and is not a proof of deadlock freedom. PostgreSQL deadlock detection remains the backstop: `40P01` → `503 unavailable`, retryable with the same Idempotency-Key, no partial effect.
 
 Port: `MatterUnitOfWork.Execute(ctx, matterID, fn)`; implementations: PostgreSQL (production) and memory (per-matter mutex; tests only). The shared contract suite (template `repotest` pattern) runs concurrency contracts against both.
 
@@ -30,7 +41,7 @@ Port: `MatterUnitOfWork.Execute(ctx, matterID, fn)`; implementations: PostgreSQL
 ## 3. Consequences
 
 - Write throughput per matter is bounded by transaction duration. At the 50–200 row interaction scale and W1/W2 options this is expected to be adequate; it must be measured (AC-154), not assumed. Bulk and import commit per row/group, so long batches do not hold the lock.
-- Deadlocks across matters cannot occur from domain commands because each command locks exactly one matter row first. Cross-matter operations (My Actions read, workspace revocation) are reads or single-row updates.
+- Locking follows §1a: domain commands lock one matter row; workspace revocation locks the workspace row then matters ascending. Deadlock freedom is not claimed absolutely; detected deadlocks map to retryable 503, and lock waits/deadlocks are operational metrics.
 - Lock wait time becomes an operational metric (template otelpgx pool metrics).
 
 ## 4. Critical races and tests
@@ -43,11 +54,16 @@ Port: `MatterUnitOfWork.Execute(ctx, matterID, fn)`; implementations: PostgreSQL
 | R4 Verify while criterion revised | Acceptance of superseded criterion | Criterion revision ID check under lock | EV-06 | AC-160 |
 | R5 Membership revoked during bulk commit | Write after revocation | FOR SHARE membership per row txn | AC-133 fixture with revoke between rows | AC-133, AC-147 |
 | R6 Promotion while assessment in flight on old version | Old-version acceptance satisfying CURRENT criterion | Satisfaction checks current pointer at evaluation; recompute on promotion | DL-03 + concurrent | AC-128 |
-| R7 Expiry instant vs read | Read shows VERIFIED after expiry | Boundary fence before snapshot | State-machine boundary test | AC-126 |
+| R7 Expiry instant vs read | Read shows VERIFIED after expiry | Pure evaluation at `asOf`; stored values used only in their validity interval | State-machine boundary test, DM-13 | AC-126 |
 | R8 Client disconnect after commit | Duplicate on retry | Idempotency receipt in same txn; operations endpoint | Kill connection after COMMIT, retry same key | AC-153 |
 | R9 History write failure | Mutation without history | Single transaction | DM-04 | AC-153 |
 | R10 Dispute raised while resolution in flight | Resolution of wrong state | Unique open dispute index; lock | EV-05 concurrent | AC-157 |
 | R11 Import retry concurrent with first apply | Duplicate records | Unique `(matter, source_id, row_key)` | Parallel confirm | AC-132 |
 | R12 Last two owners demote each other | Zero owners | Lock + deferred last-owner trigger | Concurrent demotion | AC-158 |
+| R13 Grant vs workspace revocation vs command | Lock inversion; grant to revoked user | §1a order; grants hold workspace row FOR SHARE | Three-session barrier test | AC-147, AC-158 |
+| R14 Workspace revocation of last effective OWNER | Matter without effective owner | Effective-owner guard + trigger on both membership tables | Concurrent revoke + demote | AC-158 |
+| R15 Same key in flight twice | Duplicate effect; false "never committed" | Replay check after scope lock; receipt PK; 404 not final | Barrier before COMMIT | AC-153 |
+| R16 Boundary during a command | Ambiguous state | Linearized at `t_cmd`; next write/worker materializes; reads evaluate purely | Clock injected between lock and commit | AC-126 |
+| R17 Unbound preview commit | Other actor/expired/altered preview applied | Binding check before rows | API race test | AC-133 |
 
 All race tests run against real PostgreSQL in a disposable schema (template `pgtest.FreshSchemaDSN`), with `-race`, repeated (e.g., 100 iterations) and with injected barriers rather than sleeps.

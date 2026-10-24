@@ -62,8 +62,8 @@ classDiagram
 |---|---|---|
 | `Workspace` | ID, Name, Revision | Contains matters; not a legal entity |
 | `WorkspaceMembership` | WorkspaceID, UserID, Role {OWNER, MEMBER}, Status {ACTIVE, REVOKED}, Revision | Workspace OWNER administers workspace membership and matter creation only; grants no matter read |
-| `MatterMembership` | MatterID, UserID, Role {OWNER, EDITOR, VIEWER}, Status, Revision | Requires ACTIVE workspace membership; ≥1 ACTIVE OWNER always (last-owner guard); never created by import or assignment |
-| `VerifierDesignation` | MatterID, UserID, Active, DesignatedBy, Reason | Holder must be matter EDITOR or OWNER at verification time; OWNER role alone confers nothing |
+| `MatterMembership` | MatterID, UserID, Role {OWNER, EDITOR, VIEWER}, Status, Revision | Requires ACTIVE workspace membership; ≥1 *effective* OWNER always (matter OWNER ∧ ACTIVE ∧ workspace membership ACTIVE), guarded on matter demotion/revocation **and** workspace revocation (data-model §2); never created by import or assignment |
+| `VerifierDesignation` | MatterID, UserID, Active, DesignatedBy, Reason, Revision | Holder must be matter EDITOR or OWNER at verification time; OWNER role alone confers nothing |
 | `Actor` (value) | UserID or `SYSTEM_CLOCK` | System actor only for boundary materialization; never for business decisions |
 
 ## 4. Matter operations context
@@ -92,7 +92,8 @@ type Requirement struct {
     Outcome             string          // condition/outcome text, required
     WorkstreamID        *WorkstreamID
     Verification        VerificationState // derived aggregate (proof context)
-    ProofEpoch          int32           // incremented by reopen; stale assessments stop counting
+    ProofEpoch          int32           // incremented by reopen, never decremented; older-epoch assessments stop counting
+    ProofEpochOpenedAt  *time.Time      // t_cmd of the reopen that opened the current epoch (nil for epoch 0)
     VerificationApplicability Applicability // REQUIRED | NOT_REQUIRED{reason, decidedBy}
     ImportedVerificationClaim *string   // RULE-014: retained claim, never authority
 }
@@ -103,6 +104,7 @@ type Action struct {
     ProofRequired bool              // Verification applies only if true (state-semantics)
     Verification  *VerificationState
     ProofEpoch    int32
+    ProofEpochOpenedAt *time.Time
 }
 ```
 
@@ -126,8 +128,8 @@ type Action struct {
 | `CriterionRevision` | RevNo, Mandatory, Applicable(+reason), AcceptableProof, VersionRule {CURRENT_AUTHORITATIVE(DocumentID), FIXED(DocumentVersionID), NONE}, ValidityRequired, Components[], Reason, CreatedBy | Immutable; new revision supersedes; stale-revision assessments stop counting |
 | `CriterionComponent` | Key, Label, Mandatory | Supports partial verification of one criterion (e.g., per-signatory signature) |
 | `Evidence` | ID, MatterID, Kind {DOCUMENT_VERSION, EXTERNAL_REFERENCE, OBSERVATION}, DocumentVersionID, ExternalReference, ValidFrom, ValidUntil, SubmittedBy, WithdrawnAt | Immutable after submission; replacement is a new record; positive validity interval |
-| `EvidenceClaim` | EvidenceID, CriterionRevisionID, ComponentKey, ClaimedBy | The M:N link; acceptance is scoped to this triple |
-| `EvidenceAssessment` | ClaimID, SubjectEpoch, Verdict {ACCEPTED, REJECTED}, Reviewer, Rationale, AssessedVersionID, EffectiveUntil, RevokedAt/By/Reason | Reviewer ∉ {evidence submitter, claimant}; reviewer designated and EDITOR/OWNER |
+| `EvidenceClaim` | EvidenceID, CriterionRevisionID, ComponentKey (nil = implicit single component), ClaimedBy, Revision | The M:N link; acceptance scoped to this triple; exactly one subject (via its criterion); Revision is the CAS target for assess/revoke/dispute |
+| `EvidenceAssessment` | ClaimID, SubjectEpoch, Verdict {ACCEPTED, REJECTED}, Reviewer, Rationale, AssessedVersionID, EffectiveUntil, SupersededByID, RevokedAt/By/Reason | Reviewer ∉ {evidence submitter, claimant}; reviewer designated and EDITOR/OWNER; SubjectEpoch = subject's current epoch at insert; exactly one current (non-superseded) assessment per (claim, epoch) = canonical verdict |
 | `Dispute` | AssessmentID, RaisedBy, Reason, ResolvedBy, Outcome {UPHOLD, REVOKE}, Rationale | Resolver is designated, independent of evidence submitter/claimant |
 
 Details: [evidence-model.md](evidence-model.md).
@@ -135,7 +137,7 @@ Details: [evidence-model.md](evidence-model.md).
 ## 7. Documents and filing
 
 - `Document{ID, MatterID, Title, CurrentVersionID *, Revision}`; `DocumentVersion{ID, DocumentID, Seq, Source {CONTENT, EXTERNAL_REFERENCE}, ContentObjectID, SHA256, Size, MediaType, PredecessorID, UploadedBy, Availability}`; `SignatureObservation{VersionID, Signatory {PartyID or EntityRefID or label}, Observed {SIGNED, NOT_SIGNED, DECLINED}, EvidenceID *, ObservedAt}` — see [document-lineage.md](document-lineage.md).
-- `Filing{ID, MatterID, RequirementID, AuthorityPartyID, Owner, Stage, Execution, Verification *, DueAt, NegativeOutcome *}`, `FilingCycle`, `StageObservation`, `Submission{CycleID, Reference, SubmittedAt, Items[]DocumentVersionID}` — see [filing-model.md](filing-model.md).
+- `Filing{ID, MatterID, RequirementID, AuthorityPartyID, Owner, Stage, Execution, ProofRequired, Verification *, ProofEpoch, ProofEpochOpenedAt *, DueAt, NegativeOutcome *, NegativeOutcomeEpoch *}`, `FilingCycle{CycleNo, OpenedInEpoch, …}`, `StageObservation`, `Submission{CycleID, Reference, SubmittedAt, Items[]DocumentVersionID}` — see [filing-model.md](filing-model.md).
 
 ## 8. Basic legal context (P0, RULE-020)
 
@@ -164,7 +166,7 @@ These records have a simple status field, not the five axes (state-semantics: ba
 
 ## 10. Domain event catalogue (excerpt)
 
-Event types are typed Go structs with a schema version; the persisted payload is the serialized struct (see data-model §6). Examples: `requirement.created`, `node.execution_changed`, `node.execution_corrected`, `node.dependency_derived`, `node.verification_derived`, `node.timing_boundary_crossed`, `node.attention_derived`, `edge.added`, `edge.removed`, `criterion.revised`, `criterion.applicability_changed`, `evidence.submitted`, `evidence.claimed`, `evidence.withdrawn`, `assessment.recorded`, `assessment.revoked`, `assessment.expired`, `dispute.raised`, `dispute.resolved`, `subject.verification_applicability_decided`, `document.version_added`, `document.version_promoted`, `signature.observed`, `filing.stage_observed`, `filing.cycle_opened`, `filing.submitted`, `filing.negative_outcome_recorded`, `filing.cancelled`, `waiting.set`, `waiting.resolved`, `membership.granted`, `membership.revoked`, `verifier.designated`, `milestone.prerequisite_changed`, `milestone.readiness_derived`, `import.group_applied`, `bulk.row_applied`.
+Event types are typed Go structs with a schema version; the persisted payload is the serialized struct (see data-model §6). Examples: `requirement.created`, `node.execution_changed`, `node.execution_corrected`, `node.dependency_derived`, `node.verification_derived`, `node.timing_boundary_crossed`, `node.attention_derived`, `edge.added`, `edge.removed`, `criterion.revised`, `criterion.applicability_changed`, `evidence.submitted`, `evidence.claimed`, `evidence.withdrawn`, `assessment.recorded`, `assessment.revoked`, `assessment.expired`, `dispute.raised`, `dispute.resolved`, `subject.verification_applicability_decided`, `document.version_added`, `document.version_promoted`, `signature.observed`, `filing.stage_observed`, `filing.cycle_opened`, `filing.submitted`, `filing.negative_outcome_recorded`, `filing.cancelled`, `filing.reopened`, `subject.proof_epoch_advanced`, `assessment.superseded`, `waiting.set`, `waiting.resolved`, `membership.granted`, `membership.revoked`, `verifier.designated`, `milestone.prerequisite_changed`, `milestone.readiness_derived`, `import.group_applied`, `bulk.row_applied`.
 
 ## 11. Domain tests
 

@@ -1,0 +1,111 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "session_id": "3110fb7c-d15a-4daf-8760-ade72486f61d",
+  "duration_ms": 1379650,
+  "num_turns": 3,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 6,
+      "outputTokens": 171096,
+      "cacheReadInputTokens": 153312,
+      "cacheCreationInputTokens": 251666,
+      "webSearchRequests": 0,
+      "costUSD": 5.4659344,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 102805,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "task_id": "MC-002-ARCH-REWORK",
+  "status": "REWORK_PROPOSED / WAITING_OPENCODE_REREVIEW / WAITING_ARCHITECTURE_APPROVAL \u2014 not PASS, not DONE",
+  "summary": "Targeted corrections for OpenCode round 1 F-01..F-14 and Codex C02-P01..P10: same-Matter composite FK register and DDL with referenced UNIQUE keys, graph-node typed totality, NULL-safe discriminator CHECKs, canonical current assessment, proof epochs incl. Filing reopen, pure time evaluation with explicit clock capture/linearization/boundary materialization, milestone intersection recompute, fail-closed order-independent NOT_REQUIRED proof-gate handling (exception left unapproved), effective last-OWNER guard and global lock order, re-authorized idempotent replay with in-flight/retention contract, per-endpoint CAS table, bound bulk/import previews with group atomicity, corrected Hyperdrive arithmetic, AC-161..163 seams, F3 entry conditions, test-table formatting, and removal of incorrect abbreviated hashes. Hosting/identity/frontend/storage/workload/recovery remain gated.",
+  "raw_response_sha256": "8d814fd25c766106ca9c93632ea6c0f92b67c755139c0a2d823153f32445257e",
+  "input_manifest": "docs/tooling/step-02-claude-rework-input-manifest.json",
+  "prior_candidate_commit": "1516f15426a149a4706a2b4bf6642185e553d7f7",
+  "edits_applied": 134,
+  "formatting": "Normalized trailing whitespace and final newline only; exact sequential old-text matches required; Claude owns technical amendments.",
+  "outputs": {
+    "docs/architecture/system-architecture.md": {
+      "previous_sha256": "7c991677b31015f984c30aa5882f1099c6c8a37c477a0c86c6850a4caeea4ef9",
+      "stored_sha256": "1babdefea40bc29c8e9e7e87f46202ab23fba81920b7c4e4d830d170eb6f0956",
+      "edits": 15
+    },
+    "docs/architecture/domain-model.md": {
+      "previous_sha256": "37e160c183db33210d29c301fa50a22b17945be98ff811f5b4c089dcf13c24a8",
+      "stored_sha256": "6b1f7fa53723e427d3ff0255e303bf27f2c455fb65da97f642f16922cc9cef60",
+      "edits": 8
+    },
+    "docs/architecture/state-machine.md": {
+      "previous_sha256": "6194b024e867f2eba080ce9c88fa5d0b8d2169c3e04f9cadc2ae43e85986883d",
+      "stored_sha256": "652273cb442c73ffc3ffc869fdbd3ac3188c7ef053e8dcd10cd0f7fbb336bca7",
+      "edits": 9
+    },
+    "docs/architecture/dependency-engine.md": {
+      "previous_sha256": "7f7ddc40f6384bd725b53446254d78a0be0d55367f6d1ed6bc07e172df0f079d",
+      "stored_sha256": "44ff0e3ae53b06d87a45a09ed511aff4e2034eb236bb58cb9bd3e991c07891b2",
+      "edits": 8
+    },
+    "docs/architecture/evidence-model.md": {
+      "previous_sha256": "a1796c06de7116e15ab7230cbf776f1a5d61630ec87b616df1222401fa1e6f55",
+      "stored_sha256": "73ebd112b9aeae30308195b0f8632395d66dcdde3529b46435f63cf5b7190fae",
+      "edits": 7
+    },
+    "docs/architecture/document-lineage.md": {
+      "previous_sha256": "33b62940a6099e059f74a3f8bac09b9ebad2775599702fc1fe9a276b7787b4b4",
+      "stored_sha256": "33b62940a6099e059f74a3f8bac09b9ebad2775599702fc1fe9a276b7787b4b4",
+      "edits": 0
+    },
+    "docs/architecture/filing-model.md": {
+      "previous_sha256": "1c2c8e6f76f5e772e0493849c94b56749c50167d7969314e044f47ae5fdcc176",
+      "stored_sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "edits": 6
+    },
+    "docs/architecture/api-contracts.md": {
+      "previous_sha256": "b513294fff2ccc0b5e0cd4d411b57d864409f9f8c1d9b4ab48fd27f19191f24e",
+      "stored_sha256": "1db6b8d987b8c60c365c76c4f3d0e9c7d0afcfb3f69a71f1f269ae8409012da9",
+      "edits": 19
+    },
+    "docs/architecture/data-model.md": {
+      "previous_sha256": "9863c4766267aeb090f24f617fd1844d348f115b8975500f7deb5b39ddc07810",
+      "stored_sha256": "607a6b3fabaf30ebe79f181a40f7911f963d14f6319bb9263a4ea448e06e32a1",
+      "edits": 38
+    },
+    "docs/architecture/security-architecture.md": {
+      "previous_sha256": "e63004b84c452aa22842b12510d140c19c704ea789e31328c872c1ce88e4ac9d",
+      "stored_sha256": "519af1539f30ef4d7e93f60e6063d677246959fd4a54eb3ae1bce780c356b465",
+      "edits": 7
+    },
+    "docs/architecture/technical-blockers.md": {
+      "previous_sha256": "e50d8fd77fd4f3ae9df3e46930432b61052378ad55c61f06d6a49da5217b1ad8",
+      "stored_sha256": "0b8f667433142e29fb35af14e7fdd2cfb8eee1784e799925509dea4c3ce7e566",
+      "edits": 3
+    },
+    "docs/architecture/adr/ADR-001-runtime-and-hosting.md": {
+      "previous_sha256": "e3fb634cea2e67aaa12230d6edccefcd333e974ef45f542ed255a438cc636eb2",
+      "stored_sha256": "e3fb634cea2e67aaa12230d6edccefcd333e974ef45f542ed255a438cc636eb2",
+      "edits": 0
+    },
+    "docs/architecture/adr/ADR-002-transaction-and-concurrency.md": {
+      "previous_sha256": "13d1ae699a4ffb7249df53ac43c8c46dba631316e00f79c443cb0d2dedfbb1fe",
+      "stored_sha256": "656dbf1041f5ded59366d3c1d424bad57f8fbf03974d40e67190a58da9d23d0d",
+      "edits": 5
+    },
+    "docs/architecture/adr/ADR-003-frontend-runtime.md": {
+      "previous_sha256": "77d5155f3cf2eee6c4083fe86d9579f7c879778999357559ab51b61525b78070",
+      "stored_sha256": "bfbdc5a78aa2ffe57988de777ee07893d29dd9bb8b7d7fd4758798fea10999bb",
+      "edits": 2
+    },
+    "docs/reviews/step-02-claude-architecture-result.md": {
+      "previous_sha256": "9d1ac60335718b583bdf519f8a4323ad9c0342f714e9a5cf8d2df768925c7b9b",
+      "stored_sha256": "5cc70ba06b180f0a9baf1f91840ddc3519d10d9754d3e02c94a546bf2361bf55",
+      "edits": 7
+    }
+  },
+  "report_sha256": "45d139fec659a2c51273ee79c489573a032c6d7df60942847f602942fb22cbf7"
+}

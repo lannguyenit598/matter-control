@@ -32,11 +32,11 @@ All fourteen Step02 §4 input paths exist at the entry baseline. PRD/SRS, rules,
 | Exact Claude egress subject |162 snapshots,794810 bytes, packet hash and per-file manifest | PASS; human named-packet approval recorded |
 | Public source pinning | Backend d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b, frontend3e5a642479acb789eb210e73fba956f3e85082e3; both temporary snapshots clean | PASS, source only |
 | Official-source assertions | Eight quota tables, D1 SQLite identity and source auth/adapter integration gaps checked using Python standard-library assertions | PASS, no account/runtime inference |
-| Architecture response / invariants / API/data |15 actual Claude candidate files; round1 findings and Codex preflight unresolved | AUTHORED / REWORK_REQUIRED |
+| Architecture response / invariants / API/data |15 actual Claude candidate files;134 corrections applied to13 files | AUTHORED / IN_REVIEW |
 | Independent architecture/security review | Actual OpenCode authorized30-file round1, exit0 | CHANGES_REQUIRED:5High9Medium |
 | Technical PoCs / build / smoke / restore | No architecture candidate selected, owner/environment gates open | NOT_RUN |
-| Local links / allowed paths / JSON |133 changed-file links resolve;40 changed paths in permitted scope; manifest JSON parses | PASS for pre-correction snapshot |
-| Markdown tables / architecture semantics | Security test-table columns and substantive review findings await Claude correction | REWORK_REQUIRED |
+| Local links / allowed paths / JSON |147 changed-file links resolve;45 changed paths in permitted scope; manifest JSON parses | PASS for corrected pre-review snapshot |
+| Markdown tables / architecture semantics | Table column checks now pass; substantive corrections await independent review | IN_REVIEW |
 | Whitespace | git diff --check exit0; staged/full snapshot check follows commit preparation | PASS for tracked diff; final check pending |
 
 ## Actual tool identities and limits
@@ -45,4 +45,4 @@ Codex collected source and cloud evidence. Claude Code2.1.309 real route probe s
 
 ## Gate outcome
 
-Step02 REWORK_REQUIRED, not DONE. Stop remains Architecture Approval Gate; pending architecture correction/re-review, owner validation, critical PoCs, independent security/technical review and unresolved architecture/runtime/cost/workload decisions prevent a completion claim. No full product implementation, high-fidelity UI, production deploy, cloud/account/billing mutation or Step03 start. Runtime product ACs remain NOT_RUN.
+Step02 IN_REVIEW, not DONE. Stop remains Architecture Approval Gate; pending architecture correction/re-review, owner validation, critical PoCs, independent security/technical review and unresolved architecture/runtime/cost/workload decisions prevent a completion claim. No full product implementation, high-fidelity UI, production deploy, cloud/account/billing mutation or Step03 start. Runtime product ACs remain NOT_RUN.

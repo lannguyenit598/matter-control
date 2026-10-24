@@ -8,7 +8,7 @@
 
 - Nodes: Requirements and Actions of one Matter (`graph_nodes` supertype, kind REQUIREMENT|ACTION). Filings are gated through their linked Requirement/Action; Milestones are not nodes (they have prerequisites, not edges).
 - Edge `u → d` means *d depends on u*. Attributes: `gate ∈ {COMPLETION, COMPLETION_AND_VERIFIED}` (explicit, no default), reason, author, revision, soft removal with reason.
-- Structural constraints: same Matter (composite FK), no self-edge (CHECK), at most one active edge per ordered pair (partial unique index), acyclic (algorithmic under lock, §3).
+- Structural constraints: same Matter (composite FK), no self-edge (CHECK), at most one active edge per ordered pair (partial unique index), acyclic (algorithmic under lock, §3); every endpoint has exactly one typed Requirement/Action row (deferred totality trigger, data-model §3).
 - Not supported in P0 (require approved change): OR groups, cross-matter edges, automatic waivers, edges to milestones.
 
 ## 2. Readiness semantics (RULE-003)
@@ -19,9 +19,13 @@ satisfied(e: u→d) = dep(u) == READY && exec(u) == COMPLETED &&
 dep(d) = READY  iff  ∀ active e into d: satisfied(e)     // no incoming edges ⇒ READY
 ```
 
-Proof gates use VERIFIED only, as RULE-003 states. **Open interpretation ARCH-Q1:** whether an upstream with verification NOT_REQUIRED satisfies a proof gate. Proposal: reject creating a COMPLETION_AND_VERIFIED edge from an upstream whose applicability is NOT_REQUIRED (validation error suggesting a COMPLETION gate), and if applicability later becomes NOT_REQUIRED the edge stays unsatisfied and is surfaced as a reason. PO/BA confirmation needed; no behavior is invented silently.
+Proof gates use VERIFIED only, as RULE-003 states; NOT_REQUIRED is never treated as VERIFIED. **Adopted fail-closed handling (ARCH-Q1, within approved semantics):**
+- An upstream whose verification is NOT_REQUIRED (or not applicable) never satisfies a `COMPLETION_AND_VERIFIED` edge. The edge reason is `NOT_VERIFIED` with `upstreamVerification: NOT_REQUIRED`.
+- Order-independent outcome. Adding such an edge to an exempt upstream is accepted (201, warning `PROOF_GATE_UNSATISFIED_WHILE_UPSTREAM_NOT_REQUIRED`). Exempting an upstream with outgoing proof gates is accepted, with those edges listed as impact. Both orders yield the same graph and the same BLOCKED state. The earlier proposal to reject creation is withdrawn because it made the result order-dependent.
+- Remediation uses only approved commands: change the gate with an audited reason (`POST /dependency-edges/{id}:replace-gate`, which emits `edge.removed` + `edge.added` atomically; the permission matrix allows reasoned edge change), or OWNER revokes the exemption and the upstream is verified normally.
+- **Unapproved alternative ARCH-Q1-B (not adopted):** an OWNER NOT_REQUIRED decision satisfies proof gates. That would broaden RULE-003 and needs an explicit PO change. OpenCode F-07 is recorded as this option only.
 
-Each BLOCKED node carries `blockingReasons[]`: `{edgeId, upstreamId, gate, failed: [UPSTREAM_BLOCKED | NOT_COMPLETED | NOT_VERIFIED]}`, ordered by upstream ID. The Control Room "why blocked" view walks reasons upstream to the root causes (nodes that are themselves READY but not completed/verified).
+Each BLOCKED node carries `blockingReasons[]`: `{edgeId, upstreamId, gate, failed: [UPSTREAM_BLOCKED | NOT_COMPLETED | NOT_VERIFIED], upstreamVerification}`, ordered by upstream ID. The Control Room "why blocked" view walks reasons upstream to the root causes (nodes that are themselves READY but not completed/verified).
 
 ## 3. Mutation algorithm (inside MatterUnitOfWork)
 
@@ -29,13 +33,13 @@ Each BLOCKED node carries `blockingReasons[]`: `{edgeId, upstreamId, gate, faile
 AddEdge(cmd{matter, u, d, gate, reason, expectedRevisions{u, d}}):
   lock matter row (FOR UPDATE)                       // serializes all graph mutations of the matter
   authorize EDITOR|OWNER (FOR SHARE on memberships)
-  apply time boundaries ≤ now
-  load u, d; check same matter, kinds, revisions == expected
+  t_cmd := greatest(clock, last_recorded_at); ApplyBoundaries(upTo = t_cmd)   // state-machine §6
+  load u, d as typed rows (missing typed row → abort 503, never READY); same matter; If-Match = d.revision, expectedRevisions[u]
   if u == d → reject self-edge
   if active edge (u,d) exists → reject duplicate
   path := bfsPath(from=d, to=u, over active edges)    // adding u→d creates a cycle iff d ⇝ u
   if path != nil → reject cycle-detected{path: [d, …, u]}
-  insert edge; emit edge.added
+  insert edge; d.revision+1; emit edge.added
   Recompute(roots={d})
 
 Recompute(roots):
@@ -44,8 +48,9 @@ Recompute(roots):
   for n in order:
      newDep := READY iff all incoming edges satisfied (reads already-updated upstream values)
      if newDep != n.dep or reasons changed: update row (revision+1), emit node.dependency_derived{cause}
-  recompute milestone readiness for milestones whose prerequisites ⊆ S∪roots
-  recompute critical-chain membership if edges or milestone prerequisites changed
+  Δ := nodes whose exec, ver or dep changed in this transaction (incl. boundary catch-up)
+  recompute readiness of every milestone M with prerequisites(M) ∩ Δ ≠ ∅, or whose prerequisite set or critical flag changed
+  recompute critical-unsatisfied membership if Δ ∩ C ≠ ∅ or edges, prerequisites or critical flags changed   // C per §5
 ```
 
 The same `Recompute` is invoked after: execution change of any node, verification aggregate change, reopen, cancellation, edge removal, criteria revision, boundary expiry. Because the graph is a DAG and each node is processed once in topological order, recomputation terminates in O(|S| + |E(S)|). For the 50–200 row interaction scale and W1/W2 options, a matter graph fits in memory; the engine loads the matter's edges and node states once per command.
@@ -65,7 +70,7 @@ No PostgreSQL advisory locks are used in the request path (Hyperdrive does not s
 
 ## 5. Milestones and critical chain
 
-- Readiness (RULE-008): no prerequisites → UNASSESSED; else READY iff every prerequisite Requirement has `exec = COMPLETED ∧ ver ∈ {VERIFIED, NOT_REQUIRED} ∧ dep = READY`. Output `satisfied/total` and per-prerequisite failure reasons (AC-102, AC-141). Cancelled prerequisites are unsatisfied; there is no waiver label.
+- Readiness (RULE-008): no prerequisites → UNASSESSED; else READY iff every prerequisite Requirement has `exec = COMPLETED ∧ ver ∈ {VERIFIED, NOT_REQUIRED} ∧ dep = READY`. This RULE-008 predicate is deliberately distinct from the RULE-003 edge predicate (§2). Output `satisfied/total` and per-prerequisite failure reasons (AC-102, AC-141). Cancelled prerequisites are unsatisfied; there is no waiver label.
 - Critical chain set `C` = prerequisites of milestones with `critical = true` ∪ all graph ancestors of those prerequisites. A node in `C` is **critical-unsatisfied** if (a) it is a critical prerequisite and fails milestone satisfaction, or (b) it is an ancestor and at least one of its outgoing edges on a path into `C` is unsatisfied. Such nodes get CRITICAL attention with reasons naming the milestone(s) (RULE-010).
 - Prerequisite add/remove and critical designation are OWNER-only, reasoned, audited, and trigger recomputation.
 
@@ -93,3 +98,6 @@ Candidates: visible Actions assigned to the caller (or a selected member for own
 | DG-08 | Property test: random DAG + random state changes; stored `dependency_state` equals full recomputation after every command | NFR-005 |
 | DG-09 | Next Action ordering fixture K1..N3 and exclusions | AC-103, AC-144 |
 | DG-10 | Milestone unassessed, cancelled/disputed prerequisite | AC-102, AC-141 |
+| DG-11 | Exempt-then-link vs link-then-exempt → identical graph, downstream BLOCKED (`upstreamVerification=NOT_REQUIRED`); remediation via replace-gate or exemption revoke | AC-105, AC-160 |
+| DG-12 | Milestone with R1,R2; only R1 changes → milestone recomputed (intersection rule) | AC-102, AC-141 |
+| DG-13 | Fault-injected node without typed row → 503, never READY | AC-156, AC-160 |

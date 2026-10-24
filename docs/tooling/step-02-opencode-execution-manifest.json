@@ -1,0 +1,62 @@
+{
+  "task_id": "MC-002-QA",
+  "round": 1,
+  "tool": "OpenCode2.1.4",
+  "provider": "opencode",
+  "model": "big-pickle",
+  "session_id": "ses_e929198d8ffeFwkVV16SNbAFYR",
+  "environment": "host darwin/arm64, existing provider, no auth/global config changes",
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "governance_base": "54e1db541157706dee9037b23f630faf59249c27",
+  "candidate_archived_commit": "1516f15426a149a4706a2b4bf6642185e553d7f7",
+  "candidate_identity": "30 per-file SHA256 entries in step-02-opencode-result.md pin the sent snapshots; archive commit also contains later status updates",
+  "time_utc": {
+    "created": "2026-10-24T10:21:54.511000+00:00",
+    "updated": "2026-10-24T10:30:10.166000+00:00",
+    "idle": "2026-10-24T10:30:10.169000+00:00"
+  },
+  "command": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02 architecture independent review",
+    "--file",
+    "/tmp/mattercontrol-step02-opencode-input.txt",
+    "Review MC-002 architecture and security against approved requirements and supplied evidence. No tools. Return final findings and verdict."
+  ],
+  "process_environment_overrides": {
+    "OPENCODE_PERMISSION": "{\"*\":\"deny\"}",
+    "OPENCODE_DISABLE_AUTOUPDATE": "true",
+    "OPENCODE_DISABLE_LSP_DOWNLOAD": "true",
+    "OPENCODE_DISABLE_DEFAULT_PLUGINS": "true"
+  },
+  "exit_code": 0,
+  "outcome": "succeeded",
+  "verdict": "CHANGES_REQUIRED",
+  "findings": {
+    "critical": 0,
+    "high": 5,
+    "medium": 9
+  },
+  "reported_usage": {
+    "input": 314439,
+    "output": 4819,
+    "reasoning": 41424,
+    "cache": {
+      "read": 54528,
+      "write": 0
+    }
+  },
+  "reported_cost": 0,
+  "cost_note": "Provider telemetry only, not proof of actual invoice or total infrastructure cost",
+  "raw_jsonl_sha256": "422de74a7bbecef9df5f2bd7203435040b81e2036d2838546f8f3664f3109f72",
+  "session_export_sha256": "340cabd5ed26f4c95dc8b84d27fe6113a43ada51d92d0936ca4b5116a2cd575e",
+  "tool_invocations": "all denied; document review only"
+}

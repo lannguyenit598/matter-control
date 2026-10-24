@@ -25,7 +25,7 @@ Functional parity for Control Room/Grid (50–200 rows, keyboard), correct auth/
 
 ## 4. Architect's assessment (not a decision)
 
-F3 most plausibly fits $0/Free CPU but changes the template's server-side session and Server Action model and moves tokens into the browser; it needs a security review. F1/F2 preserve the template but have unmeasured CPU and compatibility risk. F4 couples to the ADR-001 H1 exception. Recommend deciding ADR-003 together with ADR-001 after PoCs.
+F3 most plausibly fits $0/Free CPU but changes the template's server-side session and Server Action model and moves tokens into the browser; it needs a security review. Its minimum entry conditions are in security-architecture §6.1; they gate the PoC and are not a selection. F1/F2 preserve the template but have unmeasured CPU and compatibility risk. F4 couples to the ADR-001 H1 exception. Recommend deciding ADR-003 together with ADR-001 after PoCs.
 
 ## 5. Required PoCs
 
@@ -34,6 +34,6 @@ F3 most plausibly fits $0/Free CPU but changes the template's server-side sessio
 | P-FE-1 Template build/test baseline | Antigravity | Local disposable checkout at pinned SHA | `pnpm install --frozen-lockfile`, typecheck, test, build, e2e logs |
 | P-FE-2 vinext check + local Workers preview | Antigravity | Local `wrangler dev`, no deploy | Compatibility report; per-route CPU from local profiling |
 | P-FE-3 OpenNext build + preview | Antigravity | Local | Same evidence |
-| P-FE-4 Static export of a Control Room spike with client-side auth | Antigravity, OpenCode security review | Local | Feature parity notes, CSP/XSS review |
+| P-FE-4 Static export of a Control Room spike with client-side auth | Antigravity, OpenCode security review | Local | Feature parity notes; security-architecture §6.1 checklist (CSP without `'unsafe-inline'`, in-memory tokens, CORS allowlist); XSS review |
 
 Remote CPU measurements on Cloudflare require a PO-approved deployment to a non-production Workers account; not authorized now.
