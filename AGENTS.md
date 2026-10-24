@@ -4,7 +4,7 @@
 
 MatterControl is the Control Plane for High-Stakes Legal Work and the System of Operational Truth for Complex Legal Matters. Initial vertical: Transactions & Corporate Legal Work. Discovery is closed; do not reopen positioning.
 
-This repository holds governance and versioned evidence. Step 00 permits documentation and bounded tooling verification only. Do not implement product features, deploy production, install integrations requiring new permissions, or change infrastructure costs. Step 00A requires an explicit Product Owner transition.
+This repository holds governance and versioned evidence. The Product Owner has explicitly authorized Step 00A: Canonical Product Context, superseding the earlier proposed technical audit. Apply the Step 00 operating model. Product direction and the P0/P1/P2 capability baseline are approved inputs; do not ask for their approval again. Documents A/B are confirmed missing: never invent their contents or claim both briefs consolidated. Preserve Requirement versus Action and independent state axes. Step 00A permits product documentation only: no code, solution architecture, high-fidelity UI or deployment. Raise only real semantic, release-criteria or infrastructure trade-offs for additional approval.
 
 ## Start and execution
 

@@ -19,7 +19,7 @@ Excluded: discovery, product features, final architecture selection, new integra
 - UI/UX: OpenDesign.
 - Deployment target: Cloudflare Free Tier.
 - Infrastructure target: $0/month **within verified MVP workload**; verification has not occurred.
-- Template reuse is intended; repository ownership, pinned source SHAs and deployment compatibility remain Step 00A questions. This governance repo does not replace or mutate either template.
+- Template reuse is intended; repository ownership, pinned source SHAs and deployment compatibility remain open for a separately scoped technical audit. Step 00A is product-context consolidation and excludes solution architecture. This governance repo does not replace or mutate either template.
 - AI tool subscriptions/credits, domains and ancillary services must be separately disclosed; never silently exclude a required service to make a cost claim.
 
 ## Authority and success
@@ -33,9 +33,9 @@ Detailed MVP success metrics and release dates are not set in this bootstrap. Co
 | Milestone | Deliverable | Exit condition | Current state |
 |---|---|---|---|
 | M0 / Step 00 | Governance and capability baseline | Structural checks plus Human review | IN_REVIEW |
-| M0A / Step 00A | Read-only repository/tooling/hosting feasibility baseline | Evidence, pinned sources, open questions and PO decision | WAITING_APPROVAL to start |
+| M0A / Step 00A | Canonical Product Context under explicit PO instruction | Both briefs reconciled; baseline, workflows, dataset and Step 01 inputs documented | BLOCKED on missing A/B; partial artifacts prepared |
 | M1 | Approved requirements and architecture/design | Relevant quality gates pass | Not scheduled |
 | M2 | Implemented and verified MVP | Traceability, tests and independent review | Not scheduled |
 | M3 | Approved release and observation | Human go/no-go and release evidence | Not scheduled |
 
-Step 00A's proposed scope is in [its task](../implementation/tasks/MC-00A.md); the original request names the next step but does not define its detailed content.
+Step 00A scope is now defined by the [Product Owner request](step-00a-request.md) and [rebaseline](scope-rebaseline.md), replacing the earlier unapproved technical-audit proposal. Product direction and all P0 capabilities are already approved; missing A/B source inputs do not reopen product discovery.

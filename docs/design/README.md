@@ -1,6 +1,6 @@
 # OpenDesign Handoff Contract
 
-Owner: OpenDesign. No design run or design approval exists yet. OpenDesign is currently blocked by invalid application signature and missing MCP registration.
+Owner: OpenDesign. No design run or design approval exists yet. Historical signature/registration blockers were subsequently resolved according to user logs; see [follow-up evidence](../tooling/follow-up-evidence.md). Live MCP connection and task execution remain unverified. Step 00A excludes high-fidelity UI work.
 
 When available, explicitly supply AGENTS.md, the approved product baseline, relevant requirements and a scoped design task. Automatic workspace instruction-file loading is unverified.
 
@@ -15,4 +15,4 @@ Required return packet:
 - Human design direction approval and Antigravity handoff acknowledgement.
 - QA acceptance/visual comparison criteria and outstanding design questions.
 
-Until the tool is safely restored, prepare task packets only. Do not generate replacement designs, register MCP, sign the app or incur cloud generation charges as part of Step 00.
+Until the connection and assigned scope are verified, prepare task packets only. Do not generate replacement designs, change MCP, sign the app or incur cloud generation charges as part of product-context consolidation.

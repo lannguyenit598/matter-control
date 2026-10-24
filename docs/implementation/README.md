@@ -1,10 +1,10 @@
 # Implementation and Task Board
 
-No product implementation is authorized in Step 00.
+Step 00A is product documentation only. No product implementation is authorized.
 
 | Task | Owner | Priority | Status | Dependency | Reviewer |
 |---|---|---|---|---|---|
-| [MC-000 — Bootstrap](tasks/MC-000.md) | Codex | P1 | IN_REVIEW | Approved Step 00 request | Human |
-| [MC-00A — Proposed feasibility audit](tasks/MC-00A.md) | Codex | P1 | WAITING_APPROVAL | Human transition and review disposition for MC-000 | Human; Claude/OpenCode when routes available |
+| [MC-000 — Bootstrap](tasks/MC-000.md) | Codex | P1 | IN_REVIEW | Historical Step 00 evidence | Human; no independent review recorded |
+| [MC-00A — Canonical Product Context](tasks/MC-00A.md) | Codex | P1 | BLOCKED | Missing full Document A/B, confirmed by PO | OpenCode when assigned; Human for material trade-offs |
 
-Do not seed feature tasks before the MVP requirements are defined. Add a task from the contract only when its purpose and owner are clear.
+Product direction, P0/P1/P2 baseline and three workflows are approved inputs. The old technical-audit proposal is superseded, not silently executed. Implementation task decomposition belongs to a later planning step after specification; capability IDs are not executable tasks.

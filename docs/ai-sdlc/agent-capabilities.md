@@ -2,6 +2,8 @@
 
 Observed 2026-10-24, Asia/Ho_Chi_Minh, in this Codex task's restricted filesystem/network environment. These results do not describe all capabilities available in an interactive terminal or GUI.
 
+Historical baseline below. Subsequent [user-reported follow-up](../tooling/follow-up-evidence.md) confirms Terminal authentication/version checks and valid OpenDesign signature/MCP registration; those newer observations supersede the corresponding startup blockers, but no successful task handoff is yet recorded.
+
 Legend: **OBSERVED** = directly measured; **DOCS** = current vendor documentation; **UNVERIFIED** = not demonstrated; **BLOCKED** = attempted operation failed. Full evidence: [verification record](../tooling/verification-2026-10-24.md).
 
 | Agent | CLI/API/MCP and invocation | Workspace access | Branch/worktree support | Handoff and collection | Permission boundary / verdict |

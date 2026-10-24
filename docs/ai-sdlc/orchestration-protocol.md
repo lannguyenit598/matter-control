@@ -56,4 +56,4 @@ On unavailable tool, auth, packaging or permission error: retain the error evide
 
 ## Step 00 boundary
 
-No external task completed successfully during bootstrap. No GUI task was dispatched. Future dispatch and the transition to Step 00A await Human direction; these files are ready for review.
+No external task completed successfully during bootstrap. No GUI task was dispatched. The Product Owner subsequently authorized Step 00A as Canonical Product Context; see scope-rebaseline.md. That authorization does not dispatch external agents or approve architecture/deployment. Full A/B consolidation remains blocked on missing sources.

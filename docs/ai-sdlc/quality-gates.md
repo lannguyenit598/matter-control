@@ -10,6 +10,8 @@ A task is DONE only when all acceptance criteria pass with revision-specific evi
 
 For documentation-only bootstrap: structure, required fields, links and consistency are checked; code/runtime tests are N/A. Human review is still pending, so MC-000 is IN_REVIEW.
 
+For Step 00A: product direction and P0 baseline are already approved by direct PO instruction; do not request them again. Full source gate requires both A/B read and reconciled, original JTBD preserved, domain/priority/workflow conflicts identified and Step 01 inputs ready. Missing sources cannot be waived by an author structural PASS. Clarification work for Step 01 is distinct from approval of a material change.
+
 ## Gates
 
 | Gate | Required evidence | Owner / acceptor | Blocks |

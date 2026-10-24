@@ -21,7 +21,7 @@ Empty future domains contain README boundaries, not invented implementation docu
 
 Root AGENTS.md is the shared project instruction source; CLAUDE.md adds architect-specific context. Structured task files are the canonical task status records; project-status.md is a derived dashboard and must match them.
 
-The two supplied template repositories remain separate sources. Pin their exact commits during Step 00A. A cross-repository task records every repo/head in its return packet; release manifests identify the complete tested combination.
+The two supplied template repositories remain separate sources. Pin their exact commits in a separately assigned technical baseline task; Step 00A now consolidates product context. A cross-repository task records every repo/head in its return packet; release manifests identify the complete tested combination.
 
 This repo has a local baseline only; no governance remote or shared PR workflow has been configured. Do not point origin at one of the template repositories to solve that gap. Confirm the intended remote before publishing.
 
