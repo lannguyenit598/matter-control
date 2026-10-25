@@ -1,0 +1,100 @@
+{
+  "task": "MC-003A.8A scoped rereview",
+  "source_review": "OpenCode R1 CHANGES_REQUIRED_DOCUMENT_ONLY,4High/1Medium/2Low",
+  "findings": [
+    {
+      "id": "F10-OC-01",
+      "severity_reported": "High",
+      "original_title": "C2 effective-view derivation omits superseded replacement observations",
+      "corrected_delta_key": "oc01_oc05_terminal_derivation",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-02",
+      "severity_reported": "High",
+      "original_title": "C3 “never false completeness” overclaims surplus detection after stop",
+      "corrected_delta_key": "oc02_observed_window",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-03",
+      "severity_reported": "High",
+      "original_title": "C3 AND predicate cannot produce the claimed identity-mismatch anomaly",
+      "corrected_delta_key": "oc03_anomaly_predicate",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-04",
+      "severity_reported": "High",
+      "original_title": "C1 P1.3 is global, incomplete on 422, and lacks a per-command CAS/precondition matrix",
+      "corrected_delta_key": "oc04_scoped_pipeline",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-05",
+      "severity_reported": "Medium",
+      "original_title": "C2 “latest-seq terminal” is not explicitly scoped per original",
+      "corrected_delta_key": "oc01_oc05_terminal_derivation",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-06",
+      "severity_reported": "Low",
+      "original_title": "Proposed numeric bounds lack units and envelope definition",
+      "corrected_delta_key": "oc06_bounds",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-07",
+      "severity_reported": "Low",
+      "original_title": "Cross-document status inconsistency",
+      "corrected_delta_key": "oc07_precedence + separate Codex dispatch-and-supersession.json",
+      "owner_correction": "PRECEDENCE_RETURNED / PROCESS_DISPOSITION_RECORDED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    }
+  ],
+  "precedence": "Current correctedaddendum supersedes only explicitlylistedconflictingcandidateclauses. Olderreviewpacket and R2/R3/finalownerconfirmation remainimmutable evidence. Untouchedconstraints persist.",
+  "OC07": {
+    "task": "MC-003A.8A independentF10review",
+    "state": "MANUAL_EXTERNAL_REVIEW_RETURN_RECEIVED",
+    "evidence": "Human-pasted actual OpenCode report; not a newCodexCLIinvocation",
+    "reviewed_packet": {
+      "manifest_path": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/packet-manifest.json",
+      "manifest_bytes": 1797,
+      "manifest_sha256": "6d670d8292a1775d00f099af1dd7e764151ca752fb1ae82db70a2ae6eb4ff7cd",
+      "snapshots": 6,
+      "snapshot_bytes": 49688,
+      "all_files_bytes": 51485,
+      "codex_current_hash_recheck": "PASS6of6"
+    },
+    "reviewer_reported": {
+      "tool": "OpenCodeCLI2.1.4",
+      "provider": "opencode",
+      "model_display": "DeepSeek V4.1 Flash Free",
+      "model_id": "deepseek-v4.1-flash-free",
+      "identity_and_cli_commands": "reported in human-return, no exported CLIcommand/sessiontelemetry independently verified",
+      "endpoint": "NOT_ATTESTED",
+      "independence": "reviewer declares no authorship; source scopes exclude product/runtime/fullsourcecontract audit"
+    },
+    "reviewer_git_checkpoint": "1381601d52c40da3475aac8cf5e3d3cffd1e9f19",
+    "current_governance_base": "9fe6be75d0e3ce0d1164551f14b90b02ed51835f",
+    "verdict": "CHANGES_REQUIRED_DOCUMENT_ONLY",
+    "prior_preparation_manifest": "Immutable PREPARED_NOT_DISPATCHED is historical preparation record. This separate actualreturn/dispatch record supersedes only operational no-review label; rawmanifest bytes unchanged.",
+    "candidate_supersession": "Final owner recommendation chooses pathA with BcauseSequnadopted, superseding earlierR3 openA-vsB recommendation. This is author-selection supersession, NOT adopted contract/POapproval. B35/L2unadopted.",
+    "no_new_provider_call_by_Codex": true
+  },
+  "scope": "Verify OC01..06changedclauses/T1..22 and OC07processnote; no fullarchitecture/F08/BE01/INTAreview"
+}

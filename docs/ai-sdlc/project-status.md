@@ -293,3 +293,12 @@ Repository-relative docs/reviews/inta-frontend-runtime-stage3-intake.md records 
 Findings: peroriginalterminal/supersededreplacement exclusion(OC01/05), observedanomalywindow vs stop-at-N(OC02), separateANDmatch/anomalypredicate(OC03), filingonly422/428/412/409percommandmatrix(OC04), proposedlimitunits(OC06), preparation/dispatch/authorselectionstatus(OC07). OC07 Codex separateactualdispatch/supersessionrecord appliedpendingrecheck; immutablepacket/R3/manifest preserved. Reviewreceipt supersedes eligible-reviewernotdispatched labels, never authorproposaladoption/independentPASS.
 
 CompleteZCode narrowtextcorrectionhandoff preparednotdispatched, then correctedrevision newmanifest and independentOpenCode changedclauses-onlyrereview. DirectPOownerconfirmationreroute honored; no redundantmandatoryClaude/fullarchitecture/32operation audit. F10REWORK_REQUIRED/G5Bfindingsopen;catalogue32/B35/L2/filterunadopted, F08/22CT/QA/design/architecture/STEP03Bgatesunchanged. BE01/currentINTAworkstream/source/lifecycle untouched; allF10runtimeNOT_RUN.
+
+
+## F10 corrected candidate ready for scoped rereview — 2026-10-26
+
+[Actual ZCode OC01..06 correction intake](../design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/intake.md) records CORRECTED_CANDIDATE_RECEIVED / READY_FOR_SCOPED_REREVIEW. Peroriginalcorrectionderivation,closingpagewindow,separateanomalypredicate,filingonlyvalidationmatrix andcodepointbounds proposed;explicitOC07precedence retained. Rawreturn/unique-keyJSON/oldpacket/protectedhashesverified;T1..T22documentexpectationspresent,noneexecuted.
+
+New7snapshot77420byte packet+manifest andcompleteOpenCode-onlyrereviewpromptpreparedNOT_DISPATCHED;no newCodexprovidercall. Previous4High/1Medium/2Lowfindingsremainpendingindependentrereview,notclosedbyauthor/Codexpresencechecks. Scopechangedclauses/expectedcasesandOC07processnoteonly;nofullarchitecture/32operationaudit,extraauthorselfconfirmationormandatoryClaudeownerround.
+
+F10OPEN/REWORK_REQUIREDpendingrereview/requireddecisions,catalogue32/fieldsboundsNOT_ADOPTED,envelopeNEEDS_AUTHORIZED_SOURCE;F08/22CT/QA/design/architecture/STEP03Bgatesunchanged. BE01andcurrentINTAsource/task/coordination/lifecycle/returnsuntouched. AllF10runtimeNOT_RUN.

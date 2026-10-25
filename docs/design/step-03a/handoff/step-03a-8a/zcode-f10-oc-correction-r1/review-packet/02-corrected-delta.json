@@ -1,0 +1,73 @@
+{
+  "task": "MC-003A.8A.f10_oc01_06_targeted_correction",
+  "reviewer": "ZCode Desktop interactive session, human-operated (candidate author performing scoped correction; cannot independently accept own changes)",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN",
+  "trigger": "actual OpenCode independent review CHANGES_REQUIRED on the exact 6-snapshot 49688-byte packet",
+  "proposed_status": "CORRECTED_CANDIDATE_READY_FOR_SCOPED_REREVIEW",
+  "not_claimed": ["PASS", "CLOSED", "approval", "adoption", "independent acceptance"],
+  "oc07_precedence": {
+    "superseded_clauses": "listed in addendum section 1; manifest under review is immutable history",
+    "final_A_selection": "supersedes prior R3 A-vs-B author recommendation; A remains CANDIDATE not contract-approved",
+    "unadopted": ["B causeSeq filter", "B35", "L2"],
+    "process_owner": "Codex separate dispatch/supersession record; no retrospective edits or extra owner loop here"
+  },
+  "oc01_oc05_terminal_derivation": {
+    "per_original": "terminal(O) = unique argmax seq over corrections targeting original O in committed history <= S; independent per original; no global-latest interpretation",
+    "effective_links": {"no_correction": "links(O)", "terminal_RETRACT": "empty", "terminal_REPLACE": "links(terminal.replacementObservationId) only"},
+    "excluded": ["original links when any correction exists", "all superseded replacements' links", "old-replacement resurrection impossible (terminal recomputed per snapshot)"],
+    "command_guard": "original-target-only; replacement/unresolvable correctsObservationId -> scoped 422 validation, no leak",
+    "history": "pure function of append-only history at S; asOf before/between/after without rewrite",
+    "expected": ["T1 replace-then-retract -> none", "T2 double replace -> only newest replacement", "T3 interleaved originals independent terminals", "T4 target replacement -> 422", "T5 asOf variants no rewrite"]
+  },
+  "oc02_observed_window": {
+    "N_zero": "COMPLETE_0_OF_0, no link pages fetched",
+    "closing_page": "the page containing the Nth exact match; inspect its full remainder (already fetched, zero extra calls) then STOP; no speculative lookahead or new scan option",
+    "surplus_detection": "surplus = (N+1)th exact match within closing page; surplus after closing page NOT_CLAIMED_DETECTED",
+    "exhaustion": "stream exhausted with count < N -> INCOMPLETE_HISTORY",
+    "completion_claim": "N unique exact matches observed + no surplus and no wrong-observation anomaly observed within the scanned window; no claim of never-false-completeness against corrupt producers outside the window",
+    "boundary": "Nth match at page boundary deterministic; an event belongs to exactly one page; no next-page fetch",
+    "expected": ["T6 valid interleaving limit=1", "T7 N=0", "T8 exhausted<N", "T9 surplus within closing page", "T10 Nth at boundary"]
+  },
+  "oc03_anomaly_predicate": {
+    "exact_match_kept": "type=filing.observation.evidence_linked AND causeSeq=mainSeq AND payload.observationId=expectedObsId",
+    "anomaly_match_new": "type=filing.observation.evidence_linked AND causeSeq=mainSeq AND payload.observationId != expectedObsId; evaluated over the same scanned window including closing-page remainder",
+    "ignored": ["derived events with same causeSeq and different type", "other commands' links with different causeSeq"],
+    "override": "observed anomaly overrides N-complete -> status ANOMALY; UI shows anomaly state, never zero/success",
+    "no_precomputed_set": "predicate uses only mainSeq and expectedObsId from the main event; expected evidence IDs need not be known initially",
+    "coverage": "before Nth detected; after Nth within closing page detected; outside window not detected (explicit non-claim)",
+    "expected": ["T11 wrong-obs before Nth", "T12 after Nth within closing page", "T13 outside window undetected", "T14 derived between links no false anomaly"]
+  },
+  "oc04_scoped_pipeline": {
+    "scope": "F10 filing family ONLY (filing create, ordinary observation, supplement, correction); other commands unchanged; no global contract authority claimed",
+    "pipeline": "transport+JSON admission (400, format only) -> 401 -> scope/Matter authz (uniform 404) -> idempotency replay -> body format validation (422) -> preconditions (If-Match 428/412; expectedCycleNo missing 422 candidate choice, stale 412) -> scoped target existence (422) -> stage guard (409) -> atomic effects",
+    "matrix": {
+      "filing_create": "no If-Match (CAS scope none); no nonexistent-filing CAS; server creates cycle 1",
+      "ordinary_observation": "If-Match 428/412; expectedCycleNo required when body names a cycle (missing 422 choice, stale 412); body cycleNo scoped 422",
+      "supplement": "If-Match 428/412; expectedCycleNo required (missing 422 choice, stale 412); NO existing-target check, server derives n+1; stage AUTHORITY_REVIEW else 409",
+      "correction": "If-Match 428/412; expectedCycleNo required (missing 422 choice, stale 412); correctsObservationId must be an original (scoped 422); REPLACE cycleNo scoped 422"
+    },
+    "pinned_combinations": {"stale_CAS_and_changed_stage": "412", "invalid_target_and_stale_expected": "412", "invalid_target_and_changed_stage": "422", "correction_missing_IfMatch": "428", "correction_stale": "412", "correction_non_original": "422", "missing_expectedCycleNo": "422 (routine candidate choice)"},
+    "replay": "existing api-conventions replay semantics unchanged (current authz re-check on scope; stored response or uniform 404)",
+    "rollback": "all-or-nothing unchanged",
+    "expected": ["T15", "T16", "T17", "T18", "T19", "T20 non-filing order unchanged", "T21 full rollback"]
+  },
+  "oc06_bounds": {
+    "status": "PROPOSED, not source-proven, not approved, NOT_ADOPTED",
+    "values": {"reason_max": 2000, "observationType_max": 64, "correlationId_max": 128},
+    "count_unit": "Unicode code points (routine candidate choice), inclusive boundary",
+    "multibyte_fixture": "2000-codepoint multibyte string (~4-8KB UTF-8) passes; 2001 codepoints fails even if byte count low",
+    "envelope_bound": "NEEDS_AUTHORIZED_SOURCE; no constant-byte claim",
+    "no_new": "no business link cap; no numeric acceptance on behalf of PO"
+  },
+  "preserved_coherent": ["same-Matter cycle binding and epoch independence", "atomicity and full rollback", "OWNER+reason correction", "immutable history", "exact versions and current proof epoch", "receipt != approval", "per-page snapshot labels", "path A same-Matter unfiltered seq discovery", "no-array invariant scoped to two event types", "no new routes or filters"],
+  "state": {
+    "catalogue": 32,
+    "fields_and_bounds": "NOT_ADOPTED",
+    "acceptance": "DOCUMENT_EXPECTED (T1..T22)",
+    "runtime": "NOT_RUN",
+    "f08_be01_inta": "outside this work",
+    "ct_qa_gates": {"ct": "22 IDs, 16+4+1+1", "qa": "Q1..Q8 with Q2/Q4/Q6/Q8 conditional", "gates": {"G3": "NOT_VERIFIED", "G4_design_qa": "PENDING", "G5-A": "stands", "G5-B": "FINDINGS_OPEN", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED", "po_architecture_approval_gate": "NOT_PASSED"}}
+  },
+  "authorship_attribution": {"approved_rules_and_base_contract": "Claude-authored reviewed candidate (RULE-011/012/019, permission matrix, DR-15/RC-6/F-09) and PO-approved requirements", "corrections_oc01_06": "ZCode-authored corrected candidate; independent re-review required; not self-accepted"}
+}
