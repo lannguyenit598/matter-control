@@ -1,0 +1,114 @@
+{
+  "info": {
+    "id": "ses_e8f4bedd9ffeBel5Ii2z3P6ejo",
+    "projectID": "56512bc17ede1f94831e6c5716d9c01aa1a12b0d",
+    "agent": "plan",
+    "cost": 0,
+    "tokens": {
+      "input": 39808,
+      "output": 2601,
+      "reasoning": 6465,
+      "cache": {
+        "read": 4352,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1792892211877,
+      "updated": 1792892311308,
+      "idle": 1792892311313
+    },
+    "title": "[redacted:session-title:ses_e8f4bedd9ffeBel5Ii2z3P6ejo]",
+    "location": {
+      "directory": "/[redacted:session-directory:ses_e8f4bedd9ffeBel5Ii2z3P6ejo]"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_170b412ac001A023321224Omvm",
+      "time": {
+        "created": 1792892211885
+      },
+      "type": "agent-switched",
+      "agent": "plan",
+      "previous": "plan"
+    },
+    {
+      "id": "msg_170b412a7001PPxuDFmLkc9Q9u",
+      "time": {
+        "created": 1792892212030
+      },
+      "text": "[redacted:synthetic:msg_170b412a7001PPxuDFmLkc9Q9u]",
+      "type": "synthetic"
+    },
+    {
+      "id": "msg_170b412ac001CGUf1WMJv26Y8T",
+      "time": {
+        "created": 1792892212031
+      },
+      "text": "[redacted:text:msg_170b412ac001CGUf1WMJv26Y8T]",
+      "files": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_170b4134400179saRssXibqfp1",
+      "time": {
+        "created": 1792892212040,
+        "streamed": 1792892311220,
+        "completed": 1792892311308
+      },
+      "type": "assistant",
+      "agent": "plan",
+      "model": {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "[redacted:reasoning:msg_170b4134400179saRssXibqfp1]",
+          "native": {
+            "redacted": "reasoning-native:msg_170b4134400179saRssXibqfp1"
+          },
+          "time": {
+            "created": 1792892215860,
+            "completed": 1792892311209
+          }
+        },
+        {
+          "type": "text",
+          "text": "[redacted:text:msg_170b4134400179saRssXibqfp1]"
+        }
+      ],
+      "snapshot": {
+        "start": "b2bc93c227d52afae7f2dcb921f287de4bada5e1",
+        "end": "ce973c3a9f45a4671088d5e9a48508a65030cb3b",
+        "files": [
+          "docs/ai-sdlc/step-02-3-review-routing.md",
+          "docs/testing/step-02-3-opencode-clarification/preservation.json"
+        ]
+      },
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 39808,
+        "output": 2601,
+        "reasoning": 6465,
+        "cache": {
+          "read": 4352,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_170b59711001sYHY4cMCbIHaAv",
+      "time": {
+        "created": 1792892311313
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

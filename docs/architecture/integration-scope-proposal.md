@@ -9,6 +9,7 @@
   - Product requirements and the permission matrix are PO-approved and are not reopened.
 - **Companion:** [api-auth-decision-analysis.md](api-auth-decision-analysis.md). This proposal is decision INT-D01 there.
 - **No implementation before PO selection.**
+- **Bounded clarification update:** actual OpenCode reviewed and supplied the section4/5 wording under the human [this-round routing override](../ai-sdlc/step-02-3-review-routing.md). Historical Claude authorship is preserved; this update is attributed to OpenCode, not an unexecuted Claude return. Runtime checks remain NOT_RUN.
 
 ## 1. Objective
 
@@ -56,6 +57,8 @@ Starting facts: the frontend `restTaskRepository` targets `/tasks` and `/tasks/s
 - The client itself always sets `Accept: application/json`, and sets `Content-Type: application/json` whenever a body is given.
 - Never sent: `Authorization`, `Cookie`, `Origin`, `Idempotency-Key`.
 
+> **Native 503 source pin (accepted `52b60a4`):** every native unavailable problem returns exactly `type` `/problems/unavailable`, `detail` `"service temporarily unavailable"`, integer `retryAfter` `1` and `title` "Service Unavailable", pinned by `docs/api.md` L148–163, `internal/adapter/inbound/httpapi/errors.go` L58–78 (`unavailableDetail`, `retryAfterSeconds`) and `testdata/unavailable.golden` L1–15, with Codex-recorded file hashes in `docs/testing/step-02-3/native-503-source-pin.json`. Source pin only: no runtime replay, no new product `retryAfter`/`Retry-After` convention (product units/range/header remain deferred to D-11/G-5).
+
 Evidence path: **C** = app-client mode, **W** = wire mode (§5.3). Expected values are the native contract (`docs/api.md` at the pinned head).
 
 | # | Request | Expected | Path |
@@ -96,7 +99,7 @@ Evidence path: **C** = app-client mode, **W** = wire mode (§5.3). Expected valu
 - One `POST` handler inside the harness root only, for example `/harness/case`. Other methods are rejected.
 - Input, Zod-validated: `runId` (`[A-Za-z0-9]{8,32}`), `caseId` (fixed allowlist from §4), and `refId` (lowercase UUID, only for cases that need a record).
 - The Go base URL comes only from server environment and must be the loopback literal `127.0.0.1` or `[::1]`; it is re-checked on every call.
-- Method, path template, headers and body are fixed per case. Nothing caller-supplied becomes a URL, path, header, method or body, so the endpoint is **not a proxy**.
+- Caller input is limited to three Zod-validated fields — `runId` (`[A-Za-z0-9]{8,32}`), `caseId` (fixed §4 allowlist) and `refId` (lowercase UUID, supplied only for cases that address a record) — and only the validated `refId` fills the single `{id}` parameter of the fixed `/api/v1/users/{id}` route template, never a caller-supplied URL or path. All other method, path template, header and body values are fixed per case; arbitrary caller-supplied URL, path, method, header or body overrides are forbidden, so the endpoint is **not a proxy**.
 - The harness response is its own envelope with `Cache-Control: no-store`. Client calls pass `init: { cache: 'no-store' }`.
 - Antigravity confirms against the installed version that the handler is dynamic and that no fetch result is cached or reused. Deviations are reported.
 
@@ -122,10 +125,10 @@ Rules:
 
 Fields: `runId`, `caseId`, `requestId`, `mode`, `method`, `routeTemplate`, `startedAt` (UTC), `latencyMs`, `nextVersion` (from the installed package), `harnessRevision`.
 
-- **App-client:** `outcome` (`value` / `apiError` / `abort`), `apiError.{status, code, message, details}`, `classification`.
+- **App-client:** `outcome` (`value` / `apiError` / `abort`); when `outcome` is `value`, `value` carries the harness-local Zod-validated native User object (properties per §4 expectations) and `apiError` is `null`; when `outcome` is `apiError`, `value` is `null` and `apiError.{status, code, message, details}` is present; a caller `signal` abort leaves `value` and `apiError` `null` (client timeouts are `apiError` code `TIMEOUT`, not aborts, per client source); `classification` per §5.5. The shared client returns schema-validated body only on success — success HTTP status and response headers are not observable through it — so wire fields stay `null` (`not-observable-via-client`); wire evidence keeps its own request IDs/records; the shared client is unmodified.
 - **Wire:** `upstream.status`, `upstream.headers` (allowlist only: `content-type`, `location`, `etag`, `x-request-id`, `retry-after`), `upstream.body`, `sentHeaders` (as constructed).
 - In app-client mode, wire fields are `null` with reason `not-observable-via-client`.
-- Bodies are capped at 16 KiB, with truncation flagged. Synthetic data only.
+- Retained bodies (`value`, wire `upstream.body`) are capped at 16 KiB with a `truncated` flag set when capped. Truncation is an envelope-retention boundary only — the client parses and schema-validates the complete response body in memory — but a truncated retained value is never evidence of a complete response: rows asserting full-body equality (T2), field-for-field persistence comparison (INT-PERS-01/02 checkpoints) or full validated/persisted state are recorded BLOCKED (assertion not established, never PASS) unless the retained body is untruncated. Synthetic data only.
 
 ### 5.5 Harness-local classification (app-client outcomes)
 
@@ -144,6 +147,8 @@ The product problem-to-UI mapping (`api-contracts.md` §4) is deferred.
 ### 5.6 Not exercised, and feasibility unknowns
 
 **Not called:** `backendRequest`, `getSession`, `requireSession`, `restTaskRepository`. Not exercised: the product session, Server Actions, Server Components and product cache. The harness runs on the development server only, because it refuses `NODE_ENV=production`, so no production build/start behavior is claimed.
+
+**OpenCode source-only clarification, this round:** Source-supplied `src/lib/api/http-client.ts` confirms at static source level: `headers?: HeadersInit` is supported (merged via `new Headers(options.headers)`; the client authoritatively sets `Accept: application/json` always and `Content-Type: application/json` whenever a body is given); `init` accepts `cache: 'no-store'` (typed `Omit<RequestInit, 'method' | 'body' | 'headers' | 'signal'>` and spread first in `fetch`, so it cannot override method/body/headers/signal); error mapping is `404→NOT_FOUND`, `400/422→VALIDATION_ERROR`, otherwise `HTTP_ERROR` (consistent with T8/T10/T11a asserting `HTTP_ERROR` on 409/412/503), transport failure `NETWORK_ERROR` status 0, timeout `TIMEOUT`, 2xx schema failure `INVALID_RESPONSE`. This closes the source-level gap for the pinned file only; it is not a runtime or test result, and INT-ENV-07's Next caching/cross-root/binding/dynamicity items remain NOT_RUN.
 
 **Antigravity confirms before implementation** (deviations are reported, not worked around):
 

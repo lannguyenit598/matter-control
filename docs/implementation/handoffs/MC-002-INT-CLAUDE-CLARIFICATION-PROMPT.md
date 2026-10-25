@@ -1,3 +1,7 @@
+# SUPERSEDED_THIS_ROUND — Not Dispatched
+
+The human reassigned this bounded clarification/review to actual OpenCode and skipped Claude review this round. [Routing override](../../ai-sdlc/step-02-3-review-routing.md), [actual OpenCode result](../../reviews/step-02-3-opencode-clarification-review.md). No Claude return/authentication is needed for these current items. The original pre-override preparation below is retained as historical context, not an active dispatch instruction.
+
 # MC-002-INT-ARCH-CLARIFY — Manual Claude Code Handoff
 
 **PREPARED / WAITING_MANUAL_DISPATCH. Not sent or executed.** Actual Claude Code returned the main architecture proposal and its Next-runtime correction. The supplemental call failed: exit1, is_error=true, “Not logged in”; independent read-only auth status also reports not logged in. Codex did not initiate login or change settings. See testing/step-02-3/claude-final-execution.json and claude-auth-status.json.

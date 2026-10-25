@@ -274,3 +274,7 @@ None of these is a production, account, paid or $0 decision.
 | Codex | Coordination and the local environment |
 
 No agent self-approves. MC-002 is not DONE. A local PASS does not establish Cloudflare viability. Price facts and account eligibility are not runtime proof.
+
+## Current bounded review exception
+
+The human [this-round override](../ai-sdlc/step-02-3-review-routing.md) routes the remaining Step02.3 clarification/review to actual OpenCode and skips Claude review of those current items. Historical Claude authorship and default future architecture responsibilities above remain accurate. [Actual OpenCode review](../reviews/step-02-3-opencode-clarification-review.md) and applied scope/matrix wording close the current documentation findings; no PO decision, runtime result or overall architecture approval is implied.

@@ -52,7 +52,7 @@ C01-NATIVE stays accepted with its recorded limits. C01-PRODUCT remains OPEN/NOT
 
 ## Approval record and exact next action
 
-A supplemental actual Claude call for three bounded wording clarifications returned exit1/is_error=true, “Not logged in”; read-only auth status confirms it. The successful proposal/correction remains the architect input. The [complete manual Claude prompt](../implementation/handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md) is PREPARED, not dispatched; its return and OpenCode check are pre-dispatch prerequisites within ARCH-FINAL. No login or settings change was initiated.
+The human explicitly reassigned the remaining Claude clarification/review portion to OpenCode and skipped Claude review for this round. Actual OpenCode returned PASS_DOCUMENT_ONLY and closed the value/refId wording plus source-option and DB-stop evidence issues; Codex applied its bounded documentation clarifications. The [routing override](step-02-3-review-routing.md) supersedes the old manual Claude handoff for these current items. The historical Claude failure is retained; no Claude return/login is awaited for this current round. PO selection, final contract freeze and later execution/conformance gates remain required.
 
 **No PO selection has been received for INT-D01.** This is a reviewable decision package, not a decision record. The INT-Dnn identifiers are proposals, not DEC approvals. The specific permission to send analysis packets to Claude/OpenCode authorizes analysis only.
 

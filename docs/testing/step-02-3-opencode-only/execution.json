@@ -1,0 +1,56 @@
+{
+  "task": "MC-002-INT-REVIEW-ONLY",
+  "base": "3ebc0f0e8daa6dc7682e02dfa61b8fa6b9ca20fb",
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.3 review only at3ebc0f0",
+    "--file",
+    "/tmp/mc002-step023-review-only-input.txt",
+    "Review only the supplied Step02.3 documents. No tools or edits. Assess PO-package readiness separately from engineering-dispatch readiness and disposition the two prior prerequisites."
+  ],
+  "start_utc": "2026-10-25T01:14:11.708138+00:00",
+  "end_utc": "2026-10-25T01:15:42.510836+00:00",
+  "exit": 0,
+  "elapsed_seconds": 90.80127791700215,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "runtime_tests": "NOT_RUN",
+  "source_design_edits": "NONE",
+  "session_id": "ses_e8f60ace3ffeXXzqqxQuU758tZ",
+  "event_types": [
+    "step_start",
+    "text"
+  ],
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e8f60ace3ffeXXzqqxQuU758tZ"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "input_integrity": "PASS",
+  "report_sha256": "19de5e29bc14de0bcf316486a85058902fd3f6c9aadd610355ab613407b4e404"
+}

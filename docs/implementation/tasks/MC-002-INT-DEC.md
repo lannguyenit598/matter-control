@@ -17,3 +17,5 @@
 - Completion evidence: recorded later in the Step02.3 review/execution artifacts and project-status overlay. Stop at Integration/API/Auth Decision Approval Gate.
 
 Current evidence: actual Claude return/correction and actual OpenCode PASS_DOCUMENT_ONLY in ../../reviews/step-02-3-execution.md; future acceptance matrix entirely NOT_RUN. Documentation readiness is distinct from PO approval and engineering execution. No assigned engineering task is READY for dispatch before its dependencies.
+
+Current human override: [review routing](../../ai-sdlc/step-02-3-review-routing.md) moves the remaining bounded Claude clarification/review to actual OpenCode and skips Claude review this round. Actual [review](../../reviews/step-02-3-opencode-clarification-review.md) PASS_DOCUMENT_ONLY; returned wording applied. PREREQ-01/02 and F1..F4 documentation-CLOSED; no supplemental Claude authentication/return is awaited. Parent remains IN_REVIEW / WAITING_PO_APPROVAL, all51runtime rows NOT_RUN, no implementation or overall DONE.

@@ -17,7 +17,7 @@ H5/W1/local restore/Q3/Q5 approvals are preserved; they do not select the integr
 - Outputs/acceptance: frozen methods/payloads/errors/origins/identity/isolation/evidence limits; unambiguous expected failures; no unapproved product policy, dependencies or retry semantics; independently reviewed contract plus decision record.
 - Checks/completion: document/source-contract review, no test result inferred. Record actual tool/model/session, packet/return hashes and review. New material variance returns to PO.
 
-Current route note: a supplemental Claude call now reports Not logged in; no authentication or settings mutation. The bounded [manual Claude clarification prompt](handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md) is prepared, not dispatched. Its actual return/independent check must precede engineering readiness. Prior successful architect proposal/correction are preserved.
+Current-round routing: the human reassigned the remaining bounded clarification/review to actual OpenCode and skipped Claude review this round. Returned wording is applied; PREREQ-01/02 and F1..F4 are closed at documentation/source-evidence level. The [override](../ai-sdlc/step-02-3-review-routing.md) supersedes the manual Claude prompt for these items. No Claude login/return is awaited for this current round; future material architecture and post-approval contract/conformance gates retain their owners.
 
 ## MC-002-INT-BE — ZCode
 
