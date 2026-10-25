@@ -1,0 +1,14 @@
+T1[0] | mc-int-intamvnmoems3pd-T1-1 | app-client | POST /api/v1/users | value |  wire=null id=01a17422-e796-7465-a325-1c87c74d8393 v=1 | 66ms | 2026-10-25T17:36:46.969Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T2[0] | mc-int-intamvnmoems3pd-T2-2 | app-client | GET /api/v1/users/{id} | value |  wire=null id=01a17422-e796-7465-a325-1c87c74d8393 v=1 | 8ms | 2026-10-25T17:36:47.066Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+W1[0] | mc-int-intamvnmoems3pd-W1-3 | wire | POST /api/v1/users | value |  wire=201 id=01a17422-e7ff-7daf-a9a1-a0994eaed691 v=1 | 4ms | 2026-10-25T17:36:47.102Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+W2[0] | mc-int-intamvnmoems3pd-W2-4 | wire | GET /api/v1/users/{id} | value |  wire=200 id=01a17422-e796-7465-a325-1c87c74d8393 v=1 | 2ms | 2026-10-25T17:36:47.125Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T3[0] | mc-int-intamvnmoems3pd-T3-5 | app-client | GET /api/v1/users/{id} | apiError 404/NOT_FOUND |  wire=null | 3ms | 2026-10-25T17:36:47.148Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T4[0] | mc-int-intamvnmoems3pd-T4-6 | app-client | GET /api/v1/users/{id} | apiError 404/NOT_FOUND |  wire=null | 1ms | 2026-10-25T17:36:47.171Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T4[1] | mc-int-intamvnmoems3pd-T4-7 | app-client | GET /api/v1/users/{id} | apiError 404/NOT_FOUND |  wire=null | 1ms | 2026-10-25T17:36:47.173Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T5[0] | mc-int-intamvnmoems3pd-T5-8 | app-client | POST /api/v1/users | apiError 422/VALIDATION_ERROR |  wire=null | 2ms | 2026-10-25T17:36:47.196Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T5[1] | mc-int-intamvnmoems3pd-T5-9 | app-client | GET /api/v1/users/{id} | value |  wire=null id=01a17422-e796-7465-a325-1c87c74d8393 v=1 | 1ms | 2026-10-25T17:36:47.198Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T8[0] | mc-int-intamvnmoems3pd-T8-10 | app-client | POST /api/v1/users | apiError 409/HTTP_ERROR |  wire=null | 5ms | 2026-10-25T17:36:47.218Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T8[1] | mc-int-intamvnmoems3pd-T8-11 | app-client | GET /api/v1/users/{id} | value |  wire=null id=01a17422-e796-7465-a325-1c87c74d8393 v=1 | 2ms | 2026-10-25T17:36:47.223Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+W3[0] | mc-int-intamvnmoems3pd-W3-12 | wire | GET /api/v1/users/{id} | apiError 404/NOT_FOUND |  wire=404 | 2ms | 2026-10-25T17:36:47.246Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T6-W[0] | mc-int-intamvnmoems3pd-T6-W-13 | wire | POST /api/v1/users | apiError 400/HTTP_ERROR |  wire=400 | 2ms | 2026-10-25T17:36:47.267Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6
+T7-W[0] | mc-int-intamvnmoems3pd-T7-W-14 | wire | POST /api/v1/users | apiError 415/HTTP_ERROR |  wire=415 | 1ms | 2026-10-25T17:36:47.293Z | cap16KiB-ok | next=undefined | rev=48cc03e949d6

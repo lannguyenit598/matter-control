@@ -1,0 +1,586 @@
+{
+  "task": "MC-002-INTA-FE-STAGE1-INTAKE",
+  "actor": "Local Codex",
+  "utc": "2026-10-25T17:45:48.357644+00:00",
+  "base": "68b5586ca09160ff1be6fa42e68f88885767c74d",
+  "status": "OWNER_EXECUTION_RECEIVED_PACKET_CHECKS_PASS_WITH_LIMITATIONS",
+  "checks": [
+    {
+      "name": "42 exports byte-identical to raw owner files",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 00-prestage-readiness.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 01-next-stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 01-next-stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 02-next-stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 02-next-stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 03-launch-meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 04-stage1-stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 04-stage1-stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 05-stage1-envelope-summary.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 06-correlation-go-log.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 07-redaction-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/assertions/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T4.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T5.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T6-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T7-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T8.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/W1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/W2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/W3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/stages/stage1.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T4.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T5.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T6-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T7-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T8.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/W1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/W2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/W3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash summarize-envelopes.cjs",
+      "result": "PASS"
+    },
+    {
+      "name": "41 unique hashes cover all payloads without self-hash",
+      "result": "PASS"
+    },
+    {
+      "name": "11 passed assertion records and exact 11 case identities",
+      "result": "PASS"
+    },
+    {
+      "name": "14 complete unique monotonically numbered envelopes",
+      "result": "PASS"
+    },
+    {
+      "name": "actual pinned Next version and harness revision",
+      "result": "PASS"
+    },
+    {
+      "name": "A baseline/current/T1/T2/rejected-write readbacks agree",
+      "result": "PASS"
+    },
+    {
+      "name": "B distinct W1 201 Location ETag echo",
+      "result": "PASS"
+    },
+    {
+      "name": "T3/T4/T5/T8 negative outcomes",
+      "result": "PASS"
+    },
+    {
+      "name": "wire GET and negative status/headers",
+      "result": "PASS"
+    },
+    {
+      "name": "client success does not invent numeric wire status/header",
+      "result": "PASS"
+    },
+    {
+      "name": "counter fourteen and stage1 marker",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger matches captured owner ledger",
+      "result": "PASS"
+    },
+    {
+      "name": "no later stage marker present",
+      "result": "PASS"
+    },
+    {
+      "name": "14 API log lines map one-to-one with stage1 IDs",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T1-1",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T6-W-13",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-W1-3",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T4-6",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T4-7",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-W2-4",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T8-10",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T8-11",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-W3-12",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T5-8",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T5-9",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T7-W-14",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T2-2",
+      "result": "PASS"
+    },
+    {
+      "name": "correlated method/status mc-int-intamvnmoems3pd-T3-5",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned /tmp/mc002-inta-be",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "binary unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "webpack argv present in accepted R4 evidence",
+      "result": "PASS"
+    },
+    {
+      "name": "high-signal credential-value patterns absent from 43 candidate evidence files",
+      "result": "PASS"
+    },
+    {
+      "name": "observed synthetic names/emails absent from seven application logs",
+      "result": "PASS"
+    },
+    {
+      "name": "11 case IDs exist among 51 canonical rows",
+      "result": "PASS"
+    }
+  ],
+  "checks_passed": 77,
+  "raw_export_pairs": 42,
+  "payload_hashes": 41,
+  "assertion_records": 11,
+  "substep_envelopes": 14,
+  "logical_case_ids": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T6-W",
+    "T7-W",
+    "T8",
+    "W1",
+    "W2",
+    "W3"
+  ],
+  "correlated_api_lines": 14,
+  "report_sha256": "c00d55170d5cc0b78d11d7ead63c8936a7b053e47b4e92658bf6debf848bfa54",
+  "session_return_sha256": "73b93f0d2d57b1605b1f1acf1391de427cf02b2e85628e92a8474f9016b4f3a3",
+  "credential_pattern_scan": {
+    "private_key": 0,
+    "credential_uri": 0,
+    "bearer_value": 0,
+    "known_api_key": 0
+  },
+  "privacy_limit": "Pattern/known-synthetic-marker scan only; not confidentiality or zero-egress attestation; backend.env not read. Descriptive pattern names inside scan report are not leaked credential values.",
+  "process_observation": {
+    "utc": "2026-10-25T17:44:19.196528+00:00",
+    "method": "official exec_command require_escalated; ps pid/ppid/lstart/comm and lsof read-only",
+    "go_pid": 77632,
+    "go_start_local": "Sun Oct 25 16:49:50 2026",
+    "go_listener": "127.0.0.1:18086",
+    "next_root_pid": 88444,
+    "next_listener_pid": 88453,
+    "next_start_local": "Mon Oct 26 00:35:21 2026",
+    "next_listener": "127.0.0.1:18085",
+    "health_probe_rerun": false
+  },
+  "limitations": [
+    "initial sandbox ps denied; official read-only escalation succeeded",
+    "11 assertion records not 14; 14 are substep envelopes",
+    "11 logical case IDs not ten",
+    "stage marker confirms completed stage1; top-level initializer checkpointBId=null is not the active nested state checkpoint",
+    "INT-ENV-07 overall criterion unaccepted; webpack matches earlier argv but Turbopack failure causal explanation remains owner diagnosis",
+    "model/provider/billing/egress are owner-reported, not independently attested"
+  ],
+  "independent_qa": "PENDING",
+  "canonical_runtime_results": "51 NOT_RUN / 0 PASS / 0 FAIL per existing convention; explicit executed sub-evidence recorded",
+  "codex_no_driver_or_http_requests": true,
+  "codex_no_lifecycle_or_data_mutation": true,
+  "inventory": [
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/00-prestage-readiness.txt",
+      "bytes": 3166,
+      "sha256": "e8c146f2a91938a4b8c369c7af22bc41131b6302a56016bf6c200fd6b9511c0f"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/04-stage1-stdout.log",
+      "bytes": 438,
+      "sha256": "cde591e736df29a9fee2df1ed6592c48377638ba947bbbac7c2595009aa99320"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/summarize-envelopes.cjs",
+      "bytes": 1116,
+      "sha256": "e256787a89384e05ca39649ab7afc987db27754f1d29056ca86fd0124654a1ae"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/07-redaction-scan.txt",
+      "bytes": 1860,
+      "sha256": "d96076cc8d697801399369f19b8ea2b18219add3942196c4847d6d2de996b022"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/06-correlation-go-log.txt",
+      "bytes": 4874,
+      "sha256": "e185248b5a7d72a8ba628499c9954649ff3ae920df7e241c09e32e09f7aea694"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/01-next-stdout.log",
+      "bytes": 176,
+      "sha256": "82f9c556acd7ca5b3fc5ecb87f0b1a6205fe68676c29b9edc873e7d0ba2a26cb"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/05-stage1-envelope-summary.txt",
+      "bytes": 2857,
+      "sha256": "abdf12fdcb33c38244e537ee9e157c9b8442aa0dfb213430a78329296bcf9868"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/02-next-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/03-launch-meta.txt",
+      "bytes": 3788,
+      "sha256": "658c8e06a283fd158c76f5d4b4ecec90ea750f2f3cc4eebbe6e93b26d55a5634"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/04-stage1-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/30-hashes.txt",
+      "bytes": 4198,
+      "sha256": "19397e7af679945bfcf3317a68695809c9de72fca8b9109fd1456dd8d84272a0"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/01-next-stderr.log",
+      "bytes": 1743,
+      "sha256": "7feb1594e0c33a47ed6e9e237573f7c4d7384dda04eb15de438f600db57ffa7e"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/02-next-stdout.log",
+      "bytes": 1029,
+      "sha256": "b02d4378cd09bdf45ccf0e97ae4dd8f36a0e9748ca41cc98e216f7e3a1fe69c9"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/counters.json",
+      "bytes": 27,
+      "sha256": "830c1046242f6a1282917df0dc26e119c383aab33622ceffc54ccb9dc2503a3d"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/W1.status",
+      "bytes": 92,
+      "sha256": "c264c0e470ce5b9e5544be8da985255bec447d07fb3412eecf7e44498bca3734"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/W3.status",
+      "bytes": 92,
+      "sha256": "38b4bb9bfd2e7b74f71d6e2c165958fe6ae0f33ca01c01c8cc2793cd23f7f197"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T5.status",
+      "bytes": 92,
+      "sha256": "455ad1459e0d28c4cc3689f01191c580b2c5dcf4f86d7c3335fece6a46bdd0eb"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T1.status",
+      "bytes": 92,
+      "sha256": "34c628e5338632bed18a846745bba82a47b28e54347737abf0332233ee1407af"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T3.status",
+      "bytes": 92,
+      "sha256": "a32ab55b05c99312fd9b60575d7a95d8e603258a4c0220770e53922da7f0ce22"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T6-W.status",
+      "bytes": 94,
+      "sha256": "64b1a6ef7ff129596eb27dbd6ceec29d1569f425dd4b2e9d1e82a089dc09af20"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T7-W.status",
+      "bytes": 94,
+      "sha256": "1553b56f8c3456191db3b1cea677c344a9d081b81dbe5af100eae5de15e032af"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T8.status",
+      "bytes": 92,
+      "sha256": "e367de62c6e8cac7e0b78eeef72a0513f83907d2c92a507ce60ed12ef93b25fe"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T4.status",
+      "bytes": 92,
+      "sha256": "86dfae3a5974317e3383ab5db30f84a20eda956e537aa360bd8502f70fbaef03"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/W2.status",
+      "bytes": 92,
+      "sha256": "84839bcc586f174d4f9ec503a43b4ec517c1acad5b0e5f74721a111a7777e91c"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/substeps/T2.status",
+      "bytes": 92,
+      "sha256": "8f570a3ee3f4e6be2577274c5828d11eedef996d4d3481dbb6f63c4476b26066"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/stages/stage1.completed",
+      "bytes": 64,
+      "sha256": "16c9513311fb4b1f118fe3fcb2848c6e007fe125ba12ae6cb3aad539891a534f"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/checkpoints/state.json",
+      "bytes": 193,
+      "sha256": "d1e8ce72b8d8e6c29e5f67d580d9555ad5285af3eb31ecdf369106cc8a1595da"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/checkpoints/checkpointA.baseline.json",
+      "bytes": 238,
+      "sha256": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/checkpoints/intamvnmoems3pd.json",
+      "bytes": 424,
+      "sha256": "f1512a8ae54e5d0c187342c1e4ccbdfd82748d3911da293dc7847700b7e21a9d"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/checkpoints/checkpointA.current.json",
+      "bytes": 238,
+      "sha256": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/assertions/intamvnmoems3pd.json",
+      "bytes": 1934,
+      "sha256": "a915040687048fa1678b6267fbb973c39ba0337e8b9537fa05319cfb2c722a6c"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T1.json",
+      "bytes": 859,
+      "sha256": "aaf934463218948754e8e556d8aeee618484c672dbeda4bde37e2cc3202b3218"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T6-W.json",
+      "bytes": 945,
+      "sha256": "8b80fb6f572041284a65a637e352ba482c90a15d43650c212a1fbdda6abc0e9d"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/W1.json",
+      "bytes": 1010,
+      "sha256": "23e2d1b5441850fc7c7ecdaa351185b2d825dd8b2535be02aedfa0c7df7b3aad"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T4.json",
+      "bytes": 1796,
+      "sha256": "be2fe5066d083e9b0bcae8a362299f1acae0a3ce90f4244631831e94fbb99e2a"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/W2.json",
+      "bytes": 940,
+      "sha256": "cc972e7c070073876bc01a4e358ceeb1a98778ae1f5140fcc5c98a13ec63455c"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T8.json",
+      "bytes": 1771,
+      "sha256": "d54b4f79cd1650b64cdf8fd075f79d41bd6ce94a3b5ece7c14a5ff76235e643e"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/W3.json",
+      "bytes": 965,
+      "sha256": "6d14bc0364b6a6c7c9c7d5d4fb1c51821c71c59614e4046613fe8684d9b13a26"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T5.json",
+      "bytes": 1884,
+      "sha256": "7e35bf0813f0d63871bfe3aa7483901b401cd8f83fa21b6465fd1ad4461bd59b"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T7-W.json",
+      "bytes": 904,
+      "sha256": "ecd791341928b2807fef37ad55cd10bc206a59a73f87f5189e5dfef1792f2a3b"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T2.json",
+      "bytes": 862,
+      "sha256": "68c8fbd7f0b0bdb409eb28d6016c88f41a4c4b7ad6b9d70fc9b22446890ca898"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/state-copy/envelopes/T3.json",
+      "bytes": 912,
+      "sha256": "7e22996435ccf690565f944b52b73f0af2ee5b65c06cd6664820ba6444e2594d"
+    },
+    {
+      "path": "docs/reviews/inta-frontend-runtime-stage1-return.md",
+      "bytes": 9278,
+      "sha256": "c00d55170d5cc0b78d11d7ead63c8936a7b053e47b4e92658bf6debf848bfa54"
+    }
+  ]
+}

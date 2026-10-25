@@ -1,0 +1,30 @@
+MC-002-INTA-FE stage1 marker/secret scan — runId intamvnmoems3pd
+Generated 2026-10-25T17:39:20Z by actual ZCode. Counts only; no values printed.
+
+Scope A — synthetic fixture markers in APPLICATION logs (expect 0):
+  A1 Go application log: /tmp/mc002-inta-evidence/backend/runtime-intamvnmoems3pd/20-server.stdout.log (backend owner file, read-only)
+  A2 Next application logs: /tmp/mc002-inta-evidence/frontend/runtime-intamvnmoems3pd/01-next-std{out,err}.log, /tmp/mc002-inta-evidence/frontend/runtime-intamvnmoems3pd/02-next-std{out,err}.log (both launch attempts)
+  A3 Driver logs: /tmp/mc002-inta-evidence/frontend/runtime-intamvnmoems3pd/04-stage1-std{out,err}.log
+
+marker [redacted-form-1]: go=0 next=0 driver=0
+marker [redacted-form-2]: go=0 next=0 driver=0
+marker [redacted-form-3]: go=0 next=0 driver=0
+marker [redacted-form-4]: go=0 next=0 driver=0
+marker [redacted-form-5]: go=0 next=0 driver=0
+marker [redacted-form-6]: go=0 next=0 driver=0
+marker [redacted-form-7]: go=0 next=0 driver=0
+
+Scope B — credential/DSN/token value patterns across ALL retained artifacts of this run
+  (evidence dir /tmp/mc002-inta-evidence/frontend/runtime-intamvnmoems3pd recursive incl. state-copy, and live state dir /tmp/mc002-inta-state-intamvnmoems3pd):
+pattern [postgres://]: evidence=0 state=0
+pattern [postgresql://]: evidence=0 state=0
+pattern [127.0.0.1:15457]: evidence=0 state=0
+pattern [DATABASE_URL]: evidence=0 state=0
+pattern [PGPASSWORD]: evidence=0 state=0
+pattern [password=]: evidence=0 state=0
+pattern [Bearer ]: evidence=0 state=0
+
+Scope C — envelope body-cap flags:
+envelopes truncated=true count: 0 (expected 0); truncated=false count in copied envelopes: 14 (expected 14)
+
+Provenance: in-shell grep -cF/-rF, fixed-string literal patterns listed above; no pattern values from private backend.env were available to or read by this owner.

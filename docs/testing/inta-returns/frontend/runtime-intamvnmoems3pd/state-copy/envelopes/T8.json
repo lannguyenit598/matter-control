@@ -1,0 +1,64 @@
+[
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T8",
+    "requestId": "mc-int-intamvnmoems3pd-T8-10",
+    "mode": "app-client",
+    "method": "POST",
+    "routeTemplate": "/api/v1/users",
+    "startedAtUTC": "2026-10-25T17:36:47.218Z",
+    "latencyMs": 5,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": null,
+    "value": null,
+    "apiError": {
+      "status": 409,
+      "code": "HTTP_ERROR",
+      "message": "a user with this email already exists",
+      "details": {
+        "type": "about:blank",
+        "title": "Conflict",
+        "status": 409,
+        "detail": "a user with this email already exists",
+        "instance": "/api/v1/users"
+      }
+    },
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  },
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T8",
+    "requestId": "mc-int-intamvnmoems3pd-T8-11",
+    "mode": "app-client",
+    "method": "GET",
+    "routeTemplate": "/api/v1/users/{id}",
+    "startedAtUTC": "2026-10-25T17:36:47.223Z",
+    "latencyMs": 2,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "value",
+    "classification": "success",
+    "value": {
+      "id": "01a17422-e796-7465-a325-1c87c74d8393",
+      "email": "inta-a-intamvnmoems3pd@example.test",
+      "name": "INTA_A_INITIAL",
+      "version": 1,
+      "created_at": "2026-10-25T17:36:46.998289Z",
+      "updated_at": "2026-10-25T17:36:46.998289Z"
+    },
+    "apiError": null,
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  }
+]
