@@ -5,8 +5,8 @@ Codex,2026-10-25 Asia/Ho_Chi_Minh. Scope DEC-028/INTA-1 unchanged.
 | Workstream | Current received evidence | Next dependency/action |
 |---|---|---|
 | ZCode MC-002-INTA-BE | Actual manual return, clean52b60a4 task worktree and matching clean-source binary; Codex read-only intake complete, preparation IN_REVIEW | WAITING_ENV. Preserve current binary/worktree; do not rerun native/full baselines. Resume migrate/start only after Codex verified new DB/private DSN |
-| Antigravity MC-002-INTA-FE | Actual manual R2 return received at clean79322fcb; integrity verified; actual OpenCode R2 review CHANGES_REQUIRED | REWORK_REQUIRED. R3 READY / NOT_DISPATCHED; R2-F01 lifecycle barriers/F02 pre-dispatch intent/F03 valid ENV consumption block upstream; F04/F05 cleanup and F06 echo also need correction |
-| Codex MC-002-INTA-ENV | Not provisioned; no private DSN handoff yet | Held for frontend R3 correction/review; then verify unused fixed ports/names; create only new owned capped PG and durable task storage; verify actual empty/healthy DB/user before private DSN handoff. Do not invent the driver's runId |
+| Antigravity MC-002-INTA-FE | Actual manual R3 return received at clean cfec8694; integrity verified; actual OpenCode R3 review CHANGES_REQUIRED | REWORK_REQUIRED. R4 READY / NOT_DISPATCHED; R3-F01 corrupt intent/F03 marker-reader integrity/F04 full fake runner proof pre-upstream; F02 blank-provenance refusal before next cleanup |
+| Codex MC-002-INTA-ENV | Not provisioned; no private DSN handoff yet | Held for bounded frontend R4 correction/review; then verify unused fixed ports/names; create only new owned capped PG and durable task storage; verify actual empty/healthy DB/user before private DSN handoff. Do not invent the driver's runId |
 | OpenCode MC-002-INTA-QA | Actual source/evidence review completed CHANGES_REQUIRED; no runtime invocation/verdict | Wait for actual owner execution/ENV/evidence, independently verify36cases. Document-only prior review never substitutes |
 
 ## Phase schedule
@@ -24,3 +24,5 @@ Latest frontend intake: [Codex disposition](../reviews/inta-frontend-intake.md),
 Latest R1 checkpoint: [intake](../reviews/inta-frontend-r1-intake.md), [actual review](../reviews/inta-frontend-r1-opencode-review.md), [R2 prompt](handoffs/MC-002-INTA-FE-R2-PROMPT.md). R1 manual execution received (supersedes R1 not-dispatched); R2 READY / NOT_DISPATCHED. No upstream/PG action before reviewed corrections; driver readiness gates must not amend endpoint contract.
 
 Latest R2: [intake](../reviews/inta-frontend-r2-intake.md), [actual review](../reviews/inta-frontend-r2-opencode-review.md), [R3 full prompt](handoffs/MC-002-INTA-FE-R3-PROMPT.md). R2 actual manual return received; R3 READY / NOT_DISPATCHED. No new PG/private DSN/Go launch; backend binary retained. Driver must stop between lifecycle stages and prevent replay before I/O.
+
+Latest R3: [intake](../reviews/inta-frontend-r3-intake.md), [actual review](../reviews/inta-frontend-r3-opencode-review.md), [R4 full prompt](handoffs/MC-002-INTA-FE-R4-PROMPT.md). R3 actual manual return received; R4 READY / NOT_DISPATCHED. Codex isolated helper counterexample reproduced invalid-intent acceptance with0network; no owner baseline replay/Go/PG. Actual runtime commands stage1..7 ONLY; phase* combining aliases prohibited.

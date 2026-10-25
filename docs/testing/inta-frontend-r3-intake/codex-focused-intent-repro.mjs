@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { HarnessDriver } from '/tmp/mc002-inta-harness/src/driver.ts';
+const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mc002-inta-r3-repro-'));
+const runId = 'repro' + crypto.randomBytes(8).toString('hex');
+let networkCalls = 0;
+globalThis.fetch = async () => { networkCalls++; throw new Error('Network disabled in focused repro'); };
+const driver = new HarnessDriver(runId, stateDir);
+const intent = path.join(driver.substepsDir, 'T1.status');
+fs.writeFileSync(intent, '{}');
+let error = null;
+try { driver.reserveSubstepIntent('T1'); } catch (e) { error = String(e); }
+const after = JSON.parse(fs.readFileSync(intent, 'utf8'));
+assert.equal(networkCalls, 0);
+assert.equal(error, null, 'R3 counterexample changed; inspect source head before interpretation');
+assert.equal(after.state, 'started', 'R3 counterexample changed; inspect source head before interpretation');
+console.log(JSON.stringify({ sourceHead: 'cfec8694799634b05438764aec56858dc26c8764', stateDir, caseId: 'T1', input: {}, expectedFrozenPolicy: 'reject corrupt existing intent before I/O', observed: 'accepted and overwrote existing corrupt intent', error, stateAfter: after.state, networkCalls, result: 'COUNTEREXAMPLE_REPRODUCED_NOT_ACCEPTANCE_PASS' }, null, 2));
