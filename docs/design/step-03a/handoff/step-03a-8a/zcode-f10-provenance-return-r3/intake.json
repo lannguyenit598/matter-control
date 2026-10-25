@@ -1,0 +1,77 @@
+{
+  "task": "MC-003A.8A / F10 Clause3 R3",
+  "owner": "Local Codex intake; ZCode candidate author; actual Claude Code contract authority; PO and independent QA separate",
+  "priority": "P0",
+  "base": "521ad725a450327ac0c32c9da01f4615a7899a37",
+  "utc": "2026-10-25T18:03:22.785392+00:00",
+  "status": "PROPOSAL_COMPLETED_FOR_TARGETED_CONTRACT_REVIEW / NOT_ADOPTED",
+  "author_identity": "ZCode Desktop / GLM-5.3 account:zai-start-plan self-reported; version UNKNOWN",
+  "reported_execution": "TEXT_ONLY_NO_NEW_TOOLS_OR_READS; supplement NOT_READ",
+  "return": {
+    "bytes": 14453,
+    "sha256": "9ae87a9a2ca8679e3e1749ea1247bc079a16a6ea2bd41f349d47796687b35054",
+    "json": "VALID_UNIQUE_KEYS"
+  },
+  "prior_gap_disposition": {
+    "F10-PROVENANCE-DISCOVERY": "ADDRESSED_IN_AUTHOR_PROPOSAL: unfiltered same-Matter seq discovery without evidence/key knowledge; not architect/independent closure",
+    "F10-PROVENANCE-LEGACY-BOUNDS": "RELATION_PROJECTION_ADDRESSED_IN_AUTHOR_PROPOSAL; numeric size/length bounds explicitly NEEDS_AUTHORIZED_SOURCE"
+  },
+  "contract_review_notes": [
+    {
+      "id": "F10-ARCH-MATCH-COMPLETION",
+      "status": "ARCHITECT_ACCEPTANCE_ASSERTION",
+      "question": "Pin causeSeq/observationId matching (returned OR versus exact-command link set), unique event identity/dedup and evidenceLinkedCount grain, N=0, exhaustion before N and surplus/mismatched events. Stop-after-N is complete only if count/link cardinality invariants hold.",
+      "expected": "Prefer exact main causeSeq AND matching observationId unless a citable invariant makes OR equivalent; mismatch is inconsistent/incomplete, never false-zero. This preference is not adopted."
+    },
+    {
+      "id": "F10-ARCH-SNAPSHOT",
+      "status": "ARCHITECT_ACCEPTANCE_ASSERTION",
+      "question": "Returned text says both stop at N and no completeness while cursor remains. Distinguish command-specific historical set completeness from global history cursor exhaustion, and fixed versus changing revision.",
+      "expected": "Completion can be command-local with a remaining global cursor only under explicit invariants/stable-view conditions; newer pages are labeled and not merged into an overview/current-effective proof."
+    },
+    {
+      "id": "F10-ARCH-BOUNDS",
+      "status": "NEEDS_AUTHORIZED_SOURCE_OR_EXPLICIT_DECISION",
+      "question": "Closed scalar projection removes growing evidence arrays but does not establish byte limits. Scalar field length/integer/envelope limits need exact source or a proposed technical decision.",
+      "expected": "No fabricated numeric bounds or business link cap; relation-bounded is distinct from constant-byte. Limit1 interleaved trace should be independent of a contiguous command-block assumption."
+    }
+  ],
+  "no_further_full_zcode_rewrite_assigned": true,
+  "catalogue": "32 unchanged; A zero-filter delta still adds candidate payload/projection semantics; B causeSeq filter and B35/L2 unadopted",
+  "C1_C2": "R2 proposals preserved; pending architect/PO acceptance",
+  "F08": "UNCHANGED",
+  "CT": "22 original IDs/16+4+1+1, runtime NOT_RUN",
+  "QA": "Q1..Q8 original conditions retained",
+  "gates": {
+    "G3": "NOT_VERIFIED",
+    "G4_design_qa": "PENDING",
+    "G5": "G5-A document compatibility stands / G5-B FINDINGS_OPEN",
+    "G6": "REWORK_REQUIRED",
+    "STEP03B": "NOT_AUTHORIZED",
+    "po_architecture_approval_gate": "NOT_PASSED"
+  },
+  "BE01_INTA": "UNCHANGED_INDEPENDENT; no Go/PG/runtime action",
+  "claude_handoff": "READY_NOT_DISPATCHED; no new external payload permission inferred",
+  "checks": {
+    "raw_archive": "PASS",
+    "unique_json": "PASS",
+    "cases5": "PASS",
+    "interleaved_discovery_counterexample": "PASS_LOGICAL_FIXTURE_ONLY; Codex conjunctive matching example, not implementation or author-runtime proof",
+    "protected_hashes": {
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/candidate-read-set.json": "9817f034a76b9c18fada8aeed1e205b7bbdb215d927612089110c3cf2325783b",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/reviewed-clarifications.json": "80620c485fab24bbf61cf09350ae41b7c73ce193f166ae1ef7c6c39077b043fd",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/f11-fixture-reviewed.json": "d6e9d2ef2629e77f8a48a4f9e641b6cad1f0a4f32d3fe3891bb17fdf468b5fa3",
+      "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5",
+      "docs/architecture/api-contracts.md": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "docs/architecture/filing-model.md": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "docs/testing/inta-stage1-intake/canonical-case-checkpoint.json": "8583f45f643f9d250d7f61983cf2844f641685fffdb336dc4bb57fe4d136a9c5"
+    },
+    "secret_pattern_counts": {
+      "private_key": 0,
+      "credential_uri": 0,
+      "api_key": 0
+    },
+    "runtime": "NOT_RUN",
+    "new_provider_calls": 0
+  }
+}
