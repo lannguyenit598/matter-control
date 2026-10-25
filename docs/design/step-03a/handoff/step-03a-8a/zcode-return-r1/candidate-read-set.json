@@ -1,0 +1,57 @@
+{
+  "purpose": "Current scoped reviewed-candidate clarification input index; not a merged OpenAPI/schema or product approval",
+  "authority": "REVIEWED_CANDIDATE_DOCUMENT_ONLY_WITH_OPEN_F08_F10",
+  "extends_frozen_index": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/current-reviewed-read-set.json",
+    "bytes": 4892,
+    "sha256": "da50b8557eaef4fff5655bf67e180c14be2a2d3ffd75da07dd6b8887db633ee7"
+  },
+  "read_order": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json",
+      "bytes": 77882,
+      "sha256": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-delta.json",
+      "bytes": 14094,
+      "sha256": "fdd1f39373bea80665d1d54fff9c17449c34a7eb7eceaa9bf553da033bb251ce"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/reviewed-clarifications.json",
+      "bytes": 19412,
+      "sha256": "80620c485fab24bbf61cf09350ae41b7c73ce193f166ae1ef7c6c39077b043fd"
+    }
+  ],
+  "supporting_report": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-addendum.md",
+    "bytes": 10706,
+    "sha256": "cd7923f2e57bb9434b84222bc5e535a518519a80a575a43eecbc0c537744556f"
+  },
+  "precedence": "Original reference delta only supersedes its named locations. New clarification layer applies only owner-authored/reviewer-accepted finding clauses and exact F-07 locations; R2 replaces the named R1 clauses. Retracted R1 alternatives and F-08/F-10 open subparts are not chosen policies. Unnamed original constraints persist.",
+  "operation_count": 32,
+  "routes_added": [],
+  "open_subparts": [
+    {
+      "id": "F-08.EVIDENCE_GAP",
+      "owner": "actual Claude Code contract authority",
+      "status": "NEEDS_CLARIFICATION",
+      "request": "Recommend one row unit (criterion versus component), stable row key, gap dedup and exact total/count semantics with multi-component positive/negative examples. Record candidate compatibility; do not silently choose on Codex/QA authority."
+    },
+    {
+      "id": "F-10.nested",
+      "owner": "actual Claude Code proposal -> PO architecture/catalogue decision if required",
+      "status": "DECISION_REQUIRED / PROPOSAL_NOT_READY_FOR_PO_APPROVAL",
+      "request": "Provide one recommended concrete option with exact routes (if any), query/envelope/IDs/order/continuation/auth/freshness/consumer impacts and exact change to 32-operation count. Compare alternatives, retain exact versions/receipt/outcome evidence reachability, specify what PO must approve. No arbitrary business cap or silent complete-embedding risk acceptance."
+    }
+  ],
+  "runtime": "NOT_RUN",
+  "gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "REVIEW_RETURN_RECEIVED / FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP_03B": "NOT_AUTHORIZED"
+  }
+}

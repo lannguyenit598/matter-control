@@ -1,0 +1,88 @@
+{
+  "task": "MC-003A.8A / only F-08 and F-10",
+  "baseline": "97356ce",
+  "owner_r2": {
+    "F-08": {
+      "id": "F-08",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "subpart_open": {
+        "EVIDENCE_GAP": "NEEDS_CLARIFICATION (evidenceGaps row unit not pinned)"
+      },
+      "r1_items_changed": [
+        "DEPENDENCY_BLOCKED source blockers -> condition own evaluation",
+        "WAITING source waitingOn -> condition own evaluation; unit = objects",
+        "DISPUTED source evidenceGaps -> condition own evaluation",
+        "contributing sections = milestones, evidenceGaps, decisions"
+      ],
+      "units": {
+        "CRITICAL": "Requirement/Action/Filing with attention CRITICAL",
+        "ATTENTION": "Requirement/Action/Filing with attention ATTENTION",
+        "OVERDUE": "Requirement/Action/Filing with timing OVERDUE",
+        "DUE_SOON": "Requirement/Action/Filing with timing DUE_SOON",
+        "COMPLETED_UNVERIFIED": "execution COMPLETED and verification exactly UNVERIFIED",
+        "DEPENDENCY_BLOCKED": "Requirement/Action with dependency BLOCKED, any execution",
+        "DISPUTED": "Requirement/Action/Filing with verification DISPUTED",
+        "WAITING": "Requirement/Action/Filing with execution WAITING",
+        "MILESTONE_NOT_READY": "milestones with readiness NOT_READY",
+        "MILESTONE_UNASSESSED": "milestones with readiness UNASSESSED",
+        "OPEN_DECISION": "open decisions; equals decisions.total",
+        "EVIDENCE_GAP": "equals evidenceGaps.total; row unit open"
+      }
+    },
+    "F-10": {
+      "id": "F-10",
+      "verdict": "SPLIT",
+      "parts": [
+        {
+          "part": "DR-10 versions / DR-12 cycles outer pages",
+          "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+          "change_from_r1": "none"
+        },
+        {
+          "part": "submissions[], submittedVersionRefs, cycle receipt/outcome evidence refs",
+          "verdict": "DECISION_REQUIRED",
+          "r1_items_struck": [
+            "RC-10 forbids a truncation flag",
+            "complete untruncated arrays are base behaviour"
+          ],
+          "evidence": [
+            "filing_submissions: no UNIQUE (filing_id, cycle_no)",
+            "filing_submission_items: PK (submission_id, document_version_id), no bound",
+            "filing-model 3: supplement cycles unbounded"
+          ],
+          "options": [
+            "O1 new nested read route(s): expands 32, catalogue decision",
+            "O2 data-model/domain bound: architecture decision, possibly PO",
+            "O3 accept complete embedding and response-size risk: architecture/PO decision",
+            "O4 bounded prefix without continuation: rejected, breaks reachability"
+          ],
+          "approval": "PO Architecture Approval Gate on Claude proposal"
+        }
+      ]
+    }
+  },
+  "requests": [
+    {
+      "id": "F-08.EVIDENCE_GAP",
+      "owner": "actual Claude Code contract authority",
+      "status": "NEEDS_CLARIFICATION",
+      "request": "Recommend one row unit (criterion versus component), stable row key, gap dedup and exact total/count semantics with multi-component positive/negative examples. Record candidate compatibility; do not silently choose on Codex/QA authority."
+    },
+    {
+      "id": "F-10.nested",
+      "owner": "actual Claude Code proposal -> PO architecture/catalogue decision if required",
+      "status": "DECISION_REQUIRED / PROPOSAL_NOT_READY_FOR_PO_APPROVAL",
+      "request": "Provide one recommended concrete option with exact routes (if any), query/envelope/IDs/order/continuation/auth/freshness/consumer impacts and exact change to 32-operation count. Compare alternatives, retain exact versions/receipt/outcome evidence reachability, specify what PO must approve. No arbitrary business cap or silent complete-embedding risk acceptance."
+    }
+  ],
+  "scope": "No new source read or full review; use existing authorized 19 snapshots plus this context and reviewer feedback only. F-07 has a mechanical reviewed-candidate alignment and F-11 document fixture is recorded by Codex; do not review those again.",
+  "gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "REVIEW_RETURN_RECEIVED / FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP_03B": "NOT_AUTHORIZED"
+  },
+  "runtime": "NOT_RUN"
+}
