@@ -1,0 +1,117 @@
+{
+  "task": "MC-003A.8A / R2 intake",
+  "agent": "Local Codex PM/BA",
+  "utc": "2026-10-25T14:23:42.404771+00:00",
+  "source_head": "1804d85a4aff99391100f7c703a77d543ae5b70f",
+  "contract_baseline": "97356ce45c2b10070e9303f7c2ab39a425fad7a5",
+  "official_write_route": "exec_command require_escalated intended local documentation/commit",
+  "integrity": "PASS",
+  "checks_count": 23,
+  "checks": [
+    "correct worktree branch/source checkpoint",
+    "R2 JSON valid with unique keys",
+    "five changed IDs and five preserved R1 IDs",
+    "merged 8 recommendation/1 changes-required/1 split count",
+    "two input manifests exact SHA/bytes and 19 snapshots verified",
+    "18 frozen source inputs unchanged",
+    "original R2 archive lossless",
+    "READ-02 amendment withdrawn recorded",
+    "F-07 changes-required/example alignment held",
+    "F-08 evidence-gap unit held",
+    "F-10 nested decision held",
+    "K6 empty-Matter scope counterexample recorded",
+    "all eleven original findings OPEN",
+    "22 CT IDs and 16/4/1/1 preserved",
+    "eight QA dispositions and runtime NOT_RUN preserved",
+    "all gate states preserved",
+    "prospective scoped source origins explicitly listed",
+    "all 25 recheck input hashes/bytes verified",
+    "recheck manifest hash verified",
+    "current unverified identity/auth/routing/cost limits explicit",
+    "no retroactive authorization certified",
+    "no new reviewer/provider invocation",
+    "secret pattern scan no matches"
+  ],
+  "technical_status": "CANDIDATE / FINDINGS_OPEN / NOT_INDEPENDENT_QA",
+  "runtime": "NOT_RUN",
+  "zcode": "READY_NOT_DISPATCHED",
+  "summary": {
+    "source_head": "1804d85a4aff99391100f7c703a77d543ae5b70f",
+    "original_return_bytes": 44114,
+    "original_return_sha256": "4a46667e332dccbdb2cd0818937b2af836a54c648e3cd37c855086001b22b0a6",
+    "r2_delta_unique_keys": true,
+    "merged_counts": {
+      "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY": 8,
+      "CHANGES_REQUIRED": 1,
+      "SPLIT": 1
+    },
+    "new_files_before_checks": 8,
+    "recheck_input_count": 25,
+    "recheck_input_bytes": 288697,
+    "recheck_manifest_bytes": 22474,
+    "recheck_manifest_sha256": "a93d5684767e19113be85fe15e95fd99f7f867e7ed2514a5ecc2f9047b8d7b9b",
+    "zcode_status": "READY_NOT_DISPATCHED",
+    "runtime": "NOT_RUN"
+  },
+  "changed_paths": [
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/review-original.txt.gz",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/returned-delta.json",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/intake.json",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/intake.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/owner-addenda.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/f11-timing-sources.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/manifest.json",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/PROMPT.md",
+    "docs/implementation/tasks/MC-003A-8A.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/document-checks.json"
+  ],
+  "new_files": 9,
+  "modified_files": 1,
+  "artifacts": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/review-original.txt.gz",
+      "bytes": 8613,
+      "sha256": "174b178220a3a5718e700a5285bcbb5b344e7caba4d9b23d6abd98e2a6f9c7fe"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/returned-delta.json",
+      "bytes": 6368,
+      "sha256": "5692e4dd2b27ed44360c4c95d4fad3a9509cc6181a35d2e4096143d79309c174"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/intake.json",
+      "bytes": 35749,
+      "sha256": "a96fa5ef7f9cb218c030c16b3465618e8d8741dcc2458da9a5eb75038aae99bf"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/intake.md",
+      "bytes": 4013,
+      "sha256": "0561a4dfaa6987e06ac7cd4e39b1a2981ccaa75c32309c91ef85c196a41f790f"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/owner-addenda.md",
+      "bytes": 40940,
+      "sha256": "d0be3daaf2295ebc0478915c48d0265611ca460496c94039a427c52e30b4685b"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/f11-timing-sources.md",
+      "bytes": 13171,
+      "sha256": "973729a07f7f29a30c8c07a464a5caab1bfc4c3a1393fd505cf98625688730d3"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/manifest.json",
+      "bytes": 22474,
+      "sha256": "a93d5684767e19113be85fe15e95fd99f7f867e7ed2514a5ecc2f9047b8d7b9b"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/zcode-recheck/PROMPT.md",
+      "bytes": 7503,
+      "sha256": "8f4462244042512061c55f1846c76244a722bbf3957b461bfdbd27efeeecb229"
+    }
+  ],
+  "preexisting_untracked_inventory": "?? docs/ai-sdlc/step-03a-request.md\n?? docs/design/step-03a/commissioned-brief.md\n?? docs/design/step-03a/execution.json\n?? docs/design/step-03a/export-manifest.json\n?? docs/design/step-03a/intake-checklist.md\n?? docs/design/step-03a/intake-report.md\n?? docs/design/step-03a/local-checks.json\n?? docs/design/step-03a/owner-correction-prompt.md\n?? docs/design/step-03a/qa-input-manifest.json\n?? docs/design/step-03a/qa/authorization.md\n?? docs/design/step-03a/qa/authorized-manifest.json\n?? docs/design/step-03a/qa/execution.json\n?? docs/design/step-03a/qa/opencode-events.jsonl\n?? docs/design/step-03a/qa/opencode-stderr.txt\n?? docs/design/step-03a/qa/opendesign-remediation-prompt.md\n?? docs/design/step-03a/qa/preflight.json\n?? docs/design/step-03a/qa/result.json\n?? docs/design/step-03a/qa/review-attempt-report.md\n?? docs/design/step-03a/qa/session-after-attempt.json\n?? docs/design/step-03a/qa/session-created.json\n?? docs/design/step-03a/remediation/coverage-matrix.md\n?? docs/design/step-03a/remediation/delivery.md\n?? docs/design/step-03a/remediation/findings.json\n?? docs/design/step-03a/remediation/opendesign-input-manifest.json\n?? docs/design/step-03a/remediation/original-integrity.json\n?? docs/design/step-03a/remediation/preparation-checks.json\n?? docs/design/step-03a/remediation/qa-recovery-plan.md\n?? docs/design/step-03a/remediation/request.md\n?? docs/design/step-03a/remediation/shared-governance-proposal.md\n?? docs/design/step-03a/terminal-result.json\n?? docs/design/step-03a/tooling-review/\n?? docs/implementation/tasks/MC-003A-R1.md\n?? docs/implementation/tasks/MC-003A-TOOLS.md\n?? docs/implementation/tasks/MC-003A.md",
+  "task_before_sha256": "fa45995b4bb902ba4860cc633c393707cc8e33494b56fe4b138cd12c0a1c42b9",
+  "task_after_sha256": "3f7f9c6d908725515afcb625f2fa8353b68ac5df69d523af56cd88f50b33cb7a",
+  "command_evidence": "Inline Python read-only validation/local document preparation in original Codex tool call; no product test runner. rtk proxy git add -- exact changed_paths; rtk proxy git diff --cached --check; rtk proxy git commit -m docs(MC-003A): intake R2 and prepare correction-only ZCode handoff",
+  "git_whitespace_check": "Initial extra EOF blank line in generated prompt; removed before successful final check/commit. Source artifacts untouched."
+}
