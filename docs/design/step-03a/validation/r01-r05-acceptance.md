@@ -1,0 +1,20 @@
+# MC-003A R01–R05 / UI-T01–04 acceptance — STEP03A.2
+
+Author/coordinator assessment; no formal finding closure. Original reports/locations remain preserved in ../critique and ../remediation/consolidated-findings.json. Current source references are revised/local-r1 HTML/spec/handoff at495a6e2, with line references in rendered-review-report.md. All prior PASS claims below are qualified source/VM evidence read from committed reports, not reruns or native interaction results.
+
+| Finding | Original evidence | Revised behavior/evidence | Requirement | Result | Remaining risk | Needed validation |
+|---|---|---|---|---|---|---|
+| R01 | Original bulkWorkstream/control/applyBulk; A-01/A-06 | bulkDialog/bulkPatch/commitMetadata/applyBulk/renderBulkPreview; Specs§4.6 | RULE-013/017/018/019 | PASS for prior source/VM scope; rendered NOT_TESTED; overall PARTIAL | Approved fields/defaults and persistent mixed result source; no actual role enforcement/native result observation | MV-04/05/10; independent source review |
+| R02 | Original HTMLarchitecture§14/Handoff§8; UX-R02/A-05 | Approved role/designated verifier/per-record atomic/import/draft-export contract restored; mechanisms deferred | RULE-005/006/013–019; DEC-016/017 | PASS author document comparison; implementation NOT_TESTED; overall PARTIAL | No policy reopening found in inspected corrective contract; independent acceptance and enforcement absent | QA source review; MV-06/08 |
+| R03 | OriginalD-01/D-02 collision and wrong suppliedEV mappings; UX-R03 | UX-DEC vs DEC-AT,5evidence/24records restored in interactive data; historical self-review disclosed | Atlas§4/7/8/9; RULE-002/006/012/020 | PARTIAL; board consistency FAIL (RV-S01) | MiniatureBoardC still disagrees with canonical values; grid-note stale inRV-S02. ID corrections do not establish all-screen dataset consistency | Bounded source rework then compareall representations; MV-02/06/08 |
+| R04 | Original ambiguous COMPLETED+VERIFIED orNOT_REQUIRED copy; UX-R04 | edgeSatisfied / milestoneReadiness and separate RULE-003/008 copy; no current-valid proof from historical self-review | RULE-002/003/005/008 | PASS prior source/predicate scope; rendered NOT_TESTED; overall PARTIAL | No old runtime bypass demonstrated; explaining actual edgevs milestone to users remains unobserved | MV-01/06/07 plus independent policy review |
+| R05 | Originalfirst8mobile cut and incomplete connected flow/coverage; UX-R05/UI-T04/A-11 | All filtered mobile rows generated;3canonical slice maps;9partial/4spec-only scope | GW-01/02/03; RULE-012/021; responsive UX | PARTIAL; actual mobileNOT_TESTED / NEEDS_CLARIFICATION | No browser reachability proof; RV-S02 validation/inline scopecopy inconsistent; actual filing lifecycle not executable | MV-01/03/08/09/10/11; scope-aware independent QA |
+
+| UI finding | Result | Evidence / limit |
+|---|---|---|
+| UI-T01 | NOT_TESTED rendered; PARTIAL source | Draft grid type/scale specimen exists; actual readability, diacritics, wrapping and zoom unmeasured. |
+| UI-T02 | NOT_TESTED | CSS target overrides exist; target bounds/spacing/cascade and touch task performance not observed. |
+| UI-T03 | PARTIAL | Namespaces/undefined token corrected and five-role mapping specified; remaining literals and rendered contrast unaccepted. |
+| UI-T04 | PARTIAL; source claim inconsistency FAIL | Clear main scope disclosure coexists with obsolete missing-data/inline wording and unsupported native-test statement (RV-S02). |
+
+Rework owner: design owner for RV-S01/02 local artifact correction, coordinated by Codex; PO does not need to reapprove canonical fields or evidence semantics. Reviewer remains formal independent QA, not author or earlier two internal critics. Acceptance requires source consistency and scoped real rendered/interaction evidence; no blanket replacement of PARTIAL with PASS. All important consolidated HIGH findings remain pending independent acceptance and relevant rendered tests; no Critical finding is newly established by this source-only pass.
