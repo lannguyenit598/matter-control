@@ -273,3 +273,10 @@ Six exact review snapshots49688bytes plus manifest/manualprompt are prepared, NO
 ## Stage2 received and same-PG restart executed — 2026-10-26
 
 [Repository-relative: docs/reviews/inta-frontend-runtime-stage2-intake.md] Local Codex verifies9owner export pairs/8hashes, full A baseline equality/version1, one INT-PERS-01 request correlated in newGo log;32state files counter15/12assertions/STAGE_2_COMPLETED. Report UTC/latency errata retained, no raw rewrite. Codex then ACTUALLY stop/start exactPG04552c…bd01 once at18:13:34–18:13:37Z, exit0, same volume/image/container/labels/caps/ports and healthy; Go98134/Next88444+88453/start times and32ledger hashes unchanged. No SQL/recordHTTP or Go/Next lifecycle. Status SAME_PG_RESTART_EXECUTED / WAITING_STAGE3_READBACK. Stage3 MC-002-INTA-FE-STAGE3-PROMPT.md is CUE_RELEASED / READY_NOT_DISPATCHED; human delivers to ZCode, one readback then WAITING_CODEX_STAGE4_CUE. Supersedes older stage2-pending/PG-next-action labels only; no restart replay/stage4 or further lifecycle.51formal results/independent QA/product/design gates unchanged, explicit executed subevidence in new checkpoint.
+
+
+## F10 independent-review routing corrected — 2026-10-26
+
+Actual ZCode return declares authorship conflict and refuses independentreview, without reading/verifyingpacket or issuingverdict. [Routing intake](../design/step-03a/handoff/step-03a-8a/f10-review-routing-r1/intake.md) preserves rawresponse; author acknowledgement of knownanomalylimits is not independentacceptance. LocalCodex verifies existing6snapshots/49688bytes/manifest unchanged.
+
+Explicit OpenCode-only manualprompt prepared; human sends toactualOpenCode/currentconfiguredmodel/provider/permittedquota with exactread/textreturn scope. NOT_DISPATCHED toeligible reviewer; no newprovider/model/login/payment action. ZCodeownerconfirmation remainscandidate, F10notclosed, catalogue32/CT/QA/POarchitecture/designgates/runtimeunchanged. BE01andINTAindependent/untouched.
