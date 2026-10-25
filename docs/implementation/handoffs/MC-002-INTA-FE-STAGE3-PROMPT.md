@@ -1,5 +1,7 @@
 # INT-A frontend stage3 — released Codex cue for ZCode
 
+EXECUTED — stage3 actual return intaken2026-10-26. Do not replay this cue. Follow MC-002-INTA-FE-STAGE4-PROMPT.md only after immediate preflight. Historical stage3 instructions below retained.
+
 CUE_RELEASED / READY_NOT_DISPATCHED,2026-10-26. Human delivery assigns actual ZCode frontend/Next/driver stage3 ONLY under existing DEC-028/INTA-1. Codex has intaken stage2 and actually stopped/started the SAME owned PostgreSQL successfully. Do not repeat Go/PG restart or stage1/2. This is owner execution, not independent QA; no new provider/model/auth/settings/cost or source scope.
 
 Governance /Users/nguyenvanlan/Documents/code/pet-projects/matter-control on codex/unified-project-flow. Read AGENTS/RTK, current workflow/INT-A coordination/task, frozen INTA-1, docs/reviews/inta-frontend-runtime-stage2-intake.md, original stage2 return, docs/testing/inta-stage2-intake/checks.json and exported PG preflight/lifecycle under docs/testing/inta-returns/environment/pg-restart-intamvnmoems3pd-01/. Use latest HEAD; prior preparation snapshots are historical. Report actual tool/model/provider and scope; preserve other's work. Honor actual hook instructions and official permissions; do not evade denials.
