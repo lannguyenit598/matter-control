@@ -1,0 +1,36 @@
+{
+  "task": "MC-002-INTA-FE-R4-ZCODE-INTAKE",
+  "report_sha256": "8d4dd0ec94087586fee3421d929617db7fbba0035e39127290879b8a2cceb759",
+  "metadata_sha256": "ed18d4e65fcc3c481efb15ab2196aec3ab7724ce20fa055981444a58cfc943d3",
+  "verdict": "PASS_WITH_LIMITATIONS (SOURCE/EVIDENCE ONLY)",
+  "packet_and_4_source_hashes_match": true,
+  "reviewer_identity": "actual manual ZCode / account:zai-start-plan/GLM-5.3 / Z.AI, owner-reported",
+  "sources": [
+    {
+      "label": "harness",
+      "head": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+      "status": ""
+    },
+    {
+      "label": "template",
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "status": ""
+    },
+    {
+      "label": "backend",
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "status": ""
+    }
+  ],
+  "backend_binary": {
+    "bytes": 42202722,
+    "sha256": "f3bcdc2f7ce893cdfa248274777f1d3401f538d3ff290d93abf3bd7f370a54c1"
+  },
+  "r4_author": "Antigravity (MC-002-INTA-FE) <antigravity@mattercontrol.local>",
+  "r4_changed_paths": [
+    "scripts/live-guards.ts",
+    "scripts/stop-harness.sh",
+    "src/driver.ts",
+    "tests/driver.test.ts"
+  ]
+}

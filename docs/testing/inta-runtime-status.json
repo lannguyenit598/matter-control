@@ -1,6 +1,6 @@
 {
   "task": "MC-002-INT-A",
-  "timestamp_utc": "2026-10-25T09:20:11.515991+00:00",
+  "timestamp_utc": "2026-10-25T09:37:14.677895+00:00",
   "scope_decision": "INT-D01=INT-A",
   "approval": "DEC-028",
   "approved_subject": "e7dbfbfb63062c4df576836c744701832356edd7",
@@ -18,7 +18,7 @@
     "PASS": 0,
     "FAIL": 0
   },
-  "owner_execution": "FRONTEND_R4_RETURNED_IN_REVIEW / INDEPENDENT_REVIEW_BLOCKED_PROVIDER_QUOTA / BACKEND_PREPARATION_IN_REVIEW / ENV_HELD",
+  "owner_execution": "FRONTEND_R4_SOURCE_REVIEW_PASS_WITH_LIMITATIONS / ENV_ACTUALLY_VERIFIED_READY / BE_MIGRATE_START_READY_NOT_DISPATCHED / FE_RUNTIME_WAITING_BE_READY",
   "rows": [
     {
       "id": "INT-ENV-01",
@@ -26,7 +26,13 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded.",
+      "sub_evidence": {
+        "execution_status": "ACTUAL_CODEX_FIXTURE_VERIFICATION_EXECUTED",
+        "path": "docs/testing/inta-returns/environment/env-intamvnmoems3pd/environment.json",
+        "full_profile_independent_acceptance": "PENDING",
+        "result_label_scope": "NOT_RUN remains the unawarded full canonical acceptance result, not a claim that fixture provisioning was not performed"
+      }
     },
     {
       "id": "INT-ENV-02",
@@ -34,7 +40,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ENV-03",
@@ -42,7 +48,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ENV-04",
@@ -50,7 +56,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ENV-05",
@@ -58,7 +64,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ENV-06",
@@ -66,7 +72,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ENV-07",
@@ -74,7 +80,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T1",
@@ -82,7 +88,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T2",
@@ -90,7 +96,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T3",
@@ -98,7 +104,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T4",
@@ -106,7 +112,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T5",
@@ -114,7 +120,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T8",
@@ -122,7 +128,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T9",
@@ -130,7 +136,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T10",
@@ -138,7 +144,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T11a",
@@ -146,7 +152,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T11b",
@@ -154,7 +160,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T11c",
@@ -162,7 +168,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T12",
@@ -170,7 +176,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "W1",
@@ -178,7 +184,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "W2",
@@ -186,7 +192,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "W3",
@@ -194,7 +200,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T6-W",
@@ -202,7 +208,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "T7-W",
@@ -210,7 +216,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "W9",
@@ -218,7 +224,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "W11",
@@ -226,7 +232,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-PERS-01",
@@ -234,7 +240,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-PERS-02",
@@ -242,7 +248,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-PERS-03",
@@ -250,7 +256,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-PERS-04",
@@ -258,7 +264,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-COR-01",
@@ -266,7 +272,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-PRIV-01",
@@ -274,7 +280,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ISO-01",
@@ -282,7 +288,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ISO-02",
@@ -290,7 +296,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-ISO-03",
@@ -298,7 +304,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "INT-CONF-01",
@@ -306,7 +312,7 @@
       "result": "NOT_RUN",
       "execution_evidence": null,
       "independent_review": null,
-      "reason": "Frontend R4 returned; independent review attempt failed provider quota429 with no verdict. Actual source acceptance/runtime QA pending; ENV held."
+      "reason": "Source-only ZCode review accepted; Codex fixture verified. Actual owner runtime/profile assertions and independent OpenCode acceptance pending; no canonical PASS awarded."
     },
     {
       "id": "D-01",
@@ -432,33 +438,36 @@
   "backend_preparation_intake": "docs/reviews/inta-backend-intake.md",
   "coordination": "docs/implementation/inta-coordination.md",
   "frontend_source_review": {
-    "verdict": "PENDING_PROVIDER_QUOTA_NO_VERDICT",
+    "verdict": "PASS_WITH_LIMITATIONS_SOURCE_EVIDENCE_ONLY",
     "source_head": "48cc03e949d66fc47a7d304413621eb79804e6c1",
-    "session": "ses_e8db2b912ffeb1p9kYKffD3XRy",
-    "attempt_exit": 1,
-    "error": "provider.free-limit HTTP429",
-    "scope": "SOURCE_REVIEW_ATTEMPT_FAILED_BEFORE_VERDICT",
-    "report": "docs/reviews/inta-frontend-r4-review-blocker.md",
-    "intake": "docs/reviews/inta-frontend-r4-intake.md",
-    "manual_prompt": "docs/implementation/handoffs/MC-002-INTA-FE-R4-QA-PROMPT.md",
-    "dispatch": "R4_MANUAL_RETURN_RECEIVED / QA_ATTEMPT_FAILED / MANUAL_QA_READY_NOT_DISPATCHED",
-    "codex_focused_recheck": "docs/testing/inta-frontend-r4-intake/codex-focused-intent-recheck.stdout.json",
-    "alternate_attempt": {
-      "requested_model": "opencode/big-pickle",
-      "session": "ses_e8dab66d3ffeZNJjY1xaZY1cnt",
-      "exit": 1,
-      "error": "provider.free-limit HTTP429",
-      "verdict": null,
-      "execution": "docs/testing/inta-frontend-r4-intake/alternate-big-pickle/opencode-execution.json"
+    "reviewer": "Actual manual ZCode under explicit human source-review routing override",
+    "model": "account:zai-start-plan/GLM-5.3",
+    "provider": "Z.AI",
+    "identity_provenance": "reviewer-reported metadata",
+    "report": "docs/reviews/inta-frontend-r4-zcode-review.md",
+    "closure": "docs/reviews/inta-frontend-r4-source-closure.md",
+    "checks": "docs/testing/inta-frontend-r4-intake/zcode-return/checks.json",
+    "independence": "Antigravity frontend authorship; ZCode previous backend work separate; no reviewed-source contribution per reviewer",
+    "historical_opencode_attempts": {
+      "original": "docs/testing/inta-frontend-r4-intake/opencode-execution.json",
+      "alternate": "docs/testing/inta-frontend-r4-intake/alternate-big-pickle/opencode-execution.json",
+      "no_verdict": true
     },
-    "next_dependency": "Human delivers ZCode source-review prompt and returns actual report for Codex intake; independent runtime QA remains OpenCode",
-    "manual_routing_override": {
-      "authority": "Human request: vi\u1ebft l\u1ea1i prompt \u0111\u1ec3 zcode review",
-      "reviewer": "actual ZCode, frontend source/evidence only",
-      "status": "READY_NOT_DISPATCHED",
-      "prompt": "docs/implementation/handoffs/MC-002-INTA-FE-R4-ZCODE-REVIEW-PROMPT.md",
-      "routing_record": "docs/reviews/inta-frontend-r4-review-routing.md",
-      "runtime_qa_owner_unchanged": "actual OpenCode"
-    }
+    "runtime_qa_owner_unchanged": "actual OpenCode"
+  },
+  "environment_execution": {
+    "status": "VERIFIED_READY_PENDING_INDEPENDENT_ACCEPTANCE",
+    "runId": "intamvnmoems3pd",
+    "container_id": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+    "evidence": "docs/testing/inta-returns/environment/env-intamvnmoems3pd/environment.json",
+    "private_handoff_values_exported": false,
+    "container_state": "running healthy retained for manual owner continuation",
+    "migration_go_next_not_executed": true
+  },
+  "runtime_manual_handoffs": {
+    "backend_prompt": "docs/implementation/handoffs/MC-002-INTA-BE-RUNTIME-START-PROMPT.md",
+    "backend_status": "READY_NOT_DISPATCHED",
+    "frontend_prompt": "docs/implementation/handoffs/MC-002-INTA-FE-RUNTIME-PROMPT.md",
+    "frontend_status": "READY_NOT_DISPATCHED_WAITING_BE_READY"
   }
 }

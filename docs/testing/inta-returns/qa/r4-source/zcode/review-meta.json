@@ -1,0 +1,47 @@
+{
+  "task": "MC-002-INTA-FE-R4-ZCODE-REVIEW",
+  "reviewer": "ZCode (actual interactive agent session)",
+  "model": "account:zai-start-plan/GLM-5.3",
+  "provider": "Z.AI",
+  "review_utc": "2026-10-25T09:27:28Z",
+  "report": "docs/reviews/inta-frontend-r4-zcode-review.md",
+  "verdict": "PASS_WITH_LIMITATIONS (SOURCE/EVIDENCE ONLY)",
+  "scope": "read-only source/evidence review; no harness/test/build/script/HTTP/Go/Docker/PG execution",
+  "inputs": {
+    "packet_ready": "/tmp/mc002-inta-fe-r4-zcode-review-input.txt",
+    "packet_durable": "docs/testing/inta-frontend-r4-intake/zcode-handoff/zcode-input.txt.gz",
+    "manifest": "docs/testing/inta-frontend-r4-intake/zcode-handoff/manifest.json",
+    "harness": "/tmp/mc002-inta-harness",
+    "branch": "codex/mc-002-inta-harness-r4",
+    "base": "cfec8694799634b05438764aec56858dc26c8764",
+    "head": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "head_author": "Antigravity (MC-002-INTA-FE) <antigravity@mattercontrol.local>"
+  },
+  "independence": "ZCode authored backend work only; zero contributions to reviewed frontend R4 source; no self-approval conflict; not an OpenCode substitute for the 36 runtime QA cases",
+  "hash_recomputed_this_session": {
+    "packet_ready_sha256": "3af9133a2729a91f03405ebbae56dca4bb0b2d3da8e384c976233e7da07db6ae",
+    "packet_durable_gunzip_sha256": "3af9133a2729a91f03405ebbae56dca4bb0b2d3da8e384c976233e7da07db6ae",
+    "src/driver.ts": "4ca96d195a196c9d959360b2eeaea9e957c44a1bf870d6837fb58f25892fba1c",
+    "tests/driver.test.ts": "e4afbddea103d85fbb4b72af3b8636764a5ed0d0bf78536e34499299c63e327d",
+    "scripts/live-guards.ts": "f65ebb1e8466233eec5a2d17d9cd8634d968eaaafb9395256fdaf01d5b04fe6f",
+    "scripts/stop-harness.sh": "c1687f67043a3be9b60255bfa8bb44edd8b7f16ebb8cbc3e455553d305f63d9e",
+    "all_match_manifest": true
+  },
+  "dispositions": {
+    "R3-F01": "CLOSED_SOURCE_ONLY",
+    "R3-F02": "CLOSED_SOURCE_ONLY",
+    "R3-F03": "CLOSED_SOURCE_ONLY",
+    "R3-F04": "CLOSED_SOURCE_ONLY",
+    "R3-F05": "CLOSED_SOURCE_ONLY",
+    "R3-F06": "CLOSED_SOURCE_ONLY",
+    "R3-F07": "CLOSED (riders dispositioned)"
+  },
+  "findings": [
+    "ZC-R4-F01 P3 documentary errata: return claims multi-space collapsing; script strips CR + trims only",
+    "ZC-R4-F02 P3 documentary errata: return mentions all/resume commands; none exist in main()",
+    "ZC-R4-F03 P4 residual rider: unknown-command path mkdirs empty state dirs (pre-existing R3-F07(c))"
+  ],
+  "not_run": ["harness", "pnpm test", "builds", "guard/stop scripts", "HTTP", "Go", "Docker", "PostgreSQL"],
+  "matrix_rows": "51 canonical rows NOT_RUN (36 required / 14 deferred / 1 blocked); no PASS awarded",
+  "recommendation": "Source-review dependency cleared for Codex to prepare approved local ENV per INT-A; Codex records disposition; runtime QA and PO gates unchanged"
+}
