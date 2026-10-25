@@ -1,0 +1,11 @@
+# MC-003A-ARCH-COMPAT — bounded architecture compatibility review
+
+Owner: actual Claude Code, Solution Architecture Authority. Codex orchestration/evidence intake. Priority P0. Status WAITING_MANUAL_DISPATCH (not EXECUTED). Base dbcc4a96189dc185a5113a9ad8af3296494dd2b3, isolated task/MC-003A-remediation. Requirements FR-001..020 / REQ-MC-P0-01..20, permissions/state rules, D-UX01..04 and GW-01..03.
+
+Scope: document/source compatibility of accepted local-r3 and qualified Antigravity return versus actual approved policy, candidate product contracts and current DEC-028/INTA-1transport scope. No implementation, gate waiver, shared Step02 edits or repeat closed clarification. Dependency: normal authorized authenticated Claude context and current-payload destination permission; direct auth-status exit1/none recorded. Runtime/verified security/independentUIQA are not provided by this task.
+
+Inputs: ../../design/step-03a/handoff/step-03a-6/review-input-manifest.json (41hash-pinned entries;7primaryGitblob snapshots), request.md, current dispatch-status.md. The complete prompt is ../../design/step-03a/handoff/MC-003A-CLAUDE-ARCHITECTURE-REVIEW-PROMPT.md. Output paths are declared there; Codex has not authored Claude's deliverables.
+
+Acceptance: actual owner identity/method/revision; all20FR/material features with11required matrix columns and six architecture statuses; API/Auth dependency matrix and explicit412/200classification; six review boundaries/all3GW; authority/source/exact evidence/risk/owner/minimal fix for conflicts; ADR only if material; scoped document/source/runtime/security verdict and Antigravity constraints. Unknown evaluated by impact, not automatically blocking. Codex intakes the return; formal independent QA remains separate.
+
+Checks: baseline/hash/source snapshot integrity, input-matrix completeness/null verdicts, current-scope authority and prompt/output references. No historical162suite/template-runtime rerun or review dispatched. Completion evidence: handoff/step-03a-6/preflight.json; actual Claude completion evidence NOT_AVAILABLE. Reviewer for returned technical findings: Codex intake + existing mandatory independent QA; PO retains material policy/architecture approvals. Overall MC-003A REWORK_REQUIRED,03BNOT_AUTHORIZED.
