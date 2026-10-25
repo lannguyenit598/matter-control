@@ -8,7 +8,7 @@
   "ledger_results": "51 NOT_RUN",
   "md_links": "PASS",
   "json_parse": "PASS",
-  "diff_check": "PASS",
+  "diff_check": "PASS for non-raw files; one expected trailing-tab warning in verbatim Go build-info stdout",
   "changed_tracked": [
     "docs/ai-sdlc/project-status.md",
     "docs/ai-sdlc/risk-register.md",
@@ -26,5 +26,15 @@
   "binary_run_build_db_container_actions_by_codex": "NONE",
   "opencode_runtime": "PENDING",
   "frontend_return_exists_at_final_check": false,
-  "other_work": "MC-003A/.mimosa/frontend in-progress files preserved and excluded"
+  "other_work": "MC-003A/.mimosa/frontend in-progress files preserved and excluded",
+  "raw_whitespace_qualification": {
+    "path": "docs/testing/inta-backend-intake/binary-build-info.txt",
+    "line": 3,
+    "warning_count": 1,
+    "reason": "go version -m emits a trailing tab on its module line; raw evidence intentionally preserved byte-for-byte",
+    "raw_check_exit": 2,
+    "non_raw_check_exit": 0,
+    "commit_intake": "875e5d9",
+    "staging_script_note": "Initial stage check returned2 for this raw tab; local commit was created by subsequent tool call. Qualification recorded explicitly; no runtime/product check failed."
+  }
 }

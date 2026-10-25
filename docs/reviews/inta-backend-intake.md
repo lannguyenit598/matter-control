@@ -31,3 +31,6 @@ All51results remain NOT_RUN:36required local cases,14product-deferred and1produc
 DEC-028/INT-A approval remains in force; no new scope approval is needed. C01-NATIVE/R01/R02 closed scopes and59protected artifacts remain unchanged. C01-PRODUCT, MC-002, overall architecture, product security, Cloudflare/cost/full recovery remain OPEN. No fallback, paid activation, deploy/merge, MC-003A or existing DB/volume action.
 
 Skipped: rebuilding/running the binary, DB/container provisioning or migration, frontend execution and test replay. Risk: current checks do not prove runtime compatibility; ENV plus frontend coordination and independent QA are still required.
+
+
+Static-check qualification: verbatim go version -m output includes one trailing tab on its module line (binary-build-info.txt line3). Whole intake diff-check reports that raw-only whitespace warning; all non-raw files pass. Preserve the raw bytes rather than rewriting evidence. The initial local staging check returned2 for this line; commit875e5d9 was subsequently created. This qualification corrects the initial broad diff-check PASS label and does not alter any runtime result or owner payload.
