@@ -1,0 +1,56 @@
+I've resolved all three reference questions in a small delta on top of the reviewed contract. The verdict is COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY: this is a reviewed candidate, not PO or product-contract approval. No PO decision or ADR is needed.
+
+Task and identity
+- Task: MC-003A-REF-RESOLUTION. Reviewer is actual Claude Code 2.1.310, model claude-opus-5-5, interactive. No login, provider or settings change.
+- Head: cc121cf, with intake base cd30600 as an ancestor.
+- Hashes: the Antigravity report and its returned summary match the intake JSON. The two originals I'm amending are unchanged (ac2b3851… and 263718e7…).
+- Self-review: I wrote the reviewed contract this amends, so this addendum is not independent of it.
+
+The three gaps and how they're resolved
+
+All three gaps are real. A synthetic Matter with 201 records shows the problem: record #201 sits on page 2 under the 200-per-page cap. The fix follows one pattern. The client gets a single point lookup for any reference it must resolve on its own. Wherever the server shows a reference, it carries the label from the same snapshot. The generic {kind, id} reference shape is unchanged, and I'm not claiming a resolver for all 25 kinds.
+
+┌───────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│       Question        │                                                          Resolution                                                           │
+├───────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ RC-REF-01 external    │ Restore GET /external-parties/{id} with the reviewed fields only (label, role/context, inactive, revision). Wait cards and    │
+│ party                 │ waits carry partyLabel; filings carry authorityPartyLabel                                                                     │
+├───────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ RC-REF-02 evidence    │ No new route. GET /evidence-claims/{id}/assessments now always returns a claim envelope that includes the parent evidenceRef, │
+│ claim                 │  on every page and even with zero assessments. Path: claim → this route → evidenceRef → GET /evidence/{id}. A claim ID is     │
+│                       │ never sent to /evidence/{id}                                                                                                  │
+├───────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ RC-REF-02 dispute and │ Those commands address assessments and disputes by their own IDs, so a dispute event would otherwise dead-end. Any event or   │
+│  revocation events    │ recent-change card targeting an assessment or dispute now carries a claimRef                                                  │
+├───────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ RC-REF-03 workstream  │ Restore GET /workstreams/{id}. Requirement and Action detail carry workstreamLabel, as do grid rows if they show a            │
+│                       │ workstream. No per-Matter count or business cap is set                                                                        │
+└───────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+Navigation clarifications
+- NAV-03: follow the evidenceRef already given in the criteria list; a standalone claim reference uses the claim path above.
+- NAV-09: no change needed. The reviewed rule already uses node references; an edge ID is never sent to /nodes/{id}. Antigravity's "follows edgeRef" mapping is what was wrong.
+
+Effect on the contract
+- Catalogue: read operations go from 30 to 32, plus one extended response. Every new field is CANDIDATE_FIELD and every new route is REVIEWED_CANDIDATE.
+- Superseded: my earlier rejections of the party and workstream point routes are reversed. The delta JSON lists exactly which rows it replaces; the originals stay untouched.
+- Unchanged rules: authorization (uniform 404, no 403 on reads), the single overview snapshot and cache purge on revocation.
+- Open questions: TQ-02/06/08 stand as resolved candidates; TQ-01/03/04/05/07 are still open.
+
+Still blocking implementation
+- The PO Architecture Approval Gate.
+- The auth seam (A-01/A-02) and the identity-provider selection (INT-D02).
+- Backend implementation plus contract and negative tests.
+- G3/G4/G6.
+
+MC-003A stays REWORK_REQUIRED and STEP03B is not authorized. All test scenarios and the OpenCode questions remain NOT_RUN.
+
+Files (both checked absent first; nothing committed):
+- reference-resolution-addendum.md — SHA256 cd7923f2…
+- reference-resolution-delta.json — SHA256 fdd1f393…
+
+After an advisor pass I revised both files to cover the dispute/revocation path and add the supersede pointers. These hashes are the final ones for intake.
+
+Skipped: the rest of the Antigravity report beyond the three gaps and the navigation mapping, the full intake JSON beyond its hash records, and any runtime, security or render check.
+
+Remaining risk: any future response that shows a party, workstream, assessment or dispute without its sibling label or claimRef would bring back follow-up lookups. There is still no product authentication.

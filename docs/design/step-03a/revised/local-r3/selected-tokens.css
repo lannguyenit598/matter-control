@@ -1,0 +1,47 @@
+/* MatterControl selected A foundation, D-UX01..04; source-only concept, not rendered acceptance. */
+#mcApp {
+ --mc-bg:#f6f8fa; --mc-surface:#ffffff; --mc-subtle:#eef2f6; --mc-ink:#17212b; --mc-muted:#52606d;
+ --mc-line:#c6ced6; --mc-line-dark:#9aa8b5; --mc-accent:#174ea6; --mc-ok:#236341; --mc-danger:#a12622;
+ --mc-type-body:14px; --mc-type-meta:12px; --mc-control-min:32px; --mc-touch-min:44px;
+ --mc-row-comfortable:44px; --mc-row-compact:36px; --mc-space-unit:4px; --mc-type-heading:22px;
+ font-size:var(--mc-type-body); line-height:1.5; font-family:var(--font-body);
+}
+#mcApp .mc-content { padding:16px; }
+#mcApp .mc-top { background:#101820; color:#ffffff; }
+#mcApp .mc-pagehead h2, #mcApp .grid-head h2 { font:600 var(--mc-type-heading)/1.25 var(--font-body) !important; letter-spacing:normal !important; }
+#mcApp .mc-workspace strong, #mcApp .mc-matter strong { font-size:14px; }
+#mcApp .mc-workspace small, #mcApp .mc-matter small, #mcApp .mc-asof, #mcApp .mc-role { font-size:12px; }
+#mcApp .mc-nav button, #mcApp .mc-mobile-nav button, #mcApp .mc-btn, #mcApp .grid-search, #mcApp .grid-filter, #mcApp .grid-select { font-size:12px; min-height:var(--mc-control-min); }
+#mcApp .mc-head-meta, #mcApp .mc-pagehead p, #mcApp .mc-ticker, #mcApp .mc-panel-head h3, #mcApp .mc-panel-head .mc-mini { font-size:12px; line-height:1.5; letter-spacing:normal; text-transform:none; }
+#mcApp .mc-panel-head { padding:8px 12px; }
+#mcApp .mc-panel-body { padding:12px; }
+#mcApp .cr-layout { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:12px; align-items:start; }
+#mcApp .cr-layout > [aria-labelledby="blocker-title"] { grid-column:1 / -1; }
+#mcApp .chain-node { min-height:0; padding:8px; }
+#mcApp .chain-node .ck, #mcApp .chain-node b, #mcApp .chain-node .cl, #mcApp .chain-node .cs, #mcApp .chain-node small { font-size:12px; line-height:1.5; letter-spacing:normal; }
+#mcApp .chain-reason, #mcApp .mc-inline-link, #mcApp .mc-state-row p, #mcApp .mc-waiting-row small, #mcApp .waittime, #mcApp .mc-milestone small, #mcApp .mc-change, #mcApp .mc-change time, #mcApp .evidence-labels, #mcApp .evidence-missing div, #mcApp .evidence-missing b, #mcApp .mc-watch, #mcApp .mc-empty-note { font-size:12px; line-height:1.5; }
+#mcApp .mc-state-row strong, #mcApp .mc-waiting-row strong, #mcApp .mc-milestone strong { font-size:14px; line-height:1.5; }
+#mcApp .mc-panel .tag { font-size:12px; }
+#mcApp .grid-table td { height:var(--mc-row-comfortable); padding:8px; }
+#mcApp .grid-table.is-compact td { height:var(--mc-row-compact); padding:4px 8px; }
+#mcApp .grid-table .record-sub, #mcApp .grid-table.is-compact .record-sub, #mcApp .state, #mcApp .axis-reasons { font-size:12px; line-height:1.5; }
+#mcApp .state--exec { color:#364152; }
+#mcApp .state--ver.is-ok { color:#236341; }
+#mcApp .state--dep.is-ok { color:#174ea6; }
+#mcApp .state--dep.is-danger { color:#8a2925; }
+#mcApp .grid-table tr.is-selected td { background:#e8effa; }
+#mcApp :focus-visible { outline:2px solid #174ea6; outline-offset:2px; }
+#mcApp .mc-top :focus-visible { outline-color:#ffffff; }
+#mcApp .mc-btn:disabled { opacity:1; color:#626973; background:#eef2f6; }
+#mcApp [aria-invalid="true"] { border:2px solid #a12622; }
+#mcApp .next-action-empty { margin-bottom:8px; }
+@media(max-width:980px) { #mcApp .cr-layout { grid-template-columns:1fr; } }
+@media(max-width:760px) {
+ #mcApp .mc-mobile-nav button, #mcApp .mc-btn, #mcApp .grid-search, #mcApp .grid-filter, #mcApp .grid-select, #mcApp .mc-inline-link { min-height:var(--mc-touch-min); }
+ #mcApp .chain-node { display:grid; grid-template-columns:92px minmax(0,1fr); gap:2px 8px; align-content:start; }
+ #mcApp .chain-node .ck { grid-column:1; } #mcApp .chain-node b { grid-column:1; grid-row:2; margin:0; }
+ #mcApp .chain-node .cl { grid-column:2; grid-row:1; margin:0; } #mcApp .chain-node .cs { grid-column:2; grid-row:2; margin:0; }
+ #mcApp .chain-node small { grid-column:2; margin:0; }
+ #mcApp .chain-reason { flex-direction:column; gap:8px; }
+}
+@media(prefers-reduced-motion:reduce) { #mcApp *, dialog { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }

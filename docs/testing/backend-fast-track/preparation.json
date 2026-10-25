@@ -1,0 +1,158 @@
+{
+  "task": "MC-BE-DESIGN / BE-01 preparation",
+  "agent": "Local Codex PM/BA",
+  "utc": "2026-10-25T16:41:09.282315+00:00",
+  "governance_source_head": "51b0b07546377a144979be55635920615cc8cfb3",
+  "backend": {
+    "path": "/private/tmp/mattercontrol-step022-backend-c01",
+    "base": "52b60a4617081c41b949f2242e1784238c170f75",
+    "branch": "task/MC-002-be-c01",
+    "clean": true,
+    "source_files": [
+      {
+        "path": "AGENTS.md",
+        "bytes": 5653,
+        "sha256": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f"
+      },
+      {
+        "path": "go.mod",
+        "bytes": 2377,
+        "sha256": "63eed6d9405dd929eb48c6dfcb53f9b5f4761185cfd6989d66f72863a14afe30"
+      },
+      {
+        "path": "go.sum",
+        "bytes": 12929,
+        "sha256": "b34f484a93734fd4b6eda8c801fc149947d1e78f45639a948595687132d1f0b9"
+      },
+      {
+        "path": "sqlc.yaml",
+        "bytes": 957,
+        "sha256": "13d383ce9b77cd4eec5ae5986cba29485d0336b24f5165936ee69a3fd11963bc"
+      },
+      {
+        "path": "Makefile",
+        "bytes": 3388,
+        "sha256": "ca26092315bd93d8c024df7ed129fa80c6ea5ab5cadb1d306b51fc8955922549"
+      },
+      {
+        "path": ".golangci.yml",
+        "bytes": 10745,
+        "sha256": "8b47d2561e65fcac1325b2208ec12cbc95fcb378533e15c01fd36cd773f201a2"
+      },
+      {
+        "path": "internal/core/port/port.go",
+        "bytes": 2799,
+        "sha256": "551c60989f82fefd5c3c068c86c5d314f24447384b5822ce1cae066596e5c166"
+      },
+      {
+        "path": "internal/adapter/outbound/postgres/outbox.go",
+        "bytes": 5606,
+        "sha256": "bf583b37177a6f657bfdeed8e1db82edd5d2b6959320930c1a734c2c40559c23"
+      },
+      {
+        "path": "internal/adapter/outbound/postgres/migrate.go",
+        "bytes": 3656,
+        "sha256": "43c0840b1c9ef3f0bc749a7f95064674f2e157e45af1b8d99e54b75eb7ef828d"
+      },
+      {
+        "path": "internal/adapter/outbound/postgres/user_repository.go",
+        "bytes": 10369,
+        "sha256": "92d50cba4e0449e8256e89d013e9e5d5dfacee08b407942f86960b8c2a91ef0e"
+      },
+      {
+        "path": "internal/adapter/outbound/postgres/pgtest/pgtest.go",
+        "bytes": 1360,
+        "sha256": "3db2c664d27b2140e2bb975ed57f314b7f4f0ea7b05c56747d5275e0530d3369"
+      },
+      {
+        "path": "internal/adapter/inbound/httpapi/server.go",
+        "bytes": 7380,
+        "sha256": "3319e1a355b0bf720f275bce02b1122d9a32cbda6d878f38a8676adeb5688678"
+      },
+      {
+        "path": "internal/app/app.go",
+        "bytes": 13180,
+        "sha256": "5e6cd64ac79762cb22c623e7077cc46f36bb52799e7af0a7fa27a18a6ec64ca8"
+      },
+      {
+        "path": ".claude/rules/core.md",
+        "bytes": 1471,
+        "sha256": "7bd286d29816023845bff272d2fcb403e7bc2457929b2c92437989f3aeb86c9c"
+      },
+      {
+        "path": ".claude/rules/persistence.md",
+        "bytes": 2916,
+        "sha256": "26f20ed399cf42721a9645815a35c08e4a938ac9b914ac1a1bdee00335953641"
+      },
+      {
+        "path": ".claude/rules/http-adapter.md",
+        "bytes": 2221,
+        "sha256": "02c67d4f21592a1fc653f503df8f1bd006c8a893064bcd4cb6dce9e73e239034"
+      },
+      {
+        "path": ".claude/rules/tests.md",
+        "bytes": 1311,
+        "sha256": "f7a4c0e0a1c64a06eb6138196cc9764c398a010fec2eda857c18bc414053401e"
+      },
+      {
+        "path": ".agents/skills/add-use-case/SKILL.md",
+        "bytes": 5062,
+        "sha256": "9d3cdb307fb29f19a74088b8937eeec8c293053e5fb66debe522544155c965f9"
+      },
+      {
+        "path": ".agents/skills/add-migration/SKILL.md",
+        "bytes": 4614,
+        "sha256": "0245b1173092d8df76c8e40de530157fbfa318dabdc2617afc47f01478dd0c4c"
+      }
+    ]
+  },
+  "design": "PROPOSED_FOR_LOCAL_SLICE_APPROVAL",
+  "implementation": "NOT_STARTED / WAITING_EXPLICIT_BE01_LOCAL_ASSIGNMENT",
+  "zcode": "READY_NOT_DISPATCHED",
+  "authorization": "Current user requested fastest backend design for ZCode implementation. Only local design artifacts prepared; copyable handoff is the concrete future local-slice approval/assignment, not evidence it was sent. No global STEP03B/architecture/production approval inferred.",
+  "skill_used": "go-project-and-api-design",
+  "source_findings": [
+    "Outbox-disabled legacy write bypasses transaction",
+    "NewServer registers legacy User routes and has no auth",
+    "Legacy User schema differs from product issuer/subject identities",
+    "FreshSchemaDSN creates/drops a random test schema"
+  ],
+  "checks": {
+    "reference_files_exist": true,
+    "all_twenty_FRs_retained_in_roadmap": true,
+    "eight_slices_ordered": true,
+    "first_slice_independent_of_F08_F10": true,
+    "current_catalogue_32_unchanged_future_35_proposal_only": true,
+    "18_frozen_inputs_unchanged": true,
+    "markdown_whitespace_preflight": true,
+    "backend_source_unchanged": true
+  },
+  "tests": "NOT_RUN: no Go build/test, SQL migration, container/database or product/runtime operation",
+  "protected": "Native C01/INT-A/backend and primary governance worktrees unchanged",
+  "pending": [
+    "Explicit BE-01 local implementation assignment",
+    "Independent implementation review after actual return",
+    "Real identity/wire/retention/boundary policies before HTTP activation",
+    "F-08/F-10 decisions before dependent features",
+    "G3/G4/G6/MC-002/architecture/cloud/cost/recovery/release gates"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/architecture/backend-fast-track.md",
+      "bytes": 12155,
+      "sha256": "bebcbdbadc1c2c6e2153d29227227522acb2837335f4783dd0246900d4c07352"
+    },
+    {
+      "path": "docs/implementation/tasks/MC-BE-01.md",
+      "bytes": 6274,
+      "sha256": "a02cd5619acde201ba9c1eac0a723a9f35f7c3cd892acef95213339838b616ff"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-BE-01-ZCODE-PROMPT.md",
+      "bytes": 4763,
+      "sha256": "21b494a8323b2bd6cf658fce67c6846e3e93d4ec27a57a23e714a6e79d7efb92"
+    }
+  ],
+  "preexisting_untracked_inventory": "?? docs/ai-sdlc/step-03a-request.md\n?? docs/design/step-03a/commissioned-brief.md\n?? docs/design/step-03a/execution.json\n?? docs/design/step-03a/export-manifest.json\n?? docs/design/step-03a/intake-checklist.md\n?? docs/design/step-03a/intake-report.md\n?? docs/design/step-03a/local-checks.json\n?? docs/design/step-03a/owner-correction-prompt.md\n?? docs/design/step-03a/qa-input-manifest.json\n?? docs/design/step-03a/qa/authorization.md\n?? docs/design/step-03a/qa/authorized-manifest.json\n?? docs/design/step-03a/qa/execution.json\n?? docs/design/step-03a/qa/opencode-events.jsonl\n?? docs/design/step-03a/qa/opencode-stderr.txt\n?? docs/design/step-03a/qa/opendesign-remediation-prompt.md\n?? docs/design/step-03a/qa/preflight.json\n?? docs/design/step-03a/qa/result.json\n?? docs/design/step-03a/qa/review-attempt-report.md\n?? docs/design/step-03a/qa/session-after-attempt.json\n?? docs/design/step-03a/qa/session-created.json\n?? docs/design/step-03a/remediation/coverage-matrix.md\n?? docs/design/step-03a/remediation/delivery.md\n?? docs/design/step-03a/remediation/findings.json\n?? docs/design/step-03a/remediation/opendesign-input-manifest.json\n?? docs/design/step-03a/remediation/original-integrity.json\n?? docs/design/step-03a/remediation/preparation-checks.json\n?? docs/design/step-03a/remediation/qa-recovery-plan.md\n?? docs/design/step-03a/remediation/request.md\n?? docs/design/step-03a/remediation/shared-governance-proposal.md\n?? docs/design/step-03a/terminal-result.json\n?? docs/design/step-03a/tooling-review/\n?? docs/implementation/tasks/MC-003A-R1.md\n?? docs/implementation/tasks/MC-003A-TOOLS.md\n?? docs/implementation/tasks/MC-003A.md",
+  "official_write_route": "exec_command require_escalated bounded design docs/commit"
+}

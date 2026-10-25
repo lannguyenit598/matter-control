@@ -1,0 +1,430 @@
+{
+  "task": "MC-003A.8A",
+  "authority": "MATERIALIZED_REVIEWED_CANDIDATE_DOCUMENT_ONLY; PO_ARCHITECTURE_APPROVAL_NOT_GRANTED",
+  "purpose": "Versioned transcription of already-owner-authored and ZCode-reviewed clauses; not executable JSON Patch, merged OpenAPI or implementation",
+  "precedence": "Start with immutable base+RC-REF delta. For the named finding locations apply selected R1 clauses; R2 supersedes R1 only for F-02/03/07/08/10. R1 READ-02 amendment, F-03 matter-wide candidacy, six-value claim-status fallback and F-10 universal-truncation/complete-embedding assertions are withdrawn. The explicit F-07 alignment below overrides every named inherited claim-status location; other fields/constraints remain.",
+  "source_evidence": {
+    "owner_r1": {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/returned-delta-normalized.json",
+      "sha256": "9a90e955c3cb453f26943ed9b9cc6099984dae69a51c01cf2b528626b4a47903"
+    },
+    "owner_r2": {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r2/returned-delta.json",
+      "sha256": "5692e4dd2b27ed44360c4c95d4fad3a9509cc6181a35d2e4096143d79309c174"
+    },
+    "independent_recheck": {
+      "archive": "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/review-original.txt.gz",
+      "original_bytes": 30677,
+      "original_sha256": "a288b2d40862256c1dbeb93b40a80b17fa23026977284f1693cd552fa6bc7e3c"
+    }
+  },
+  "clauses": [
+    {
+      "id": "F-01",
+      "owner_source": "Claude R1",
+      "owner_proposal": {
+        "id": "F-01",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "locations": [
+          "detail_read_catalogue DR-06 required_data",
+          "read_common_rules RC-6 (collection=(nodeId,side))"
+        ],
+        "new_fields": [
+          "DR-06 query side=incoming|downstream",
+          "DR-06 incoming{items,total,nextCursor}",
+          "DR-06 downstream{items[{ref,distance}],total,nextCursor}"
+        ],
+        "rules": [
+          "no side: both first pages one snapshot; after without side 422",
+          "side=X: other member absent",
+          "incoming order upstreamRef.id,edgeRef.id; downstream order distance,ref.id; min-distance dedup",
+          "no-omission/no-dup only at constant sourceRevision"
+        ]
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-02",
+      "owner_source": "Claude R2",
+      "owner_proposal": {
+        "id": "F-02",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "r1_items_changed": [
+          "READ-02 amendment WITHDRAWN; baseline READ-02 retained",
+          "B1 restated for contributing sections only"
+        ],
+        "rules": [
+          "unavailableReason closed set {EVALUATION_FAILED} (unchanged)",
+          "root 503 iff snapshot cannot open or no section AVAILABLE (baseline)",
+          "condition-only AVAILABLE response is root 200",
+          "per-section containment mechanism and feasibility unverified"
+        ],
+        "truth_table_ref": "addendum F-02/F-08 table rows a-g"
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-03",
+      "owner_source": "Claude R2",
+      "owner_proposal": {
+        "id": "F-03",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "r1_items_changed": [
+          "evaluation actor = caller (AC-144); R1 implicit matter-wide reading withdrawn",
+          "UNASSIGNED = not assigned to the caller as an active Matter member",
+          "excluded becomes {items,total,nextCursor} (CANDIDATE)",
+          "continuation GET /matters/{m}/next-actions?excluded=true (CANDIDATE query param)"
+        ],
+        "rules": [
+          "candidate = visible Action, NOT_STARTED|IN_PROGRESS, dependency READY, assignee = caller",
+          "excluded = every other visible non-terminal Action",
+          "reason = first of WAITING, BLOCKED, UNASSIGNED; display-only",
+          "excluded order = critical-chain first, dueAt asc nulls last, id asc",
+          "no ownerRef/display name for a non-member assignee",
+          "no selected-member parameter added"
+        ]
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-04",
+      "owner_source": "Claude R1",
+      "owner_proposal": {
+        "id": "F-04",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "locations": [
+          "control_room sections.decisions order",
+          "DR-14 reviewed_operations default order"
+        ],
+        "rules": [
+          "dueAt asc nulls last, createdAt asc, id asc; cursor uses same tuple"
+        ]
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-05",
+      "owner_source": "Claude R1",
+      "owner_proposal": {
+        "id": "F-05",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "locations": [
+          "read_common_rules new RC-3a",
+          "testability_review CT-05 testability"
+        ],
+        "rules": [
+          "401 first",
+          "any non-resolving path id (incl. malformed) -> uniform 404 on reads; never 400/422",
+          "query/cursor 422 only after authorization; malformed filter id 422; unmatched filter 200 []"
+        ],
+        "scope": "reads only"
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-06",
+      "owner_source": "Claude R1",
+      "owner_proposal": {
+        "id": "F-06",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "locations": [
+          "delta RC-REF-01 fields",
+          "delta RC-REF-03 fields"
+        ],
+        "rules": [
+          "keys always present",
+          "ref null <=> label null",
+          "non-null ref label same snapshot, inactive kept",
+          "unresolvable ref -> 503 detail / section UNAVAILABLE EVALUATION_FAILED",
+          "no new domain optionality"
+        ]
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-07",
+      "owner_source": "Claude R2",
+      "owner_proposal": {
+        "id": "F-07",
+        "verdict": "CHANGES_REQUIRED",
+        "r1_items_changed": [
+          "R1 six-value fallback WITHDRAWN",
+          "status field removed from DR-07/DR-08/DR-09 claim shapes",
+          "DR-07 claimStatus= filter withdrawn"
+        ],
+        "new_fields": [
+          "claim.currentAssessmentRef (ASSESSMENT ref | null)",
+          "claim.openDisputeRef (DISPUTE ref | null)",
+          "claim.failed [code] (CANDIDATE vocabulary)"
+        ],
+        "failed_codes_candidate": [
+          "STALE_CRITERION_REVISION",
+          "NO_CURRENT_ASSESSMENT",
+          "REJECTED",
+          "REVOKED",
+          "EVIDENCE_WITHDRAWN",
+          "OUTSIDE_VALIDITY",
+          "VERSION_RULE_MISMATCH",
+          "OPEN_DISPUTE"
+        ],
+        "binding": "evidence-model section 4 satisfaction conjuncts; data-model section 4 tables",
+        "po_decision": "none; no new lifecycle semantics",
+        "known_contradiction": "api-contracts 3.3 command example status PENDING_REVIEW"
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-08",
+      "owner_source": "Claude R2",
+      "owner_proposal": {
+        "id": "F-08",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "subpart_open": {
+          "EVIDENCE_GAP": "NEEDS_CLARIFICATION (evidenceGaps row unit not pinned)"
+        },
+        "r1_items_changed": [
+          "DEPENDENCY_BLOCKED source blockers -> condition own evaluation",
+          "WAITING source waitingOn -> condition own evaluation; unit = objects",
+          "DISPUTED source evidenceGaps -> condition own evaluation",
+          "contributing sections = milestones, evidenceGaps, decisions"
+        ],
+        "units": {
+          "CRITICAL": "Requirement/Action/Filing with attention CRITICAL",
+          "ATTENTION": "Requirement/Action/Filing with attention ATTENTION",
+          "OVERDUE": "Requirement/Action/Filing with timing OVERDUE",
+          "DUE_SOON": "Requirement/Action/Filing with timing DUE_SOON",
+          "COMPLETED_UNVERIFIED": "execution COMPLETED and verification exactly UNVERIFIED",
+          "DEPENDENCY_BLOCKED": "Requirement/Action with dependency BLOCKED, any execution",
+          "DISPUTED": "Requirement/Action/Filing with verification DISPUTED",
+          "WAITING": "Requirement/Action/Filing with execution WAITING",
+          "MILESTONE_NOT_READY": "milestones with readiness NOT_READY",
+          "MILESTONE_UNASSESSED": "milestones with readiness UNASSESSED",
+          "OPEN_DECISION": "open decisions; equals decisions.total",
+          "EVIDENCE_GAP": "equals evidenceGaps.total; row unit open"
+        }
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-09",
+      "owner_source": "Claude R1",
+      "owner_proposal": {
+        "id": "F-09",
+        "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+        "locations": [
+          "DR-15 reviewed_operations and collection_version",
+          "read_common_rules RC-6 (exemption)",
+          "control_room sections.recentChanges continuation"
+        ],
+        "rules": [
+          "seq bounds exempt from opaque syntax/binding only",
+          "after xor before; neither = asc from start",
+          "exclusive bounds; after>=0, before>=1 else 422",
+          "nextCursor = decimal last seq",
+          "filters unbound (deliberate)"
+        ],
+        "tq_05": "OPEN"
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    },
+    {
+      "id": "F-10",
+      "owner_source": "Claude R2",
+      "owner_proposal": {
+        "id": "F-10",
+        "verdict": "SPLIT",
+        "parts": [
+          {
+            "part": "DR-10 versions / DR-12 cycles outer pages",
+            "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+            "change_from_r1": "none"
+          },
+          {
+            "part": "submissions[], submittedVersionRefs, cycle receipt/outcome evidence refs",
+            "verdict": "DECISION_REQUIRED",
+            "r1_items_struck": [
+              "RC-10 forbids a truncation flag",
+              "complete untruncated arrays are base behaviour"
+            ],
+            "evidence": [
+              "filing_submissions: no UNIQUE (filing_id, cycle_no)",
+              "filing_submission_items: PK (submission_id, document_version_id), no bound",
+              "filing-model 3: supplement cycles unbounded"
+            ],
+            "options": [
+              "O1 new nested read route(s): expands 32, catalogue decision",
+              "O2 data-model/domain bound: architecture decision, possibly PO",
+              "O3 accept complete embedding and response-size risk: architecture/PO decision",
+              "O4 bounded prefix without continuation: rejected, breaks reachability"
+            ],
+            "approval": "PO Architecture Approval Gate on Claude proposal"
+          }
+        ]
+      },
+      "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+      "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+    }
+  ],
+  "f07_alignment": {
+    "finding": "F-07",
+    "authority": "Mechanical transcription of actual Claude R2 proposal accepted DOCUMENT_ONLY by actual human-returned ZCode recheck; not a Codex architecture choice",
+    "claim_shapes": {
+      "DR-07 claims summary": [
+        "claimRef",
+        "evidenceRef",
+        "currentAssessmentRef",
+        "openDisputeRef",
+        "failed"
+      ],
+      "DR-08 claims inline": [
+        "claimRef",
+        "criterionRevisionRef",
+        "componentKey",
+        "revision",
+        "currentAssessmentRef",
+        "openDisputeRef",
+        "failed"
+      ],
+      "DR-09 / RC-REF-02 claim envelope": [
+        "claimRef",
+        "evidenceRef",
+        "criterionRevisionRef",
+        "componentKey",
+        "revision",
+        "currentAssessmentRef",
+        "openDisputeRef",
+        "failed"
+      ]
+    },
+    "field_types": {
+      "currentAssessmentRef": "ASSESSMENT typed ref or null; current assessment of the subject current proof epoch",
+      "openDisputeRef": "DISPUTE typed ref or null; open dispute on that current assessment",
+      "failed": "array of the eight owner-defined CANDIDATE codes, ordered as evidence-model section 4 conditions; assessment-dependent codes evaluated only when current assessment exists"
+    },
+    "failed_codes_candidate": [
+      "STALE_CRITERION_REVISION",
+      "NO_CURRENT_ASSESSMENT",
+      "REJECTED",
+      "REVOKED",
+      "EVIDENCE_WITHDRAWN",
+      "OUTSIDE_VALIDITY",
+      "VERSION_RULE_MISMATCH",
+      "OPEN_DISPUTE"
+    ],
+    "superseded_document_locations": [
+      "reviewed-read-contract.json DR-07 required_data claims summary status",
+      "reviewed-read-contract.json DR-07 reviewed_operations claimStatus query and corresponding reviewed_read_operations signature",
+      "reviewed-read-contract.json DR-08 required_data claims[].status",
+      "reviewed-read-contract.json DR-09 response as extended by RC-REF-02",
+      "reference-resolution-delta.json RC-REF-02 resolution[0], claim field note and collection_negative status-shown phrase",
+      "reference-resolution-addendum.md RC-REF-02 resolution item 1 claim envelope",
+      "api-contracts.md section 3.3 response fragment claims[].status"
+    ],
+    "withdrawn_filter": "claimStatus; subjectId and gap remain, no route removed or added",
+    "rc_ref_02_preserved": [
+      "claimRef",
+      "evidenceRef",
+      "criterionRevisionRef",
+      "componentKey nullable",
+      "revision",
+      "claim envelope on every assessment page, including empty",
+      "exact assessedDocumentVersionRef remains on assessments",
+      "two-request claim->Evidence navigation and typed auth boundaries unchanged"
+    ],
+    "rc_ref_02_negative": "Existing claim with zero assessments returns envelope plus []; withdrawn Evidence retains resolvable claim with the reviewed projection/failed codes; unavailable/foreign/inaccessible remain uniform errors.",
+    "index_correction_note": "The old current-reviewed-read-set.json directly references RC-REF-02; it contains no literal wire claim.status field. This new index references the explicit replacement. Governance status fields are not wire claim.status and remain unchanged.",
+    "command_example": {
+      "source": "docs/architecture/api-contracts.md:173",
+      "before_fragment": {
+        "claims": [
+          {
+            "id": "k1",
+            "status": "PENDING_REVIEW"
+          }
+        ]
+      },
+      "after_fragment": {
+        "claims": [
+          {
+            "id": "k1",
+            "currentAssessmentRef": null,
+            "openDisputeRef": null,
+            "failed": [
+              "NO_CURRENT_ASSESSMENT"
+            ]
+          },
+          {
+            "id": "k2",
+            "currentAssessmentRef": null,
+            "openDisputeRef": null,
+            "failed": [
+              "NO_CURRENT_ASSESSMENT"
+            ]
+          }
+        ]
+      },
+      "scope": "Illustrative response fragment only; unshown fields unchanged. At approved fixture T0, newly submitted unwithdrawn Evidence/claims, current criterion revisions, no assessments and all assessment-independent conditions satisfied. No command CAS/idempotency/subject-state rule changed."
+    },
+    "application_scope": "Versioned reviewed-candidate documentation overlay only. Original baseline files and product code are untouched; implementation/Antigravity consumption remain unverified."
+  },
+  "acceptance_correction_F03_K6": "Positive excluded.total requires at least one visible excluded nonterminal Action. Empty/terminal-only Matter returns items=[] and excluded.total=0; no invented recommendation. This Codex fixture-scope correction is explicitly accepted by ZCode.",
+  "open_subparts": {
+    "F-08.EVIDENCE_GAP": "NEEDS_CLARIFICATION: criterion vs component row unit/stable identity/dedup/total unknown; no numeric PASS",
+    "F-10.nested": "DECISION_REQUIRED: submissions, submittedVersionRefs, cycle receipt/outcome evidence refs; do not select O1/O2/O3 or accept size risk, add a route/cap/UNIQUE constraint"
+  },
+  "operation_count": 32,
+  "routes_added": [],
+  "normalized_route_set": [
+    "/api/v1/actions/{id}",
+    "/api/v1/decisions/{id}",
+    "/api/v1/document-versions/{id}",
+    "/api/v1/document-versions/{id}/content",
+    "/api/v1/documents/{id}",
+    "/api/v1/documents/{id}/versions",
+    "/api/v1/evidence-claims/{id}/assessments",
+    "/api/v1/evidence-requirements/{id}",
+    "/api/v1/evidence/{id}",
+    "/api/v1/external-parties/{id}",
+    "/api/v1/filings/{id}",
+    "/api/v1/filings/{id}/cycles",
+    "/api/v1/findings/{id}",
+    "/api/v1/matters/{matterId}",
+    "/api/v1/matters/{matterId}/blockers",
+    "/api/v1/matters/{matterId}/decisions",
+    "/api/v1/matters/{matterId}/documents",
+    "/api/v1/matters/{matterId}/events",
+    "/api/v1/matters/{matterId}/evidence-requirements",
+    "/api/v1/matters/{matterId}/external-parties",
+    "/api/v1/matters/{matterId}/filings",
+    "/api/v1/matters/{matterId}/findings",
+    "/api/v1/matters/{matterId}/milestones",
+    "/api/v1/matters/{matterId}/risks",
+    "/api/v1/matters/{matterId}/waits",
+    "/api/v1/matters/{matterId}/workstreams",
+    "/api/v1/milestones/{id}/readiness",
+    "/api/v1/nodes/{id}/dependencies",
+    "/api/v1/requirements/{id}",
+    "/api/v1/risks/{id}",
+    "/api/v1/waits/{id}",
+    "/api/v1/workstreams/{id}"
+  ],
+  "consumer_status": "NOT_IMPLEMENTED / NOT_RECONCILED for affected F-01/03/06/07/08/10 outer fields; old Antigravity consumption is not evidence for these changes",
+  "runtime": "NOT_RUN",
+  "gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "REVIEW_RETURN_RECEIVED / FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP_03B": "NOT_AUTHORIZED"
+  }
+}

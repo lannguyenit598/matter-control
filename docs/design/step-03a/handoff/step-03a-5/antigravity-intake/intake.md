@@ -1,0 +1,36 @@
+# Antigravity feasibility return — Codex intake
+
+Task MC-003A-FE-FEASIBILITY-INTAKE. Owner Local Codex. Priority P0. Status IN_REVIEW. Input checkpoint7258fc5; actual returned report self-identifies Antigravity / Gemini3.8FlashHigh. [Verbatim output](returned-output.txt) is preserved byte-for-byte; [intake evidence and dispositions](intake.json) distinguishes supplied claims from fresh checks. No external agent invoked by Codex in this intake.
+
+## Intake verdict
+
+**FEASIBLE WITH ADAPTATION AND EXTENSION** is usable as a scoped planning conclusion, subject to the corrections below. The frontend-owner report has been received: earlier PREPARED_NOT_DISPATCHED records are historical for this task only. It does not satisfy formal independent QA, rendering, architecture acceptance or stage authorization. No repeated owner dispatch is needed merely to restate the same source gaps.
+
+Source observations accepted: presentational DataTable; native Dialog child unmount; MobileNav is navigation rather than domain triage; TaskRepository remains generic CRUD; primitive tokens/sizing require adaptation. F-01..05 are future adaptation obligations in a starter, F-06 is an architecture dependency and F-07 an evidence/access gate. They do not establish seven new defects in current local-r3HTML. Reuse/adapt before selecting replacement or a new dependency.
+
+## Required corrections to downstream interpretation
+
+- **INT-01 (HIGH), returned §5 bulk / §6.2 / §7 Phase5:** Do not adopt207or universal409stale mapping. Candidate API §1 uses428missing precondition/412stale,409guard or preview mismatch; §3.6 uses200with APPLIED/STALE/FORBIDDEN/NOT_FOUND/INVALID row outcomes and a new failed-only preview. Candidates remain unapproved; final HTTP contracts belong to Claude. Preserve uniform unavailable response for inaccessible objects.
+- **INT-02 (MEDIUM), returned §1.4 / §6.1 / F-01,F-03:** Generic starter CRUD and lack of grid handlers are capability gaps against future MatterControl, not proven starter defects. Guarded user execution transitions are allowed; only derived dimensions/aggregate verification must not become arbitrary dropdown assignments. No universal role=grid or spreadsheet paste/resize/virtualization requirement inferred.
+- **INT-03 (MEDIUM), returned §1.2 / §6.3 / F-02:** Child unmount and lack of explicit fallback are source-observed. Actual draft loss depends on state ownership; focus landing on body is an untested scenario, not a reproduction. Preserve drafts outside the mounting boundary or guard intentional dismissal using existing React patterns; no mandated Zustand/ReactHookForm/new prop/library.
+- **INT-04 (LOW), returned §6.6:** Replace approximate static ratios14.8/5.3/4.6 with recalculated pairs in intake.json. Even exact static ratios do not certify computed contrast, all component states or WCAG AA.
+- **INT-05 (MEDIUM), returned Execution Environment / §9:** Agent/model/sandbox/no-egress/commands are user-supplied report claims, not independently attested execution metadata. List tasks/find failures exit1, grep exit2 and Edited task_tracking.md are disclosed; path/content of that edit and complete stdout/stderr/UTC/argv are absent. Current clean Git check cannot prove no prior writes, ignored files or network egress. Two listed blob hashes do not prove85-input verification.
+- **INT-06 (MEDIUM), returned §2,§3 / §6.4..6 / F-05:** Component names/token mapping/disabledReason/focusFallbackId are suggestions, not accepted API or required packages. Reuse existing components before replacement.44px is the selected touch contract, not a universal WCAG minimum. Preserve native multiline Enter/editing and context-appropriate announcements; do not force every key into a cell-save path or every security event into public alerts.
+- **INT-07 (HIGH), returned §7 phases1..6:** The implementation sequence is a conditional proposal only. Phases1..4 are not currently authorized merely because real API integration is drawn atPhase5. Full03B/product work requires actual applicable design and architecture gates; read-only feasibility/report intake can proceed now.
+- **INT-08 (MEDIUM), returned §5 A-16 / conclusion:** Record actual owner feasibility return received, qualified by this intake; replace future dispatch assumptions only for this report. A-16 author intake is advanced to IN_REVIEW, not runtime/architecture approval. F-01..05 are adaptation obligations, F-06architecture gate, F-07validation/access gate; none prove a new local-r3design defect.
+
+These are Codex intake dispositions, not edits attributed to Antigravity or an independent corrected verdict. Preserve the returned file unchanged. Approved SRS/business/state/permission rules outrank suggestions; candidate API details correct unsupported interpretation but do not become approved contracts through this intake.
+
+## Evidence and acceptance
+
+Fresh Codex checks: both frontend references clean at3e5a642; all20FR present and all acceptance ID sets match SRS after expanding AC-122..125 and ignoring order; r3output20/QA85hashes preserved. Three static token pairs recalculated only to correct numerical claims. Exact assertions/results and hashes are in intake.json. Source inspection confirms Button sizing/opacity, auth stub/demo behavior and conditional Dialog mounting; no browser effect inferred.
+
+Limitations: supplied command list is not a complete execution log. Report lists failed commands and a task_tracking.md edit without its path; zero historical writes/egress cannot be attested. Requested model flags/effective provider/model/service and complete run metadata are not independently proven by prose. Current cleanliness is point-in-time evidence only. No rendering/native keyboard/focus, effective touch geometry, computed contrast, build/test or external QA was executed in this intake.
+
+## Gate disposition and concrete next step
+
+G1preserved; G2author correction preserved, no new current HTML defect established. G3BLOCKED_BY_TOOLING, G4PENDING, G5OPEN with frontend feasibility return received, G6PENDING. Parent MC-003A remains REWORK_REQUIRED at the mandatory gate; full03B/high-fidelity/product implementation NOT_AUTHORIZED. Existing162source checks and historical template suites are not rerun or newly counted.
+
+Codex next uses the corrected20FR/reuse-gap map for read-only architecture compatibility intake by actual Claude when an authorized execution context exists, focusing on candidate API preconditions/bulk outcomes, scoped authorization, source-of-truth state and first-slice sequencing. Do not initiate external transfer/provider use under this document alone. Independent QA and legitimate render collection remain separate unblocking events. No routine UX decision or screenshot task is returned to PO.
+
+Reviewer: actual Claude for architecture, formal independent QA according to existing gate. Acceptance of this intake: exact raw preservation, complete20FR/ACcheck, corrected scope/provenance/API/numerical claims, preserved baseline and explicit gate split. Author intake completion is not independently reviewed DONE. Requirements FR-001..020 / REQ-MC-P0-01..20; dependency matrix A-01..16 and selected D-UX01..04 unchanged.

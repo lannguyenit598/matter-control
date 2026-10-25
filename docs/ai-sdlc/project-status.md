@@ -1,5 +1,15 @@
 # Project Status Dashboard
 
+## Unified coordination checkpoint — 2026-10-26
+
+Continue on `codex/unified-project-flow` at `/Users/nguyenvanlan/Documents/code/pet-projects/matter-control`. [Current workflow, owners and next actions](current-workflow.md) consolidates integration, design and backend intake. The Product Owner authorized merging the two coordination branches; this is not product, architecture, design or release approval.
+
+- Integration: imported MC-002 history through `7cdde53`; latest committed checkpoint records accepted R4 source review and provisioned local PostgreSQL, with runtime acceptance still pending. A local untracked backend runtime return is retained and must be reconciled before repeating start/migration steps.
+- Design: imported MC-003A history through `2c14cbb`; concept/local-r3 and reviewed contract candidates exist. Latest committed F-08/F-10 intake records targeted rework/decision items; G3 NOT_VERIFIED, G4 PENDING, G6 REWORK_REQUIRED, STEP03B NOT_AUTHORIZED.
+- BE-01 and F-08/F-10: the Product Owner reports both activities performed. Reconcile the newest returns with the committed intakes; do not reassign the original tasks or infer accepted implementation from a report alone.
+- Previous sections below retain historical workstream evidence. Read their dates and subsequent intakes before treating a historical status as current. Branch consolidation does not advance any acceptance case or approval gate.
+
+
 As of 2026-10-25 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002-INT-A](../implementation/tasks/MC-002-INT-A.md) within [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
 
 **Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: IN_REVIEW / WAITING_APPROVAL / REMAINING_FEASIBILITY_OPEN / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
@@ -12,12 +22,12 @@ As of 2026-10-25 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002-INT-A](..
 | PRD / SRS | APPROVED_BY_PO, subject 572835a | 7 BR, 20 FR, 14 NFR; all P0 specified |
 | Domain / state / business policy | APPROVED_BY_PO | 21 RULE entries, five axes and permissions; DEC-016 / approval record |
 | Stories / acceptance | Authored, runtime NOT_RUN | 20 US; 63 AC including 18 priority scenario categories and three end-to-end workflow contracts |
-| UX | Requirements specified; no UI created | Control Room/Grid, 50–200 rows, ~10-second comprehension target not proven |
+| UX | local-r3 concept and handoff exist; MC-003A REWORK_REQUIRED | Rendered validation and independent Design QA pending; latest F-08/F-10 returns need reconciliation |
 | Open decisions | OBD-02..08/10/11 approved B (OBD-08 B/B); OBD-01 previously resolved | DEC-016/017; numeric workload/retention/RPO/RTO explicitly deferred to Step 02; feasibility remains UNVERIFIED |
 | Step 01 independent testability review | PASS, round 2 | Actual OpenCode opencode/big-pickle review; all 10 findings resolved; exact hashes and returned reports in REV-01 |
 | Architecture execution | AUTHORED / CORRECTED / DOCUMENT_REVIEW_PASS | Actual Claude15-file candidate,134+30 corrections; actual OpenCode round2/final PASS_DOCUMENT_ONLY; exact final manifests; overall PO architecture approval remains pending |
 | Infrastructure | H5_LOCAL_APPROVED / DEPLOYMENT_UNVERIFIED | DEC-023..025: H5 and W1/restore local targets approved, ARCH-Q3/Q5 accepted; Docker local reachable; owner-tool gates remain |
-| Full product implementation / high-fidelity UI / production deployment | NOT_STARTED / NOT_AUTHORIZED | Explicit Step02 stop; technical PoCs follow architecture direction |
+| Full product implementation / high-fidelity UI / production deployment | Overall approval remains gated; bounded BE-01 activity reported by PO | Verify BE-01 actual return/acceptance separately; STEP03B and production are not authorized by this merge |
 | Git | Local documentation and evidence manifests | No push/PR; exact revision in commit history |
 
 ## Step 01 quality gate

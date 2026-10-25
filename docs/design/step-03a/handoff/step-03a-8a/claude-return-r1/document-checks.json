@@ -1,0 +1,157 @@
+{
+  "task": "MC-003A.8A / Claude R1 intake",
+  "actual_agent": "Local Codex PM/BA",
+  "utc": "2026-10-25T11:30:50.802263+00:00",
+  "tool": "exec_command / rtk proxy python3; rtk proxy git",
+  "official_write_route": "require_escalated intended local-document write/commit permitted",
+  "source_head": "838fde6f3eabb35471a95d9066ea933297c6e8c2",
+  "contract_baseline": "97356ce45c2b10070e9303f7c2ab39a425fad7a5",
+  "integrity_checks": "PASS",
+  "checks_count": 21,
+  "checks": [
+    "source branch/checkpoint match",
+    "prior 12-snapshot manifest bytes/SHA and snapshots match",
+    "18 frozen baseline input hashes/sizes unchanged",
+    "original return preserved losslessly via gzip",
+    "original delta strict parser fails as recorded",
+    "normalized transcription strict unique-key parser succeeds",
+    "all ten original finding objects retained",
+    "actual 8 recommendation /1 source /1 split count",
+    "actor-scoped F-03 counterexample established by document logic",
+    "F-02 B1 / F-08 noncontributing failure contradiction recorded",
+    "RC-10 unsupported completeness/prohibition inference held",
+    "all eleven findings OPEN",
+    "22 unchanged CT IDs and 16/4/1/1 classification",
+    "eight QA IDs/dispositions/conditional dependencies retained",
+    "all runtime NOT_RUN",
+    "gate dictionary unchanged",
+    "seven follow-up snapshot hashes and manifest verified",
+    "source expansion path/sections/reason/recipient/model/cost/permissions explicit",
+    "no dependency-engine content in follow-up",
+    "no new external provider/reviewer invocation",
+    "secret pattern scan no matches on prepared snapshots"
+  ],
+  "original_json_valid": false,
+  "normalized_delta_applied": false,
+  "technical_disposition": "TARGETED_REWORK_REQUIRED; not QA PASS",
+  "product_runtime": "NOT_RUN",
+  "all_findings_closed": 0,
+  "provider_dispatch": "NOT_DISPATCHED",
+  "proposed_followup": {
+    "snapshot_count": 7,
+    "snapshot_bytes": 47615,
+    "manifest_bytes": 9944,
+    "manifest_sha256": "956946dcb100465f65bce2eb329afecf7cfc90c8506ab65e730cb0156bb7cd2c",
+    "new_return_files": 13,
+    "source_head": "838fde6f3eabb35471a95d9066ea933297c6e8c2",
+    "original_return_sha256": "7945caae8f73c3f465b9ddbb7f7e7bbb223c78481755bd65787365164526eb86",
+    "summary_counts": {
+      "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY": 8,
+      "NEEDS_AUTHORIZED_SOURCE": 1,
+      "SPLIT": 1
+    },
+    "intake_disposition": "PARTIAL_RETURN / TARGETED_REWORK_REQUIRED",
+    "normalization_edit": "Remove original return lines 586-587 only; original preserved",
+    "source_expansion_files": [
+      "docs/architecture/data-model.md",
+      "docs/architecture/evidence-model.md",
+      "docs/architecture/filing-model.md",
+      "docs/architecture/api-contracts.md"
+    ]
+  },
+  "changed_paths": [
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/review-original.txt.gz",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/returned-delta-normalized.json",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/intake.json",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/intake.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/01-data-model-proof-filing.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/02-evidence-lifecycle.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/03-filing-cycles.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/04-api-claim-commands.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/05-return-excerpts.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/06-returned-delta-normalized.json",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/00-followup.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/manifest.json",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/APPROVAL-DRAFT.md",
+    "docs/implementation/tasks/MC-003A-8A.md",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/document-checks.json"
+  ],
+  "new_files": 14,
+  "modified_files": 1,
+  "preexisting_untracked_inventory": "?? docs/ai-sdlc/step-03a-request.md\n?? docs/design/step-03a/commissioned-brief.md\n?? docs/design/step-03a/execution.json\n?? docs/design/step-03a/export-manifest.json\n?? docs/design/step-03a/intake-checklist.md\n?? docs/design/step-03a/intake-report.md\n?? docs/design/step-03a/local-checks.json\n?? docs/design/step-03a/owner-correction-prompt.md\n?? docs/design/step-03a/qa-input-manifest.json\n?? docs/design/step-03a/qa/authorization.md\n?? docs/design/step-03a/qa/authorized-manifest.json\n?? docs/design/step-03a/qa/execution.json\n?? docs/design/step-03a/qa/opencode-events.jsonl\n?? docs/design/step-03a/qa/opencode-stderr.txt\n?? docs/design/step-03a/qa/opendesign-remediation-prompt.md\n?? docs/design/step-03a/qa/preflight.json\n?? docs/design/step-03a/qa/result.json\n?? docs/design/step-03a/qa/review-attempt-report.md\n?? docs/design/step-03a/qa/session-after-attempt.json\n?? docs/design/step-03a/qa/session-created.json\n?? docs/design/step-03a/remediation/coverage-matrix.md\n?? docs/design/step-03a/remediation/delivery.md\n?? docs/design/step-03a/remediation/findings.json\n?? docs/design/step-03a/remediation/opendesign-input-manifest.json\n?? docs/design/step-03a/remediation/original-integrity.json\n?? docs/design/step-03a/remediation/preparation-checks.json\n?? docs/design/step-03a/remediation/qa-recovery-plan.md\n?? docs/design/step-03a/remediation/request.md\n?? docs/design/step-03a/remediation/shared-governance-proposal.md\n?? docs/design/step-03a/terminal-result.json\n?? docs/design/step-03a/tooling-review/\n?? docs/implementation/tasks/MC-003A-R1.md\n?? docs/implementation/tasks/MC-003A-TOOLS.md\n?? docs/implementation/tasks/MC-003A.md\n",
+  "artifact_hashes": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/review-original.txt.gz",
+      "bytes": 16340,
+      "sha256": "4cce4cfcfecff2940ecb5d40965c7a2c9e5b454bd03b2986917e019347c4b007"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/returned-delta-normalized.json",
+      "bytes": 6951,
+      "sha256": "9a90e955c3cb453f26943ed9b9cc6099984dae69a51c01cf2b528626b4a47903"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/intake.json",
+      "bytes": 38954,
+      "sha256": "3d0d59bf9f0bbf0db4eddc96cfbc3b8def99fe69a4470b3397cf1acb71749791"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/intake.md",
+      "bytes": 6315,
+      "sha256": "da1b7651fd64ede690fc78739aefde88707c5c55fadb888a652daf0876b4ba5c"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/01-data-model-proof-filing.md",
+      "bytes": 8476,
+      "sha256": "afc622ce23e38846001e5bcea397f39865bb2338bbdbab2e6b14475a24914b8d"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/02-evidence-lifecycle.md",
+      "bytes": 7097,
+      "sha256": "958fc321ef92c21997dcab01ef7a082647f947f38aaeec0c0974771cb11db7dd"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/03-filing-cycles.md",
+      "bytes": 1873,
+      "sha256": "33f10313365bf0785a3cf370582d7e7e3f241ee571293bbf69e3bbfc1079a702"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/04-api-claim-commands.md",
+      "bytes": 4267,
+      "sha256": "b4979593dc8d19ad1e1c19994e7e943fb88e8ee231205ed2a37c38045ac856d9"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/05-return-excerpts.md",
+      "bytes": 11031,
+      "sha256": "3999df27cc7d329b11ad06d2855c23286db55055f4e74f1e96ca94da4537a260"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/06-returned-delta-normalized.json",
+      "bytes": 6951,
+      "sha256": "9a90e955c3cb453f26943ed9b9cc6099984dae69a51c01cf2b528626b4a47903"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/00-followup.md",
+      "bytes": 7920,
+      "sha256": "f24a36dd668acfeae8680131b4fd506d7ae20787e86eca02ebc336f742bb465b"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/manifest.json",
+      "bytes": 9944,
+      "sha256": "956946dcb100465f65bce2eb329afecf7cfc90c8506ab65e730cb0156bb7cd2c"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/APPROVAL-DRAFT.md",
+      "bytes": 2333,
+      "sha256": "514dfa52584bf4254ce8ef9e4d8510c5ddd8dc777f53ac7c7b1625ca9006b708"
+    }
+  ],
+  "task_before_sha256": "0611fc802b2a4f64536c5b3d8fffa806738c0dad62b63e11edabaccd1072a8da",
+  "task_after_sha256": "fa45995b4bb902ba4860cc633c393707cc8e33494b56fe4b138cd12c0a1c42b9",
+  "command_evidence": "Inline preparation/validation in this Codex tool-call record; no product test runner created. Git commands below are exact.",
+  "git_commands": [
+    "rtk proxy git add -- <changed_paths exactly as recorded>",
+    "rtk proxy git diff --cached --check",
+    "rtk proxy git commit -m \"docs(MC-003A): intake Claude return and isolate targeted rework\""
+  ]
+}

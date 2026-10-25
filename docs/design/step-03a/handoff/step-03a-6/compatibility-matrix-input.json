@@ -1,0 +1,508 @@
+{
+  "mode": "CODEx_REQUIREMENT_INPUT_ONLY_NOT_A_CLAUDE_REVIEW",
+  "review_status": "WAITING_MANUAL_DISPATCH",
+  "architecture_verdict": null,
+  "instruction": "Claude fills all requested architecture/auth/API/component/risk columns and six exact statuses after actual review; nulls are intentionally not verdicts.",
+  "features": [
+    {
+      "requirement_id": "FR-001",
+      "parent_id": "REQ-MC-P0-01",
+      "feature": "Requirement vs Action",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.06 Requirement Detail / §5.07 Action Detail",
+      "expected_user_visible_behavior": "Tạo/sửa Requirement độc lập Action; liên kết zero/multiple Actions; tạo basic Decision/Finding/Risk theo RULE-020 khi workflow cần",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-05",
+        "A-09"
+      ],
+      "data_contract": "Matter/Workstream, loại Requirement hoặc Action, outcome/work description, owner, due, liên kết → Typed record và liên kết rõ ràng, năm trạng thái phù hợp",
+      "unverified_interaction": "Typed create/link and authoritative persisted transitions",
+      "acceptance_criteria_ids": [
+        "AC-101",
+        "AC-121",
+        "AC-159"
+      ],
+      "acceptance_requirement": "Loại, title/outcome không trống; references cùng matter; không ép 1:1; Sai type/reference: reject và chỉ rõ field; không đổi record loại khác hoặc generic hóa",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-002",
+      "parent_id": "REQ-MC-P0-02",
+      "feature": "Milestones",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.02 Control Room / §5.08 Dependency View",
+      "expected_user_visible_behavior": "Đánh giá từng prerequisite; no prerequisites là unassessed; expose chuỗi blocker và evidence gap",
+      "data_api_dependency_ids": [
+        "A-03",
+        "A-12"
+      ],
+      "data_contract": "Milestone, due, explicit required Requirements, critical designation → Readiness, satisfied/total, failed prerequisite reasons",
+      "unverified_interaction": "Required-set evaluation, UNASSESSED and causal navigation",
+      "acceptance_criteria_ids": [
+        "AC-102",
+        "AC-141"
+      ],
+      "acceptance_requirement": "Prerequisites cùng matter, explicit applicable criteria; không dùng task count làm approval; Thiếu definition: unassessed; stale/evaluator error: unavailable, không ready",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-003",
+      "parent_id": "REQ-MC-P0-03",
+      "feature": "Next Action",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.02 Control Room + selected-design-system.md Layout",
+      "expected_user_visible_behavior": "Lọc/sắp theo RULE-021, navigate to context; follow-up explicit thay vì tự mở khóa waiting work",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-12"
+      ],
+      "data_contract": "Visible Actions, owner, execution, dependency, due/attention → Ordered candidate list, reason, owner, empty/exclusion explanation",
+      "unverified_interaction": "No-candidate explanation comprehension; ranking and scoped ownership",
+      "acceptance_criteria_ids": [
+        "AC-103",
+        "AC-144"
+      ],
+      "acceptance_requirement": "Current authorized snapshot; active assignee; deterministic tie order; Không có candidate: giải thích waiting/blocker/unassigned; stale snapshot yêu cầu refresh",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-004",
+      "parent_id": "REQ-MC-P0-04",
+      "feature": "Waiting On",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.05 Waiting On / §5.02 Control Room",
+      "expected_user_visible_behavior": "Ghi waiting, nhận response và resolve relation; execution WAITING tách dependency BLOCKED",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-09"
+      ],
+      "data_contract": "Requirement/Action/Filing context, external party hoặc condition, internal owner, follow-up due → Waiting On relation, reason, follow-up context",
+      "unverified_interaction": "Follow-up/response lifecycle; owner and party reachability",
+      "acceptance_criteria_ids": [
+        "AC-104",
+        "AC-130"
+      ],
+      "acceptance_requirement": "Waiting phải có reason và internal accountable owner; party cùng matter context; Party không có quyền/không hợp lệ: reject; response không tự complete/verify",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-005",
+      "parent_id": "REQ-MC-P0-05",
+      "feature": "Dependencies and Blocker Logic",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.08 Dependency View / §4.3",
+      "expected_user_visible_behavior": "AND incoming gates; recursive recompute; propagate reopen without falsifying completed history",
+      "data_api_dependency_ids": [
+        "A-03",
+        "A-06",
+        "A-12"
+      ],
+      "data_contract": "Typed prerequisite/target, explicit gate, current states/revisions → Validated graph links, READY/BLOCKED and causal failed gate list",
+      "unverified_interaction": "Cycle/reopen/proof-edge errors and exact context return",
+      "acceptance_criteria_ids": [
+        "AC-105",
+        "AC-122",
+        "AC-123",
+        "AC-124",
+        "AC-125",
+        "AC-146"
+      ],
+      "acceptance_requirement": "No self/duplicate/cycle/cross-matter link; gate type explicit; current revision; Reject cycle with authorized path; concurrent invalid graph rejected without partial edges",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-006",
+      "parent_id": "REQ-MC-P0-06",
+      "feature": "Evidence Requirements",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.06 Requirement Detail / §4.2",
+      "expected_user_visible_behavior": "Create/revise criteria; attach evidence later; expose missing even when execution completed",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-11",
+        "A-12"
+      ],
+      "data_contract": "Subject, mandatory criteria/components, acceptable proof, current/fixed version rule, expiry if applicable → Criteria checklist distinct from evidence, gaps and applicability",
+      "unverified_interaction": "Criteria revisions/components/applicability under real permissions",
+      "acceptance_criteria_ids": [
+        "AC-106",
+        "AC-127"
+      ],
+      "acceptance_requirement": "Criterion scope/type; applicability reason; positive validity interval; criteria revision invalidates stale assessment; Missing proof is gap, not fake attachment; invalid criterion rejected",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-007",
+      "parent_id": "REQ-MC-P0-07",
+      "feature": "Evidence Verification",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.09 Evidence & Verification",
+      "expected_user_visible_behavior": "Submit separate from verify; independent designated verifier; expiry/rejection/dispute/reversal recomputes current aggregate",
+      "data_api_dependency_ids": [
+        "A-01",
+        "A-02",
+        "A-06",
+        "A-11",
+        "A-12"
+      ],
+      "data_contract": "Evidence/version, criterion revision, validity, reviewer verdict/reason → Review record and current verification with dependent impact",
+      "unverified_interaction": "Designated non-submitter review, stale proof/dispute/expiry failures",
+      "acceptance_criteria_ids": [
+        "AC-107",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-140"
+      ],
+      "acceptance_requirement": "Scope, version, validity, no-self, verifier designation, current revision; Reject unauthorized/stale review; missing/expired proof cannot produce VERIFIED; preserve past review",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-008",
+      "parent_id": "REQ-MC-P0-08",
+      "feature": "Event History",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §3 History navigation / §4.7 / §7 context",
+      "expected_user_visible_behavior": "Expose authorized history; distinguish effective vs recorded time; prevent ordinary edit/delete history",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-09"
+      ],
+      "data_contract": "Accepted domain mutations, actor/reason/time, target/scope, correlation → Ordered attributable history and correction links",
+      "unverified_interaction": "Authorized history loading, correction links and failure atomicity",
+      "acceptance_criteria_ids": [
+        "AC-108",
+        "AC-136",
+        "AC-149",
+        "AC-153"
+      ],
+      "acceptance_requirement": "Accepted event refers to committed change; batch/import correlation; no secret fields; Failure to persist history prevents successful mutation; denied attempt separate restricted audit",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-009",
+      "parent_id": "REQ-MC-P0-09",
+      "feature": "Matter Control Room",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.02 Control Room; controlled-handoff.md corrigendum E-01",
+      "expected_user_visible_behavior": "Show current truth, changes, blockers/why, next/owner, waiting, missing proof and nearest relevant milestone; unknown is visible",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08",
+        "A-12"
+      ],
+      "data_contract": "Authorized snapshot of states, blockers, milestones, evidence gaps, decisions, changes → Control Room summary with reasons/as-of and links to source context",
+      "unverified_interaction": "Desktop scan, mobile priority, region stale/error feedback and 10-second task",
+      "acceptance_criteria_ids": [
+        "AC-109",
+        "AC-137"
+      ],
+      "acceptance_requirement": "Summary ties to same scope/as-of; no aggregation hiding restricted records; Partial loading/error/stale region explicit; do not display zero blockers from failure",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-010",
+      "parent_id": "REQ-MC-P0-10",
+      "feature": "My Actions",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.04 My Actions",
+      "expected_user_visible_behavior": "Show own visible assigned work; distinguish actionable/waiting/blocked; open context and follow-up",
+      "data_api_dependency_ids": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04"
+      ],
+      "data_contract": "Current user, active memberships, assigned actions, filters → My Actions with due, evidence needs, waiting/dependency reasons",
+      "unverified_interaction": "Complete own-work route, revoked access and empty/unavailable distinction",
+      "acceptance_criteria_ids": [
+        "AC-110",
+        "AC-144",
+        "AC-147"
+      ],
+      "acceptance_requirement": "Assignment points to active scoped member; filter stable; no role escalation via assignment; Revoked access removes result; zero own work honest empty state; unavailable not empty",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-011",
+      "parent_id": "REQ-MC-P0-11",
+      "feature": "Operational Grid",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.03 Operational Grid / §7 / selected-design-system.md Density",
+      "expected_user_visible_behavior": "Keyboard navigation/edit/cancel/save; multiselect; context details; clearly show evidence gaps and blocked vs actionable",
+      "data_api_dependency_ids": [
+        "A-03",
+        "A-04",
+        "A-05",
+        "A-06",
+        "A-07",
+        "A-08",
+        "A-16"
+      ],
+      "data_contract": "Authorized typed records, filters, row revisions, field edits, selection → Dense grid, typed states, inline result/errors and stable selection",
+      "unverified_interaction": "50/100/200 mixed rows; density, editing, selection, nested keys, focus return",
+      "acceptance_criteria_ids": [
+        "AC-111",
+        "AC-139",
+        "AC-150"
+      ],
+      "acceptance_requirement": "Editable field allowlist; required types/dates; stale revision; hidden rows not silently selected; Inline failure retains draft and prior server value; precise row/field error; conflict requires reconciliation",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-012",
+      "parent_id": "REQ-MC-P0-12",
+      "feature": "Bulk Editing",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §4.6 / §7 bulk / interaction-guidance.md",
+      "expected_user_visible_behavior": "Preview exact selection; commit each valid row atomically with audit; recheck rights/revisions; failed rows unchanged",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-05",
+        "A-06",
+        "A-08",
+        "A-13"
+      ],
+      "data_contract": "Explicit selected IDs, allowed metadata patch, preview revisions → Per-row success/failure summary and retry selection",
+      "unverified_interaction": "Native preview/commit/retry and per-row conflict/denial/unknown outcomes",
+      "acceptance_criteria_ids": [
+        "AC-112",
+        "AC-133",
+        "AC-139"
+      ],
+      "acceptance_requirement": "Field allowlist; permissions; owner/due values; no bulk verify/waive/promotion; Partial failure explicit; retry failed only; unknown outcome reconcile operation before resubmit",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-013",
+      "parent_id": "REQ-MC-P0-13",
+      "feature": "Excel/CSV Import",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.12 Excel/CSV Import Wizard",
+      "expected_user_visible_behavior": "Map Requirement/Action separately, validate groups/duplicates; explicit confirm; retry-safe apply; verification claims retained for review only",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-05",
+        "A-14"
+      ],
+      "data_contract": "Excel/CSV, source identity/row keys, mapping, timezone, same-matter references → Preview/errors, import result and typed records with lineage",
+      "unverified_interaction": "Real parser, source-key/group rejection, retry and safe drafts",
+      "acceptance_criteria_ids": [
+        "AC-113",
+        "AC-131",
+        "AC-132",
+        "AC-148"
+      ],
+      "acceptance_requirement": "Malformed input/types/dates/formulas, unknown references, duplicate keys, graph cycles and scoped ownership; No mutations on preview; invalid group rejected; no silent coercion/fuzzy merge; changed retry conflicts",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-014",
+      "parent_id": "REQ-MC-P0-14",
+      "feature": "Excel Export",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §7 export / §5.03 Grid",
+      "expected_user_visible_behavior": "Export current permitted facts; preserve distinction and dates; formula-safe literal values; empty export explicit",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-11",
+        "A-15"
+      ],
+      "data_contract": "Authorized scope/filter, selected fields, as-of, timezone → Excel table with type/state/version labels and provenance",
+      "unverified_interaction": "Real file generation/retrieval, formula safety and revoked access",
+      "acceptance_criteria_ids": [
+        "AC-114",
+        "AC-148",
+        "AC-147"
+      ],
+      "acceptance_requirement": "Rights at generation and retrieval; valid fields/scope; no hidden metadata/counts; Export failure yields no partial file presented as complete; revoked permission denies retrieval",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-015",
+      "parent_id": "REQ-MC-P0-15",
+      "feature": "Document Versions",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.10 Document Versions",
+      "expected_user_visible_behavior": "Add version separately from promotion; preserve old links; assess current-version criterion impact, not blanket invalidation",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-06",
+        "A-11"
+      ],
+      "data_contract": "Document identity, version content/reference, prior-current revision, promotion reason → Immutable version identity/lineage, one current pointer, signature observations",
+      "unverified_interaction": "Native version detail/promotion/conflict and retrieval permissions",
+      "acceptance_criteria_ids": [
+        "AC-115",
+        "AC-128"
+      ],
+      "acceptance_requirement": "Same document/matter; current pointer uniqueness; no overwrite; authorized promotion; Stale promotion rejects; missing/unavailable content visible; no false version/current label",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-016",
+      "parent_id": "REQ-MC-P0-16",
+      "feature": "Regulatory Filing Lifecycle",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.11 Filing Detail",
+      "expected_user_visible_behavior": "Track golden stages and repeat/negative paths; no automated filing; package completeness based on declared criteria",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-06",
+        "A-11",
+        "A-12"
+      ],
+      "data_contract": "Filing requirement, party, package criteria/versions, submission/receipt/authority proof → Stage, execution/proof status, waiting party, supplement cycles, next work",
+      "unverified_interaction": "Complete stage/repeat/rejection/withdrawal workflow; receipt is not approval",
+      "acceptance_criteria_ids": [
+        "AC-116",
+        "AC-129",
+        "AC-145"
+      ],
+      "acceptance_requirement": "Stage guards, exact versions/evidence, response cycle references, owner and dates; Premature submission/approval rejected; missing acknowledgement remains waiting; rejection/withdrawal preserved",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-017",
+      "parent_id": "REQ-MC-P0-17",
+      "feature": "External Parties",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.05 Waiting On / §2 roles",
+      "expected_user_visible_behavior": "Create/update scoped party and link waits; party is neither user grant nor legal entity master",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-03",
+        "A-09"
+      ],
+      "data_contract": "Party label/contact reference, role/context, waiting links → Scoped external party context and related open waits",
+      "unverified_interaction": "Scoped party CRUD/waiting response and no external-user role inference",
+      "acceptance_criteria_ids": [
+        "AC-117",
+        "AC-130"
+      ],
+      "acceptance_requirement": "Required label/context; valid links; sensitive contact fields scoped; Referenced party cannot vanish silently; inactivate preserves history and surfaces unresolved waits",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-018",
+      "parent_id": "REQ-MC-P0-18",
+      "feature": "Simple Roles and Ownership",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §2.2 roles / §12 A-01..02",
+      "expected_user_visible_behavior": "Apply matrix to all paths; no cross-workspace leakage; membership revocation takes effect; no implicit grant by ownership field",
+      "data_api_dependency_ids": [
+        "A-01",
+        "A-02",
+        "A-03"
+      ],
+      "data_contract": "Active workspace/matter membership, approved roles, assignment/verifier designation → Enforced allow/deny per operation with access audit",
+      "unverified_interaction": "All real auth/session/membership/role enforcement, no client-only proof",
+      "acceptance_criteria_ids": [
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "acceptance_requirement": "Scope and nested refs validated; last OWNER protected; designation and no-self check; Uniform inaccessible/not-found; no leaked metadata; unauthorized write no domain change",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-019",
+      "parent_id": "REQ-MC-P0-19",
+      "feature": "Delta-Based Status Brief",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.13 Status Brief",
+      "expected_user_visible_behavior": "Separate (t1,t2] changes from unresolved at t2; stable ordering; label draft/provenance; no implicit P1 snapshot/issued workflow",
+      "data_api_dependency_ids": [
+        "A-02",
+        "A-09",
+        "A-15"
+      ],
+      "data_contract": "Authorized matter scope, baseline/as-of, source revisions, history → Deterministic draft brief/export with references, no-change and outstanding sections",
+      "unverified_interaction": "Real deterministic draft/export, baseline/window/provenance/retrieval",
+      "acceptance_criteria_ids": [
+        "AC-119",
+        "AC-138"
+      ],
+      "acceptance_requirement": "t1≤t2; consistent source boundary; no invisible data through summaries; Unavailable/inconsistent historical inputs: explicit cannot generate, not guessed narrative; access change forces new scoped output",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    },
+    {
+      "requirement_id": "FR-020",
+      "parent_id": "REQ-MC-P0-20",
+      "feature": "Separate State Dimensions",
+      "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §4 state model / design-tokens.json / selected-design-system.md",
+      "expected_user_visible_behavior": "Apply state semantics and guards server-side; preserve allowed combinations and propagate derived changes",
+      "data_api_dependency_ids": [
+        "A-03",
+        "A-08",
+        "A-10",
+        "A-12"
+      ],
+      "data_contract": "Applicable object, state inputs, operation, effective time, current revision → Execution, Verification, Dependency, Timing, Attention plus reasons",
+      "unverified_interaction": "Computed five-axis rendering, no-due/stale/error context and comprehension",
+      "acceptance_criteria_ids": [
+        "AC-120",
+        "AC-121",
+        "AC-139",
+        "AC-142",
+        "AC-143",
+        "AC-160"
+      ],
+      "acceptance_requirement": "Allowed transitions/applicability, actor/reason, evidence, current revision; Invalid transition denied with no mutation; inability to compute exposed as unavailable",
+      "implementation_readiness": "SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY; PRODUCT_IMPLEMENTATION_GATED",
+      "architecture_status": null,
+      "review_owner": "Actual Claude Code",
+      "review_evidence": null
+    }
+  ]
+}

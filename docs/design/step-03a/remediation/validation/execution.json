@@ -1,0 +1,45 @@
+{
+  "timestamp_utc": "2026-10-25T02:43:46.055377+00:00",
+  "structural": {
+    "command": "rtk proxy python3 docs/design/step-03a/remediation/validation/structural-checks.py",
+    "exit": 0,
+    "checks": 48
+  },
+  "logic": {
+    "command": "rtk proxy node docs/design/step-03a/remediation/validation/local-checks.cjs",
+    "exit": 0,
+    "groups": 11
+  },
+  "hallmark": {
+    "command": [
+      "rtk",
+      "proxy",
+      "node",
+      "/Users/nguyenvanlan/.codex/skills/hallmark/scripts/sloplint.mjs",
+      "/Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/revised/local-r1/mattercontrol-step-03a-ux-concept-review.html",
+      "--scope",
+      "app",
+      "--genre",
+      "modern-minimal",
+      "--json"
+    ],
+    "cwd": "/tmp",
+    "exit": 1,
+    "summary": {
+      "fails": 245,
+      "reflex": 302,
+      "warns": 7,
+      "waived": 0,
+      "rejected": 0,
+      "answered": 0,
+      "dismissed": 0,
+      "notes": 0,
+      "files": 1,
+      "render": "off"
+    },
+    "render": "off"
+  },
+  "visual": "VISUAL_VALIDATION_NOT_EXECUTED",
+  "dependencies_installed": false,
+  "external_dispatch": false
+}

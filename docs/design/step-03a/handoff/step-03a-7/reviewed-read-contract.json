@@ -1,0 +1,1835 @@
+{
+ "task": "MC-003A-TQ02-TQ08",
+ "reviewer": "Claude Code (actual) 2.1.310, model claude-opus-5-5, interactive session invoked by the human user",
+ "review_type": "DOCUMENT_ONLY this round; source observations carried from MC-003A.6 at unchanged bytes; no runtime",
+ "repository_head": "9262e6ea6f289ba83d70ef0016a55de9aeca6822",
+ "base_commit": "1ec02fde274ef7469646830378c024d2f73bab4d",
+ "proposal_sha256": "a0ae17ab92541cc563288ebb9489091e52932baff6458a80404c1054b19ef8d6",
+ "verdict": "COMPATIBLE_WITH_CONSTRAINTS (DOCUMENT_ONLY); Codex proposal accepted with changes applied below",
+ "contract_authority": "REVIEWED_CANDIDATE: technically accepted by the architecture owner as a candidate within the existing candidate architecture (api-contracts.md, ADR-002). Not PO/product-contract approval; PO Architecture Approval Gate NOT_PASSED. Every field is CANDIDATE_FIELD; every route is candidate",
+ "self_review_disclosure": "The base candidate architecture (api-contracts.md, dependency-engine.md, ADR-002/003) was authored by Claude Code claude-opus-5-5; this review is not independent of it",
+ "po_decisions_required_now": [],
+ "adr": "None: single-snapshot read projection is already ADR-002 §1.6; no material new architecture choice",
+ "control_room": {
+  "route": "GET /api/v1/matters/{matterId}/control-room (existing candidate route; response shape now specified)",
+  "READ-01": {
+   "decision": "Server-assembled display projection evaluated in ONE read snapshot (ADR-002 §1.6 REPEATABLE READ READ ONLY). No persisted ControlRoom entity, store, cache, realtime channel or background pipeline",
+   "rationale": "FR-009 Validation 'summary ties to same scope/as-of' and AC-109 'match underlying authorized records at that boundary' require one boundary; client composition of N reads yields mixed snapshots and N authorization checks. Detail is fetched lazily through typed reads"
+  },
+  "READ-02": {
+   "decision": "One meta.asOf/sourceRevision for every AVAILABLE section. Per-section availability AVAILABLE|UNAVAILABLE only. STALE is not a server value: it is the client's label on a previously received response retained after a failed refetch, shown with that response's asOf. Root HTTP 200 when at least one section is AVAILABLE; 503 /problems/unavailable when the snapshot cannot be opened or no section is available. Each section bounded with server order, nextCursor for continuation on its named collection route; continuation pages are new snapshots with their own asOf/sourceRevision and are never silently merged as coherent",
+   "rationale": "Satisfies FR-009 error behaviour (partial region explicit, never zero blockers from failure) without a retained-data store, which no architecture document selects"
+  },
+  "READ-03": {
+   "decision": "Small typed cards + typed refs {kind, id}; detail via reviewed catalogue; reuse candidate identity/provenance/axes/problem conventions; INT-A refId/value/16KiB envelope not used",
+   "rationale": "Avoids duplicating domain objects and keeps Requirement/Action, criterion/Evidence and exact version/cycle identity"
+  },
+  "meta": "{matterRef:{kind:MATTER,id}, asOf (server RFC3339 with offset), sourceRevision (integer matter event seq), historyMaterializedThrough (integer seq)}; correlation via X-Request-ID response header",
+  "section_envelope": "{availability: AVAILABLE|UNAVAILABLE, items: [card] | null, total: int|null, nextCursor: string|null, unavailableReason: code|null}",
+  "invariants": [
+   "AVAILABLE+[] = successful authorized zero; UNAVAILABLE+null = failed evaluation, never zero/READY",
+   "A 200 response does not mean every section is available; consumers inspect each section",
+   "condition exception counts sourced from an UNAVAILABLE section are null, never 0 (FR-009 'do not display zero blockers from failure')",
+   "A section nextCursor is a cursor for that section's named continuation route; the route's default order for that filter equals the section order, so continuation reaches every row",
+   "condition.completeness=INCOMPLETE if any contributing section is UNAVAILABLE",
+   "Counts/totals are in-Matter from the same snapshot; valid because P0 has no sub-Matter ACL (permission-matrix); a future narrower access rule reopens this",
+   "Section page sizes are an implementation parameter <= inherited candidate cap 200; no new numeric limit is set here",
+   "Reads create no domain event, verification or history; denial goes to restricted security audit only"
+  ],
+  "sections": {
+   "condition": {
+    "cri": [
+     "CRI-01"
+    ],
+    "order": "single card",
+    "card": "{matterRef, label, exceptions:[{code, count}], completeness: COMPLETE|INCOMPLETE}",
+    "rule": "Named exceptions only, codes from approved vocabularies (CRITICAL_ATTENTION, DEPENDENCY_BLOCKED, OVERDUE, DUE_SOON, COMPLETED_UNVERIFIED, DISPUTED, EVIDENCE_GAP, WAITING, OPEN_DECISION, MILESTONE_UNASSESSED, MILESTONE_NOT_READY); counts from the same snapshot. No overall status enum, score or percentage. completeness=INCOMPLETE whenever any contributing section is UNAVAILABLE, and every exception sourced from an UNAVAILABLE section has count:null (never 0)",
+    "continuation": "none"
+   },
+   "blockers": {
+    "cri": [
+     "CRI-02"
+    ],
+    "order": "critical-unsatisfied first (dependency-engine §5), then rootCause before intermediate, then dueAt ascending (no due last), then id",
+    "card": "{ref: REQUIREMENT|ACTION, label, axes, ownerRef, dueAt, waitRef|null, rootCause: bool, failingGates:[{edgeRef, downstreamRef, gate, failed:[code]}], criticalMilestoneRefs, revision}",
+    "rule": "Cards are unsatisfied upstream CAUSES: every node with at least one failing outgoing gate. rootCause=true when the cause itself is dependency READY (e.g. AtlasT0 RQ-04 WAITING+READY failing DEP-01). The card shows the cause's own axes and wait, so WAITING and BLOCKED stay distinct. Blocked targets and transitive impact via DR-06",
+    "continuation": "GET /api/v1/matters/{matterId}/blockers (new candidate; same card and order)"
+   },
+   "nextActions": {
+    "cri": [
+     "CRI-03",
+     "CRI-09"
+    ],
+    "order": "RULE-021: critical-unsatisfied, dueAt asc (no due last), id",
+    "card": "{ref: ACTION, label, ownerRef, dueAt, axes, permittedActions?}; section adds excluded:[{ref, reason: WAITING|BLOCKED|UNASSIGNED}]",
+    "rule": "Backend RULE-021 candidates only; excluded reasons always returned so an empty list explains itself (AtlasT0). Requirements never appear",
+    "continuation": "GET /api/v1/matters/{matterId}/next-actions (existing candidate)"
+   },
+   "waitingOn": {
+    "cri": [
+     "CRI-04"
+    ],
+    "order": "followUpDueAt ascending (none last), then openedAt, then id",
+    "card": "{ref: WAIT, subjectRef, partyRef|condition, internalOwnerRef, reason, followUpDueAt, openedAt, openedEventSeq}",
+    "rule": "Subject dependency state is shown from the subject's own axes; WAITING never implies BLOCKED. openedAt/openedEventSeq identify the event that opened the wait (execution transition or filing observation, e.g. AUTHORITY_REVIEW); system-recorded time, not an asserted real-world start (TQ-06)",
+    "continuation": "GET /api/v1/matters/{matterId}/waits"
+   },
+   "milestones": {
+    "cri": [
+     "CRI-05"
+    ],
+    "order": "dueAt ascending, then id",
+    "card": "{ref: MILESTONE, label, dueAt, critical, readiness:{state: READY|NOT_READY|UNASSESSED, satisfied, total, unsatisfied:[{requirementRef, failed:[code]}]}}",
+    "rule": "UNASSESSED (no declared prerequisites) is a successful AVAILABLE result, not UNAVAILABLE. No percentage",
+    "continuation": "GET /api/v1/matters/{matterId}/milestones"
+   },
+   "evidenceGaps": {
+    "cri": [
+     "CRI-06"
+    ],
+    "order": "subject critical first, then subject dueAt, then id",
+    "card": "{ref: EVIDENCE_REQUIREMENT, criterionRevisionRef, componentKey?, subjectRef, gap: MISSING|PENDING_REVIEW|REJECTED|EXPIRED|DISPUTED|WITHDRAWN, evidenceRefs (actual only)}",
+    "rule": "A gap never carries a fabricated Evidence reference; criterion and Evidence stay distinct types",
+    "continuation": "GET /api/v1/matters/{matterId}/evidence-requirements?gap=true"
+   },
+   "decisions": {
+    "cri": [
+     "CRI-07"
+    ],
+    "order": "dueAt if recorded, then createdAt, then id",
+    "card": "{ref: DECISION, label (question), lifecycle, ownerRef|null, relatedRefs}",
+    "rule": "Open decisions only; null owner shown as unassigned, never inferred. No override of dependency or proof",
+    "continuation": "GET /api/v1/matters/{matterId}/decisions?open=true"
+   },
+   "recentChanges": {
+    "cri": [
+     "CRI-08"
+    ],
+    "order": "event seq descending",
+    "card": "{eventRef, type, actorRef, recordedAt, effectiveAt, targetRef, correlationId}",
+    "rule": "Most recent authorized events by seq; a still-open old blocker is not a change. Time-window mapping ('since T-1 09:00') remains TQ-05",
+    "continuation": "GET /api/v1/matters/{matterId}/events?before={seq} (new candidate query param)"
+   }
+  },
+  "embedded_groups": {
+   "CRI-09": "actionability: embedded. nextActions.excluded reasons + optional advisory permittedActions per card (absent = unknown, never allowed) + caller's own Matter role on DR-01. Backend enforces; TQ-03 per-claim verifier eligibility stays open",
+   "CRI-10": "navigation: embedded. Every card carries typed ref/relatedRefs resolved through the reviewed route table; no hrefs, no harness refId"
+  }
+ },
+ "reference": {
+  "shape": "{kind, id} (+ cycleNo for FILING_CYCLE where id = filingId; EVENT id = seq); matterId only in responses that span Matters (e.g. /me/actions)",
+  "kinds": [
+   "MATTER",
+   "WORKSTREAM",
+   "MILESTONE",
+   "REQUIREMENT",
+   "ACTION",
+   "DEPENDENCY_EDGE",
+   "WAIT",
+   "EVIDENCE_REQUIREMENT",
+   "CRITERION_REVISION",
+   "EVIDENCE",
+   "EVIDENCE_CLAIM",
+   "ASSESSMENT",
+   "DISPUTE",
+   "DOCUMENT",
+   "DOCUMENT_VERSION",
+   "SIGNATURE_OBSERVATION",
+   "FILING",
+   "FILING_CYCLE",
+   "FILING_SUBMISSION",
+   "EXTERNAL_PARTY",
+   "DECISION",
+   "FINDING",
+   "RISK",
+   "EVENT",
+   "USER"
+  ],
+  "relation_roles": [
+   "subject",
+   "upstream",
+   "downstream",
+   "target",
+   "criterionRevision",
+   "proof",
+   "documentVersion",
+   "submittedVersion",
+   "cycle",
+   "party",
+   "owner",
+   "related"
+  ],
+  "rules": [
+   "All refs in a Matter-scoped response belong to that Matter (RULE-003 no cross-matter links)",
+   "Exact identity retained: documentVersionId never replaced by current pointer; criterionRevisionId; claimId; (filingId, cycleNo) reusing candidate expectedCycleNo; submissionId",
+   "USER refs expose display name only for co-members of the Matter"
+  ]
+ },
+ "field_registry_review": [
+  {
+   "path": "matterRef",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Typed {kind: MATTER, id}",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "meta",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Envelope provenance",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "meta.asOf",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Candidate §1 server-captured instant; single snapshot",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "meta.sourceRevision",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Integer matter event seq (candidate §1)",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "meta.historyMaterializedThrough",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Integer seq (candidate §1)",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "meta.displayTimezone",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "REJECTED",
+   "reviewed_note": "Instants carry offsets; display zone is a client/user preference; no approved Matter timezone field",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "meta.requestId",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Use X-Request-ID response header, not a body field",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Display-only regions",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "8 sections; actionability and navigation embedded in cards",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>.availability",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "AVAILABLE|UNAVAILABLE only; STALE is client-side presentation of a retained response",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>.asOf",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "REJECTED",
+   "reviewed_note": "Single snapshot: meta.asOf applies to every AVAILABLE section",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>.sourceRevision",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "REJECTED",
+   "reviewed_note": "Single snapshot: meta.sourceRevision applies",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>.items",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "[] successful zero; null when UNAVAILABLE",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>.reason",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "unavailableReason closed code, null when AVAILABLE",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>.nextCursor",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Continuation on the section's named collection route",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].resourceRef",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Renamed ref; {kind, id}",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "resourceRef.kind",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Closed enum, see reference.kinds",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "resourceRef.id",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Backend UUIDv7 (EVENT uses seq)",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "resourceRef.matterId",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Omitted in Matter-scoped responses; present only where a response spans Matters",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].label",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Short authorized label; not truncated as a contract",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].stateProjection",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Renamed axes; reuse candidate node axis shape, applicable axes only",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].ownerRef",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "USER ref or null (unassigned)",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].relatedRefs",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Typed refs with relation role",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].dueAt",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "RFC3339 with offset; null = no due date",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].permittedActions",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Optional advisory; absent = unknown; TQ-03 open",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].eventRef",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "EVENT ref (seq)",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].contentCompleteness",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "REJECTED",
+   "reviewed_note": "No product truncation contract; labels are short and reasons are structured codes",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].revision",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Resource revision for later commands",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].reason",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Structured reasons[]/failingGates[] codes with refs (candidate failedGuards style)",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "relatedRefs[].relation",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Closed role enum, see reference.relation_roles",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].eventRecordedAt",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Renamed recordedAt",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].eventEffectiveAt",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Renamed effectiveAt; null when undefined",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].resourceLifecycle",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "ACCEPTED",
+   "reviewed_note": "Renamed lifecycle; Decision/Finding/Risk only; vocabulary candidate",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "items[].milestoneReadiness",
+   "proposal_status": "CANDIDATE_FIELD",
+   "disposition": "CHANGED",
+   "reviewed_note": "Renamed readiness {state, satisfied, total, unsatisfied[]}",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.<group>.total",
+   "proposal_status": "NOT_IN_PROPOSAL",
+   "disposition": "ADDED",
+   "reviewed_note": "In-Matter count from same snapshot; null when UNAVAILABLE",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.nextActions.excluded",
+   "proposal_status": "NOT_IN_PROPOSAL",
+   "disposition": "ADDED",
+   "reviewed_note": "[{ref, reason: WAITING|BLOCKED|UNASSIGNED}] (dependency-engine §7)",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.condition.items[].exceptions",
+   "proposal_status": "NOT_IN_PROPOSAL",
+   "disposition": "ADDED",
+   "reviewed_note": "[{code, count}] named exceptions",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "sections.condition.items[].completeness",
+   "proposal_status": "NOT_IN_PROPOSAL",
+   "disposition": "ADDED",
+   "reviewed_note": "COMPLETE|INCOMPLETE",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "blockers.items[].failingGates / rootCause / waitRef",
+   "proposal_status": "NOT_IN_PROPOSAL",
+   "disposition": "ADDED",
+   "reviewed_note": "Cause card: failing outgoing gates [{edgeRef, downstreamRef, gate, failed[]}], rootCause bool, own wait ref",
+   "authority": "CANDIDATE_FIELD"
+  },
+  {
+   "path": "waitingOn.items[].openedAt / openedEventSeq",
+   "proposal_status": "NOT_IN_PROPOSAL",
+   "disposition": "ADDED",
+   "reviewed_note": "TQ-06: recorded time and seq of the opening transition",
+   "authority": "CANDIDATE_FIELD"
+  }
+ ],
+ "read_common_rules": [
+  "RC-1 Check order: authentication (401) -> Matter membership resolved from path or resource (404 uniform) -> query/cursor validation (422) -> evaluation (503). A revoked caller with a valid cursor gets 404",
+  "RC-2 No 403 on P0 reads; 403 remains for member role failures on commands only",
+  "RC-3 Resource-in-path routes resolve the owning Matter server-side; foreign or other-kind ids return the same 404",
+  "RC-4 Every response carries asOf/sourceRevision; singletons carry revision (+ETag) for later commands; GETs never take If-Match/If-None-Match (CI-02)",
+  "RC-5 Cache-Control: private, no-store; no shared cache of per-user legal data; no presigned content URLs",
+  "RC-6 Cursors are opaque, contain only keyset values of rows the caller could see, and are bound to actor/matter/collection/filter/sort; mismatch -> 422 without detail",
+  "RC-7 limit <= 200 inherited from candidate §1 (not a new approval); defaults are implementation parameters; in-Matter totals from the same snapshot allowed",
+  "RC-8 Derived axes and readiness are server values at asOf; clients never recompute them",
+  "RC-9 Reads create no domain event, verification or history; denials go to restricted security audit; X-Request-ID correlation; no tokens or legal payload in logs",
+  "RC-10 No product truncation contract; INT-A refId/value/16KiB rules are harness-only and not applied"
+ ],
+ "existing_candidate_routes_reused": [
+  "GET /api/v1/matters/{matterId}/control-room",
+  "GET /api/v1/matters/{matterId}/grid",
+  "GET /api/v1/matters/{matterId}/next-actions",
+  "GET /api/v1/me/actions",
+  "GET /api/v1/milestones/{id}/readiness",
+  "GET /api/v1/document-versions/{id}/content",
+  "GET /api/v1/matters/{matterId}/events",
+  "GET /api/v1/operations/{idempotencyKey}"
+ ],
+ "detail_read_catalogue": [
+  {
+   "id": "DR-01",
+   "requirement_ids": [
+    "FR-009",
+    "FR-018"
+   ],
+   "ux_interaction": "Matter header/context, role-aware affordances",
+   "domain_resource": "Matter",
+   "existing_coverage": "None",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "matterId",
+   "required_data": "label, workspace label, caller's own Matter role (viewerRole), asOf, revision",
+   "links": "workstreams/milestones collections",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-109",
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-147"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "viewerRole is the caller's own role, advisory only; does not close TQ-03"
+  },
+  {
+   "id": "DR-02",
+   "requirement_ids": [
+    "FR-001",
+    "FR-009"
+   ],
+   "ux_interaction": "Workstream filter/segment",
+   "domain_resource": "Workstream",
+   "existing_coverage": "None",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/workstreams"
+   ],
+   "proposal_disposition": "CHANGED",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "workstreamId",
+   "required_data": "label, order",
+   "links": "grid?workstreamId= filter",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-109"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Proposed GET /workstreams/{id} rejected (YAGNI): workstreams are grouping labels; members via grid filter"
+  },
+  {
+   "id": "DR-03",
+   "requirement_ids": [
+    "FR-002",
+    "FR-009"
+   ],
+   "ux_interaction": "Milestones panel and readiness drill-down",
+   "domain_resource": "Milestone",
+   "existing_coverage": "GET /milestones/{id}/readiness (candidate)",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/milestones (default order dueAt asc, id)",
+    "GET /api/v1/milestones/{id}/readiness (existing; add label/dueAt/critical to its response)"
+   ],
+   "proposal_disposition": "CHANGED",
+   "reviewed_status": "EXISTING_WITH_GAP_RESOLVED",
+   "resource_identifier": "milestoneId",
+   "required_data": "label, dueAt, critical, readiness {state READY|NOT_READY|UNASSESSED, satisfied, total, unsatisfied[]}",
+   "links": "required Requirements",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-102",
+    "AC-109",
+    "AC-141"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Proposed GET /milestones/{id} rejected as redundant with the existing readiness route"
+  },
+  {
+   "id": "DR-04",
+   "requirement_ids": [
+    "FR-001",
+    "FR-006"
+   ],
+   "ux_interaction": "Requirement drawer/inspector (NAV-01/05)",
+   "domain_resource": "Requirement",
+   "existing_coverage": "Create/PATCH/transitions only",
+   "reviewed_operations": [
+    "GET /api/v1/requirements/{id}"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "requirementId",
+   "required_data": "title/outcome, ownerRef, dueAt, applicable axes with reasons, revision",
+   "links": "linked Action refs, evidence-requirement refs, current wait ref, workstream",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-106",
+    "AC-121",
+    "AC-127",
+    "AC-159"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Kind-specific route; an Action id returns 404, never another kind"
+  },
+  {
+   "id": "DR-05",
+   "requirement_ids": [
+    "FR-001",
+    "FR-003",
+    "FR-011"
+   ],
+   "ux_interaction": "Action drawer/inspector (NAV-06)",
+   "domain_resource": "Action",
+   "existing_coverage": "Grid/next-actions aggregate only",
+   "reviewed_operations": [
+    "GET /api/v1/actions/{id}"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "actionId",
+   "required_data": "title/work, ownerRef, dueAt, applicable axes with reasons, revision",
+   "links": "linked Requirement refs, current wait ref",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-103",
+    "AC-111",
+    "AC-121",
+    "AC-139",
+    "AC-144",
+    "AC-150",
+    "AC-159"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": ""
+  },
+  {
+   "id": "DR-06",
+   "requirement_ids": [
+    "FR-005",
+    "FR-009"
+   ],
+   "ux_interaction": "Dependency View and impact rail (NAV-09)",
+   "domain_resource": "Dependency edges",
+   "existing_coverage": "Edge writes only",
+   "reviewed_operations": [
+    "GET /api/v1/nodes/{id}/dependencies",
+    "GET /api/v1/matters/{matterId}/blockers"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "nodeId; edges by dependencyEdgeId",
+   "required_data": "incoming[] {edgeRef, upstreamRef, gate, satisfied, failed[], revision} (all incoming; paged only past cap with nextCursor); downstream[] transitive reachable refs ordered by distance then id, keyset paged. Matter blockers collection: blocker cards (see control_room.sections.blockers), default order = section order",
+   "links": "upstream/downstream node refs",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-105",
+    "AC-109",
+    "AC-122",
+    "AC-123",
+    "AC-124",
+    "AC-125",
+    "AC-146"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Edge revision returned for :remove/:replace-gate commands; a partial downstream page never claims the full chain"
+  },
+  {
+   "id": "DR-07",
+   "requirement_ids": [
+    "FR-006",
+    "FR-007"
+   ],
+   "ux_interaction": "Criteria checklist (NAV-02)",
+   "domain_resource": "Evidence Requirement",
+   "existing_coverage": "Criterion revision writes only",
+   "reviewed_operations": [
+    "GET /api/v1/evidence-requirements/{id}",
+    "GET /api/v1/matters/{matterId}/evidence-requirements?subjectId=&gap=&claimStatus= (default order with gap=true: subject critical, subject dueAt, id)"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "evidenceRequirementId; criterionRevisionId",
+   "required_data": "subject ref, current criterion revision (components, acceptable proof, current/fixed version rule, validity), prior revision refs, applicability, claims summary {claimRef, evidenceRef, status}, gap codes, revision",
+   "links": "subject, claims, evidence",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08",
+    "A-11",
+    "A-12"
+   ],
+   "acceptance_ids": [
+    "AC-106",
+    "AC-107",
+    "AC-121",
+    "AC-126",
+    "AC-127",
+    "AC-140"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Collection added: serves Evidence & Verification page and evidenceGaps continuation"
+  },
+  {
+   "id": "DR-08",
+   "requirement_ids": [
+    "FR-006",
+    "FR-007"
+   ],
+   "ux_interaction": "Evidence record (NAV-03)",
+   "domain_resource": "Evidence + claims",
+   "existing_coverage": "Submission/claim writes only",
+   "reviewed_operations": [
+    "GET /api/v1/evidence/{id}"
+   ],
+   "proposal_disposition": "CHANGED",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "evidenceId; claimId",
+   "required_data": "kind, submittedBy, submittedAt, documentVersionRef (exact) or non-document reference, validity, claims[] inline {claimRef, criterionRevisionRef, componentKey, status, revision}, revision",
+   "links": "criterion revisions, document version, assessments",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08",
+    "A-11",
+    "A-12"
+   ],
+   "acceptance_ids": [
+    "AC-106",
+    "AC-107",
+    "AC-121",
+    "AC-126",
+    "AC-127",
+    "AC-140"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Proposed GET /evidence/{id}/claims rejected: claims inline (one per addressed criterion, small)"
+  },
+  {
+   "id": "DR-09",
+   "requirement_ids": [
+    "FR-007",
+    "FR-008"
+   ],
+   "ux_interaction": "Verification history (NAV-04)",
+   "domain_resource": "Assessments/disputes",
+   "existing_coverage": "Assessment/dispute commands only",
+   "reviewed_operations": [
+    "GET /api/v1/evidence-claims/{id}/assessments"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "claimId; assessmentId",
+   "required_data": "assessments[] {assessmentRef, verdict, rationale, reviewerRef, assessedDocumentVersionRef, criterionRevisionRef, recordedAt, revokedBy?, disputes[]}; current subject aggregate is a separate backend projection",
+   "links": "claim, evidence, events",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08",
+    "A-11",
+    "A-12"
+   ],
+   "acceptance_ids": [
+    "AC-107",
+    "AC-108",
+    "AC-121",
+    "AC-126",
+    "AC-127",
+    "AC-136",
+    "AC-140",
+    "AC-149",
+    "AC-153"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": ""
+  },
+  {
+   "id": "DR-10",
+   "requirement_ids": [
+    "FR-015"
+   ],
+   "ux_interaction": "Documents page and ledger",
+   "domain_resource": "Document",
+   "existing_coverage": "Upload/promote only",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/documents",
+    "GET /api/v1/documents/{id}",
+    "GET /api/v1/documents/{id}/versions"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "documentId; documentVersionId",
+   "required_data": "title, currentVersionRef|null, revision; versions[] {versionRef, seq, createdAt, isCurrent (derived), signatureSummary}",
+   "links": "versions, promotion events",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08",
+    "A-11",
+    "A-12"
+   ],
+   "acceptance_ids": [
+    "AC-115",
+    "AC-128"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Matter documents collection added for the Documents nav page"
+  },
+  {
+   "id": "DR-11",
+   "requirement_ids": [
+    "FR-015",
+    "FR-016"
+   ],
+   "ux_interaction": "Exact version detail (NAV-07)",
+   "domain_resource": "Document Version",
+   "existing_coverage": "GET /document-versions/{id}/content (candidate)",
+   "reviewed_operations": [
+    "GET /api/v1/document-versions/{id}",
+    "GET /api/v1/document-versions/{id}/content (existing)"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "EXISTING_WITH_GAP_RESOLVED",
+   "resource_identifier": "documentVersionId (never the current pointer)",
+   "required_data": "documentRef, version seq, createdAt, isCurrent at asOf, signatureObservations[] {signatory, observedAt, status}, content metadata (no filename on denial)",
+   "links": "document, evidence, filing submissions",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08",
+    "A-11",
+    "A-12"
+   ],
+   "acceptance_ids": [
+    "AC-115",
+    "AC-116",
+    "AC-128",
+    "AC-129",
+    "AC-145"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Content via authorized streaming proxy, no presigned GET (document-lineage §4); storage provider TB-05 open"
+  },
+  {
+   "id": "DR-12",
+   "requirement_ids": [
+    "FR-016",
+    "FR-004"
+   ],
+   "ux_interaction": "Filing detail, cycles (NAV-07/08)",
+   "domain_resource": "Filing + cycles + submissions",
+   "existing_coverage": "Observation/correction writes only",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/filings",
+    "GET /api/v1/filings/{id}",
+    "GET /api/v1/filings/{id}/cycles"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "filingId; (filingId, cycleNo); submissionId",
+   "required_data": "stage, applicable axes, negativeOutcome, proofEpoch, authorityPartyRef, revision; cycles[] {cycleNo, requestRef, ownerRef, dueAt, opened/closed, submissions[] {submissionRef, reference, submittedAt, submittedVersionRefs (exact)}, receipt/outcome evidence refs}",
+   "links": "requirement, versions, evidence, waits, party",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08",
+    "A-11",
+    "A-12"
+   ],
+   "acceptance_ids": [
+    "AC-104",
+    "AC-116",
+    "AC-129",
+    "AC-130",
+    "AC-145"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Cycle identity reuses candidate expectedCycleNo / filing-model cycle_no; no separate cycle id"
+  },
+  {
+   "id": "DR-13",
+   "requirement_ids": [
+    "FR-017",
+    "FR-004"
+   ],
+   "ux_interaction": "Party context in waits/filings",
+   "domain_resource": "External Party",
+   "existing_coverage": "Party writes only",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/external-parties"
+   ],
+   "proposal_disposition": "CHANGED",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "externalPartyId",
+   "required_data": "label, role/context, inactive flag, revision",
+   "links": "waits?partyId=",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-104",
+    "AC-117",
+    "AC-130"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Proposed GET /external-parties/{id} rejected (YAGNI): list carries all fields; open waits via waits?partyId="
+  },
+  {
+   "id": "DR-14",
+   "requirement_ids": [
+    "FR-001",
+    "FR-009"
+   ],
+   "ux_interaction": "Decision queue/detail (NAV-10)",
+   "domain_resource": "Decision",
+   "existing_coverage": "Basic decision writes only",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/decisions?open= (default order dueAt, createdAt, id)",
+    "GET /api/v1/decisions/{id}"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "decisionId",
+   "required_data": "question, lifecycle, ownerRef|null, outcome/rationale if recorded, relatedRefs, revision",
+   "links": "related records, events",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-109",
+    "AC-121",
+    "AC-159"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": ""
+  },
+  {
+   "id": "DR-15",
+   "requirement_ids": [
+    "FR-008",
+    "FR-019"
+   ],
+   "ux_interaction": "History tab, recent changes (NAV-10)",
+   "domain_resource": "Event History",
+   "existing_coverage": "GET /matters/{m}/events?after=&limit=&targetId=&commandKey= (candidate)",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/events?after=|before=&limit=&targetId= (after: seq asc; before: seq desc)"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "EXISTING_WITH_GAP_RESOLVED",
+   "resource_identifier": "matterId + seq",
+   "required_data": "events[] {seq, type, actorRef, targetRef, recordedAt, effectiveAt, causeSeq, correlationId, reason, before/after}",
+   "links": "targets",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-108",
+    "AC-119",
+    "AC-136",
+    "AC-138",
+    "AC-149",
+    "AC-153"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Adds keyset 'before' for most-recent-first; time-window filter stays TQ-05; security audit never included"
+  },
+  {
+   "id": "DR-16",
+   "requirement_ids": [
+    "FR-004",
+    "FR-017"
+   ],
+   "ux_interaction": "Waiting On page/detail (NAV-08)",
+   "domain_resource": "Waiting relation",
+   "existing_coverage": "POST /waits/{id}:resolve only",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/waits?partyId=&subjectId=&open= (default order followUpDueAt asc none last, openedAt, id)",
+    "GET /api/v1/waits/{id}"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "waitId",
+   "required_data": "subjectRef, partyRef|condition, internalOwnerRef, reason, followUpDueAt, openedAt, openedEventSeq, resolution {responseReference, resolvedAt}|null, revision",
+   "links": "subject, party, events",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-104",
+    "AC-117",
+    "AC-130"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "Explicit collection: waits are created by execution transitions, so no create route exists to mirror"
+  },
+  {
+   "id": "DR-17",
+   "requirement_ids": [
+    "FR-001",
+    "FR-009"
+   ],
+   "ux_interaction": "Basic Finding/Risk context",
+   "domain_resource": "Finding, Risk (RULE-020 basic)",
+   "existing_coverage": "Basic writes only",
+   "reviewed_operations": [
+    "GET /api/v1/matters/{matterId}/findings",
+    "GET /api/v1/findings/{id}",
+    "GET /api/v1/matters/{matterId}/risks",
+    "GET /api/v1/risks/{id}"
+   ],
+   "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+   "reviewed_status": "REVIEWED_CANDIDATE",
+   "resource_identifier": "findingId; riskId",
+   "required_data": "label, lifecycle, ownerRef|null, follow-up/resolution refs (finding), attention/response (risk), revision",
+   "links": "subject, action, evidence",
+   "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+   "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+   "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+   "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+   "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+   "architecture_dependencies": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-121",
+    "AC-159"
+   ],
+   "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+   "review_note": "P1 taxonomy/scoring/entity graph rejected"
+  }
+ ],
+ "reviewed_read_operations": [
+  "GET /api/v1/actions/{id}",
+  "GET /api/v1/decisions/{id}",
+  "GET /api/v1/document-versions/{id}",
+  "GET /api/v1/document-versions/{id}/content (existing)",
+  "GET /api/v1/documents/{id}",
+  "GET /api/v1/documents/{id}/versions",
+  "GET /api/v1/evidence-claims/{id}/assessments",
+  "GET /api/v1/evidence-requirements/{id}",
+  "GET /api/v1/evidence/{id}",
+  "GET /api/v1/filings/{id}",
+  "GET /api/v1/filings/{id}/cycles",
+  "GET /api/v1/findings/{id}",
+  "GET /api/v1/matters/{matterId}",
+  "GET /api/v1/matters/{matterId}/blockers",
+  "GET /api/v1/matters/{matterId}/decisions?open= (default order dueAt, createdAt, id)",
+  "GET /api/v1/matters/{matterId}/documents",
+  "GET /api/v1/matters/{matterId}/events?after=|before=&limit=&targetId= (after: seq asc; before: seq desc)",
+  "GET /api/v1/matters/{matterId}/evidence-requirements?subjectId=&gap=&claimStatus= (default order with gap=true: subject critical, subject dueAt, id)",
+  "GET /api/v1/matters/{matterId}/external-parties",
+  "GET /api/v1/matters/{matterId}/filings",
+  "GET /api/v1/matters/{matterId}/findings",
+  "GET /api/v1/matters/{matterId}/milestones (default order dueAt asc, id)",
+  "GET /api/v1/matters/{matterId}/risks",
+  "GET /api/v1/matters/{matterId}/waits?partyId=&subjectId=&open= (default order followUpDueAt asc none last, openedAt, id)",
+  "GET /api/v1/matters/{matterId}/workstreams",
+  "GET /api/v1/milestones/{id}/readiness (existing; add label/dueAt/critical to its response)",
+  "GET /api/v1/nodes/{id}/dependencies",
+  "GET /api/v1/requirements/{id}",
+  "GET /api/v1/risks/{id}",
+  "GET /api/v1/waits/{id}"
+ ],
+ "navigation_review": [
+  {
+   "id": "NAV-01",
+   "from": "ControlRoom blocker",
+   "to": "Requirement detail",
+   "reviewed_route": "DR-04",
+   "rule": "Card ref REQUIREMENT -> GET /requirements/{id}; compare sourceRevision with overview, show 'changed since overview' if newer",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-02",
+   "from": "Requirement detail",
+   "to": "Evidence Requirement",
+   "reviewed_route": "DR-07",
+   "rule": "criterionRevisionRef from gap -> GET /evidence-requirements/{id}; a gap has no evidence ref",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-03",
+   "from": "Evidence Requirement",
+   "to": "Actual Evidence",
+   "reviewed_route": "DR-08",
+   "rule": "Only actual evidenceRef/claimRef -> GET /evidence/{id}; missing proof stays a gap",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-04",
+   "from": "Actual Evidence",
+   "to": "Verification history",
+   "reviewed_route": "DR-09",
+   "rule": "claimRef -> GET /evidence-claims/{id}/assessments",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-05",
+   "from": "OperationalGrid selected Requirement",
+   "to": "Contextual inspector",
+   "reviewed_route": "DR-04",
+   "rule": "Grid row ref -> GET /requirements/{id}; grid selection/filter/scroll retained client-side",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-06",
+   "from": "OperationalGrid selected Action",
+   "to": "Contextual inspector",
+   "reviewed_route": "DR-05",
+   "rule": "Grid row ref -> GET /actions/{id}",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-07",
+   "from": "Filing",
+   "to": "Document/version",
+   "reviewed_route": "DR-11",
+   "rule": "submittedVersionRefs from the cycle -> GET /document-versions/{id}; never document.currentVersion",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-08",
+   "from": "Filing lifecycle",
+   "to": "WaitingOn/supplement",
+   "reviewed_route": "DR-12",
+   "rule": "GET /filings/{id}/cycles then wait ref -> GET /waits/{id}",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-09",
+   "from": "Blocker/inspector",
+   "to": "Dependency explanation",
+   "reviewed_route": "DR-06",
+   "rule": "blocker card ref or failingGates.downstreamRef -> GET /nodes/{id}/dependencies",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  },
+  {
+   "id": "NAV-10",
+   "from": "Recent change/decision",
+   "to": "Event/decision context",
+   "reviewed_route": "DR-14",
+   "rule": "decision ref -> GET /decisions/{id}; event ref -> GET /matters/{m}/events?targetId= (DR-15)",
+   "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+  }
+ ],
+ "testability_review": [
+  {
+   "id": "CT-01",
+   "scenario": "Authorized Matter read",
+   "requirement_ids": [
+    "FR-009",
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-109",
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-137",
+    "AC-140",
+    "AC-147",
+    "AC-149"
+   ],
+   "reviewed_element": "control-room meta + RC-1/RC-9",
+   "testability": "Testable: 200 with sections, single asOf, no events created",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-02",
+   "scenario": "Unauthorized Matter read",
+   "requirement_ids": [
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-147",
+    "AC-149"
+   ],
+   "reviewed_element": "RC-1/RC-3",
+   "testability": "Testable: non-member and nonexistent Matter return byte-identical 404",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-03",
+   "scenario": "Resource not found",
+   "requirement_ids": [
+    "FR-001",
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-118",
+    "AC-121",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-147",
+    "AC-149",
+    "AC-159"
+   ],
+   "reviewed_element": "RC-3",
+   "testability": "Testable on every DR singleton route",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-04",
+   "scenario": "Cross-workspace reference",
+   "requirement_ids": [
+    "FR-005",
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-105",
+    "AC-118",
+    "AC-122",
+    "AC-123",
+    "AC-124",
+    "AC-125",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-146",
+    "AC-147",
+    "AC-149"
+   ],
+   "reviewed_element": "RC-3, reference rules",
+   "testability": "Testable: foreign-Matter id on resource route -> 404; responses never emit foreign refs",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-05",
+   "scenario": "Missing/invalid reference",
+   "requirement_ids": [
+    "FR-001"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-121",
+    "AC-159"
+   ],
+   "reviewed_element": "RC-3",
+   "testability": "Testable: malformed id 404/422 per route convention; other-kind id -> 404",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-06",
+   "scenario": "Empty sections",
+   "requirement_ids": [
+    "FR-009"
+   ],
+   "acceptance_ids": [
+    "AC-109",
+    "AC-137"
+   ],
+   "reviewed_element": "READ-02 invariants",
+   "testability": "Testable: AVAILABLE + [] with total 0",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-07",
+   "scenario": "Multiple blockers",
+   "requirement_ids": [
+    "FR-005",
+    "FR-009"
+   ],
+   "acceptance_ids": [
+    "AC-105",
+    "AC-109",
+    "AC-122",
+    "AC-123",
+    "AC-124",
+    "AC-125",
+    "AC-137",
+    "AC-146"
+   ],
+   "reviewed_element": "blockers (cause cards, failingGates), DR-06",
+   "testability": "Testable: AtlasT0 RQ-04 rootCause card (WAITING+READY) failing DEP-01, AC-05/07/08 intermediate causes; partial downstream page has nextCursor",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-08",
+   "scenario": "Completed but unverified",
+   "requirement_ids": [
+    "FR-001",
+    "FR-007",
+    "FR-020"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-107",
+    "AC-120",
+    "AC-121",
+    "AC-126",
+    "AC-127",
+    "AC-139",
+    "AC-140",
+    "AC-142",
+    "AC-143",
+    "AC-159",
+    "AC-160"
+   ],
+   "reviewed_element": "axes",
+   "testability": "Testable: RQ-02 COMPLETED + UNVERIFIED, exception COMPLETED_UNVERIFIED",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-09",
+   "scenario": "Waiting on party",
+   "requirement_ids": [
+    "FR-004",
+    "FR-017"
+   ],
+   "acceptance_ids": [
+    "AC-104",
+    "AC-117",
+    "AC-130"
+   ],
+   "reviewed_element": "waitingOn, DR-16, DR-13",
+   "testability": "Testable: RQ-04/AC-04 waits with party and internal owner; subject dependency independent",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-10",
+   "scenario": "Detail permission filtering/revocation",
+   "requirement_ids": [
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-147",
+    "AC-149"
+   ],
+   "reviewed_element": "RC-1, RC-5",
+   "testability": "Testable: revoke between card and detail -> 404; client purges retained detail",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-11",
+   "scenario": "Missing Evidence",
+   "requirement_ids": [
+    "FR-006"
+   ],
+   "acceptance_ids": [
+    "AC-106",
+    "AC-127"
+   ],
+   "reviewed_element": "evidenceGaps, DR-07",
+   "testability": "Testable: ER-02/ER-04 gap MISSING with no evidenceRefs",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-12",
+   "scenario": "Superseded/version proof",
+   "requirement_ids": [
+    "FR-007",
+    "FR-015"
+   ],
+   "acceptance_ids": [
+    "AC-107",
+    "AC-115",
+    "AC-121",
+    "AC-126",
+    "AC-127",
+    "AC-128",
+    "AC-140"
+   ],
+   "reviewed_element": "DR-08/09/11, reference rules",
+   "testability": "Testable: assessedDocumentVersionRef stays v2 after promotion; fixed-version criterion unaffected",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-13",
+   "scenario": "Filing/document references",
+   "requirement_ids": [
+    "FR-015",
+    "FR-016"
+   ],
+   "acceptance_ids": [
+    "AC-115",
+    "AC-116",
+    "AC-128",
+    "AC-129",
+    "AC-145"
+   ],
+   "reviewed_element": "DR-12, DR-11",
+   "testability": "Testable: FIL-02 cycle submittedVersionRefs exact; receipt without outcome not approval",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-14",
+   "scenario": "Partial/unavailable section",
+   "requirement_ids": [
+    "FR-009"
+   ],
+   "acceptance_ids": [
+    "AC-109",
+    "AC-137"
+   ],
+   "reviewed_element": "READ-02 partial 200 / 503; condition null counts",
+   "testability": "Testable with fault injection: one section UNAVAILABLE + null, condition INCOMPLETE with that exception count null (not 0), others AVAILABLE",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-15",
+   "scenario": "Freshness/mixed snapshots",
+   "requirement_ids": [
+    "FR-009",
+    "FR-020"
+   ],
+   "acceptance_ids": [
+    "AC-109",
+    "AC-120",
+    "AC-121",
+    "AC-137",
+    "AC-139",
+    "AC-142",
+    "AC-143",
+    "AC-160"
+   ],
+   "reviewed_element": "READ-01 single snapshot; continuation pages",
+   "testability": "Testable: one asOf/sourceRevision; continuation page with newer sourceRevision is labeled, not merged",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-16",
+   "scenario": "Collection bounds/cursor",
+   "requirement_ids": [
+    "FR-011",
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-111",
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-139",
+    "AC-140",
+    "AC-147",
+    "AC-149",
+    "AC-150"
+   ],
+   "reviewed_element": "RC-6/RC-7",
+   "testability": "Testable: all rows reachable via section nextCursor on its continuation route; cursor reuse by another actor/matter -> 422; after revocation -> 404",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-17",
+   "scenario": "Golden connected navigation",
+   "requirement_ids": [
+    "FR-001",
+    "FR-007",
+    "FR-011",
+    "FR-016"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-107",
+    "AC-111",
+    "AC-116",
+    "AC-121",
+    "AC-126",
+    "AC-127",
+    "AC-129",
+    "AC-139",
+    "AC-140",
+    "AC-145",
+    "AC-150",
+    "AC-159"
+   ],
+   "reviewed_element": "NAV-01..10",
+   "testability": "Contract part testable; keyboard/focus/render remains G3/G4",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-18",
+   "scenario": "Decision namespaces/lifecycle",
+   "requirement_ids": [
+    "FR-001",
+    "FR-009"
+   ],
+   "acceptance_ids": [
+    "AC-101",
+    "AC-109",
+    "AC-121",
+    "AC-137",
+    "AC-159"
+   ],
+   "reviewed_element": "decisions, DR-14",
+   "testability": "Testable: DEC-AT-01/02 open with ownerRef null",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-19",
+   "scenario": "Recent changes versus outstanding",
+   "requirement_ids": [
+    "FR-008",
+    "FR-019"
+   ],
+   "acceptance_ids": [
+    "AC-108",
+    "AC-119",
+    "AC-136",
+    "AC-138",
+    "AC-149",
+    "AC-153"
+   ],
+   "reviewed_element": "recentChanges, DR-15",
+   "testability": "Testable for seq ordering only; time-window semantics wait on TQ-05",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-20",
+   "scenario": "Document content retrieval",
+   "requirement_ids": [
+    "FR-015",
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-115",
+    "AC-118",
+    "AC-128",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-147",
+    "AC-149"
+   ],
+   "reviewed_element": "DR-11 content, RC-5",
+   "testability": "Testable: content route rechecks membership; denial leaks no filename",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-21",
+   "scenario": "Actionability and no candidate",
+   "requirement_ids": [
+    "FR-003",
+    "FR-018"
+   ],
+   "acceptance_ids": [
+    "AC-103",
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-144",
+    "AC-147",
+    "AC-149"
+   ],
+   "reviewed_element": "nextActions.excluded, blockers rootCause, permittedActions",
+   "testability": "Testable: AtlasT0 empty candidates with excluded reasons; RQ-06 absent; top cause RQ-04 visible in blockers",
+   "status": "NOT_RUN"
+  },
+  {
+   "id": "CT-22",
+   "scenario": "Correlation/privacy/no mutation",
+   "requirement_ids": [
+    "FR-008",
+    "FR-009"
+   ],
+   "acceptance_ids": [
+    "AC-108",
+    "AC-109",
+    "AC-136",
+    "AC-137",
+    "AC-149",
+    "AC-153"
+   ],
+   "reviewed_element": "RC-9",
+   "testability": "Testable: X-Request-ID present; no history rows after reads; log scan for payload",
+   "status": "NOT_RUN"
+  }
+ ],
+ "technical_questions": [
+  {
+   "id": "TQ-01",
+   "status": "OPEN",
+   "disposition": "Not resolved: no dry-run read added; reopen/promote impact preview remains Claude/Codex item",
+   "authority": "n/a (open)",
+   "owner": "Claude (contract), Codex/OpenDesign (copy)",
+   "resulting_catalogue_refs": [],
+   "acceptance": [],
+   "constraints": "Any pre-confirm preview stays non-authoritative"
+  },
+  {
+   "id": "TQ-02",
+   "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+   "disposition": "Control Room response specified (READ-01/02/03, 8 sections + 2 embedded groups)",
+   "authority": "CANDIDATE (api-contracts §2 route + ADR-002 §1.6); not PO-approved",
+   "owner": "Claude (contract), ZCode (implementation), Antigravity (consumer)",
+   "resulting_catalogue_refs": [
+    "control_room",
+    "GET /api/v1/matters/{matterId}/control-room",
+    "continuation collections in detail_read_catalogue"
+   ],
+   "acceptance": [
+    "CT-01",
+    "CT-06",
+    "CT-07",
+    "CT-14",
+    "CT-15",
+    "CT-21"
+   ],
+   "constraints": "Single snapshot; AVAILABLE|UNAVAILABLE; partial 200 / all-fail 503; null not zero; bounded sections with working continuation"
+  },
+  {
+   "id": "TQ-03",
+   "status": "OPEN",
+   "disposition": "Only the caller's own Matter role (DR-01 viewerRole) and optional advisory permittedActions added; per-claim verifier eligibility unresolved",
+   "authority": "n/a (open)",
+   "owner": "Claude",
+   "resulting_catalogue_refs": [
+    "DR-01 viewerRole",
+    "items[].permittedActions"
+   ],
+   "acceptance": [
+    "CT-21"
+   ],
+   "constraints": "Advisory only; server enforces"
+  },
+  {
+   "id": "TQ-04",
+   "status": "OPEN",
+   "disposition": "503 shape reused; retry conventions (INT-D09) unresolved, PO decision on Claude proposal",
+   "authority": "n/a (open)",
+   "owner": "Claude -> PO",
+   "resulting_catalogue_refs": [],
+   "acceptance": [],
+   "constraints": "503 never default zero/READY"
+  },
+  {
+   "id": "TQ-05",
+   "status": "OPEN",
+   "disposition": "recentChanges uses seq order; 'before' cursor added; time-window mapping unresolved",
+   "authority": "n/a (open)",
+   "owner": "Claude",
+   "resulting_catalogue_refs": [
+    "DR-15 before"
+   ],
+   "acceptance": [
+    "CT-19"
+   ],
+   "constraints": "Seq order only until decided"
+  },
+  {
+   "id": "TQ-06",
+   "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+   "disposition": "openedAt + openedEventSeq on waits, sourced from the opening transition event",
+   "authority": "CANDIDATE_FIELD",
+   "owner": "Claude (contract), ZCode",
+   "resulting_catalogue_refs": [
+    "DR-16",
+    "control_room.sections.waitingOn"
+   ],
+   "acceptance": [
+    "CT-09"
+   ],
+   "constraints": "System-recorded opening event; not an asserted real-world start"
+  },
+  {
+   "id": "TQ-07",
+   "status": "OPEN",
+   "disposition": "No numeric values set; PO-owned",
+   "authority": "n/a (open)",
+   "owner": "PO (values), Claude",
+   "resulting_catalogue_refs": [],
+   "acceptance": [],
+   "constraints": "No numeric values set"
+  },
+  {
+   "id": "TQ-08",
+   "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+   "disposition": "17 DR rows dispositioned; reviewed route catalogue with collection routes added",
+   "authority": "CANDIDATE routes; not PO-approved",
+   "owner": "Claude (contract), ZCode (implementation), Antigravity (consumer), OpenCode (tests)",
+   "resulting_catalogue_refs": [
+    "detail_read_catalogue",
+    "reviewed_read_operations",
+    "read_common_rules"
+   ],
+   "acceptance": [
+    "CT-02",
+    "CT-03",
+    "CT-04",
+    "CT-05",
+    "CT-10",
+    "CT-12",
+    "CT-13",
+    "CT-16",
+    "CT-17",
+    "CT-20"
+   ],
+   "constraints": "RC-1..10; typed refs; exact version/criterion/claim/cycle identity"
+  }
+ ],
+ "implementation_blockers": [
+  "PO Architecture Approval Gate (candidate contracts)",
+  "A-01/A-02 auth seam and INT-D02 IdP selection",
+  "Backend implementation + contract/negative tests",
+  "G3 rendered and G4 independent QA",
+  "TB-05 storage provider for content (DR-11)"
+ ]
+}

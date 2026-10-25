@@ -1,0 +1,153 @@
+{
+  "task": "MC-003A.8A-R2",
+  "reviewer": "Claude Code (actual), claude-opus-5-5, interactive, packet-only",
+  "authority": "REVIEWED_CANDIDATE_DOCUMENT_ONLY; not PO/product approval",
+  "inputs": {
+    "followup_manifest_sha256": "956946dcb100465f65bce2eb329afecf7cfc90c8506ab65e730cb0156bb7cd2c",
+    "followup_snapshots": 7,
+    "followup_bytes": 47615,
+    "prior_manifest_sha256": "eed788550530966eea23a66a20e1edd84f18fa024963b60fb132f0a3028f0979",
+    "prior_snapshots": 12,
+    "prior_bytes": 164137,
+    "source_head_declared": "838fde6f3eabb35471a95d9066ea933297c6e8c2"
+  },
+  "r1_summary_correction": {
+    "r1_stated": "7 document-only",
+    "r1_actual": {
+      "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY": 8,
+      "NEEDS_AUTHORIZED_SOURCE": 1,
+      "SPLIT": 1
+    }
+  },
+  "operation_count": 32,
+  "routes_added": [],
+  "unchanged_from_r1": ["F-01", "F-04", "F-05", "F-06", "F-09"],
+  "findings": [
+    {
+      "id": "F-02",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "r1_items_changed": [
+        "READ-02 amendment WITHDRAWN; baseline READ-02 retained",
+        "B1 restated for contributing sections only"
+      ],
+      "rules": [
+        "unavailableReason closed set {EVALUATION_FAILED} (unchanged)",
+        "root 503 iff snapshot cannot open or no section AVAILABLE (baseline)",
+        "condition-only AVAILABLE response is root 200",
+        "per-section containment mechanism and feasibility unverified"
+      ],
+      "truth_table_ref": "addendum F-02/F-08 table rows a-g"
+    },
+    {
+      "id": "F-03",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "r1_items_changed": [
+        "evaluation actor = caller (AC-144); R1 implicit matter-wide reading withdrawn",
+        "UNASSIGNED = not assigned to the caller as an active Matter member",
+        "excluded becomes {items,total,nextCursor} (CANDIDATE)",
+        "continuation GET /matters/{m}/next-actions?excluded=true (CANDIDATE query param)"
+      ],
+      "rules": [
+        "candidate = visible Action, NOT_STARTED|IN_PROGRESS, dependency READY, assignee = caller",
+        "excluded = every other visible non-terminal Action",
+        "reason = first of WAITING, BLOCKED, UNASSIGNED; display-only",
+        "excluded order = critical-chain first, dueAt asc nulls last, id asc",
+        "no ownerRef/display name for a non-member assignee",
+        "no selected-member parameter added"
+      ]
+    },
+    {
+      "id": "F-07",
+      "verdict": "CHANGES_REQUIRED",
+      "r1_items_changed": [
+        "R1 six-value fallback WITHDRAWN",
+        "status field removed from DR-07/DR-08/DR-09 claim shapes",
+        "DR-07 claimStatus= filter withdrawn"
+      ],
+      "new_fields": [
+        "claim.currentAssessmentRef (ASSESSMENT ref | null)",
+        "claim.openDisputeRef (DISPUTE ref | null)",
+        "claim.failed [code] (CANDIDATE vocabulary)"
+      ],
+      "failed_codes_candidate": [
+        "STALE_CRITERION_REVISION",
+        "NO_CURRENT_ASSESSMENT",
+        "REJECTED",
+        "REVOKED",
+        "EVIDENCE_WITHDRAWN",
+        "OUTSIDE_VALIDITY",
+        "VERSION_RULE_MISMATCH",
+        "OPEN_DISPUTE"
+      ],
+      "binding": "evidence-model section 4 satisfaction conjuncts; data-model section 4 tables",
+      "po_decision": "none; no new lifecycle semantics",
+      "known_contradiction": "api-contracts 3.3 command example status PENDING_REVIEW"
+    },
+    {
+      "id": "F-08",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "subpart_open": {
+        "EVIDENCE_GAP": "NEEDS_CLARIFICATION (evidenceGaps row unit not pinned)"
+      },
+      "r1_items_changed": [
+        "DEPENDENCY_BLOCKED source blockers -> condition own evaluation",
+        "WAITING source waitingOn -> condition own evaluation; unit = objects",
+        "DISPUTED source evidenceGaps -> condition own evaluation",
+        "contributing sections = milestones, evidenceGaps, decisions"
+      ],
+      "units": {
+        "CRITICAL": "Requirement/Action/Filing with attention CRITICAL",
+        "ATTENTION": "Requirement/Action/Filing with attention ATTENTION",
+        "OVERDUE": "Requirement/Action/Filing with timing OVERDUE",
+        "DUE_SOON": "Requirement/Action/Filing with timing DUE_SOON",
+        "COMPLETED_UNVERIFIED": "execution COMPLETED and verification exactly UNVERIFIED",
+        "DEPENDENCY_BLOCKED": "Requirement/Action with dependency BLOCKED, any execution",
+        "DISPUTED": "Requirement/Action/Filing with verification DISPUTED",
+        "WAITING": "Requirement/Action/Filing with execution WAITING",
+        "MILESTONE_NOT_READY": "milestones with readiness NOT_READY",
+        "MILESTONE_UNASSESSED": "milestones with readiness UNASSESSED",
+        "OPEN_DECISION": "open decisions; equals decisions.total",
+        "EVIDENCE_GAP": "equals evidenceGaps.total; row unit open"
+      }
+    },
+    {
+      "id": "F-10",
+      "verdict": "SPLIT",
+      "parts": [
+        {
+          "part": "DR-10 versions / DR-12 cycles outer pages",
+          "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+          "change_from_r1": "none"
+        },
+        {
+          "part": "submissions[], submittedVersionRefs, cycle receipt/outcome evidence refs",
+          "verdict": "DECISION_REQUIRED",
+          "r1_items_struck": [
+            "RC-10 forbids a truncation flag",
+            "complete untruncated arrays are base behaviour"
+          ],
+          "evidence": [
+            "filing_submissions: no UNIQUE (filing_id, cycle_no)",
+            "filing_submission_items: PK (submission_id, document_version_id), no bound",
+            "filing-model 3: supplement cycles unbounded"
+          ],
+          "options": [
+            "O1 new nested read route(s): expands 32, catalogue decision",
+            "O2 data-model/domain bound: architecture decision, possibly PO",
+            "O3 accept complete embedding and response-size risk: architecture/PO decision",
+            "O4 bounded prefix without continuation: rejected, breaks reachability"
+          ],
+          "approval": "PO Architecture Approval Gate on Claude proposal"
+        }
+      ]
+    }
+  ],
+  "preserved": [
+    "22 CT IDs and 16/4/1/1 classification",
+    "Q1..Q8 dispositions; Q2/Q4/Q6/Q8 conditional",
+    "F-11 owned by Codex",
+    "CT-19/TQ-05 and CT-20/TB-05 open",
+    "no finding CLOSED by self-review"
+  ],
+  "runtime": "NOT_RUN"
+}

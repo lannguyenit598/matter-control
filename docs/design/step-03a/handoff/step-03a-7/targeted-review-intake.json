@@ -1,0 +1,352 @@
+{
+  "task": "MC-003A-TQ02-TQ08-INTAKE",
+  "actual_actor": "Local Codex PM/BA/orchestration",
+  "status": "IN_REVIEW",
+  "timestamp_utc": "2026-10-25T08:18:42.062787+00:00",
+  "base_commit": "9262e6ea6f289ba83d70ef0016a55de9aeca6822",
+  "reviewer": "Human-returned actualClaudeCode artifacts, self-reported2.1.310/claude-opus-5-5 interactive",
+  "identity_limit": "No machine session/service routing/effective model/charge attestation supplied. No Codex model invocation, login or new project transfer.",
+  "reviewed_outputs": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/targeted-claude-review.md",
+      "bytes": 17480,
+      "sha256": "263718e7b7cf2554594de5bfa73e331ad3cfe4d9d97c3a7d2bfabfd45402c203"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json",
+      "bytes": 77882,
+      "sha256": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5"
+    }
+  ],
+  "human_summary": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/targeted-return-summary.txt",
+    "bytes": 8278,
+    "sha256": "b4bd1da67f09518fd153bdb26cea871e4bbc192572ee9c2bcaf9f91b8fb99fda"
+  },
+  "returned_verdict": "COMPATIBLE_WITH_CONSTRAINTS (DOCUMENT_ONLY); Codex proposal accepted with changes applied below",
+  "intake": "ACCEPT_SCOPED_REVIEWED_CANDIDATE_DOCUMENT_ONLY; no PO/productcontract/runtime/security acceptance",
+  "self_review_disclosure": "The base candidate architecture (api-contracts.md, dependency-engine.md, ADR-002/003) was authored by Claude Code claude-opus-5-5; this review is not independent of it",
+  "checks": [
+    {
+      "name": "Reviewedhead/branchmatch",
+      "result": "PASS"
+    },
+    {
+      "name": "Proposal SHA exact",
+      "result": "PASS"
+    },
+    {
+      "name": "Two actual final hashprefixes",
+      "result": "PASS"
+    },
+    {
+      "name": "30inputs unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Four prior Claude originals unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozenr3 output-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozenr3 qa-input-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "8serversections",
+      "result": "PASS"
+    },
+    {
+      "name": "All10CRI covered",
+      "result": "PASS"
+    },
+    {
+      "name": "34originalfieldpaths plus6added",
+      "result": "PASS"
+    },
+    {
+      "name": "Field dispositions19/11/4/6",
+      "result": "PASS"
+    },
+    {
+      "name": "Allfieldauthoritycandidate",
+      "result": "PASS"
+    },
+    {
+      "name": "17catalogueIDs",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-01 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-02 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-03 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-04 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-05 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-06 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-07 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-08 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-09 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-10 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-11 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-12 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-13 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-14 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-15 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-16 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "DR-17 complete scopedreviewedrow",
+      "result": "PASS"
+    },
+    {
+      "name": "30uniqueops exact",
+      "result": "PASS"
+    },
+    {
+      "name": "Exactly4changedDRalternatives",
+      "result": "PASS"
+    },
+    {
+      "name": "3existingcandidateops within30",
+      "result": "PASS"
+    },
+    {
+      "name": "25distincttypedreferencekinds",
+      "result": "PASS"
+    },
+    {
+      "name": "10NAV mapped to catalogue",
+      "result": "PASS"
+    },
+    {
+      "name": "22CT mapped/allNOT_RUN",
+      "result": "PASS"
+    },
+    {
+      "name": "TQ02/06/08 reviewedcandidateresolution only",
+      "result": "PASS"
+    },
+    {
+      "name": "Documentonly/unapproved/selfreview scope",
+      "result": "PASS"
+    },
+    {
+      "name": "10readrules",
+      "result": "PASS"
+    },
+    {
+      "name": "10frontendconstraints/8QAquestions",
+      "result": "PASS"
+    }
+  ],
+  "check_count": 40,
+  "validator_correction": "Initial inline validator incorrectly required everyDRreviewed_status=REVIEWED_CANDIDATE and stopped atDR03. Corrected to retain three explicitly declared EXISTING_WITH_GAP_RESOLVED rows DR03/11/15 under globalcandidateauthority; originals not modified. This was a validator assumption, not an architecture defect.",
+  "resolution_registry": [
+    {
+      "id": "TQ-01",
+      "status": "OPEN",
+      "disposition": "Not resolved: no dry-run read added; reopen/promote impact preview remains Claude/Codex item",
+      "authority": "n/a (open)",
+      "owner": "Claude (contract), Codex/OpenDesign (copy)",
+      "resulting_catalogue_refs": [],
+      "acceptance": [],
+      "constraints": "Any pre-confirm preview stays non-authoritative"
+    },
+    {
+      "id": "TQ-02",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "disposition": "Control Room response specified (READ-01/02/03, 8 sections + 2 embedded groups)",
+      "authority": "CANDIDATE (api-contracts §2 route + ADR-002 §1.6); not PO-approved",
+      "owner": "Claude (contract), ZCode (implementation), Antigravity (consumer)",
+      "resulting_catalogue_refs": [
+        "control_room",
+        "GET /api/v1/matters/{matterId}/control-room",
+        "continuation collections in detail_read_catalogue"
+      ],
+      "acceptance": [
+        "CT-01",
+        "CT-06",
+        "CT-07",
+        "CT-14",
+        "CT-15",
+        "CT-21"
+      ],
+      "constraints": "Single snapshot; AVAILABLE|UNAVAILABLE; partial 200 / all-fail 503; null not zero; bounded sections with working continuation"
+    },
+    {
+      "id": "TQ-03",
+      "status": "OPEN",
+      "disposition": "Only the caller's own Matter role (DR-01 viewerRole) and optional advisory permittedActions added; per-claim verifier eligibility unresolved",
+      "authority": "n/a (open)",
+      "owner": "Claude",
+      "resulting_catalogue_refs": [
+        "DR-01 viewerRole",
+        "items[].permittedActions"
+      ],
+      "acceptance": [
+        "CT-21"
+      ],
+      "constraints": "Advisory only; server enforces"
+    },
+    {
+      "id": "TQ-04",
+      "status": "OPEN",
+      "disposition": "503 shape reused; retry conventions (INT-D09) unresolved, PO decision on Claude proposal",
+      "authority": "n/a (open)",
+      "owner": "Claude -> PO",
+      "resulting_catalogue_refs": [],
+      "acceptance": [],
+      "constraints": "503 never default zero/READY"
+    },
+    {
+      "id": "TQ-05",
+      "status": "OPEN",
+      "disposition": "recentChanges uses seq order; 'before' cursor added; time-window mapping unresolved",
+      "authority": "n/a (open)",
+      "owner": "Claude",
+      "resulting_catalogue_refs": [
+        "DR-15 before"
+      ],
+      "acceptance": [
+        "CT-19"
+      ],
+      "constraints": "Seq order only until decided"
+    },
+    {
+      "id": "TQ-06",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "disposition": "openedAt + openedEventSeq on waits, sourced from the opening transition event",
+      "authority": "CANDIDATE_FIELD",
+      "owner": "Claude (contract), ZCode",
+      "resulting_catalogue_refs": [
+        "DR-16",
+        "control_room.sections.waitingOn"
+      ],
+      "acceptance": [
+        "CT-09"
+      ],
+      "constraints": "System-recorded opening event; not an asserted real-world start"
+    },
+    {
+      "id": "TQ-07",
+      "status": "OPEN",
+      "disposition": "No numeric values set; PO-owned",
+      "authority": "n/a (open)",
+      "owner": "PO (values), Claude",
+      "resulting_catalogue_refs": [],
+      "acceptance": [],
+      "constraints": "No numeric values set"
+    },
+    {
+      "id": "TQ-08",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "disposition": "17 DR rows dispositioned; reviewed route catalogue with collection routes added",
+      "authority": "CANDIDATE routes; not PO-approved",
+      "owner": "Claude (contract), ZCode (implementation), Antigravity (consumer), OpenCode (tests)",
+      "resulting_catalogue_refs": [
+        "detail_read_catalogue",
+        "reviewed_read_operations",
+        "read_common_rules"
+      ],
+      "acceptance": [
+        "CT-02",
+        "CT-03",
+        "CT-04",
+        "CT-05",
+        "CT-10",
+        "CT-12",
+        "CT-13",
+        "CT-16",
+        "CT-17",
+        "CT-20"
+      ],
+      "constraints": "RC-1..10; typed refs; exact version/criterion/claim/cycle identity"
+    }
+  ],
+  "contract_delta": {
+    "snapshot": "One serverbuilt readprojection/snapshot; no new authoritativeentity/store",
+    "availability": "ServerAVAILABLE|UNAVAILABLE only; clientSTALE labels anolderretainedresponse with itsownasOf",
+    "partial": "200ifanyavailable/503ifnone;nullfailedcountsneverzero",
+    "sections": 8,
+    "embedded_groups": 2,
+    "operations": 30,
+    "field_dispositions": {
+      "ACCEPTED": 19,
+      "REJECTED": 4,
+      "CHANGED": 11,
+      "ADDED": 6
+    },
+    "blockers": "Unsatisfiedupstreamcauses with ownaxes,rootCause ifdependencyREADY, notjustBLOCKEDtargets",
+    "waiting_since": "openedAt/openedEventSeq from systemrecordedopeningevent,notassertedrealworldstart"
+  },
+  "consumption_notes": [
+    "KnownVIEWERread-only and designatednon-submitter guards remain applicable if advisorycapabilities absent; unknownhint nevergrantspermission.",
+    "Revocation purges sensitivecachedcontent; oldernetwork-staleresponse retained only under validscope.",
+    "Continuation/detailboundarychanges labeled, never silently merged; incomparableboundaryhandling must be reconciled explicitly.",
+    "Single-snapshot plus partialfailure isolation is candidate intent, not implemented/reproduceddatabaseguarantee; independenttestability must inspect concretefaultpaths."
+  ],
+  "gates": {
+    "G1": "Delegatedchoicespreserved",
+    "G2": "Priorcorrectivescopepreserved; frozenUXunchanged",
+    "G3": "RENDERED_VALIDATION_BLOCKED_BY_TOOLING / NOT_TESTED",
+    "G4": "INDEPENDENT_QA_PENDING; selfreviewdisclosed",
+    "G5": "TQ02/06/08resolvedasreviewedcandidateDOCUMENT_ONLY; overallarchitecture/productcontractapprovalOPEN",
+    "G6": "PENDING; MC003AREWORK_REQUIRED / STEP03BNOT_AUTHORIZED"
+  },
+  "acceptance_cases": "22NOT_RUN",
+  "not_run": [
+    "Runtime/API/DB/build/browser/native checks",
+    "IndependentOpenCodeorAntigravityinvocation",
+    "Historical162suite/fullarchitecture/templateaudit rerun"
+  ],
+  "next_action": "FocusedAntigravityread-consumptionreconciliation against exactreviewedcandidate via authorizednormalownercontext only; retain8QAquestions for futureauthorizedindependentreview, nofailedproviderretry/newexternaltransfer."
+}
