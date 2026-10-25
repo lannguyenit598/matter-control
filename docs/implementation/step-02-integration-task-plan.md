@@ -64,3 +64,7 @@ Current-round routing: the human reassigned the remaining bounded clarification/
 These are conditional assignments, not active manual handoffs. No ZCode/Antigravity engineering prompt is due for dispatch in Step02.3. After PO approval and ARCH-FINAL, Codex must create full copy-paste-ready manual prompts under the existing handoff protocol, containing approved exact contract, repository/base/allowed paths, tests, environment, reviewer and return schema. Current known direct-route limitations remain: ZCode packaged provider configuration missing; Antigravity headless RunCommand denied. No repair/auth/global permission workaround is authorized. Actual Claude/OpenCode document calls are tracked separately from future engineering execution.
 
 Skipped: implementation, runtime/environment provisioning and all acceptance execution. Risk: task readiness is conditional on PO selection and finalized contracts; a prepared plan does not establish integration or security feasibility.
+
+## INT-A selection supersedes conditional planning
+
+Direct [PO DEC-028](../ai-sdlc/inta-po-approval.md) selects INT-A. Use the [frozen selected contract](inta-approved-contract.md), [exact owner task contracts](tasks/MC-002-INT-A.md) and [manual prompts](handoffs/MC-002-INTA-MANUAL-PROMPTS.md) for execution. Current explicit assignment reserves Claude review for material architectural deviations; no repeated Step02.3 clarification. Direct engineering unavailable, so stop at PREPARED manual handoffs; no dispatch/runtime/ENV occurred. Selected51-case ledger remains allNOT_RUN.

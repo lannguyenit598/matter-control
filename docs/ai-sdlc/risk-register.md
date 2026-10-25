@@ -93,3 +93,9 @@ Step02.3 bounded review update: under the direct human [routing override](step-0
 
 
 Step02.4 planning preserves R-020/028/031: recommended INT-A excludes auth/authz/Workspace-Matter verification, so PO must explicitly choose that local evidence boundary or another recorded option. No policy requirement is waived.0tests required-now;36candidate local cases remain NEEDS_SCOPE_DECISION,14product cases deferred, D-14 production feasibility separate. All51NOT_RUN; missing feasibility is not mislabeled as runtime failure or proof every topology is impossible. Step03A impacts are documented via an unsent governance notice; no design artifact change.
+
+## INT-A approval — current risk disposition
+
+DEC-028 approves the local transport scope and its explicit evidence exclusions, not closure of R-020/028/031 or product/cloud/recovery/cost risks. INTA-1 freezes the companion test root outside the product checkout because the pinned TS/ESLint globs are broad; source/template configs stay unchanged. Cross-root import/binding/guard/artifact exclusion remain actual feasibility checks, not established facts. If owners cannot satisfy them within the approved boundaries, stop to PO without fallback.
+
+Direct engineering unavailable (ZCode packaged files absent, Antigravity recorded tool denial); complete manual handoffs prepared. No owner/runtime/DB/container execution yet. All36required local cases stayNOT_RUN and require independent OpenCode verification. Product14 and production1 remain separate. No prior C01/R01/R02 recheck or global tool/auth repair is authorized merely to remove this route limitation.

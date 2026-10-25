@@ -1,0 +1,17 @@
+{
+  "tool": "Context7 MCP",
+  "resolved_library": "/vercel/next.js",
+  "scope": "Generic documentation research before frozen manual handoff, not installed16.4.2 execution",
+  "query": "next dev project directory, hostname/port, temporary separate Route Handler root",
+  "primary_sources": [
+    "https://github.com/vercel/next.js/blob/canary/packages/next/src/bin/next.ts",
+    "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/06-cli/next.mdx"
+  ],
+  "observed_documentation": [
+    "next dev accepts optional directory argument",
+    "--hostname/-H and --port/-p are documented; default all-interface binding must be overridden",
+    "cross-root import, actual16.4.2 module resolution, no-cache and guard behavior not tested"
+  ],
+  "owner_requirement": "Read installed node_modules/next/dist/docs and actual CLI help before implementation; record exact argv, do not assume latest docs prove pinned behavior",
+  "runtime_result": "NOT_RUN"
+}

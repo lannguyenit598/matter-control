@@ -14,3 +14,7 @@
 - Reviewer: current planning is Codex-authored, no new independent review claimed. Existing actual OpenCode document clarification PASS is input only; OpenCode verifies future frozen plan/implementation and execution, Claude handles material architecture deviations/later conformance.
 - Completion evidence: static results at testing/step-02-4/checks.json and this commit. Final state WAITING_PO_SCOPE_DECISION; MC-002 OPEN, C01-PRODUCT OPEN, no product/architecture/production release acceptance.
 - Skipped: API/Auth implementation, DB/test runs, provider/account/paid/deploy actions, design edits and agent dispatch. Remaining risk: INT-A proves transport only; authentic product scope and production feasibility remain separate gates.
+
+## PO decision received — planning continuation
+
+[DEC-028](../../ai-sdlc/inta-po-approval.md) now selects INT-A; this task's previous WAITING_PO_SCOPE_DECISION is superseded for that choice only. Prepared artifacts feed [MC-002-INT-A](MC-002-INT-A.md). Documentation checks are not independent runtime acceptance or whole MC-002 DONE. Implementation/runtime awaits manual owner dispatch and verified ENV; no actual execution inferred.

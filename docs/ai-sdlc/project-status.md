@@ -1,6 +1,6 @@
 # Project Status Dashboard
 
-As of 2026-10-25 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002-INT-PLAN-024](../implementation/tasks/MC-002-INT-PLAN-024.md) within [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
+As of 2026-10-25 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002-INT-A](../implementation/tasks/MC-002-INT-A.md) within [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
 
 **Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: IN_REVIEW / WAITING_APPROVAL / REMAINING_FEASIBILITY_OPEN / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
 
@@ -113,3 +113,13 @@ C01-NATIVE at52b60a4, R01/R02, native frontend and tiny tooling restore retain t
 [Classification](../testing/step-02-4-runtime-classification.md) preserves all51IDs:0required-now,36NEEDS_SCOPE_DECISION,14later-product,1production-feasibility (D-14); conditional INT-A after selection/freeze makes36required. All51NOT_RUN. No agent/runtime/implementation/environment dispatch or provisioning. Conditional manual prompts are planning templates only, not issued task contracts.
 
 Step02.3 clarification PASS_DOCUMENT_ONLY at a7e9992 remains preserved; no repeated Claude review. Claude remains Solution Architecture Authority for material deviations/later conformance. C01-NATIVE accepted with limits, C01-PRODUCT and MC-002 OPEN; Cloudflare/cost/recovery gates remain separate. A governance Design Impact Notice is prepared, not sent; Step03A worktree/artifacts untouched, no Step03A/03B DONE. Stop at Product Owner Integration Scope Approval Gate.
+
+## INT-D01=INT-A — latest approved local scope / manual handoff boundary
+
+Direct human PO [DEC-028](inta-po-approval.md) explicitly selects INT-A at e7dbfbf and permits isolated local implementation/runtime verification after contract/tasks. Prior NO_SCOPE_SELECTED/WAITING_PO_SCOPE_DECISION descriptions are historical checkpoints, superseded for INT-D01 only. [INTA-1 selected contract](../implementation/inta-approved-contract.md) and [owner task contracts](../implementation/tasks/MC-002-INT-A.md) are prepared; actual source52b60a4/3e5a642 heads are clean and59protected files unchanged. Remaining scope/provider/product/architecture/cost/recovery gates are not waived.
+
+ZCode required packaged provider files still absent; Antigravity headless engineering has a recorded explicit RunCommand denial. The approved manual-stop condition applies: [full owner prompts](../implementation/handoffs/MC-002-INTA-MANUAL-PROMPTS.md) PREPARED / NOT_DISPATCHED; no worktree/container/volume created, code built or harness implemented in this turn. Codex ENV awaits owner acknowledgements, OpenCode runtime QA awaits actual returns/verified ENV. Existing OpenCode PASS_DOCUMENT_ONLY remains documentation evidence; no new runtime verdict.
+
+[Selected ledger](../testing/inta-runtime-status.json):36REQUIRED_FOR_SELECTED_INTEGRATION_SLICE,14DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION,1BLOCKED_BY_EXTERNAL_FEASIBILITY; all51NOT_RUN,0PASS/0FAIL. Frozen companion-harness root is outside the unchanged product checkout to avoid broad product globs; actual cross-root import/isolated runtime feasibility still needs owner evidence. Stop on infeasibility; no INT-A0/B/C fallback.
+
+C01-NATIVE accepted with limitations/R01-R02 closed; C01-PRODUCT OPEN, MC-002 OPEN / WAITING_MANUAL_DISPATCH, Architecture Approval Gate NOT_PASSED. No product auth/authz/Workspace-Matter security, Cloudflare/$0 or full recovery proof. Claude handles material architectural deviations; no repeated closed Step02.3 clarification. Parallel MC-003A untouched; no production/paid/merge/Step03 completion action. Exact next step: human manually supplies BE/FE prompts and returns acknowledgements/feasibility; Codex then coordinates approved new ENV and later independent runtime QA.

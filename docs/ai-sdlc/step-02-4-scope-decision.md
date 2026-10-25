@@ -1,3 +1,5 @@
+> **Current decision:** Human [DEC-028](inta-po-approval.md) selects INT-D01=INT-A at e7dbfbf. The unselected/awaiting-choice wording below is historical preparation. Execution now follows the [selected INTA-1 contract](../implementation/inta-approved-contract.md) and manual task gates; no runtime result is inferred.
+
 # Step02.4 — Product Owner Integration Scope Decision
 
 Owner Codex PM/BA/Cloud/DevOps,2026-10-25 Asia/Ho_Chi_Minh. Task MC-002-INT-PLAN-024. Repository matter-control, branch task/MC-002-solution-architecture, base a7e99929e842105c7941b469422f4bfb7778bf82. **PROPOSED / WAITING_PO_SCOPE_DECISION. Selected option: NONE.** The Step02.4 request authorizes decision preparation, not an integration option or implementation.

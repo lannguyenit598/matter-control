@@ -12,3 +12,7 @@ Owner Codex coordination.2026-10-25 Asia/Ho_Chi_Minh. Base a7e99929e842105c7941b
 State/permission constraints are unchanged: Requirement versus Action and independent Execution/Verification/Dependency/Timing/Attention; active Workspace membership AND explicit Matter membership AND scoped role; Workspace OWNER no implicit Matter access; VIEWER read/export only within approved Matter scope. Frontend cannot authoritatively compute readiness or grant permissions.
 
 No OpenDesign model/tool was invoked, no message sent, no design review/release approval inferred. Step03A/03B are not marked DONE. A later selected decision may need an updated notice; receipt/acknowledgement must be recorded separately.
+
+## Selected-decision update — NOT_SENT
+
+Direct PO DEC-028 selects INT-A. Its transport-only/harness-excluded-from-product implications in the INT-A row above now apply as the selected scope. No auth/provider/product UX is implemented or proven. This notice remains governance-only NOT_SENT/NOT_ACKNOWLEDGED; no message or design worktree edit occurred, Step03A/03B not marked DONE.

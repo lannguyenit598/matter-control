@@ -53,3 +53,10 @@ APPROVED_INPUT is evidence from the supplied request, not an approval of all gen
 |---|---|---|---|---|---|
 | DEC-026 | 2026-10-24 | Continue MC-002 with agent provenance/recovery, owner audits/local PoCs, Codex synthetic restore, independent verification and full manual prompts when needed | Human Product Owner | APPROVED_ASSIGNMENT | step-02-1-request.md; no full product/UI/production/paid activation; gate stays open if feasibility unresolved |
 | DEC-027 | 2026-10-24 | Send exact14-snapshot58203-byte frontend audit packet to Antigravity/Google; select Gemini3.8Flash with thinkingHIGH | Human Product Owner | APPROVED_NAMED_PACKET_AND_MODEL | Direct answer “có và chọn model là gemini 3.8 flash với thinking là HIGH”; actual available slug gemini-3.8-flash-high and effort high pinned; no global setting change or blanket new-payload permission |
+
+
+## INT-D01 explicit Product Owner scope approval
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| DEC-028 | 2026-10-25 | Select INT-D01=INT-A at e7dbfbf; permit isolated local temporary Next harness→REST→unchanged Go52b60a4→new synthetic PostgreSQL after finalized contract/task prerequisites | Human Product Owner, direct chat approval | APPROVED_LOCAL_SCOPE / EXECUTION_PENDING | [Approval and limits](inta-po-approval.md), [frozen INTA-1 contract](../implementation/inta-approved-contract.md);36required/14product-deferred/1production-blocked, all51NOT_RUN. Stop at manual handoff if direct engineering unavailable. No auth/product/production/Cloudflare/$0/recovery waiver, no automatic fallback/merge/MC-002 DONE |

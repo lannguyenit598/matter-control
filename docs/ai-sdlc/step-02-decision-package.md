@@ -1,3 +1,5 @@
+> **Current decision:** Human [DEC-028](inta-po-approval.md) selects INT-D01=INT-A at e7dbfbf. The unselected/awaiting-choice wording below is historical preparation. Execution now follows the [selected INTA-1 contract](../implementation/inta-approved-contract.md) and manual task gates; no runtime result is inferred.
+
 # Step02.3 — Product Owner Integration/API/Auth Decision Package
 
 Prepared by Codex PM/BA/Cloud/DevOps,2026-10-25 Asia/Ho_Chi_Minh, governance base e377568ac47f8f1b88e3875a8f13d7e57fc30667. Actual Claude Code owns the [scope proposal](../architecture/integration-scope-proposal.md) and [nine-decision analysis](../architecture/api-auth-decision-analysis.md). **PROPOSED / WAITING_PO_APPROVAL. No implementation or acceptance execution is authorized by this document.**

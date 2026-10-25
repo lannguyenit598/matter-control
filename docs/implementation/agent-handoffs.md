@@ -49,3 +49,9 @@ The human reassigned the remaining Claude clarification/review to actual OpenCod
 ## Step02.4 — planning only, no dispatch
 
 [PO package](../ai-sdlc/step-02-4-scope-decision.md), [case classification](../testing/step-02-4-runtime-classification.md), [complete conditional manual templates](handoffs/MC-002-INT-024-CONDITIONAL-PROMPTS.md). No scope selected; exact implementation task contracts/acknowledgements are issued only after selection and contract freeze. No ZCode/Antigravity/OpenCode runtime job or Claude repetition is dispatched now. Route limitations stay recorded; no repair/login/permission workaround. Claude retains material-architecture authority. [Design Impact Notice](design-impact-notices/INT-D01-step-02-4.md) is governance-only, not sent or applied to Step03A.
+
+## INT-A selected — current owner handoffs
+
+[DEC-028](../ai-sdlc/inta-po-approval.md) approves INT-A; [INTA-1](inta-approved-contract.md) and [task contracts](tasks/MC-002-INT-A.md) replace the prior conditional planning templates for execution. [Full manual prompts](handoffs/MC-002-INTA-MANUAL-PROMPTS.md) are PREPARED / NOT_DISPATCHED / NOT_EXECUTED. ZCode/Antigravity engineering direct routes unavailable; normal human-assisted app execution is required, no bypass. ENV waits for acknowledgements; OpenCode runtime QA waits for actual evidence and verified ENV. Claude handles material deviations, no repeat closed clarification.
+
+Human pastes BE and FE prompts, returns acknowledgement/source/feasibility. Codex then creates only the approved fresh capped local fixture and coordinates the frozen36cases; QA prompt is held until inputs exist. No runtime/fixture/source work ran in this preparation. Shared worktree MC-003A and prior evidence untouched.
