@@ -1,0 +1,50 @@
+{
+  "task": "MC-003A.8A.final_clarification",
+  "reviewer": "ZCode Desktop interactive session, human-operated",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN (not in available session metadata)",
+  "authorship": "ZCode-authored candidates; no self-approval; Claude owns F-08 contract acceptance; PO owns catalogue and vocabulary decisions",
+  "f08_v1_classifier": {
+    "steps": ["S0 componentSatisfied-first suppression (zero rows when any claim literally satisfies §4)", "S1 K empty -> MISSING", "S2 per-claim first-match WITHDRAWN > DISPUTED > REJECTED > EXPIRED > PENDING_REVIEW residual", "S3 per-component dedup to distinct codes, one row per code, row key (criterionRevisionRef, componentKey|null, code)"],
+    "current_definition": "unique non-superseded assessment of the claim in the subject's CURRENT proof_epoch; old-epoch assessments never satisfy and never earn EXPIRED/REJECTED/DISPUTED",
+    "expired_definition": "current ACCEPTED, not revoked, no dispute, bound = min(valid_until, effective_until) non-nil and asOf >= bound (half-open; future valid_from is not EXPIRED)",
+    "pending_review_residual_covers": ["no current-epoch assessment (including old-epoch-only)", "current assessment revoked", "valid_from in future", "version-rule mismatch"],
+    "required_vectors_expected": {
+      "withdrawn+expired": "WITHDRAWN",
+      "rejected+version_mismatch": "REJECTED (branch does not test versionOK)",
+      "disputed+expired": "DISPUTED",
+      "revoked+future_validity": "PENDING_REVIEW",
+      "old_epoch_only": "PENDING_REVIEW (no dedicated code, not satisfied)",
+      "one_valid_plus_one_invalid_claim": "zero rows"
+    },
+    "display_order_rows": "MISSING, PENDING_REVIEW, REJECTED, EXPIRED, DISPUTED, WITHDRAWN (display only; distinct from S2 match order)",
+    "f07_boundary": "no claim.status/claimStatus revival; detail via accepted DR-08 evidence fields, DR-09 assessment history, DR-07 current criterion revision, subject verification aggregate",
+    "condition_catalogue_rule": "gap vocabulary extension never auto-extends the Condition exceptions[] code list; EVIDENCE_GAP count stays evidenceGaps.total",
+    "status": "CANDIDATE; V1/V2 and component-by-code vs component-only remain unapproved choices"
+  },
+  "f10_b3": {
+    "grain_pinned": "distinct (evidenceRef, observationKind RECEIPT|OUTCOME); unique key (evidenceRef.id, observationKind)",
+    "dedup": "repeated same-role observations linking same evidence collapse to one row; multiplicity lives in history (DR-15), not B3",
+    "order_cursor_tuple": ["evidenceRef.id ASC", "observationKind ASC with fixed role order RECEIPT < OUTCOME"],
+    "total_semantics": "count of distinct (evidence, role) pairs of the cycle, in-Matter, same snapshot; limit<=200 is page size only; no business UNIQUE/cap; no new routes",
+    "lossless_alternative": "observation-evidence link grain requires observation identity in the item and a reference-vocabulary extension (no FILING_STAGE_OBSERVATION kind in the accepted 25); presented, not adopted",
+    "unresolved_source": "no authorized clause binds an observation (or its evidence link) to (filing_id, cycle_no); DDL keys observations by (matter_id, filing_id, proof_epoch); api-contracts §1.1 has command-level expectedCycleNo only; cycles and epochs are independent per filing-model §1; minimal missing clause: stored/derived observation-to-cycle binding (candidates: data-model §5 full filing_stage_observations definition; filing-model observation-command contract) plus observation-type to role enumeration if more than two labels",
+    "status": "PROPOSAL_WITH_UNRESOLVED_SOURCE until the mapping clause is supplied; baseline DR-12 cycle-item receipt/outcome refs inherit the same gap",
+    "fixtures": {
+      "F1_same_evidence_two_roles": "rows (E1,RECEIPT),(E1,OUTCOME); limit=1 continuation via tuple cursor, no omit/repeat",
+      "F2_repeated_same_role": "one deduped row under pinned grain; two rows under lossless alternative",
+      "F3_same_cycle_across_epochs": "links from both reopen epochs belong to the same cycle; per-page snapshot labels; expected conditional on association resolution",
+      "F4_cross_cycle": "evidence appears only in cycles its observations belong to; no cross-cycle leakage",
+      "F5_limit1_generic": "unique tuple gives complete no-dup traversal; consistent total per page; no completeness claim while cursor non-null"
+    },
+    "non_claims": ["constant bytes (scalar field lengths and latency unverified until runtime)", "catalogue adoption (B1/B2/B35 remain proposals)", "dueAt end-of-day rule (fixture assumption only)"]
+  },
+  "preserved": {
+    "ct_ids": "22 with 16/4/1/1",
+    "qa": "Q1..Q8 original dispositions with Q2/Q4/Q6/Q8 conditional",
+    "runtime": "NOT_RUN",
+    "gates": { "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY", "G5-B": "FINDINGS_OPEN", "G3": "NOT_VERIFIED", "G4_design_qa": "PENDING", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED", "po_architecture_approval_gate": "NOT_PASSED" },
+    "scope": "no re-review of F-01..07/F-09/F-11; corrected sections of prior addendum stand as corrected",
+    "be_01": "independent; not blocked by F-08/F-10; no implementation or test execution claimed"
+  }
+}
