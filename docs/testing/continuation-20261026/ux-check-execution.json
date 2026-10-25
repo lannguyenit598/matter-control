@@ -1,0 +1,15 @@
+{
+  "started_utc": "2026-10-25T17:16:30.607362+00:00",
+  "ended_utc": "2026-10-25T17:16:30.736740+00:00",
+  "input_script": "docs/design/step-03a/revised/local-r3/source-checks.py",
+  "input_sha256": "9a9e24ed36d77b42fd30d3d4d10f66a389bd577155c8b44dc226104351ca56cd",
+  "exit": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 66, in <module>\n    check('Historical snapshot intact '+manifest,all(Path(f['path']).stat().st_size==f['bytes']and hashlib.sha256(Path(f['path']).read_bytes()).hexdigest()==f['sha256']for f in m['files']),len(m['files']))\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 7, in check\n    checks.append({'name':name,'result':'PASS' if condition else 'FAIL','details':details});assert condition,(name,details)\n                                                                                                   ^^^^^^^^^\nAssertionError: ('Historical snapshot intact local-remediation-review-manifest.json', 42)\n",
+  "method": "Existing assertions; only two scratch/result paths redirected; no UI or prototype source edits",
+  "rendered": "NOT_RUN / prior target denial retained; no alternate renderer/server/proxy attempted",
+  "browser_inventory": "CUA getState available; no concept page opened, viewport/zoom/screenshots/keyboard actions NOT_RUN",
+  "historical_sources_unchanged": true,
+  "syntax_scratch_sha256": "8d05e3eb3ed07b6ffe2f7d7bb80ad2463671a117dfe53fab2e4d6c623e181c37",
+  "syntax_scratch_disposition": "Owned scratch removed after node --check; original pinned HTML contains recoverable script; no source changed"
+}

@@ -1,0 +1,24 @@
+{
+  "task": "MC-CONT-01 / UX integrity disposition",
+  "utc": "2026-10-25T17:18:16.650833+00:00",
+  "failed_check": "Historical snapshot intact local-remediation-review-manifest.json",
+  "current_tree_mismatches": [
+    "docs/ai-sdlc/decision-log.md"
+  ],
+  "expected_historical_bytes": 8648,
+  "expected_historical_sha256": "d447d48796a4940cc1b9b0e253f1b6324f0f64ab564748f1a34979ce68524457",
+  "historical_bytes_recovered_from_git": "ca649fe^:docs/ai-sdlc/decision-log.md",
+  "current_bytes": 9426,
+  "current_sha256": "6b89961d51cc5feec0f332f303b8975d3d14ac89e80fbda43e2e909ebcd5ce0f",
+  "current_is_exact_append": true,
+  "append_commit": "ca649fe7e176dd4ee58021f80952d3b69d750f03",
+  "append_scope": "DEC-028 explicit PO INT-A approval, no older decision edits",
+  "disposition": "EXPECTED_VERSION_DRIFT_IN_LIVE_PATH; original historical bytes still retrievable exactly from Git. Historical manifest unchanged; raw check remains FAIL, not waived or falsely PASS. This does not establish a concept source defect.",
+  "predicate_counts": {
+    "total": 162,
+    "pass": 161,
+    "fail": 1
+  },
+  "rendered": "NOT_RUN / prior file target policy boundary remains",
+  "concept_source_modified": false
+}

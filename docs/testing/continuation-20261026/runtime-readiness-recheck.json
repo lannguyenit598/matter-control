@@ -1,0 +1,133 @@
+{
+  "task": "MC-CONT-01 / MC-002-INTA operational readiness",
+  "utc": "2026-10-25T17:16:10.990012+00:00",
+  "supersedes": "runtime-intake-checks.json readiness fields only; initial lsof resolved 127.0.0.1 to localhost, and initial label query used wrong keys. Numeric -nP and exact recorded keys correct measurement without any runtime mutation. Initial raw observation preserved.",
+  "resource": {
+    "Id": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+    "Image": "sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+    "Running": true,
+    "Health": "healthy",
+    "Memory": 536870912,
+    "NanoCpus": 1000000000,
+    "PidsLimit": 128,
+    "Ports": {
+      "5432/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "15457"
+        }
+      ]
+    },
+    "Task": "MC-002-INTA-ENV",
+    "Owner": "Codex",
+    "RunId": "intamvnmoems3pd",
+    "Volume": "mc002-inta-data-intamvnmoems3pd"
+  },
+  "commands": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "77632",
+        "-o",
+        "pid=,ppid=,lstart=,comm="
+      ],
+      "started_utc": "2026-10-25T17:16:10.789230+00:00",
+      "ended_utc": "2026-10-25T17:16:10.813220+00:00",
+      "exit": 0,
+      "stdout": "77632     1 Sun Oct 25 16:49:50 2026     /tmp/mc002-inta-be/bin/userapi\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-a",
+        "-p",
+        "77632",
+        "-iTCP:18086",
+        "-sTCP:LISTEN",
+        "-Fn"
+      ],
+      "started_utc": "2026-10-25T17:16:10.813253+00:00",
+      "ended_utc": "2026-10-25T17:16:10.835548+00:00",
+      "exit": 0,
+      "stdout": "p77632\nf7\nn127.0.0.1:18086\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--type",
+        "container",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Image\":{{json .Image}},\"Running\":{{.State.Running}},\"Health\":{{if .State.Health}}{{json .State.Health.Status}}{{else}}null{{end}},\"Memory\":{{.HostConfig.Memory}},\"NanoCpus\":{{.HostConfig.NanoCpus}},\"PidsLimit\":{{.HostConfig.PidsLimit}},\"Ports\":{{json .HostConfig.PortBindings}},\"Task\":{{json (index .Config.Labels \"mattercontrol.task\")}},\"Owner\":{{json (index .Config.Labels \"mattercontrol.owner\")}},\"RunId\":{{json (index .Config.Labels \"mattercontrol.runId\")}},\"Volume\":{{range .Mounts}}{{if eq .Destination \"/var/lib/postgresql\"}}{{json .Name}}{{end}}{{end}}}",
+        "mc002-inta-pg-intamvnmoems3pd"
+      ],
+      "started_utc": "2026-10-25T17:16:10.835582+00:00",
+      "ended_utc": "2026-10-25T17:16:10.926328+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Running\":true,\"Health\":\"healthy\",\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128,\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Task\":\"MC-002-INTA-ENV\",\"Owner\":\"Codex\",\"RunId\":\"intamvnmoems3pd\",\"Volume\":\"mc002-inta-data-intamvnmoems3pd\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "curl",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "3",
+        "--write-out",
+        "\nHTTP_CODE=%{http_code}\n",
+        "http://127.0.0.1:18086/healthz"
+      ],
+      "started_utc": "2026-10-25T17:16:10.926437+00:00",
+      "ended_utc": "2026-10-25T17:16:10.956026+00:00",
+      "exit": 0,
+      "stdout": "{\"status\":\"ok\"}\n\nHTTP_CODE=200\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "curl",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "3",
+        "--write-out",
+        "\nHTTP_CODE=%{http_code}\n",
+        "http://127.0.0.1:18086/readyz"
+      ],
+      "started_utc": "2026-10-25T17:16:10.956054+00:00",
+      "ended_utc": "2026-10-25T17:16:10.989895+00:00",
+      "exit": 0,
+      "stdout": "{\"status\":\"ready\"}\n\nHTTP_CODE=200\n",
+      "stderr": ""
+    }
+  ],
+  "process_identity": "same PID77632, executable/start time and numeric loopback listener verified",
+  "probe_results": {
+    "healthz": "{\"status\":\"ok\"}\n\nHTTP_CODE=200\n",
+    "readyz": "{\"status\":\"ready\"}\n\nHTTP_CODE=200\n"
+  },
+  "frontend_state_absent": true,
+  "frontend_runtime_evidence_absent": true,
+  "stage1_eligible_at_observation": true,
+  "canonical_cases": "51 NOT_RUN / 36 required,14 deferred,1 blocked; no case PASS inferred",
+  "lifecycle_mutations": 0,
+  "data_mutations": 0,
+  "database_queries": 0,
+  "independent_qa": "PENDING",
+  "external_owner_execution": "Frontend handoff READY_NOT_DISPATCHED by Codex"
+}

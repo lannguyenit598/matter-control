@@ -1,0 +1,6 @@
+argv: ["/tmp/mc002-inta-be/bin/userapi","migrate"]
+env: env -i + sourced /tmp/mc002-inta-private/intamvnmoems3pd/backend.env (values not recorded)
+started_utc: 2026-10-25T09:48:20.985589000Z
+ended_utc: 2026-10-25T09:48:22.015795000Z
+exit: 1
+diagnosis: exit1 config validation error \"DATABASE_URL is required for migrate\"; wrapper sourced private env without set -a so nothing was exported across exec; binary never received a DSN, zero DB connection attempted, zero side effects on mc002_inta.
