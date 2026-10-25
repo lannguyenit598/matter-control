@@ -19,4 +19,3 @@ Revision: local-r2, STEP 03A.3. Local-r1 and all previous review evidence remain
 | A/B/C direction boards | CONCEPTUAL_ONLY / REVIEW_BOARD miniatures, not a 1:1 application. | PO chooses one coherent direction after actual evidence; no automatic approval. |
 
 Requirement ≠ Action. Evidence Requirement ≠ Evidence. COMPLETED ≠ VERIFIED. No classification grants production readiness, formal QA or PO approval. Proposed keyboard/focus/responsive behavior elsewhere in this document is expected interaction unless this table identifies an executed source check. No blanket interaction PASS is implied.
-
