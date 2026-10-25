@@ -1,0 +1,70 @@
+{
+  "task": "MC-003A.8A.f10_clause3_provenance_completed",
+  "reviewer": "ZCode Desktop interactive session, human-operated",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN",
+  "authorship": "ZCode-authored candidate; not independent approval; C1/C2 preserved unchanged",
+  "path_A_recommended": {
+    "filters_used": "after|before, limit only (indexed reviewed DR-15 set); no targetId needed for link discovery",
+    "discovery": "forward seq pages on the same Matter without targetId; client-side match type=filing.observation.evidence_linked AND (causeSeq=mainSeq OR payload.observationId); E3 discovered from link targetRef",
+    "stop_condition": "collected evidenceLinkedCount matches; same-transaction same-lock writing puts links in the command's seq block, so stable-dataset scan terminates; potentially many bounded pages, never claimed <=2 calls",
+    "not_claimed": [
+      "commandKey filter (absent from indexed reviewed_operations)",
+      "any correlationId->commandKey mapping",
+      "access beyond RC-1/RC-3/F-09"
+    ]
+  },
+  "path_B_optional_delta": "one optional indexed query param causeSeq={seq} on DR-15 (AND with after/before/limit/targetId; F-09 validation 422; no new cursor/route); explicit contract change pending Claude/PO; A remains baseline",
+  "event_schema_closed": {
+    "main_payload": "{observationId UUIDv7, action RECORD|RETRACT|REPLACE, observationType closed-candidate-string, cycleNo int>=1|null, proofEpoch int>=0, correctsObservationId UUIDv7|null, evidenceLinkedCount int>=0}",
+    "link_payload": "{observationId UUIDv7, role RECEIPT|OUTCOME|null (fix: nullable for roleless stage links), cycleNo int>=1|null, proofEpoch int>=0}",
+    "inherited_pinned": "seq int; actorRef standard ref; recordedAt RFC3339 offset; effectiveAt = observedAt or null; causeSeq = mainSeq on links, null on mains (correction chain via correctsObservationId); correlationId opaque, never read as commandKey; reason string mandatory on RETRACT/REPLACE; before/after ∈ null|same closed scalar projection — never arrays or evidence containers",
+    "no_array_invariant": "no array/collection field of any kind in these two event types; per-evidence representation is one-link-one-event; document-level enforcement, runtime NOT_RUN",
+    "numeric_bounds": "cycleNo/proofEpoch lower bounds from authorized DDL; no upper bound on evidenceLinkedCount (no cap); reason/observationType length and envelope size NEEDS_AUTHORIZED_SOURCE (missing clause: field-length/validation table beyond authorized excerpts), no invented numbers",
+    "scope": "these two event types only; unrelated event types unchanged"
+  },
+  "trace_O7_E3": {
+    "known": "filingId, mainSeq=41, observationId=OB-07; E3 and commandKey unknown",
+    "steps": [
+      "after=40&limit=1 -> seq41 main (N=1) at S0",
+      "after=41&limit=1 -> seq42 link {OB-07, role null, cycleNo null} targetRef={EVIDENCE,E3} -> match 1/1 stop",
+      "seq40/seq43 unrelated skipped by filter; within block [41,42] only O7-command events (matter lock), not relied upon"
+    ],
+    "completion": "stop when N matches collected; per-page asOf/sourceRevision labeled; newer sourceRevision disclosed per page; no cross-mutation guarantee; no completeness claim while cursor remains",
+    "historical_vs_effective": "link events are immutable history; current effectiveness depends on terminal corrections; incomplete history cannot prove current unbound total; filing-read unboundObservationEvidenceTotal at its own snapshot is authoritative for the current count"
+  },
+  "cases": [
+    "P1 discovery trace (limit=1, unrelated 40/43, zero filter delta)",
+    "P2 N=3 limit=2 completion + per-page sourceRevision labels",
+    "P3 retracted link: history retains event, current total drops, history alone insufficient",
+    "P4 roleless link role=null excluded from B3",
+    "P5 NEEDS_AUTHORIZED_SOURCE bounds; traversal correctness independent of them"
+  ],
+  "delta": "zero routes; zero filter change in A; optional causeSeq param in B (indexed delta, unadopted); payload blocks CANDIDATE_FIELD scoped to two event types; catalogue stays 32; B35/L2 unadopted",
+  "remaining_decisions": [
+    "A vs B (contract delta decision: Claude/PO)",
+    "event payload schema acceptance (Claude)",
+    "role-nullable link fix (Claude)",
+    "NEEDS_AUTHORIZED_SOURCE numeric-bounds clause (future authorized packet; exact missing item: field-length/validation limits if any)",
+    "B-variant 35-ops adoption (PO)"
+  ],
+  "preserved": {
+    "ct_ids": "22 with 16/4/1/1",
+    "qa": "Q1..Q8 with Q2/Q4/Q6/Q8 conditional",
+    "gates": {
+      "G3": "NOT_VERIFIED",
+      "G4_design_qa": "PENDING",
+      "G5": "G5-A document compatibility stands / G5-B FINDINGS_OPEN",
+      "G6": "REWORK_REQUIRED",
+      "STEP03B": "NOT_AUTHORIZED",
+      "po_architecture_approval_gate": "NOT_PASSED"
+    },
+    "runtime": "NOT_RUN",
+    "independence": "BE-01/INT-A independent; not restarted or reassigned; no implementation claims"
+  },
+  "checks": {
+    "run_this_round": "none (text-only per assignment)",
+    "standing_from_session": "24-file hash verification from prior rounds; no new hash/read/tool claims",
+    "limitations": "document-level only; runtime NOT_RUN; independent review follows separately"
+  }
+}

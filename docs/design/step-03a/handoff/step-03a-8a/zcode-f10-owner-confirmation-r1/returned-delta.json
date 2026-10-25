@@ -1,0 +1,51 @@
+{
+  "task": "MC-003A.8A.f10_c1c2c3_owner_technical_confirmation",
+  "reviewer": "ZCode Desktop interactive session, human-operated (author self-confirmation, not independent review)",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN (not in available session metadata; none fabricated)",
+  "confirmation_scope": "technical consistency confirmation of ZCode-authored C1/C2/C3 per direct PO reroute; not PO approval, not adopted API, not runtime PASS, not F10 CLOSED; independent reviewer still required for the final revision",
+  "c1": {
+    "disposition": "OWNER_TECHNICALLY_CONFIRMED_CANDIDATE",
+    "patches": {
+      "cycle1_creation": "filing-create makes filing + filing_cycles cycle 1 (INITIAL, epoch 0) in one transaction [candidate]",
+      "target_vs_cas": "body cycleNo must exist under filing -> 422 scoped; expectedCycleNo = believed current open cycle, mismatch -> 412 [expectedCycleNo existence approved §1.1; semantics candidate]",
+      "check_ordering": "uniform command order: admission -> authz -> replay -> preconditions (428/412) -> guards (409) -> effects; stale-CAS + changed stage -> 412; stage-only change with valid CAS -> 409 [candidate technical decision, previously unpinned]",
+      "supplement": "server-derived n+1 under matter lock; one txn cycle+observation+links+revision+events; full rollback [candidate on approved RULE-012/filing-model §3]",
+      "response": "RESPONSE is FilingSubmission only (FK cycle binding), never an observation type; no invented intermediate stage; 9-value stage vocabulary not enumerated (not needed by these clauses)"
+    }
+  },
+  "c2": {
+    "disposition": "OWNER_TECHNICALLY_CONFIRMED_CANDIDATE",
+    "patches": {
+      "actions": "RETRACT {correctsObservationId, reason} | REPLACE {correctsObservationId, type, cycleNo, evidenceRefs[], observedAt?, reason}; OWNER+reason; original-target-only; latest-seq terminal; superseded replacement deactivated in same commit [candidate on approved permission matrix/RULE-019]",
+      "effective_view": "effective at asOf = links of observations not targeted by a terminal correction among committed history at that snapshot; pure function of append-only log; no rewrite [candidate derivation on approved RULE-019]",
+      "proof_boundaries": "incomplete historical links never prove current totals; filing-read single-snapshot count authoritative; receipt != approval; satisfaction only via evidence-model §4 at current proof_epoch with exact versions [approved RULE-011/012]"
+    }
+  },
+  "c3": {
+    "disposition": "OWNER_TECHNICALLY_CONFIRMED_CANDIDATE",
+    "patches": {
+      "path": "A only: same-Matter unfiltered seq pages; no commandKey/correlation mapping; no causeSeq query param (B unadopted)",
+      "predicate": "normative AND: type=filing.observation.evidence_linked AND causeSeq==mainSeq AND payload.observationId==O7; OR-equivalence invariant citable (one observation per command, causeSeq=own main seq, per-matter unique seq) but AND pinned for drift-safety [candidate; seq uniqueness approved ADR-002 §1.5]",
+      "dedup_grain": "event identity (matterId, seq), counted once; link PK (matter_id, observation_id, evidence_id); evidenceLinkedCount = link events emitted by the command (RETRACT: 0)",
+      "emission_rules": "main event seq precedes its links within the command; links only at creation; no later event reuses an old mainSeq as causeSeq (corrections reference via correctsObservationId) [candidate; append-only approved]",
+      "edge_semantics": "N=0 complete; exhausted<N, surplus, or identity mismatch -> INCOMPLETE_HISTORY/ANOMALY surfaced; never false zero/completeness [candidate reader contract]",
+      "completion": "command-local completeness (N unique exact matches) independent of global nextCursor exhaustion and of later unrelated history; sourceRevision changes disclose per-page labels; no overview merge, no shared cross-page snapshot, no current-effective proof from scan [candidate; append-only approved]"
+    }
+  },
+  "projection": {
+    "main_payload": "{observationId UUIDv7, action RECORD|RETRACT|REPLACE, observationType closed 7-value candidate set (final strings via filing-model edit), cycleNo int>=1|null, proofEpoch int>=0, correctsObservationId UUIDv7|null, evidenceLinkedCount int>=0}",
+    "link_payload": "{observationId UUIDv7, role RECEIPT|OUTCOME|null (roleless links excluded from B3), cycleNo int>=1|null, proofEpoch int>=0}",
+    "inherited": "seq int>=0; recordedAt RFC3339 offset; effectiveAt=observedAt|null; causeSeq=mainSeq on links|null on mains; correlationId opaque (proposed <=128 chars, NEEDS_AUTHORIZED_SOURCE alternative); reason non-null on RETRACT/REPLACE; before/after in null|same closed scalar projection — never arrays; no-array invariant scoped to these two event types",
+    "numeric_bounds": "dual status: ZCode-proposed candidate values (reason<=2000, type<=64, correlationId<=128) OR NEEDS_AUTHORIZED_SOURCE for sourced limits (missing clause: field-length/validation table beyond authorized excerpts); relation-bounded is not constant-byte; no business cardinality cap; no size-risk accepted for PO"
+  },
+  "acceptance": ["A1 initial filing one-txn", "A2 stale CAS + changed stage -> 412", "A3 stage-only -> 409 no mutation", "A4 supplement happy/failure rollback", "A5 replace-then-retract terminal/deactivation, immutable history", "A6 effective-at-asOf derivation, history insufficient for current totals", "A7 exact-predicate trace with derived event between links", "A8 N=0/exhausted/surplus/mismatch anomaly semantics", "A9 no-array invariant, role-null excluded from B3, per-page labels", "A10 RESPONSE = FilingSubmission only"],
+  "status_flags": { "acceptance": "DOCUMENT_EXPECTED", "runtime": "NOT_RUN", "catalogue": "32 unchanged", "unadopted_alternatives": ["path B causeSeq param", "L2 link-grain", "B35"], "candidate_fields_pending_acceptance": ["unboundObservationEvidenceTotal", "DR-15 scoped payload blocks"], "po_choices_genuine": ["candidate fields + proposed bounds adoption at gate", "B35 adoption"], "adr_needed": false },
+  "preserved": {
+    "f08": "untouched",
+    "ct": "22 IDs, 16+4+1+1",
+    "qa": "Q1..Q8 original dispositions, Q2/Q4/Q6/Q8 conditional",
+    "gates": { "G3": "NOT_VERIFIED", "G4_design_qa": "PENDING", "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY", "G5-B": "FINDINGS_OPEN", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED", "po_architecture_approval_gate": "NOT_PASSED" },
+    "independence": "BE-01 and INT-A flow independent; not restarted or reassigned; no payload/read permission inherited beyond this same-session text assignment"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "review_questions": [
+    {
+      "id": "IR-F10-01",
+      "scope": "C3 corruption detection versus finite stop",
+      "question": "Differentiate invariant-based command completeness from detecting corrupt producer history. After collecting N and stopping, a later surplus is unseen; an AND predicate excludes wrong-observation rows instead of automatically flagging them. Pin an anomaly predicate and observation window or qualify the guarantee; do not demand an unbounded scan by default.",
+      "acceptance": "Valid interleaving/N0/exhaustion are retained, corruption guarantees neither overclaimed nor hidden."
+    },
+    {
+      "id": "IR-F10-02",
+      "scope": "C2 effective replacement lineage",
+      "question": "Consolidated P2.2 wording about observations not targeted by terminal correction must be read with R2 at-most-one-effective-replacement and superseded-replacement exclusion. REPLACE O4->O5 then RETRACT O4 must exclude both O4/O5; REPLACE O4->O5 then REPLACE O4->O6 leaves onlyO6. Confirm a single explicit canonical derivation rather than taking the short sentence literally.",
+      "acceptance": "No original or superseded replacement resurfaces; history remains immutable; no correction-of-correction target invented."
+    },
+    {
+      "id": "IR-F10-03",
+      "scope": "C1 validation order local scope",
+      "question": "P1.3 calls the recommended order uniform for every command. Confirm filing/observation/correction-family scope and compatibility with existing command contracts; do not silently create a global command-order change outside this F10 task. Pin supplement target-vs-CAS handling and existing428/412/409 expectations.",
+      "acceptance": "No unrelated command contract superseded by scoped addendum."
+    },
+    {
+      "id": "IR-F10-04",
+      "scope": "numeric/approval status and schema projection",
+      "question": "Review proposed limits reason2000/type64/correlation128 as proposed values, not sourced policy; envelope/UTF8-vs-characters/overflow bounds remain explicit where absent. Existing32catalogue stays; zero route/filter delta still includes new payload/field/semantics.",
+      "acceptance": "One concrete decision packet after review; no production byte/latency or approved-limit claim."
+    }
+  ],
+  "prose_walks": {
+    "task": "MC-003A.8A",
+    "utc": "2026-10-25T18:14:35.437637+00:00",
+    "base": "767f548f19b367a6893a3b8e0983107b5d509474",
+    "return_bytes": 22015,
+    "return_sha256": "39eab0fab2836ffc2afc46b2e85091c5e9045361df9f0e9768009156ed66cc2f",
+    "JSON": "VALID_UNIQUE_KEYS",
+    "prose_trace_method": "Pure document interpretation of stop-at-N and AND-predicate; no runtime code or design acceptance",
+    "valid_interleaving": {
+      "found": [
+        "E3a",
+        "E3b"
+      ],
+      "read": [
+        41,
+        42,
+        43,
+        44
+      ],
+      "complete": true
+    },
+    "zero_count": {
+      "found": [],
+      "read": [],
+      "complete": true
+    },
+    "exhaustion_before_count": {
+      "found": [
+        "E3a"
+      ],
+      "read": [
+        41,
+        42
+      ],
+      "complete": false
+    },
+    "review_counterexamples": {
+      "late_surplus_not_observable_after_stop": {
+        "found": [
+          "E3a",
+          "E3b"
+        ],
+        "read": [
+          41,
+          42,
+          43,
+          44
+        ],
+        "complete": true
+      },
+      "wrong_identity_rejected_by_match_but_not_reported": {
+        "found": [
+          "E3a",
+          "E3b"
+        ],
+        "read": [
+          41,
+          42,
+          43,
+          44
+        ],
+        "complete": true
+      }
+    },
+    "interpretation": "Healthy trace passes under candidate emission/count invariants. Claimed corruption detection must be conditional or have an explicit broader anomaly predicate/window. These are independent review questions, not asserted live-product failures.",
+    "protected_files": {
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/candidate-read-set.json": "9817f034a76b9c18fada8aeed1e205b7bbdb215d927612089110c3cf2325783b",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/reviewed-clarifications.json": "80620c485fab24bbf61cf09350ae41b7c73ce193f166ae1ef7c6c39077b043fd",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/f11-fixture-reviewed.json": "d6e9d2ef2629e77f8a48a4f9e641b6cad1f0a4f32d3fe3891bb17fdf468b5fa3",
+      "docs/testing/integration-acceptance-matrix.md": "71578d6f36c0e45f5ee012c7909cad98d4b3059fa77756a67e7e6d356253abe1",
+      "docs/implementation/inta-coordination.md": "54dbe63d3db8e874a619754dab78ab6b2cc6be6570939858fcaedb1c5c9aa7ab",
+      "docs/implementation/tasks/MC-BE-01.md": "37fec8749bcb68525978d63fb0891cb4aa3515e2255e237ba71a4afb2cb02d55",
+      "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5"
+    },
+    "runtime": "NOT_RUN",
+    "new_external_calls": 0
+  }
+}

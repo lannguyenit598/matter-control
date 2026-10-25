@@ -260,3 +260,12 @@ Direct PO instruction “cho zcode xác nhận phần này luôn” supersedes t
 ## Restart route clarified; stage2 cue released — 2026-10-26
 
 Actual ZCode text-only clarification quotes Mimosa explicitly prescribing Write/Edit/MultiEdit for script-content scan; INTA-GOV-RESTART-01 is EXPLAINED_TOOL_WRITE_ROUTING / NO_REMAINING_STAGE2_HOLD with owner-reported telemetry limits. See docs/reviews/inta-go-restart-route-clarification-intake.md (repository-relative). This supersedes the provisional stage2 hold above, not any independent-QA gate. Stage2 CUE_RELEASED / READY_NOT_DISPATCHED: deliver MC-002-INTA-FE-STAGE2-PROMPT.md to actual ZCode; immediate source/process/state recheck, one INT-PERS-01 readback only, then WAITING_PG_RESTART. Go/Next observed unchanged at18:06:18Z;29ledger hashes unchanged. No restart replay, PG action, driver invocation or provider call by Codex. All51formal results/runtimeQA/product/design/release gates remain unchanged.
+
+
+## F10 final owner confirmation received — 2026-10-26
+
+[Actual consolidated ZCode return](../design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/intake.md) is received, OWNER_TECHNICALLY_CONFIRMED_CANDIDATE / INDEPENDENT_REVIEW_PENDING / NOT_ADOPTED. Direct PO reroute is honored; no mandatory Claude confirmation loop reintroduced. This is author self-confirmation, no formal PO/architecture acceptance, independent QA or runtimePASS; supplement staysNOT_READ, no new source/tool/hash execution claimed.
+
+C1/C2/C3 clause patch and proposednumericlimits preserved. Local documenttrace verifies validinterleaving/N0/exhaustion behavior and records precise independentreview questions: stop-at-N cannot observe latersurplus; AND-filtered mismatches need separate anomaly handling if detection is promised; C2 effectiveview must retain R2 supersededreplacement exclusion; P1.3 must not silently change unrelatedcommands. No fresh fullownerrewrite assignment.
+
+Six exact review snapshots49688bytes plus manifest/manualprompt are prepared, NOT_DISPATCHED/no new externalpayloadpermission inferred. Nonauthor review precedes actual field/bounds/B35 POchoices. Catalogue32/B35/L2/causeSeqfilter unadopted; F08/F11/22CT/QA/gates retained, allF10runtimeNOT_RUN. BE01 rework and INT-A latestcoordination unaffected; no DB/lifecycle/implementation/provider/model/settings/deploy action.
