@@ -1,0 +1,103 @@
+{
+  "task": "MC-002-INTA-BE-INTAKE",
+  "timestamp_utc": "2026-10-25T02:58:11.040887+00:00",
+  "governance_base": "ca649fe7e176dd4ee58021f80952d3b69d750f03",
+  "owner_identity": "User-returned actual ZCode desktop; GLM-5.3-Flash owner-reported, not independently model-attested",
+  "exports": [
+    {
+      "name": "10-build-meta.txt",
+      "bytes": 319,
+      "sha256": "fe6f400003488909d928288a613d945d24955a59e3b3975c17b9e143b136a780",
+      "export_byte_equal": true
+    },
+    {
+      "name": "11-build.stdout.log",
+      "bytes": 97,
+      "sha256": "9bfd4a142cc03439ca126ef07989a46315a626c0c33d20b3d36411771529401a",
+      "export_byte_equal": true
+    },
+    {
+      "name": "12-build.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "export_byte_equal": true
+    },
+    {
+      "name": "20-export-hashes.txt",
+      "bytes": 256,
+      "sha256": "b256bd66c3ce721abbfa94b56be729347e2bdc211ee4d9168b303960bcf17c7f",
+      "export_byte_equal": true
+    }
+  ],
+  "valid_manifest_payloads": [
+    "10-build-meta.txt",
+    "11-build.stdout.log",
+    "12-build.stderr.log"
+  ],
+  "sources": {
+    "seed": {
+      "path": "/tmp/mattercontrol-step022-backend-c01",
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "branch": "task/MC-002-be-c01",
+      "status": "",
+      "tracked_diff_vs_baseline": ""
+    },
+    "owner": {
+      "path": "/tmp/mc002-inta-be",
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "branch": "codex/mc-002-inta-be",
+      "status": "",
+      "tracked_diff_vs_baseline": ""
+    }
+  },
+  "binary": {
+    "path": "/tmp/mc002-inta-be/bin/userapi",
+    "bytes": 42202722,
+    "sha256": "f3bcdc2f7ce893cdfa248274777f1d3401f538d3ff290d93abf3bd7f370a54c1",
+    "build_info": "binary-build-info.txt",
+    "binary_executed_by_codex": false,
+    "owner_build": "make build exit0 UTC02:51:43Z..02:51:45Z per owner metadata/recipe; not rebuilt by Codex",
+    "in_process_version_stamp": "NOT_RUN; must be verified on actual launch"
+  },
+  "cors_literal_scan": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "rg",
+      "-i",
+      "cors|access-control-allow",
+      "internal/",
+      "cmd/"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "scope": "literal source check only, not runtime CORS/security proof"
+  },
+  "listeners": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "lsof",
+      "-nP",
+      "-iTCP:18085,18086,15457",
+      "-sTCP:LISTEN"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "current three assigned ports only, not historical graceful-stop proof or all-process inventory"
+  },
+  "dependencies": {
+    "frontend_return_exists": false,
+    "frontend_worktree_exists": true,
+    "harness_exists": true,
+    "environment_handoff_exists": false,
+    "run_id_from_driver_received": false,
+    "interpretation": "No frontend return or driver-generated runId has been received. Frontend/harness directories appeared during intake; presence alone does not establish owner completion or permission to run its code. Preserve active owner work and await its coordination return."
+  },
+  "protected_files_unchanged": 59,
+  "runtime_result": "51 NOT_RUN",
+  "independent_opencode_verdict": "PENDING",
+  "new_source_build_db_container_actions": "NONE",
+  "state": "IN_REVIEW_PREPARATION / WAITING_ENV_AND_FRONTEND_RUN_COORDINATION"
+}

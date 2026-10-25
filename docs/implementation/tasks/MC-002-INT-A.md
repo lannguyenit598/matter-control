@@ -1,6 +1,6 @@
 # MC-002-INT-A — Selected Local Integration Assignment
 
-Owner Codex PM/Cloud/DevOps; priority P0 local feasibility. Base e7dbfbfb63062c4df576836c744701832356edd7, branch task/MC-002-solution-architecture. **PREPARED / WAITING_MANUAL_DISPATCH. No owner acknowledgement, implementation or runtime evidence yet.** [DEC-028](../../ai-sdlc/inta-po-approval.md) approves INT-A; [INTA-1](../inta-approved-contract.md) is frozen within that scope. No fallback to INT-A0/B/C.
+Owner Codex PM/Cloud/DevOps; priority P0 local feasibility. Base e7dbfbfb63062c4df576836c744701832356edd7, branch task/MC-002-solution-architecture. **IN_REVIEW_BACKEND_PREPARATION / WAITING_ENV / FRONTEND_RETURN_PENDING.** Actual ZCode acknowledgement/build return is received; no integration runtime evidence yet. [DEC-028](../../ai-sdlc/inta-po-approval.md) approves INT-A; [INTA-1](../inta-approved-contract.md) is frozen within that scope. No fallback to INT-A0/B/C.
 
 ## Shared task contract and dependencies
 
@@ -36,3 +36,8 @@ Owner Codex PM/Cloud/DevOps; priority P0 local feasibility. Base e7dbfbfb63062c4
 Read-only source/head checks PASS. Both ZCode packaged provider paths remain absent. Antigravity's prior actual headless RunCommand denial remains an explicit permission boundary; no redundant probe/global allow-rule/login workaround. Direct engineering orchestration is unavailable, therefore the PO-requested manual-stop condition applies now. **No dispatch, worktree creation, source implementation, binary build, DB/container mutation or runtime test executed.** OpenCode runtime QA not yet invoked; verdict PENDING.
 
 C01-NATIVE stays accepted with limitations; C01-PRODUCT, production Cloudflare/cost/recovery and MC-002 remain OPEN. INT-D01 scope is approved; these quality gates are not. No Step03A/03B completion or production implication.
+
+
+## Backend preparation return — latest checkpoint
+
+[Actual ZCode return](../../reviews/inta-backend-return.md), [Codex intake](../../reviews/inta-backend-intake.md). New clean52b60a4 task worktree and binary match source/build metadata;4/4exports and3payload hashes verify. This supersedes earlier no-owner-build/acknowledgement statements only for backend preparation. Backend runtime WAITING_ENV; no full case PASS. Frontend directories/install evidence appeared but no return/runId received. [Current coordination](../inta-coordination.md) precedes the verified new PG/private DSN handoff; no environment/resource action in this intake. OpenCode runtime verdict PENDING; all51NOT_RUN.
