@@ -1,0 +1,286 @@
+{
+  "task": "MC-003A-READ-CONSUMPTION-INTAKE",
+  "actual_actor": "Local Codex PM/BA/orchestration",
+  "status": "IN_REVIEW",
+  "base_commit": "cd30600dc8b88b80fb10b96d4049e84787c4cf47",
+  "timestamp_utc": "2026-10-25T08:35:17.847220+00:00",
+  "returned_report": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/antigravity-read-consumption-reconciliation.md",
+    "bytes": 40729,
+    "sha256": "b1d7b7674cfca3ecddf2f7cb54a8924babb869a8d5ee0bc6f6b0c37ba807fd58"
+  },
+  "human_summary": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/antigravity-consumption-return-summary.txt",
+    "bytes": 22878,
+    "sha256": "b49c2f35d00df8ded4cb11d5f54d3a8d609e707d9dcd87aae14af4b3aabffbf1"
+  },
+  "reported_verdict": "FEASIBLE_WITH_CANDIDATE_READ_CONTRACT_SUBJECT_TO_PAGINATION_CLARIFICATIONS",
+  "intake_disposition": "ACCEPT_CONDITIONAL_DOCUMENT_FEASIBILITY_WITH_RCI_CORRECTIONS; no runtime/architectureapproval/independentQA acceptance",
+  "provenance_limit": "Human-supplied actual Antigravity report; self-reportedGemini3.8FlashHighinteractive, no machine session/provider/cost attestation. CurrentCodexGitchecks supplement failedownercommands, not retroactive executionproof. No agent/provider invocation byCodex.",
+  "checks": [
+    {
+      "name": "Expected intakecheckpoint",
+      "result": "PASS"
+    },
+    {
+      "name": "Correct isolated branch",
+      "result": "PASS"
+    },
+    {
+      "name": "Returned report actually present/uncommitted atintake",
+      "result": "PASS"
+    },
+    {
+      "name": "Reviewed input exact targeted-claude-review.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Reviewed input exact reviewed-read-contract.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Reviewed input exact targeted-return-summary.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "30proposal/reviewinputs intact",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozen r3 output-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozen r3 qa-input-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "/tmp/mattercontrol-step02-frontend Codex currenthead/clean",
+      "result": "PASS"
+    },
+    {
+      "name": "/tmp/mattercontrol-step021-frontend Codex currenthead/clean",
+      "result": "PASS"
+    },
+    {
+      "name": "DR01 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR02 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR03 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR04 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR05 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR06 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR07 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR08 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR09 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR10 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR11 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR12 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR13 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR14 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR15 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR16 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "DR17 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV01 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV02 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV03 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV04 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV05 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV06 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV07 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV08 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV09 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV10 mapping present",
+      "result": "PASS"
+    },
+    {
+      "name": "10consumerhooks allpresent",
+      "result": "PASS"
+    },
+    {
+      "name": "All8sections and2embeddedgroups present",
+      "result": "PASS"
+    },
+    {
+      "name": "22reviewedCTremainNOT_RUN",
+      "result": "PASS"
+    },
+    {
+      "name": "Materialrefquestions correspond toactualreviewedrows",
+      "result": "PASS"
+    }
+  ],
+  "check_count": 42,
+  "corrections": [
+    {
+      "id": "RCI-01",
+      "severity": "MEDIUM",
+      "reference": "Returned summary firstparagraph; report§1; failedgitcommands exit128; Editedtask_tracking.md",
+      "disposition": "Artifact was untracked atcd30600, not Gitcommitted by Antigravity. Current Codex head/status checks are separate evidence, not proof that failed owner commands succeeded. Owner model/service/no-egress/zero-charge/fullread claims and unknown task_tracking.md edit are not independently attested; do not infer historical zero writes or charges."
+    },
+    {
+      "id": "RCI-02",
+      "severity": "MEDIUM",
+      "reference": "HOOK-CR-06 / report§4; Atlas§8",
+      "disposition": "FIL-02 references DOC-05v2 with EV-10receipt, not DOC-03v2/v3. Use exact fixture versionRef; absence of currentpointer substitution is an acceptance target, not run result. Keep original report unchanged."
+    },
+    {
+      "id": "RCI-03",
+      "severity": "HIGH",
+      "reference": "report§5PARTIAL_SUCCESS scopedsectionrefetch",
+      "disposition": "No section-refetch API or mergedreplacement snapshot is approved by the reviewedcandidate. Refresh the wholeoverview to acquire a coherent newboundary, or present a separate collection/detail boundary explicitly; do not patchone panel into the oldsnapshot or invent endpoint."
+    },
+    {
+      "id": "RCI-04",
+      "severity": "HIGH",
+      "reference": "A-02 client-side enforcement / §8 Q1,Q4,Q7/Q8 / verified100%testable",
+      "disposition": "Frontendaffordances and identicalerrorUI do not enforceauthz, establishbyte-identicalbackendresponses, guaranteezero leakage, prove cursorsecurity or readsideeffectfreedom. These need actual server/integration negatives and no-mutation/log evidence;22CTand8QAquestions remainNOT_RUN/PENDING, notverifiedtestabilityPASS."
+    },
+    {
+      "id": "RCI-05",
+      "severity": "MEDIUM",
+      "reference": "HOOK-CR-05 zero client status transitionlogic; Dialogsourceclaim",
+      "disposition": "Do not prohibit ordinary UIstate/pending/navigation or explicitguardedRequirementtransition requests. Only authoritativelegalstate/readiness/permission computation is forbidden. Childunmount is source-observed; actualdraftloss/focusloss remainsunreproduced and depends on ownership."
+    },
+    {
+      "id": "RCI-06",
+      "severity": "MEDIUM",
+      "reference": "§5REVOKED_ACCESS history purge / §6.2TQ04backoff",
+      "disposition": "Purge protectedclientcache on auth/scope invalidation per reviewedcandidate, never delete domain EventHistory or invent persistentstorage. Polling/backoff/prevCursor/newcomponentnames are proposals, not selected technicalcontracts; no new retry cadence or mutationretry policy. Authentication and authorization remain distinct."
+    },
+    {
+      "id": "RCI-07",
+      "severity": "MEDIUM",
+      "reference": "DR02 small<=200 safe; DR13 morethan200common; inspected/reconciledA16",
+      "disposition": "Candidate200cap is perpage, not a Matterworkstream/partycount guarantee. Use a hypothetical multi-pagecounterexample, not an establishedworkload/frequency or runtimeperformanceclaim. Sourcegitmetadata alone doesnotprove currentcleanliness; freshCodexchecks now establish only point-in-timehead/status."
+    },
+    {
+      "id": "RCI-08",
+      "severity": "MEDIUM",
+      "reference": "NAV03 claimRef viaEvidencepath / NAV09edgeRef vianodespath",
+      "disposition": "claimId cannot be usedas evidenceId, or edgeId asnodeId. Require actual correctlytypedparent/node reference or show safe unresolvedcontext pending targetedClaudeclarification. No generic25kindresolver is proven by the report."
+    }
+  ],
+  "targeted_questions": [
+    {
+      "id": "RC-REF-01",
+      "parent_tq": "TQ-08",
+      "catalogue_id": "DR-13",
+      "priority": "HIGH_BEFORE_AFFECTED_INTEGRATION",
+      "status": "OPEN_TARGETED_ARCHITECTURE_CLARIFICATION",
+      "question": "How does an EXTERNAL_PARTY {kind,id} resolve directly under paginated Mattercollection? Decide a minimal authorizedidfilter/lookuporotherguaranteedresolution without sequential scan; do not add contact/legalfields beyond existinglabel/role/context/inactive/revision.",
+      "evidence": "reviewedDR13onlylist; refsarekind/id; paginationcap isperpage; noidfilterguarantee",
+      "owner": "ActualClaude architecture; Antigravity consumes"
+    },
+    {
+      "id": "RC-REF-02",
+      "parent_tq": "TQ-08",
+      "catalogue_id": "DR-08/DR-09",
+      "priority": "HIGH_BEFORE_AFFECTED_INTEGRATION",
+      "status": "OPEN_TARGETED_ARCHITECTURE_CLARIFICATION",
+      "question": "How does EVIDENCE_CLAIM {kind,id} resolve Evidenceparent/claimdefinition when onlyclaimsinlineonevidence andclaimassessmenthistoryexist? Decide requiredparentcontextorminimalreviewedlookup/envelope; never passclaimIdasevidenceId.",
+      "evidence": "25kindrefsincludeEVIDENCE_CLAIM;inlineclaimsrequiredDatahasclaimRefbutgenericrefparentnotguaranteed",
+      "owner": "ActualClaude architecture; Antigravity consumes"
+    },
+    {
+      "id": "RC-REF-03",
+      "parent_tq": "TQ-08",
+      "catalogue_id": "DR-02",
+      "priority": "MEDIUM_BEFORE_AFFECTED_INTEGRATION",
+      "status": "OPEN_TARGETED_ARCHITECTURE_CLARIFICATION",
+      "question": "Define WORKSTREAMtypedrefresolution if list spanspages; do not assume <=200total or selectnewbusinesscap. Choose minimal stablelookup/context/collectionguarantee consistentwithapprovedscope.",
+      "evidence": "DR02declareskeysetpaginationandlistreplacement, not totalbound",
+      "owner": "ActualClaude architecture; Antigravity consumes"
+    }
+  ],
+  "preserved_resolution": "TQ02/06/08remain priorRESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY; three new boundedconsumptionclarifications blockcorrespondingintegration, not a restartedfullreview",
+  "gates": {
+    "G3": "RENDERED_VALIDATION_BLOCKED_BY_TOOLING / NOT_TESTED",
+    "G4": "INDEPENDENT_QA_PENDING; CT22andQA8notexecuted",
+    "G5": "ActualClaude reviewedcandidate achievement preserved; RCREF01..03need targetedaddendum; productarchitectureapprovalungranted",
+    "G6": "PENDING; MC003AREWORK_REQUIRED,STEP03B/productNOT_AUTHORIZED"
+  },
+  "not_run": [
+    "Runtime/build/API/DB/browser/focus/computedcontrast",
+    "ExternalClaude/Antigravity/OpenCodecall",
+    "Completedarchitecture/templateaudits/historical162suite rerun"
+  ],
+  "next_action": "Prepareexact3-questionClaudeaddendum withoriginalreviewedhashesandminimalcorrectedconsumptionscenarios; no fullarchitectureaudit, no new endpoint/field approvedbyCodex, no failedproviderretry."
+}
