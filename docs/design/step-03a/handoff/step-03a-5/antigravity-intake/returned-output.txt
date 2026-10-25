@@ -1,0 +1,453 @@
+Analyzed dashboard-template.tsx:L1-33
+Analyzed auth.ts:L1-60
+Analyzed auth-provider.ts:L1-36
+Analyzed backend.ts:L1-34
+Ran list tasks services · Exited with code 1
+Ran find files in tasks services · Exited with code 1
+Analyzed actions.ts:L1-50
+Analyzed task-repository.ts:L1-11
+Analyzed task-table.tsx:L1-50
+Analyzed card.tsx:L1-30
+Analyzed label.tsx:L1-18
+Analyzed spinner.tsx:L1-20
+Analyzed skeleton.tsx:L1-10
+Analyzed textarea.tsx:L1-11
+Analyzed search-input.tsx:L1-32
+Analyzed pagination.tsx:L1-60
+Analyzed nav-menu.tsx:L1-48
+Analyzed page-header.tsx:L1-23
+Analyzed stat-card.tsx:L1-29
+Ran list docs tree in governance repository
+Ran list docs/product in governance repository
+Analyzed mattercontrol-step-03a-ux-specifications.md:L1-150
+Ran grep sections in ux-specifications.md · Exited with code 2
+Ran grep section headers via git show
+Edited task_tracking.md
+
+# MC-003A-FE-FEASIBILITY: Read-Only Design-to-Code Feasibility Report
+
+## Execution Environment & Agent Identity
+
+| Dimension | Recorded Evidence |
+|---|---|
+| **Actual Agent & Role** | Antigravity — MatterControl Frontend Owner |
+| **Model** | Gemini 3.8 Flash (High) |
+| **Execution Environment** | Standard Sandbox Mode (local read-only inspection; no network egress, no external payload transfer, no permission escalation) |
+| **Tooling & Proxies** | `rtk 1.0.1` active; Semble search CLI unavailable on `$PATH` and `uvx` sandboxed execution denied (`/Users/nguyenvanlan/.local/share/uv/python` restricted); fallback to verified path reads and `git show` objects executed |
+| **Governance Checkout** | `/Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control`<br>(Shared repository root: `/Users/nguyenvanlan/Documents/code/pet-projects/matter-control`) |
+| **Governance Branch** | `task/MC-003A-remediation` |
+| **Controlled Handoff Checkpoint** | `7258fc55ee95ab64579e572e97466924381bef7b` |
+| **Frozen Design Baseline** | `24103d17b5c9ca5cd23ed7f9695cb623517c76fe` |
+| **Primary Reference Checkout** | `/tmp/mattercontrol-step02-frontend`<br>Commit: `3e5a642479acb789eb210e73fba956f3e85082e3`<br>Branch: `main` (clean, verified against `https://github.com/lannguyenit598/nextjs-atomic-starter`) |
+| **Alternate Reference Checkout** | `/tmp/mattercontrol-step021-frontend`<br>Commit: `3e5a642479acb789eb210e73fba956f3e85082e3`<br>Branch: `task/MC-002-fe-poc` (clean, identical commit) |
+| **Task Boundary** | Read-only feasibility audit for Step 03A. No product UI implementation, no Step 03B execution, no dependency installation, no server/browser execution, no architecture approval, no formal independent QA claim. MC-003A remains `REWORK_REQUIRED` / `WAITING_APPROVAL`. |
+
+---
+
+## 1. Independent Verification of Codex Observations
+
+We performed a direct, line-by-line inspection of the reference starter codebase at `/tmp/mattercontrol-step02-frontend`:
+
+```
+/tmp/mattercontrol-step02-frontend/
+├── package.json (Next.js 16.4.2, React 19.3.1, Tailwind 4.3.3, Zod 4.6.7)
+├── src/
+│   ├── components/
+│   │   ├── atoms/ (button, input, select, textarea, card, badge, label, spinner, skeleton)
+│   │   ├── molecules/ (dialog, form-field, alert, empty-state, confirmation-dialog, pagination, etc.)
+│   │   ├── organisms/ (data-table, mobile-nav, app-header, app-sidebar)
+│   │   └── templates/ (dashboard-template)
+│   ├── features/tasks/ (generic task CRUD: actions, schemas, types, task-table, task-repository)
+│   └── lib/ (auth, auth-provider, api/backend, api/http-client, utils)
+```
+
+### 1.1 Presentational `DataTable` ([`data-table.tsx`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/data-table.tsx#L1-L69))
+- **Observation Verified**: [`DataTable`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/data-table.tsx#L28-L68) is strictly a presentational HTML wrapper (`<div className="overflow-x-auto rounded-lg border bg-card"><table>...</table></div>`).
+- **Gaps for MatterControl**:
+  - Contains **zero row selection** logic (no checkboxes, no multi-select, no `is-selected` state).
+  - Contains **zero keyboard navigation** (no row arrow `Up`/`Down`, no `Enter`/`Space` activation, no `role="grid"` or `aria-rowindex`/`aria-colindex` attributes).
+  - Contains **zero inline editing** capability (no input cells, no local error boundary, no `Enter` commit or `Escape` cancel).
+  - Contains **zero density adaptation** (fixed row padding `px-4 py-3`, no Comfortable 44px vs Compact 36px row minimum with multiline expansion).
+  - Does **not** provide spreadsheet paste, column resizing, bulk state management, or five-axis display.
+  - **Conclusion**: `DataTable` cannot serve as the Operational Grid without fundamental replacement or deep adaptation into a full Grid organism.
+
+### 1.2 Native `Dialog` ([`dialog.tsx`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/dialog.tsx#L1-L110))
+- **Observation Verified**: [`Dialog`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/dialog.tsx#L25-L109) utilizes native `<dialog>` and `showModal()`, granting browser-level focus trapping, top-layer rendering, and backdrop click handling.
+- **Risks & Gaps Identified**:
+  - Line 82: `{open && <div ...>{children}</div>}` unmounts children as soon as `open === false`. Any uncommitted form state, draft, or validation error inside the dialog is immediately destroyed upon close unless explicitly lifted to an external state container.
+  - Line 47: Focus restoration relies entirely on the browser's default behavior (returning focus to the opener element). If the opener was a row item or action trigger that disappeared due to concurrent filtering, sorting, or pagination, focus drops to `document.body`. A robust labeled fallback focus target is missing.
+  - No side-sheet / drawer primitive exists for the contextual impact rail, object detail drawers, or Evidence review panels.
+
+### 1.3 `MobileNav` ([`mobile-nav.tsx`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/mobile-nav.tsx#L1-L40))
+- **Observation Verified**: [`MobileNav`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/mobile-nav.tsx#L15-L39) is solely a menu trigger button (`<Menu />`) opening a slide-out navigation menu (`<NavMenu items={items} />`) styled via `h-dvh max-h-dvh w-72`.
+- **Gaps for MatterControl**:
+  - Does not implement mobile triage, mobile record cards, full-screen record detail views, or permitted simple action workflows.
+  - The menu toggle button uses `Button size="icon"` (`size-9` = 36px), falling below the D-UX04 / `selected-tokens.css` 44px minimum touch target specification (`--mc-touch-min: 44px`).
+
+### 1.4 Generic `TaskRepository` ([`types.ts`](file:///tmp/mattercontrol-step02-frontend/src/features/tasks/types.ts#L26-L32) & [`actions.ts`](file:///tmp/mattercontrol-step02-frontend/src/features/tasks/actions.ts#L1-L78))
+- **Observation Verified**: `TaskRepository` exposes a standard CRUD interface (`list`, `stats`, `create`, `update`, `remove`) targeting a flat `Task` model (`title`, `description`, `status`, `priority`, `dueDate`).
+- **Gaps for MatterControl**:
+  - Lacks Matter, Workstream, and Requirement vs. Action domain entities.
+  - Directly sets status via dropdown, violating the immutable domain rule that state is independently evaluated across 5 distinct axes (Execution, Verification, Dependency, Timing, Attention).
+  - Lacks Evidence Requirement linkage, proof verification with designated independent verifiers, document version lineage, and regulatory filing lifecycle stages.
+  - Contains no bulk editing transactions following RULE-013 (per-record atomic mutation, allowlisted fields, revision validation, failed row retention, and persistent retry selection).
+  - `src/lib/auth-provider.ts` defaults to fail-closed (`resolveSession()` returns `null` with a console warning); demo mode bypasses auth entirely with `{ userId: 'demo', permissions: ['*'] }`. Production authorization enforcement remains unimplemented.
+
+---
+
+## 2. Component Reuse, Adaptation, Missing & Unknown Matrix
+
+| Starter Component | Source Path & Lines | Reuse / Adaptation Classification | Gap Analysis & Required Remediation |
+|---|---|---|---|
+| [`Button`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/button.tsx#L1-L58) | `src/components/atoms/button.tsx` | **ADAPT** | Uses Tailwind `h-8` (32px) and `h-9` (36px). Must introduce explicit `--mc-control-min: 32px` desktop and `--mc-touch-min: 44px` mobile touch sizing. Disabled state currently uses `disabled:opacity-50`; per D-UX01/02 and `selected-tokens.css#L35`, disabled controls must maintain readable ink (`#626973` on `#eef2f6`) with an accessible textual reason rather than relying solely on opacity. |
+| [`Input`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/input.tsx#L1-L13) | `src/components/atoms/input.tsx` | **ADAPT** | Fixed height `h-9` (36px). Needs adaptation for compact density (32px min-height in table cells), explicit 44px touch targets on mobile, and integration with `--mc-line` (`#c6ced6`) and `--mc-danger` (`#a12622`). |
+| [`Select`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/select.tsx#L1-L34) | `src/components/atoms/select.tsx` | **REUSE** (with styling adaptation) | Native `<select>` preserves keyboard, assistive technology, and mobile OS picker support. Needs font/size alignment (`12px` metadata / `14px` body) and `--mc-control-min` / `--mc-touch-min` padding. |
+| [`Textarea`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/textarea.tsx#L1-L11) | `src/components/atoms/textarea.tsx` | **REUSE** | Standard controlled textarea with `aria-invalid` styling. Compatible with evidence submission notes and import mapping descriptions. |
+| [`Card`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/card.tsx#L1-L30) | `src/components/atoms/card.tsx` | **ADAPT** | Generic rounded card container. Must adapt paddings to 4px space unit (8px/12px/16px) and support flat resting elevation without excessive shadow, matching Enterprise Precision styling. |
+| [`Badge`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/badge.tsx#L1-L29) | `src/components/atoms/badge.tsx` | **ADAPT** | Generic status pill (`neutral`, `primary`, `success`, `destructive`). Incompatible with MatterControl's 5-axis state model: `COMPLETED` is neutral execution (`#364152`), NOT green success. Must adapt into semantic badge variants for Execution, Verification, Dependency, Timing, Attention, and Requirement vs. Action tags. |
+| [`Label`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/label.tsx#L1-L18) | `src/components/atoms/label.tsx` | **REUSE** | Accessible `<label>` with required indicator (`*`). Compatible with all domain form fields. |
+| [`Spinner`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/spinner.tsx#L1-L20) | `src/components/atoms/spinner.tsx` | **REUSE** | Accessible SVG loader with `role="status"` and visually hidden label option. Respects reduced motion when wrapped in CSS token rules. |
+| [`Skeleton`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/skeleton.tsx#L1-L10) | `src/components/atoms/skeleton.tsx` | **REUSE** | Pulse placeholder for async region loading in Control Room panels. |
+| [`FormField`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/form-field.tsx#L1-L52) | `src/components/molecules/form-field.tsx` | **REUSE** | Correctly coordinates `useId()`, `aria-describedby`, error strings, and hints. Fully reusable for inline/dialog forms. |
+| [`Alert`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/alert.tsx#L1-L43) | `src/components/molecules/alert.tsx` | **REUSE** | Accessible inline alert (`role="alert"` for destructive, `role="status"` for info). Reusable for bulk error summaries and dependency warnings. |
+| [`EmptyState`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/empty-state.tsx#L1-L43) | `src/components/molecules/empty-state.tsx` | **REUSE** | Supports title, description, icon, and action button. Fully compatible with honest zero-match search/filter resets. |
+| [`ConfirmationDialog`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/confirmation-dialog.tsx#L1-L57) | `src/components/molecules/confirmation-dialog.tsx` | **REUSE** | Wraps `Dialog` with confirm/cancel buttons and pending state. Reusable for destructive actions (e.g., withdraw filing, cancel requirement). |
+| [`SearchInput`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/search-input.tsx#L1-L32) | `src/components/molecules/search-input.tsx` | **REUSE** | Accessible search field with clear button (`aria-label="Clear search"`). Directly satisfies filter reset requirements. |
+| [`Pagination`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/pagination.tsx#L1-L100) | `src/components/molecules/pagination.tsx` | **REUSE** | Accessible server-driven link pagination. Reusable for large lists where client-side virtual scrolling is not utilized. |
+| [`NavMenu`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/nav-menu.tsx#L1-L48) | `src/components/molecules/nav-menu.tsx` | **REUSE** | Accessible `<ul>` navigation with `aria-current="page"`. |
+| [`Dialog`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/dialog.tsx#L1-L110) | `src/components/molecules/dialog.tsx` | **ADAPT** | Must address draft unmounting risk (support persistent form state containers) and implement explicit fallback focus restoration if the triggering DOM node was unmounted during background updates. |
+| [`PageHeader`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/page-header.tsx#L1-L23) | `src/components/molecules/page-header.tsx` | **REUSE** | Standard header with title, subtitle, and action slots. |
+| [`ThemeToggle`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/theme-toggle.tsx#L1-L32) | `src/components/molecules/theme-toggle.tsx` | **UNKNOWN / DEFERRED** | Toggles light/dark. MatterControl D-UX01 establishes a single coherent Enterprise Precision foundation (Direction A) with a dark application header (`#101820`). Arbitrary dark/light theme switching without computed contrast verification is currently unverified. |
+| [`StatCard`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/stat-card.tsx#L1-L29) | `src/components/molecules/stat-card.tsx` | **REUSE** (limited) | Reusable for count summaries (e.g., satisfied/total prerequisites), provided vanity metrics, glow effects, and overall readiness percentages are strictly avoided. |
+| [`DataTable`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/data-table.tsx#L1-L69) | `src/components/organisms/data-table.tsx` | **REPLACE / EXTEND** | Cannot satisfy FR-011. Must construct a dedicated `OperationalGrid` organism supporting row selection, density switching (44px / 36px), keyboard navigation, multiline cell expansion, and inline editing. |
+| [`AppHeader`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/app-header.tsx#L1-L25) | `src/components/organisms/app-header.tsx` | **ADAPT** | Must be styled with `--mc-top` background (`#101820`), white ink, and slots for Workspace switcher, Matter title, As-Of timestamp (`UTC+07`), and user role badge. |
+| [`AppSidebar`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/app-sidebar.tsx#L1-L25) | `src/components/organisms/app-sidebar.tsx` | **REUSE** | Standard desktop sidebar for Workspace → Matter → Feature navigation. |
+| [`MobileNav`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/mobile-nav.tsx#L1-L40) | `src/components/organisms/mobile-nav.tsx` | **ADAPT** | Must ensure trigger button satisfies 44px hit target; drawer content must support mobile matter context switching. |
+| [`DashboardTemplate`](file:///tmp/mattercontrol-step02-frontend/src/components/templates/dashboard-template.tsx#L1-L33) | `src/components/templates/dashboard-template.tsx` | **ADAPT** | Layout container currently assumes standard container widths (`max-w-6xl`). Needs full-width density options for the Operational Grid and dual-column grid layouts for the Control Room. |
+| **Operational Grid Organism** | *None* | **MISSING** | Interactive table with row selection, multi-select, keyboard arrow navigation, inline title editing with Enter/Escape, local validation error retention, density toggle, and five-axis state display. |
+| **Causal Impact Rail / Blocker Chain** | *None* | **MISSING** | Visual chain node component displaying ID, type, state, reason, and downstream exposure for critical blockers. |
+| **Important Decisions Queue** | *None* | **MISSING** | Dedicated queue panel alongside Next Actions displaying unresolved case decisions (DEC-AT-01/02), accountable owners, and linked objects. |
+| **Next Action Panel** | *None* | **MISSING** | Ordered candidate list strictly evaluated via RULE-021, with deterministic tie-breaking and explicit explanation when zero candidates exist (e.g., at Atlas T0). |
+| **Evidence Review & Drawer** | *None* | **MISSING** | Drawer panel for attaching proof, designating independent scoped verifiers, checking criteria applicability, verifying validity intervals, and entering audit rationale. |
+| **Bulk Edit Modal & Results Selector** | *None* | **MISSING** | Modal allowing metadata updates (title, description, owner, due) over allowlisted fields (RULE-013) with preview, atomic mutation, failed row retention, and persistent retry selection. |
+| **Excel/CSV Import Wizard** | *None* | **MISSING** | Step-by-step modal for file upload, column mapping (Requirement vs Action), duplicate/cycle validation, preview, and unverified claim ingestion. |
+| **Regulatory Filing Lifecycle Tracker** | *None* | **MISSING** | Stage visualization and history tracking covering package prep, submission, receipt, authority review, repeat supplement/response cycles, and negative outcomes. |
+| **Document Versions Inspector** | *None* | **MISSING** | Version lineage display, immutable file records, signature completeness indicators (e.g., 1/2 signed), and current version promotion controls. |
+| **Delta-Based Status Brief Drawer** | *None* | **MISSING** | View/export drawer separating changes during $(t_1, t_2]$ from outstanding items at $t_2$, preserving stable chronological event provenance. |
+
+---
+
+## 3. Coherent Token / Theme and Atomic Design Mapping
+
+### 3.1 Design Token Integration
+
+The design baseline establishes Direction A (Enterprise Precision) as the single foundation under PO Delegation (D-UX01..04). The starter's generic OKLCH color palette in [`src/app/globals.css`](file:///tmp/mattercontrol-step02-frontend/src/app/globals.css#L1-L129) must be aligned with the semantic tokens defined in [`selected-tokens.css`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/revised/local-r3/selected-tokens.css#L1-L47) and [`design-tokens.json`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/revised/local-r3/design-tokens.json#L1-L33):
+
+```css
+/* Semantic Token System Mapping for Tailwind v4 (@theme inline) */
+:root {
+  /* Surfaces & Structural Typography */
+  --mc-surface: #ffffff;
+  --mc-bg: #f6f8fa;
+  --mc-subtle: #eef2f6;
+  --mc-ink: #17212b;
+  --mc-muted: #52606d;
+  --mc-line: #c6ced6;
+  --mc-line-dark: #9aa8b5;
+  --mc-header: #101820;
+  --mc-header-text: #ffffff;
+
+  /* Focus, Selection & Alerts */
+  --mc-focus: #174ea6;
+  --mc-selected: #e8effa;
+  --mc-danger: #a12622;
+  --mc-disabled: #626973;
+
+  /* Five Independent State Dimensions */
+  --mc-execution: #364152;       /* Terminal progress / execution neutral */
+  --mc-verification: #236341;     /* Verified with valid proof */
+  --mc-dependency-ready: #174ea6; /* Satisfied upstream gates */
+  --mc-dependency-blocked: #8a2925;/* Unresolved upstream blocker */
+  --mc-timing: #775317;           /* Due date / deadline proximity */
+  --mc-attention: #783e14;        /* Critical attention / expedite */
+
+  /* Density & Geometry Guidance */
+  --mc-space-unit: 4px;
+  --mc-type-body: 14px;
+  --mc-type-meta: 12px;
+  --mc-type-heading: 22px;
+  --mc-row-comfortable: 44px;
+  --mc-row-compact: 36px;
+  --mc-control-min: 32px;
+  --mc-touch-min: 44px;
+}
+
+/* Reduced Motion Enforcement */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after, dialog {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+### 3.2 Atomic Design System Hierarchy
+
+```
+src/
+├── components/
+│   ├── atoms/
+│   │   ├── button.tsx              (Extended with 32px/44px sizing & disabled reasons)
+│   │   ├── input.tsx               (32px/36px/44px field control classes)
+│   │   ├── select.tsx              (Native select with standard/compact density)
+│   │   ├── textarea.tsx            (Controlled text entry for notes/rationale)
+│   │   ├── state-badge.tsx         (Five-axis badges: execution, verification, dependency, timing, attention)
+│   │   ├── type-tag.tsx            (Requirement vs. Action visual tags)
+│   │   ├── density-switch.tsx      (Comfortable 44px / Compact 36px toggle)
+│   │   ├── spinner.tsx             (Loading status indicator)
+│   │   └── skeleton.tsx            (Panel loading wireframes)
+│   ├── molecules/
+│   │   ├── form-field.tsx          (Label + control + aria-describedby hint/error)
+│   │   ├── blocker-node.tsx        (Chain card: ID, type, state, reason, owner)
+│   │   ├── decision-item.tsx       (Important Decision row with link to matter object)
+│   │   ├── next-action-item.tsx    (Ranked Action item with candidate reason or exclusion note)
+│   │   ├── waiting-item.tsx        (Pending wait condition with external party & internal owner)
+│   │   ├── inline-cell-editor.tsx  (Interactive table cell: Enter commit, Escape cancel, local error)
+│   │   ├── criterion-checklist.tsx (Evidence criterion with mandatory/optional & validity status)
+│   │   ├── version-item.tsx        (Document version row with signature observation)
+│   │   ├── search-input.tsx        (Filter search with explicit reset)
+│   │   ├── confirmation-dialog.tsx (Reversible/destructive modal confirmation)
+│   │   └── empty-state.tsx         (Zero-data honest feedback with reset action)
+│   ├── organisms/
+│   │   ├── operational-grid.tsx    (Dense 50-200 row table, keyboard navigation, multiselect, inline edits)
+│   │   ├── control-room-layout.tsx (Blocker chain, Next Actions, Decisions, Waiting On, Milestones)
+│   │   ├── causal-impact-rail.tsx  (Inspector panel showing root cause and downstream dependencies)
+│   │   ├── evidence-review-drawer.tsx (Proof inspection, verifier designation, rationale, dispute)
+│   │   ├── bulk-edit-modal.tsx     (Atomic patch preview, revision checks, retry selection)
+│   │   ├── import-wizard.tsx       (Excel/CSV mapping, duplicate detection, unverified intake)
+│   │   ├── export-dialog.tsx       (Formula-safe literal Excel export with as-of metadata)
+│   │   ├── filing-timeline.tsx     (Stage lifecycle, repeat supplement cycles, negative outcomes)
+│   │   ├── app-header.tsx          (Top bar with Workspace, Matter, As-Of timestamp, user role)
+│   │   ├── app-sidebar.tsx         (Primary desktop navigation)
+│   │   └── mobile-nav.tsx          (Mobile navigation drawer with 44px touch targets)
+│   └── templates/
+│       ├── control-room-template.tsx (Dual-column desktop / single-column mobile Control Room)
+│       ├── grid-template.tsx       (Full-width data table layout with sticky toolbar & filter header)
+│       └── workspace-template.tsx  (Standard app skeleton with header, sidebar, and breadcrumbs)
+```
+
+---
+
+## 4. Traceability & Feasibility: All 20 Functional Requirements
+
+All 20 Functional Requirements (FR-001..FR-020) are verified as **SPECIFICATION_READY_FOR_READ_ONLY_FEASIBILITY** with **PRODUCT_IMPLEMENTATION_GATED** pending Solution Architecture acceptance.
+
+| FR ID | Feature & Name | Design Reference | Frontend Component Mapping | Data & API Dependencies | Unverified Interaction Behavior | Acceptance IDs |
+|---|---|---|---|---|---|---|
+| **FR-001** | Requirement vs Action | r3 spec §5.06 / §5.07 | `type-tag.tsx`, `requirement-detail.tsx`, `action-detail.tsx` | A-02, A-03, A-05, A-09 | Typed create/link; independent status transitions; distinct non-1:1 card rendering | AC-101, AC-121, AC-159 |
+| **FR-002** | Milestones | r3 spec §5.02 / §5.08 | `milestone-card.tsx`, `milestone-list.tsx` | A-03, A-12 | Prerequisite evaluation; explicit UNASSESSED state for empty sets; causal link to blockers | AC-102, AC-141 |
+| **FR-003** | Next Action | r3 spec §5.02 + selected layout | `next-action-item.tsx`, `next-action-panel.tsx` | A-02, A-03, A-12 | RULE-021 ranking; deterministic sorting; explicit no-candidate explanation at Atlas T0 | AC-103, AC-144 |
+| **FR-004** | Waiting On | r3 spec §5.05 / §5.02 | `waiting-item.tsx`, `waiting-panel.tsx` | A-02, A-03, A-09 | WAITING (execution) separated from BLOCKED (dependency); internal owner and external party display | AC-104, AC-130 |
+| **FR-005** | Dependencies & Blocker Logic | r3 spec §5.08 / §4.3 | `causal-impact-rail.tsx`, `blocker-chain.tsx` | A-03, A-06, A-12 | Recursive recomputation; AND gates; cycle rejection; reopen propagation without history loss | AC-105, AC-122..125, AC-146 |
+| **FR-006** | Evidence Requirements | r3 spec §5.06 / §4.2 | `criterion-checklist.tsx`, `evidence-panel.tsx` | A-02, A-03, A-11, A-12 | Criteria revision; proof attachment separated from verification; explicit missing evidence gaps | AC-106, AC-127 |
+| **FR-007** | Evidence Verification | r3 spec §5.09 | `evidence-review-drawer.tsx`, `verifier-selector.tsx` | A-01, A-02, A-06, A-11, A-12 | Designated independent verifier check; no self-review; dispute/reversal handling; aggregate recompute | AC-107, AC-121, AC-126, AC-127, AC-140 |
+| **FR-008** | Event History | r3 spec §3 / §4.7 / §7 | `event-timeline.tsx`, `audit-history.tsx` | A-02, A-03, A-09 | Effective vs. recorded timestamps; immutable audit trail; correction reference links | AC-108, AC-136, AC-149, AC-153 |
+| **FR-009** | Matter Control Room | r3 spec §5.02 (E-01 corrigendum) | `control-room-layout.tsx`, `cr-blocker-section.tsx` | A-02, A-03, A-04, A-08, A-12 | Ten-second comprehension scan; blocker chain spanning full width; prominent decisions queue; stale region warnings | AC-109, AC-137 |
+| **FR-010** | My Actions | r3 spec §5.04 | `my-actions-view.tsx`, `action-filter-bar.tsx` | A-01, A-02, A-03, A-04 | User-scoped action filtering; honest empty state vs. unavailable service distinction | AC-110, AC-144, AC-147 |
+| **FR-011** | Operational Grid | r3 spec §5.03 / §7 | `operational-grid.tsx`, `inline-cell-editor.tsx` | A-03..A-08, A-16 | 50-200 rows; Comfortable (44px) / Compact (36px); multiline growth; keyboard navigation; inline title edit | AC-111, AC-139, AC-150 |
+| **FR-012** | Bulk Editing | r3 spec §4.6 / §7 | `bulk-edit-modal.tsx`, `bulk-results-view.tsx` | A-02, A-05, A-06, A-08, A-13 | RULE-013 allowlisted fields (title, desc, owner, due); atomic per-row commits; persistent retry selection | AC-112, AC-133, AC-139 |
+| **FR-013** | Excel/CSV Import | r3 spec §5.12 | `import-wizard.tsx`, `column-mapper.tsx` | A-02, A-05, A-14 | Separate Requirement/Action mapping; duplicate key rejection; non-mutating preview; unverified intake claims | AC-113, AC-131, AC-132, AC-148 |
+| **FR-014** | Excel Export | r3 spec §7 / §5.03 | `export-dialog.tsx`, `export-trigger.tsx` | A-02, A-11, A-15 | Formula-safe literal text escaping; as-of timestamp and filter metadata export; permission recheck | AC-114, AC-147, AC-148 |
+| **FR-015** | Document Versions | r3 spec §5.10 | `document-versions-view.tsx`, `version-item.tsx` | A-02, A-06, A-11 | Version lineage; current pointer promotion; signature observation (e.g., 1/2 signed); conflict rejection | AC-115, AC-128 |
+| **FR-016** | Regulatory Filing Lifecycle | r3 spec §5.11 | `filing-timeline.tsx`, `filing-detail.tsx` | A-02, A-03, A-06, A-11, A-12 | Golden workflow stages; repeated supplement/response cycles; negative outcomes (rejection, withdrawal) | AC-116, AC-129, AC-145 |
+| **FR-017** | External Parties | r3 spec §5.05 / §2 | `party-card.tsx`, `party-selector.tsx` | A-02, A-03, A-09 | Scoped party entity creation; linking open waits without creating user accounts or system grants | AC-117, AC-130 |
+| **FR-018** | Simple Roles & Ownership | r3 spec §2.2 / §12 | `role-guard.tsx`, `permission-banner.tsx` | A-01, A-02, A-03 | OWNER/EDITOR/VIEWER enforcement; no client-only security; assignment does not escalate access | AC-118, AC-134, AC-135, AC-140, AC-147, AC-149 |
+| **FR-019** | Delta-Based Status Brief | r3 spec §5.13 | `status-brief-drawer.tsx`, `delta-summary.tsx` | A-02, A-09, A-15 | Separation of $(t_1, t_2]$ changes from outstanding at $t_2$; stable ordering; draft provenance labeling | AC-119, AC-138 |
+| **FR-020** | Separate State Dimensions | r3 spec §4 / tokens | `state-badge.tsx`, `five-axis-cell.tsx` | A-03, A-08, A-10, A-12 | Five independent axes (Execution, Verification, Dependency, Timing, Attention); text/reasons; no color collapse | AC-120, AC-121, AC-139, AC-142, AC-143, AC-160 |
+
+---
+
+## 5. Architecture Dependencies (A-01..A-16) & Blockers per Implementation Slice
+
+All architecture documents (`docs/architecture/api-contracts.md`, `api-auth-decision-analysis.md`, `data-model.md`, etc.) are candidate inputs, not proof of Product Owner architecture approval. The architecture gate remains **OPEN** under Step 02 / Step 02.3. Dependencies A-01..A-15 are `MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE` (owned by Claude Code). They block corresponding product integrations, but do **not** block read-only frontend feasibility. A-16 is `STARTER_SOURCE_INSPECTED_OWNER_FEASIBILITY_PENDING`.
+
+```
++--------------------------------------------------------------------------+
+|                     SLICES & ARCHITECTURE GATES                          |
++--------------------------------------------------------------------------+
+| Slice 1: Shell & Token Infrastructure          [A-16: Feasibility Done]  |
+| Slice 2: Control Room & Info Hierarchy         [A-01, A-02, A-03, A-04,  |
+|                                                 A-08, A-12: Pending]     |
+| Slice 3: Operational Grid & Context            [A-03, A-04, A-05, A-06,  |
+|                                                 A-07, A-08, A-16: Pending|
+| Slice 4: Domain Proof, Verification & Versions [A-01, A-02, A-06, A-11,  |
+|                                                 A-12: Pending]           |
+| Slice 5: Bulk Operations & Import/Export       [A-02, A-05, A-06, A-08,  |
+|                                                 A-13, A-14, A-15: Pending|
+| Slice 6: Audit, History & Delta Briefs         [A-02, A-03, A-09, A-10,  |
+|                                                 A-15: Pending]           |
++--------------------------------------------------------------------------+
+```
+
+| Slice | Features Included | Required Architecture Contracts (A-01..A-16) | Architectural Blocker & Unblock Criteria |
+|---|---|---|---|
+| **Slice 1: Shell & Tokens** | Design tokens, Shell layout, Header, Sidebar, Navigation | **A-16** (Frontend reference architecture) | **Blocker**: Ensure starter template dependencies (Next.js 16, React 19, Tailwind 4) integrate `--mc-*` variables cleanly without bundling external UI libraries.<br>**Unblock**: Frontend owner feasibility sign-off (completed herein). |
+| **Slice 2: Control Room** | FR-002, FR-003, FR-004, FR-009, FR-010, FR-018 | **A-01** (Auth session), **A-02** (RBAC enforcement), **A-03** (API contracts), **A-04** (Pagination/loading), **A-08** (Error taxonomy), **A-12** (Verification aggregates) | **Blocker**: Candidate REST endpoints for Control Room aggregation, Next Action deterministic sorting, and partial region error states are unapproved.<br>**Unblock**: Claude Code formal architecture sign-off on API contracts and negative response formats. |
+| **Slice 3: Operational Grid** | FR-001, FR-005, FR-011, FR-020 | **A-03** (API contracts), **A-04** (Grid query pagination), **A-05** (Field validation), **A-06** (Concurrency/revisions), **A-07** (Optimistic updates), **A-08** (Error taxonomy), **A-16** (Grid engine) | **Blocker**: Optimistic updates (A-07) must never falsify gate completion before server confirmation; row revision tracking (A-06) required for conflict detection (`409 Conflict`).<br>**Unblock**: Concurrency protocol and revision header contract approved. |
+| **Slice 4: Proof & Verification** | FR-006, FR-007, FR-015, FR-016 | **A-01** (Identity verification), **A-02** (Designated verifier RBAC), **A-06** (Version concurrency), **A-11** (Evidence storage), **A-12** (Verification aggregate engine) | **Blocker**: Object storage for evidence files (A-11) is unselected (no S3/GCS provider chosen); aggregate recomputation rules (A-12) and dispute invalidation mechanisms must be backend-enforced.<br>**Unblock**: Storage interface contract and verification state machine ratified. |
+| **Slice 5: Bulk & Import/Export** | FR-012, FR-013, FR-014 | **A-02** (Export authorization), **A-05** (Batch validation), **A-06** (Row revisions), **A-08** (Batch error reporting), **A-13** (Bulk transaction semantics), **A-14** (Import parser), **A-15** (Export engine) | **Blocker**: Bulk mutation (A-13) requires per-record atomic execution and partial failure payloads (`207 Multi-Status` or granular batch response); import parser (A-14) must validate without creating mutations.<br>**Unblock**: Batch payload schema and partial retry semantics accepted by Claude Code. |
+| **Slice 6: Audit & Delta Briefs** | FR-008, FR-017, FR-019 | **A-02** (History authorization), **A-03** (History endpoints), **A-09** (Durable persistence), **A-10** (Realtime sync), **A-15** (Status Brief generation) | **Blocker**: Immutable audit persistence (A-09) and deterministic delta calculation for $(t_1, t_2]$ (A-15) require authoritative backend storage and timestamp indexing.<br>**Unblock**: Audit log schema and delta query interface formally approved. |
+
+---
+
+## 6. Keyboard & Accessibility Requirements Audit
+
+### 6.1 Nested Editor Keys & Grid Focus Traps
+- **Requirement**: While editing within an inline cell input or textarea, standard typing and editing keys (`ArrowLeft`, `ArrowRight`, `Home`, `End`, `Space`, `Backspace`, `Delete`) must remain trapped inside the native text control and must **never** bubble up to trigger grid row navigation, record selection, or drawer dismissal.
+- **Starter Defect**: [`DataTable`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/data-table.tsx#L56-L64) lacks keyboard event handlers entirely. An `OperationalGrid` implementation must explicitly check `event.target` in its `onKeyDown` listener: if the active target is an `INPUT`, `TEXTAREA`, or `SELECT`, grid navigation hotkeys (`ArrowUp`, `ArrowDown`, `Space`) must be ignored.
+- **Recovery**: Pressing `Enter` inside an inline editor submits the validated patch; pressing `Escape` cancels the edit, reverts the cell to its server-confirmed value, and returns focus to the containing cell without shifting row selection or viewport scroll.
+
+### 6.2 Selection, Inline, and Bulk Error Recovery
+- **Inline Cell Errors**: If an inline edit fails client-side validation (e.g., empty title, invalid date) or backend mutation (e.g., `409 Conflict`), the cell must retain the user's uncommitted draft, visually highlight the error with `--mc-danger` (`#a12622`) and `aria-invalid="true"`, and display an adjacent error tooltip/announcement. The row must remain selected and the table must not clear filter or sort context.
+- **Bulk Edit Failure Recovery**: Under RULE-013, bulk mutations commit atomically per record. If 3 of 10 rows fail due to permissions (`403`) or revision conflicts (`409`), the 7 successful rows deselect and update, while the 3 failed rows **remain selected in the Grid**. The bulk modal/banner must persist a summary of failed IDs with specific reasons and a dedicated "Retry Failed Only" action.
+
+### 6.3 Dialog Draft Preservation & Focus Restoration Fallback
+- **Starter Defect in [`Dialog`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/dialog.tsx#L82)**: Because `{open && children}` unmounts on close, temporary dismissals (such as accidental backdrop clicks or checking an underlying value) destroy unsubmitted forms.
+- **Remediation**: Form state must be managed via an external Zustand store or React Hook Form context external to the mounting boundary, or the dialog must support an explicit draft confirmation check before unmounting.
+- **Focus Restoration Fallback**: In standard browser behavior, `dialog.close()` returns focus to the opener element. However, if the opener row was removed (e.g., completed or filtered out while the dialog was active), focus drops to `document.body`. The dialog manager must verify `document.contains(triggerElement)`: if false, it must fall back to a labeled container (e.g., the table header or filter bar) via `focusFallbackId`.
+
+### 6.4 Textual Status, Non-Color Axes & Screen Reader Feedback
+- **Non-Color Semantics**: Color alone must never convey state. Every badge, cell, and list item must explicitly render the textual state label and reason (e.g., `BLOCKED: Missing ER-02 Board Approval`, not just a red icon).
+- **Live Regions**: Asynchronous status updates (e.g., inline save confirmation, bulk progress, background evaluator error) must output to an accessible live region (`role="status"` with `aria-live="polite"` for non-critical updates; `role="alert"` with `aria-live="assertive"` for fatal or security errors).
+
+### 6.5 Mobile Reachability, Zoom & Touch Targets
+- **No Record Truncation**: Mobile card lists must render **all** matching records. The legacy concept truncation (first 8 rows) is explicitly forbidden. Users must be able to scroll, search, and paginate through every record.
+- **Touch Target Geometry**: All interactive elements on mobile viewports ($\le 760\text{px}$) must satisfy the `--mc-touch-min: 44px` minimum hit area (`min-height: 44px`, `min-width: 44px`), including icon buttons, close triggers, and filter chips.
+- **200% Zoom & Reflow**: Layouts must reflow into a single column at $200\%$ browser zoom ($1280\text{px} \to 640\text{px}$) without horizontal scrolling for primary prose or clipping of critical blocker descriptions and decision queues.
+
+### 6.6 Reduced Motion & Computed Contrast
+- **Reduced Motion**: When `prefers-reduced-motion: reduce` is active, all CSS transitions, dialog animations, and pulse effects must be disabled (`animation: none !important; transition: none !important;`), while fully preserving color contrast and text visibility.
+- **Computed Contrast Verification Status**: The theoretical sRGB token pairs in `selected-tokens.css` meet WCAG AA ($4.5:1$ for body ink `#17212b` on `#ffffff` $\approx 14.8:1$; `#52606d` on `#ffffff` $\approx 5.3:1$). However, computed contrast across hover, active, focus-visible (`#174ea6` 2px ring), and disabled states (`#626973` on `#eef2f6` $\approx 4.6:1$) has **not** been measured under actual browser rendering and remains formally `NOT_TESTED`.
+
+---
+
+## 7. Qualitative Implementation Sequencing
+
+To guarantee that product UI is never implemented prematurely before its foundation and architectural seams are ratified, we recommend the following six-phase delivery sequence:
+
+```mermaid
+flowchart TD
+  P1[Phase 1: Shell, Tokens & Atomic Primitives] --> P2[Phase 2: Operational Grid & Context Interactivity]
+  P2 --> P3[Phase 3: Domain Panels & Workflows]
+  P3 --> P4[Phase 4: Bulk, Import/Export & Reporting]
+  P4 -.->|Blocked until Claude Code Approval| P5[Phase 5: Architecture & Real API Integration]
+  P5 --> P6[Phase 6: Negative Acceptance & Independent QA]
+```
+
+1. **Phase 1: Shell, Tokens & Atomic Primitives (Foundation)**
+   - Integrate `--mc-*` semantic design tokens into `src/app/globals.css` and configure Tailwind v4 utility theme.
+   - Adapt `Button`, `Input`, `Select`, `Card`, and `Badge` into strict Atomic atoms supporting desktop (32px) and mobile (44px) contracts.
+   - Construct MatterControl App Header (Workspace, Matter, As-Of `+07`, Role) and responsive application shell.
+   - Implement `@media(prefers-reduced-motion:reduce)` and accessible live region announcer.
+
+2. **Phase 2: Operational Grid & Context Interactivity (Core Engine)**
+   - Build `OperationalGrid` organism replacing presentational `DataTable`.
+   - Implement multi-select state management, row checkbox bindings, and density switching (Comfortable 44px / Compact 36px).
+   - Implement keyboard navigation (`ArrowUp`, `ArrowDown`, `Enter`, `Space`) with nested editor exclusion.
+   - Implement inline title editing with local validation error retention and `Escape` recovery.
+   - Create drawer container primitive for side-sheet inspections with labeled focus restoration fallback.
+
+3. **Phase 3: Domain Panels & Workflow Representations (P0 Views)**
+   - Construct Control Room layout following E-01 binding corrigendum:
+     $$\text{Blocker Chain} \longrightarrow \text{Next Actions} \parallel \text{Important Decisions} \longrightarrow \text{Waiting On} \longrightarrow \text{Milestones} \longrightarrow \text{Evidence Gaps} \longrightarrow \text{Changes}$$
+   - Implement Causal Impact Rail displaying root cause, blocker reasons, and downstream exposure.
+   - Implement Next Action panel with strict RULE-021 evaluation and explicit T0 no-candidate explanation.
+   - Implement Evidence & Verification drawer with designated independent verifier selection, criteria checklist, and document version linkage.
+   - Implement Regulatory Filing lifecycle stage tracker and Document Versions inspector.
+
+4. **Phase 4: Bulk Operations, Import/Export & Reporting (Data Movement)**
+   - Construct Bulk Edit modal strictly enforcing RULE-013 allowlist (title, description, owner, due).
+   - Implement atomic per-record mutation simulation, failed row retention, and persistent retry selection.
+   - Build Excel/CSV Import Wizard with separate Requirement/Action mapping and non-mutating preview.
+   - Build Excel Export dialog with formula-safe text escaping and as-of metadata inclusion.
+   - Construct Delta-Based Status Brief drawer separating $(t_1, t_2]$ changes from outstanding at $t_2$.
+
+5. **Phase 5: Architecture & Real API Integration (Gated Seam)**
+   - *Strictly gated*: Requires Claude Code sign-off on A-01..A-15.
+   - Replace demo repositories with REST client services in `src/features/matters/services/`.
+   - Implement session resolution in `src/lib/auth-provider.ts` forwarding user access tokens.
+   - Connect backend revision headers (`ETag` / `If-Match`) for `409 Conflict` detection and batch mutation endpoints.
+
+6. **Phase 6: Negative Acceptance & Independent QA (Gate Closure)**
+   - Execute negative acceptance suites: session expiry, RBAC write denial, invalid dependency cycles, self-review rejection, concurrent revision conflict, malformed import groups.
+   - Validate 1440px / 1280px / 768px / 390px viewports and 200% zoom reflow.
+   - Handoff exact hash-pinned packet to OpenCode for independent verification.
+
+---
+
+## 8. Findings, Severity, Evidence & Remediation
+
+| Finding ID | Title & Description | Severity | Confidence | Observed Evidence | Recommended Remediation |
+|---|---|---|---|---|---|
+| **F-01** | **Starter `DataTable` is Presentational Only** | **HIGH** | 100% | [`data-table.tsx#L24-L67`](file:///tmp/mattercontrol-step02-frontend/src/components/organisms/data-table.tsx#L24-L67): standard `<table>` without selection, keyboard handlers, inline editing, or density controls. | Develop a purpose-built `OperationalGrid` organism implementing row selection, multiselect, keyboard navigation with nested input exclusion, inline cell editing, and Comfortable (44px) / Compact (36px) densities. |
+| **F-02** | **Native `Dialog` Unmounts Children on Close** | **MEDIUM** | 95% | [`dialog.tsx#L82`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/dialog.tsx#L82): `{open && children}` drops uncommitted form state upon close. Missing labeled fallback focus target when trigger node is removed. | Externalize form draft state to an outer store/context so drafts survive close/reopen. Implement explicit focus fallback tracking (`focusFallbackId`) for unmounted trigger elements. |
+| **F-03** | **Task Module is Generic CRUD** | **HIGH** | 100% | [`types.ts#L26-L32`](file:///tmp/mattercontrol-step02-frontend/src/features/tasks/types.ts#L26-L32), [`task-table.tsx#L26`](file:///tmp/mattercontrol-step02-frontend/src/features/tasks/components/task-table.tsx#L26): simple task table with direct status dropdown; lacks Matter contracts, 5-axis state, evidence proof, and atomic bulk transactions. | Quarantine `src/features/tasks/` as a template reference. Build dedicated domain feature modules (`src/features/matters/`, `src/features/control-room/`, `src/features/grid/`, `src/features/evidence/`) implementing approved domain contracts. |
+| **F-04** | **Starter Design Tokens Lack Semantic MatterControl Variables** | **MEDIUM** | 100% | [`globals.css#L11-L66`](file:///tmp/mattercontrol-step02-frontend/src/app/globals.css#L11-L66): generic OKLCH palette lacks `--mc-*` variables (execution, verification, dependency, timing, attention, density rows). | Map [`selected-tokens.css`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/revised/local-r3/selected-tokens.css) into Tailwind v4 theme under `@theme inline` without importing competing external design system libraries. |
+| **F-05** | **`Button` Disabled State Uses Opacity Only** | **LOW** | 90% | [`button.tsx#L10`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/button.tsx#L10): `disabled:opacity-50` reduces contrast and lacks textual reason feedback, conflicting with D-UX01/02 and WCAG intent. | Adapt `Button` disabled styling to `#626973` on `#eef2f6` (`opacity: 1`) and support an accessible `disabledReason` prop announced via tooltip or `aria-describedby`. |
+| **F-06** | **Architecture & API Contracts (A-01..A-15) Are Candidate Proposals** | **HIGH** | 100% | `docs/architecture/api-contracts.md` and `api-auth-decision-analysis.md` have not received PO architecture approval. Architecture gate remains OPEN. | Maintain strict product implementation gate. Do not implement live API calls or write backend endpoints until Claude Code ratifies architecture and formal approval is granted. |
+| **F-07** | **Rendered Validation & Independent QA Blocked** | **HIGH** | 100% | [`design-to-code.json#L14-L18`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/handoff/step-03a-5/design-to-code.json#L14-L18): Browser-Use file:// refusal; OpenCode HTTP 403 FreeTierError; zero browser interaction tests executed. | Uphold governance status: rendered validation remains `RENDERED_VALIDATION_BLOCKED_BY_TOOLING`; independent QA remains `PENDING / BLOCKED_BY_PROVIDER_ACCESS`. Do not claim formal pass. |
+
+---
+
+## 9. Actual Commands Executed & Checks Not Run
+
+### 9.1 Actual Commands Executed (Read-Only)
+
+```bash
+# 1. Environment & tooling verification
+rtk --version
+rtk proxy which semble
+rtk proxy which uvx
+rtk proxy uvx --from "semble[mcp]" semble --version
+
+# 2. Workspace & worktree identification
+rtk git status
+rtk git worktree list
+rtk git rev-parse task/MC-003A-remediation
+rtk git log -1 --stat 7258fc55ee95ab64579e572e97466924381bef7b
+rtk git log -1 --stat 24103d17b5c9ca5cd23ed7f9695cb623517c76fe
+
+# 3. Reference checkout verification
+rtk git -C /tmp/mattercontrol-step02-frontend status
+rtk git -C /tmp/mattercontrol-step02-frontend log -1 --format="%H %s"
+rtk git -C /tmp/mattercontrol-step02-frontend remote get-url origin
+rtk git -C /tmp/mattercontrol-step021-frontend status
+rtk git -C /tmp/mattercontrol-step021-frontend log -1 --format="%H %s"
+rtk git -C /tmp/mattercontrol-step021-frontend remote get-url origin
+
+# 4. Hash-pinned manifest integrity checks via git blob inspection
+rtk proxy git show 24103d17b5c9ca5cd23ed7f9695cb623517c76fe:docs/design/step-03a/revised/local-r3/design-tokens.json | sha256sum
+rtk proxy git show 24103d17b5c9ca5cd23ed7f9695cb623517c76fe:docs/design/step-03a/revised/local-r3/selected-tokens.css | sha256sum
+
+# 5. Reference codebase exploration
+rtk proxy find /tmp/mattercontrol-step02-frontend -maxdepth 4 -not -path '*/.*' -not -path '*/node_modules*'
+```
+
+### 9.2 Checks Not Run (Explicitly Preserved Scope Boundaries)
+- **Did NOT install dependencies**: `pnpm install`, `npm install`, or `yarn` were not executed.
+- **Did NOT run test suites or builds**: `pnpm test`, `pnpm build`, `pnpm check`, `vitest`, `playwright`, and `storybook` were not run. Historical Step 02 test logs remain valid scoped baseline evidence.
+- **Did NOT launch servers or browser automation**: No `next dev`, local HTTP servers, headless Chrome, CDP, Puppeteer, or Playwright sessions were initiated against `mattercontrol-step-03a-ux-concept-review.html` or the starter app.
+- **Did NOT edit product code or governance records**: No files inside `/tmp/mattercontrol-step02-frontend` or the governance repository were modified, pushed, merged, or deployed.
+- **Did NOT bypass sandbox restrictions**: Denied operations (e.g., `uvx` access outside sandbox, direct shell access to `.codex/worktrees`) were recorded as environment boundaries and not retried with bypass permissions.
+- **Did NOT call external AI/cloud providers**: No requests were made to OpenDesign Cloud, OpenCode, or external LLM APIs.
+
+---
+
+## 10. Conclusion & Governance Status
+
+1. **Feasibility Verdict**: **FEASIBLE WITH ADAPTATION AND EXTENSION**.
+   - The Next.js 16 + React 19 + Tailwind 4 reference starter provides a robust architectural skeleton (App Router, Server Actions, Zod validation, Atomic Design structure).
+   - However, presentational `DataTable`, native `Dialog`, `MobileNav`, and generic `TaskRepository` cannot be reused as-is for MatterControl core workflows. They require purpose-built organisms (`OperationalGrid`, `ControlRoomLayout`, `EvidenceReviewDrawer`, `BulkEditModal`).
+2. **Architecture Status**: Candidate API and data models (A-01..A-15) remain `MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE`. Solution Architect (Claude Code) owns final architecture decisions; product UI implementation remains strictly blocked until the Architecture Approval Gate is formally cleared.
+3. **Task Status**: MC-003A-FE-FEASIBILITY is complete as a read-only feasibility report. Codex owns evidence intake. Formal independent QA remains pending. **MC-003A is NOT marked DONE.**
