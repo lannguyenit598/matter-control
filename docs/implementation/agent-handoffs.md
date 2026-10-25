@@ -44,3 +44,8 @@ No current engineering manual prompt needs dispatch. After PO INT-D01 selection 
 ## Current Step02.3 review routing
 
 The human reassigned the remaining Claude clarification/review to actual OpenCode and skipped Claude review this round. [Explicit override](../ai-sdlc/step-02-3-review-routing.md), [actual return](../reviews/step-02-3-opencode-clarification-review.md). Bounded wording is applied; F1..F4/PREREQ-01/02 closed at document/source level, no runtime result. The manual Claude prompt is SUPERSEDED_THIS_ROUND/NOT_DISPATCHED. PO selection/final contract and later engineering/QA/conformance remain gated; no global owner change.
+
+
+## Step02.4 — planning only, no dispatch
+
+[PO package](../ai-sdlc/step-02-4-scope-decision.md), [case classification](../testing/step-02-4-runtime-classification.md), [complete conditional manual templates](handoffs/MC-002-INT-024-CONDITIONAL-PROMPTS.md). No scope selected; exact implementation task contracts/acknowledgements are issued only after selection and contract freeze. No ZCode/Antigravity/OpenCode runtime job or Claude repetition is dispatched now. Route limitations stay recorded; no repair/login/permission workaround. Claude retains material-architecture authority. [Design Impact Notice](design-impact-notices/INT-D01-step-02-4.md) is governance-only, not sent or applied to Step03A.

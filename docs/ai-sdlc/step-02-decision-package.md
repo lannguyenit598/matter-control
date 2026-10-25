@@ -65,3 +65,8 @@ If approved, Claude first finalizes the exact temporary API/harness contract and
 Stop at **Integration/API/Auth Decision Approval Gate**. MC-002 OPEN / WAITING_APPROVAL; C01-PRODUCT OPEN; Architecture Approval Gate NOT_PASSED; Step03 NOT_STARTED_BY_STEP02.3. A later local PASS cannot establish Cloudflare viability, full recovery or $0 cost.
 
 Skipped: implementation, all runtime/database/integration tests, provider/account/paid activation and deployment. Risk: only independently reviewed proposal readiness can close this document step; all engineering and product-security evidence remains future work.
+
+
+## Step02.4 continuation
+
+Use the [current scope decision package](step-02-4-scope-decision.md) for the next PO response, conditional51-case classifications and execution-planning gates. This record remains historical Step02.3 input. No scope has been selected; no new architecture approval, implementation or runtime result is implied.

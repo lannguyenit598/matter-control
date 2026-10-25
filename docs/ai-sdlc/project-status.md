@@ -1,6 +1,6 @@
 # Project Status Dashboard
 
-As of 2026-10-25 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002-INT-DEC](../implementation/tasks/MC-002-INT-DEC.md) within [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
+As of 2026-10-25 Asia/Ho_Chi_Minh. Owner: Codex. Current task: [MC-002-INT-PLAN-024](../implementation/tasks/MC-002-INT-PLAN-024.md) within [MC-002](../implementation/tasks/MC-002.md), authorized by [Step 02](step-02-request.md) and [Step02.1](step-02-1-request.md). Step01 closure remains recorded.
 
 **Step 00A: COMPLETED. MC-00A: DONE for reviewed baseline 20f12fe. Step 01: COMPLETED / PRODUCT_REQUIREMENTS_APPROVED. MC-001: DONE. Step 02: IN_REVIEW / WAITING_APPROVAL / REMAINING_FEASIBILITY_OPEN / ARCHITECTURE_APPROVAL_NOT_GRANTED.**
 
@@ -104,3 +104,12 @@ Recommendation **INT-A**: isolated temporary harness executing inside the actual
 **WAITING_PO_APPROVAL at Integration/API/Auth Decision Approval Gate.** Only INT-D01 local scope/evidence boundary is needed now; INT-D02..09 preserve policy or remain separate future decisions. No production provider/adapter/paid service is selected, no $0 claim, no full-product/Cloudflare/recovery acceptance, no architecture approval, no MC-002 DONE and no Step03 action by this workstream. [PO decision package](step-02-decision-package.md), [conditional owner tasks](../implementation/step-02-integration-task-plan.md).
 
 C01-NATIVE at52b60a4, R01/R02, native frontend and tiny tooling restore retain their accepted scopes/limitations; no replay. C01-PRODUCT stays OPEN. The fifteen historical normative architecture/ADRs and protected requirements/evidence remain byte-identical. No engineering dispatch, source change, database/container action or acceptance execution in Step02.3.
+
+
+## Step02.4 — current Product Owner scope gate
+
+[Exact request](step-02-4-request.md) authorizes planning only. [Decision package](step-02-4-scope-decision.md) presents existing INT-D01 options; INT-A remains recommended transport-only, INT-C defers, INT-B needs revised design and INT-A0 requires reported INT-A infeasibility plus a separate exception. **NO_SCOPE_SELECTED / WAITING_PO_SCOPE_DECISION.** The auth/authz/Workspace-Matter difference is explicit and needs PO choice; approved policy is unchanged.
+
+[Classification](../testing/step-02-4-runtime-classification.md) preserves all51IDs:0required-now,36NEEDS_SCOPE_DECISION,14later-product,1production-feasibility (D-14); conditional INT-A after selection/freeze makes36required. All51NOT_RUN. No agent/runtime/implementation/environment dispatch or provisioning. Conditional manual prompts are planning templates only, not issued task contracts.
+
+Step02.3 clarification PASS_DOCUMENT_ONLY at a7e9992 remains preserved; no repeated Claude review. Claude remains Solution Architecture Authority for material deviations/later conformance. C01-NATIVE accepted with limits, C01-PRODUCT and MC-002 OPEN; Cloudflare/cost/recovery gates remain separate. A governance Design Impact Notice is prepared, not sent; Step03A worktree/artifacts untouched, no Step03A/03B DONE. Stop at Product Owner Integration Scope Approval Gate.

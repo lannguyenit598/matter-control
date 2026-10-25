@@ -28,3 +28,8 @@ Chosen H/F and integration scope; explicitly accepted exceptions; candidate prov
 The next gate is explicit PO selection of INT-D01 from the reviewed Step02.3 package, then Claude final contracts and exact Codex owner tasks. C01-NATIVE is already accepted; no native redispatch. Provider review permission is not implementation or architecture approval.
 
 Skipped: provider/account activation, adapter migration and topology selection. Risk: a component free allowance cannot establish a complete zero-cost service.
+
+
+## Step02.4 decision-preparation overlay
+
+[Current PO decision package](step-02-4-scope-decision.md) extracts the exact options above and INT-D01..09 without selecting them. Only INT-D01 needs a choice for the next local milestone. The existing INT-A recommendation is retained; its explicit lack of auth/authz/isolation coverage differs from a product-authenticated minimum slice and must be accepted or deferred by PO. [51-case classification/procedures](../testing/step-02-4-runtime-classification.md) is conditional, allNOT_RUN. No implementation, agent dispatch or environment creation before explicit choice and final contracts; no production/hosting/cost decision is inferred.
