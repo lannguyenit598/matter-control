@@ -1,5 +1,7 @@
 # MC-CONT-01 — independent continuation while BE01/F08/F10 returns wait
 
+Current routing amendment — 2026-10-26: per direct PO instruction, deliver the pending frontend stage1 handoff to actual ZCode, now backend and frontend owner. The Antigravity references in this original continuation record describe prior routing/authorship. No repeated source review, baseline rerun or runtime invocation follows from the role change. ZCode returns WAITING_GO_RESTART after stage1; a later backend action still requires a separate confirmed cue, with PostgreSQL controlled by Codex.
+
 Owner Local Codex PM/BA/orchestration/ENV; priorityP0; status IN_REVIEW / WAITING_MANUAL_STAGE1. Reviewer actual OpenCode for runtime (PENDING); formal independent Design QA remains separate. Base16c9b5d, branch codex/unified-project-flow; old design checkout detached8c4d47e read-only. User directive preserved under docs/testing/continuation-20261026/request-original.txt.gz; later steering explicitly says wait for BE01 and F08/F10, do independent work.
 
 Scope: actual INT-A backend-start return intake, read-only owned resource/process/private-mode checks, canonical51case checkpoint, complete existing Antigravity stage1 handoff, UX source/traceability checks and truthful tooling-blocker disposition. No BE01/F08/F10 reassignment, code, renderer bypass, source merge, provider/auth/model change, lifecycle/data mutation or Step03B/deploy.

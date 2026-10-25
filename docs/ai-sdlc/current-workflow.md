@@ -8,13 +8,21 @@ Use `codex/unified-project-flow` in `/Users/nguyenvanlan/Documents/code/pet-proj
 
 This is one delivery flow with separately evidenced workstreams. A branch merge is not design approval, architecture approval, runtime acceptance or production release.
 
+## Current engineering ownership — 2026-10-26
+
+The Product Owner explicitly assigns backend and frontend development to ZCode. Antigravity has no default new frontend assignment; its existing source and accepted reports retain their original authorship. See [RACI](raci-matrix.md). Codex still coordinates and owns PostgreSQL barriers; ZCode owns Go and Next/driver in separate scoped steps. OpenDesign owns UX and Claude Code architecture; OpenCode/formally designated independent reviewers remain separate from ZCode-authored changes.
+
+The active [frontend stage1 handoff](../implementation/handoffs/MC-002-INTA-FE-RUNTIME-PROMPT.md) now addresses ZCode using its currently configured provider/model and permitted quota, with no automatic model switch or dispatch. The historical FE filename is stable. Stage1 remains READY_NOT_DISPATCHED until actual delivery/acknowledgement; backend readiness observations must be freshly checked. Ownership does not grant backend/private-config access inside a frontend-only step or permission to skip a later Go/PG barrier.
+
+Coordination change MC-COORD-02: owner Local Codex; priority P0; status IN_REVIEW; process-only requirement linkage MC-002-INT-A, MC-CONT-01 and MC-003A-READ-CONSUMPTION. Inputs are the direct PO instruction and current tasks/handoffs. Outputs are aligned role/RACI/workflow/task instructions and the ZCode frontend handoff. Acceptance is consistent current ownership, preserved authorship, stage/QA gates and configured-route constraints. Validation is focused document assertions and Git whitespace checks; no runtime or external agent execution. Reviewer is PO for this directly requested role change; product/architecture/design/runtime acceptance remains with the existing independent authorities.
+
 ## Current evidence and next actions
 
 | Workstream | Evidence currently committed | Next action and dependency |
 |---|---|---|
 | MC-BE-01 | [Bounded task](../implementation/tasks/MC-BE-01.md) and handoff; PO reports work performed | PO now asks to wait for the BE01 return; no reassignment or acceptance inferred. Continue independent INT-A/UX work. |
 | F-08/F-10 | [Corrected ZCode addendum intake](../design/step-03a/handoff/step-03a-8a/zcode-remaining-return-r2/intake.md): null/cardinality/order/size disclosures corrected; B35 recommended, unapproved | Await the owner follow-up as explicitly instructed; no repeat assignment/review. Latest intake remains the correction checkpoint, catalogue32 and gates unchanged. |
-| INT-A | [Coordination](../implementation/inta-coordination.md), accepted source review and provisioned fixture at imported head `7cdde53` | Backend-start return now received and operationally reverified: [intake](../reviews/inta-backend-runtime-start-intake.md). Deliver complete Antigravity stage1 handoff; no migration/start replay. Stop at checkpoint before Go restart. |
+| INT-A | [Coordination](../implementation/inta-coordination.md), accepted source review and provisioned fixture at imported head `7cdde53` | Backend-start return now received and operationally reverified: [intake](../reviews/inta-backend-runtime-start-intake.md). Deliver complete ZCode frontend stage1 handoff; no migration/start replay. Stop at checkpoint before Go restart. |
 | UX validation | local-r3 concept, source remediation, candidate contracts and handoffs | [Contract/design/consumer mapping](../testing/continuation-20261026/contract-design-consumer-trace.json) added. Source161/162PASS, one explained live decision-log append drift; historical bytes verified in Git. Rendered target restriction and independent QA remain pending. |
 | Approval | Product requirements approved; architecture/product/security/cost/recovery gates remain scoped and open | Update each gate only from actual evidence and the required authority. MC-003A REWORK_REQUIRED; STEP03B NOT_AUTHORIZED. |
 

@@ -1,5 +1,7 @@
 # MC-002-INT-A — Selected Local Integration Assignment
 
+Current engineering owner amendment — 2026-10-26: actual ZCode owns both MC-002-INTA-BE and MC-002-INTA-FE from now on. Previous Antigravity preparation/source reviews remain historical evidence, not rewritten ZCode authorship. The existing MC-002-INTA-FE-RUNTIME-PROMPT.md now routes stage1 to ZCode; it remains READY_NOT_DISPATCHED. Preserve all source revisions, 51 acceptance IDs, runId/state, Codex PG barriers and independent QA. A frontend step grants no Go lifecycle or backend.env access; later backend steps need their own cue/checkpoint. This role change is not a new runtime result or approval gate transition.
+
 Owner Codex PM/Cloud/DevOps; priority P0 local feasibility. Base e7dbfbfb63062c4df576836c744701832356edd7, branch task/MC-002-solution-architecture. **FRONTEND_SOURCE_REVIEW_PASS_WITH_LIMITATIONS / VERIFIED_ENV_READY / WAITING_MANUAL_RUNTIME_OWNERS.** Actual ZCode acknowledgement/build return is received; no integration runtime evidence yet. [DEC-028](../../ai-sdlc/inta-po-approval.md) approves INT-A; [INTA-1](../inta-approved-contract.md) is frozen within that scope. No fallback to INT-A0/B/C.
 
 ## Shared task contract and dependencies

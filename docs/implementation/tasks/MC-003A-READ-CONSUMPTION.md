@@ -1,5 +1,7 @@
 # MC-003A-READ-CONSUMPTION — focused frontend contract reconciliation
 
+Current frontend owner amendment — 2026-10-26: actual ZCode owns future frontend reconciliation/development under direct PO reassignment. The original Antigravity reconciliation below and its reports remain unchanged historical evidence; no duplicate audit or new implementation is assigned here. Future work consumes the latest indexed candidate/approved inputs and requires its normal scope, design and independent review gates.
+
 Owner actualAntigravity frontend; Codex orchestration/intake; actualClaude owns material contractclarification. Priority P0. Status IN_REVIEW — actual human-returned Antigravity reconciliation received; prior manual-dispatch state is historical. Requirements FR009/AC109/137 plus FR001..008/011/015..020, D-UX01..04 and10NAVflows. Inputs exactreviewedcandidate/targetedreview+intake under ../../design/step-03a/handoff/step-03a-7/, priorfrontendfeasibility and selectedUX/rules/permissions; no generalarchitectureaudit.
 
 Scope: read-only reconcile8sections+2groups,17DR/30ops/10NAV,10consumerconstraints and22NOT_RUNCT/8independentquestions againstactualstartercompositions; identify materialconsumptiongaps without creatingAPIs. Dependency: normal authorized ownercontext and currentpayload/destinationpermission. No headlesspermissionbypass, newegress/provider/cost/auth or implementation. ActualAntigravityruntime notinvokedbyCodex.

@@ -1,5 +1,7 @@
 # Project Status Dashboard
 
+Current ownership amendment — 2026-10-26: the Product Owner assigns both backend and frontend development to ZCode. Future frontend/Next/driver assignments, including pending INT-A stage1, use ZCode; historical Antigravity results below retain their actual authorship. See [current workflow](current-workflow.md) and [RACI](raci-matrix.md). No runtime execution, product-scope expansion or gate approval follows from this reassignment.
+
 ## Unified coordination checkpoint — 2026-10-26
 
 Continue on `codex/unified-project-flow` at `/Users/nguyenvanlan/Documents/code/pet-projects/matter-control`. [Current workflow, owners and next actions](current-workflow.md) consolidates integration, design and backend intake. The Product Owner authorized merging the two coordination branches; this is not product, architecture, design or release approval.

@@ -1,5 +1,7 @@
 # AI SDLC Operating Model
 
+Ownership amendment, 2026-10-26: the Product Owner assigns both engineering layers to ZCode. This specific role amendment is effective now; it does not approve all other proposed operating choices, implementation scopes or release gates. Codex coordinates; Claude Code architects; OpenDesign designs; OpenCode verifies independently.
+
 Owner: Codex. Status: proposed operating baseline, IN_REVIEW. Discovery is closed by Product Owner; downstream outputs must preserve that decision.
 
 DISCOVER → DEFINE → SPECIFY → ARCHITECT → DESIGN → PLAN → IMPLEMENT → VERIFY → REVIEW → RELEASE → OBSERVE → IMPROVE.
@@ -12,7 +14,7 @@ DISCOVER → DEFINE → SPECIFY → ARCHITECT → DESIGN → PLAN → IMPLEMENT 
 | ARCHITECT | Claude Code | Boundaries, API/data/security contracts, ADRs, risk analysis | Human approves material trade-offs |
 | DESIGN | OpenDesign | Flows, screens, states, accessibility, interaction specs | Human approves design; engineers accept handoff |
 | PLAN | Codex | Prioritized task contracts, dependencies and milestone plan | Definition of Ready passes |
-| IMPLEMENT | ZCode / Antigravity | Scoped implementation + tests + updated docs | Contract satisfied; diff and evidence submitted |
+| IMPLEMENT | ZCode (backend and frontend) | Scoped implementation + tests + updated docs | Contract satisfied; diff and evidence submitted |
 | VERIFY | OpenCode | Independent acceptance, integration and regression results | No unresolved blocking failures |
 | REVIEW | Independent discipline reviewer | Findings, dispositions and approval on exact revision | All required gates pass |
 | RELEASE | Codex | Release manifest, migration/rollback plan, approval | Human go/no-go, then deployment evidence |

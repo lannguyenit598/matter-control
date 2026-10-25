@@ -1,20 +1,22 @@
 # INT-A — Current Owner Coordination
 
+Current owner amendment — 2026-10-26: ZCode now owns backend and frontend engineering by direct PO instruction. Historical Antigravity source remains accepted at its original revision. Stage barriers still require recorded checkpoints and Codex cues even when one ZCode operator owns both Go and Next. This update is prepared routing, not a new owner invocation.
+
 Codex,2026-10-26 Asia/Ho_Chi_Minh. DEC-028/INTA-1 unchanged. This current table supersedes prior preparation/ENV-held snapshots; raw historical returns/reviews remain immutable.
 
 | Workstream | Actual current evidence | Next dependency/action |
 |---|---|---|
-| Antigravity source | R4 clean48cc03e; actual human-routed ZCode SOURCE/EVIDENCE PASS_WITH_LIMITATIONS accepted; R3-F01..F07 closed/dispositioned | No more source rework assigned; preserve reviewed source, canonicalstage1..7 only |
+| Historical Antigravity source | R4 clean48cc03e; actual human-routed ZCode SOURCE/EVIDENCE PASS_WITH_LIMITATIONS accepted; R3-F01..F07 closed/dispositioned | No more source rework assigned; preserve reviewed source, canonicalstage1..7 only |
 | Codex ENV | Same container/volume/image/caps/ports/labels verified running healthy on2026-10-26; private modes0700/0600. Empty DB was pre-migration history, not current assumption | Retained running; no new fixture or lifecycle mutation. Codex owns later exact-container barriers |
 | ZCode backend | [Actual runtime-start return](../reviews/inta-backend-runtime-start-return.md) received; six migrations owner exit0; exact binary/PID77632/start-time/listener and health rechecked by Codex | [Codex intake](../reviews/inta-backend-runtime-start-intake.md) accepts operational readiness only. Do not migrate/start again; wait stage1 checkpoint before Go restart |
-| Antigravity runtime | State/runtime-evidence paths absent at current observation; source48cc03e/template3e5a642 clean. Backend-ready return now verified | [Complete staged prompt with stage1 cue](handoffs/MC-002-INTA-FE-RUNTIME-PROMPT.md) READY_NOT_DISPATCHED. Human delivers stage1 only, then WAITING_GO_RESTART; fresh immediate readiness recheck required |
+| ZCode frontend runtime | State/runtime-evidence paths absent at current observation; source48cc03e/template3e5a642 clean. Backend-ready return now verified | [Complete staged prompt with stage1 cue](handoffs/MC-002-INTA-FE-RUNTIME-PROMPT.md) READY_NOT_DISPATCHED. Human delivers stage1 only, then WAITING_GO_RESTART; fresh immediate readiness recheck required |
 | OpenCode runtime QA | Original provider.free-limit429 source attempts retained; no runtime QA verdict | Mandatory36case independent QA still pending; no silent substitution with ZCode. Usable route/runtime permission and actual owner evidence needed |
 
 ## Frozen run and manual stage barriers
 
 Actual driver-generated runId `intamvnmoems3pd`, fresh shared Next/driver state `/tmp/mc002-inta-state-intamvnmoems3pd`. State path was absent before ENV; do not create it or invoke status/invalid CLI/pausedstage1 with this runId before actual stage1 prerequisites. Evidence owner attempts use runtime-/env-prefixed leaf names to avoid fresh-preflight per-runId collision. Previous proposed inta20261025a not used.
 
-Private backend config `/tmp/mc002-inta-private/intamvnmoems3pd/backend.env` stays local0600/parent0700; never render/copy values into chat/Git/review packets. ZCode loads privately only after verified DB identity. Antigravity does not read this file. Frontend has no product auth/provider secrets.
+Private backend config `/tmp/mc002-inta-private/intamvnmoems3pd/backend.env` stays local0600/parent0700; never render/copy values into chat/Git/review packets. ZCode loads privately only after verified DB identity. The ZCode frontend/driver step does not read this file; only the separately scoped ZCode backend step may load it privately after the required checks. Frontend has no product auth/provider secrets.
 
 Order: ZCode migrate/start → frontendstage1/checkpoint → ZCode Go restart → frontendstage2/PERS01 → Codex samePGrestart → frontendstage3/PERS02 → frontendstage4/update/stale → Codex PGstop whileGoalive → frontendstage5/outage → Codex samePGrecovery withoutGorestart → frontendstage6/recoveryreads → ZCodeGostop → frontendstage7/T12 → log/privacy/correlation/isolation/ownedteardown and independentQA. Every arrow crossing an external-owner action requires actual return/confirmed identity before the next stage; printed instructions are not execution.
 
