@@ -1,5 +1,7 @@
 # Actual Claude Code — targeted F10 contract disposition only
 
+SUPERSEDED — 2026-10-26: direct PO instruction assigns this exact F10 technical confirmation to ZCode. Use ZCODE-F10-CONFIRMATION-PROMPT.md. The following former Claude plan is historical; do not dispatch it or require a mandatory Claude loop for this task. Independent review/PO acceptance remain separate.
+
 READY_NOT_DISPATCHED. This is a prepared handoff, not authorization to access repository/tools or transmit a new payload. Before execution, Codex/human must supply exact snapshot manifest/SHA256, confirmed destination/model, read/text-return permissions and cost envelope through the official mechanism. Do not inherit prior ZCode payload permission, switch provider, login, pay/retry or bypass a denial. If prerequisites are missing, state only the precise missing scope. No general architecture or32-operation audit.
 
 You are actual Claude Code, contract authority. Report actual tool/version/model/provider, source revision and prior authorship/self-review limits. ZCode now owns backend and frontend development; it does not approve its own candidate. Codex intake is not architecture approval. Human retains material scope/policy/catalogue/size-risk decisions; independent QA separate.

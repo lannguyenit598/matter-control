@@ -23,3 +23,7 @@ Codex ran a small logical interleaving assertion (unknown E3/E4, unrelated event
 Catalogue32 remains current; A's zero filter/route delta is still a payload/schema/semantics change. Optional causeSeq/B35/L2 remain unadopted. Original22CT/16+4+1+1, Q1..Q8 conditions, F08 candidate and all G3/G4/G5/G6/STEP03B states stay unchanged. BE01/INT-A including restart governance clarification remain independent; no lifecycle or source task restart.
 
 Skipped: runtime/build/DB/browser, implementation, external dispatch, independent review, numeric-bounds verification and product approval. Risk: exact matching/count/revision semantics and scalar bounds still require authoritative contract disposition; proposal completion is not F10 closure.
+
+## Direct PO reroute — ZCode confirmation, 2026-10-26
+
+The human explicitly assigns this F10 technical confirmation to ZCode. ZCODE-F10-CONFIRMATION-PROMPT.md is the current same-session/text-only handoff; Claude handoff superseded. No new tools/source reads/provider changes or dispatch occurred. Prospective author disposition is OWNER_TECHNICALLY_CONFIRMED_CANDIDATE only after actual return, not independent acceptance or PO approval. Existing role/payload approval need not be requested again for this exact same-context assignment. Scope covers the remaining C1/C2/C3 contract assertions; no global architecture-role reassignment or F10 closure.
