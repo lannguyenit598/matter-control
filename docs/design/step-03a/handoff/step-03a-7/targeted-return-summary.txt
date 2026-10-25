@@ -1,0 +1,63 @@
+I've written the TQ-02/TQ-08 review: both files are in docs/design/step-03a/handoff/step-03a-7/. The verdict is COMPATIBLE_WITH_CONSTRAINTS, document-only: Codex's proposal is accepted as a reviewed candidate, with my changes applied in the JSON. It is not PO or product-contract approval, and nothing was run.
+
+Task and identity
+- Task: MC-003A-TQ02-TQ08. Reviewer is actual Claude Code 2.1.310, model claude-opus-5-5, interactive. No login, provider/model switch or settings change.
+- Head: 9262e6e, with base 1ec02fd as an ancestor.
+- Manifest: 30/30 files match bytes and SHA256.
+- Prior step-03a-6 outputs: unchanged and not edited; the prior verdict and its disclosures stand.
+- Reading: I read only documents this round. git diff 6530858..HEAD shows zero changes to the requirements, architecture and design inputs, so my earlier reads of them still hold.
+- Self-review: I authored the base candidate architecture, so this review is not independent of it. The PO Architecture Approval Gate is still NOT_PASSED.
+
+How the Control Room read works (TQ-02)
+- One server-built projection, one snapshot. The existing candidate route GET /matters/{m}/control-room is assembled server-side in a single read snapshot. FR-009 requires the "same scope/as-of", AC-109 requires a match at "that boundary", and ADR-002 §1.6 already provides this kind of snapshot. Client-side composition would mix snapshots. No new entity, store or cache is introduced.
+- Freshness. One asOf/sourceRevision covers every section. Each section is either AVAILABLE or UNAVAILABLE. STALE is not a server value; it is the client's label on an older response it kept after a failed refetch.
+- Partial failure. The root returns 200 if at least one section works and 503 if none do. Empty-but-available ([]) is different from unavailable (null). A condition count drawn from a failed section is null, never 0.
+- Paging. Each section's nextCursor works on a named collection route whose default order matches the section. Continuation pages are new snapshots and are never silently merged.
+- Refs, errors and caching. References are typed {kind, id} over 25 kinds; filing cycles use (filingId, cycleNo). Check order is 401, then a uniform 404 for non-member or nonexistent, then 422, then 503. P0 reads never return 403. No If-Match on GETs, and responses are private, no-store.
+- Sections. Eight are server sections; actionability and navigation are carried on every card.
+- Blockers are causes, not blocked targets. A card is any node with at least one failing outgoing gate, flagged rootCause when the node itself is dependency READY. At AtlasT0 this makes RQ-04 (WAITING but READY) the top card. The first draft listed blocked nodes instead, which would have hidden RQ-04; the advisor caught this and I checked it against Atlas §5.
+
+The detail-read catalogue (TQ-08)
+- Dispositions: of the 17 rows, 13 are accepted and 4 changed. The workstream, milestone, evidence-claims and external-party detail routes are rejected as redundant, and each names its replacement.
+- Added: matter-level list routes for documents, filings, evidence requirements, waits, decisions, findings, risks and blockers; waits get an explicit list route because no create route exists to mirror; and a before cursor on events for most-recent-first.
+- Total: 30 catalogue operations. 3 reuse or extend existing candidate routes and 27 are new candidates. All 10 navigation transitions map to a route, and all 22 test scenarios are mapped to the contract but remain NOT_RUN.
+- Fields: of the 34 proposed fields, 19 accepted, 11 changed and 4 rejected, plus 6 added. The rejected ones are displayTimezone, per-section asOf, per-section sourceRevision and contentCompleteness.
+
+Technical questions
+
+┌──────────────────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│            TQ            │                                                     Status                                                     │
+├──────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TQ-02 Control Room shape │ Resolved as reviewed candidate, document-only                                                                  │
+├──────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TQ-08 detail reads       │ Resolved as reviewed candidate, document-only                                                                  │
+├──────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TQ-06 waiting-since      │ Resolved as reviewed candidate: openedAt/openedEventSeq from the event that opened the wait                    │
+├──────────────────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ TQ-01, 03, 04, 05, 07    │ Still open. TQ-03 only gained the caller's own Matter role (viewerRole) and optional advisory permittedActions │
+└──────────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+No ADR is proposed, and no new PO decision is needed now.
+
+Still blocking implementation
+- The PO Architecture Approval Gate, since every route and field is a candidate.
+- The auth seam (A-01/A-02) and the identity-provider selection (INT-D02).
+- Backend implementation plus contract and negative tests.
+- G3 rendered validation and G4 independent QA.
+- The storage provider for document content (TB-05).
+
+MC-003A is not DONE and STEP03B is not authorized.
+
+The Antigravity read-consumption constraints (10 items) and 8 OpenCode testability questions are in §7–§8 of the report.
+
+Files
+- targeted-claude-review.md — SHA256 263718e7…
+- reviewed-read-contract.json — SHA256 ac2b3851…
+
+Both were checked absent before writing, and nothing was committed. After an advisor pass I revised and regenerated these two files before handing them over; the hashes above are the final ones for intake.
+
+Skipped: re-inspecting the concept HTML, review-intake.json, the rest of request.md, and any execution.
+
+Remaining risk:
+- High: there is no product authentication yet.
+- Medium: a partial 200 could be misread as "all fresh"; section page sizes are unset; TQ-03 and TQ-05 are still open; the document-content storage provider (TB-05) is undecided.
