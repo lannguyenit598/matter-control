@@ -284,3 +284,12 @@ Explicit OpenCode-only manualprompt prepared; human sends toactualOpenCode/curre
 ## Stage3 readback received; stage4 cue released — 2026-10-26
 
 Repository-relative docs/reviews/inta-frontend-runtime-stage3-intake.md records actual ZCode INT-PERS-02 known-A full equality/version1 after Codex samePGrestart;9export pairs/8hashes and64Codexchecks pass,one correlated GET200. State32->35,counter16,13trueassertions,STAGE_3_COMPLETED; report32after heading erratum retained. No lifecycle/driver/recordHTTP/SQL by Codex or freshprocessprobe this intake. Stage4 MC-002-INTA-FE-STAGE4-PROMPT.md is CUE_RELEASED/READY_NOT_DISPATCHED for ZCode:T9/W9/T10 once,then WAITING_CODEX_PG_STOP. KeepPG/Go/Next running until actual stage4 intake; no replay or premature outage. Historical stage3pending labels superseded;51formalNOT_RUN/independentQA/product/design gates unchanged. BE01/F10 preserved separately.
+
+
+## Actual F10 OpenCode independent review received — 2026-10-26
+
+[Review/intake](../reviews/f10-opencode-independent-review-r1.md) records actual human-delivered OpenCode CLI2.1.4/provideropencode/modeldeepseek-v4.1-flash-free report, independence selfdeclared and exact6snapshot49688byte/manifest1797hash reverified. No newCodexprovidercall. Verdict CHANGES_REQUIRED_DOCUMENT_ONLY:4High/1Medium/2Low; reviewer examinedpacket consistency/testability only, not fullcitedsourcecompatibility/runtime.
+
+Findings: peroriginalterminal/supersededreplacement exclusion(OC01/05), observedanomalywindow vs stop-at-N(OC02), separateANDmatch/anomalypredicate(OC03), filingonly422/428/412/409percommandmatrix(OC04), proposedlimitunits(OC06), preparation/dispatch/authorselectionstatus(OC07). OC07 Codex separateactualdispatch/supersessionrecord appliedpendingrecheck; immutablepacket/R3/manifest preserved. Reviewreceipt supersedes eligible-reviewernotdispatched labels, never authorproposaladoption/independentPASS.
+
+CompleteZCode narrowtextcorrectionhandoff preparednotdispatched, then correctedrevision newmanifest and independentOpenCode changedclauses-onlyrereview. DirectPOownerconfirmationreroute honored; no redundantmandatoryClaude/fullarchitecture/32operation audit. F10REWORK_REQUIRED/G5Bfindingsopen;catalogue32/B35/L2/filterunadopted, F08/22CT/QA/design/architecture/STEP03Bgatesunchanged. BE01/currentINTAworkstream/source/lifecycle untouched; allF10runtimeNOT_RUN.

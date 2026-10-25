@@ -1,0 +1,117 @@
+{
+  "task": "MC-003A.8A OpenCode independentreviewintake",
+  "owner": "LocalCodexPM/BA",
+  "priority": "P0 documentgate",
+  "requirement_trace": "Inherited F10 DR12/DR15/CT13/CT16/CT17, RULE012/019; no newbusinesspolicy",
+  "utc": "2026-10-25T18:30:07.125904+00:00",
+  "base": "9fe6be75d0e3ce0d1164551f14b90b02ed51835f",
+  "return": {
+    "attachment": "/Users/nguyenvanlan/.codex/attachments/9e709b38-ee74-46e5-abb6-2f5f26bfcfea/Pasted text.txt",
+    "archive": "review-original.txt.gz",
+    "bytes": 24675,
+    "sha256": "6aed6f42f331797a4216eff6997534e6462d297ce11364c05aa7cde3fd85729c"
+  },
+  "review_dispatch": {
+    "task": "MC-003A.8A independentF10review",
+    "state": "MANUAL_EXTERNAL_REVIEW_RETURN_RECEIVED",
+    "evidence": "Human-pasted actual OpenCode report; not a newCodexCLIinvocation",
+    "reviewed_packet": {
+      "manifest_path": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/packet-manifest.json",
+      "manifest_bytes": 1797,
+      "manifest_sha256": "6d670d8292a1775d00f099af1dd7e764151ca752fb1ae82db70a2ae6eb4ff7cd",
+      "snapshots": 6,
+      "snapshot_bytes": 49688,
+      "all_files_bytes": 51485,
+      "codex_current_hash_recheck": "PASS6of6"
+    },
+    "reviewer_reported": {
+      "tool": "OpenCodeCLI2.1.4",
+      "provider": "opencode",
+      "model_display": "DeepSeek V4.1 Flash Free",
+      "model_id": "deepseek-v4.1-flash-free",
+      "identity_and_cli_commands": "reported in human-return, no exported CLIcommand/sessiontelemetry independently verified",
+      "endpoint": "NOT_ATTESTED",
+      "independence": "reviewer declares no authorship; source scopes exclude product/runtime/fullsourcecontract audit"
+    },
+    "reviewer_git_checkpoint": "1381601d52c40da3475aac8cf5e3d3cffd1e9f19",
+    "current_governance_base": "9fe6be75d0e3ce0d1164551f14b90b02ed51835f",
+    "verdict": "CHANGES_REQUIRED_DOCUMENT_ONLY",
+    "prior_preparation_manifest": "Immutable PREPARED_NOT_DISPATCHED is historical preparation record. This separate actualreturn/dispatch record supersedes only operational no-review label; rawmanifest bytes unchanged.",
+    "candidate_supersession": "Final owner recommendation chooses pathA with BcauseSequnadopted, superseding earlierR3 openA-vsB recommendation. This is author-selection supersession, NOT adopted contract/POapproval. B35/L2unadopted.",
+    "no_new_provider_call_by_Codex": true
+  },
+  "findings": [
+    {
+      "id": "F10-OC-01",
+      "severity_reported": "High",
+      "title_reported": "C2 effective-view derivation omits superseded replacement observations",
+      "reviewer_text_verbatim": "### F10-OC-01 — [High] C2 effective-view derivation omits superseded replacement observations\n\n- **Location**: `01-final-owner-confirmation.txt` §1 C2 **P2.2**; `02-final-delta.json` `c2.patches.effective_view`; `03-C1-C2-R2-delta.json` `clause2_correction.terminal_rule`.\n- **Exact clause**: P2.2 defines effective linkage as “các evidence link của observation **không bị target bởi correction terminal** trong lịch sử đã commit đến snapshot đó.” P2.1 separately says “replacement của correction superseded mất hiệu lực trong cùng commit; tối đa một replacement hiệu lực/observation gốc.”\n- **Trigger A**: O4 has links; C1 `REPLACE O4→O5`; C2 `RETRACT O4` (terminal). P2.2 excludes O4 because it is targeted, but O5 is **not** targeted by a correction. Read literally, O5’s links remain effective, contradicting the R2 example that O4 and O5 are both ineffective.\n- **Trigger B**: C1 `REPLACE O4→O5`; C2 `REPLACE O4→O6`. O5 is not targeted; P2.2 would keep O5 and O6 effective, violating “at most one effective replacement.”\n- **Impact**: Effective/unbound totals and B3/provenance can include stale replacement links. A5/A6 cannot pass as written. History immutability itself is not broken; the derivation is.\n- **Smallest correction**: replace P2.2 with one explicit per-original derivation: for each original observation, find the terminal correction (maximum `seq` among corrections whose `correctsObservationId` equals that original); no correction → original links effective; `RETRACT` → none; `REPLACE` → only links of the replacement observation created by that terminal correction; all replacement observations created by superseded corrections are ineffective; corrections targeting replacement observations → 422. Put this in P2.1/P2.2 and the JSON, not only in R2.\n- **Expected cases**:\n  - A5a `REPLACE O4→O5` then `RETRACT O4`: zero effective links from the O4/O5 lineage.\n  - A5b `REPLACE O4→O5` then `REPLACE O4→O6`: only O6 effective; O5 ineffective.\n  - A5c two originals with interleaved corrections: terminal is per original, not the latest correction in the filing.\n  - A5d correction targeting O5: 422, no correction-of-correction.\n  - A6 asOf before/between/after corrections: derived view changes without history rewrite.\n- **Owner**: Claude (contract derivation) + Codex (document intake). This is an integration fix, not a new policy.",
+      "codex_disposition": "OWNER_SCOPED_CORRECTION_REQUIRED",
+      "owner_route": "ZCode scoped candidate author correction; Codex intake; independent OpenCode re-review"
+    },
+    {
+      "id": "F10-OC-02",
+      "severity_reported": "High",
+      "title_reported": "C3 “never false completeness” overclaims surplus detection after stop",
+      "reviewer_text_verbatim": "### F10-OC-02 — [High] C3 “never false completeness” overclaims surplus detection after stop\n\n- **Location**: `01-final-owner-confirmation.txt` §1 C3 **P3.3–P3.5**; `02-final-delta.json` `c3.patches.emission_rules`, `c3.patches.edge_semantics`, `c3.patches.completion`; `04-C3-R3-delta.json` `path_A_recommended.stop_condition`.\n- **Exact clause**: P3.4 says “`exhausted<N` … hoặc `count>N` hoặc `identity mismatch` → surface `INCOMPLETE_HISTORY/ANOMALY`; never false zero/completeness.” P3.5 says finding N unique exact matches is command-local complete even if later history is unscanned.\n- **Trigger**: main event N=2; matches at seq 42 and 44; the reader stops. A third matching link event at seq 46 (duplicate/corrupt producer history) is never read; the reader reports complete. The packet’s `limit=1` trace makes this concrete.\n- **Impact**: The unconditional “never false completeness” and the A8 surplus case are not achievable with stop-at-N. A corrupt producer can pass as complete. Command-local completeness under the healthy emission invariant remains sound; the defect is the overbroad corruption guarantee.\n- **Smallest correction**: state that completeness is guaranteed **within the observed window** and define the window (e.g. through the page containing the Nth match, with an optional one-page lookahead). Define `surplus` as an observed matching event after N within that window. State that later surplus is outside the guarantee and does not invalidate the healthy-producer command-local completion. Do not require an unbounded scan. Update A8 to separate healthy completion from corruption detection.\n- **Expected cases**:\n  - A8a N=0: complete 0/0, no link scan, no false anomaly.\n  - A8b exhausted<N: `INCOMPLETE_HISTORY/ANOMALY`.\n  - A8c observed match count > N within the pinned window: anomaly.\n  - A8d surplus only after the stop page: **not claimed detected**; no “corruption-free” assertion.\n  - A8e page boundary at the Nth match: window definition and result are deterministic.\n- **Owner**: Claude (reader contract) + Codex (document intake).",
+      "codex_disposition": "OWNER_SCOPED_CORRECTION_REQUIRED",
+      "owner_route": "ZCode scoped candidate author correction; Codex intake; independent OpenCode re-review"
+    },
+    {
+      "id": "F10-OC-03",
+      "severity_reported": "High",
+      "title_reported": "C3 AND predicate cannot produce the claimed identity-mismatch anomaly",
+      "reviewer_text_verbatim": "### F10-OC-03 — [High] C3 AND predicate cannot produce the claimed identity-mismatch anomaly\n\n- **Location**: `01-final-owner-confirmation.txt` §1 C3 **P3.1 vs P3.4**; `02-final-delta.json` `c3.patches.predicate` vs `c3.patches.edge_semantics`; `04-C3-R3-delta.json` `path_A_recommended.discovery`.\n- **Exact clause**: P3.1 makes `payload.observationId==O7` part of the normative AND. P3.4 nevertheless says identity mismatch “match có observationId ≠ O7” → `ANOMALY`.\n- **Trigger**: link event with `causeSeq=41`, `type=filing.observation.evidence_linked`, `payload.observationId=O8`. The AND predicate rejects it as a non-match; no anomaly is emitted; the reader completes using O7’s N matches.\n- **Impact**: Cross-observation or corrupt link rows are silently ignored. The identity-mismatch anomaly case in A8 cannot pass as specified. This is a direct contradiction, not merely a residual limitation.\n- **Smallest correction**: separate the **match** predicate (AND, unchanged) from an **anomaly** predicate over the scanned window. Anomaly candidate: any scanned event with `causeSeq==mainSeq` and `type=filing.observation.evidence_linked` whose `payload.observationId != O7` (and/or whose target is not in the expected link set) → `INCOMPLETE_HISTORY/ANOMALY`. Or explicitly remove the identity-mismatch guarantee and state it is not detected. Pin the scan window in either case.\n- **Expected cases**:\n  - A8f O8 link under causeSeq 41: anomaly (if anomaly predicate adopted) or explicit “not detected.”\n  - A8g unrelated event with causeSeq 41 but different type: ignored, no anomaly.\n  - A8h unrelated link with causeSeq != 41: ignored, no anomaly.\n  - A7 normal interleaving with a derived event between links: no false anomaly.\n  - Page boundary around the mismatched row: deterministic result.\n- **Owner**: Claude (reader contract) + Codex (document intake).",
+      "codex_disposition": "OWNER_SCOPED_CORRECTION_REQUIRED",
+      "owner_route": "ZCode scoped candidate author correction; Codex intake; independent OpenCode re-review"
+    },
+    {
+      "id": "F10-OC-04",
+      "severity_reported": "High",
+      "title_reported": "C1 P1.3 is global, incomplete on 422, and lacks a per-command CAS/precondition matrix",
+      "reviewer_text_verbatim": "### F10-OC-04 — [High] C1 P1.3 is global, incomplete on 422, and lacks a per-command CAS/precondition matrix\n\n- **Location**: `01-final-owner-confirmation.txt` §1 C1 **P1.3** (and P1.2); `02-final-delta.json` `c1.patches.check_ordering`; `03-C1-C2-R2-delta.json` `clause1_lifecycle.observation_target_vs_cas` / `supplement_request`.\n- **Exact clause**: P1.3 defines “admission → scope lock + authorization → idempotency replay → preconditions (428/412, gồm If-Match và expectedCycleNo) → state/stage guards (409) → effects” and says it applies “đều cho mọi command.” P1.2 says a body `cycleNo` that does not exist under the filing is `422 validation`.\n- **Trigger A — scope**: any command outside filing/observation/correction. P1.3 would impose a global command-order change, contrary to the F10 boundary “không áp global command order ngoài phạm vi” and the review focus IR-F10-03.\n- **Trigger B — missing 422 placement**: a request with an invalid target `cycleNo`, a stale `expectedCycleNo`, and a changed stage. P1.3 lists 428/412 preconditions and 409 guards, but does not place the 422 target-binding validation. The outcome is not deterministic; if 422 is placed in “admission” before authz, it may leak target existence.\n- **Trigger C — per-command CAS ambiguity**: supplement is described with `expectedCycleNo`; corrections are described in R2 with `If-Match` filing revision + `expectedCycleNo`; P1.3 says “gồm If-Match và expectedCycleNo” without saying which command uses which. Missing `If-Match`/`expectedCycleNo` also has no pinned 422/428 behavior.\n- **Impact**: Unscoped global contract change; nondeterministic 422/412/409 precedence; possible authorization/existence leak; A2/A3 are insufficient to test the order.\n- **Smallest correction**: scope P1.3 explicitly to the filing family (filing-create, supplement, observation, corrections); state other commands keep their existing contracts. Add a small per-command matrix for: body target binding (422), `If-Match` (428 missing / 412 stale), `expectedCycleNo` (422 missing / 412 stale), stage guard (409), and idempotency replay. Place the 422 target-binding check after authorization and replay, with an explicit 422-vs-412-vs-409 precedence. If a truly global order is desired, route it as a separate Claude/PO change, not this F10 addendum.\n- **Expected cases**:\n  - A2 concurrent supplement, stale CAS + changed stage → 412.\n  - A2b invalid target cycleNo + stale expectedCycleNo → the pinned precedence (422 or 412; must be explicit).\n  - A2c invalid target cycleNo + changed stage → the pinned precedence (422 or 409).\n  - A2d missing expectedCycleNo → 422/428 as pinned.\n  - A3 stage-only change + valid CAS → 409, no mutation.\n  - A4 injected failure → full rollback, no event.\n  - A2e correction: missing If-Match → 428; stale → 412; target not original → 422; stage guard → 409.\n  - A non-filing command regression check confirms its existing order is unchanged.\n- **Owner**: Claude (command contract) + Codex (document intake).",
+      "codex_disposition": "OWNER_SCOPED_CORRECTION_REQUIRED",
+      "owner_route": "ZCode scoped candidate author correction; Codex intake; independent OpenCode re-review"
+    },
+    {
+      "id": "F10-OC-05",
+      "severity_reported": "Medium",
+      "title_reported": "C2 “latest-seq terminal” is not explicitly scoped per original",
+      "reviewer_text_verbatim": "### F10-OC-05 — [Medium] C2 “latest-seq terminal” is not explicitly scoped per original\n\n- **Location**: `01-final-owner-confirmation.txt` §1 C2 **P2.1/P2.2**; `02-final-delta.json` `c2.patches.actions`; `03-C1-C2-R2-delta.json` `clause2_correction.terminal_rule`.\n- **Exact clause**: P2.1 says “latest-seq terminal” and P2.2 says “correction terminal,” but neither states that “latest” means **latest correction targeting the same original observation**, not the latest correction in the filing.\n- **Trigger**: two originals O4 and O9 have interleaved corrections. A literal global “latest correction by seq” would select only one terminal for the filing and leave the other original’s corrections misclassified. A correction targeting a replacement observation O5 could also be read as allowed unless explicitly rejected.\n- **Impact**: Wrong terminal selection; nondeterministic effective view; correction-of-correction ambiguity.\n- **Smallest correction**: state “terminal correction = maximum `seq` among corrections whose `correctsObservationId` equals the same original observation; latest is per original, not per filing; corrections targeting replacement observations are rejected 422.” Add to P2.1/P2.2 and A5.\n- **Expected cases**:\n  - A5e interleaved corrections on O4/O9: each original has its own terminal.\n  - A5f correction targeting O5: 422.\n  - A5g repeated REPLACE on the same original: latest terminal only; earlier replacement ineffective.\n- **Owner**: Claude/Codex.",
+      "codex_disposition": "OWNER_SCOPED_CORRECTION_REQUIRED",
+      "owner_route": "ZCode scoped candidate author correction; Codex intake; independent OpenCode re-review"
+    },
+    {
+      "id": "F10-OC-06",
+      "severity_reported": "Low",
+      "title_reported": "Proposed numeric bounds lack units and envelope definition",
+      "reviewer_text_verbatim": "### F10-OC-06 — [Low] Proposed numeric bounds lack units and envelope definition\n\n- **Location**: `01-final-owner-confirmation.txt` §1 Projection (numeric bounds); `02-final-delta.json` `projection.numeric_bounds`.\n- **Exact clause**: proposed `reason<=2000`, `type<=64`, `correlationId<=128`; `correlationId` says “chars,” but `reason`/`type` do not state Unicode code points vs UTF-8 bytes, inclusive/exclusive limit, or envelope size.\n- **Trigger**: a 2000-character reason with multi-byte UTF-8; a 2000-byte reason; an envelope larger than an unstated server limit. Client and server can disagree at the boundary.\n- **Impact**: Cross-language validation ambiguity; proposed bounds are not fully testable; the packet correctly avoids a constant-byte claim, but the bounds are not yet a precise proposed contract.\n- **Smallest correction**: state the unit and inclusivity for each proposed bound; either propose an envelope bound or explicitly mark it `NEEDS_AUTHORIZED_SOURCE`; keep the “proposed, not source-proven” label.\n- **Expected cases**: P5a boundary at 2000 code points vs 2000 UTF-8 bytes; P5b envelope oversize/deferred; P5c correlationId 128 chars; no constant-byte claim.\n- **Owner**: Codex (document) / PO at the contract gate.",
+      "codex_disposition": "OWNER_SCOPED_CORRECTION_REQUIRED",
+      "owner_route": "ZCode scoped candidate author correction; Codex intake; independent OpenCode re-review"
+    },
+    {
+      "id": "F10-OC-07",
+      "severity_reported": "Low",
+      "title_reported": "Cross-document status inconsistency",
+      "reviewer_text_verbatim": "### F10-OC-07 — [Low] Cross-document status inconsistency\n\n- **Location**: `04-C3-R3-delta.json` `remaining_decisions` (A vs B); `01-final-owner-confirmation.txt` P3.1 (A final, B unadopted); `packet-manifest.json` `status`.\n- **Exact issue**: R3 still lists “A vs B (contract delta decision: Claude/PO)” as open, while the final declares path A final and B/causeSeq-param unadopted. The manifest still says `PREPARED_NOT_DISPATCHED`, while the human prompt is the actual dispatch.\n- **Impact**: An implementer reading R3 may treat B as open; an intake reader may treat the packet as not dispatched. This is a status/provenance ambiguity, not a C1/C2/C3 semantic defect.\n- **Smallest correction**: add a supersession note to R3/final: “R3 A-vs-B decision closed by final P3.1: A final, B unadopted; B35/L2 remain unadopted.” Record the human dispatch separately or update the manifest status. Do not change the contract semantics.\n- **Expected cases**: document consistency check only.\n- **Owner**: Codex intake.\n\n---",
+      "codex_disposition": "PROCESS_DISPOSITION_RECORDED_PENDING_RECHECK",
+      "owner_route": "Codex separate dispatch/supersession record; immutable original snapshot/manifest retained"
+    }
+  ],
+  "severity_counts": {
+    "High": 4,
+    "Medium": 1,
+    "Low": 2
+  },
+  "status": "REWORK_REQUIRED / ACTUAL_INDEPENDENT_DOCUMENT_REVIEW_RECEIVED",
+  "scope": "Packet-internal consistency/testability only; cited normative sources were not independently reread by reviewer. Do not report full source compatibility/security/runtimePASS.",
+  "routing": "Direct POZCode owner-confirmation reroute retained. Reviewer printed Claudeownerlabels are role recommendations, not a newmandatoryClaudeloop or userapproval. ZCode may correct owncandidate, cannot independentlyaccept it.",
+  "process_fix": "F10-OC07 separate dispatch/supersessionrecord applied; pendingreviewerrecheck, no rewritingoldpacket/R3",
+  "next": "ZCode changes only F10-OC01..06 and exact A/Pexpectedcases, returns oneconsolidateddeltacandidate; Codex freezesnewpacket; OpenCode re-reviews changedclausesonly",
+  "candidate_catalogue": 32,
+  "B35_L2_causeSeqfilter": "NOT_ADOPTED",
+  "F08_BE01_INTA": "unchanged/independent; source/task/coordinationprotected",
+  "runtime": "NOT_RUN",
+  "gates": "G5Astands;G5Bfindingsopen/G3notverified/G4pending/G6reworkrequired/STEP03Bnotauthorized;POarchitecturegateNOT_PASSED",
+  "new_provider_calls_by_Codex": 0
+}
