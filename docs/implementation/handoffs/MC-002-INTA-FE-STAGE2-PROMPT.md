@@ -1,5 +1,7 @@
 # INT-A frontend stage2 — released Codex cue for ZCode
 
+EXECUTED — stage2 actual return received/intaken2026-10-26. Do not re-run this cue. Codex same-PG stop/start is now executed; follow MC-002-INTA-FE-STAGE3-PROMPT.md only after fresh preflight. Historical stage2 instructions below retained.
+
 CUE_RELEASED / READY_NOT_DISPATCHED — 2026-10-26. Codex has recorded INTA-GOV-RESTART-01 as EXPLAINED_TOOL_WRITE_ROUTING / NO_REMAINING_STAGE2_HOLD; read docs/reviews/inta-go-restart-route-clarification-intake.md. Human delivery of this cue assigns stage2 ONLY under the existing DEC-028/INTA-1 local scope. No new permission loop is required for the same authorized scope; actual tools/provider/payload permissions still apply. No direct dispatch or execution has occurred by preparing this cue.
 
 You are actual ZCode acting only as frontend/Next/driver owner for this released stage2 cue. Use configured permitted route/quota; no model/provider/settings/auth changes. Read AGENTS/RTK, frozen INTA-1, current coordination, MC-002-INT-A, Go-restart intake and its governance disposition, stage1 intake and the reviewed full frontend runtime plan. Verify current checkout/head and existing scope permissions. Prior Antigravity authorship remains historical, ZCode owner execution is not independent QA.

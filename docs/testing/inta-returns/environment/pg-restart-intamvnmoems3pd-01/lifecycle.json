@@ -1,0 +1,319 @@
+{
+  "task": "MC-002-INTA-PG-RESTART",
+  "authority": "DEC-028/INTA-1; actual stage2 intake verified; Codex exact-container lifecycle",
+  "started_utc": "2026-10-25T18:13:34.830474+00:00",
+  "commands": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Labels\":{{json .Config.Labels}},\"State\":{\"Status\":{{json .State.Status}},\"Health\":{{json .State.Health.Status}},\"StartedAt\":{{json .State.StartedAt}},\"FinishedAt\":{{json .State.FinishedAt}},\"ExitCode\":{{json .State.ExitCode}}},\"Mounts\":{{json .Mounts}},\"Ports\":{{json .HostConfig.PortBindings}},\"Memory\":{{json .HostConfig.Memory}},\"NanoCpus\":{{json .HostConfig.NanoCpus}},\"PidsLimit\":{{json .HostConfig.PidsLimit}}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T18:13:34.830593+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Name\":\"/mc002-inta-pg-intamvnmoems3pd\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"State\":{\"Status\":\"running\",\"Health\":\"healthy\",\"StartedAt\":\"2026-10-25T09:32:28.012708375Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\",\"ExitCode\":0},\"Mounts\":[{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}],\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128}\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:34.981603+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "stop",
+        "--time",
+        "20",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T18:13:34.986190+00:00",
+      "exit": 0,
+      "stdout": "Flag --time has been deprecated, use --timeout instead\n04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:35.304545+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Labels\":{{json .Config.Labels}},\"State\":{\"Status\":{{json .State.Status}},\"Health\":{{json .State.Health.Status}},\"StartedAt\":{{json .State.StartedAt}},\"FinishedAt\":{{json .State.FinishedAt}},\"ExitCode\":{{json .State.ExitCode}}},\"Mounts\":{{json .Mounts}},\"Ports\":{{json .HostConfig.PortBindings}},\"Memory\":{{json .HostConfig.Memory}},\"NanoCpus\":{{json .HostConfig.NanoCpus}},\"PidsLimit\":{{json .HostConfig.PidsLimit}}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T18:13:35.305041+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Name\":\"/mc002-inta-pg-intamvnmoems3pd\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"State\":{\"Status\":\"exited\",\"Health\":\"unhealthy\",\"StartedAt\":\"2026-10-25T09:32:28.012708375Z\",\"FinishedAt\":\"2026-10-25T18:13:35.090455294Z\",\"ExitCode\":0},\"Mounts\":[{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}],\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128}\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:35.350539+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "start",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T18:13:35.351047+00:00",
+      "exit": 0,
+      "stdout": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:35.529621+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Labels\":{{json .Config.Labels}},\"State\":{\"Status\":{{json .State.Status}},\"Health\":{{json .State.Health.Status}},\"StartedAt\":{{json .State.StartedAt}},\"FinishedAt\":{{json .State.FinishedAt}},\"ExitCode\":{{json .State.ExitCode}}},\"Mounts\":{{json .Mounts}},\"Ports\":{{json .HostConfig.PortBindings}},\"Memory\":{{json .HostConfig.Memory}},\"NanoCpus\":{{json .HostConfig.NanoCpus}},\"PidsLimit\":{{json .HostConfig.PidsLimit}}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T18:13:35.530419+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Name\":\"/mc002-inta-pg-intamvnmoems3pd\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"State\":{\"Status\":\"running\",\"Health\":\"starting\",\"StartedAt\":\"2026-10-25T18:13:35.414703211Z\",\"FinishedAt\":\"2026-10-25T18:13:35.090455294Z\",\"ExitCode\":0},\"Mounts\":[{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}],\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128}\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:35.569764+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Labels\":{{json .Config.Labels}},\"State\":{\"Status\":{{json .State.Status}},\"Health\":{{json .State.Health.Status}},\"StartedAt\":{{json .State.StartedAt}},\"FinishedAt\":{{json .State.FinishedAt}},\"ExitCode\":{{json .State.ExitCode}}},\"Mounts\":{{json .Mounts}},\"Ports\":{{json .HostConfig.PortBindings}},\"Memory\":{{json .HostConfig.Memory}},\"NanoCpus\":{{json .HostConfig.NanoCpus}},\"PidsLimit\":{{json .HostConfig.PidsLimit}}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T18:13:36.575185+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Name\":\"/mc002-inta-pg-intamvnmoems3pd\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"State\":{\"Status\":\"running\",\"Health\":\"starting\",\"StartedAt\":\"2026-10-25T18:13:35.414703211Z\",\"FinishedAt\":\"2026-10-25T18:13:35.090455294Z\",\"ExitCode\":0},\"Mounts\":[{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}],\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128}\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:36.620604+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Labels\":{{json .Config.Labels}},\"State\":{\"Status\":{{json .State.Status}},\"Health\":{{json .State.Health.Status}},\"StartedAt\":{{json .State.StartedAt}},\"FinishedAt\":{{json .State.FinishedAt}},\"ExitCode\":{{json .State.ExitCode}}},\"Mounts\":{{json .Mounts}},\"Ports\":{{json .HostConfig.PortBindings}},\"Memory\":{{json .HostConfig.Memory}},\"NanoCpus\":{{json .HostConfig.NanoCpus}},\"PidsLimit\":{{json .HostConfig.PidsLimit}}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T18:13:37.622031+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Name\":\"/mc002-inta-pg-intamvnmoems3pd\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"State\":{\"Status\":\"running\",\"Health\":\"healthy\",\"StartedAt\":\"2026-10-25T18:13:35.414703211Z\",\"FinishedAt\":\"2026-10-25T18:13:35.090455294Z\",\"ExitCode\":0},\"Mounts\":[{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}],\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128}\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:37.660766+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "volume",
+        "inspect",
+        "--format",
+        "{\"Name\":{{json .Name}},\"Driver\":{{json .Driver}},\"Mountpoint\":{{json .Mountpoint}},\"Labels\":{{json .Labels}},\"CreatedAt\":{{json .CreatedAt}}}",
+        "mc002-inta-data-intamvnmoems3pd"
+      ],
+      "started_utc": "2026-10-25T18:13:37.661096+00:00",
+      "exit": 0,
+      "stdout": "{\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Driver\":\"local\",\"Mountpoint\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"CreatedAt\":\"2026-10-25T09:32:27Z\"}\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:37.700004+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "98134",
+        "-o",
+        "pid=,ppid=,lstart=,comm="
+      ],
+      "started_utc": "2026-10-25T18:13:37.700318+00:00",
+      "exit": 0,
+      "stdout": "98134     1 Mon Oct 26 00:54:29 2026     /tmp/mc002-inta-be/bin/userapi\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:37.710056+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "88444",
+        "-o",
+        "pid=,ppid=,lstart=,comm="
+      ],
+      "started_utc": "2026-10-25T18:13:37.710688+00:00",
+      "exit": 0,
+      "stdout": "88444 88442 Mon Oct 26 00:35:21 2026     node\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:37.721769+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "88453",
+        "-o",
+        "pid=,ppid=,lstart=,comm="
+      ],
+      "started_utc": "2026-10-25T18:13:37.722064+00:00",
+      "exit": 0,
+      "stdout": "88453 88444 Mon Oct 26 00:35:21 2026     next-server (v16.4.2)\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:37.731161+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-a",
+        "-p",
+        "98134",
+        "-iTCP",
+        "-sTCP:LISTEN"
+      ],
+      "started_utc": "2026-10-25T18:13:37.731600+00:00",
+      "exit": 0,
+      "stdout": "COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nuserapi 98134 nguyenvanlan    7u  IPv4 0xb8063352ca47be75      0t0  TCP 127.0.0.1:18086 (LISTEN)\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:37.754572+00:00"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-a",
+        "-p",
+        "88453",
+        "-iTCP",
+        "-sTCP:LISTEN"
+      ],
+      "started_utc": "2026-10-25T18:13:37.754940+00:00",
+      "exit": 0,
+      "stdout": "COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    88453 nguyenvanlan   13u  IPv4 0xdc2ef12f3f9303fc      0t0  TCP 127.0.0.1:18085 (LISTEN)\n",
+      "stderr": "",
+      "ended_utc": "2026-10-25T18:13:37.777264+00:00"
+    }
+  ],
+  "status": "SAME_PG_STOP_START_EXECUTED_HEALTHY_WAITING_STAGE3_READBACK",
+  "stopped": {
+    "Id": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+    "Name": "/mc002-inta-pg-intamvnmoems3pd",
+    "Image": "sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+    "Labels": {
+      "mattercontrol.owner": "Codex",
+      "mattercontrol.runId": "intamvnmoems3pd",
+      "mattercontrol.task": "MC-002-INTA-ENV"
+    },
+    "State": {
+      "Status": "exited",
+      "Health": "unhealthy",
+      "StartedAt": "2026-10-25T09:32:28.012708375Z",
+      "FinishedAt": "2026-10-25T18:13:35.090455294Z",
+      "ExitCode": 0
+    },
+    "Mounts": [
+      {
+        "Destination": "/var/lib/postgresql",
+        "Driver": "local",
+        "Mode": "z",
+        "Name": "mc002-inta-data-intamvnmoems3pd",
+        "Propagation": "",
+        "RW": true,
+        "Source": "/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data",
+        "Type": "volume"
+      }
+    ],
+    "Ports": {
+      "5432/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "15457"
+        }
+      ]
+    },
+    "Memory": 536870912,
+    "NanoCpus": 1000000000,
+    "PidsLimit": 128
+  },
+  "post_container": {
+    "Id": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+    "Name": "/mc002-inta-pg-intamvnmoems3pd",
+    "Image": "sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+    "Labels": {
+      "mattercontrol.owner": "Codex",
+      "mattercontrol.runId": "intamvnmoems3pd",
+      "mattercontrol.task": "MC-002-INTA-ENV"
+    },
+    "State": {
+      "Status": "running",
+      "Health": "healthy",
+      "StartedAt": "2026-10-25T18:13:35.414703211Z",
+      "FinishedAt": "2026-10-25T18:13:35.090455294Z",
+      "ExitCode": 0
+    },
+    "Mounts": [
+      {
+        "Destination": "/var/lib/postgresql",
+        "Driver": "local",
+        "Mode": "z",
+        "Name": "mc002-inta-data-intamvnmoems3pd",
+        "Propagation": "",
+        "RW": true,
+        "Source": "/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data",
+        "Type": "volume"
+      }
+    ],
+    "Ports": {
+      "5432/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "15457"
+        }
+      ]
+    },
+    "Memory": 536870912,
+    "NanoCpus": 1000000000,
+    "PidsLimit": 128
+  },
+  "post_volume": {
+    "Name": "mc002-inta-data-intamvnmoems3pd",
+    "Driver": "local",
+    "Mountpoint": "/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data",
+    "Labels": {
+      "mattercontrol.owner": "Codex",
+      "mattercontrol.runId": "intamvnmoems3pd",
+      "mattercontrol.task": "MC-002-INTA-ENV"
+    },
+    "CreatedAt": "2026-10-25T09:32:27Z"
+  },
+  "post_processes": {
+    "98134": "98134     1 Mon Oct 26 00:54:29 2026     /tmp/mc002-inta-be/bin/userapi",
+    "88444": "88444 88442 Mon Oct 26 00:35:21 2026     node",
+    "88453": "88453 88444 Mon Oct 26 00:35:21 2026     next-server (v16.4.2)"
+  },
+  "ledger_unchanged_count": 32,
+  "no_record_http_sql": true,
+  "no_go_next_restart": true,
+  "ended_utc": "2026-10-25T18:13:37.779006+00:00"
+}
