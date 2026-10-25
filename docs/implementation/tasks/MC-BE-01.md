@@ -1,6 +1,6 @@
 # MC-BE-01 — Requirement service transaction spine
 
-Status: WAITING_APPROVAL for local source implementation; design/handoff prepared. Owner: actual ZCode. Priority: P0 enabling slice. Design coordinator: Codex. Reviewer: a human-designated reviewer distinct from the implementation author (OpenCode if an authorized path is available). No external implementation dispatch yet.
+Status: REWORK_REQUIRED at source136eae6 after actual ZCode return and three Codex counterexamples (2026-10-26). Owner: actual ZCode. Priority:P0. Design coordinator/intake: Local Codex. Formal independent reviewer distinct from ZCode still pending (OpenCode when authorized/available). Historical preparation/WAITING_APPROVAL statements below are superseded only for this bounded BE01 implementation; no BE02/fullStep03B activation.
 
 ## Authority and dependencies
 
@@ -59,3 +59,14 @@ Outputs: source commit/diff, failing-before/passing-after evidence, raw stdout/s
 ## Copyable activation meaning
 
 When the human explicitly sends the complete MC-BE-01-ZCODE-PROMPT.md assignment, it approves BE-01 local implementation/tests within this exact scope as a bounded exception; it does not approve full STEP03B, infrastructure, production auth or deployment. No source implementation was performed by preparing these files.
+
+
+## Actual implementation return and focused intake — 2026-10-26
+
+Human returned actual ZCode implementation: clean codex/mc-be-01 at136eae6ad403ae3ede797faf6a0d6179c3b95685 from52b60a4,31files/+5243/-8. Owner activation is evidenced by the delivered task acknowledgement and source; prior no-dispatch/waiting labels are historical. [Intake](../../reviews/be01-intake.md) and raw/test/source/probe evidence under ../../testing/be01-intake/.
+
+Owner raceJSON parsed391namedpasses/0fails/1intentionalnamedskip,15test-bearing/5no-testpackages. Source scope and protected C01/INTAheads clean verified; minimalMakefile two-bundle addition reported for reviewerconfirmation. Standalone makecheck metadata absent, text/JSONduration differences and approximate timestamp documented. Nullablepurge_after/zeroagepolicy remain disclosed, not approved defaults.
+
+Codex independently wrote/executed3service-double overlayprobes on unchangedsource: F01 representedMatter authorization before receipt hash/replay; F02 unsupported elapsed temporalboundary accepted/cleared; F03 membershipunavailable becomesNotFound. All3reproduced (testexit1). No DB queries/sourceedits or acceptedbaseline replay. Formal independentOpenCode acceptance is stillPENDING; this intake can require rework but cannot grant architecture/releaseapproval.
+
+Acceptance still unresolved: BE01-T05/06(F01),T03/08(F02),T07/08(F03); other ownerPASS claims retained as evidence pending independentreview. MC-BE-01-ZCODE-REWORK-PROMPT.md is prepared for scoped correction, READY_NOT_DISPATCHED byCodex. Samebranch/existingbaseline, no newtask restart/fullbackend. Correctedhead requires actual meaningful regression/gate evidence and nonauthor review before acceptance. INT-A/f08/f10/parentgates unchanged.

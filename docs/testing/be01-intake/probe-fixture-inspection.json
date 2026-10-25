@@ -1,0 +1,72 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--type",
+        "container",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Status\":{{json .State.Status}},\"Memory\":{{.HostConfig.Memory}},\"NanoCpus\":{{.HostConfig.NanoCpus}},\"PidsLimit\":{{.HostConfig.PidsLimit}},\"Ports\":{{json .HostConfig.PortBindings}},\"Fixture\":{{json (index .Config.Labels \"mc-be01-fixture\")}},\"Owner\":{{json (index .Config.Labels \"mc-be01-owner\")}}}",
+        "mc-be01-pg-native"
+      ],
+      "utc": "2026-10-25T17:54:02.689648+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"ef94b10040730d9c6fa0918f24ff280f449981aa0ff27765762e9fc7af4d78ed\",\"Name\":\"/mc-be01-pg-native\",\"Image\":\"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\"Status\":\"running\",\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128,\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"55433\"}]},\"Fixture\":\"native\",\"Owner\":\"zcode-be01\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{json .RepoDigests}}",
+        "sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5"
+      ],
+      "utc": "2026-10-25T17:54:02.876868+00:00",
+      "exit": 0,
+      "stdout": "[\"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\"]\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--type",
+        "container",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Status\":{{json .State.Status}},\"Memory\":{{.HostConfig.Memory}},\"NanoCpus\":{{.HostConfig.NanoCpus}},\"PidsLimit\":{{.HostConfig.PidsLimit}},\"Ports\":{{json .HostConfig.PortBindings}},\"Fixture\":{{json (index .Config.Labels \"mc-be01-fixture\")}},\"Owner\":{{json (index .Config.Labels \"mc-be01-owner\")}}}",
+        "mc-be01-pg-product"
+      ],
+      "utc": "2026-10-25T17:54:02.876899+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"a61a7912e8a90dee4070aed8ad86856826d5852e645530d42787ee033e72dc8b\",\"Name\":\"/mc-be01-pg-product\",\"Image\":\"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\"Status\":\"running\",\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128,\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"55434\"}]},\"Fixture\":\"product\",\"Owner\":\"zcode-be01\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{json .RepoDigests}}",
+        "sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5"
+      ],
+      "utc": "2026-10-25T17:54:02.955317+00:00",
+      "exit": 0,
+      "stdout": "[\"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\"]\n",
+      "stderr": ""
+    }
+  ],
+  "method": "read-only allowlisted metadata; no Config.Env, queries, starts/stops or recreation",
+  "historical_empty_db_check": "owner reported; not inferred from current state"
+}

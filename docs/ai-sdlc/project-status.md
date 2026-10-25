@@ -243,3 +243,12 @@ Actual ZCode Go restart return is received; Local Codex verified22export pairs/2
 ## F10 provenance R3 received — 2026-10-26
 
 ZCode author text-only R3 retained under docs/design/step-03a/handoff/step-03a-8a/zcode-f10-provenance-return-r3/ (repository-relative). Discovery via unfiltered seq pages and closed scalar/inherited projection now address the two prior gaps at proposal level; numeric field/envelope limits explicitly NEEDS_AUTHORIZED_SOURCE. Current PROPOSAL_COMPLETED_FOR_TARGETED_CONTRACT_REVIEW / NOT_ADOPTED. No full ZCode rewrite assigned; actual Claude narrow contract handoff READY_NOT_DISPATCHED pending exact scoped payload/route permission. Pin matching/count/command-local completion/per-page revision semantics and missing bounds through contract authority. C1/C2 remain R2 proposals; F10 not closed, catalogue32/B35 unadopted, F08/22CT/QA/gates unchanged. No BE01/INT-A/lifecycle/provider/implementation action.
+
+
+## BE01 actual implementation return received — 2026-10-26
+
+[MC-BE-01 intake](../reviews/be01-intake.md): actual ZCode clean136eae6 from52b60a4,31files/+5243/-8. Owner retained raceJSON1662events yields391namedpasses/0fail/1intentionalnamedskip;15test-bearing and5no-testpackages. Four reported hashes and sixraw evidence exports verified, credentials scan0matches. Makecheck/emptyfixture historical provenance owner-reported; text/JSONduration mismatch recorded. Both BE01fixtures running with exactIDs/digest/loopback/caps/labels rechecked read-only, noDBquery/lifecycle.
+
+LocalCodex independently executed3service-double Go-overlay probes on unchanged136eae6 (DBenvremoved/networkfetchdisabled/sourceuntouched). All3fail: receipt representedMatter authority bypass before hash classification(F01), unsupported elapsed temporalboundary accepted(F02), membershipunavailable convertedNotFound(F03). Status REWORK_REQUIRED, notDONE; focused ZCode rework prompt ready/notdispatched; no fresh externalreview/providercall. Correctedhead needs new requiredgate/evidence and nonauthorreview. Nullablepurge_after/keyagezeroseam and minimalMakefile addition remain reviewdispositions, not productpolicy approvals.
+
+NoBE02/auth/HTTP/fullbackend/Step03B/deploy activation. INT-A baseline/currentrestartgovernancehold and F08/F10candidate choices/gates untouched; latest current workflow governs those independent streams. ParentMC002/MC003A/architecture/cost/recovery/release gates remainopen.

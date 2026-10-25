@@ -1,0 +1,57 @@
+{
+  "owner": "ZCode, self-reported execution; Codex parsed retained artifact",
+  "source_head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+  "events": 1662,
+  "named_pass": 391,
+  "named_fail": 0,
+  "named_skip": 1,
+  "named_skips": [
+    {
+      "package": "github.com/example/userapi/internal/adapter/outbound/postgres/pgtest",
+      "test": "TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip"
+    }
+  ],
+  "no_test_packages": [
+    "github.com/example/userapi/cmd/userapi",
+    "github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc",
+    "github.com/example/userapi/internal/adapter/outbound/postgres/sqlcgen",
+    "github.com/example/userapi/internal/adapter/outbound/repotest",
+    "github.com/example/userapi/internal/core/port"
+  ],
+  "test_bearing_package_passes": 15,
+  "first_event_time": "2026-10-26T00:42:34.311184+07:00",
+  "last_event_time": "2026-10-26T00:42:43.733131+07:00",
+  "timestamps_note": "JSON timestamps 2026-10-26 00:42:34..43+07 equal2026-10-25 17:42:34..43Z; report17:42:52Z not exact event window",
+  "count_note": "Includes parent tests and subtests; not391independent behavior cases",
+  "hashes": {
+    "domain-first-impl-run.log": {
+      "bytes": 12981,
+      "sha256": "2bc2e95a97a01c60c396731167576bab9367a8c78a5cbe0a34e81295eeadbff3"
+    },
+    "failing-before-domain-matter.log": {
+      "bytes": 928,
+      "sha256": "efac226398f8a4a5fa7e59e92cdd431f059ae3faa7c88746dce0b0665a071a26"
+    },
+    "race-full.stdout": {
+      "bytes": 1393,
+      "sha256": "924055bf74a1c24bbe8f581af36692e2eb99affc7b440287121bb555ea37cbed"
+    },
+    "race-full.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "race-full.json": {
+      "bytes": 392019,
+      "sha256": "6169d6f06e7a171ec0d3e943cb4e7eb2ed1992fe3abbbf35b2bd32773d441830"
+    },
+    "failing-before-service-stub.log": {
+      "bytes": 50887,
+      "sha256": "901d14dd8300215460830018b4c068ce058d40e2c03444e5ab8811174ad97952"
+    }
+  },
+  "make_check": "OWNER_REPORTED_EXIT0; no standalone make-check command/stdout/UTC/exit artifact present in six-file evidence dir",
+  "race_exit": "OWNER_REPORTED_EXIT0; retained JSON has15package passes/0fails and1intentional skip; no separate shell exit metadata retained",
+  "text_copy_note": "race-full.stdout durations differ from race-full.json on15packages; treat as separate unidentified run output, not faithful rendering of the JSON run",
+  "red_before": "Domain missing package retained; service27named failures retained, not every failure proven to share identical not-implemented cause; policy fail-before only narrated",
+  "fixtures": "Allowlisted current ID/image/labels/caps/ports verified; historical empty/credential-creation sequence owner-reported, not proved by current inspect"
+}
