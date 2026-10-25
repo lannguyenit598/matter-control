@@ -218,3 +218,12 @@ Human-returned final ZCode clarification received in [scoped intake](../design/s
 F10 composite(evidence,role) keyset fixes duplicate-Evidence ordering under a disclosed same-role-dedup grain; fixed-sourceRevision limit1 traversal checked only as document simulation. Cycle/epoch association, role projection and correction/history reachability remain unresolved. Codex inspected full current source sections: data-model uses an abbreviated observation declaration and filing-model/API give no explicit binding, so this is a technical design gap rather than a request to reread the same excerpt. Prepared narrow technical-proposal prompt plus exact supplemental excerpts/bytes/SHA, NOT_DISPATCHED; no new provider call or source permission inferred.
 
 No A33/B35 adoption; current catalogue32/accepted clauses/F11/22CTpartition/QA conditions/gates unchanged, all runtimeNOT_RUN. This intake changes no Go/Next/PG source/lifecycle, BE01 task or INT-A stage1 coordination. Current ZCode backend/frontend ownership preserved. MC003A REWORK_REQUIRED/G3 NOT_VERIFIED/G4 PENDING/G6 REWORK_REQUIRED/STEP03B NOT_AUTHORIZED; overall PO architecture gate remainsNOT_PASSED.
+
+
+## F10 observation-cycle binding proposal intake — 2026-10-26
+
+Actual human-returned ZCode text proposes cycle_no composite binding, type-role mapping, reopen-stable associations, effective correction view and L1/L2 provenance alternatives. [Intake](../design/step-03a/handoff/step-03a-8a/zcode-f10-binding-return-r1/intake.md) preserves raw return and valid JSON; author explicitly did NOT read the supplemental source note/manifest. No command/runtime or independent acceptance claimed.
+
+Proposal needs three bounded clause reconciliations before contract/PO decision: supplement creates a cycle rejected by the generic exists check; correction type/role and effective-chain behavior do not derive G3 precisely; generic DR15 before/after plus unbound counter do not pin bounded provenance/detail reachability. DR15 targetId is confirmed; no invented absent filter. Prepared correction prompt, NOT_DISPATCHED by Codex, with no new source read/egress permission inferred.
+
+F08 classifier unchanged/choice pending, catalogue32 unchanged, G1..G8 runtimeNOT_RUN; accepted clauses/F11/22CT/QA and all gates retained. BE01/INT-A remain independent; no source, DB/lifecycle, provider/model/settings, merge/push/deploy or STEP03B action.
