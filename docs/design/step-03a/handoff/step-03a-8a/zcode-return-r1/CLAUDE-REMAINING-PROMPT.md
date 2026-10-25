@@ -1,3 +1,9 @@
+# SUPERSEDED FOR DISPATCH
+
+Direct PO instruction on 2026-10-25 reroutes only F-08/F-10 to ZCode. Use ZCODE-REMAINING-PROMPT.md. The body/hash below is historical at commit 58f7a71 and must not be dispatched. Original scope/clauses remain evidence; current routing is in remaining-context/manifest.json.
+
+---
+
 # MC-003A.8A — Claude: two remaining contract decisions
 
 Tôi là Product Owner MatterControl. Tôi giao Claude Code xử lý đúng hai phần còn mở F-08 EVIDENCE_GAP row unit và F-10 nested design. Tôi cho phép session Claude interactive hiện tại qua Anthropic, model claude-opus-5-5, xử lý đúng hai input mới trong manifest dưới đây và sử dụng lại 19 snapshots đã được duyệt trước. Xác nhận metadata trước; không đổi model/provider/account/login/settings. Chỉ quota hiện có, không API job/paid retry/credits/overage; nếu ngoài giới hạn thì dừng báo tôi.

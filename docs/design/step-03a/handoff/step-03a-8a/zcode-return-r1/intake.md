@@ -23,7 +23,7 @@ Nine finding corrections are materialized as reviewed-candidate documentation; F
 - F-08 EVIDENCE_GAP: exact criterion/component row unit, stable key, dedup and total semantics NEEDS_CLARIFICATION. Numeric assertions stay blocked.
 - F-10 nested arrays: a concrete recommendation with exact API/catalogue/size/reachability impact is required before asking PO to choose. No new route, arbitrary cap, UNIQUE constraint or complete-embedding risk is approved.
 
-Use CLAUDE-REMAINING-PROMPT.md as an explicit prospective human assignment if approved. It covers only these two items using the two new feedback/context snapshots plus previously authorized 19 snapshots. Prepared, NOT_DISPATCHED. Do not repeat accepted findings/full architecture/32-operation review.
+Direct PO instruction “đổi sang zcode review luôn” reroutes these two review/proposal items to ZCode. Use ZCODE-REMAINING-PROMPT.md; the prior Claude prompt is superseded. It covers only these two items using the same two feedback/context inputs plus 19 existing snapshots. Direct reroute authorization is recorded; manual handoff remains READY_NOT_DISPATCHED until actual execution. A ZCode-authored proposal is not independent approval of itself. Do not repeat accepted findings/full architecture/32-operation review.
 
 ## Tests and gates
 
