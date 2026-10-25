@@ -1,0 +1,465 @@
+{
+  "task": "MC-002-INTA-FE-R1-INTAKE",
+  "timestamp_utc": "2026-10-25T06:26:16.534087+00:00",
+  "governance_base": "b86d7c2d60c3f3b433eb4aaf008810c1848a3863",
+  "owner_identity": "Antigravity / Gemini3.8Flash High, per human-returned report; no independent model attestation",
+  "raw_manifest": [
+    {
+      "name": "01-unit-tests.log",
+      "expected": "6a5b20eedc7c882abe25556062cda37c29e2e351de9e4d6508930b2d32e99fa8",
+      "actual": "6a5b20eedc7c882abe25556062cda37c29e2e351de9e4d6508930b2d32e99fa8",
+      "match": true
+    },
+    {
+      "name": "02-harness-live-guards.log",
+      "expected": "614eaf9978b425d3756442f2c8b7b1dbfc7c61d0b580246d560d1e1c91743f26",
+      "actual": "614eaf9978b425d3756442f2c8b7b1dbfc7c61d0b580246d560d1e1c91743f26",
+      "match": true
+    },
+    {
+      "name": "03-template-isolation.log",
+      "expected": "04445c73e1d88bc38c9df1b31a7f52903951b1f64b07777e9cb8c220e2d08835",
+      "actual": "04445c73e1d88bc38c9df1b31a7f52903951b1f64b07777e9cb8c220e2d08835",
+      "match": true
+    },
+    {
+      "name": "harness-source.tar.gz",
+      "expected": "29c9537201bc1a4ecc81c3902888297a9fc3f8c537203e9981cac598f3375ab3",
+      "actual": "29c9537201bc1a4ecc81c3902888297a9fc3f8c537203e9981cac598f3375ab3",
+      "match": true
+    },
+    {
+      "name": "source-hashes.txt",
+      "expected": "df81eac33e2affa16fa6d67d9c60d0b3d56fcc51e73d74b487610e6c0b1be7c5",
+      "actual": "df81eac33e2affa16fa6d67d9c60d0b3d56fcc51e73d74b487610e6c0b1be7c5",
+      "match": true
+    }
+  ],
+  "export_manifest": [
+    {
+      "name": "10-harness-meta.txt",
+      "expected": "229c0bf2465ea7ce29d4d8a9d8e65d17517b45d86da4db4c117df3b046299255",
+      "actual": "229c0bf2465ea7ce29d4d8a9d8e65d17517b45d86da4db4c117df3b046299255",
+      "match": true
+    },
+    {
+      "name": "11-unit-tests.log",
+      "expected": "6a5b20eedc7c882abe25556062cda37c29e2e351de9e4d6508930b2d32e99fa8",
+      "actual": "6a5b20eedc7c882abe25556062cda37c29e2e351de9e4d6508930b2d32e99fa8",
+      "match": true
+    },
+    {
+      "name": "12-live-guards.log",
+      "expected": "614eaf9978b425d3756442f2c8b7b1dbfc7c61d0b580246d560d1e1c91743f26",
+      "actual": "614eaf9978b425d3756442f2c8b7b1dbfc7c61d0b580246d560d1e1c91743f26",
+      "match": true
+    },
+    {
+      "name": "13-template-isolation.log",
+      "expected": "04445c73e1d88bc38c9df1b31a7f52903951b1f64b07777e9cb8c220e2d08835",
+      "actual": "04445c73e1d88bc38c9df1b31a7f52903951b1f64b07777e9cb8c220e2d08835",
+      "match": true
+    },
+    {
+      "name": "20-source-hashes.txt",
+      "expected": "df81eac33e2affa16fa6d67d9c60d0b3d56fcc51e73d74b487610e6c0b1be7c5",
+      "actual": "df81eac33e2affa16fa6d67d9c60d0b3d56fcc51e73d74b487610e6c0b1be7c5",
+      "match": true
+    }
+  ],
+  "source_manifest": [
+    {
+      "name": ".gitignore",
+      "expected": "0c9af7cbc28691f89246cf22cd8c3f60a4611b4f7626f2ae2780f2b764d93085",
+      "actual": "0c9af7cbc28691f89246cf22cd8c3f60a4611b4f7626f2ae2780f2b764d93085",
+      "match": true
+    },
+    {
+      "name": "AGENTS.md",
+      "expected": "063098f6cb31bb44c6f8fbea25b3876de7ee1e5f7d00a50dbab506f6415eb7f0",
+      "actual": "063098f6cb31bb44c6f8fbea25b3876de7ee1e5f7d00a50dbab506f6415eb7f0",
+      "match": true
+    },
+    {
+      "name": "app/harness/case/route.ts",
+      "expected": "c5ee4a7b4e53bd0a2b33843c85c2055b1f429def10ee5fbfd17e4c8accbf5a15",
+      "actual": "c5ee4a7b4e53bd0a2b33843c85c2055b1f429def10ee5fbfd17e4c8accbf5a15",
+      "match": true
+    },
+    {
+      "name": "next-env.d.ts",
+      "expected": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc",
+      "actual": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc",
+      "match": true
+    },
+    {
+      "name": "next.config.ts",
+      "expected": "f8dc471f4eb7fcf5bce08655c789669fdb8a24f8c3bccef5863b5c44b7061734",
+      "actual": "f8dc471f4eb7fcf5bce08655c789669fdb8a24f8c3bccef5863b5c44b7061734",
+      "match": true
+    },
+    {
+      "name": "package.json",
+      "expected": "c126bb0ad5f97c41027c902a2763f6927f02feb48208b6286c9f19fa9277de38",
+      "actual": "c126bb0ad5f97c41027c902a2763f6927f02feb48208b6286c9f19fa9277de38",
+      "match": true
+    },
+    {
+      "name": "pnpm-lock.yaml",
+      "expected": "17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a",
+      "actual": "17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a",
+      "match": true
+    },
+    {
+      "name": "scripts/live-guards.ts",
+      "expected": "f64a195abaa263a760ef3fb9f7838be8b335b5a9433f8ef40b57e9340a78375e",
+      "actual": "f64a195abaa263a760ef3fb9f7838be8b335b5a9433f8ef40b57e9340a78375e",
+      "match": true
+    },
+    {
+      "name": "scripts/stop-harness.sh",
+      "expected": "2fbd7bad64cad2dd3b940adfc7a826aece664ee9238f18e67a610c8c32e7e8e4",
+      "actual": "2fbd7bad64cad2dd3b940adfc7a826aece664ee9238f18e67a610c8c32e7e8e4",
+      "match": true
+    },
+    {
+      "name": "src/driver.ts",
+      "expected": "4bf07e8138885e63b6702ff554575d92a3efd8993412b42f8ab61879d0e82f5a",
+      "actual": "4bf07e8138885e63b6702ff554575d92a3efd8993412b42f8ab61879d0e82f5a",
+      "match": true
+    },
+    {
+      "name": "src/envelope.ts",
+      "expected": "d0bc3e812ef99101d186e316f3717851157d2c2beb0ee2b5a0c48c27313286d8",
+      "actual": "d0bc3e812ef99101d186e316f3717851157d2c2beb0ee2b5a0c48c27313286d8",
+      "match": true
+    },
+    {
+      "name": "src/executor.ts",
+      "expected": "a808b7e3dc72fe311d2202b3100ed4d55af5a83c67ec292806fb82e510f5bcf5",
+      "actual": "a808b7e3dc72fe311d2202b3100ed4d55af5a83c67ec292806fb82e510f5bcf5",
+      "match": true
+    },
+    {
+      "name": "src/fixtures.ts",
+      "expected": "f364d3f880eb046ab1162cd42ef36665b085c1fdacd056cdd8e21eab48dedf48",
+      "actual": "f364d3f880eb046ab1162cd42ef36665b085c1fdacd056cdd8e21eab48dedf48",
+      "match": true
+    },
+    {
+      "name": "src/guards.ts",
+      "expected": "ada7d5f94fd0e33ffee5bbc848076041d68ac9ecc5672b31388b14d843d7e215",
+      "actual": "ada7d5f94fd0e33ffee5bbc848076041d68ac9ecc5672b31388b14d843d7e215",
+      "match": true
+    },
+    {
+      "name": "src/request-id.ts",
+      "expected": "27126db7dda335fc274d2b459038730bcfecb4b35b48bb05a7a41a05b6c9e9b8",
+      "actual": "27126db7dda335fc274d2b459038730bcfecb4b35b48bb05a7a41a05b6c9e9b8",
+      "match": true
+    },
+    {
+      "name": "src/schemas.ts",
+      "expected": "45ade230c3cf1a7d7e979efc347ca10b22f3cafb16debac312250c7c4e078c02",
+      "actual": "45ade230c3cf1a7d7e979efc347ca10b22f3cafb16debac312250c7c4e078c02",
+      "match": true
+    },
+    {
+      "name": "tests/driver.test.ts",
+      "expected": "6915d447609524a3f3c47409d3d92cfc484215bdc8d889565cdb76e47789d00f",
+      "actual": "6915d447609524a3f3c47409d3d92cfc484215bdc8d889565cdb76e47789d00f",
+      "match": true
+    },
+    {
+      "name": "tests/envelope.test.ts",
+      "expected": "801268f10008d14c394cd99cc91ae5f58f80c0a3ca63fa056b679489a7c5ee4b",
+      "actual": "801268f10008d14c394cd99cc91ae5f58f80c0a3ca63fa056b679489a7c5ee4b",
+      "match": true
+    },
+    {
+      "name": "tests/executor.test.ts",
+      "expected": "fae273b91cdfad04f80e66ae21e044e87d509f5cde9a6addc5c1b8084248decf",
+      "actual": "fae273b91cdfad04f80e66ae21e044e87d509f5cde9a6addc5c1b8084248decf",
+      "match": true
+    },
+    {
+      "name": "tests/fixtures.test.ts",
+      "expected": "ed86bfb6dde9ab27deb000871350fd558d2599603b90dbd0b16a9b059bfa1a87",
+      "actual": "ed86bfb6dde9ab27deb000871350fd558d2599603b90dbd0b16a9b059bfa1a87",
+      "match": true
+    },
+    {
+      "name": "tests/guards.test.ts",
+      "expected": "de463608754bf793b1a7c8be72292a234142ca90c11f31248efc5a0b4ff3ee60",
+      "actual": "de463608754bf793b1a7c8be72292a234142ca90c11f31248efc5a0b4ff3ee60",
+      "match": true
+    },
+    {
+      "name": "tests/request-id.test.ts",
+      "expected": "c08004189ae07d66330fba0e8fbe506596e1b56f12087c9ba26c16617a2f5476",
+      "actual": "c08004189ae07d66330fba0e8fbe506596e1b56f12087c9ba26c16617a2f5476",
+      "match": true
+    },
+    {
+      "name": "tests/schemas.test.ts",
+      "expected": "70abd132ef08d5a46ef107882d7e85839e868679b657801674fd600f74de9eef",
+      "actual": "70abd132ef08d5a46ef107882d7e85839e868679b657801674fd600f74de9eef",
+      "match": true
+    },
+    {
+      "name": "tsconfig.json",
+      "expected": "cb314854419ea85599282799f8b3dd398001791a362705ecf4e0ec3b5c13573a",
+      "actual": "cb314854419ea85599282799f8b3dd398001791a362705ecf4e0ec3b5c13573a",
+      "match": true
+    },
+    {
+      "name": "vitest.config.ts",
+      "expected": "178fcdb4e53cb3781ca35df77077c1c8608a951b3547c73d3503f14233f3dc7a",
+      "actual": "178fcdb4e53cb3781ca35df77077c1c8608a951b3547c73d3503f14233f3dc7a",
+      "match": true
+    }
+  ],
+  "raw_export_pairs": [
+    {
+      "raw": "01-unit-tests.log",
+      "export": "11-unit-tests.log",
+      "match": true
+    },
+    {
+      "raw": "02-harness-live-guards.log",
+      "export": "12-live-guards.log",
+      "match": true
+    },
+    {
+      "raw": "03-template-isolation.log",
+      "export": "13-template-isolation.log",
+      "match": true
+    },
+    {
+      "raw": "source-hashes.txt",
+      "export": "20-source-hashes.txt",
+      "match": true
+    }
+  ],
+  "archive": {
+    "bytes": 23401,
+    "sha256": "29c9537201bc1a4ecc81c3902888297a9fc3f8c537203e9981cac598f3375ab3",
+    "members": [
+      {
+        "path": ".gitignore",
+        "bytes": 106,
+        "sha256": "0c9af7cbc28691f89246cf22cd8c3f60a4611b4f7626f2ae2780f2b764d93085",
+        "matches_live": true
+      },
+      {
+        "path": "AGENTS.md",
+        "bytes": 679,
+        "sha256": "063098f6cb31bb44c6f8fbea25b3876de7ee1e5f7d00a50dbab506f6415eb7f0",
+        "matches_live": true
+      },
+      {
+        "path": "app/harness/case/route.ts",
+        "bytes": 2723,
+        "sha256": "c5ee4a7b4e53bd0a2b33843c85c2055b1f429def10ee5fbfd17e4c8accbf5a15",
+        "matches_live": true
+      },
+      {
+        "path": "next-env.d.ts",
+        "bytes": 296,
+        "sha256": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc",
+        "matches_live": true
+      },
+      {
+        "path": "next.config.ts",
+        "bytes": 382,
+        "sha256": "f8dc471f4eb7fcf5bce08655c789669fdb8a24f8c3bccef5863b5c44b7061734",
+        "matches_live": true
+      },
+      {
+        "path": "package.json",
+        "bytes": 344,
+        "sha256": "c126bb0ad5f97c41027c902a2763f6927f02feb48208b6286c9f19fa9277de38",
+        "matches_live": true
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "bytes": 114,
+        "sha256": "17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a",
+        "matches_live": true
+      },
+      {
+        "path": "scripts/live-guards.ts",
+        "bytes": 20207,
+        "sha256": "f64a195abaa263a760ef3fb9f7838be8b335b5a9433f8ef40b57e9340a78375e",
+        "matches_live": true
+      },
+      {
+        "path": "scripts/stop-harness.sh",
+        "bytes": 1970,
+        "sha256": "2fbd7bad64cad2dd3b940adfc7a826aece664ee9238f18e67a610c8c32e7e8e4",
+        "matches_live": true
+      },
+      {
+        "path": "src/driver.ts",
+        "bytes": 8702,
+        "sha256": "4bf07e8138885e63b6702ff554575d92a3efd8993412b42f8ab61879d0e82f5a",
+        "matches_live": true
+      },
+      {
+        "path": "src/envelope.ts",
+        "bytes": 4674,
+        "sha256": "d0bc3e812ef99101d186e316f3717851157d2c2beb0ee2b5a0c48c27313286d8",
+        "matches_live": true
+      },
+      {
+        "path": "src/executor.ts",
+        "bytes": 17821,
+        "sha256": "a808b7e3dc72fe311d2202b3100ed4d55af5a83c67ec292806fb82e510f5bcf5",
+        "matches_live": true
+      },
+      {
+        "path": "src/fixtures.ts",
+        "bytes": 1106,
+        "sha256": "f364d3f880eb046ab1162cd42ef36665b085c1fdacd056cdd8e21eab48dedf48",
+        "matches_live": true
+      },
+      {
+        "path": "src/guards.ts",
+        "bytes": 3136,
+        "sha256": "ada7d5f94fd0e33ffee5bbc848076041d68ac9ecc5672b31388b14d843d7e215",
+        "matches_live": true
+      },
+      {
+        "path": "src/request-id.ts",
+        "bytes": 2690,
+        "sha256": "27126db7dda335fc274d2b459038730bcfecb4b35b48bb05a7a41a05b6c9e9b8",
+        "matches_live": true
+      },
+      {
+        "path": "src/schemas.ts",
+        "bytes": 2648,
+        "sha256": "45ade230c3cf1a7d7e979efc347ca10b22f3cafb16debac312250c7c4e078c02",
+        "matches_live": true
+      },
+      {
+        "path": "tests/driver.test.ts",
+        "bytes": 6072,
+        "sha256": "6915d447609524a3f3c47409d3d92cfc484215bdc8d889565cdb76e47789d00f",
+        "matches_live": true
+      },
+      {
+        "path": "tests/envelope.test.ts",
+        "bytes": 5608,
+        "sha256": "801268f10008d14c394cd99cc91ae5f58f80c0a3ca63fa056b679489a7c5ee4b",
+        "matches_live": true
+      },
+      {
+        "path": "tests/executor.test.ts",
+        "bytes": 7119,
+        "sha256": "fae273b91cdfad04f80e66ae21e044e87d509f5cde9a6addc5c1b8084248decf",
+        "matches_live": true
+      },
+      {
+        "path": "tests/fixtures.test.ts",
+        "bytes": 1392,
+        "sha256": "ed86bfb6dde9ab27deb000871350fd558d2599603b90dbd0b16a9b059bfa1a87",
+        "matches_live": true
+      },
+      {
+        "path": "tests/guards.test.ts",
+        "bytes": 3389,
+        "sha256": "de463608754bf793b1a7c8be72292a234142ca90c11f31248efc5a0b4ff3ee60",
+        "matches_live": true
+      },
+      {
+        "path": "tests/request-id.test.ts",
+        "bytes": 2979,
+        "sha256": "c08004189ae07d66330fba0e8fbe506596e1b56f12087c9ba26c16617a2f5476",
+        "matches_live": true
+      },
+      {
+        "path": "tests/schemas.test.ts",
+        "bytes": 5425,
+        "sha256": "70abd132ef08d5a46ef107882d7e85839e868679b657801674fd600f74de9eef",
+        "matches_live": true
+      },
+      {
+        "path": "tsconfig.json",
+        "bytes": 772,
+        "sha256": "cb314854419ea85599282799f8b3dd398001791a362705ecf4e0ec3b5c13573a",
+        "matches_live": true
+      },
+      {
+        "path": "vitest.config.ts",
+        "bytes": 289,
+        "sha256": "178fcdb4e53cb3781ca35df77077c1c8608a951b3547c73d3503f14233f3dc7a",
+        "matches_live": true
+      }
+    ]
+  },
+  "source_heads": [
+    {
+      "label": "harness",
+      "path": "/tmp/mc002-inta-harness",
+      "head": "6e2f65b51e7ead3c84274e717f8f3bcaeccf9b91",
+      "branch": "codex/mc-002-inta-harness-r1",
+      "status": ""
+    },
+    {
+      "label": "template",
+      "path": "/tmp/mc002-inta-fe",
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "branch": "codex/mc-002-inta-fe",
+      "status": ""
+    },
+    {
+      "label": "backend",
+      "path": "/tmp/mc002-inta-be",
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "branch": "codex/mc-002-inta-be",
+      "status": ""
+    }
+  ],
+  "harness_delta": [
+    "M\t.gitignore",
+    "M\tapp/harness/case/route.ts",
+    "M\tnext.config.ts",
+    "M\tpackage.json",
+    "A\tscripts/live-guards.ts",
+    "A\tscripts/stop-harness.sh",
+    "A\tsrc/driver.ts",
+    "M\tsrc/envelope.ts",
+    "M\tsrc/executor.ts",
+    "M\tsrc/guards.ts",
+    "M\tsrc/request-id.ts",
+    "M\tsrc/schemas.ts",
+    "A\ttests/driver.test.ts",
+    "M\ttests/envelope.test.ts",
+    "M\ttests/executor.test.ts",
+    "M\ttests/guards.test.ts",
+    "M\ttests/request-id.test.ts",
+    "M\ttests/schemas.test.ts",
+    "M\tvitest.config.ts"
+  ],
+  "harness_commit_time": [
+    "6e2f65b51e7ead3c84274e717f8f3bcaeccf9b91",
+    "2026-10-25T10:56:23+07:00",
+    "2026-10-25T10:56:23+07:00"
+  ],
+  "report_sha256": "74ab5363bcc1127d605e5eb961328541906e6c0f3846e5d6c48ec79e70ed5e6b",
+  "actual_package_versions": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "typescript": "5.9.3",
+    "eslint": "9.39.5"
+  },
+  "owner_tests": "Owner retained log66passes/7files,7liveguardcomputedpasses; not Codex replay or accepted runtime row results",
+  "source_concerns": [
+    "Driver exports helpers/T1-T2 assertions only, no CLI main/HTTP sequencing/phase execution or attempt gating",
+    "Counter failure fallback and stale multiple generator state can duplicate IDs; collision check filename differs actual counters.json",
+    "Source/runtime identity fallbacks still hardcode historical values; startup guard skips when VITEST set",
+    "Guard script times out startup without stopping third child; standalone stop script trusts arbitrary/stale PID file; final port snapshot does not prove never listened",
+    "R1 complete-case report includes PREPARED claims not established by actual driver/guards; no Go/PG runtime accepted"
+  ],
+  "runtime_ledger": "51 NOT_RUN; no Go/PG provisioning or upstream execution by Codex"
+}
