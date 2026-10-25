@@ -1,0 +1,225 @@
+{
+  "task": "MC-003A-REF-RESOLUTION-INTAKE",
+  "actual_actor": "Local Codex PM/BA/orchestration",
+  "status": "IN_REVIEW",
+  "timestamp_utc": "2026-10-25T08:52:11.630666+00:00",
+  "base_commit": "cc121cf12e6d7fb3385cf9e384b7921fd6fd403a",
+  "returned_outputs": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-addendum.md",
+      "bytes": 10706,
+      "sha256": "cd7923f2e57bb9434b84222bc5e535a518519a80a575a43eecbc0c537744556f"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-delta.json",
+      "bytes": 14094,
+      "sha256": "fdd1f39373bea80665d1d54fff9c17449c34a7eb7eceaa9bf553da033bb251ce"
+    }
+  ],
+  "human_summary": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-return-summary.txt",
+    "bytes": 7532,
+    "sha256": "28cb041aef902eb71ed8a4b81c151afa7d3e8eca3b4f6766a28daa78d8644c66"
+  },
+  "reviewer": "Human-returned actualClaudeCode addendum; self-reported2.1.310/claude-opus-5-5interactive, no Codexinvocation",
+  "identity_limit": "No independentmachine session/provider/model/routing/cost attestation; same-sessionidentity/noauth/settings/chargeclaims remain reviewer-reported.",
+  "returned_verdict": "COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+  "intake": "ACCEPT_SCOPED_REVIEWED_CANDIDATE_DELTA;3RCREFresolveddocumentlevelonly;noPO/product/runtime/security/independentQAapproval",
+  "checks": [
+    {
+      "name": "Reviewedhead/branch",
+      "result": "PASS"
+    },
+    {
+      "name": "Intakebaseancestor",
+      "result": "PASS"
+    },
+    {
+      "name": "Actualreturnfinalhashprefixes",
+      "result": "PASS"
+    },
+    {
+      "name": "Amendedoriginalunchanged reviewed-read-contract.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Amendedoriginalunchanged targeted-claude-review.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Previousownerreturnunchanged antigravity-read-consumption-reconciliation.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Previousownerreturnunchanged antigravity-consumption-return-summary.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "Exactly3questions",
+      "result": "PASS"
+    },
+    {
+      "name": "RC-REF-01 completeboundedtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "RC-REF-01 candidateauthority",
+      "result": "PASS"
+    },
+    {
+      "name": "RC-REF-02 completeboundedtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "RC-REF-02 candidateauthority",
+      "result": "PASS"
+    },
+    {
+      "name": "RC-REF-03 completeboundedtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "RC-REF-03 candidateauthority",
+      "result": "PASS"
+    },
+    {
+      "name": "SupersededactualDR02/13rejections",
+      "result": "PASS"
+    },
+    {
+      "name": "Only2pointreadadditions",
+      "result": "PASS"
+    },
+    {
+      "name": "Operationunion30to32",
+      "result": "PASS"
+    },
+    {
+      "name": "Onlyassessmentresponseextended",
+      "result": "PASS"
+    },
+    {
+      "name": "Claimparentcontextonallpagesandzeroassessmentcase",
+      "result": "PASS"
+    },
+    {
+      "name": "Disputerevocationclaimrefpresent",
+      "result": "PASS"
+    },
+    {
+      "name": "Partyandworkstreamlabelsnapshotcontext",
+      "result": "PASS"
+    },
+    {
+      "name": "NAV03/09clarificationsonly",
+      "result": "PASS"
+    },
+    {
+      "name": "Documentcandidateauthorityselfreview",
+      "result": "PASS"
+    },
+    {
+      "name": "All22CTstillNOT_RUN",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozenr3 output-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozenr3 qa-input-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Original30reviewinputsintact",
+      "result": "PASS"
+    }
+  ],
+  "check_count": 27,
+  "validator_correction": "Initialvalidatorrequiredexact assessments: [] spacing and stopped. Corrected whitespace-insensitive textassertion verifies samezero-assessmentcase and everypageparentcontext. No sourceartifact changed; not a contractdefect.",
+  "self_review_disclosure": "Reviewer authored the base candidate architecture and the reviewed read contract; not independent",
+  "resolution_registry": [
+    {
+      "id": "RC-REF-01",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "owner": "Claude (contract), ZCode (API), Antigravity (consumer), OpenCode (negative tests)",
+      "affected_dr": [
+        "DR-13",
+        "DR-16",
+        "DR-12"
+      ],
+      "affected_nav": [
+        "NAV-08"
+      ],
+      "acceptance": [
+        "Clicking a partyRef from a wait/filing issues exactly one GET /external-parties/{id}; no list scan",
+        "Overview wait cards render party labels with no follow-up request",
+        "Party #201 in the synthetic 201-party Matter resolves in one request",
+        "Revoked member gets the same 404 as nonexistent; client purges cached party detail for that Matter"
+      ],
+      "acceptance_result": "NOT_RUN"
+    },
+    {
+      "id": "RC-REF-02",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "owner": "Claude (contract), ZCode (API), Antigravity (consumer), OpenCode (negative tests)",
+      "affected_dr": [
+        "DR-08",
+        "DR-09",
+        "DR-15"
+      ],
+      "affected_nav": [
+        "NAV-03",
+        "NAV-04",
+        "NAV-10"
+      ],
+      "acceptance": [
+        "A claimRef from recentChanges resolves to claim + parent evidence in at most two requests, without guessing ids",
+        "A claimId sent to /evidence/{id} returns 404 (RC-3); the consumer never does this",
+        "Zero-assessment claim renders as an existing claim with no review, not as not-found",
+        "After promotion the assessment keeps the exact assessedDocumentVersionRef (CT-12)",
+        "A dispute or assessment-revocation event in recentChanges resolves to its claim and parent evidence without guessed ids (CT-19)"
+      ],
+      "acceptance_result": "NOT_RUN"
+    },
+    {
+      "id": "RC-REF-03",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "owner": "Claude (contract), ZCode (API), Antigravity (consumer)",
+      "affected_dr": [
+        "DR-02",
+        "DR-04",
+        "DR-05"
+      ],
+      "affected_nav": [
+        "NAV-01",
+        "NAV-05",
+        "NAV-06"
+      ],
+      "acceptance": [
+        "Requirement/Action drawers show the workstream label without an extra request",
+        "Restoring grid?workstreamId= resolves the chip label with one GET /workstreams/{id}",
+        "Workstream #201 in the synthetic 201-workstream Matter resolves in one request",
+        "Client never assumes the first list page is complete"
+      ],
+      "acceptance_result": "NOT_RUN"
+    }
+  ],
+  "current_read_set": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/current-reviewed-read-set.json",
+    "bytes": 4892,
+    "sha256": "da50b8557eaef4fff5655bf67e180c14be2a2d3ffd75da07dd6b8887db633ee7"
+  },
+  "not_run": [
+    "CT-01..22",
+    "OpenCode questions 1..8",
+    "all runtime/security/render checks"
+  ],
+  "gates": {
+    "G3": "RENDERED_VALIDATION_BLOCKED_BY_TOOLING / NOT_TESTED",
+    "G4": "INDEPENDENT_QA_PENDING",
+    "G5": "Actualdocumentcompatibility+targetedread/refcandidateclarificationsreceived; RCREF01..03resolveddocumentlevel; overallarchitecture/productapprovalOPEN",
+    "G6": "PENDING;MC003AREWORK_REQUIRED,STEP03B/productNOT_AUTHORIZED"
+  },
+  "next_action": "Carryexactbase+deltaindexedreadset into remainingauthorizedcontract/testabilitywork; no additionalarchitecture/frontendfullreviewneededforthesethreequestions. FormalindependentQAandlegitimaterenderingremainseparateunblockevents. No automaticproviderretry,newexternaltransferorimplementation."
+}

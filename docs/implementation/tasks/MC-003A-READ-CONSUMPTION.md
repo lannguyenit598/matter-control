@@ -11,3 +11,9 @@ Gates: reviewedcandidate not PO/productapproval. G3rendered/G4independent/G6clos
 ## Actual reconciliation return — current state
 
 Conditionaldocumentverdict FEASIBLE_WITH_CANDIDATE_READ_CONTRACT_SUBJECT_TO_PAGINATION_CLARIFICATIONS received atcd30600; originalreportpreserved/hashpinned.42CodexintakechecksPASS,8RCIcorrections,3boundedClaudequestions RCREF01..03. See ../../design/step-03a/handoff/step-03a-7/antigravity-consumption-intake.md andJSON. Ownergitfailures/zeroegress/cost/modelattestation limits retained; currentCodexcheckouts verifiedcleanseparately. No formaltestability/security/runtimePASS. TaskIN_REVIEW, notDONE. Next MC003AREFRESOLUTION manualaddendum only, nofullaudit/productcode/Step02change; parentgatesunchanged.
+
+## Reference-resolution addendum received — current status
+
+Actual human-returned ClaudeCode2.1.310/claude-opus-5-5 addendum atcc121cf received,originalspreserved/hashverified. Verdict COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY;27CodexintakeassertionsPASS. RCREF01/02/03nowRESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY;prioropen/manualpendingstatementsforthesequestionsaresuperseded. Effectiveinput is reviewedbase+immutableClaude delta,32candidateoperations;2restoredpointreads,1extendedclaimresponse,siblinglabels/claimRef;no25kinduniversalresolver. See ../../design/step-03a/handoff/step-03a-7/reference-resolution-intake.md andcurrent-reviewed-read-set.json. No additionalfullrevieworredundantfrontendtemplateauditforthesamequestions.
+
+TQ02/06/08reviewedcandidateclosurespreserved,TQ01/03/04/05/07OPEN;CT22/QA8/deltaacceptanceNOT_RUN. TaskIN_REVIEW,notDONE;candidateproduct/overallarchitectureapproval,G3/G4/G6remainopen,MC003AREWORK_REQUIRED,STEP03BNOT_AUTHORIZED. Nextuseexactindexedreadsetforremainingauthorizedcontract/testabilitywork;no newegress/providerretry/implementationorStep02mutation.
