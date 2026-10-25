@@ -1,0 +1,202 @@
+{
+  "task": "MC-003A.8A",
+  "reviewer": "Claude Code (actual), claude-opus-5-5, interactive, packet-only",
+  "authority": "REVIEWED_CANDIDATE_DOCUMENT_ONLY; not PO/product approval; PO Architecture Approval Gate NOT_PASSED",
+  "inputs": {
+    "manifest_sha256": "eed788550530966eea23a66a20e1edd84f18fa024963b60fb132f0a3028f0979",
+    "snapshots": 12,
+    "bytes": 164137,
+    "head_declared": "e8eaea71099c575360e12ba81f462d8732843b6a"
+  },
+  "operation_count": 32,
+  "routes_added": [],
+  "findings": [
+    {
+      "id": "F-01",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "detail_read_catalogue DR-06 required_data",
+        "read_common_rules RC-6 (collection=(nodeId,side))"
+      ],
+      "new_fields": [
+        "DR-06 query side=incoming|downstream",
+        "DR-06 incoming{items,total,nextCursor}",
+        "DR-06 downstream{items[{ref,distance}],total,nextCursor}"
+      ],
+      "rules": [
+        "no side: both first pages one snapshot; after without side 422",
+        "side=X: other member absent",
+        "incoming order upstreamRef.id,edgeRef.id; downstream order distance,ref.id; min-distance dedup",
+        "no-omission/no-dup only at constant sourceRevision"
+      ]
+    },
+    {
+      "id": "F-02",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "control_room section_envelope unavailableReason",
+        "control_room READ-02 (labelled amendment)"
+      ],
+      "rules": [
+        "unavailableReason closed {EVALUATION_FAILED}",
+        "SNAPSHOT_UNAVAILABLE omitted",
+        "root 503 if snapshot fails or none of 7 data sections AVAILABLE",
+        "UNAVAILABLE: items/total/nextCursor null",
+        "non-production per-section fault seam required (document only)"
+      ],
+      "implementation_note_unverified": "per-section isolation (e.g. savepoints) inside one REPEATABLE READ snapshot"
+    },
+    {
+      "id": "F-03",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "control_room sections.nextActions card/rule"
+      ],
+      "rules": [
+        "excluded = visible non-terminal non-candidate Actions",
+        "reason precedence WAITING>BLOCKED>UNASSIGNED, display-only",
+        "UNASSIGNED = ownerRef null or assignee not active member"
+      ],
+      "open_outside_scope": [
+        "excluded[] order and size"
+      ]
+    },
+    {
+      "id": "F-04",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "control_room sections.decisions order",
+        "DR-14 reviewed_operations default order"
+      ],
+      "rules": [
+        "dueAt asc nulls last, createdAt asc, id asc; cursor uses same tuple"
+      ]
+    },
+    {
+      "id": "F-05",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "read_common_rules new RC-3a",
+        "testability_review CT-05 testability"
+      ],
+      "rules": [
+        "401 first",
+        "any non-resolving path id (incl. malformed) -> uniform 404 on reads; never 400/422",
+        "query/cursor 422 only after authorization; malformed filter id 422; unmatched filter 200 []"
+      ],
+      "scope": "reads only"
+    },
+    {
+      "id": "F-06",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "delta RC-REF-01 fields",
+        "delta RC-REF-03 fields"
+      ],
+      "rules": [
+        "keys always present",
+        "ref null <=> label null",
+        "non-null ref label same snapshot, inactive kept",
+        "unresolvable ref -> 503 detail / section UNAVAILABLE EVALUATION_FAILED",
+        "no new domain optionality"
+      ]
+    },
+    {
+      "id": "F-07",
+      "verdict": "NEEDS_AUTHORIZED_SOURCE",
+      "locations": [
+        "delta RC-REF-02 claim.status",
+        "DR-07 claims summary + claimStatus filter",
+        "DR-08 claims[].status"
+      ],
+      "settled": [
+        "status is claim review state, never subject aggregate values",
+        "zero assessments -> envelope + []",
+        "status evaluated at asOf"
+      ],
+      "source_request": [
+        "docs/architecture/data-model.md claim/assessment/dispute status definition",
+        "docs/architecture/api-contracts.md §1.1 and dispute/revoke command section",
+        "any candidate Evidence withdrawal definition"
+      ],
+      "fallback_not_applied": [
+        "PENDING_REVIEW",
+        "ACCEPTED",
+        "REJECTED",
+        "DISPUTED",
+        "EXPIRED",
+        "WITHDRAWN"
+      ]
+    },
+    {
+      "id": "F-08",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "control_room sections.condition",
+        "control_room section_envelope"
+      ],
+      "rules": [
+        "AVAILABLE: items=[1 card], total=1, nextCursor=null",
+        "CRITICAL_ATTENTION -> CRITICAL + ATTENTION (attention axis counts, disjoint)",
+        "all codes always present, list order, int>=0|null",
+        "null iff source evaluator failed (map in addendum)",
+        "INCOMPLETE iff blockers|waitingOn|milestones|evidenceGaps|decisions UNAVAILABLE"
+      ]
+    },
+    {
+      "id": "F-09",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "DR-15 reviewed_operations and collection_version",
+        "read_common_rules RC-6 (exemption)",
+        "control_room sections.recentChanges continuation"
+      ],
+      "rules": [
+        "seq bounds exempt from opaque syntax/binding only",
+        "after xor before; neither = asc from start",
+        "exclusive bounds; after>=0, before>=1 else 422",
+        "nextCursor = decimal last seq",
+        "filters unbound (deliberate)"
+      ],
+      "tq_05": "OPEN"
+    },
+    {
+      "id": "F-10",
+      "verdict": "SPLIT",
+      "parts": [
+        {
+          "part": "DR-10 versions / DR-12 cycles",
+          "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+          "rules": [
+            "embedded {items,total,nextCursor} continued on existing /versions, /cycles",
+            "default order seq desc / cycleNo desc on both"
+          ]
+        },
+        {
+          "part": "DR-12 submissions[] and submittedVersionRefs",
+          "verdict": "DECISION_REQUIRED",
+          "options": [
+            "authorized cardinality source",
+            "new nested route (expands 32, separate decision)",
+            "complete embedding with accepted size risk"
+          ],
+          "interim": "base complete arrays, no truncation flag (RC-10)"
+        }
+      ]
+    }
+  ],
+  "preserved": [
+    "22 CT IDs and 16/4/1/1 classification",
+    "Q1..Q8 dispositions",
+    "product 412 / bulk 200 per-row as candidates",
+    "INT-A 412 transport-only",
+    "Import Draft preview-before-confirm",
+    "guarded Requirement completion",
+    "CAS-scoped If-Match",
+    "External Party point lookup",
+    "Evidence Claim parent envelope",
+    "Workstream point lookup without total limit",
+    "F-11 owned by Codex"
+  ],
+  "runtime": "NOT_RUN"
+}
