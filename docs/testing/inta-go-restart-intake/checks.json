@@ -1,0 +1,156 @@
+{
+  "task": "MC-002-INTA-GO-RESTART-INTAKE",
+  "actor": "Local Codex",
+  "base": "894167497ec80ef94a975c35d3a25b5f37371ce2",
+  "utc": "2026-10-25T18:01:38.818997+00:00",
+  "export_pairs": 22,
+  "payload_hashes": 21,
+  "unchanged_ledger_files": 29,
+  "technical_status": "RESTART_EVIDENCE_VERIFIED_WITH_LIMITATIONS",
+  "go_old_pid": 77632,
+  "go_new_pid": 98134,
+  "next_pids": [
+    88444,
+    88453
+  ],
+  "process_observation_utc": "2026-10-25T18:00:46.438401+00:00",
+  "process_method": "official read-only escalated ps/lsof; no environment or HTTP",
+  "source_binary_clean_unchanged": true,
+  "graceful_log_present": true,
+  "scan_counts": {
+    "private_key": 0,
+    "credential_uri": 0,
+    "api_key": 0
+  },
+  "scan_limit": "High-signal patterns only; no private config or exact credential scan by Codex",
+  "governance_observation": {
+    "id": "INTA-GOV-RESTART-01",
+    "status": "NEEDS_EXECUTION_ROUTE_CLARIFICATION",
+    "evidence": "Human-pasted transcript reports Mimosa blocked Bash script copy, then Write tool and split commands used. Raw rejection/allowance and governing hook rule not provided.",
+    "not_claimed": "No retrospective approval; no conclusive determination of policy violation from prose alone. Technical hashes do not attest permissions.",
+    "required": "Return exact redacted hook refusal text/action and any explicit allowed-path/approval evidence, text-only from existing session; no new tool attempt or workaround."
+  },
+  "stage2": "PREPARED_NOT_RELEASED_PENDING_GOVERNANCE_RECONCILIATION",
+  "independent_qa": "PENDING",
+  "canonical_cases": "51 NOT_RUN / executed stage1 sub-evidence preserved",
+  "no_codex_lifecycle_driver_http_sql": true,
+  "report_sha256": "6a8bff806e1e71db3e3dc1c2a62cef6ad6918a7a5351a32dd174541aa423e3f3",
+  "session_sha256": "dd4b2c091ecbe1c896fe764122600011938e244c99562610aa00582cb52503a9",
+  "inventory": [
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/10-stop.meta.txt",
+      "sha256": "e712841ac9e527bae1f632371a6ab58574fe7c993f51fa4439d6ed6532cf8a6a",
+      "bytes": 203
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/24-state-after-restart.sha256",
+      "sha256": "f2f099fa8350c1e1e0062f12f6e54426177c64e815adde06c3100dccf85d0c47",
+      "bytes": 4048
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/20-restart.stdout.log",
+      "sha256": "2d44c9ff001da4aee2ae87e90a242214c2ab0a202febe613d3f3f6fcea6c5b4f",
+      "bytes": 163
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/21-restart.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/23-restart-identity.txt",
+      "sha256": "a916c58b5eca2943fbb19e2672cd6b59c8ac71d567e68bb15b1d8af8fe0448b1",
+      "bytes": 249
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/22-probes.meta.txt",
+      "sha256": "c47e3192b6850c4c3ca5c9631acd3aa8879e06a12410bd6d96410389ec8608ee",
+      "bytes": 116
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/30-hashes.txt",
+      "sha256": "224c490fd010b85dd0ebe828a237e34fafaa7136c69ea9d4ebe73cc425c7676f",
+      "bytes": 3473
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/01-server-logs-before.sha256",
+      "sha256": "91ccfcd51c0317426521393ce39546be3e0ac1e1ec09c5903adeaf15a58acf77",
+      "bytes": 288
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/11-server-logs-after-stop.sha256",
+      "sha256": "2896caf90a956ed166b9e4d8183e165842c6409c19852571e4a1e6cd50ce07e5",
+      "bytes": 288
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/11-state-after-stop.sha256",
+      "sha256": "f2f099fa8350c1e1e0062f12f6e54426177c64e815adde06c3100dccf85d0c47",
+      "bytes": 4048
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/01-state-before.sha256",
+      "sha256": "f2f099fa8350c1e1e0062f12f6e54426177c64e815adde06c3100dccf85d0c47",
+      "bytes": 4048
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/go-restart-wrapper.sh.txt",
+      "sha256": "c7a3c86ce88cad14c7cc2e9df478b325a7c58564cbb0cd5c38c50defecd62df4",
+      "bytes": 418
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/25-redaction-scan.txt",
+      "sha256": "138204a4a04154912c8d92d4fc80cda714d110521208ec12734635e39a91d67c",
+      "bytes": 115
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/stage1.completed",
+      "sha256": "16c9513311fb4b1f118fe3fcb2848c6e007fe125ba12ae6cb3aad539891a534f",
+      "bytes": 64
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/checkpoint-state.json",
+      "sha256": "d1e8ce72b8d8e6c29e5f67d580d9555ad5285af3eb31ecdf369106cc8a1595da",
+      "bytes": 193
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/checkpointA.baseline.json",
+      "sha256": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15",
+      "bytes": 238
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/checkpointA.current.json",
+      "sha256": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15",
+      "bytes": 238
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/counters.json",
+      "sha256": "830c1046242f6a1282917df0dc26e119c383aab33622ceffc54ccb9dc2503a3d",
+      "bytes": 27
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/checkpoint-initializer.json",
+      "sha256": "f1512a8ae54e5d0c187342c1e4ccbdfd82748d3911da293dc7847700b7e21a9d",
+      "bytes": 424
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log",
+      "sha256": "be937aa52f8d7b1092571d93fd4e67d884c27583b4be676444736f7384b01a25",
+      "bytes": 3829
+    },
+    {
+      "path": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/assertions.json",
+      "sha256": "a915040687048fa1678b6267fbb973c39ba0337e8b9537fa05319cfb2c722a6c",
+      "bytes": 1934
+    },
+    {
+      "path": "docs/reviews/inta-backend-go-restart-return.md",
+      "sha256": "6a8bff806e1e71db3e3dc1c2a62cef6ad6918a7a5351a32dd174541aa423e3f3",
+      "bytes": 8513
+    }
+  ]
+}

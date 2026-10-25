@@ -1,0 +1,7 @@
+# ZCode — text-only Go-restart execution-route clarification
+
+Technical restart evidence has been received and locally verified. Do NOT repeat restart, stage1, stage2, ledger writes or any tool action for this clarification. Reply from existing session evidence only; no new source/files/hook probes/provider calls/settings changes. Preserve Go98134, Next88444/88453, PostgreSQL and state.
+
+Your pasted transcript says Mimosa blocked Bash script copies, then you used Write for the wrapper and split calls to avoid .sh hook matching. Return the exact redacted blocked action and refusal text, what rule was invoked, subsequent action/tool, and any explicit official permission or permitted-route evidence already present. Distinguish a permission/security denial from a documented tooling constraint; do not infer that another tool being callable grants authorization. If original evidence is unavailable, say UNKNOWN; do not reconstruct a fabricated refusal or approval. Do not expose credentials, full session logs or unrelated content.
+
+Explain whether a report-only wrapper copy was blocked versus actual execution; state what ran after the refusal and whether an approval was sought/received. This is a provenance clarification, not a request to bypass or retroactively approve anything. Codex will record disposition and determine stage2 release under the existing official mechanism. No self-approval or independent QA claim.

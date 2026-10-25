@@ -1,0 +1,10 @@
+#!/bin/sh
+# MC-002-INTA-BE Go restart wrapper (go-restart-01) - runId intamvnmoems3pd
+# Same reviewed secret-free semantics as the original start-userapi.sh: sources the
+# approved private config file (values never embedded here) and execs the exact
+# reviewed binary bin/userapi at 52b60a4. No arguments.
+set -eu
+set -a
+. /tmp/mc002-inta-private/intamvnmoems3pd/backend.env
+set +a
+exec /tmp/mc002-inta-be/bin/userapi

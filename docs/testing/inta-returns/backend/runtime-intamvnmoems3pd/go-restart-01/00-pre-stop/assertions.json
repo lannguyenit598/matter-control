@@ -1,0 +1,68 @@
+[
+  {
+    "caseId": "T1",
+    "pass": true,
+    "notes": "User A created with version 1, valid UUIDv7 and RFC 3339 UTC timestamps",
+    "timestampUTC": "2026-10-25T17:36:47.042Z"
+  },
+  {
+    "caseId": "T2",
+    "pass": true,
+    "notes": "T2 readback matches checkpoint field-for-field",
+    "timestampUTC": "2026-10-25T17:36:47.227Z"
+  },
+  {
+    "caseId": "W1",
+    "pass": true,
+    "notes": "User B created with 201, valid Location, ETag \"1\", JSON content-type and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.108Z"
+  },
+  {
+    "caseId": "W2",
+    "pass": true,
+    "notes": "W2 read User A with 200, ETag \"1\" and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.128Z"
+  },
+  {
+    "caseId": "T3",
+    "pass": true,
+    "notes": "T3 missing UUID returned 404 NOT_FOUND",
+    "timestampUTC": "2026-10-25T17:36:47.152Z"
+  },
+  {
+    "caseId": "T4",
+    "pass": true,
+    "notes": "T4 executed two distinct 404 NOT_FOUND substeps with unique request IDs",
+    "timestampUTC": "2026-10-25T17:36:47.176Z"
+  },
+  {
+    "caseId": "T5",
+    "pass": true,
+    "notes": "T5 rejected empty name with 422 and verified User A unchanged",
+    "timestampUTC": "2026-10-25T17:36:47.201Z"
+  },
+  {
+    "caseId": "T8",
+    "pass": true,
+    "notes": "T8 rejected duplicate email with 409 and verified User A unchanged",
+    "timestampUTC": "2026-10-25T17:36:47.227Z"
+  },
+  {
+    "caseId": "W3",
+    "pass": true,
+    "notes": "W3 returned 404 with application/problem+json and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.249Z"
+  },
+  {
+    "caseId": "T6-W",
+    "pass": true,
+    "notes": "T6-W returned 400 with application/problem+json and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.271Z"
+  },
+  {
+    "caseId": "T7-W",
+    "pass": true,
+    "notes": "T7-W returned 415 with application/problem+json and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.295Z"
+  }
+]
