@@ -1,0 +1,114 @@
+{
+  "info": {
+    "id": "ses_e8ee93b62ffeIfh87PcEY6Jutw",
+    "projectID": "56512bc17ede1f94831e6c5716d9c01aa1a12b0d",
+    "agent": "plan",
+    "cost": 0,
+    "tokens": {
+      "input": 53080,
+      "output": 4635,
+      "reasoning": 25582,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1792898680097,
+      "updated": 1792898839444,
+      "idle": 1792898839447
+    },
+    "title": "[redacted:session-title:ses_e8ee93b62ffeIfh87PcEY6Jutw]",
+    "location": {
+      "directory": "/[redacted:session-directory:ses_e8ee93b62ffeIfh87PcEY6Jutw]"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_17116c52b001ea6pmkD8xtbeky",
+      "time": {
+        "created": 1792898680107
+      },
+      "type": "agent-switched",
+      "agent": "plan",
+      "previous": "plan"
+    },
+    {
+      "id": "msg_17116c524001ZHcTzGTWPZN1h2",
+      "time": {
+        "created": 1792898680241
+      },
+      "text": "[redacted:synthetic:msg_17116c524001ZHcTzGTWPZN1h2]",
+      "type": "synthetic"
+    },
+    {
+      "id": "msg_17116c529001qehDj68tZcYxgU",
+      "time": {
+        "created": 1792898680242
+      },
+      "text": "[redacted:text:msg_17116c529001qehDj68tZcYxgU]",
+      "files": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_17116c5ba001G5bo5hB2NpD93J",
+      "time": {
+        "created": 1792898680254,
+        "streamed": 1792898839358,
+        "completed": 1792898839444
+      },
+      "type": "assistant",
+      "agent": "plan",
+      "model": {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "[redacted:reasoning:msg_17116c5ba001G5bo5hB2NpD93J]",
+          "native": {
+            "redacted": "reasoning-native:msg_17116c5ba001G5bo5hB2NpD93J"
+          },
+          "time": {
+            "created": 1792898683977,
+            "completed": 1792898839344
+          }
+        },
+        {
+          "type": "text",
+          "text": "[redacted:text:msg_17116c5ba001G5bo5hB2NpD93J]"
+        }
+      ],
+      "snapshot": {
+        "start": "80c40a2baaebab17d521cb25f08f2f50636dffc3",
+        "end": "e5a1fdb0b4c89754b57b9a3a6c260188a9afae7c",
+        "files": [
+          "docs/testing/inta-frontend-intake/owner-harness-source.tar.gz",
+          "docs/testing/inta-frontend-intake/return-qualifications.json"
+        ]
+      },
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 53080,
+        "output": 4635,
+        "reasoning": 25582,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_171193397001nPDnpHgLOFklu6",
+      "time": {
+        "created": 1792898839447
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # MC-002-INT-A — Selected Local Integration Assignment
 
-Owner Codex PM/Cloud/DevOps; priority P0 local feasibility. Base e7dbfbfb63062c4df576836c744701832356edd7, branch task/MC-002-solution-architecture. **IN_REVIEW_BACKEND_PREPARATION / WAITING_ENV / FRONTEND_RETURN_PENDING.** Actual ZCode acknowledgement/build return is received; no integration runtime evidence yet. [DEC-028](../../ai-sdlc/inta-po-approval.md) approves INT-A; [INTA-1](../inta-approved-contract.md) is frozen within that scope. No fallback to INT-A0/B/C.
+Owner Codex PM/Cloud/DevOps; priority P0 local feasibility. Base e7dbfbfb63062c4df576836c744701832356edd7, branch task/MC-002-solution-architecture. **FRONTEND_REWORK_REQUIRED / BACKEND_PREPARATION_IN_REVIEW / ENV_HELD.** Actual ZCode acknowledgement/build return is received; no integration runtime evidence yet. [DEC-028](../../ai-sdlc/inta-po-approval.md) approves INT-A; [INTA-1](../inta-approved-contract.md) is frozen within that scope. No fallback to INT-A0/B/C.
 
 ## Shared task contract and dependencies
 
@@ -41,3 +41,7 @@ C01-NATIVE stays accepted with limitations; C01-PRODUCT, production Cloudflare/c
 ## Backend preparation return — latest checkpoint
 
 [Actual ZCode return](../../reviews/inta-backend-return.md), [Codex intake](../../reviews/inta-backend-intake.md). New clean52b60a4 task worktree and binary match source/build metadata;4/4exports and3payload hashes verify. This supersedes earlier no-owner-build/acknowledgement statements only for backend preparation. Backend runtime WAITING_ENV; no full case PASS. Frontend directories/install evidence appeared but no return/runId received. [Current coordination](../inta-coordination.md) precedes the verified new PG/private DSN handoff; no environment/resource action in this intake. OpenCode runtime verdict PENDING; all51NOT_RUN.
+
+## Frontend preparation return — latest checkpoint
+
+Actual Antigravity manual return received at clean companion e25bbc6; original source archive and exports preserved. [Codex intake](../../reviews/inta-frontend-intake.md) verifies hashes and qualifies owner unit/guard claims. Actual [OpenCode source review](../../reviews/inta-frontend-opencode-source-review.md) CHANGES_REQUIRED, R01..R09 ordinary implementation/evidence corrections; R10 minor. This supersedes earlier frontend-return-pending statements. No material architectural deviation identified. [R1 manual prompt](../handoffs/MC-002-INTA-FE-REWORK-PROMPT.md) READY / NOT_DISPATCHED, Antigravity owns companion changes only; OpenCode re-reviews before verified ENV/upstream cases. Backend WAITING_ENV, no rebuild; Codex PG held. All51NOT_RUN and runtime QA PENDING; no gate waived.
