@@ -1,8 +1,8 @@
-# INT-A frontend stage2 — draft, NOT RELEASED
+# INT-A frontend stage2 — released Codex cue for ZCode
 
-PREPARED_NOT_RELEASED: do not execute until Codex explicitly releases this cue after INTA-GOV-RESTART-01 disposition. This file alone is not an executable assignment.
+CUE_RELEASED / READY_NOT_DISPATCHED — 2026-10-26. Codex has recorded INTA-GOV-RESTART-01 as EXPLAINED_TOOL_WRITE_ROUTING / NO_REMAINING_STAGE2_HOLD; read docs/reviews/inta-go-restart-route-clarification-intake.md. Human delivery of this cue assigns stage2 ONLY under the existing DEC-028/INTA-1 local scope. No new permission loop is required for the same authorized scope; actual tools/provider/payload permissions still apply. No direct dispatch or execution has occurred by preparing this cue.
 
-On release, actual ZCode acts only as frontend/Next/driver owner. Use configured permitted route/quota; no model/provider/settings/auth changes. Read AGENTS/RTK, frozen INTA-1, current coordination, MC-002-INT-A, Go-restart intake and its governance disposition, stage1 intake and the reviewed full frontend runtime plan. Verify current checkout/head and existing scope permissions. Prior Antigravity authorship remains historical, ZCode owner execution is not independent QA.
+You are actual ZCode acting only as frontend/Next/driver owner for this released stage2 cue. Use configured permitted route/quota; no model/provider/settings/auth changes. Read AGENTS/RTK, frozen INTA-1, current coordination, MC-002-INT-A, Go-restart intake and its governance disposition, stage1 intake and the reviewed full frontend runtime plan. Verify current checkout/head and existing scope permissions. Prior Antigravity authorship remains historical, ZCode owner execution is not independent QA.
 
 Recheck exact running Go98134/start00:54:29 local/executable52b60a4/listener18086, Next88444/listener88453/start00:35:21/loopback18085, unchanged binary and clean harness48cc03e/template3e5a642; time-scoped IDs require fresh comparison. No source edits/rebuild/migration/Go/Next restart or Docker/private-config access. If changed/absent, stop for reconciliation, never repair/replay.
 

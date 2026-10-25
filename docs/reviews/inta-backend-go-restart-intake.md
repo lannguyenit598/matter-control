@@ -21,3 +21,7 @@ Request exact redacted blocked action/refusal text, relevant rule and any alread
 Scan of22exports+report found zero high-signal private-key/credential-URI/API-key patterns; this is limited pattern evidence, not full confidentiality attestation. Model/provider/version remain owner reports. No external agent call is claimed by Codex.
 
 Skipped: stage2, record HTTP/SQL, PG/Go/Next lifecycle, runtime suites, independent QA, provider calls and push. Risks: execution-route permissions need exact reconciliation; processes/logs can drift; persistence is not established until separately cued readback.
+
+## Execution-route clarification received — current disposition, 2026-10-26
+
+[Clarification intake](inta-go-restart-route-clarification-intake.md) supersedes the provisional stage2 hold above. Quoted hook expressly prescribes Write/Edit/MultiEdit for the same content scan; this is explained tool routing, with author-reported telemetry limits retained. INTA-GOV-RESTART-01 EXPLAINED_TOOL_WRITE_ROUTING / NO_REMAINING_STAGE2_HOLD. Stage2 CUE_RELEASED / READY_NOT_DISPATCHED, no extra restart approval or replay. Actual execution/independent QA still pending.
