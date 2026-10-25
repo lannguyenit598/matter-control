@@ -30,3 +30,7 @@ Latest R3: [intake](../reviews/inta-frontend-r3-intake.md), [actual review](../r
 Latest R4: [intake](../reviews/inta-frontend-r4-intake.md), [actual failed review](../reviews/inta-frontend-r4-review-blocker.md), [manual QA prompt](handoffs/MC-002-INTA-FE-R4-QA-PROMPT.md) READY/NOT_DISPATCHED. Human authorized an alternate model/provider; big-pickle also failed429; no authenticated integration available, no further cycling/login/payment. R4 received; not REWORK_REQUIRED merely for quota. ENV still not created;51NOT_RUN.
 
 Latest provider checkpoint: actual per-invocation opencode/big-pickle session ses_e8dab66d3ffeZNJjY1xaZY1cnt also failed provider.free-limit429 with no verdict. Await usable externally restored/authenticated OpenCode route or quota recovery. No new source-rework assignment, no provider substitution, no ENV creation.
+
+## Human routing override — R4 source review to ZCode
+
+Human explicitly requests rewriting the R4 review prompt for actual ZCode. [Complete manual prompt](handoffs/MC-002-INTA-FE-R4-ZCODE-REVIEW-PROMPT.md) READY / NOT_DISPATCHED; no invocation or verdict. Same33immutable source snapshots, reviewed head48cc03e; ZCode checks Antigravity frontend source only and discloses authorship conflicts. Both failed OpenCode attempts preserved; no impersonated OpenCode result. This source-review override does not replace independent OpenCode QA for36runtime cases. ENV_HELD,51NOT_RUN and MC-002/product/cloud/cost/recovery gates unchanged. Next: human delivers prompt, returns ZCode report for Codex intake.

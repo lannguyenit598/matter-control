@@ -1,0 +1,7 @@
+# R4 source review — human routing override to ZCode
+
+Direct human request: "viết lại prompt để zcode review". This explicitly authorizes preparing a manual actual-ZCode source/evidence review of Antigravity frontend R4 at48cc03e949d66fc47a7d304413621eb79804e6c1. It does not globally change role ownership or dispatch any agent. ZCode must disclose authorship conflicts; backend authorship alone is distinct from the frontend change under review. Codex intakes the report; no self-approval/product waiver.
+
+[Complete prompt](../implementation/handoffs/MC-002-INTA-FE-R4-ZCODE-REVIEW-PROMPT.md), [neutral packet manifest](../testing/inta-frontend-r4-intake/zcode-handoff/manifest.json).33source/evidence snapshots preserved byte-identical to prior R4 packet; reviewer preamble replaced only. No additional credentials/real legal data or new provider destination. Both actual failed OpenCode attempts remain historical evidence; no OpenCode verdict exists. Do not impersonate OpenCode or overwrite its expected review path.
+
+Status READY / NOT_DISPATCHED until human delivery and actual ZCode acknowledgement. This is a prompt preparation task, no ZCode invocation or completed review. ENV remains held,51NOT_RUN, MC-002 OPEN. Independent OpenCode QA for36runtime cases remains assigned/pending; this override is only R4 source review. Next: human supplies full prompt to actual ZCode, returns its report for Codex intake.

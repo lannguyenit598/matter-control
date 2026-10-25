@@ -1,6 +1,6 @@
 {
   "task": "MC-002-INT-A",
-  "timestamp_utc": "2026-10-25T09:12:38.108771+00:00",
+  "timestamp_utc": "2026-10-25T09:20:11.515991+00:00",
   "scope_decision": "INT-D01=INT-A",
   "approval": "DEC-028",
   "approved_subject": "e7dbfbfb63062c4df576836c744701832356edd7",
@@ -451,6 +451,14 @@
       "verdict": null,
       "execution": "docs/testing/inta-frontend-r4-intake/alternate-big-pickle/opencode-execution.json"
     },
-    "next_dependency": "Usable externally restored/authenticated OpenCode route or quota recovery; no authenticated alternate integration currently available"
+    "next_dependency": "Human delivers ZCode source-review prompt and returns actual report for Codex intake; independent runtime QA remains OpenCode",
+    "manual_routing_override": {
+      "authority": "Human request: vi\u1ebft l\u1ea1i prompt \u0111\u1ec3 zcode review",
+      "reviewer": "actual ZCode, frontend source/evidence only",
+      "status": "READY_NOT_DISPATCHED",
+      "prompt": "docs/implementation/handoffs/MC-002-INTA-FE-R4-ZCODE-REVIEW-PROMPT.md",
+      "routing_record": "docs/reviews/inta-frontend-r4-review-routing.md",
+      "runtime_qa_owner_unchanged": "actual OpenCode"
+    }
   }
 }
