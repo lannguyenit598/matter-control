@@ -1,0 +1,59 @@
+{
+  "task": "MC-002-INT-ARCH",
+  "argv": [
+    "rtk",
+    "proxy",
+    "claude",
+    "-p",
+    "--output-format",
+    "json",
+    "--tools",
+    "",
+    "--restricted",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--disable-slash-commands",
+    "--no-chrome",
+    "--no-session-persistence"
+  ],
+  "start_utc": "2026-10-24T18:03:52.949541+00:00",
+  "end_utc": "2026-10-24T18:08:12.547100+00:00",
+  "exit": 0,
+  "elapsed_seconds": 259.597924958005,
+  "scope": "packet-only architecture proposals; tools/MCP disabled; runtime NOT_RUN",
+  "input_manifest": "claude-correction-input-manifest.json",
+  "stdout_sha256": "5c39ac2b9c0232a65278135a4337c495de0c46c9e8cf9deba411e559a1caff56",
+  "session_id": "a6577bf0-ce08-4d72-9e69-3fa29bb7b00f",
+  "subtype": "success",
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 29792,
+      "cacheReadInputTokens": 1383,
+      "cacheCreationInputTokens": 16630,
+      "webSearchRequests": 0,
+      "costUSD": 0.7291645999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 12802,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "summary": "Changes: (1) INT-A is redefined as a temporary isolated Next.js runtime harness. It is a dedicated test-only Next root outside src/ that uses the installed pinned dependencies, with one harness-only POST Route Handler that executes the unmodified shared httpRequest inside Next before REST to unchanged Go 52b60a4 and PostgreSQL. This endpoint needs explicit PO approval within INT-D01. The Node-only runner becomes INT-A0, an explicit reduced-scope exception, available only on reported infeasibility. (2) The split is grounded in the supplied http-client.ts. App-client mode observes only the decoded body, or ApiError status/code/details and NETWORK_ERROR/TIMEOUT. Wire mode (raw fetch in the same Next route) covers Location, ETag, media type, request-ID echo, T6 malformed JSON and T7 missing Content-Type (byte body). No wire request repeats an app-client POST/PATCH; W1 creates its own record. Evidence is tied to request IDs. The endpoint uses a fixed case allowlist, an env-only loopback base URL and no caller-supplied URL/path/header/body, so it is not a proxy. It returns a bounded envelope; upstream responses are copied, never altered or re-emitted. INVALID_RESPONSE is never classified as success. (3) Removed: the local $0 claim and the F3 lowest-cost ranking. Cloudflare figures are marked inherited and not re-verified; F1/F2 Server Action and partial-prefetch support is NOT_TESTED. P-HOST-1/P-BE-3/P-FE spike requests and the priority question are removed (future separate authorization). There is no restore or cadence rerun absent a new defect. (4) T9 and T10 use fresh, different names. PostgreSQL is a new owned container using its own writable layer or a dedicated new volume (no existing volume, no tmpfs; Codex chooses after approval), with real stop/start of the same container, a container/storage identity check and a name-collision check. (5) The OIDC note now states that the ID Token is a JWT and access-token format depends on the IdP. The cache wording is changed to 'no response cached across users'. The receipt formula is marked candidate, not a PO decision. A 'Decision class' row was added so every INT-D table has 16 fields; if the packet's 16-field list names a different field, that label should be swapped. Remaining limits: everything is NOT_RUN. Feasibility of the cross-root import inside the pinned Next, the loopback binding option and the product-glob exclusion are unconfirmed (Antigravity). The harness runs on the development server only, so there is no build/start claim. The Go request-ID log presence is unknown from the packet. T7 depends on the runtime fetch not adding Content-Type to byte bodies. Auth, authorization and isolation remain deferred.",
+  "outputs": {
+    "docs/architecture/integration-scope-proposal.md": "b7c95b4eeabb83e2712159e6be3c543bc5ea60ebabd4732b36487916dcd93508",
+    "docs/architecture/api-auth-decision-analysis.md": "8637b5ae527352a99c899cd22a409fe0abe12e2f6c0f36ba1f0262168f409ec0"
+  },
+  "serialization_repair": {
+    "cli_exit": 0,
+    "intake_initial_exit": 1,
+    "reason": "Provider wrapped the requested JSON in Markdown fence",
+    "normalization": "Remove outer JSON fence and parse JSON only; no content or escape rewriting; raw response unchanged",
+    "runtime_effect": "none"
+  }
+}

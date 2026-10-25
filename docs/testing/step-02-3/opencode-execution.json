@@ -1,0 +1,75 @@
+{
+  "task": "MC-002-INT-QA-PLAN",
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.3 integration API auth decision gate",
+    "--file",
+    "/tmp/mc002-step023-opencode-input.txt",
+    "Independently review the Step02.3 proposal documents and define the acceptance matrix. Follow the packet JSON output schema; no tools, files or runtime execution."
+  ],
+  "exit": 0,
+  "start_utc": "2026-10-24T18:09:09.303723+00:00",
+  "end_utc": "2026-10-24T18:16:20.181884+00:00",
+  "elapsed_seconds": 430.87765700000455,
+  "session_id": "ses_e90e5cf7bffeqtOKafnvhwOwFK",
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "scope": "independent proposal/testability review and future test matrix; no runtime replay",
+  "runtime_tests": "NOT_RUN",
+  "stdout_sha256": "a3ddbb00a56debc03df4b5b75d726bc3611648ef5c8dc620fa48e97f61eeb58e",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e90e5cf7bffeqtOKafnvhwOwFK"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "verdict": "PASS_DOCUMENT_ONLY",
+  "findings": [
+    {
+      "id": "INT-QA-01",
+      "severity": "Medium",
+      "path": "docs/architecture/integration-scope-proposal.md (\u00a74 case T11)",
+      "issue": "T11 asserts details.detail equals 'the pinned golden/docs string', but the literal 503 detail text is not present in the packet and docs/api.md was not reviewed; no golden value or retention path is identified, so the matrix cannot execute an exact-match assertion from packet content alone.",
+      "required_change": "At ARCH-FINAL, pin the exact retained C01 golden 503 detail string (with its evidence reference from the C01 closure/verification manifest) into the finalized contract and the matrix FIX-SET so the equality assertion is checkable without manufacturing contract text."
+    },
+    {
+      "id": "INT-QA-02",
+      "severity": "Low",
+      "path": "docs/ai-sdlc/step-02-decision-package.md (INT-A table row)",
+      "issue": "The phrasing 'Harness-only endpoints, if required by the finalized proposal, are temporary test contracts' presents approval of the harness endpoint as conditional, while the authoritative proposal \u00a72/\u00a75 makes explicit PO approval of the harness endpoint a mandatory part of selecting INT-A.",
+      "required_change": "Reword the INT-A trade-off cell so the harness-only endpoint approval is stated as explicit and required within the INT-A selection."
+    },
+    {
+      "id": "INT-QA-03",
+      "severity": "Low",
+      "path": "docs/ai-sdlc/step-02-runtime-decision-request.md (\u00a72)",
+      "issue": "The document still presents the earlier round's two options (a) transport-only and (b) defer as Claude's proposal, while the correction-round-1 analysis (INT-A, INT-A0, INT-B, INT-C) supersedes them without a pointer marking the newer option set as governing.",
+      "required_change": "Add one line to \u00a72 pointing to docs/architecture/integration-scope-proposal.md and api-auth-decision-analysis.md as the current governing INT-D01 option set, preserving the earlier text as historical context."
+    }
+  ]
+}

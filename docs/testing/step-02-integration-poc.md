@@ -9,7 +9,7 @@ Both original native template baselines have actual returned evidence and indepe
 | Order | Owner / work | Input / output / passing evidence | State |
 |---|---|---|---|
 | 1 | ZCode, then OpenCode: C01-NATIVE | Corrected52b60a4 independently accepted PASS_WITH_LIMITATIONS; native scope only | SATISFIED_NATIVE_SCOPE |
-| 2 | Claude + PO: decide scope of H5 integration | Explicit choice of transport-only harness versus defer to product API/auth; approved request/response/error/session contract and allowed paths, no Task/User alias | WAITING_DECISION |
+| 2 | Claude + PO: decide scope of H5 integration | Actual Claude Step02.3 INT-A Next-runtime harness proposal versus INT-C defer; independent document review, PO choice and final contract still required; no Task/User alias | WAITING_PO_APPROVAL |
 | 3 | Codex environment; owners acknowledge | New labelled/capped loopback-only fixture, verified empty DB before assigning DSN; pinned source/heads; synthetic inputs; owned process groups/ports | NOT_PREPARED pending2 |
 | 4 | Antigravity + ZCode implement only approved seam | Next→real REST→Go→real PostgreSQL; session behavior under exact agreed scope; no mock presented as end-to-end | NOT_RUN |
 | 5 | Owners execute smoke; OpenCode verify | Actual HTTP status/body assertions, create/read/restart/read persistence, nonmatching/invalid errors, outage503/recovery, no false empty/success; current auth negatives if the approved seam includes auth | NOT_RUN |
@@ -24,3 +24,8 @@ Completion requires actual connected-chain evidence and independent review again
 Skipped: integration scaffolding/execution until contract and identity boundaries are decided. Risk: either pretending the domains match or weakening fail-closed auth would manufacture a misleading PASS.
 
 C01-native prerequisite is now satisfied within its accepted scope; the next missing prerequisite is still the explicit integration-scope/API/auth decision (row2). No automatic execution/transport alias/auth bypass is authorized. [Native closure](../reviews/step-02-c01-native-closure.md).
+
+
+## Step02.3 decision-plan overlay — current
+
+[Actual architect proposal](../architecture/integration-scope-proposal.md), [decision analysis](../architecture/api-auth-decision-analysis.md), [PO package](../ai-sdlc/step-02-decision-package.md), [conditional task plan](../implementation/step-02-integration-task-plan.md) and actual OpenCode-authored [acceptance matrix](integration-acceptance-matrix.md) supersede the former unanalysed scope question. INT-D01 **not approved**, all runtime rows NOT_RUN. Recommended INT-A uses a genuinely executing isolated Next runtime; plain Node scripts do not count. Auth/authz/isolation and product flows stay separately gated. C01-NATIVE prerequisite is satisfied; no rerun or rework is due. Execution remains PENDING.

@@ -1,6 +1,6 @@
 # MC-002 — Agent Handoffs
 
-Codex orchestrates; the named external owners retain engineering responsibility. Current authority: Step02.2 request, prior Step02.1/DEC-026 and H5/W1/restore targets DEC-023..025; approved behavior572835a. No Step03/product/production/paid action.
+Codex orchestrates; the named external owners retain engineering responsibility. Current authority: Step02.3 decision-only request, Step02.2 request, prior Step02.1/DEC-026 and H5/W1/restore targets DEC-023..025; approved behavior572835a. No Step03/product/production/paid action.
 
 | Assignment | Actual execution / current state | Next packet |
 |---|---|---|
@@ -33,3 +33,10 @@ Current actual implementation reviews: OpenCode source CHANGES_REQUIRED (F1test/
 ## C01 corrected native slice accepted — current
 
 Actual ZCode R1 return52b60a4 contains exactly F1test/F5docs/F6rule changes; actual OpenCode sessionses_e90ff024dffeuJ1Kmcnp6qicY9, exit0, PASS_WITH_LIMITATIONS accepts C01-NATIVE and closes F1/F5/F6/E-03/F8. Current state NATIVE_PASS / PRODUCT_OPEN, no more ZCode rework or reassurance rerun. [Closure and exact limitations](../reviews/step-02-c01-native-closure.md). Owner279namedpass/0fail/0namedskip full suite and Codex2namedpass committed-head F1 check are distinct from reviewer packet-only verification; no DB replay by Codex/OpenCode. Original self-hash-list defects are preserved and resolved by a separately verified canonical inventory. Earlier rework/waiting labels above are historical. Integration/API/auth scope, full product/recovery/Cloudflare/cost and Architecture Approval Gate remain OPEN; MC-002 not DONE, Step03 not started.
+
+
+## Step02.3 — current conditional assignments
+
+Actual Claude architecture and actual OpenCode independent review/acceptance-plan calls have returned; [execution](../reviews/step-02-3-execution.md). The [task plan](step-02-integration-task-plan.md) assigns Claude final contracts, ZCode unchanged Go operation/focused checks, Antigravity isolated Next runtime harness, Codex owned synthetic environment, OpenCode later verification and Claude conformance review. **PREPARED / WAITING_PO_APPROVAL** for engineering. Only document analysis/review executed.
+
+No current engineering manual prompt needs dispatch. After PO INT-D01 selection and final contract, Codex must issue complete exact per-repository/manual prompts; known direct ZCode/Antigravity limits are preserved, no bypass or baseline rerun. C01-NATIVE/R01/R02 closed scopes remain; C01-PRODUCT, integration execution and MC-002 stay open. [PO package](../ai-sdlc/step-02-decision-package.md). No Step03/provider/production/paid approval.

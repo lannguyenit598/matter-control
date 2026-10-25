@@ -17,12 +17,14 @@ H4 TypeScript/D1 remains an unselected major stack/database substitution, not a 
 
 ## Integration scope question (separate from deployment)
 
-Actual Claude proposes (a) a transport-only local harness for reachability/problem parsing/error mapping, or (b) defer integration until a compatible product API/auth seam exists; neither is selected. C01-NATIVE can proceed independently. Any auth seam needs an identity decision; no aliases/bypass/new product routes/screens are implied. [Dependency plan](../testing/step-02-integration-poc.md).
+Step02.3 analyzed the entire request into INT-D01..09, each with all16 required fields in the actual Claude [decision analysis](../architecture/api-auth-decision-analysis.md). INT-D01 remains **PROPOSED / WAITING_PO_APPROVAL**, not selected. Recommended INT-A is an isolated temporary actual Next.js-runtime transport harness to unchanged native UserAPI/Go/PostgreSQL. INT-C defers until a compatible product API/auth slice. INT-B authenticated temporary scope is not recommended or ready; it needs revised architecture and an identity decision first. There is no Task/User alias, auth bypass or new product route/screen. Temporary harness-only contracts, if approved, are excluded from the product app/build and governed by explicit enable/removal criteria.
+
+C01-NATIVE is already independently accepted at52b60a4; no new native dispatch or replay is needed. A transport PASS cannot prove authentication, role enforcement, Workspace/Matter isolation, product receipts/UoW/recovery or Cloudflare/cost. Identity provider, hosting, adapter, storage/recovery, retention/limits, workload/full cost and product error conventions remain explicitly separated; INT-D03 preserves approved policy and does not ask for a new policy choice. [PO package](step-02-decision-package.md), [scope](../architecture/integration-scope-proposal.md), [QA matrix](../testing/integration-acceptance-matrix.md), [task sequencing](../implementation/step-02-integration-task-plan.md). All runtime tests NOT_RUN.
 
 ## What a later decision record must contain
 
 Chosen H/F and integration scope; explicitly accepted exceptions; candidate provider/plan/region and exact pinned versions; measured demand and quota headroom; full storage/identity/backup/CI/monitoring/egress inventory; approved retention/receipt/import-export parameters; security/recovery evidence; actual Claude disposition and independent OpenCode verification. Account eligibility and price facts are not runtime proof. Production commitments, paid activation and deployment remain separate approvals.
 
-No approval request is blocking the already-ready manual C01 dispatch. These consequential decisions remain visible for subsequent work; no approval is inferred from this document.
+The next gate is explicit PO selection of INT-D01 from the reviewed Step02.3 package, then Claude final contracts and exact Codex owner tasks. C01-NATIVE is already accepted; no native redispatch. Provider review permission is not implementation or architecture approval.
 
 Skipped: provider/account activation, adapter migration and topology selection. Risk: a component free allowance cannot establish a complete zero-cost service.

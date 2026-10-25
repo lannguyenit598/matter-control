@@ -75,3 +75,16 @@ R-030 remains CLOSED. Native frontend actual final recheck PASS_WITH_LIMITATIONS
 R-029 remains OPEN: fd747ae production code returned; actual Claude says production conforms but requires F1cause-preservation regression, F5docs499wording and F6stale57014rule correction before native acceptance. Codex66focusednamedpasses/noDB is independent limited verification, not full QA or production proof. Owner HTTP pool labels claim4s57014 while actual logs show both3sdeadlines; [intake](../reviews/step-02-c01-intake.md) preserves raw bytes and qualifies claims. Native correction manual handoff prepared; PRODUCT_OPEN. R-030/R01/R02 stay CLOSED, R-028integration and R-027fullrecovery unchanged.
 
 R-029 native mapping remediation is now independently accepted at52b60a4; R-029 stays OPEN for the remaining product-conformance scope. Self-hash entries in two R1 owner manifests were stale; all16exports match originals and canonical recomputed inventory preserves raw lists, independently accepted as a documentation qualification. No payload mismatch or source change inferred. R-028integration, R-027full recovery and cloud/cost risks remain open. [Closure](../reviews/step-02-c01-native-closure.md).
+
+
+## Step02.3 — current integration decision risk controls
+
+R-028 remains OPEN: actual Claude has proposed a genuine Next-runtime temporary transport seam and actual OpenCode reviewed testability; PO selection and every runtime assertion remain pending. The initial Node-only proposal was corrected before independent review because it did not exercise Next.js. The existing client returns body only and auto-serializes JSON: raw wire controls and application-client observations are separately identified. No false header/status proof, Task/User alias or auth bypass.
+
+R-020 remains OPEN for product identity/authz/isolation: transport-only exclusion is explicit, never a waiver. R-029 C01-NATIVE stays accepted with limits; C01-PRODUCT remains OPEN. R-019/021 hosting/adapter, R-027 full recovery and cost/retention risks retain their prior gates. No new app/signature/auth failure inferred from the sandbox-only OpenCode version log EPERM; actual provider execution uses the authorized host route.
+
+| ID | Evidence / unresolved risk | Impact | Owner | Required closure | State |
+|---|---|---|---|---|---|
+| R-031 | Proposed unauthenticated temporary Next harness could enter a product build or become a proxy if isolation is not enforced | High | Claude / Antigravity / Codex / OpenCode | Explicit PO scope; separate test root outside product app/build; fixed loopback targets/allowlisted operations; opt-in and production refusal; no shared token; removal conditions and future independent artifact/negative checks | OPEN_PROPOSAL_ONLY / NOT_IMPLEMENTED |
+
+[Decision package](step-02-decision-package.md), [architecture analysis](../architecture/api-auth-decision-analysis.md), [acceptance plan](../testing/integration-acceptance-matrix.md). Document review does not mitigate these risks by runtime proof.

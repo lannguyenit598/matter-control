@@ -1,0 +1,42 @@
+{
+  "timestamp_utc": "2026-10-25T01:04:16.867719+00:00",
+  "literal_detail": "service temporarily unavailable",
+  "native_retryAfter": 1,
+  "source_entries": [
+    {
+      "repo_path": "/tmp/mattercontrol-step022-backend-c01",
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "path": "docs/api.md",
+      "file_sha256": "39aa7970e8e5bf75ed2bfc2af685f66f7bd5519a2b94d52744232261a03db00d",
+      "lines": [
+        148,
+        163
+      ],
+      "excerpt": "Retryable unavailability (503) returns a fixed body with a `retryAfter` hint:\n\n```json\n{\n  \"type\": \"/problems/unavailable\",\n  \"title\": \"Service Unavailable\",\n  \"status\": 503,\n  \"detail\": \"service temporarily unavailable\",\n  \"instance\": \"/api/v1/users\",\n  \"retryAfter\": 1\n}\n```\n\n`retryAfter` is an integer number of seconds. Its value is a **native-template constant** (1), not a MatterControl production convention. **A 5xx on a non-GET request does not mean the change was not applied**: the outcome of a failed write is unknown (this template has no idempotency), so never assume \"not committed\" from a 503.\n\n| Status | When | `detail` |\n"
+    },
+    {
+      "repo_path": "/tmp/mattercontrol-step022-backend-c01",
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "path": "internal/adapter/inbound/httpapi/errors.go",
+      "file_sha256": "bb4153fdbccd56d73ae048b19a03fd2d03e7a7e0c6a7d835acae412e4308f471",
+      "lines": [
+        58,
+        78
+      ],
+      "excerpt": "const (\n\t// problemTypeUnavailable is the RFC 9457 type URI for the retryable unavailability problem.\n\tproblemTypeUnavailable = \"/problems/unavailable\"\n\t// unavailableDetail is the fixed, non-sensitive detail of every 503 unavailable problem.\n\t// It never asserts anything about the outcome of a failed write.\n\tunavailableDetail = \"service temporarily unavailable\"\n\t// retryAfterSeconds is the retryAfter value, in whole seconds, on 503 unavailable\n\t// problems. NATIVE-TEMPLATE CONSTANT: a fixed local default, NOT a MatterControl\n\t// production convention; the product unit and range remain an open decision.\n\tretryAfterSeconds = 1\n)\n\n// unavailableProblem is the single 503 body for storage/request-deadline unavailability.\nfunc unavailableProblem() problem {\n\treturn problem{\n\t\tStatus:     http.StatusServiceUnavailable,\n\t\tType:       problemTypeUnavailable,\n\t\tDetail:     unavailableDetail,\n\t\tRetryAfter: retryAfterSeconds,\n\t}\n}\n"
+    },
+    {
+      "repo_path": "/tmp/mattercontrol-step022-backend-c01",
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "path": "internal/adapter/inbound/httpapi/testdata/unavailable.golden",
+      "file_sha256": "f630d97174ce3e06252ee871a45557624ab108b448b703a645f648fe318a26fb",
+      "lines": [
+        1,
+        15
+      ],
+      "excerpt": "=== create\nPOST /api/v1/users\nContent-Type: application/json\nX-Request-Id: contract-00\n\n{\"email\":\"a@example.com\",\"name\":\"A\"}\n--- 503 Service Unavailable\nContent-Length: 160\nContent-Type: application/problem+json\nX-Request-Id: contract-00\n\n{\"type\":\"/problems/unavailable\",\"title\":\"Service Unavailable\",\"status\":503,\"detail\":\"service temporarily unavailable\",\"instance\":\"/api/v1/users\",\"retryAfter\":1}\n\n=== list\nGET /api/v1/users\n"
+    }
+  ],
+  "scope": "Read-only source pin, not a new contract or runtime replay",
+  "unknown_write_rule": "A5xx on nonGET does not mean not applied; no mutation-based probe/retry in INT-A; POST stays OUTCOME_UNKNOWN under actual Claude scope section7."
+}
