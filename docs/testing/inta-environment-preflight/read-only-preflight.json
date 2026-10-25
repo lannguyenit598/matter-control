@@ -1,0 +1,92 @@
+{
+  "task": "MC-002-INTA-ENV",
+  "timestamp_utc": "2026-10-25T09:04:27.332969+00:00",
+  "scope": "Read-only preflight while source review pending; no resource creation/mutation, no env/credential dump",
+  "commands": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "version",
+        "--format",
+        "{{json .Server}}"
+      ],
+      "exit": 0,
+      "stdout": "{\"Platform\":{\"Name\":\"Docker Desktop 4.95.0 (242831)\"},\"Version\":\"29.8.2\",\"ApiVersion\":\"1.56\",\"MinAPIVersion\":\"1.40\",\"Os\":\"linux\",\"Arch\":\"arm64\",\"Components\":[{\"Name\":\"Engine\",\"Version\":\"29.8.2\",\"Details\":{\"ApiVersion\":\"1.56\",\"Arch\":\"arm64\",\"BuildTime\":\"Wed Sep 30 19:31:50 2026\",\"Experimental\":\"false\",\"GitCommit\":\"8af9fe3\",\"GoVersion\":\"go1.26.8\",\"KernelVersion\":\"7.0.14-linuxkit\",\"MinAPIVersion\":\"1.40\",\"Module\":\"github.com/moby/moby/v2\",\"ModuleVersion\":\"v2.0.0+unknown\",\"Os\":\"linux\"}},{\"Name\":\"containerd\",\"Version\":\"v2.3.6\",\"Details\":{\"GitCommit\":\"ee2735368117d2eb259779949d5e75cdafec9761\"}},{\"Name\":\"runc\",\"Version\":\"1.5.1\",\"Details\":{\"GitCommit\":\"v1.5.1-0-g8f2685a4\"}},{\"Name\":\"docker-init\",\"Version\":\"0.19.0\",\"Details\":{\"GitCommit\":\"de40ad0\"}}],\"GitCommit\":\"8af9fe3\",\"GoVersion\":\"go1.26.8\",\"KernelVersion\":\"7.0.14-linuxkit\",\"BuildTime\":\"2026-09-30T19:31:50.000000000+00:00\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "image",
+        "inspect",
+        "postgres:18-alpine",
+        "--format",
+        "{{json .Id}} {{json .RepoDigests}} {{json .Config.Volumes}}"
+      ],
+      "exit": 0,
+      "stdout": "\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\" [\"postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\"] {\"/var/lib/postgresql\":{}}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "ps",
+        "-a",
+        "--format",
+        "{{.Names}}"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_qualification": "Inventory retained as count/digest and MatterControl names only; unrelated resource names omitted",
+      "observed_count": 9,
+      "inventory_sha256": "dfef6c2c719e4357062cff9824d1c1674e97ee4c8d5de189381a9f03d545317c",
+      "mattercontrol_names": [
+        "mc002be-c01r1-pg-20261024T1734Z",
+        "mc002be-c01-pg-20261024T1700Z",
+        "mc002be-recheck-pg-20261024T1539Z",
+        "mc002be-pg-20261024T1454Z",
+        "mc021-28e17f032857-restore",
+        "mc021-28e17f032857-source",
+        "mc021-0cc3b3f257c3-restore",
+        "mc021-0cc3b3f257c3-source"
+      ]
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "volume",
+        "ls",
+        "--format",
+        "{{.Name}}"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_qualification": "Inventory retained as count/digest and MatterControl names only; unrelated resource names omitted",
+      "observed_count": 93,
+      "inventory_sha256": "6bd7e44cfdbbfb40f334b0bb4cfc18038ea952705801e87411ea436f74c3d7bc",
+      "mattercontrol_names": []
+    }
+  ],
+  "ports": [
+    {
+      "port": 18085,
+      "loopback_bind_available": true
+    },
+    {
+      "port": 18086,
+      "loopback_bind_available": true
+    },
+    {
+      "port": 15457,
+      "loopback_bind_available": true
+    }
+  ]
+}

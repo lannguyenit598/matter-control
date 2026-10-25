@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { HarnessDriver } from '/tmp/mc002-inta-harness/src/driver.ts';
+const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mc002-inta-r4-repro-'));
+const runId = 'repro' + crypto.randomBytes(8).toString('hex');
+let networkCalls = 0;
+globalThis.fetch = async () => { networkCalls++; throw new Error('Network disabled in focused repro'); };
+const driver = new HarnessDriver(runId, stateDir);
+const intent = path.join(driver.substepsDir, 'T1.status');
+fs.writeFileSync(intent, '{}');
+assert.throws(() => driver.reserveSubstepIntent('T1'), /Fail-closed: existing intent file/);
+assert.equal(fs.readFileSync(intent, 'utf8'), '{}');
+assert.equal(networkCalls, 0);
+console.log(JSON.stringify({ sourceHead: '48cc03e949d66fc47a7d304413621eb79804e6c1', stateDir, caseId: 'T1', input: {}, observed: 'refused existing corrupt intent without overwrite', retainedBytesUnchanged: true, networkCalls, result: 'R3_COUNTEREXAMPLE_CLOSED_FOCUSED_ONLY_NOT_INDEPENDENT_QA' }, null, 2));

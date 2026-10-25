@@ -1,0 +1,17 @@
+{
+  "task": "MC-002-INTA-FE-R4-SOURCE-REVIEW",
+  "status": "BLOCKED_PROVIDER_QUOTA",
+  "requested_model": "opencode/big-pickle",
+  "human_authority": "User explicitly selected another configured model/provider and asked continue",
+  "session_id": "ses_e8dab66d3ffeZNJjY1xaZY1cnt",
+  "exit": 1,
+  "error_type": "provider.free-limit",
+  "http_status": 429,
+  "message": "Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+  "retry_after_ms": 53289000,
+  "verdict": null,
+  "input_identical_to_original": true,
+  "configured_alternate_integrations": 0,
+  "interpretation": "Both tested opencode models hit provider.free-limit. Shared provider restriction inferred; no claim every listed model tested.",
+  "action": "Stop model cycling; preserve both attempts. Await usable authenticated OpenCode route or quota recovery; no login/payment/settings changes or scheduled retry."
+}
