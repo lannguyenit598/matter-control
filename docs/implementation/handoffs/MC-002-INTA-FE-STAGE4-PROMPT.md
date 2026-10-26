@@ -1,5 +1,7 @@
 # INT-A frontend stage4 — released Codex cue for ZCode
 
+EXECUTED — actual stage4 return intaken2026-10-26. Do not replay stage4 or T9 mutation. Codex has stopped exactPG for outage; follow MC-002-INTA-FE-STAGE5-PROMPT.md only after fresh preflight. Historical instructions below retained.
+
 CUE_RELEASED / READY_NOT_DISPATCHED,2026-10-26. Human delivery assigns actual ZCode frontend/Next/driver stage4 ONLY, under existing DEC-028/frozen INTA-1. Stage3 actual return has been intaken: complete A equals version1 baseline after same-PG restart. This is synthetic local native transport characterization, not product CAS/idempotency/security or independent QA. No repeat permission needed for this same approved scope; normal current tool/provider/payload permissions still apply. Use configured permitted route/quota; no model/provider/settings/login/paid retry or new external source access.
 
 Governance /Users/nguyenvanlan/Documents/code/pet-projects/matter-control, codex/unified-project-flow: read AGENTS/RTK,current workflow/INT-A task and coordination, frozen INTA-1 in full, docs/reviews/inta-frontend-runtime-stage3-intake.md and owner report, docs/testing/inta-stage3-intake/checks.json, full reviewed frontend runtime plan and pinned driver stage4 implementation. Verify actual latest HEAD, do not hardcode an old preparation head. Respect current hook instructions and official permissions; preserve others' work and all prior snapshots.
