@@ -1,0 +1,38 @@
+[
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "W11",
+    "requestId": "mc-int-intamvnmoems3pd-W11-24",
+    "mode": "wire",
+    "method": "GET",
+    "routeTemplate": "/api/v1/users/{id}",
+    "startedAtUTC": "2026-10-26T00:21:41.259Z",
+    "latencyMs": 4,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": "unavailable",
+    "value": null,
+    "apiError": {
+      "status": 503,
+      "code": "HTTP_ERROR",
+      "message": "HTTP 503",
+      "details": {
+        "type": "/problems/unavailable",
+        "title": "Service Unavailable",
+        "status": 503,
+        "detail": "service temporarily unavailable",
+        "instance": "/api/v1/users/01a17422-e796-7465-a325-1c87c74d8393",
+        "retryAfter": 1
+      }
+    },
+    "wire": {
+      "status": 503,
+      "headers": {
+        "content-type": "application/problem+json",
+        "x-request-id": "mc-int-intamvnmoems3pd-W11-24"
+      }
+    },
+    "truncated": false
+  }
+]

@@ -1,5 +1,7 @@
 # INT-A frontend stage5 — released outage cue for ZCode
 
+EXECUTED — actualstage5return intaken2026-10-26. Do not replayoutagecases/POSTX. Codex samePGrecovery executed withoutGoRestart; follow MC-002-INTA-FE-STAGE6-PROMPT.md only after freshpreflight. Historicalinstructions below retained.
+
 CUE_RELEASED / READY_NOT_DISPATCHED,2026-10-26. Actual human delivery assigns ZCode frontend/Next/driver stage5 ONLY under existing DEC-028/INTA-1. Codex has intaken stage4 and ACTUALLY STOPPED the exact PostgreSQL container while Go/Next remain alive. No repeat approval needed for the same scoped assignment; normal tool/payload/provider permissions apply. Use current configured ZCode route/quota, no provider/model/login/settings/paid retry or new context scope. This is owner runtime execution, not independent QA/product acceptance.
 
 Read governance /Users/nguyenvanlan/Documents/code/pet-projects/matter-control AGENTS/RTK,current workflow/INT-A task/coordination,frozen INTA-1,docs/reviews/inta-frontend-runtime-stage4-intake.md and ownerreturn,docs/testing/inta-stage4-intake/checks.json and exported environment pg-outage-intamvnmoems3pd-01/lifecycle.json. Latest HEAD and source identity required; preserve all previous work. Honor official hook-prescribed routes; no bypass of denied actions.

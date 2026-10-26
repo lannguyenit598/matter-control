@@ -1,0 +1,36 @@
+[
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T11a",
+    "requestId": "mc-int-intamvnmoems3pd-T11a-21",
+    "mode": "app-client",
+    "method": "GET",
+    "routeTemplate": "/api/v1/users/{id}",
+    "startedAtUTC": "2026-10-26T00:21:41.055Z",
+    "latencyMs": 24,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": "unavailable",
+    "value": null,
+    "apiError": {
+      "status": 503,
+      "code": "HTTP_ERROR",
+      "message": "service temporarily unavailable",
+      "details": {
+        "type": "/problems/unavailable",
+        "title": "Service Unavailable",
+        "status": 503,
+        "detail": "service temporarily unavailable",
+        "instance": "/api/v1/users/01a17422-e796-7465-a325-1c87c74d8393",
+        "retryAfter": 1
+      }
+    },
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "caseId": "T1",
+    "pass": true,
+    "notes": "User A created with version 1, valid UUIDv7 and RFC 3339 UTC timestamps",
+    "timestampUTC": "2026-10-25T17:36:47.042Z"
+  },
+  {
+    "caseId": "T2",
+    "pass": true,
+    "notes": "T2 readback matches checkpoint field-for-field",
+    "timestampUTC": "2026-10-25T18:25:40.521Z"
+  },
+  {
+    "caseId": "W1",
+    "pass": true,
+    "notes": "User B created with 201, valid Location, ETag \"1\", JSON content-type and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.108Z"
+  },
+  {
+    "caseId": "W2",
+    "pass": true,
+    "notes": "W2 read User A with 200, ETag \"1\" and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.128Z"
+  },
+  {
+    "caseId": "T3",
+    "pass": true,
+    "notes": "T3 missing UUID returned 404 NOT_FOUND",
+    "timestampUTC": "2026-10-25T17:36:47.152Z"
+  },
+  {
+    "caseId": "T4",
+    "pass": true,
+    "notes": "T4 executed two distinct 404 NOT_FOUND substeps with unique request IDs",
+    "timestampUTC": "2026-10-25T17:36:47.176Z"
+  },
+  {
+    "caseId": "T5",
+    "pass": true,
+    "notes": "T5 rejected empty name with 422 and verified User A unchanged",
+    "timestampUTC": "2026-10-25T17:36:47.201Z"
+  },
+  {
+    "caseId": "T8",
+    "pass": true,
+    "notes": "T8 rejected duplicate email with 409 and verified User A unchanged",
+    "timestampUTC": "2026-10-25T17:36:47.227Z"
+  },
+  {
+    "caseId": "W3",
+    "pass": true,
+    "notes": "W3 returned 404 with application/problem+json and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.249Z"
+  },
+  {
+    "caseId": "T6-W",
+    "pass": true,
+    "notes": "T6-W returned 400 with application/problem+json and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.271Z"
+  },
+  {
+    "caseId": "T7-W",
+    "pass": true,
+    "notes": "T7-W returned 415 with application/problem+json and x-request-id echo",
+    "timestampUTC": "2026-10-25T17:36:47.295Z"
+  },
+  {
+    "caseId": "INT-PERS-01",
+    "pass": true,
+    "notes": "INT-PERS-01 verified User A unchanged across Go restart",
+    "timestampUTC": "2026-10-25T18:09:19.988Z"
+  },
+  {
+    "caseId": "INT-PERS-02",
+    "pass": true,
+    "notes": "INT-PERS-02 verified User A unchanged across PostgreSQL restart",
+    "timestampUTC": "2026-10-25T18:20:29.953Z"
+  },
+  {
+    "caseId": "T9",
+    "pass": true,
+    "notes": "T9 updated User A to version 2 with name INTA_A_UPDATED and verified RFC 3339 UTC updated_at",
+    "timestampUTC": "2026-10-25T18:25:40.438Z"
+  },
+  {
+    "caseId": "W9",
+    "pass": true,
+    "notes": "W9 read User A with 200, ETag \"2\" and x-request-id echo",
+    "timestampUTC": "2026-10-25T18:25:40.476Z"
+  },
+  {
+    "caseId": "T10",
+    "pass": true,
+    "notes": "T10 rejected stale update with 412 and verified User A version 2 preserved",
+    "timestampUTC": "2026-10-25T18:25:40.521Z"
+  },
+  {
+    "caseId": "T11a",
+    "pass": true,
+    "notes": "T11a returned 503 unavailable with native problem literals (/problems/unavailable, retryAfter: 1)",
+    "timestampUTC": "2026-10-26T00:21:41.092Z"
+  },
+  {
+    "caseId": "T11b",
+    "pass": true,
+    "notes": "T11b returned 503 unavailable",
+    "timestampUTC": "2026-10-26T00:21:41.153Z"
+  },
+  {
+    "caseId": "T11c",
+    "pass": true,
+    "notes": "T11c returned 503 unavailable; User X outcome marked OUTCOME_UNKNOWN (no replay/probe)",
+    "timestampUTC": "2026-10-26T00:21:41.208Z"
+  },
+  {
+    "caseId": "W11",
+    "pass": true,
+    "notes": "W11 returned 503 with application/problem+json and x-request-id echo",
+    "timestampUTC": "2026-10-26T00:21:41.264Z"
+  }
+]
