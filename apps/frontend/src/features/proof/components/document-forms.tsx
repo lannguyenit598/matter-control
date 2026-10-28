@@ -3,16 +3,19 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
 
 import { useRouter } from 'next/navigation'
-import { useState, useTransition, type FormEvent } from 'react'
+import { useRef, useState, useTransition, type FormEvent } from 'react'
 
 import { Button } from '@/components/atoms/button'
 import { Input } from '@/components/atoms/input'
 import { Textarea } from '@/components/atoms/textarea'
 import { Alert } from '@/components/molecules/alert'
 import { FormField } from '@/components/molecules/form-field'
+import { useDraftNamespace } from '@/components/organisms/draft-scope'
 import { IntentForm } from '@/components/organisms/intent-form'
 import { MESSAGES, type McActionResult } from '@/lib/mc/action-result'
+import { clearAttempt, saveAttempt } from '@/lib/mc/drafts'
 import { newIdempotencyKey } from '@/lib/mc/idempotency'
+import { usePendingAttempt } from '@/lib/mc/use-attempt'
 
 import { createDocumentAction, promoteVersionAction, recordSignatureAction } from '../actions'
 import type { DocumentDetail } from '../schemas'
@@ -43,11 +46,33 @@ type UploadState =
   | { kind: 'done'; replayed: boolean }
   | { kind: 'failed'; result: Extract<McActionResult, { ok: false }> }
 
+/** Lower-case hex SHA-256 of the file bytes, or '' when the browser cannot compute it. */
+async function sha256Hex(file: File): Promise<string> {
+  try {
+    const digest = await crypto.subtle.digest('SHA-256', await file.arrayBuffer())
+    return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('')
+  } catch {
+    // skip: without a digest the attempt simply is not kept across a reload
+    return ''
+  }
+}
+
+const UNKNOWN_RETRY: Extract<McActionResult, { ok: false }> = {
+  ok: false,
+  kind: 'outcome-unknown',
+  error: MESSAGES['outcome-unknown'],
+  retrySameKey: true,
+}
+
 /**
  * Uploads one file as the next version. The bytes go straight to the same-origin upload route
  * (never through a Server Action) with an idempotency key that stays the same for every retry of
  * this selection: an interrupted request is UNKNOWN, retrying with the same key either replays the
  * stored version or stores it once. A new file mints a new key.
+ *
+ * A File cannot survive a reload, so when the answer was lost the key is kept with the file's name,
+ * size and SHA-256 (session storage, same scope rules as drafts). After a reload the key is reused
+ * only if the person chooses the same bytes again; any other file is a new intent.
  */
 export function UploadVersionForm({
   matterId,
@@ -61,10 +86,45 @@ export function UploadVersionForm({
   const [key, setKey] = useState(() => newIdempotencyKey())
   const [state, setState] = useState<UploadState>({ kind: 'idle' })
   const [pending, start] = useTransition()
+  const namespace = useDraftNamespace()
+  const scope = `document:${documentId}:upload`
+  // An upload whose answer was lost before a reload, read from storage: name, size and SHA-256.
+  const stored = usePendingAttempt(namespace, scope)
+  const earlier =
+    stored?.values.name && stored.values.size && stored.values.sha256
+      ? {
+          key: stored.key,
+          name: stored.values.name,
+          size: stored.values.size,
+          sha256: stored.values.sha256,
+        }
+      : null
+  const earlierName = earlier?.name ?? null
+  const [checking, setChecking] = useState(false)
+  const selection = useRef(0)
+
+  function forget() {
+    if (namespace) clearAttempt(namespace, scope)
+  }
+
+  async function remember(f: File, k: string) {
+    if (!namespace) return
+    const sha256 = await sha256Hex(f)
+    if (sha256)
+      saveAttempt(namespace, scope, {
+        key: k,
+        values: { name: f.name, size: String(f.size), sha256 },
+      })
+  }
 
   function submit(e: FormEvent) {
     e.preventDefault()
     if (!file) return
+    const fail = (result: Extract<McActionResult, { ok: false }>) => {
+      setState({ kind: 'failed', result })
+      if (result.retrySameKey) void remember(file, key)
+      else forget()
+    }
     start(async () => {
       try {
         const res = await fetch(`/api/matters/${matterId}/documents/${documentId}/versions`, {
@@ -79,32 +139,17 @@ export function UploadVersionForm({
         const json = (await res.json().catch(() => null)) as McActionResult | null
         if (res.ok && json?.ok) {
           setState({ kind: 'done', replayed: json.replayed === true })
+          forget()
           setFile(null)
           setKey(newIdempotencyKey())
           router.refresh()
           return
         }
-        if (json && !json.ok) return setState({ kind: 'failed', result: json })
+        if (json && !json.ok) return fail(json)
         // A 2xx or 5xx whose body is unusable may have committed: unknown, same key is safe.
-        setState({
-          kind: 'failed',
-          result: {
-            ok: false,
-            kind: 'outcome-unknown',
-            error: MESSAGES['outcome-unknown'],
-            retrySameKey: true,
-          },
-        })
+        fail(UNKNOWN_RETRY)
       } catch {
-        setState({
-          kind: 'failed',
-          result: {
-            ok: false,
-            kind: 'outcome-unknown',
-            error: MESSAGES['outcome-unknown'],
-            retrySameKey: true,
-          },
-        })
+        fail(UNKNOWN_RETRY)
       }
     })
   }
@@ -126,19 +171,51 @@ export function UploadVersionForm({
             type="file"
             name="file"
             onChange={(e) => {
-              setFile(e.target.files?.[0] ?? null)
-              setKey(newIdempotencyKey()) // a different file is a different intent
+              const chosen = e.target.files?.[0] ?? null
+              const ticket = ++selection.current
+              setFile(chosen)
               setState({ kind: 'idle' })
+              const was = earlier
+              if (!chosen || !was) {
+                setKey(newIdempotencyKey()) // a different file is a different intent
+                return
+              }
+              // Same name, size and bytes as the upload whose answer was lost: same intent, same key.
+              setChecking(true)
+              void sha256Hex(chosen)
+                .then((sha256) => {
+                  if (ticket !== selection.current) return // a newer selection won
+                  const same =
+                    sha256 !== '' &&
+                    sha256 === was.sha256 &&
+                    chosen.name === was.name &&
+                    String(chosen.size) === was.size
+                  if (same) {
+                    setKey(was.key)
+                    setState({ kind: 'failed', result: UNKNOWN_RETRY })
+                  } else {
+                    setKey(newIdempotencyKey())
+                    forget()
+                  }
+                })
+                .finally(() => {
+                  if (ticket === selection.current) setChecking(false)
+                })
             }}
             {...c}
           />
         )}
       </FormField>
       <div>
-        <Button type="submit" loading={pending} disabled={!file}>
+        <Button type="submit" loading={pending} disabled={!file || checking}>
           {state.kind === 'failed' && state.result.retrySameKey ? 'Retry upload' : 'Upload version'}
         </Button>
       </div>
+      {earlierName && state.kind === 'idle' && (
+        <Alert title="Earlier upload not confirmed">
+          {`An earlier upload of "${earlierName}" was not confirmed. Choose the same file again to retry it safely; any other file starts a new upload.`}
+        </Alert>
+      )}
       {state.kind === 'done' && (
         <p role="status" className="text-sm">
           {state.replayed ? 'This file had already been stored.' : 'Version stored.'}

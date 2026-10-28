@@ -8,10 +8,18 @@ import { useEffect, useRef, useState, useTransition, type FormEvent, type ReactN
 
 import { Button } from '@/components/atoms/button'
 import { Alert } from '@/components/molecules/alert'
-import { callMcAction, type McActionResult } from '@/lib/mc/action-result'
+import { callMcAction, MESSAGES, type McActionResult } from '@/lib/mc/action-result'
 import type { McRejection } from '@/lib/mc/errors'
-import { clearDraft, loadDraft, saveDraft, type DraftValues } from '@/lib/mc/drafts'
+import {
+  clearAttempt,
+  clearDraft,
+  loadDraft,
+  saveAttempt,
+  saveDraft,
+  type DraftValues,
+} from '@/lib/mc/drafts'
 import { newIdempotencyKey } from '@/lib/mc/idempotency'
+import { usePendingAttempt } from '@/lib/mc/use-attempt'
 
 import { useDraftNamespace } from './draft-scope'
 
@@ -42,6 +50,14 @@ export type IntentFormProps = {
   className?: string
 }
 
+/** What a form shows after a reload when its create may or may not have landed. */
+const RESTORED_UNKNOWN: Extract<McActionResult, { ok: false }> = {
+  ok: false,
+  kind: 'outcome-unknown',
+  error: MESSAGES['outcome-unknown'],
+  retrySameKey: true,
+}
+
 /**
  * One form = one user intent = one idempotency key. A retry after an unknown outcome reuses the
  * key (the server replays or reconciles, never double-applies); a new key is minted only after
@@ -59,7 +75,7 @@ export function IntentForm({
 }: IntentFormProps) {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
-  const [key, setKey] = useState(() => newIdempotencyKey())
+  const [ownKey, setOwnKey] = useState(() => newIdempotencyKey())
   const [result, setResult] = useState<McActionResult | null>(null)
   const [pending, start] = useTransition()
   const [attempt, setAttempt] = useState(0)
@@ -70,8 +86,15 @@ export function IntentForm({
 
   const namespace = useDraftNamespace()
   const draftsOn = namespace !== null && draftKey !== undefined
+  // A receipted create whose answer was lost before a reload: the stored attempt carries the same
+  // key and the exact values, so the one safe recovery (same request, same key) is still the only
+  // one offered. It is read from storage, not copied into state, so it can never go stale.
+  const pendingAttempt = usePendingAttempt(receipted ? namespace : null, draftKey)
+  const key = pendingAttempt?.key ?? ownKey
   const dropDraft = () => {
-    if (draftsOn) clearDraft(namespace, draftKey)
+    if (!draftsOn) return
+    clearDraft(namespace, draftKey)
+    clearAttempt(namespace, draftKey)
   }
 
   // Restore a kept draft once, after mount, into the uncontrolled fields.
@@ -84,7 +107,8 @@ export function IntentForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [namespace, draftKey])
 
-  const failure = result && !result.ok ? result : null
+  const shown = result ?? (pendingAttempt ? RESTORED_UNKNOWN : null)
+  const failure = shown && !shown.ok ? shown : null
   const retrying = failure?.retrySameKey === true
   // A CAS-only command with an unknown outcome is blocked until the state is re-read.
   const blocked = failure?.requiresReread === true
@@ -92,7 +116,8 @@ export function IntentForm({
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (blocked) return // the handler enforces it, not only the disabled button
-    const values = retrying && frozen.current ? frozen.current : readValues(event.currentTarget)
+    const sent = frozen.current ?? pendingAttempt?.values ?? null
+    const values = retrying && sent ? sent : readValues(event.currentTarget)
     start(async () => {
       const r = await callMcAction(() => run(values, key), { receipted })
       setResult(r)
@@ -107,14 +132,16 @@ export function IntentForm({
       if (r.ok) {
         dropDraft()
         frozen.current = null
-        setKey(newIdempotencyKey())
+        setOwnKey(newIdempotencyKey())
         formRef.current?.reset()
         router.refresh()
         onSuccess?.(r)
       } else if (r.kind === 'outcome-unknown' && r.retrySameKey) {
         frozen.current = values
+        if (draftsOn) saveAttempt(namespace, draftKey, { key, values })
       } else {
         frozen.current = null
+        if (draftsOn) clearAttempt(namespace, draftKey)
       }
     })
   }
@@ -131,7 +158,7 @@ export function IntentForm({
   function discard() {
     dropDraft()
     frozen.current = null
-    setKey(newIdempotencyKey())
+    setOwnKey(newIdempotencyKey())
     setResult(null)
   }
 
