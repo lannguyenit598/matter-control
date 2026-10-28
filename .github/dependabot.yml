@@ -1,10 +1,9 @@
 # Automatic dependency updates. Dependabot PRs must pass CI like every other PR.
-# cooldown: propose releases at least 14 days old, following AGENTS.md.
-# Security updates are not held back by the cooldown.
+# cooldown: propose releases at least 14 days old. Security updates are not held back by the cooldown.
 version: 2
 updates:
   - package-ecosystem: gomod
-    directory: /
+    directory: /apps/backend
     schedule:
       interval: weekly
     cooldown:
@@ -13,7 +12,17 @@ updates:
       go-minor-and-patch:
         update-types: [minor, patch]
 
-  # Actions are pinned by commit SHA with version comments; Dependabot updates both.
+  - package-ecosystem: npm
+    directory: /apps/frontend
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    groups:
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+
+  # Actions are pinned with version comments; Dependabot updates the pins.
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -25,7 +34,7 @@ updates:
         patterns: ["*"]
 
   - package-ecosystem: docker
-    directory: /
+    directory: /apps/backend
     schedule:
       interval: weekly
     cooldown:

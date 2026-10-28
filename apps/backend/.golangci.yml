@@ -16,7 +16,7 @@ linters:
       rules:
         # Core (domain, port, service) may depend only on itself and the standard library, excluding
         # standard packages owned by adapters (HTTP, SQL) or the composition root (environment).
-        # Core tests may use adapters (such as the memory repository), so exclude $test.
+        # Core tests may use adapters (such as the memory store of the contract suites), so exclude $test.
         core:
           files:
             - "**/internal/core/**"
@@ -47,10 +47,6 @@ linters:
               desc: inbound adapters must not know about the database
             - pkg: github.com/exaring/otelpgx
               desc: inbound adapters must not know about the database
-            - pkg: github.com/twmb/franz-go
-              desc: inbound adapters must not know about the message broker; events go through the outbox
-            - pkg: github.com/example/userapi/internal/outbox
-              desc: events are written by the storage adapter inside its transaction, never from a transport
             - pkg: github.com/example/userapi/internal/app
               desc: only cmd may depend on the composition root
             - pkg: go.uber.org/fx
@@ -67,13 +63,7 @@ linters:
               desc: outbound adapters must not depend on transports
             - pkg: github.com/labstack/echo
               desc: outbound adapters must not depend on the HTTP framework
-            - pkg: github.com/danielgtaylor/huma
-              desc: outbound adapters must not depend on the HTTP framework
-            - pkg: github.com/example/userapi/internal/adapter/outbound/memory
-              desc: outbound adapters must not depend on each other
             - pkg: github.com/example/userapi/internal/adapter/outbound/system
-              desc: outbound adapters must not depend on each other
-            - pkg: github.com/example/userapi/internal/adapter/outbound/kafka
               desc: outbound adapters must not depend on each other
             - pkg: github.com/example/userapi/internal/adapter/outbound/repotest
               desc: the shared contract test kit is for tests only
@@ -94,8 +84,6 @@ linters:
               desc: platform packages must not depend on adapters
             - pkg: github.com/example/userapi/internal/core
               desc: platform packages must not depend on the core
-            - pkg: github.com/example/userapi/internal/outbox
-              desc: platform packages must not depend on the outbox relay
             - pkg: github.com/example/userapi/internal/app
               desc: only cmd may depend on the composition root
             - pkg: go.uber.org/fx
@@ -103,7 +91,7 @@ linters:
             - pkg: go.uber.org/dig
               desc: dependency injection belongs in the composition root (internal/app)
         # Other outbound adapters must not depend on the postgres adapter or its generated queries
-        # (postgres/sqlcgen); the postgres adapter itself imports sqlcgen.
+        # (postgres/mcsqlc); the postgres adapter itself imports mcsqlc.
         outbound-adapters-not-postgres:
           files:
             - "**/internal/adapter/outbound/**"
@@ -112,25 +100,6 @@ linters:
           deny:
             - pkg: github.com/example/userapi/internal/adapter/outbound/postgres
               desc: outbound adapters must not depend on each other; generated queries stay inside the postgres adapter
-        # Only the kafka adapter may use a Kafka client; direct publishing elsewhere would be a dual write.
-        outbound-adapters-no-broker:
-          files:
-            - "**/internal/adapter/outbound/**"
-            - "!**/internal/adapter/outbound/kafka/**"
-            - "!$test"
-          deny:
-            - pkg: github.com/twmb/franz-go
-              desc: only the kafka adapter may use the Kafka client; other adapters write events to the outbox
-        # internal/outbox defines Source/Sink and the relay loop; it knows no database, broker, or domain.
-        outbox:
-          files:
-            - "**/internal/outbox/**"
-            - "!$test"
-          allow:
-            - $gostd
-          deny:
-            - pkg: database/sql
-              desc: internal/outbox must not know the database; postgres.OutboxSource implements Source
         # cmd reads config, creates a logger, handles signals, and calls internal/app, which wires adapters.
         cmd:
           files:
@@ -145,16 +114,12 @@ linters:
               desc: adapters are wired in internal/app, not in cmd
             - pkg: github.com/labstack/echo
               desc: adapters are wired in internal/app, not in cmd
-            - pkg: github.com/danielgtaylor/huma
-              desc: adapters are wired in internal/app, not in cmd
-            - pkg: github.com/twmb/franz-go
-              desc: adapters are wired in internal/app, not in cmd
             - pkg: github.com/pressly/goose
-              desc: migrations run through internal/app (app.Migrate), not from cmd
+              desc: migrations run through internal/app (app.MigrateProduct), not from cmd
             - pkg: go.uber.org/fx
-              desc: the fx graph is built in internal/app; cmd only calls app.Run/app.RunRelay
+              desc: the fx graph is built in internal/app; cmd only calls app.RunProduct/app.MigrateProduct
             - pkg: go.uber.org/dig
-              desc: the fx graph is built in internal/app; cmd only calls app.Run/app.RunRelay
+              desc: the fx graph is built in internal/app; cmd only calls app.RunProduct/app.MigrateProduct
         # All other packages (including new ones such as internal/worker): only the composition root may know adapters.
         # A new package category allowed to import adapters needs its own rule.
         everything-else:
@@ -175,10 +140,6 @@ linters:
               desc: only the postgres adapter may run migrations
             - pkg: github.com/labstack/echo
               desc: only the HTTP adapter may use the HTTP framework
-            - pkg: github.com/danielgtaylor/huma
-              desc: only the HTTP adapter may use Huma (operations and OpenAPI)
-            - pkg: github.com/twmb/franz-go
-              desc: only the kafka adapter may use the Kafka client (internal/outbox talks to it through Sink)
             - pkg: go.uber.org/fx
               desc: only the composition root (internal/app) may use the dependency injection container
             - pkg: go.uber.org/dig

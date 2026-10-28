@@ -1,29 +1,45 @@
+# Local stack: PostgreSQL + `mcapi migrate` (runs once) + the API. No secret is stored here: the OIDC
+# settings and the path of the API key file come from your environment (see .env.example), and the
+# compose file fails fast with a message when one is missing.
+x-mcapi-env: &mcapi-env
+  MC_DATABASE_URL: postgres://mattercontrol:mattercontrol@db:5432/mattercontrol?sslmode=disable
+  MC_OBJECT_DIR: /data/objects
+  MC_HTTP_ADDR: ":8081"
+  MC_OIDC_ISSUER: ${MC_OIDC_ISSUER:?set MC_OIDC_ISSUER}
+  MC_OIDC_INTROSPECTION_URL: ${MC_OIDC_INTROSPECTION_URL:?set MC_OIDC_INTROSPECTION_URL}
+  MC_OIDC_AUDIENCE: ${MC_OIDC_AUDIENCE:?set MC_OIDC_AUDIENCE}
+  MC_OIDC_API_CLIENT_ID: ${MC_OIDC_API_CLIENT_ID:-}
+  MC_OIDC_API_KEY_FILE: /run/secrets/oidc-api-key.json
+  MC_LOG_LEVEL: ${MC_LOG_LEVEL:-info}
+
 services:
   db:
     image: postgres:18-alpine
     environment:
-      POSTGRES_USER: userapi
-      POSTGRES_PASSWORD: userapi
-      POSTGRES_DB: userapi
+      POSTGRES_USER: mattercontrol
+      POSTGRES_PASSWORD: mattercontrol
+      POSTGRES_DB: mattercontrol
     ports:
       - "127.0.0.1:5432:5432" # Local machine only; do not expose to the network.
     volumes:
       - pgdata:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U userapi -d userapi"]
+      test: ["CMD-SHELL", "pg_isready -U mattercontrol -d mattercontrol"]
       interval: 2s
       timeout: 3s
       retries: 15
 
-  # Run migrations once and exit, like a Kubernetes Job / initContainer.
+  # Run migrations once and exit, like a Kubernetes Job / initContainer. mcapi validates its whole
+  # configuration at start, so this service needs the same OIDC settings and key file as the API.
   migrate:
     build:
       context: .
       args:
         VERSION: ${VERSION:-dev}
     command: ["migrate"]
-    environment:
-      DATABASE_URL: postgres://userapi:userapi@db:5432/userapi?sslmode=disable
+    environment: *mcapi-env
+    volumes:
+      - ${MC_OIDC_API_KEY_FILE_HOST:?set MC_OIDC_API_KEY_FILE_HOST}:/run/secrets/oidc-api-key.json:ro
     depends_on:
       db:
         condition: service_healthy
@@ -33,17 +49,16 @@ services:
       context: .
       args:
         VERSION: ${VERSION:-dev}
-    environment:
-      HTTP_ADDR: ":8080"
-      STORAGE: postgres
-      DATABASE_URL: postgres://userapi:userapi@db:5432/userapi?sslmode=disable
-      LOG_LEVEL: info
-      DB_MAX_CONNS: "10"
+    environment: *mcapi-env
     ports:
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8081:8081"
+    volumes:
+      - objects:/data/objects
+      - ${MC_OIDC_API_KEY_FILE_HOST:?set MC_OIDC_API_KEY_FILE_HOST}:/run/secrets/oidc-api-key.json:ro
     depends_on:
       migrate:
         condition: service_completed_successfully
 
 volumes:
   pgdata:
+  objects:

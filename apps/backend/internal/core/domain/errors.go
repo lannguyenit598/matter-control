@@ -1,16 +1,13 @@
 package domain
 
 import (
-	"errors"
 	"sort"
 	"strings"
 )
 
-// Domain contains business-rule errors (invalid input, email already in use).
+// Package domain holds business-rule errors shared across the core (invalid input).
 // Use-case outcome errors (not found, version conflict) belong to package port.
-// Inbound adapters (HTTP, gRPC, CLI...) map them to protocol-specific errors;
-// core knows nothing about HTTP status codes.
-var ErrEmailAlreadyExists = errors.New("email already exists")
+// Inbound adapters map them to protocol-specific errors; core knows nothing about HTTP status codes.
 
 // FieldError describes a validation error for one field.
 type FieldError struct {

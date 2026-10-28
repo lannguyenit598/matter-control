@@ -15,19 +15,6 @@ const (
 	reqUUID    = "00000000-0000-7000-8000-000000000003"
 )
 
-// BE01-T01: typed Requirement and MatterControl access facts are their own types, never
-// aliases of the legacy User/Task domain.
-func TestTypedIdentitiesAreDistinctFromLegacyUser(t *testing.T) {
-	var actor any = matter.ActorID(actorUUID)
-	if _, ok := actor.(domain.UserID); ok {
-		t.Fatal("matter.ActorID must not be the legacy domain.UserID type")
-	}
-	var req any = matter.RequirementID(reqUUID)
-	if _, ok := req.(domain.UserID); ok {
-		t.Fatal("matter.RequirementID must not be the legacy domain.UserID type")
-	}
-}
-
 // BE01-T01: identity value objects accept canonical UUIDs and reject malformed input.
 func TestIdentityParsing(t *testing.T) {
 	valid := []struct {

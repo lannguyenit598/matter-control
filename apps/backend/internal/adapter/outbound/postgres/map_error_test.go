@@ -9,7 +9,6 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 
-	"github.com/example/userapi/internal/core/domain"
 	"github.com/example/userapi/internal/core/port"
 )
 
@@ -62,8 +61,7 @@ func TestMapError_UnavailableClassification(t *testing.T) {
 		})
 	}
 
-	// A duplicate email on a different constraint is an unexpected error; only users_email_key
-	// maps to the domain conflict.
+	// A unique violation is a data error, never retryable unavailability.
 	if err := mapError(&pgconn.PgError{Code: "23505", ConstraintName: "other_pkey"}); errors.Is(err, port.ErrUnavailable) {
 		t.Fatal("23505 on an unmapped constraint must not classify as unavailable")
 	}
@@ -72,9 +70,8 @@ func TestMapError_UnavailableClassification(t *testing.T) {
 		if err := mapError(pgx.ErrNoRows); !errors.Is(err, port.ErrNotFound) {
 			t.Errorf("ErrNoRows must map to ErrNotFound, got %v", err)
 		}
-		err := mapError(&pgconn.PgError{Code: "23505", ConstraintName: "users_email_key"})
-		if !errors.Is(err, domain.ErrEmailAlreadyExists) {
-			t.Errorf("users_email_key violation must map to ErrEmailAlreadyExists, got %v", err)
+		if err := mapError(&pgconn.PgError{Code: "23505", ConstraintName: "other_pkey"}); err == nil || errors.Is(err, port.ErrNotFound) {
+			t.Errorf("a unique violation must stay an unexpected error, got %v", err)
 		}
 	})
 

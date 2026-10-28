@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/fs"
 	"log/slog"
+	"time"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -14,6 +15,9 @@ import (
 	"github.com/pressly/goose/v3"
 	"github.com/pressly/goose/v3/lock"
 )
+
+// migrationLockTimeout bounds how long a migration waits for a conflicting lock.
+const migrationLockTimeout = 5 * time.Second
 
 //go:embed migrations_mattercontrol/*.sql
 var mattercontrolEmbedded embed.FS
@@ -30,8 +34,7 @@ func mattercontrolMigrationsFS() fs.FS {
 
 // MigrateMatterControl applies the MatterControl product migrations with goose: its
 // own advisory-locked connection, statement_timeout = 0 and the same 5s lock timeout
-// as the legacy migrator. Only a fresh product database or per-test schema may receive
-// this DDL; never point it at a legacy userapi database.
+// as a 5s default. Only a fresh product database or per-test schema may receive this DDL.
 func MigrateMatterControl(ctx context.Context, dsn string, logger *slog.Logger) error {
 	db, err := openMatterControlMigrationDB(dsn)
 	if err != nil {
