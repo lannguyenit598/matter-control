@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MatterControl R3: Atlas operational truth concept</title>
+<meta name="description" content="Source-only exploratory synthetic design, no backend or authoritative operations.">
+<style id="r3-polish">/* Hallmark v2 · scope: app · selected Enterprise Precision A · source refinement · render: NOT_RUN */
+/* Critique: causal chain and proof context lead; no new visual system; independent review pending. */
+:root {
+ --r2-surface:#ffffff;
+ --r2-background:#f6f8fa;
+ --r2-ink:#17212b;
+ --r2-muted:#52606d;
+ --r2-line:#c6ced6;
+ --r2-focus:#174ea6;
+ --r2-selected:#e8effa;
+ --r2-error:#a12622;
+ --r2-disabled:#626973;
+ --r2-execution:#364152;
+ --r2-verification:#236341;
+ --r2-dependency-ready:#174ea6;
+ --r2-dependency-blocked:#8a2925;
+ --r2-timing:#775317;
+ --r2-attention:#783e14;
+ --r2-header:#101820;
+ --r2-header-text:#ffffff;
+ --font-body:"Segoe UI", "Helvetica Neue", Arial, sans-serif;
+ --font-mono:ui-monospace, SFMono-Regular, Menlo, monospace;
+ --r2-gap:12px; --r2-gutter:16px; --r2-radius:8px; --r2-control-radius:4px;
+ --r2-duration:160ms;
+}
+* { box-sizing:border-box; }
+html, body { overflow-x:clip; }
+body { margin:0; background:var(--r2-background); color:var(--r2-ink); font:14px/1.5 var(--font-body); }
+[hidden] { display:none !important; }
+header { background:var(--r2-header); color:var(--r2-header-text); padding:12px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+header p { margin:0; }
+.scope { display:flex; gap:16px; flex-wrap:wrap; }
+.notice { padding:12px 24px; background:var(--r2-surface); border-bottom:1px solid var(--r2-line); }
+.notice p { margin:0; max-width:75ch; }
+.app-layout { display:grid; grid-template-columns:212px minmax(0,1fr); min-height:80vh; }
+/* At 1440px: 212px navigation + 2×24px canvas gutters + 1180px content = 1440px. */
+nav { background:var(--r2-surface); border-right:1px solid var(--r2-line); padding:16px 12px; }
+nav button { display:block; width:100%; text-align:left; margin-bottom:4px; }
+nav button[aria-current="page"] { background:var(--r2-selected); color:var(--r2-focus); }
+main { min-width:0; padding:24px; }
+h1 { font-size:22px; line-height:1.25; font-weight:600; margin:0 0 12px; text-wrap:balance; }
+h2 { font-size:16px; line-height:1.5; margin:0 0 12px; font-weight:600; text-wrap:balance; }
+h3 { font-size:14px; margin:16px 0 8px; text-wrap:balance; }
+p { margin:8px 0; }
+.meta, small { font-size:12px; color:var(--r2-muted); }
+header .meta { color:var(--r2-header-text); }
+code,time { font-family:var(--font-mono); font-size:12px; }
+.lede { max-width:75ch; margin-bottom:24px; }
+.cr-layout { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:var(--r2-gap); align-items:start; }
+.panel { background:var(--r2-surface); border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:16px; min-width:0; }
+.span { grid-column:1/-1; }
+.chain { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; }
+.chain-step { display:flex; flex-direction:column; justify-content:space-between; height:100%; padding:12px; border:1px solid var(--r2-line); border-radius:var(--r2-radius); background:var(--r2-surface); }
+.chain-step.blocked { border-color:var(--r2-dependency-blocked); background:color-mix(in srgb,var(--r2-dependency-blocked) 4%,var(--r2-surface)); }
+.chain-step strong { display:block; margin:4px 0 4px; font-size:13px; }
+.chain-step p { font-size:12px; margin:4px 0; }
+.step-tag { font-size:12px; font-weight:600; }
+.step-tag.root { color:var(--r2-attention); }
+.step-tag.gate { color:var(--r2-dependency-blocked); }
+.step-tag.pipe { color:var(--r2-muted); }
+.cause { color:var(--r2-dependency-blocked); }
+.proof { color:var(--r2-verification); }
+.row { border-bottom:1px solid var(--r2-line); padding:12px 0; }
+.row:last-child { border-bottom:0; padding-bottom:0; }
+.row:first-child { padding-top:0; }
+.toolbar { display:flex; flex-wrap:wrap; align-items:end; gap:12px; margin:16px 0; }
+label { display:block; font-weight:500; }
+input,select,textarea,button { font:inherit; color:inherit; }
+input,select,textarea { display:block; max-width:100%; background:var(--r2-surface); border:1px solid var(--r2-line); border-radius:var(--r2-control-radius); padding:8px; min-height:36px; caret-color:var(--r2-focus); }
+textarea { width:100%; min-height:88px; resize:vertical; }
+button { background:var(--r2-surface); border:1px solid var(--r2-line); border-radius:var(--r2-control-radius); padding:8px 12px; min-height:32px; cursor:pointer; line-height:1.5; }
+button:hover { background:var(--r2-background); }
+button:active:not(:disabled) { background:var(--r2-selected); }
+button:disabled { opacity:1; cursor:not-allowed; color:var(--r2-disabled); }
+button.primary { background:var(--r2-focus); color:var(--r2-surface); border-color:var(--r2-focus); }
+button.primary:hover,button.primary:active { background:var(--r2-header); }
+:focus-visible { outline:2px solid var(--r2-focus); outline-offset:2px; }
+header :focus-visible { outline-color:var(--r2-surface); }
+::selection { background:var(--r2-selected); color:var(--r2-ink); }
+[aria-invalid="true"] { border:2px solid var(--r2-error); }
+.error { color:var(--r2-error); }
+.table-scroll { overflow:auto; max-height:70vh; border:1px solid var(--r2-line); background:var(--r2-surface); scrollbar-gutter:stable; }
+table { border-collapse:collapse; width:100%; font-size:14px; }
+caption { text-align:left; padding:12px; font-size:12px; color:var(--r2-muted); }
+th { text-align:left; font-size:12px; font-weight:500; color:var(--r2-muted); position:sticky; top:0; background:var(--r2-surface); z-index:1; }
+th,td { padding:8px 12px; border-bottom:1px solid var(--r2-line); vertical-align:top; }
+td { min-height:44px; height:auto; }
+.compact td { padding:4px 12px; min-height:36px; }
+td.identity { min-width:260px; width:36%; }
+td button { text-align:left; }
+td small { display:block; margin-top:4px; }
+.selected td { background:var(--r2-selected); }
+.check { min-width:32px; min-height:32px; }
+.axes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; margin:16px 0; }
+.axes dt { font-size:12px; color:var(--r2-muted); }
+.axes dd { margin:0; overflow-wrap:anywhere; }
+.field { margin-block:16px; }
+.field label { margin-bottom:8px; }
+.split { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; align-items:start; }
+dialog { width:min(760px,calc(100% - 32px)); max-height:92vh; overflow:auto; border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:24px; color:var(--r2-ink); background:var(--r2-surface); }
+dialog::backdrop { background:color-mix(in srgb,var(--r2-header) 40%,transparent); }
+.dialog-top { display:flex; gap:16px; align-items:start; justify-content:space-between; }
+.dialog-top h2 { font-size:22px; }
+.feedback { padding:12px; border:1px solid var(--r2-line); border-radius:var(--r2-control-radius); margin:16px 0; background:var(--r2-background); }
+.screen-link { margin-right:12px; }
+details { margin:12px 0; }
+summary { cursor:pointer; min-height:32px; }
+.mobile-list { display:none; }
+.skip { position:absolute; left:-10000px; }
+.skip:focus { position:fixed; top:8px; left:8px; background:var(--r2-surface); padding:12px; z-index:5; }
+.proof-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:16px 0; }
+.proof-card { border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:12px; background:var(--r2-surface); }
+.proof-card h4 { margin:0 0 4px; font-size:12px; color:var(--r2-muted); }
+.proof-card p { margin:4px 0; font-size:13px; }
+@media (max-width:1100px) {
+ .app-layout { grid-template-columns:minmax(0,1fr); }
+ nav { display:flex; flex-wrap:wrap; gap:8px; border-right:0; border-bottom:1px solid var(--r2-line); }
+ nav button { width:auto; margin:0; }
+ .chain { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .chain .chain-step:last-child { grid-column:1/-1; }
+ .cr-layout { grid-template-columns:minmax(0,1fr); }
+}
+@media (max-width:640px) {
+ header,main,.notice { padding:16px; }
+ nav { padding:8px 16px; }
+ button,input,select,summary { min-height:44px; }
+ .check { min-height:44px; min-width:44px; }
+ .table-scroll { display:none; }
+ .mobile-list { display:block; }
+ .chain,.split,.proof-grid { grid-template-columns:minmax(0,1fr); }
+ .panel { padding:12px; }
+ .axes { grid-template-columns:minmax(0,1fr); }
+ dialog { width:100%; max-height:100dvh; height:100dvh; margin:0; border-radius:0; padding:16px; }
+ .toolbar { align-items:stretch; }
+ .toolbar label { flex:1 1 140px; }
+}
+@media (prefers-reduced-motion:no-preference) and (hover:hover) {
+ button { transition:background-color var(--r2-duration) ease-out; }
+}
+@media (prefers-reduced-motion:reduce) {
+ *,*::before,*::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+}
+</style></head>
+<body id="mcApp"><a href="#main" class="skip">Skip to current view</a>
+<header><strong>MatterControl</strong><div class="scope"><span>ATLAS-WS / Synthetic Legal Operations</span><span>ATLAS-001 / Project Atlas</span></div><span class="meta">T0 / 15 Jun 2026 / 09:00 UTC+07</span></header>
+<div class="notice"><p><strong>Exploratory concept / MC-P0-DESIGN-R3.</strong> Synthetic snapshot; no login, backend, upload, save, verification or export. Draft controls preview local intent only. Rendered validation NOT_RUN. <a href="current-ux-spec.md">UX specification</a> / <a href="return.md">Revision and evidence</a></p></div>
+<div class="app-layout"><nav aria-label="Matter views">
+<button data-view="control" aria-current="page">Control Room</button><button data-view="grid">Operational Grid</button><button data-view="mine">My Actions</button><button data-view="waiting">Waiting On</button><button data-view="filing">Filing context</button><button data-view="brief">Draft Status Brief</button><button data-view="transfer">Data operations</button>
+</nav><main id="main" tabindex="-1">
+<div id="view-control"><h1>Control Room</h1><p class="lede">The DD gap blocks the signature chain. No Action is currently eligible; see the cause, accountable owner and permitted follow-up.</p>
+<div class="cr-layout">
+<section class="panel span" aria-labelledby="blockers-title"><h2 id="blockers-title">Blockers</h2><div id="chain" class="chain"></div><p><strong>Cause:</strong> ER-04 has no supplied proof. RQ-04 is WAITING, dependency READY; AC-05 is WAITING and BLOCKED.</p><p>Downstream payment → transfer/closing → filing stays blocked. Internal requirement owner U-02; explicit follow-up AC-04 owned by U-01. <button data-record="RQ-04">Inspect blocker</button></p></section>
+<section class="panel"><h2>Next Actions</h2><div id="next"></div><button data-view="mine">Open My Actions</button></section>
+<section class="panel"><h2>Important Decisions</h2><div class="row"><code>DEC-AT-01 / OPEN</code><p>When can readiness review close while the DD gap remains?</p></div><div class="row"><code>DEC-AT-02 / OPEN</code><p>Prioritize signature follow-up or wait for supplementary proof?</p></div><p class="meta">Owner/outcome not supplied in fixture. Neither decision overrides a dependency or grants waiver.</p></section>
+<section class="panel"><h2>Waiting On</h2><div id="wait-summary"></div><button data-view="waiting">Inspect all Action waits</button></section>
+<section class="panel"><h2>Milestones</h2><div class="row"><code>MS-01</code> Readiness Review / 14 Jun</div><div class="row"><code>MS-02</code> Closing / 18 Jun</div><div class="row"><code>MS-03</code> Filing &amp; Post-Closing Review / 22 Jun</div><p><code>UNASSESSED</code> / Required sets not defined; satisfied/total counts unavailable. Due dates do not establish readiness.</p></section>
+<section class="panel"><h2>Evidence Gaps</h2><p>ER-02 acknowledgement missing. ER-04 supplementary proof missing. ER-06 DOC-03 v3 only 1/2 signatures. ER-10 receipt present, authority outcome missing.</p><button data-record="RQ-06">Inspect proof</button><p class="meta">Historical EV-03/05 self-review conflicts with later independent-review policy; retained historical VERIFIED is not new valid acceptance.</p></section>
+<section class="panel"><h2>Changes</h2><p>Since T-1: DD review, agreement v3, filing receipt and first signature receipt recorded. Outstanding DD gap is not newly created.</p><button data-view="brief">Review draft brief</button></section>
+</div></div>
+<div id="view-grid" hidden><h1 id="grid-title" tabindex="-1">Operational Grid</h1><p class="lede" id="grid-intent">Read typed conditions and work without collapsing the five axes. Draft previews never change the canonical snapshot.</p>
+<div class="toolbar"><label>Search titles / IDs<input id="query" type="search"></label><label>Type<select id="type"><option value="all">All types</option><option value="req">Requirement</option><option value="action">Action</option></select></label><label>Sort<select id="sort"><option value="id">Stable ID</option><option value="due">Due, then stable ID</option></select></label><label>Density<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></label><label>Fixture<select id="fixture"><option value="24">Atlas 24</option><option value="50">DENSITY 50 synthetic</option><option value="100">DENSITY 100 synthetic</option><option value="200">DENSITY 200 synthetic</option></select></label></div>
+<p id="range" role="status" aria-live="polite"></p><p id="selection"></p><button id="clear-selection">Clear selection</button> <button id="reset-filter">Reset filters</button>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Typed records; scroll for all columns"><table><caption>Prototype lists all matching rows; no pagination. Product pagination and selection contract are specified separately.</caption><thead><tr><th scope="col">Select</th><th scope="col">Condition / work</th><th scope="col">Execution</th><th scope="col">Verification</th><th scope="col">Dependency</th><th scope="col">Due / owner</th><th scope="col">Timing</th><th scope="col">Attention</th></tr></thead><tbody id="rows"></tbody></table></div><div id="mobile-rows" class="mobile-list"></div></div>
+<div id="view-waiting" hidden><h1>Waiting On</h1><p class="lede">An external wait keeps an internal accountable owner. A response does not automatically complete work or verify proof.</p><div id="waiting-list"></div><p>Waiting age unavailable: waiting-since not supplied. Follow-up is explicit work; no external message is sent here.</p></div>
+<div id="view-filing" hidden><h1>Filing context</h1><p class="lede">FIL-02 has a receipt and awaits Harbor Registry Demo (EP-03). No authority approval has been recorded.</p><div class="split"><section class="panel"><h2>FIL-02 / Authority Review</h2><p>RQ-10 / WAITING / PARTIALLY_VERIFIED. Internal follow-up AC-10 / U-03. Submitted DOC-05 v2; EV-10 receipt present, outcome missing.</p><button data-record="RQ-10">Inspect Requirement</button></section><section class="panel"><h2>FIL-01 / Requirement</h2><p>RQ-09 / NOT_STARTED / UNVERIFIED. DOC-04 draft is input, not closing proof or submitted package.</p><button data-record="RQ-09">Inspect Requirement</button></section></div>
+<h2>Canonical path / specification only</h2><p>Requirement → Package Preparation → Signature → Submission → Receipt → Authority Review → Supplement → Response → Approval.</p><p>Package/signature criteria and exact versions guard submission; actual acknowledgement guards receipt. Response returns to Authority Review; each repeated request/response retains its own reference, owner, due and versions.</p><details><summary>Two-cycle test scenario and negative paths</summary><p>Labelled synthetic progression, not Atlas: Supplement 1 → Response 1 → Authority Review → Supplement 2 → Response 2 → Authority Review → Approval observation → independent proof review. No-supplement success also tested.</p><p>OWNER rejection/withdrawal cancels with reason/proof; correction appends history; reopen preserves prior authority observation and does not by itself require a reissued decision (ARCH-Q5). Incomplete package, wrong version, stale revision and revoked access prevent command. Exact schema/cycle wire DEPENDENCY_PENDING.</p></details><p>No stage mutation/upload control is implemented in this concept.</p></div>
+<div id="view-brief" hidden><h1>Draft Status Brief</h1><p class="lede">Changes in (t1,t2] stay separate from outstanding at t2. This Atlas narrative uses listed event times illustratively; authoritative recorded-time provenance is not supplied.</p><div class="toolbar"><label>Baseline t1 (UTC+07)<input id="t1" type="datetime-local" value="2026-06-14T09:00" aria-describedby="window-error"></label><label>As-of t2 (UTC+07)<input id="t2" type="datetime-local" value="2026-06-15T09:00" aria-describedby="window-error"></label><button id="brief-preview">Preview narrative window</button></div><p id="window-error" role="alert" class="error"></p><div class="split"><section class="panel"><h2>Changes / narrative illustration</h2><div id="brief-changes"></div></section><section class="panel"><h2>Outstanding at canonical T0</h2><p>RQ-04 gap unresolved; AC-05 signature wait blocked; payment/closing/filing chain blocked. RQ-02 lacks acknowledgement. FIL-02 awaits authority. MS-01..03 UNASSESSED.</p><p id="outstanding-limit"></p></section></div><p class="meta">ATLAS-001 / source baseline in return.md / draft only. P0 has no managed issued-report snapshot. Export is specification-only, current rights must be checked again at retrieval.</p></div>
+<div id="view-transfer" hidden><h1>Data operations / specification only</h1><p class="lede">Exact scope and honest partial/unknown outcomes precede any send. This prototype performs no batch, parse, upload or export.</p><section class="panel"><h2>Bulk metadata preview</h2><p id="bulk-scope"></p><p>Allowlist: title, description, assigned internal owner, due date. Unchanged is default, Set explicit, Clear separate where permitted. Title and active owner cannot be blank. No type/links/waiting/state/criteria/roles/verify/waiver/promotion/delete.</p><p>Preview exact IDs and authorized before/proposed values; recheck each record rights/revision; atomic mutation+audit per record. Accepted/failed/unknown results persist; failed drafts retained. Unknown write reconciles before safe retry. No unconditional overwrite.</p></section><h2>Import and export</h2><p>Import mapping validates typed source keys/dates/scoped references/duplicates; invalid connected group rejects whole, valid independent groups may succeed. Same source/key/content deduplicates; changed content conflicts. Imported verification is a claim, not VERIFIED. Never run formulas/macros or fetch embedded links.</p><p>Export scope/filter/as-of/timezone/version fields explicit; scoped VIEWER permitted; recheck retrieval rights, formula-leading values literal, no hidden counts. No library/provider adopted. See specification and handoff for complete state/recovery contract.</p></div>
+</main></div>
+<dialog id="detail" aria-labelledby="detail-title"><div class="dialog-top"><h2 id="detail-title" tabindex="-1"></h2><button id="close-detail">Close; keep local draft</button></div><div id="detail-body"></div></dialog>
+<script id="atlas-data" type="application/json">{"records": [{"id": "RQ-01", "type": "req", "label": "Bằng chứng approval nội bộ đầy đủ", "description": "", "ws": "Approvals", "exec": "COMPLETED", "ver": "VERIFIED", "dep": "READY", "due": "2026-06-13T17:00:00+07:00", "dueISO": "2026-06-13T17:00:00+07:00", "owner": "U-01", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": true, "explicitNotRequired": false}, {"id": "RQ-02", "type": "req", "label": "Điều kiện chấp thuận thay đổi được chứng minh", "description": "", "ws": "Approvals", "exec": "COMPLETED", "ver": "UNVERIFIED", "dep": "READY", "due": "2026-06-14T17:00:00+07:00", "dueISO": "2026-06-14T17:00:00+07:00", "owner": "U-02", "sub": "ER-02 thiếu · COMPLETED ≠ VERIFIED", "risk": true, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-03", "type": "req", "label": "Review bộ DD hiện có được ghi nhận", "description": "", "ws": "DD", "exec": "COMPLETED", "ver": "VERIFIED", "dep": "READY", "due": "2026-06-14T17:00:00+07:00", "dueISO": "2026-06-14T17:00:00+07:00", "owner": "U-02", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-04", "type": "req", "label": "Gap về chứng từ bổ sung được giải quyết", "description": "", "ws": "DD", "exec": "WAITING", "ver": "UNVERIFIED", "dep": "READY", "due": "2026-06-14T17:00:00+07:00", "dueISO": "2026-06-14T17:00:00+07:00", "owner": "U-02", "sub": "ER-04 thiếu · chờ EP-01", "risk": true, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-05", "type": "req", "label": "Nội dung DOC-03 v3 được review", "description": "", "ws": "Documents & Signatures", "exec": "COMPLETED", "ver": "VERIFIED", "dep": "READY", "due": "2026-06-15T17:00:00+07:00", "dueISO": "2026-06-15T17:00:00+07:00", "owner": "U-02", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-06", "type": "req", "label": "Agreement version hiện hành có đủ chữ ký cần thiết", "description": "", "ws": "Documents & Signatures", "exec": "IN_PROGRESS", "ver": "PARTIALLY_VERIFIED", "dep": "READY", "due": "2026-06-16T17:00:00+07:00", "dueISO": "2026-06-16T17:00:00+07:00", "owner": "U-02", "sub": "DOC-03 v3 · chỉ 1/2 chữ ký", "risk": true, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-07", "type": "req", "label": "Payment condition được chứng minh", "description": "", "ws": "Funding Transfer Closing", "exec": "NOT_STARTED", "ver": "UNVERIFIED", "dep": "READY", "due": "2026-06-17T17:00:00+07:00", "dueISO": "2026-06-17T17:00:00+07:00", "owner": "U-03", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-08", "type": "req", "label": "Transfer và closing evidence đầy đủ", "description": "", "ws": "Funding Transfer Closing", "exec": "NOT_STARTED", "ver": "UNVERIFIED", "dep": "READY", "due": "2026-06-18T17:00:00+07:00", "dueISO": "2026-06-18T17:00:00+07:00", "owner": "U-02", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-09", "type": "req", "label": "Post-closing filing được chấp thuận", "description": "", "ws": "Regulatory Filings", "exec": "NOT_STARTED", "ver": "UNVERIFIED", "dep": "READY", "due": "2026-06-22T17:00:00+07:00", "dueISO": "2026-06-22T17:00:00+07:00", "owner": "U-02", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-10", "type": "req", "label": "Filing notice có đủ kết quả cần theo dõi", "description": "", "ws": "Regulatory Filings", "exec": "WAITING", "ver": "PARTIALLY_VERIFIED", "dep": "READY", "due": "2026-06-20T17:00:00+07:00", "dueISO": "2026-06-20T17:00:00+07:00", "owner": "U-02", "sub": "EV-10 receipt có · outcome thiếu", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-11", "type": "req", "label": "Yêu cầu supplement được xử lý khi phát sinh", "description": "", "ws": "Post-Closing", "exec": "NOT_STARTED", "ver": "UNVERIFIED", "dep": "READY", "due": "2026-06-21T17:00:00+07:00", "dueISO": "2026-06-21T17:00:00+07:00", "owner": "U-02", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "RQ-12", "type": "req", "label": "Bàn giao post-closing có acknowledgement", "description": "", "ws": "Post-Closing", "exec": "NOT_STARTED", "ver": "UNVERIFIED", "dep": "READY", "due": "2026-06-22T17:00:00+07:00", "dueISO": "2026-06-22T17:00:00+07:00", "owner": "U-01", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": false}, {"id": "AC-01", "type": "action", "label": "Ghi nhận approval đã nhận cho RQ-01", "description": "", "ws": "Approvals", "exec": "COMPLETED", "ver": "NOT_REQUIRED", "dep": "READY", "due": "2026-06-13T17:00:00+07:00", "dueISO": "2026-06-13T17:00:00+07:00", "owner": "U-01", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-02", "type": "action", "label": "Gửi thông báo thay đổi liên quan RQ-02", "description": "", "ws": "Approvals", "exec": "COMPLETED", "ver": "NOT_REQUIRED", "dep": "READY", "due": "2026-06-14T17:00:00+07:00", "dueISO": "2026-06-14T17:00:00+07:00", "owner": "U-01", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-03", "type": "action", "label": "Review DOC-02 v2 cho RQ-03", "description": "", "ws": "DD", "exec": "COMPLETED", "ver": "NOT_REQUIRED", "dep": "READY", "due": "2026-06-14T17:00:00+07:00", "dueISO": "2026-06-14T17:00:00+07:00", "owner": "U-02", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-04", "type": "action", "label": "Follow-up EP-01 về chứng từ RQ-04", "description": "", "ws": "DD", "exec": "WAITING", "ver": "NOT_REQUIRED", "dep": "READY", "due": "2026-06-14T17:00:00+07:00", "dueISO": "2026-06-14T17:00:00+07:00", "owner": "U-01", "sub": "EP-01 · WAITING ≠ BLOCKED", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-05", "type": "action", "label": "Theo dõi chữ ký còn thiếu cho RQ-06", "description": "", "ws": "Documents & Signatures", "exec": "WAITING", "ver": "NOT_REQUIRED", "dep": "BLOCKED", "due": "2026-06-16T17:00:00+07:00", "dueISO": "2026-06-16T17:00:00+07:00", "owner": "U-01", "sub": "EP-02 · DEP-01 chưa thỏa", "risk": true, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-06", "type": "action", "label": "Ghi nhận receipt chữ ký đầu tiên cho RQ-06", "description": "", "ws": "Documents & Signatures", "exec": "COMPLETED", "ver": "NOT_REQUIRED", "dep": "READY", "due": "2026-06-15T08:00:00+07:00", "dueISO": "2026-06-15T08:00:00+07:00", "owner": "U-03", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-07", "type": "action", "label": "Ghi nhận payment confirmation cho RQ-07", "description": "", "ws": "Funding Transfer Closing", "exec": "NOT_STARTED", "ver": "NOT_REQUIRED", "dep": "BLOCKED", "due": "2026-06-17T17:00:00+07:00", "dueISO": "2026-06-17T17:00:00+07:00", "owner": "U-03", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": true, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-08", "type": "action", "label": "Ghi nhận transfer/closing checklist cho RQ-08", "description": "", "ws": "Funding Transfer Closing", "exec": "NOT_STARTED", "ver": "NOT_REQUIRED", "dep": "BLOCKED", "due": "2026-06-18T17:00:00+07:00", "dueISO": "2026-06-18T17:00:00+07:00", "owner": "U-03", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": true, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-09", "type": "action", "label": "Chuẩn bị FIL-01 để đáp ứng RQ-09", "description": "", "ws": "Regulatory Filings", "exec": "NOT_STARTED", "ver": "NOT_REQUIRED", "dep": "BLOCKED", "due": "2026-06-19T17:00:00+07:00", "dueISO": "2026-06-19T17:00:00+07:00", "owner": "U-03", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": true, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-10", "type": "action", "label": "Chờ response FIL-02 từ EP-03 cho RQ-10", "description": "", "ws": "Regulatory Filings", "exec": "WAITING", "ver": "NOT_REQUIRED", "dep": "READY", "due": "2026-06-20T17:00:00+07:00", "dueISO": "2026-06-20T17:00:00+07:00", "owner": "U-03", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-11", "type": "action", "label": "Chuẩn bị follow-up khi nhận response FIL-02 cho RQ-11", "description": "", "ws": "Post-Closing", "exec": "NOT_STARTED", "ver": "NOT_REQUIRED", "dep": "BLOCKED", "due": "2026-06-21T17:00:00+07:00", "dueISO": "2026-06-21T17:00:00+07:00", "owner": "U-03", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}, {"id": "AC-12", "type": "action", "label": "Gửi bàn giao sau supplement/resolution cho RQ-12", "description": "", "ws": "Post-Closing", "exec": "NOT_STARTED", "ver": "NOT_REQUIRED", "dep": "BLOCKED", "due": "2026-06-22T17:00:00+07:00", "dueISO": "2026-06-22T17:00:00+07:00", "owner": "U-01", "sub": "Canonical Atlas T0 · independent axes; historical verification may require independent re-review", "risk": false, "revision": 1, "validProof": false, "explicitNotRequired": true}], "edges": [["DEP-01", "RQ-04", "AC-05", "proof"], ["DEP-02", "AC-05", "AC-07", "completion"], ["DEP-03", "AC-07", "AC-08", "completion"], ["DEP-04", "AC-08", "AC-09", "completion"], ["DEP-05", "RQ-05", "AC-05", "proof"], ["DEP-06", "AC-10", "AC-11", "completion"], ["DEP-07", "RQ-11", "AC-12", "proof"]], "asOf": "2026-06-15T09:00:00+07:00", "base": "a62d838791ba188838c4ff00b7b6e265ac775056"}</script>
+<script id="concept-logic">
+"use strict";
+const data=JSON.parse(document.getElementById('atlas-data').textContent);
+const records=data.records;
+const recordById=Object.fromEntries(records.map(r=>[r.id,r]));
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const eligible=r=>r.type==='action' && !!r.owner && ['NOT_STARTED','IN_PROGRESS'].includes(r.exec) && r.dep==='READY';
+const edgeSatisfied=(r,gate)=>!!r && r.dep==='READY' && r.exec==='COMPLETED' && (gate==='completion' || (gate==='proof' && r.ver==='VERIFIED' && r.validProof===true));
+const milestone=rs=>!rs?.length?'UNASSESSED':rs.every(r=>r.dep==='READY' && r.exec==='COMPLETED' && ((r.ver==='VERIFIED' && r.validProof===true) || (r.ver==='NOT_REQUIRED' && r.explicitNotRequired===true)))?'READY':'BLOCKED';
+const inWindow=(t,t1,t2)=>Date.parse(t)>Date.parse(t1) && Date.parse(t)<=Date.parse(t2);
+const timing=r=>['COMPLETED','CANCELLED'].includes(r.exec)||!r.dueISO?'ON_TRACK':Date.parse(r.dueISO)<Date.parse(data.asOf)?'OVERDUE':Date.parse(r.dueISO)<=Date.parse(data.asOf)+48*3600000?'DUE_SOON':'ON_TRACK';
+const attention=r=>['RQ-04','AC-05'].includes(r.id)?'CRITICAL':['RQ-02','RQ-06','AC-04','AC-10'].includes(r.id)?'ATTENTION':'NORMAL';
+// shortcut: historical Atlas attention is explicitly assigned, use authoritative causes in product.
+const densityRows=n=>Array.from({length:n},(_,i)=>({id:'DENSITY-'+String(i+1).padStart(3,'0'),type:i%2?'action':'req',label:i%2?'Synthetic work — reconcile the complete supporting document reference before internal follow-up':'Điều kiện tổng hợp — cần giữ đầy đủ lý do và chứng từ được đối chiếu trước khi bàn giao',owner:null,exec:'NOT_STARTED',ver:'UNVERIFIED',dep:null,dueISO:null,ws:'Labelled density fixture',sub:'DENSITY ONLY · no legal relationship or state evaluation supplied'}));
+const axes=r=>'<dl class="axes">'+[['Execution',r.exec],['Verification',r.ver],['Dependency',r.dep??'unavailable'],['Timing',r.id.startsWith('DENSITY')?'unavailable':timing(r)],['Attention',r.id.startsWith('DENSITY')?'unavailable':attention(r)]].map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+esc(v)+'</dd></div>').join('')+'</dl>';
+const button=r=>'<button data-record="'+esc(r.id)+'"><code>'+esc(r.id)+'</code> · '+esc(r.label)+'</button>';
+const selected=new Set(), drafts=new Map();
+let view='control', opener=null, currentRecord=null, detailMode='record';
+const $=id=>document.getElementById(id);
+function showView(next){
+ view=next;
+ for(const name of ['control','grid','waiting','filing','brief','transfer']) $('view-'+name).hidden=name!==(next==='mine'?'grid':next);
+ document.querySelectorAll('nav [data-view]').forEach(b=>{if(b.dataset.view===next)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+ if(next==='grid'||next==='mine')renderGrid();
+ if(next==='transfer')$('bulk-scope').textContent='Explicit selected IDs: '+([...selected].join(', ')||'none; return to Grid and choose rows.');
+ $('main').focus({preventScroll:true});
+}
+function visibleRecords(){
+ const fixture=Number($('fixture').value);
+ let list=fixture===24?records:densityRows(fixture);
+ if(view==='mine')list=records.filter(r=>r.type==='action'&&r.owner==='U-01');
+ const q=$('query').value.trim().toLocaleLowerCase();
+ return list.filter(r=>($('type').value==='all'||r.type===$('type').value)&&(!q||(r.id+' '+r.label).toLocaleLowerCase().includes(q))).sort((a,b)=>$('sort').value==='due'?(Date.parse(a.dueISO)||Infinity)-(Date.parse(b.dueISO)||Infinity)||a.id.localeCompare(b.id):a.id.localeCompare(b.id));
+}
+function selectionText(){
+ const visible=new Set(visibleRecords().map(r=>r.id));
+ const hidden=[...selected].filter(id=>!visible.has(id));
+ $('selection').textContent='Selected exact IDs: '+([...selected].join(', ')||'none')+(hidden.length?' · Hidden by current view/filter: '+hidden.join(', '):'');
+}
+function renderGrid(){
+ const list=visibleRecords();
+ $('grid-title').textContent=view==='mine'?'My Actions · U-01':'Operational Grid';
+ $('grid-intent').textContent=view==='mine'?'U-01 owns waiting AC-04/05 and blocked AC-12; completed AC-01/02 remain historical. No eligible Next Action. Actor is a fixture alias, not a logged-in session.':'Read typed conditions and work with separate axes. DENSITY fixtures replace Atlas and carry no authoritative evaluation.';
+ const checkbox=(r,mobile)=>'<input class="check" type="checkbox" data-select="'+esc(r.id)+'" aria-label="Select '+esc(r.id)+(mobile?' mobile':'')+'" '+(selected.has(r.id)?'checked':'')+'>';
+ $('rows').innerHTML=list.map(r=>'<tr tabindex="0" data-row="'+esc(r.id)+'" class="'+(selected.has(r.id)?'selected':'')+'"><td>'+checkbox(r,false)+'</td><td class="identity">'+button(r)+'<small>'+esc(r.type==='req'?'Requirement':'Action')+' · '+esc(r.ws)+'</small><small>'+esc(r.sub)+'</small></td><td>'+esc(r.exec)+'</td><td>'+esc(r.ver)+'</td><td>'+esc(r.dep??'unavailable')+'</td><td><time>'+esc(r.dueISO??'no due date')+'</time><small>'+esc(r.owner??'not supplied')+'</small></td><td>'+esc(r.id.startsWith('DENSITY')?'unavailable':timing(r))+'</td><td>'+esc(r.id.startsWith('DENSITY')?'unavailable':attention(r))+'</td></tr>').join('');
+ $('mobile-rows').innerHTML=list.map(r=>'<article class="panel row">'+checkbox(r,true)+button(r)+'<p>'+esc(r.type==='req'?'Requirement':'Action')+' · '+esc(r.owner??'not supplied')+' · '+esc(r.ws)+'</p>'+axes(r)+'<time>'+esc(r.dueISO??'no due date')+'</time><p>'+esc(r.sub)+'</p></article>').join('');
+ $('range').textContent=list.length+' matching records · all matching rows shown · '+(view==='mine'?'U-01 fixture queue':Number($('fixture').value)===24?'Atlas T0':'labelled DENSITY fixture, not Atlas');
+ $('rows').closest('table').classList.toggle('compact',$('density').value==='compact');
+ if(!list.length){$('rows').innerHTML='<tr><td colspan="8">No matching records. Reset filters; this does not mean the Matter contains no work.</td></tr>';$('mobile-rows').textContent='No matching records. Reset filters.';}
+ selectionText();
+}
+function waits(){
+ return ['AC-04','AC-05','AC-10'].map(id=>{const r=recordById[id],party={'AC-04':'EP-01 · Cedar Seller Demo','AC-05':'EP-02 · Elm Signatory Demo','AC-10':'EP-03 · Harbor Registry Demo'}[id];return '<div class="row">'+button(r)+'<p>Waiting on '+party+' · Internal owner '+r.owner+' · '+r.exec+' / '+r.dep+'</p><p>'+esc(r.dueISO)+' · waiting age unavailable</p></div>';}).join('');
+}
+function openRecord(id,trigger){
+ const r=recordById[id];
+ if(!r){
+  currentRecord=null;detailMode='density';$('detail-title').textContent=id+' · labelled density specimen';$('detail-body').innerHTML='<p>Typography/reachability fixture only; no Atlas relationship, proof or authoritative state supplied. Use Grid filters to inspect all matching rows.</p>';
+ }else{
+  currentRecord=id;detailMode='record';$('detail-title').textContent=id+' · '+(r.type==='req'?'Requirement':'Action');
+  const incoming=data.edges.filter(e=>e[2]===id),outgoing=data.edges.filter(e=>e[1]===id);
+  const links=es=>es.map(e=>'<div class="row"><code>'+e[0]+'</code> · '+e[3]+' gate · <button data-record="'+e[1]+'">'+e[1]+'</button> → <button data-record="'+e[2]+'">'+e[2]+'</button></div>').join('')||'<p>No edges supplied in this direction.</p>';
+  $('detail-body').innerHTML='<p><strong>'+esc(r.label)+'</strong></p><p>Internal owner '+esc(r.owner)+' · '+esc(r.ws)+' · <time>'+esc(r.dueISO)+'</time></p>'+axes(r)+'<p>'+esc(r.sub)+'</p><div class="feedback">Read-only canonical snapshot. Eligibility and proof validity shown here are fixture context; no client-side truth becomes an accepted domain result.</div><h3>Causal context</h3><p>Incoming gates</p>'+links(incoming)+'<p>Downstream impact</p>'+links(outgoing)+'<h3>Proof / version context</h3><button id="proof-context">Inspect criterion and exact proof context</button><h3>Local draft editor specimen</h3><p>EDITOR/OWNER product intent only; no logged-in role or mutation here.</p><div class="field"><label for="draft-title">Title draft</label><textarea id="draft-title" aria-describedby="draft-error draft-limit"></textarea><p id="draft-error" class="error" role="alert"></p><p id="draft-limit" class="meta">Retained in page memory until reload; canonical title remains unchanged.</p></div><button id="preview-draft" class="primary">Preview draft intent</button><div id="draft-result" role="status"></div><details><summary>Conflict / unknown write / revocation recovery</summary><p>Conflict: keep draft, compare only permitted current values, reload/rebase and new command against adopted current revision. No overwrite.</p><p>OUTCOME_UNKNOWN: preserve permitted intent, reconcile accepted receipt/readback before safe retry. Receipt wire DEPENDENCY_PENDING. Revocation removes protected values/drafts; no stale-grant rescue export.</p></details>';
+  $('draft-title').value=drafts.get(id)??r.label;
+ }
+ if(!$('detail').open){opener=trigger??document.activeElement;$('detail').showModal();}
+ $('detail-title').focus({preventScroll:true});
+}
+function showProof(){
+ const r=recordById[currentRecord],num=r.id.slice(-2),criterion=r.type==='req'?'ER-'+num:'Proof applicability must be explicit for this Action';
+ const proofData={
+  '01':{ev:'EV-01',doc:'DOC-01 v2',submitter:'U-01 (Internal Counsel)',verifier:'U-02 (Historical Reviewer)',validity:'VERIFIED (Historical audit caveat)',consequences:'None directly blocking; baseline approval recorded. Current verifier designation not established in fixture.',note:'Historical approval proof; re-review required under current independent policy.'},
+  '02':{ev:'None (Missing Proof)',doc:'ER-02 Acknowledgement required',submitter:'None supplied',verifier:'UNDESIGNATED · Submitter cannot self-review',validity:'UNVERIFIED',consequences:'RQ-02 is COMPLETED in execution but UNVERIFIED in proof; does not satisfy proof gates.',note:'COMPLETED ≠ VERIFIED. Execution completed, but counterparty acknowledgement missing.'},
+  '03':{ev:'EV-03',doc:'DOC-02 v2 + review note',submitter:'U-02 (Internal Counsel)',verifier:'U-02 (Self-Review)',validity:'UNVERIFIED (Historical Self-Review Invalid)',consequences:'Self-review violates independent verification policy (RULE-007); cannot serve as valid milestone proof.',note:'Submitter U-02 reviewed own submission. Designated independent verifier required.'},
+  '04':{ev:'None (Missing Proof ER-04)',doc:'ER-04 Supplementary Due Diligence Documentation',submitter:'External Counterparty EP-01 (Cedar Seller Demo)',verifier:'UNDESIGNATED · Requires non-submitter assignment upon receipt',validity:'UNVERIFIED (Proof Missing)',consequences:'Directly blocks DEP-01 proof gate to AC-05, cascading to block AC-07 (payment), AC-08 (closing), and AC-09 (filing).',note:'Critical DD blocker. Follow-up action AC-04 assigned to U-01 to request missing supplementary records.'},
+  '05':{ev:'EV-05',doc:'DOC-03 v3 + content review note',submitter:'U-02 (Internal Counsel)',verifier:'U-02 (Self-Review)',validity:'UNVERIFIED (Historical Self-Review Invalid)',consequences:'Content review does not establish signature execution. Blocks DEP-05 gate to AC-05.',note:'Content review is separate from signature verification. Submitter self-review invalid.'},
+  '06':{ev:'EV-06',doc:'DOC-03 v3 · 1 of 2 signatures executed',submitter:'External Signatory EP-02 (Elm Signatory Demo)',verifier:'U-02 (Assigned Reviewer; Submitter is EP-02/U-03)',validity:'PARTIALLY_VERIFIED',consequences:'Agreement version v3 cannot satisfy closing prerequisite until second signature is obtained.',note:'Only 1 of 2 required signatures present. Second signature pending counterparty execution.'},
+  '07':{ev:'None (Missing Proof)',doc:'Payment confirmation proof required for RQ-07',submitter:'None supplied',verifier:'UNDESIGNATED',validity:'UNVERIFIED',consequences:'Payment condition unproven; transfer and closing blocked.',note:'Execution NOT_STARTED and BLOCKED by upstream dependencies.'},
+  '10':{ev:'EV-10',doc:'Filing Receipt + DOC-05 v2 filing package',submitter:'U-03 (Paralegal)',verifier:'U-02 (Assigned Reviewer)',validity:'PARTIALLY_VERIFIED (Receipt ≠ Approval)',consequences:'Filing is in Authority Review; cannot advance to APPROVED until regulatory outcome is issued.',note:'Receipt acknowledges submission only; authority approval outcome is pending from Harbor Registry Demo (EP-03).'}
+ };
+ const item=proofData[num]||{ev:'Not supplied in fixture',doc:'Exact version specification required',submitter:'Not recorded',verifier:'UNDESIGNATED',validity:r.ver,consequences:'No downstream proof gates declared for this record.',note:'Proof applicability must be declared explicitly before verification.'};
+ detailMode='proof';$('detail-title').textContent=r.id+' · Evidence & Proof Verification Context';
+ $('detail-body').innerHTML=
+  '<p><strong>Evidence Requirement Criterion:</strong> <code>'+esc(criterion)+'</code></p>'+
+  '<div class="proof-grid">'+
+   '<div class="proof-card"><h4>Criterion & Required Version</h4><p><strong>Version:</strong> '+esc(item.doc)+'</p><p><strong>Evidence ID:</strong> '+esc(item.ev)+'</p></div>'+
+   '<div class="proof-card"><h4>Submitter vs Independent Verifier</h4><p><strong>Submitter:</strong> '+esc(item.submitter)+'</p><p><strong>Verifier:</strong> '+esc(item.verifier)+'</p></div>'+
+   '<div class="proof-card"><h4>Verification Validity</h4><p class="'+(item.validity.includes('VERIFIED')&&!item.validity.includes('UNVERIFIED')&&!item.validity.includes('PARTIALLY')?'proof':'cause')+'"><strong>Status:</strong> '+esc(item.validity)+'</p><p class="meta">'+esc(item.note)+'</p></div>'+
+   '<div class="proof-card"><h4>Causal Consequences</h4><p>'+esc(item.consequences)+'</p></div>'+
+  '</div>'+
+  '<div class="feedback"><p><strong>Governance & Integrity Rules:</strong></p>'+
+  '<p>1. <strong>Submitter cannot self-review:</strong> Submitter and verifier must be distinct authorized identities (RULE-007).</p>'+
+  '<p>2. <strong>OWNER is not automatic verifier:</strong> Matter OWNER role alone does not grant verifier authority without explicit verifier designation.</p>'+
+  '<p>3. <strong>Receipt ≠ Approval:</strong> Uploading a submission confirmation or filing receipt records receipt, not regulatory approval (RULE-016).</p>'+
+  '<p>4. <strong>Honest Non-Simulated Verification:</strong> Verification requires authoritative server-side review and ledger recording. No client-side mock toasts, simulated uploads, or synthetic approval buttons are permitted.</p>'+
+  '</div>'+
+  '<button id="back-record" class="primary">Return to '+esc(r.id)+'; keep local draft</button>';
+ $('detail-title').focus({preventScroll:true});
+}
+const events=[['EVT-01','2026-06-14T10:00:00+07:00','DOC-03 v3 added; v2 superseded'],['EVT-02','2026-06-14T11:00:00+07:00','Content review v3 recorded; historical self-review caveat'],['EVT-03','2026-06-14T14:00:00+07:00','AC-03 completed; RQ-03 historical review'],['EVT-04','2026-06-14T15:00:00+07:00','DOC-05 v2; FIL-02 submitted'],['EVT-05','2026-06-14T16:00:00+07:00','FIL-02 receipt; authority waiting, not approval'],['EVT-06','2026-06-15T08:00:00+07:00','First signature receipt; RQ-06 partial']];
+function previewBrief(){
+ const a=$('t1').value,b=$('t2').value,t1=a+':00+07:00',t2=b+':00+07:00';
+ const invalid=!a||!b||Date.parse(t1)>Date.parse(t2)||!Number.isFinite(Date.parse(t1))||!Number.isFinite(Date.parse(t2));
+ $('window-error').textContent=invalid?'Choose valid endpoints with t1 ≤ t2; no draft generated.':'';
+ $('t1').setAttribute('aria-invalid',String(invalid));$('t2').setAttribute('aria-invalid',String(invalid));
+ if(invalid){$('brief-changes').textContent='Window invalid; no narrative preview.';$('outstanding-limit').textContent='No outstanding result generated for invalid window.';return;}
+ const chosen=events.filter(e=>inWindow(e[1],t1,t2));
+ $('brief-changes').innerHTML=chosen.map(e=>'<div class="row"><code>'+e[0]+'</code> · <time>'+e[1]+'</time><p>'+e[2]+'</p></div>').join('')||'<p>No changes in this narrative window. Outstanding may still exist.</p>';
+ $('outstanding-limit').textContent=Date.parse(t2)===Date.parse(data.asOf)?'Outstanding shown only for supplied canonical T0. Recorded-time report provenance remains dependency.':'Outstanding at chosen t2 unavailable: this fixture supplies only T0 state; do not infer a historical snapshot.';
+}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.view){showView(b.dataset.view);return;}
+ if(b.dataset.record){openRecord(b.dataset.record,b);return;}
+ if(b.id==='proof-context')showProof();
+ if(b.id==='back-record')openRecord(currentRecord);
+ if(b.id==='close-detail')$('detail').close();
+ if(b.id==='preview-draft'){
+  const value=$('draft-title').value;drafts.set(currentRecord,value);const bad=!value.trim();
+  $('draft-title').setAttribute('aria-invalid',String(bad));$('draft-error').textContent=bad?'Title must not be blank. Draft retained.':'';
+  $('draft-result').textContent=bad?'No intent preview; correct the field.':'Local draft intent for '+currentRecord+': '+value+' · Not saved; current permission, revision and accepted command contract required.';
+  if(bad)$('draft-title').focus();
+ }
+ if(b.id==='clear-selection'){selected.clear();renderGrid();}
+ if(b.id==='reset-filter'){$('query').value='';$('type').value='all';renderGrid();}
+ if(b.id==='brief-preview')previewBrief();
+});
+document.addEventListener('input',e=>{
+ if(e.target.id==='query')renderGrid();
+ if(e.target.id==='draft-title'&&currentRecord)drafts.set(currentRecord,e.target.value);
+});
+document.addEventListener('change',e=>{
+ if(e.target.dataset.select){const id=e.target.dataset.select;if(e.target.checked)selected.add(id);else selected.delete(id);document.querySelectorAll('[data-select="'+id+'"]').forEach(c=>c.checked=selected.has(id));document.querySelectorAll('[data-row="'+id+'"]').forEach(r=>r.classList.toggle('selected',selected.has(id)));selectionText();}
+ if(['type','sort','fixture'].includes(e.target.id))renderGrid();
+ if(e.target.id==='density')$('rows').closest('table').classList.toggle('compact',$('density').value==='compact');
+});
+document.addEventListener('keydown',e=>{
+ const row=e.target.closest('[data-row]');if(!row||e.target!==row)return;
+ if(['ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();(e.key==='ArrowDown'?row.nextElementSibling:row.previousElementSibling)?.focus();}
+ if(e.key==='Enter'){e.preventDefault();openRecord(row.dataset.row,row);}
+});
+$('detail').addEventListener('close',()=>{
+ const replacement=opener?.dataset?.record?document.querySelector('[data-record="'+opener.dataset.record+'"]'):null;
+ if(opener?.isConnected)opener.focus({preventScroll:true});else if(replacement)replacement.focus({preventScroll:true});else $('main').focus({preventScroll:true});
+});
+
+const chainSteps=[
+ {id:'RQ-04',tag:'Step 1 · Blocker root cause',tagClass:'root',condition:'ER-04 supplementary proof required',cause:'EP-01 (Cedar Seller Demo) has not supplied requested documentation',impact:'Blocks AC-05 signature follow-up via DEP-01 proof gate',nextStep:'Execute follow-up AC-04 with EP-01; do not fabricate proof'},
+ {id:'AC-05',tag:'Step 2 · Direct impact',tagClass:'gate',condition:'Requires RQ-04 proof verified before closing signature loop',cause:'Blocked by DEP-01 proof gate (RQ-04 unverified)',impact:'Blocks AC-07 payment confirmation via DEP-02',nextStep:'Track dependency status; cannot proceed with signature closeout'},
+ {id:'AC-07',tag:'Step 3 · Downstream payment',tagClass:'pipe',condition:'Payment condition proof for RQ-07',cause:'Blocked by upstream signature completion (AC-05)',impact:'Blocks AC-08 transfer/closing checklist via DEP-03',nextStep:'Awaiting upstream signature completion'},
+ {id:'AC-08',tag:'Step 4 · Downstream transfer',tagClass:'pipe',condition:'Transfer and closing evidence for RQ-08',cause:'Blocked by upstream payment confirmation (AC-07)',impact:'Blocks AC-09 post-closing filing preparation via DEP-04',nextStep:'Awaiting upstream payment confirmation'},
+ {id:'AC-09',tag:'Step 5 · Downstream filing',tagClass:'pipe',condition:'Prepare FIL-01 package to satisfy RQ-09',cause:'Blocked by upstream closing completion (AC-08)',impact:'Post-closing regulatory filing cannot proceed',nextStep:'Awaiting upstream closing completion'}
+];
+$('chain').innerHTML=chainSteps.map(step=>{
+ const r=recordById[step.id];
+ return '<div class="chain-step blocked">'+
+  '<div>'+
+   '<span class="step-tag '+step.tagClass+'">'+esc(step.tag)+'</span>'+
+   '<strong><code>'+esc(r.id)+'</code> · '+esc(r.label)+'</strong>'+
+   '<p class="meta">'+esc(r.exec)+' / '+esc(r.dep)+' · Owner '+esc(r.owner)+'</p>'+
+   '<p><strong>Condition:</strong> '+esc(step.condition)+'</p>'+
+   '<p class="cause"><strong>Cause:</strong> '+esc(step.cause)+'</p>'+
+   '<p><strong>Downstream impact:</strong> '+esc(step.impact)+'</p>'+
+   '<p><strong>Permitted next step:</strong> '+esc(step.nextStep)+'</p>'+
+  '</div>'+
+  '<button data-record="'+esc(step.id)+'" style="margin-top:8px;">Inspect '+esc(step.id)+'</button>'+
+ '</div>';
+}).join('');
+
+$('next').innerHTML='<p><strong>'+records.filter(eligible).length+' eligible Actions</strong></p><p>Five NOT_STARTED Actions are BLOCKED; AC-04/05/10 are WAITING. RQ-06 is a Requirement, not an actionable recommendation.</p>';
+$('wait-summary').innerHTML=waits();$('waiting-list').innerHTML=waits();renderGrid();previewBrief();
+</script></body></html>

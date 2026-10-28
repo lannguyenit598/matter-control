@@ -1,0 +1,30 @@
+# MC-002-INTA-GO-STOP — separate ZCode backend lifecycle cue
+
+**CUE_RELEASED / READY_NOT_DISPATCHED**,2026-10-26. Human delivery assigns actual ZCode in the backend runtime role to perform ONE graceful stop of the verified existing INT-A Go process under DEC-028/INTA-1. This does not assign stage7, restart, cleanup or product development. Use only your existing configured permitted provider/model/quota; no settings/login/provider switch/paid retry. Report actual identity/tool/version and base/head. You are not alone: preserve other work and immutable evidence.
+
+Coordination checkout /Users/nguyenvanlan/Documents/code/pet-projects/matter-control, branch codex/unified-project-flow; preparation base a62d838791ba188838c4ff00b7b6e265ac775056. Verify current HEAD rather than resetting to it. Read AGENTS/RTK, current workflow, MC-002-INT-A task, inta-coordination.md, frozen inta-approved-contract.md, stage6 owner return/intake and docs/testing/inta-stage6-intake/checks.json + canonical-case-checkpoint.json. Read the backend's applicable instructions and its documented graceful shutdown behavior. No new source edits or dependency installation.
+
+## Fresh preflight before any signal
+
+- Backend /tmp/mc002-inta-be clean52b60a4617081c41b949f2242e1784238c170f75; binary /tmp/mc002-inta-be/bin/userapi SHA256 f3bcdc2f7ce893cdfa248274777f1d3401f538d3ff290d93abf3bd7f370a54c1. Do not rebuild or migrate.
+- Expected exact Go PID98134, start MonOct26 00:54:29 +07, exact executable/argv, sole127.0.0.1:18086 listener. Verify all identifiers immediately before stopping; PID alone is insufficient. If missing/replaced/ambiguous, preserve evidence and return BLOCKED_FOR_RECONCILIATION. Do not signal a replacement or retrospectively assume a successful stop.
+- Next root88444/listener88453,startOct26 00:35:21 +07,127.0.0.1:18085 remains running. Template /tmp/mc002-inta-fe clean3e5a642479acb789eb210e73fba956f3e85082e3; harness /tmp/mc002-inta-harness clean48cc03e949d66fc47a7d304413621eb79804e6c1. Preserve them; no driver help/status invocation.
+- Same PG04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01, volume mc002-inta-data-intamvnmoems3pd, pinned image77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873, loopback15457,512MiB/1CPU/128pids and task labels unchanged, running healthy after Codex recovery. Selected read-only inspection only; never Config.Env/full env dump/private backend.env/SQL/container lifecycle. No replacement fixture or storage.
+- Live /tmp/mc002-inta-state-intamvnmoems3pd exactly56files matching stage6 after-manifest; counter26,22 true assertions, markers1..6, STAGE_6_COMPLETED. A baselinev1/currentv2 checkpoints preserved; B unchanged; X OUTCOME_UNKNOWN/T11c intentunknown. No stage7/T12 intent/envelope/marker. Read files directly, never construct the driver to inspect state. On drift stop for reconciliation; no reset or retry.
+- New return docs/reviews/inta-backend-go-stop-return.md, raw /tmp/mc002-inta-evidence/backend/runtime-intamvnmoems3pd/go-stop-01/ and export docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-stop-01/ must be absent. Never overwrite an earlier attempt.
+
+## Execute one bounded stop only
+
+1. Snapshot/hash full ledger and current post-restart Go stdout/stderr logs before action. Retain immutable snapshots separately from appendable live logs; snapshot source/process/container identity without secrets.
+2. Use the backend's documented graceful SIGTERM path for the freshly verified exact PID. Record exact command, UTC, signal-command exit and subsequent process/listener disappearance. Do not use broad pkill/fuser, SIGKILL, force escalation, blind retries or another process target. If shutdown outcome is uncertain or hangs beyond the documented bounded wait, preserve actual evidence and stop for reconciliation.
+3. Snapshot the shutdown log and distinguish an observed graceful-shutdown message from an independently observed process exit status. A successful kill command alone does not prove a graceful stop. Confirm no listener remains on18086 and no replacement was started. Do not send record HTTP, health/ready probes, SQL or extra harness requests.
+4. Verify Next remains the same running process/listener; same PG still running healthy; all56 ledger hashes unchanged, including A/B/X and counters/assertions. Do not stop/restart PG/Next, restart Go, edit source/config, migrate, repair data or clean up resources.
+5. Return **IN_REVIEW / GO_STOP_EXECUTED / WAITING_CODEX_STAGE7_CUE** if evidenced, otherwise exact blocker. Keep Go stopped, Next/PG retained. **Do not invoke stage7 or --confirm-go-stopped, set future flags, replay stage6, query X, POST/PATCH/list/search, or tear down anything.** Codex must intake the actual stop evidence before a separate stage7 cue.
+
+## Required evidence and control boundaries
+
+Write NEW owner return/raw/export paths above. Include identity/revisions, before/after PID/start/executable/listener/storage, exact command UTC/exits, immutable before/after Go logs, unchanged56-file ledger manifests, resource disposition, no-self-hash payload inventory and byte-identical export checks. Scan application logs for all fixture markers and evidence for credentials without printing values; do not read or export private configuration. Report payload count accurately, manifest excluded from its own hash.
+
+Use only permitted tool routes. If a hook denies an action, retain its exact redacted response and follow only explicitly permitted remediation. Do not split, rename or reroute the same prohibited operation to bypass it. If unclear, return BLOCKED with the action and stated reason; no global hook/config/ignore change. The stage6 reported route note does not provide blanket permission or establish a violation.
+
+No governance/canonical-result edits, source commit/merge/push, provider change, BE01/F08/F10/UX changes, independent QA claim, product recovery acceptance, deploy or STEP03B. No DONE or canonical PASS. Required return includes skipped checks and remaining limitations. Human delivery is dispatch; preparation of this file is not execution.

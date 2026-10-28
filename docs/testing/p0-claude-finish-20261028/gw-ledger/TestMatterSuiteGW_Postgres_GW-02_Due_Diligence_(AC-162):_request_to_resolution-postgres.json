@@ -1,0 +1,227 @@
+[
+  {
+    "Workflow": "GW-02",
+    "AC": "AC-162",
+    "Stage": "Request",
+    "Variant": "action completed",
+    "Actor": "01a180a3-526d-7f36-a79a-9416b348d43c",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-5295-7d6d-bb93-602759b5a474",
+    "PreRevision": 1,
+    "PostRevision": 2,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "COMPLETED",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "work.execution_changed"
+    ],
+    "FirstSeq": 12,
+    "LastSeq": 12,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-02",
+    "AC": "AC-162",
+    "Stage": "Review",
+    "Variant": "one accepted",
+    "Actor": "01a180a3-5283-7933-92fa-3bb2df9e597c",
+    "ActorRole": "EDITOR (designated verifier)",
+    "Subject": "01a180a3-5299-72ee-83b7-7151e529bb83",
+    "PreRevision": 1,
+    "PostRevision": 2,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "NOT_STARTED",
+      "Verification": "PARTIALLY_VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "assessment.recorded",
+      "work.verification_changed"
+    ],
+    "FirstSeq": 18,
+    "LastSeq": 19,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-02",
+    "AC": "AC-162",
+    "Stage": "Gap",
+    "Variant": "IP assignments rejected",
+    "Actor": "01a180a3-5283-7933-92fa-3bb2df9e597c",
+    "ActorRole": "EDITOR (designated verifier)",
+    "Subject": "01a180a3-5299-72ee-83b7-7151e529bb83",
+    "PreRevision": 2,
+    "PostRevision": 2,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "PARTIALLY_VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "NOT_STARTED",
+      "Verification": "PARTIALLY_VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "assessment.recorded"
+    ],
+    "FirstSeq": 20,
+    "LastSeq": 20,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-02",
+    "AC": "AC-162",
+    "Stage": "Finding",
+    "Variant": "typed record",
+    "Actor": "01a180a3-526d-7f36-a79a-9416b348d43c",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-529b-7aaa-8c31-f66f37ae0d3d",
+    "PreRevision": 1,
+    "PostRevision": 1,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "NOT_STARTED",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "context.created"
+    ],
+    "FirstSeq": 21,
+    "LastSeq": 21,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-02",
+    "AC": "AC-162",
+    "Stage": "Follow-Up",
+    "Variant": "waiting on the provider",
+    "Actor": "01a180a3-526d-7f36-a79a-9416b348d43c",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-536d-7328-915d-274ba91a511b",
+    "PreRevision": 2,
+    "PostRevision": 3,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "work.execution_changed"
+    ],
+    "FirstSeq": 24,
+    "LastSeq": 24,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-02",
+    "AC": "AC-162",
+    "Stage": "Resolution",
+    "Variant": "follow-up completed",
+    "Actor": "01a180a3-526d-7f36-a79a-9416b348d43c",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-536d-7328-915d-274ba91a511b",
+    "PreRevision": 3,
+    "PostRevision": 4,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "COMPLETED",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "work.execution_changed"
+    ],
+    "FirstSeq": 29,
+    "LastSeq": 29,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-02",
+    "AC": "AC-162",
+    "Stage": "Resolution",
+    "Variant": "attest the outcome",
+    "Actor": "01a180a3-526d-7f36-a79a-9416b348d43c",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-5299-72ee-83b7-7151e529bb83",
+    "PreRevision": 3,
+    "PostRevision": 4,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "COMPLETED",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "work.execution_changed"
+    ],
+    "FirstSeq": 30,
+    "LastSeq": 30,
+    "Note": ""
+  }
+]

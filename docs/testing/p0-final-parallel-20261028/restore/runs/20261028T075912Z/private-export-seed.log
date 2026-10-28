@@ -1,0 +1,115 @@
+=== RUN   TestRestoreRehearsal
+=== RUN   TestRestoreRehearsal/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage
+=== RUN   TestRestoreRehearsal/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163)
+=== RUN   TestRestoreRehearsal/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09)
+=== RUN   TestRestoreRehearsal/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10)
+=== RUN   TestRestoreRehearsal/correction:_appended,_never_edited;_owner_only_(AC-163)
+=== RUN   TestRestoreRehearsal/import_retains_verification_claim_and_fingerprints_its_content
+=== RUN   TestRestoreRehearsal/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row
+=== RUN   TestRestoreRehearsal/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk
+=== RUN   TestRestoreRehearsal/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import
+=== RUN   TestRestoreRehearsal/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed
+=== RUN   TestRestoreRehearsal/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import
+=== RUN   TestRestoreRehearsal/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint
+=== RUN   TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions
+=== RUN   TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty
+=== RUN   TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text
+=== RUN   TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries
+=== RUN   TestRestoreRehearsal/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/format
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/title
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows
+=== RUN   TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes
+=== RUN   TestRestoreRehearsal/a_new-row_dependency_graph_becomes_the_exact_persisted_edges
+=== RUN   TestRestoreRehearsal/a_reference_to_an_existing_item_links_to_it
+=== RUN   TestRestoreRehearsal/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds
+=== RUN   TestRestoreRehearsal/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation
+=== RUN   TestRestoreRehearsal/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records
+=== RUN   TestRestoreRehearsal/a_new_row_can_extend_an_already_imported_group
+=== RUN   TestRestoreRehearsal/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds
+    contract_w6.go:554: step-level failure injection is a memory-double seam; the PostgreSQL adapter rolls back through its single transaction
+=== RUN   TestRestoreRehearsal/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it
+=== RUN   TestRestoreRehearsal/concurrent_identical_imports_create_the_records_exactly_once
+=== RUN   TestRestoreRehearsal/access_withdrawn_between_preview_and_commit_mutates_nothing
+=== RUN   TestRestoreRehearsal/a_row_without_a_description_is_a_preview_error_on_every_store,_never_a_storage_failure
+=== RUN   TestRestoreRehearsal/brief:_filing_owner_survives_creation_before_later_transitions
+=== RUN   TestRestoreRehearsal/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2
+=== RUN   TestRestoreRehearsal/brief:_proof_assessment_and_dispute_change_readiness_at_t2
+=== RUN   TestRestoreRehearsal/brief:_imported_work_and_its_dependency_facts_appear_at_t2
+=== RUN   TestRestoreRehearsal/F01_dispute_survives_withdrawn
+=== RUN   TestRestoreRehearsal/F01_dispute_survives_revoked
+=== RUN   TestRestoreRehearsal/F02_stale_assessment_refused
+=== RUN   TestRestoreRehearsal/F03_no-proof_filing:_package_and_signature_guards
+=== RUN   TestRestoreRehearsal/F03_observed_signature_satisfies_the_signature_guard
+=== RUN   TestRestoreRehearsal/F04_room_is_self-contained
+=== RUN   TestRestoreRehearsal/GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen
+=== RUN   TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage
+=== RUN   TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/no-supplement_alternate
+=== RUN   TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/rejection_and_closure
+=== RUN   TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/stale_stage_update_and_revoked_membership
+=== RUN   TestRestoreRehearsal/GW-01_Transaction_(AC-161):_approval_to_post-closing
+=== RUN   TestRestoreRehearsal/GW-02_Due_Diligence_(AC-162):_request_to_resolution
+--- PASS: TestRestoreRehearsal (9.15s)
+    --- PASS: TestRestoreRehearsal/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage (0.09s)
+    --- PASS: TestRestoreRehearsal/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163) (0.82s)
+    --- PASS: TestRestoreRehearsal/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09) (0.34s)
+    --- PASS: TestRestoreRehearsal/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10) (0.37s)
+    --- PASS: TestRestoreRehearsal/correction:_appended,_never_edited;_owner_only_(AC-163) (0.26s)
+    --- PASS: TestRestoreRehearsal/import_retains_verification_claim_and_fingerprints_its_content (0.05s)
+    --- PASS: TestRestoreRehearsal/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row (0.20s)
+        --- PASS: TestRestoreRehearsal/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk (0.07s)
+        --- PASS: TestRestoreRehearsal/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import (0.13s)
+    --- PASS: TestRestoreRehearsal/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed (0.28s)
+        --- PASS: TestRestoreRehearsal/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import (0.05s)
+        --- PASS: TestRestoreRehearsal/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint (0.22s)
+    --- PASS: TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions (0.14s)
+        --- PASS: TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty (0.06s)
+        --- PASS: TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text (0.05s)
+        --- PASS: TestRestoreRehearsal/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries (0.03s)
+    --- PASS: TestRestoreRehearsal/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation (0.03s)
+    --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes (0.41s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/format (0.07s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv (0.07s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx (0.04s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty (0.04s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey (0.03s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind (0.03s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/title (0.04s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows (0.04s)
+        --- PASS: TestRestoreRehearsal/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes (0.04s)
+    --- PASS: TestRestoreRehearsal/a_new-row_dependency_graph_becomes_the_exact_persisted_edges (0.24s)
+    --- PASS: TestRestoreRehearsal/a_reference_to_an_existing_item_links_to_it (0.08s)
+    --- PASS: TestRestoreRehearsal/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds (0.04s)
+    --- PASS: TestRestoreRehearsal/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation (0.03s)
+    --- PASS: TestRestoreRehearsal/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records (0.09s)
+    --- PASS: TestRestoreRehearsal/a_new_row_can_extend_an_already_imported_group (0.10s)
+    --- SKIP: TestRestoreRehearsal/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds (0.02s)
+    --- PASS: TestRestoreRehearsal/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it (0.12s)
+    --- PASS: TestRestoreRehearsal/concurrent_identical_imports_create_the_records_exactly_once (0.29s)
+    --- PASS: TestRestoreRehearsal/access_withdrawn_between_preview_and_commit_mutates_nothing (0.09s)
+    --- PASS: TestRestoreRehearsal/a_row_without_a_description_is_a_preview_error_on_every_store,_never_a_storage_failure (0.10s)
+    --- PASS: TestRestoreRehearsal/brief:_filing_owner_survives_creation_before_later_transitions (0.08s)
+    --- PASS: TestRestoreRehearsal/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2 (0.10s)
+    --- PASS: TestRestoreRehearsal/brief:_proof_assessment_and_dispute_change_readiness_at_t2 (0.12s)
+    --- PASS: TestRestoreRehearsal/brief:_imported_work_and_its_dependency_facts_appear_at_t2 (0.04s)
+    --- PASS: TestRestoreRehearsal/F01_dispute_survives_withdrawn (0.16s)
+    --- PASS: TestRestoreRehearsal/F01_dispute_survives_revoked (0.18s)
+    --- PASS: TestRestoreRehearsal/F02_stale_assessment_refused (0.17s)
+    --- PASS: TestRestoreRehearsal/F03_no-proof_filing:_package_and_signature_guards (0.29s)
+    --- PASS: TestRestoreRehearsal/F03_observed_signature_satisfies_the_signature_guard (0.15s)
+    --- PASS: TestRestoreRehearsal/F04_room_is_self-contained (0.06s)
+    --- PASS: TestRestoreRehearsal/GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen (1.21s)
+    --- PASS: TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage (0.67s)
+        --- PASS: TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/no-supplement_alternate (0.21s)
+        --- PASS: TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/rejection_and_closure (0.32s)
+        --- PASS: TestRestoreRehearsal/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/stale_stage_update_and_revoked_membership (0.15s)
+    --- PASS: TestRestoreRehearsal/GW-01_Transaction_(AC-161):_approval_to_post-closing (0.88s)
+    --- PASS: TestRestoreRehearsal/GW-02_Due_Diligence_(AC-162):_request_to_resolution (0.35s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/outbound/postgres	9.668s

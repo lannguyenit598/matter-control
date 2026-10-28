@@ -1,0 +1,286 @@
+[
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "go",
+      "build",
+      "-o",
+      "/tmp/mc-zitadel-20261028T075805Z/mcapi",
+      "./cmd/mcapi"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start_utc": "2026-10-28T07:58:31.753506+00:00",
+    "end_utc": "2026-10-28T07:58:31.873087+00:00",
+    "exit": 1,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/backend-build.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "go",
+      "build",
+      "-o",
+      "/tmp/mc-zitadel-20261028T075805Z/mcapi",
+      "./cmd/mcapi"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start_utc": "2026-10-28T07:58:43.242443+00:00",
+    "end_utc": "2026-10-28T07:58:46.310218+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/backend-build-host.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "node",
+      "/tmp/mc-zitadel-20261028T075805Z/frontend/node_modules/next/dist/bin/next",
+      "build",
+      "--webpack"
+    ],
+    "cwd": "/tmp/mc-zitadel-20261028T075805Z/frontend",
+    "start_utc": "2026-10-28T07:58:46.310649+00:00",
+    "end_utc": "2026-10-28T07:58:59.382473+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/frontend-build.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "inspect",
+      "--format",
+      "{{json .State}} {{json .Config.Labels}} {{json .NetworkSettings.Ports}}",
+      "mc-p0-zcode-pg-product-test"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:04.530145+00:00",
+    "end_utc": "2026-10-28T07:59:04.569870+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/container-recheck.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "mc-p0-zcode-pg-product-test",
+      "pg_isready"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:04.570041+00:00",
+    "end_utc": "2026-10-28T07:59:04.651152+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/pg-ready.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "mc-p0-zcode-pg-product-test",
+      "psql",
+      "-U",
+      "mc_product",
+      "-d",
+      "postgres",
+      "-Atc",
+      "SELECT count(*) FROM pg_database WHERE datname='mc_cloud_ui_20261028t075805z'"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:04.651364+00:00",
+    "end_utc": "2026-10-28T07:59:04.815978+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/db-absence.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "mc-p0-zcode-pg-product-test",
+      "psql",
+      "-U",
+      "mc_product",
+      "-d",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-c",
+      "CREATE DATABASE mc_cloud_ui_20261028t075805z"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:04.816154+00:00",
+    "end_utc": "2026-10-28T07:59:05.841414+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/db-create.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "/tmp/mc-zitadel-20261028T075805Z/mcapi",
+      "migrate"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:05.842174+00:00",
+    "end_utc": "2026-10-28T07:59:07.464845+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/migrate-new-db.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "bash",
+      "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/ops/p0-local/cloud/seed-cloud-users.sh"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:07.465618+00:00",
+    "end_utc": "2026-10-28T07:59:07.668531+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/seed-new-users.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "mc-p0-zcode-pg-product-test",
+      "psql",
+      "-U",
+      "mc_product",
+      "-d",
+      "mc_cloud_ui_20261028t075805z",
+      "-Atc",
+      "SELECT id, display_name, idp_subject FROM users ORDER BY display_name"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:07.669232+00:00",
+    "end_utc": "2026-10-28T07:59:07.771721+00:00",
+    "exit": 0,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/new-fixture-ids.log",
+    "stdin": "not recorded",
+    "input_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "python3",
+      "/tmp/mc-zitadel-20261028T075805Z/probe.py"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:00:43.470249+00:00",
+    "end_utc": "2026-10-28T08:00:43.932900+00:00",
+    "exit": 0,
+    "artifact": "auth-cases.json; runtime-ready.json; resource-ledger.json",
+    "request_headers_recorded": false,
+    "response_bodies_recorded": false
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "/tmp/mc-zitadel-20261028T075805Z/mcapi"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start_utc": "2026-10-28T07:59:16.660219+00:00",
+    "end_utc": null,
+    "status": "SPAWNED_LISTENER_VERIFIED",
+    "pid": 40093,
+    "listener_pid": 40096,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/start-api.log"
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "node",
+      "/tmp/mc-zitadel-20261028T075805Z/frontend/node_modules/next/dist/bin/next",
+      "start",
+      "--hostname",
+      "127.0.0.1",
+      "--port",
+      "3000"
+    ],
+    "cwd": "/tmp/mc-zitadel-20261028T075805Z/frontend",
+    "start_utc": "2026-10-28T07:59:18.348022+00:00",
+    "end_utc": null,
+    "status": "SPAWNED_LISTENER_VERIFIED",
+    "pid": 40125,
+    "listener_pid": 40126,
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/start-fe.log"
+  },
+  {
+    "action": "preflight session tool calls",
+    "status": "EXECUTED",
+    "actions": [
+      "read RTK and assignment",
+      "Semble exact repo search",
+      "read root/component instructions, workflow, status, task and return",
+      "six SHA256 pins; 714 source entries; 102 R9 entries",
+      "lsof ports",
+      "allowlisted private file lstat and API client boolean",
+      "Docker selected state/labels/ports; pg_isready",
+      "Context7 resolve then query Next.js CLI",
+      "CUA dedicated login tab"
+    ],
+    "timing_limit": "Initial read-only tool calls are retained in session transcript; exact individual UTC boundaries were not captured in this file. No invented timing.",
+    "failed_attempts": [
+      {
+        "action": "sandbox Docker inspect",
+        "exit": 1,
+        "reason": "docker socket permission denied"
+      },
+      {
+        "action": "selected Docker inspect with Health.Status",
+        "exit": 1,
+        "reason": "Health property absent; corrected selected state inspection and actual pg_isready succeeded"
+      }
+    ],
+    "secrets_exported": false
+  },
+  {
+    "action": "human-blocker intake and read-only listener inventory",
+    "utc": "2026-10-28T08:05:55.982683+00:00",
+    "argv": [
+      "rtk",
+      "proxy",
+      "lsof",
+      "-nP",
+      "-iTCP:3000",
+      "-iTCP:8081",
+      "-sTCP:LISTEN"
+    ],
+    "exit": 0,
+    "sanitized_output": "COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nmcapi   40096 nguyenvanlan    8u  IPv4 0x4fea413cad6c6261      0t0  TCP 127.0.0.1:8081 (LISTEN)\nnode    40126 nguyenvanlan   12u  IPv4 0x2698b9b6f0d5977a      0t0  TCP 127.0.0.1:3000 (LISTEN)\n",
+    "browser_action": "Check prior task tab URL only; failed Tab not found, no existing tabs",
+    "provider_mutations": false
+  }
+]

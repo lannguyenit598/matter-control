@@ -1,0 +1,16 @@
+PASS  R8-N01 regression — record draft does NOT survive revoke -> owner re-grant (reproduces reviewer marker, now red->green)
+PASS  R8-N01 regression — selected bulk rows and bulk result do not resurrect after revoke -> re-grant
+PASS  R8-N01 regression — downgrade to VIEWER (still has scoped read) does NOT purge the record draft
+PASS  R8-N02 regression — Create Matter title survives view switch (reproduces reviewer finding, now red->green)
+PASS  R8-N02 regression — promotion reason survives view switch and locale switch (reproduces reviewer finding, now red->green)
+PASS  R8-N02 regression — promotion reason/target do not bleed across documents
+PASS  R8-N02 / R8-N01 regression — explicit discard (Sign out) clears the form drafts
+PASS  R8-N03 regression — target and expected-current are two independent controls
+PASS  R8-N03 regression — no target selected never produces a ready/success intent
+PASS  R8-N03 regression — re-selecting the current version as target yields a no-change message, not success
+PASS  R8-N03 regression — changing the target resets a stale impact acknowledgment
+PASS  R8-N03 regression — a stale expected-current guard never becomes a force-save
+PASS  R8-N03 regression — EDITOR can add a version but has no promotion control; VIEWER keeps scoped read
+
+MOCK_EXECUTED: 13 R8-N01..N03 regression checks passed against docs/design/p0-handoff-r9/prototype.html.
+Limits: mock DOM execution only; not rendered/browser evidence; not a product authorization/security PASS.

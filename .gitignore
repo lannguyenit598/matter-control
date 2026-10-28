@@ -4,3 +4,22 @@
 .env.*
 !.env.example
 .worktrees/
+/keys/396983916088540712.json
+
+# Secrets and local runtime credentials
+/keys/
+/ops/p0-local/secrets/
+/ops/p0-local/runtime/*key*.json
+/ops/p0-local/cloud/*.env
+*.pem
+
+# Dependencies, build output, caches
+node_modules/
+.next/
+storybook-static/
+*.tsbuildinfo
+__pycache__/
+*.pyc
+
+# Local security-review runtime state
+.mimosa/

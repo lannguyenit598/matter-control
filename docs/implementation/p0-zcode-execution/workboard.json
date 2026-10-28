@@ -1,0 +1,2677 @@
+{
+  "task": "MC-P0-ZCODE-EXECUTION",
+  "parent": "MC-P0-ZCODE-DELIVERY",
+  "owner": "Actual Local Codex for current BE/API/FE remediation",
+  "created_at": "2026-10-26T17:56:53.980641+00:00",
+  "prepared_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "status": "IN_REVIEW_WITH_VERIFICATION_BLOCKERS_CODEX_PRIMARY",
+  "authority": {
+    "latest_request": "output của zcode đây. cần tạo 1 plan từ output cũng như design thiết kế để zcode hoàn thành luôn trước khi review lại. phải hoàn thành luôn backend và frontend",
+    "auth_reply": "Đề xuất OIDC self-hosted local, chưa chốt production",
+    "auth_reply_effect": "Initial proposal request superseded for local provider selection by explicit ZITADEL reply; production unchanged.",
+    "review_sequence": "One continuous BE+FE implementation and author-test batch; independent review after final candidate. No self-approval.",
+    "provider_reply": "dùng https://github.com/zitadel/zitadel"
+  },
+  "decisions": {
+    "local_oidc": {
+      "provider": "ZITADEL self-hosted local",
+      "status": "PROVISIONED_OWNER_EXECUTED_NOT_INDEPENDENTLY_RUNTIME_VERIFIED",
+      "receipt": "ops/p0-local/runtime/provisioning.json (owner-executed, redacted ids; no Codex/provider probe in this intake)",
+      "actual_issuer": null,
+      "production_identity": "NOT_SELECTED",
+      "issuer": "http://localhost:8080",
+      "issuer_pinned": true,
+      "provider_started": true,
+      "note": "Status reconciled from the task-owned redacted provisioning receipt; no re-provisioning performed. Independent runtime verification happens via W1 backend integration tests (machine probe) + permitted-browser end-user tests (blocked)."
+    },
+    "mimosa": {
+      "status": "COMMIT_GATE_UNRESOLVED",
+      "action": "No scan/commit/stage retry, evidence rewrite or bypass; honor actual edit/run refusals.",
+      "accepted_git_source_base": false
+    },
+    "design_r2": {
+      "status": "RECEIVED_HASH_VERIFIED_INTEGRATED_AS_INPUT",
+      "revision": "MC-P0-DESIGN-R2-local-20261027-01",
+      "return_sha256": "4eb3ed8b56304e0740bebca65cf839e2c98c279f3afd36047beed4613b7e7237",
+      "output_pins_verified": "8/8 (current-ux-spec 348db055…, design-delta f1f1ee7a…, findings-disposition a62e6f32…, polish.css 9ff8deeb…, prototype 27dc7b74…, screen-state-matrix 3faaf353…, validation-plan 3b91d361…, zcode-handoff 5e862886…)",
+      "consumed": [
+        "return.md",
+        "design-delta.md",
+        "zcode-handoff.md",
+        "findings-disposition.json (UIUX-01..11 + 48 historical records)",
+        "polish.css/prototype.html (reference, hash-pinned)",
+        "screen-state-matrix.json (consumed by pin + author checks; full read at FE implementation)",
+        "current-ux-spec.md/validation-plan.md (same)"
+      ],
+      "status_note": "SOURCE_SPEC_PROPOSAL_PENDING_NONAUTHOR_REVIEW — not formal design approval; UIUX-01..11 all PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW; rendered/keyboard/touch/screen-reader/AC-137 NOT_RUN",
+      "integrated": {
+        "contract": "local-contract.md revision 2: GET /workspaces/{id}/matters (accessible list w/ role+as-of) + BFF GET /api/auth/session currentness; W1 UI slice order adopted from zcode-handoff",
+        "fe_baseline": "component reuse inventory (existing atoms/molecules/organisms, no duplicate wrappers), feature ownership under src/features/{matters,requirements,actions,dependencies,evidence,documents,filings,brief,data-transfer}, selected tokens/density/variants, nine-state per-screen contracts feed W1..W6 FE implementation",
+        "backend": "no wire/business change; R2 semantic needs match contract §2/§3; conflicts/reconciliation semantics already in §3"
+      },
+      "superseded_scheduling": "R2 per-wave activation/review-wait sentences superseded by current COMPLETE BACKEND + FRONTEND P0 execution authority (W1-W7 internal checkpoints); material receipts still gate acceptance fields",
+      "prohibitions_kept": "prototype simulation JS/draft preview not copied as enforcement; no functionality loss to match prototype; browser-dependent verification stays blocked",
+      "differences_pending": [
+        "UIUX-01..11 nonauthor semantic/testability review (Codex assigns reviewer)",
+        "rendered/interaction/AC-137 gates NOT_RUN (Work browser disabled; rows VERIFICATION_BLOCKED until permitted)",
+        "possible OpenDesign R3: verify actual return then integrate delta only; do not assume R3 exists/approved"
+      ]
+    },
+    "production": {
+      "status": "NOT_AUTHORIZED",
+      "cloudflare_cost_recovery": "UNVERIFIED_SEPARATE_RELEASE_GATES"
+    },
+    "design_r3": {
+      "status": "RECEIVED_HASH_VERIFIED_LATEST_SOURCE_SPEC_INPUT",
+      "revision": "R3 (supersedes R2 as latest; R2 + older preserved)",
+      "return_sha256": "cd42f5a44536807ba6e38a4af735ec211fa211dc9185c357ef58e36b8e2106ec",
+      "output_pins_verified": "8/8 (current-ux-spec 95e581b1…, design-delta 4ec85cc6…, findings-disposition 33035ef8…, polish.css 32f38663…, prototype 772d5630…, screen-state-matrix 1eae3e9a…, validation-plan ba51b4ac…, zcode-handoff 61cdc001…)",
+      "r2_review_notes_integrated": [
+        "Causal Back/breadcrumb with record/trail/origin context preserved (proof-back != previous-record-back) — W2 Grid/detail FE work",
+        "My Actions separates eligible/waiting/blocked/historical; WAITING+BLOCKED both meanings; actor from session/authorized API; zero-eligible is a valid state"
+      ],
+      "status_note": "SOURCE_SPEC_PROPOSAL — semantic/rendered acceptance separate; not formal design approval"
+    }
+  },
+  "w0_intake": "RECEIVED_HASH_VERIFIED; not independently accepted product implementation",
+  "waves": [
+    {
+      "id": "P0-W1",
+      "status": "IN_PROGRESS_W1_CODE_COMPLETE_HUMAN_LOGIN_BLOCKED_BY_IDP_CONFIG",
+      "author_checkpoint": "STEP0_DONE + coordination corrections applied: contract rev 3 (session-store model explicit, sha e0f0cc1867415985…), notes rev 2 (additive catalogue reach + machine/end-user evidence separation); W1 backend TDD implementation is the current active work",
+      "external_review_required_before_next_wave": false,
+      "evidence": [
+        {
+          "path": "ops/p0-local/runtime/provisioning.json",
+          "kind": "identity_provisioning_receipt"
+        }
+      ],
+      "resume_sheet": "docs/implementation/p0-zcode-execution/w1-implementation-notes.md",
+      "design_baseline": "R2 revision MC-P0-DESIGN-R2-local-20261027-01 (source proposal; visual/semantic acceptance separate)"
+    },
+    {
+      "id": "P0-W2",
+      "status": "W2_CODE_COMPLETE_AUTHOR_TESTED_BE_FE_BROWSER_AND_E2E_PENDING",
+      "author_checkpoint": null,
+      "external_review_required_before_next_wave": false,
+      "evidence": []
+    },
+    {
+      "id": "P0-W3",
+      "status": "W3_CODE_COMPLETE_AUTHOR_TESTED_BE_FE_BROWSER_AND_E2E_PENDING",
+      "author_checkpoint": "documents (immutable versions, guarded promotion, raw upload, streamed download), criteria, claims, independent per-claim assessment, dispute/revoke/resolve, applicability, verifier designation; verification derived (never set) and recomputed at the read/command instant",
+      "external_review_required_before_next_wave": false,
+      "evidence": [
+        "backend: make check exit 0 (0 lint issues; PG fixtures attached; -race); SuiteW3 on memory and PostgreSQL; mutation check of the self-evidence guard failed the suite as expected",
+        "frontend: pnpm check exit 0 (32 files, 347 tests incl. 13 route tests); pnpm build exit 0"
+      ]
+    },
+    {
+      "id": "P0-W4",
+      "status": "W4_CODE_COMPLETE_AUTHOR_TESTED_BE_FE_BROWSER_AND_E2E_PENDING",
+      "author_checkpoint": "nine-stage filing flow on the shared work spine (a filing is an ACTION with a filing sidecar): guards, exact submissions per cycle, repeated supplement cycles, negative paths, owner close/reopen with proof epochs, append-only observations with corrections",
+      "external_review_required_before_next_wave": false,
+      "evidence": [
+        "backend: make check exit 0 (0 lint issues; PG fixtures attached; -race); SuiteW4 on memory and PostgreSQL; three guards mutation-checked (negative outcome, evidence-after-reopen, package criteria)",
+        "frontend: pnpm check exit 0 x3 (33 files, 354 tests); pnpm build exit 0"
+      ]
+    },
+    {
+      "id": "P0-W5",
+      "status": "W5_CODE_COMPLETE_AUTHOR_TESTED_BE_FE_BROWSER_AND_E2E_AND_AC137_PENDING",
+      "author_checkpoint": "Control Room built from one snapshot (blockers → next actions with adjacent decisions → waiting → milestones → gaps → changes) with its boundary; basic Decision/Finding/Risk/Entity records",
+      "external_review_required_before_next_wave": false,
+      "evidence": [
+        "backend: make check exit 0 (0 lint issues; PG attached; -race); SuiteW5 on memory and PostgreSQL",
+        "frontend: pnpm check exit 0 (34 files, 361 tests); pnpm build exit 0"
+      ]
+    },
+    {
+      "id": "P0-W6",
+      "status": "W6_CODE_COMPLETE_AUTHOR_TESTED_BE_FE_BROWSER_E2E_PENDING",
+      "author_checkpoint": null,
+      "external_review_required_before_next_wave": false,
+      "evidence": []
+    },
+    {
+      "id": "P0-W7",
+      "status": "AUTHOR_DONE_LEDGERS_AND_RESTORE_VERIFIED_BROWSER_AC137_BLOCKED",
+      "author_checkpoint": null,
+      "external_review_required_before_next_wave": false,
+      "evidence": []
+    }
+  ],
+  "requirements": [
+    {
+      "id": "FR-001",
+      "title": "Requirement vs Action",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-101",
+        "AC-121",
+        "AC-159"
+      ],
+      "starting_backend": "PARTIAL_SOURCE",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-002",
+      "title": "Milestones",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-102",
+        "AC-141"
+      ],
+      "starting_backend": "PARTIAL_SOURCE",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-003",
+      "title": "Next Action",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-103",
+        "AC-144"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-004",
+      "title": "Waiting On",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-104",
+        "AC-130"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-005",
+      "title": "Dependencies and Blocker Logic",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-105",
+        "AC-122",
+        "AC-123",
+        "AC-124",
+        "AC-125",
+        "AC-146"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-006",
+      "title": "Evidence Requirements",
+      "wave": "P0-W3",
+      "acceptance_ids": [
+        "AC-106",
+        "AC-127"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/evidence.go",
+        "internal/core/service/evidence_service.go",
+        "internal/adapter/outbound/postgres/evidence_store.go",
+        "internal/adapter/outbound/objectstore/store.go",
+        "migrations_mattercontrol/0003_documents_evidence.sql"
+      ],
+      "api_operations": [
+        "contract rev7 §2.4"
+      ],
+      "ui_routes": [
+        "/matters/[id]/documents",
+        "/matters/[id]/documents/[documentId]",
+        "/matters/[id]/work/[itemId] (Proof card)",
+        "/api/matters/[id]/documents/[docId]/versions[/…/content]"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w3.go (memory+PG)",
+        "domain/matter/evidence_test.go",
+        "productapi/evidence_server_test.go",
+        "objectstore/store_test.go",
+        "features/proof/components/proof-ui.test.tsx",
+        "app/api/matters/documents-routes.test.ts"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "no Playwright/keyboard/touch/visual evidence",
+        "object store is a local directory: no malware scanning, retention or encryption at rest",
+        "promotion impact lists criterion ids (titles not resolved on the document page)"
+      ]
+    },
+    {
+      "id": "FR-007",
+      "title": "Evidence Verification",
+      "wave": "P0-W3",
+      "acceptance_ids": [
+        "AC-107",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-140"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/evidence.go",
+        "internal/core/service/evidence_service.go",
+        "internal/adapter/outbound/postgres/evidence_store.go",
+        "internal/adapter/outbound/objectstore/store.go",
+        "migrations_mattercontrol/0003_documents_evidence.sql"
+      ],
+      "api_operations": [
+        "contract rev7 §2.4"
+      ],
+      "ui_routes": [
+        "/matters/[id]/documents",
+        "/matters/[id]/documents/[documentId]",
+        "/matters/[id]/work/[itemId] (Proof card)",
+        "/api/matters/[id]/documents/[docId]/versions[/…/content]"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w3.go (memory+PG)",
+        "domain/matter/evidence_test.go",
+        "productapi/evidence_server_test.go",
+        "objectstore/store_test.go",
+        "features/proof/components/proof-ui.test.tsx",
+        "app/api/matters/documents-routes.test.ts"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "no Playwright/keyboard/touch/visual evidence",
+        "object store is a local directory: no malware scanning, retention or encryption at rest",
+        "promotion impact lists criterion ids (titles not resolved on the document page)"
+      ]
+    },
+    {
+      "id": "FR-008",
+      "title": "Event History",
+      "wave": "P0-W1",
+      "acceptance_ids": [
+        "AC-108",
+        "AC-136",
+        "AC-149",
+        "AC-153"
+      ],
+      "starting_backend": "PARTIAL_SOURCE",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__HTTP_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [],
+      "api_operations": [],
+      "ui_routes": [],
+      "test_cases": [],
+      "evidence": [],
+      "known_gaps": [
+        "event read API (append-only, scoped, paginated — F-10 B3 binding candidates pending adoption)",
+        "events for membership/admin actions",
+        "security-log separation",
+        "history view with provenance"
+      ],
+      "claude_finish_evidence": "W1 history read (HistoryRead, cursor paging) + history asserted at every GW checkpoint (SuiteGW) on memory and PostgreSQL; FE matter-history component"
+    },
+    {
+      "id": "FR-009",
+      "title": "Matter Control Room",
+      "wave": "P0-W5",
+      "acceptance_ids": [
+        "AC-109",
+        "AC-137"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_BROWSER_AND_AC137_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{controlroom,context}.go",
+        "internal/core/service/control_service.go",
+        "internal/adapter/outbound/postgres/context_store.go",
+        "migrations_mattercontrol/0005_context_records.sql"
+      ],
+      "api_operations": [
+        "contract rev9 §2.6"
+      ],
+      "ui_routes": [
+        "/matters/[id]/control-room"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w5.go (memory+PG)",
+        "productapi/control_server_test.go",
+        "features/control/components/control-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "AC-137 needs five real managers: NOT RUN, not simulated",
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "no mobile/keyboard/visual evidence (browser blocked)",
+        "no as-of selector: the room is always read at the current snapshot"
+      ]
+    },
+    {
+      "id": "FR-010",
+      "title": "My Actions",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-110",
+        "AC-144",
+        "AC-147"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-011",
+      "title": "Operational Grid",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-111",
+        "AC-139",
+        "AC-150"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-012",
+      "title": "Bulk Editing",
+      "wave": "P0-W6",
+      "acceptance_ids": [
+        "AC-112",
+        "AC-133",
+        "AC-139"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__HTTP_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [],
+      "api_operations": [],
+      "ui_routes": [],
+      "test_cases": [],
+      "evidence": [],
+      "known_gaps": [
+        "validated partial bulk with per-row permission/revision and idempotent batches/unknown-outcome recovery",
+        "per-row bulk results/reconciliation UI"
+      ],
+      "claude_finish_evidence": "Bulk preview/commit: SuiteW6 + service tests (memory, PostgreSQL), productapi TestBulk_HTTPFlow, FE intent/ui/seam tests"
+    },
+    {
+      "id": "FR-013",
+      "title": "Excel/CSV Import",
+      "wave": "P0-W6",
+      "acceptance_ids": [
+        "AC-113",
+        "AC-131",
+        "AC-132",
+        "AC-148"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__HTTP_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [],
+      "api_operations": [],
+      "ui_routes": [],
+      "test_cases": [],
+      "evidence": [],
+      "known_gaps": [
+        "preview/mapping/confirm import, formula-injection resistance, bounds decisions (D-object/budget)",
+        "import wizard"
+      ],
+      "claude_finish_evidence": "Import: SuiteW6 (graph, group atomicity, replay/conflict, concurrency, UNKNOWN recovery, revoked rights) on memory and PostgreSQL; HTTP TestImport_HTTPFlow; FE tests"
+    },
+    {
+      "id": "FR-014",
+      "title": "Excel Export",
+      "wave": "P0-W6",
+      "acceptance_ids": [
+        "AC-114",
+        "AC-148",
+        "AC-147"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__HTTP_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [],
+      "api_operations": [],
+      "ui_routes": [],
+      "test_cases": [],
+      "evidence": [],
+      "known_gaps": [
+        "meaningful Excel export with rights recheck at retrieval, no hidden fields",
+        "export triggers/download"
+      ],
+      "claude_finish_evidence": "Export: productapi TestExportAndBrief_HTTP (csv/xlsx, provenance, authorization); FE download links and BFF route build-verified only"
+    },
+    {
+      "id": "FR-015",
+      "title": "Document Versions",
+      "wave": "P0-W3",
+      "acceptance_ids": [
+        "AC-115",
+        "AC-128"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/evidence.go",
+        "internal/core/service/evidence_service.go",
+        "internal/adapter/outbound/postgres/evidence_store.go",
+        "internal/adapter/outbound/objectstore/store.go",
+        "migrations_mattercontrol/0003_documents_evidence.sql"
+      ],
+      "api_operations": [
+        "contract rev7 §2.4"
+      ],
+      "ui_routes": [
+        "/matters/[id]/documents",
+        "/matters/[id]/documents/[documentId]",
+        "/matters/[id]/work/[itemId] (Proof card)",
+        "/api/matters/[id]/documents/[docId]/versions[/…/content]"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w3.go (memory+PG)",
+        "domain/matter/evidence_test.go",
+        "productapi/evidence_server_test.go",
+        "objectstore/store_test.go",
+        "features/proof/components/proof-ui.test.tsx",
+        "app/api/matters/documents-routes.test.ts"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "no Playwright/keyboard/touch/visual evidence",
+        "object store is a local directory: no malware scanning, retention or encryption at rest",
+        "promotion impact lists criterion ids (titles not resolved on the document page)"
+      ]
+    },
+    {
+      "id": "FR-016",
+      "title": "Regulatory Filing Lifecycle",
+      "wave": "P0-W4",
+      "acceptance_ids": [
+        "AC-116",
+        "AC-129",
+        "AC-145"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/filing.go",
+        "internal/core/service/filing_service.go",
+        "internal/adapter/outbound/postgres/filing_store.go",
+        "migrations_mattercontrol/0004_filings.sql"
+      ],
+      "api_operations": [
+        "contract rev8 §2.5"
+      ],
+      "ui_routes": [
+        "/matters/[id]/filings",
+        "/matters/[id]/filings/[filingId]"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w4.go (memory+PG)",
+        "productapi/filing_server_test.go",
+        "features/filings/components/filing-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "no Playwright/keyboard/touch/visual evidence",
+        "SIGNATURE stage does not model a waiting-on-signatory state (execution stays IN_PROGRESS)",
+        "for filings without proof, evidence-after-reopen is bounded by the reopen observation"
+      ]
+    },
+    {
+      "id": "FR-017",
+      "title": "External Parties",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-117",
+        "AC-130"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    },
+    {
+      "id": "FR-018",
+      "title": "Simple Roles and Ownership",
+      "wave": "P0-W1",
+      "acceptance_ids": [
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "starting_backend": "PARTIAL_SOURCE",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__HTTP_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [],
+      "api_operations": [],
+      "ui_routes": [],
+      "test_cases": [],
+      "evidence": [],
+      "known_gaps": [
+        "verified identity resolution (no resolver exists — BG-01)",
+        "workspace/matter administration endpoints (create matter, grant/revoke membership, verifier designation, last-owner protection)",
+        "revocation recheck on every retrieval path",
+        "sensitive uniform-denial responses + security audit trail exposure",
+        "real login/session against chosen IdP seam, scoped matter navigation, explicit denied/stale/unavailable states"
+      ],
+      "claude_finish_evidence": "W1 membership roles, designated verifier, revocation: existing W1/W3 suites; SuiteW7QA F02/F03 role cases; FE members UI"
+    },
+    {
+      "id": "FR-019",
+      "title": "Delta-Based Status Brief",
+      "wave": "P0-W6",
+      "acceptance_ids": [
+        "AC-119",
+        "AC-138"
+      ],
+      "starting_backend": "ABSENT",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__HTTP_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [],
+      "api_operations": [],
+      "ui_routes": [],
+      "test_cases": [],
+      "evidence": [],
+      "known_gaps": [
+        "deterministic delta draft vs explicit baseline/as-of with provenance",
+        "brief render/download"
+      ],
+      "claude_finish_evidence": "Brief: SuiteW6 brief cases (memory+PG), replay unit tests, HTTP wire test, FE brief tests"
+    },
+    {
+      "id": "FR-020",
+      "title": "Separate State Dimensions",
+      "wave": "P0-W2",
+      "acceptance_ids": [
+        "AC-120",
+        "AC-121",
+        "AC-139",
+        "AC-142",
+        "AC-143",
+        "AC-160"
+      ],
+      "starting_backend": "PARTIAL_SOURCE",
+      "starting_frontend": "TEMPLATE_ONLY",
+      "backend_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "api_implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "frontend_implementation": "IMPLEMENTED_COMPONENT_TESTED_BROWSER_VERIFICATION_BLOCKED",
+      "author_verification": "BE_PG_RACE_PASS__FE_COMPONENT_PASS__E2E_AND_BROWSER_NOT_RUN",
+      "independent_review": "PENDING_FINAL_BATCH",
+      "backend_symbols": [
+        "internal/core/domain/matter/{workgraph,execution,derive,workview}.go",
+        "internal/core/service/work_service.go",
+        "internal/adapter/outbound/postgres/work_store.go",
+        "migrations_mattercontrol/0002_work_graph.sql"
+      ],
+      "api_operations": [
+        "contract rev6 §2.3"
+      ],
+      "ui_routes": [
+        "/matters/[id]/work",
+        "/matters/[id]/work/[itemId]",
+        "/matters/[id]/planning",
+        "/my-actions"
+      ],
+      "test_cases": [
+        "repotest/mattercontrol/contract_w2.go (memory+PG)",
+        "domain/matter/workgraph_test.go",
+        "productapi/work_server_test.go",
+        "features/work/components/work-ui.test.tsx"
+      ],
+      "evidence": [],
+      "known_gaps": [
+        "real-user UI->API->PG not run (IdP redirect config blocker, no permitted browser)",
+        "Playwright/keyboard/touch/visual evidence not run"
+      ]
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-101",
+      "title": "Typed Requirement/Action",
+      "requirements": [
+        "FR-001"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-102",
+      "title": "Milestone readiness",
+      "requirements": [
+        "FR-002"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-103",
+      "title": "Next Action selection and deterministic order",
+      "requirements": [
+        "FR-003"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-104",
+      "title": "Waiting On",
+      "requirements": [
+        "FR-004"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-105",
+      "title": "AND gate",
+      "requirements": [
+        "FR-005"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-106",
+      "title": "Criterion distinct from proof",
+      "requirements": [
+        "FR-006"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-107",
+      "title": "Independent verification",
+      "requirements": [
+        "FR-007"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-108",
+      "title": "History provenance",
+      "requirements": [
+        "FR-008"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-109",
+      "title": "Control Room consistency",
+      "requirements": [
+        "FR-009"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW7QA F04 (memory+PG)",
+        "productapi TestControlRoom HTTP records/titles",
+        "control-room page.test.tsx orchestration"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-110",
+      "title": "My Actions",
+      "requirements": [
+        "FR-010"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-111",
+      "title": "Inline grid",
+      "requirements": [
+        "FR-011"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-112",
+      "title": "Bulk preview",
+      "requirements": [
+        "FR-012"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "productapi TestBulk_HTTPFlow",
+        "FE data-transfer-ui.test.tsx BulkSection",
+        "SuiteW6 service tests"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-113",
+      "title": "Typed import",
+      "requirements": [
+        "FR-013"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW6 graph + replay cases (memory+PG)",
+        "productapi TestImport_HTTPFlow"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-114",
+      "title": "Useful export",
+      "requirements": [
+        "FR-014"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "productapi TestExportAndBrief_HTTP csv/xlsx"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-115",
+      "title": "Version authority",
+      "requirements": [
+        "FR-015"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-116",
+      "title": "Filing tracking",
+      "requirements": [
+        "FR-016"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-117",
+      "title": "External context",
+      "requirements": [
+        "FR-017"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-118",
+      "title": "Scoped membership",
+      "requirements": [
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-119",
+      "title": "Delta brief",
+      "requirements": [
+        "FR-019"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW6 brief cases (memory+PG)",
+        "brief_replay_test.go"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-120",
+      "title": "Independent axes",
+      "requirements": [
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-121",
+      "title": "Completed but Unverified",
+      "requirements": [
+        "FR-001",
+        "FR-007",
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-122",
+      "title": "Blocked Requirement",
+      "requirements": [
+        "FR-005",
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-123",
+      "title": "Upstream verification unlocks",
+      "requirements": [
+        "FR-005",
+        "FR-007"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-124",
+      "title": "Reopen re-blocks transitive work",
+      "requirements": [
+        "FR-005",
+        "FR-007",
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-125",
+      "title": "Cycle rejected",
+      "requirements": [
+        "FR-005"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-126",
+      "title": "Rejected or expired evidence",
+      "requirements": [
+        "FR-007"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW7QA F01 (memory+PG)",
+        "SuiteGW GW-02 rejected component"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-127",
+      "title": "Missing mandatory evidence",
+      "requirements": [
+        "FR-006",
+        "FR-007"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-128",
+      "title": "Superseded document",
+      "requirements": [
+        "FR-007",
+        "FR-015"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-129",
+      "title": "Supplement cycle",
+      "requirements": [
+        "FR-016"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-130",
+      "title": "External Waiting On",
+      "requirements": [
+        "FR-004",
+        "FR-017"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-131",
+      "title": "Invalid import rows",
+      "requirements": [
+        "FR-013"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW6 invalid group / cycle / self reference (memory+PG)"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-132",
+      "title": "Safe import retry",
+      "requirements": [
+        "FR-013"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW6 replay, conflict, concurrent, lost-answer recovery (memory+PG)"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-133",
+      "title": "Bulk partial failure",
+      "requirements": [
+        "FR-012"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "productapi TestBulk_HTTPFlow",
+        "FE bulk grouped outcomes / frozen retry",
+        "dataops service tests"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-134",
+      "title": "Viewer write denied",
+      "requirements": [
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-135",
+      "title": "Cross-workspace attempt",
+      "requirements": [
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-136",
+      "title": "Correct audit",
+      "requirements": [
+        "FR-008"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-137",
+      "title": "Manager comprehension target",
+      "requirements": [
+        "FR-009"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "VERIFICATION_BLOCKED_REQUIRES_FIVE_REAL_MANAGERS",
+      "evidence": [],
+      "blocking_reason": "needs five real participants; not simulated"
+    },
+    {
+      "id": "AC-138",
+      "title": "Report window variants",
+      "requirements": [
+        "FR-019"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW6 window boundaries t1=t2, reversed, beyond boundary",
+        "productapi invalid-window"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-139",
+      "title": "Concurrent state change",
+      "requirements": [
+        "FR-011",
+        "FR-012",
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-140",
+      "title": "Verifier permissions",
+      "requirements": [
+        "FR-007",
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-141",
+      "title": "Readiness edge cases",
+      "requirements": [
+        "FR-002"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-142",
+      "title": "Timing boundaries",
+      "requirements": [
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-143",
+      "title": "Attention precedence",
+      "requirements": [
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-144",
+      "title": "No actionable work",
+      "requirements": [
+        "FR-003",
+        "FR-010"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-145",
+      "title": "Filing negative paths",
+      "requirements": [
+        "FR-016"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW4 + SuiteW7QA F03 + SuiteGW GW-03 refusals (memory+PG)"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-146",
+      "title": "Cancellation and waiver",
+      "requirements": [
+        "FR-005",
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-147",
+      "title": "Revoked access",
+      "requirements": [
+        "FR-010",
+        "FR-014",
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-148",
+      "title": "Spreadsheet safety",
+      "requirements": [
+        "FR-013",
+        "FR-014"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-149",
+      "title": "History integrity",
+      "requirements": [
+        "FR-008",
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-150",
+      "title": "Keyboard and error recovery",
+      "requirements": [
+        "FR-011"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": "keyboard/focus/zoom/visual evidence needs a permitted browser: Screen Recording is not granted to the computer-use driver and no human session exists; component-level role/label tests only"
+    },
+    {
+      "id": "AC-151",
+      "title": "Accessible comprehension",
+      "requirements": [
+        "FR-009",
+        "FR-011"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": "keyboard/focus/zoom/visual evidence needs a permitted browser: Screen Recording is not granted to the computer-use driver and no human session exists; component-level role/label tests only"
+    },
+    {
+      "id": "AC-152",
+      "title": "Localization and time",
+      "requirements": [
+        "FR-014",
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": "keyboard/focus/zoom/visual evidence needs a permitted browser: Screen Recording is not granted to the computer-use driver and no human session exists; component-level role/label tests only"
+    },
+    {
+      "id": "AC-153",
+      "title": "Failure consistency",
+      "requirements": [
+        "FR-008",
+        "FR-012"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-154",
+      "title": "Performance baseline",
+      "requirements": [
+        "FR-009",
+        "FR-011"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "MEASURED_LOCAL_SERVICE_LEVEL__BUDGET_AND_BROWSER_PENDING",
+      "evidence": [
+        "docs/testing/p0-claude-finish-20261028/perf-local.json (service level, 50/200 items, 30 reps; no HTTP/browser/device budget)"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-155",
+      "title": "Backup recovery",
+      "requirements": [
+        "FR-008",
+        "FR-015",
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "LOCAL_RESTORE_REHEARSAL_PASS__PRODUCTION_RPO_RTO_PENDING",
+      "evidence": [
+        "docs/testing/p0-claude-finish-20261028/restore/20261028T034456Z/summary.json"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-156",
+      "title": "Unavailable vs empty",
+      "requirements": [
+        "FR-009",
+        "FR-011"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-157",
+      "title": "Dispute resolution",
+      "requirements": [
+        "FR-007",
+        "FR-020"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "SuiteW7QA F01 dispute survives withdrawal/revocation (memory+PG)"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-158",
+      "title": "Membership safeguards",
+      "requirements": [
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-159",
+      "title": "Basic domain context",
+      "requirements": [
+        "FR-001"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "NOT_RUN",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-160",
+      "title": "Transition-table conformance",
+      "requirements": [
+        "FR-020",
+        "FR-007",
+        "FR-016",
+        "FR-018"
+      ],
+      "source": "docs/requirements/acceptance-criteria.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_LEVEL__NOT_UI_E2E",
+      "evidence": [],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-161",
+      "title": "GW-01 full workflow",
+      "requirements": [],
+      "source": "docs/requirements/golden-workflow-acceptance.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/*GW-01*"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-162",
+      "title": "GW-02 full workflow",
+      "requirements": [],
+      "source": "docs/requirements/golden-workflow-acceptance.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/*GW-02*"
+      ],
+      "blocking_reason": null
+    },
+    {
+      "id": "AC-163",
+      "title": "GW-03 full workflow",
+      "requirements": [],
+      "source": "docs/requirements/golden-workflow-acceptance.md",
+      "test_cases": [],
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP_FE__NOT_BROWSER",
+      "evidence": [
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/*GW-03*"
+      ],
+      "blocking_reason": null
+    }
+  ],
+  "nfr": [
+    {
+      "id": "NFR-001",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_SERVICE_PG_HTTP",
+      "evidence": [
+        "authorization re-checked per transaction; bulk/import/brief/export rights tests; revoked access mid-import (SuiteW6)"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-002",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_PARTIAL",
+      "evidence": [
+        "outsider/viewer denials and uniform 404; no encryption/key design claim; compliance not claimed"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-003",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_SERVICE_PG",
+      "evidence": [
+        "UNKNOWN recovery for bulk/import; no success without commit; replay"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-004",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_SERVICE_PG",
+      "evidence": [
+        "history asserted at every GW checkpoint; retention policy OBD-11 pending"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-005",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_SERVICE_PG",
+      "evidence": [
+        "group atomicity, cycle rejection, no orphan edges, import VERIFIED stays a claim"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-006",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "MEASURED_LOCAL_SERVICE_LEVEL",
+      "evidence": [
+        "p50 4.9-5.8 ms, p95 5.1-6.2 ms for grid/room/my-actions at 50 and 200 items, 30 reps, 0 errors; no device/network/browser; budgets pending OBD-09/10"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-007",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "PARTIAL_COMPONENT_LEVEL__BROWSER_BLOCKED",
+      "evidence": [
+        "named controls/roles asserted in component tests; keyboard order, focus, 200% zoom need a browser"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-008",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_PARTIAL",
+      "evidence": [
+        "unavailable/denied states never render zero or READY in the W6 sections and Control Room failure view; SLA not set"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-009",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_FE",
+      "evidence": [
+        "frozen retry intent, drafts kept on validation failure, UNKNOWN never auto-resent"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-010",
+      "implementation": "PARTIAL_IMPLEMENTED",
+      "result": "SOURCE_CHECKED_PARTIAL_NOT_FULL_LOCALIZATION",
+      "evidence": [
+        "EN/VI locale preference/toggle and history strings/date formatting; full product translation/real screen-reader/browser acceptance not established"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-011",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "PARTIAL",
+      "evidence": [
+        "RFC 3339 with offsets end to end in the W6 surfaces and GW ledgers (+07:00); display-zone UX not verified"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-012",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "AUTHOR_TESTED_PARTIAL",
+      "evidence": [
+        "tests carry actor, injected clock and expected outcome; requirement-to-test table in this return"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-013",
+      "implementation": "IMPLEMENTED",
+      "result": "REVIEW_PENDING",
+      "evidence": [
+        "invariants owned by domain/service; frontend holds no business evaluator"
+      ],
+      "open_budget_or_external_input": null
+    },
+    {
+      "id": "NFR-014",
+      "implementation": "IMPLEMENTED_AUTHOR_TESTED",
+      "result": "LOCAL_RESTORE_REHEARSAL_PASS__RPO_RTO_APPROVAL_PENDING",
+      "evidence": [
+        "full synthetic dataset, fresh target DB + object root, census/readback identical, restart identical, corruption refused; RPO/RTO/retention approvals open"
+      ],
+      "open_budget_or_external_input": null
+    }
+  ],
+  "golden_workflows": [
+    {
+      "id": "GW-01",
+      "acceptance": "AC-161",
+      "status": "AUTHOR_TESTED_SERVICE_PG__NOT_BROWSER",
+      "checkpoint_ledger": [
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestMatterSuiteGW_Postgres_GW-01_Transaction_(AC-161):_approval_to_post-closing-postgres.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestSuiteGW_MemoryStore_GW-01_Transaction_(AC-161):_approval_to_post-closing-memory.json"
+      ],
+      "limits": "service-level checkpoints on memory and PostgreSQL; Grid/Control Room readback via services, not rendered UI; no browser/E2E"
+    },
+    {
+      "id": "GW-02",
+      "acceptance": "AC-162",
+      "status": "AUTHOR_TESTED_SERVICE_PG__NOT_BROWSER",
+      "checkpoint_ledger": [
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestMatterSuiteGW_Postgres_GW-02_Due_Diligence_(AC-162):_request_to_resolution-postgres.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestSuiteGW_MemoryStore_GW-02_Due_Diligence_(AC-162):_request_to_resolution-memory.json"
+      ],
+      "limits": "service-level checkpoints on memory and PostgreSQL; Grid/Control Room readback via services, not rendered UI; no browser/E2E"
+    },
+    {
+      "id": "GW-03",
+      "acceptance": "AC-163",
+      "status": "AUTHOR_TESTED_SERVICE_PG__NOT_BROWSER",
+      "checkpoint_ledger": [
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestMatterSuiteGW_Postgres_GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen-postgres.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestMatterSuiteGW_Postgres_GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage_no-supplement_alternate-postgres.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestMatterSuiteGW_Postgres_GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage_rejection_and_closure-postgres.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestMatterSuiteGW_Postgres_GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage_stale_stage_update_and_revoked_membership-postgres.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestSuiteGW_MemoryStore_GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen-memory.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestSuiteGW_MemoryStore_GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage_no-supplement_alternate-memory.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestSuiteGW_MemoryStore_GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage_rejection_and_closure-memory.json",
+        "docs/testing/p0-claude-finish-20261028/gw-ledger/TestSuiteGW_MemoryStore_GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage_stale_stage_update_and_revoked_membership-memory.json"
+      ],
+      "limits": "service-level checkpoints on memory and PostgreSQL; Grid/Control Room readback via services, not rendered UI; no browser/E2E"
+    }
+  ],
+  "resources": [
+    {
+      "kind": "docker container",
+      "name": "mc-p0-claude-pg",
+      "image": "postgres:18-alpine",
+      "bind": "127.0.0.1:55440",
+      "volume": "mc-p0-claude-pgdata",
+      "databases": [
+        "mc_p0_native_test",
+        "mc_p0_product_test",
+        "mc_p0_run"
+      ],
+      "owner": "MC-P0-CLAUDE-TAKEOVER",
+      "secret": "ops/p0-local/secrets/claude-pg.env (0600)",
+      "disposition": "retained, running",
+      "database_roles": {
+        "mc_p0_native_test": "native test fixture (TEST_DATABASE_URL); tests truncate/drop",
+        "mc_p0_product_test": "product test fixture (MC_TEST_DATABASE_URL); per-test schemas",
+        "mc_p0_run": "product RUN database for mcapi; users seeded by ops/p0-local/seed-users.sh; never used by tests"
+      }
+    }
+  ],
+  "local_contract": {
+    "path": "docs/implementation/p0-zcode-execution/local-contract.md",
+    "revision": 12,
+    "sha256": "814c419222b966d6f340cb421ab8d8d44b3310ece336cc9cbe1b747472194e30",
+    "canonical": true,
+    "note": "Revision10 bytes retained at docs/testing/p0-claude-intake-20261028/retained-contract-rev10.md; prior unrecoverable claim corrected in revision12."
+  },
+  "current_source_checkpoint": {
+    "id": "CKPT-CODEX-PRIMARY-REMEDIATION-20261028",
+    "utc": "2026-10-28T07:40:52.637078+00:00",
+    "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "uncommitted": true,
+    "public_source_manifest": "docs/testing/p0-codex-remediation-20261028/final-source-manifest.json",
+    "manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821",
+    "entries": 714,
+    "gates_bound_to_current_source": {
+      "backend": "validation/backend-r4: sqlc/format/tidy/lint/race exit0;764pass/4skip/0fail, per-test JSON retained",
+      "frontend": "validation/frontend-r5: pnpm check exit0,44files/444tests; production Webpack build exit0; default Turbopack port-binding blocked",
+      "restore_checker": "9 stdlib tests and shell syntax pass",
+      "restore_runtime": "last executed DSN-corrected run20261028T072524Z exit0;54Matters/3objects; precedes final legacy-Filing owner correction; final-source repeat NOT_EXECUTED approval-review quota unavailable"
+    }
+  },
+  "final_source_review": {
+    "status": "PINNED_CORE_PASS_FINAL_DELTA_PENDING",
+    "reviewer": "Local Codex non-author review subagent; not actual OpenCode",
+    "report": "docs/testing/p0-codex-remediation-20261028/review/return.md",
+    "intake": "docs/testing/p0-codex-remediation-20261028/review-intake.json",
+    "note": "Five final core source/test paths changed after report pins; reviewer messages verified legacy owner correction but final report refresh failed on quota. UI/style/scope and render not independently accepted."
+  },
+  "completion_policy": {
+    "full_author_candidate": "FULL_P0_BE_FE_IMPLEMENTED_SELF_TESTED_PENDING_REVIEW",
+    "code_complete_execution_blocked": "IMPLEMENTED_WITH_VERIFICATION_BLOCKERS",
+    "missing_code": "PARTIAL_IMPLEMENTATION or IN_PROGRESS",
+    "self_done_allowed": false
+  },
+  "updated_at": "2026-10-26T18:00:56.092508+00:00",
+  "execution_owner": "actual Local Codex; Claude stopped per direct PO acknowledgement 2026-10-28",
+  "step0": {
+    "completed_utc": "2026-10-26T18:09:18.099663+00:00",
+    "baseline_manifest": "docs/implementation/p0-zcode-execution/evidence/baseline-20261027/source-baseline-manifest.txt",
+    "baseline_manifest_sha256": "1e937f7ad0f7ae24655c586bdb86f6315ee1006e17f2bf6fc130e2dcdb80ed9b",
+    "baseline_files": 464,
+    "local_contract": {
+      "path": "docs/implementation/p0-zcode-execution/local-contract.md",
+      "revision": 4,
+      "sha256": "b418471bc137839b906397a406d572001b7992076ac64c52e3618fd7d1e268a3",
+      "revision4_reason": "W1-A03 per-operation receipt/CAS/lost-response table"
+    },
+    "intake_pins": "verified by Codex intake (42/42, 16/16, 485 source); resume spot-check ok (workboard/plan/identity-approval hashes match)",
+    "notes": "W0 errata noted (I01 census 5/15; I04 section ref; I05 count) — no artifacts rewritten; D8 P-B unverified, no sandbox action assigned",
+    "local_identity": {
+      "provider": "ZITADEL v4.16.0 self-hosted local (official compose pairing)",
+      "issuer": "http://localhost:8080",
+      "issuer_pinned": true,
+      "loopback_only": true,
+      "lsof_verified": "127.0.0.1:8080 LISTEN",
+      "api_audience": "396855361123975171",
+      "web_client_id": "396855005899980803",
+      "receipt": "ops/p0-local/runtime/provisioning.json",
+      "route": "login-client PAT -> admin human session (Session API v2) -> Management API v1",
+      "test_users": [
+        "mc-alice",
+        "mc-bob"
+      ],
+      "teardown_disposition": "task-owned mc-p0-idp down -v performed 2x during bootstrap debugging before any product data; no third-party resource touched"
+    }
+  },
+  "updated_utc": "2026-10-28T03:58:08.575263+00:00",
+  "session_log": [
+    {
+      "session": "2026-10-26T18:05-18:55Z",
+      "actor": "actual ZCode (ZCode Desktop 3.16.3, model self-reported account:zai-start-plan/GLM-5.3-Flash via Z.AI)",
+      "completed": [
+        "Step0: intake pins spot-verified (workboard eb4ac965…/plan d4809bc5…/identity e1c8911d…, HEAD a62d838…)",
+        "baseline content manifest 464 files: evidence/baseline-20261027/source-baseline-manifest.txt sha 1e937f7ad0f7ae24655c586bdb86f6315ee1006e17f2bf6fc130e2dcdb80ed9b",
+        "local-contract.md v1 frozen + pinned issuer/audience (sha 5c08a03467f816befe87acad1d4fe60b1ca8ad416e82e72da58d66a195007b02)",
+        "ZITADEL v4.16.0 provisioned: issuer http://localhost:8080 pinned, loopback-only verified, org MatterControl Local, project mattercontrol, OIDC web app 396855005899980803 (PKCE), API app 396855361123975171 (private_key_jwt + JSON key), test users mc-alice/mc-bob; receipt ops/p0-local/runtime/provisioning.json",
+        "ops/p0-local/: prepare.sh, docker-compose.yml, provision.sh, provision-continue.sh, README.md, secrets/ (0600), runtime/",
+        "w1-implementation-notes.md: exact resume sheet (patterns, work items 1-10, gotchas)"
+      ],
+      "source_edits": "none yet in apps/* (Step 0 only)",
+      "next": "W1 backend per w1-implementation-notes.md items 1-10, TDD order; then W1 FE BFF"
+    },
+    {
+      "session": "2026-10-26T18:51-19:00Z",
+      "actor": "actual ZCode (same session identity)",
+      "completed": [
+        "Design R2 intake: return.md sha 4eb3ed8b… verified; 8/8 output pins verified; consumed delta/handoff/findings/refs",
+        "local-contract revision 2 (sha 8fe1199897a49279…): + GET /workspaces/{id}/matters, + BFF /api/auth/session; W1 FE design baseline = R2 handoff + nine-state matrix",
+        "workboard design_r2 block recorded (integrated/differences/pending/superseded-scheduling)"
+      ],
+      "source_edits": "none in apps/* yet; W1 backend continues from w1-implementation-notes.md next"
+    },
+    {
+      "session": "2026-10-26T19:05-19:12Z",
+      "actor": "actual ZCode (same session identity)",
+      "completed": [
+        "Coordination corrections 1-4: contract rev 3 (server-side session store + opaque handle cookie, logout/expiry/restart semantics, token-exposure negatives required)",
+        "w1-implementation-notes rev 2: additive catalogue reach for GET /workspaces/{id}/matters + BFF /api/auth/session; ListAccessibleMatters enforcement/negatives; machine-token probe labeled MACHINE-ONLY (no API-subject-as-human seeding); end-user login rows stay VERIFICATION_BLOCKED",
+        "workboard: canonical local_contract pointer set to rev 3; decisions.local_oidc reconciled to PROVISIONED_OWNER_EXECUTED_NOT_INDEPENDENTLY_RUNTIME_VERIFIED; stale rev-1 checkpoint sentence refreshed; history retained"
+      ],
+      "source_edits": "docs/implementation/p0-zcode-execution/{local-contract.md,w1-implementation-notes.md,workboard.json} only"
+    },
+    {
+      "session": "2026-10-26T19:15-19:35Z",
+      "actor": "actual ZCode (same session identity)",
+      "completed": [
+        "W1 backend Slice A code: port/identity.go, port/workspace.go, domain/matter/workspace.go, policy/workspace.go, service/workspace_service.go (partial), errors/receipt extensions",
+        "w1_backend_state checkpoint with exact compile-gap list and TDD next order"
+      ],
+      "source_edits": "apps/backend internal core ports/domain/policy/service (5 new files, 2 edits); NOT compiling yet — interface additions pending in stores"
+    },
+    {
+      "session": "2026-10-27T07:45-08:05+07",
+      "actor": "actual ZCode (same session identity)",
+      "completed": [
+        "R3 intake verified (return cd42f5a4…, 8/8 pins) + R2-review notes recorded as FE requirements",
+        "W1 backend Slice A implemented: ports/domain/policy/service complete; memory store W1 complete; sqlc regenerated; pg WorkspaceByID; BUILD GREEN; existing suites ALL PASS",
+        "w1_backend_state checkpoint refreshed with exact remaining list"
+      ],
+      "source_edits": "apps/backend internal core/ports/domain/policy/service/repotest/postgres per written_files; sqlc generated"
+    },
+    {
+      "session": "2026-10-27T08:10-08:40+07",
+      "actor": "actual ZCode (same session identity)",
+      "completed": [
+        "W1 intake A01/A02/A03 integrated",
+        "TDD: 8 behavioral tests written first, observed fail (A01 nil-error reactivations; A02 CAS ignored), then fixed service (role-mismatch refusal both scopes; CreateMatter ExpectedRevision CAS + revision bump on success; replay without CAS re-check), 8/8 PASS",
+        "failingSnapshot.WorkspaceByID test-double fixed (pg test build)",
+        "full internal suite: 15 ok / 0 FAIL (PG skip per rules)",
+        "contract revision 4 (W1-A03 table) sha b418471bc137839b…; port comment corrected; stale compile-gap summary reconciled"
+      ],
+      "source_edits": "service/workspace_service.go (A01+A02 fixes), port/workspace.go (CreateMatterCmd.ExpectedRevision + comment), repotest/mattercontrol/memory_w1.go (test-kit readers + SetMatterRevision), queries/matter.sql (unchanged this round), pg matter_test.go (test double), local-contract.md rev 4"
+    },
+    {
+      "session": "2026-10-27T06:53:53.382889+00:00",
+      "actor": "actual Claude Code 2.1.311, model claude-sonnet-5-5 (Sonnet 5.5)",
+      "completed": [
+        "Ownership acknowledged per MC-P0-CLAUDE-TAKEOVER; read takeover task, intake, E2E plan, contract rev4",
+        "Source drift check: 472/472 identical to Codex intake inventory",
+        "execution owner history appended; ZCode log/evidence untouched"
+      ],
+      "source_edits": "none yet",
+      "reconciliation_notes": [
+        "baseline manifest has 462 hash records vs owner narrative 464 (census erratum, not a reason to rebuild)",
+        "top-level status/current_source_checkpoint were stale vs source; corrected here; W2-W7 remain NOT_STARTED"
+      ]
+    },
+    {
+      "session": "2026-10-27T07:09:05.677331+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "gofmt of 4 flagged files; removed dead requireCAS; fixed lint QF1001",
+        "Baseline then final `make check` exit 0 with both fixtures (native + product) on fresh task-owned PG",
+        "Fixed: CreateMatter dropped title and name/title unvalidated (domain.NewDisplayName, MatterHeader.Title)",
+        "Fixed: membership event seq used revision+1; now header.EventSeq+1",
+        "Fixed: same-key CreateWorkspace race returned key-reuse; service reruns once on receipt-PK conflict",
+        "Fixed: memory double AccessibleMatters Total was computed after cursor",
+        "New PG adapter workspace_store.go (ExecuteWorkspace/ExecuteCreation, matter membership admin, EventsPage/ReceiptFor/AccessibleMatters), W1 receipt snapshot codec, identity_resolver.go, sqlc regenerated",
+        "New shared contract repotest/mattercontrol/contract_w1.go (9 subtests) passing on memory and PG (-race, count=3)",
+        "New outbound/identity/zitadel introspection verifier (stdlib RS256 private-key-JWT) with fail-closed tests"
+      ],
+      "not_done": [
+        "GetMatter + workspace/matter member list reads (ports/service/stores) - test removed, not implemented",
+        "productapi HTTP adapter, mcapi composition, ZITADEL live probe, BFF, all product FE",
+        "W2-W7"
+      ],
+      "evidence_note": "scoped author evidence only; no browser, no live IdP call, no FE checks run"
+    },
+    {
+      "session": "2026-10-27T07:18:44.817511+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "GetMatter + ListWorkspaceMembers/ListMatterMembers (ports, service, memory, PG, shared contract)",
+        "productapi package: bearer auth, strict decode (unknown/duplicate/trailing), intent fingerprint, strong ETag + If-Match->revision mapping, problem URNs, 15 W1 routes, e2e tests over memory store (race)",
+        "internal/app/product.go + cmd/mcapi + config.LoadProduct (+tests, .env.example, docs/operations.md)",
+        "Fixed: memory history omitted requirement.created (PG had it); MatterService receipt Kind unset",
+        "Live probe: mcapi against real local ZITADEL accepted the private-key-JWT assertion (garbage bearer -> 401, not 503); machine-only, NOT a human login",
+        "make check exit 0 (0 lint issues) with native + product fixtures",
+        "contract revision 5, sha256 b984f552fdb103853bf5b45762936e3202203c4edfe925d8d5dce743cd3ef405"
+      ],
+      "not_done": [
+        "BFF/session + all frontend",
+        "real end-user token flow (needs permitted browser)",
+        "W2-W7",
+        "docs/api.md + api.http for product routes (contract rev5 section 2.2 is the current catalogue)"
+      ]
+    },
+    {
+      "session": "2026-10-27T07:22:27.469867+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "GET /workspaces (my workspaces) across port/service/memory/PG/shared suite/HTTP",
+        "error precedence amended to auth-first (contract rev5)",
+        "ops/p0-local/seed-users.sh: idempotent users-only seed for mc_p0_run (ZITADEL subjects from public provisioning.json)",
+        "resource ledger lists mc_p0_run",
+        "contract sha256 dbb349e18b8390e0ca020a0bbda5fc6b01d3962efec1dd2867e5529ed444606f"
+      ]
+    },
+    {
+      "session": "2026-10-27T07:38:22.922104+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "frontend: installed deps from lockfile with --ignore-scripts (git hooks untouched)",
+        "BFF: server-side session store (globalThis singleton, opaque cookie handle), Auth Code+PKCE S256 with state/nonce, JWKS-verified ID token, refresh single-flight, logout/session routes, resolveSession (authenticated-only, permissions ['*'], user token forwarded)",
+        "src/lib/mc: product client (ETag/If-Match/Idempotency-Key, problem mapping, outcome-unknown for lost command answers), error/state mapping, UUIDv7 idempotency",
+        "features workspaces/matters/requirements + login/workspace/matter/requirement pages with sign-in/forbidden/not-found/unavailable states; IntentForm + ConfirmActionButton organisms",
+        "pnpm check exit 0 (24 files, 180 tests incl. 48 auth + 33 mc negative tests); pnpm build exit 0",
+        "fixed by build/probe: force-dynamic incompatible with cacheComponents; usePathname needs Suspense on dynamic routes; /api/auth/session and /workspaces were prerendered at build (connection())",
+        "non-browser smoke: signed-out pages fail closed; real discovery works; cross-origin logout 403; login redirect carries PKCE/state/nonce/project-audience scope"
+      ],
+      "blocked": [
+        "human login: ZITADEL rejects both registered redirect URIs for client 396855005899980803 although the receipt lists them; needs admin-side correction (admin credentials not permitted to this task)",
+        "browser capability not confirmed; UI->API->PG with a real user token NOT run"
+      ],
+      "not_done": [
+        "Playwright e2e / Storybook for W1 UI",
+        "W2-W7",
+        "template demo routes (/dashboard, /tasks) still present, unlinked; removal scheduled W7"
+      ]
+    },
+    {
+      "session": "2026-10-27T08:09:32.573042+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "CW1-F01..03 fixed with regression tests (see review_findings); mutation-checked (control-char guard, receipted flag)",
+        "vitest: src/lib src/components src/features 241 pass"
+      ],
+      "checks_run": "vitest only so far in this session segment; full gates run at the next checkpoint"
+    },
+    {
+      "session": "2026-10-27T08:27:01.310713+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "W2 backend: domain (transition table, AND-gate dependency evaluation, cycle refusal, timing/attention, milestone readiness, next-action ranking) with acceptance-derived unit tests incl. mutation checks; WorkService; memory + PostgreSQL work-graph adapters; migration 0002; shared SuiteW2 passing on memory and PG; 17 packages gate green",
+        "W2 API: 19 routes (grid, detail, create action, patch, execution, escalation, dependencies, workstreams, parties, milestones, waiting-on, me/actions) + urn:mc:rejected; HTTP tests",
+        "contract revision 6 sha256 3e89654f0fabdac877e311fa59cccc9a026b13fe0265102150095119e68d665d"
+      ],
+      "not_done": [
+        "W2 frontend (grid, drawers, assignment, filters, causal navigation, My Actions)",
+        "W3-W7"
+      ]
+    },
+    {
+      "session": "2026-10-27T08:41:08.072438+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "CW1-F01..03 fixes (see review_findings)",
+        "W2 backend + API + FE (grid, record detail with metadata/execution/dependency/escalation, planning: milestones/parties/workstreams/waiting-on, My Actions), form drafts across navigation keyed by session namespace and cleared on success/discard/revocation/logout",
+        "contract rev 6",
+        "checks: make check exit 0 (17 packages, 0 lint issues, PG fixtures attached); pnpm check exit 0 (30 files, 325 tests); pnpm build exit 0"
+      ],
+      "not_done": [
+        "W3-W7",
+        "Playwright / keyboard / touch / visual / screen-reader evidence (no permitted browser)",
+        "real login (IdP redirect URIs)"
+      ]
+    },
+    {
+      "session": "2026-10-27T09:25:18.971339+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "W3 backend: evidence domain + EvidenceService + migration 0003 + memory/PG parity + filesystem ObjectStore + 25 routes; W2 fixtures now use real verification flows",
+        "W3 frontend: proof feature (schemas/repository/actions), Proof card, Documents list/detail, upload/download route handlers (same-origin, streamed), W3 rejection wording",
+        "contract revision 7",
+        "checks: make check exit 0; pnpm check exit 0 (347 tests); pnpm build exit 0"
+      ],
+      "not_done": [
+        "W4-W7",
+        "browser/E2E/AC-137 (blocked)"
+      ]
+    },
+    {
+      "session": "2026-10-27T09:45:08.552942+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "W4 backend: filing domain/stage machine, FilingService, migration 0004, memory+PG parity, 8 routes, matter evidence list",
+        "W4 frontend: filings list/detail, stage tracker, per-stage advance form, negative/close/reopen/correction, cycles and submissions view",
+        "contract revision 8",
+        "checks: make check exit 0; pnpm check exit 0 (354 tests) x3; pnpm build exit 0"
+      ],
+      "not_done": [
+        "W5-W7",
+        "browser/E2E/AC-137 (blocked)"
+      ]
+    },
+    {
+      "session": "2026-10-27T09:53:58.654256+00:00",
+      "actor": "actual Claude Code 2.1.311, claude-sonnet-5-5",
+      "completed": [
+        "W5 backend: ControlRoom builder + ControlService + context records, migration 0005, memory+PG parity, newest-first snapshot history read, 4 routes",
+        "W5 frontend: Control Room page, context record forms",
+        "contract revision 9",
+        "checks: make check exit 0; pnpm check exit 0 (361 tests); pnpm build exit 0"
+      ],
+      "not_done": [
+        "W6-W7",
+        "browser/E2E/AC-137 (blocked)"
+      ]
+    },
+    {
+      "session": "2026-10-27T15:07-15:15Z",
+      "actor": "actual ZCode (takeover)",
+      "completed": [
+        "Snapshot verified: HEAD a62d838…; contract rev9 06b4c929…; R9 return d4dc769f…/manifest 2b68bc92…; stop dir pins read",
+        "Read claude-stop-return.txt (incl. not-done/blockers/risks), stop intake, R9 consumer addendum",
+        "Owner transition Claude→ZCode recorded; W6 state reconciled (codec exists, rest remains); inherited blockers listed"
+      ],
+      "source_edits": "none yet (state verification + acknowledgment only)"
+    },
+    {
+      "session": "2026-10-27T15:20-15:40Z",
+      "actor": "actual ZCode",
+      "completed": [
+        "Baseline gates: make check exit0 (19 ok/0 skip, both PG fixtures), pnpm check exit0 (361 tests), pnpm build exit0 — receipts in /tmp/mc-p0-zcode-testenv logs"
+      ],
+      "source_edits": "none (gates only)"
+    },
+    {
+      "session": "2026-10-27T22:00–2026-10-28T00:45Z",
+      "actor": "actual ZCode (takeover continues)",
+      "completed": [
+        "W6 BE: ports/domain/service/PG+memory stores/migration 0006/sqlc/productapi handlers+routes/app wiring — build green",
+        "W6 behavioral tests fail-first then pass (bulk partial+replay+unknown, RULE-014 replay/conflict, group rejection, verified-claim, brief endpoints/replay/t1=t2/reversed)",
+        "W6 FE: features/data-transfer + data page + export BFF route; pnpm check/build green",
+        "Gates re-run: make check exit0 (19/0skip), pnpm 361/361, build exit0; one load flake recorded honestly"
+      ],
+      "source_edits": "apps/backend (dataops core/adapter/productapi/migration/queries), apps/frontend (features/data-transfer + data page + export route)"
+    },
+    {
+      "session": "2026-10-28T00:50-00:58Z",
+      "actor": "actual ZCode",
+      "completed": [
+        "final-return.md updated: ZCode takeover section prepended (W6 complete both stacks, gates receipts, W7 exact next actions), Claude W1-W5 detail preserved verbatim below"
+      ]
+    },
+    {
+      "session": "2026-10-28T01:00-01:25Z",
+      "actor": "actual ZCode",
+      "completed": [
+        "W7 GW-01/02/03 checkpoint ledger tests (TDD-fixed against real domain rules: completion-time-required, waiting-details-required+owner, edge direction Source=prerequisite/Target=blocked, CAS on blocked revision)",
+        "api.md product section + api.http product block",
+        "template /dashboard + /tasks pages removed; not-found points to /workspaces",
+        "make check exit 0 (19/0 skip)"
+      ],
+      "source_edits": "gw_ledger_test.go (new), docs/api.md, api.http, app/(app)/{dashboard,tasks} removed, not-found.tsx"
+    },
+    {
+      "session": "2026-10-28T01:05-01:20Z",
+      "actor": "actual ZCode",
+      "completed": [
+        "api.md product-API section + api.http product block (contract-normative pointer, W1-W6 route groups)",
+        "template /dashboard + /tasks pages removed (no product callers); not-found.tsx -> /workspaces",
+        "GW-01/02/03 checkpoint ledger tests pass (memory) — domain rules discovered and respected: completion-time-required, waiting-details-required + responsible owner, dependency edge Source=prerequisite/Target=blocked with CAS on blocked revision, work.execution_changed after-payload history",
+        "Isolated restore run: migrations 0001-0006 + synthetic seed (1 tx) -> pg_dump -Fc -> pg_restore into fresh mc_data_restored target -> census/readback identical (2/1/1/1/1/1, requirement + event after-payload byte-identical); synthetic object probe sha256 identical"
+      ],
+      "source_edits": "gw_ledger_test.go (new), docs/api.md, api.http, not-found.tsx, template pages removed; restore evidence in /tmp/mc-p0-zcode-testenv/"
+    },
+    {
+      "session": "2026-10-28T01:25-01:55Z",
+      "actor": "actual ZCode (final segment)",
+      "completed": [
+        "Postrun intake read; F01+F02 domain/service fixes applied; F03 domain+migration 0007+queries+sqlc applied; contract_w7_qa.go drafted (not compiling)",
+        "STOPPED per direct PO handover instruction — no further implementation"
+      ]
+    }
+  ],
+  "w1_backend_state": {
+    "status": "IN_PROGRESS_W1_A01_A02_FIXED_TESTS_GREEN_CONTRACT_REV4",
+    "written_files": [
+      "port/identity.go + port/workspace.go + port/errors.go sentinels + port/matter.go WorkspaceByID",
+      "domain/matter/workspace.go + access.go Receipt Kind/snapshots",
+      "policy/workspace.go decisions",
+      "service/workspace_service.go COMPLETE (10 use cases, authoritative rewrite)",
+      "repotest/mattercontrol/memory.go state+snapshot/adopt extension + memory_w1.go (WorkspaceStore/ExecuteWorkspace/ExecuteCreation/WorkspaceTx/WorkspaceCreationTx/MatterMembershipAdminTx/MatterReadSnapshot)",
+      "queries_mattercontrol/matter.sql + GetWorkspaceByID; sqlc regenerated (v1.31.1); matter_store.go pgSnapshot.WorkspaceByID"
+    ],
+    "edited_files": [
+      "apps/backend/internal/core/port/errors.go (+ErrUnauthenticated/ErrPreconditionRequired/ErrPreconditionFailed/ErrPreconditionNotApplicable/ErrLastOwner)",
+      "apps/backend/internal/core/domain/matter/access.go (Receipt +Kind/+WorkspaceSnapshot/+MembershipSnapshot)"
+    ],
+    "compile_gaps_exact": "RECONCILED_DONE (retained in session history): memory+pg W1 interfaces, service methods, sqlc WorkspaceByID all implemented",
+    "tdd_next_order": [
+      "1. finish service methods + domain helpers (NewWorkspaceID, InvalidRoleError, WorkspaceByID on snapshots)",
+      "2. memory store: implement new interfaces; repotest contract suite additions (admin/revocation/last-owner/CAS/ListAccessibleMatters/replay negatives) — observe fail-first where behavior, not types",
+      "3. make check (memory-only path compiles + native tests green)",
+      "4. sqlc queries + pg store + pgtest suite via MC_TEST_DATABASE_URL",
+      "5. zitadel verifier (machine-only probe) + productapi HTTP + cmd/mcapi wiring",
+      "6. BFF FE per contract rev 3 session-store model"
+    ],
+    "build": "go build ./... GREEN",
+    "tests": "go test ./internal/... -count=1: 15 packages ok, 0 FAIL (PG fixtures not attached; PG suites skip per rules)",
+    "w1_design_decisions": [
+      "membership grant/revoke are CAS-guarded audited commands, NOT receipted intents (receipts for CreateWorkspace/CreateMatter/CreateRequirement only)",
+      "workspace-scoped admin history = restricted security audit (domain_events is matter-scoped by schema); matter-scoped membership changes append membership.granted/revoked events",
+      "Workspace header revision is the CAS resource for workspace ops; matter header revision for matter ops; 428 when If-Match omitted, 412 on mismatch (hidden-denial precedence for non-members)"
+    ],
+    "remaining_w1_backend": [
+      "repotest contract suite W1 additions (workspace admin/revocation/last-owner/CAS/ListAccessibleMatters/replay negatives) — TDD the service behaviors",
+      "pg store: remaining sqlc queries (InsertWorkspace/Memberships/CAS update/Count owners/InsertMatter/AppendMatterCreatedEvent/EventsPage/AccessibleMatters/OwnReceipt) + pg ExecuteWorkspace/ExecuteCreation/WorkspaceTx/CreationTx/AdminTx/ReadSnapshot implementations",
+      "make check with both PG fixtures (TEST_DATABASE_URL + MC_TEST_DATABASE_URL)",
+      "outbound/identity/zitadel introspection verifier (machine-only probe) + config keys",
+      "inbound/productapi HTTP (routes/DTO/fingerprint/ETag/problems) + app wiring cmd/mcapi",
+      "BFF session store per contract rev 3 + token-exposure negatives"
+    ]
+  },
+  "w1_intake_a": {
+    "intake": "docs/reviews/p0-zcode-w1-slice-a-intake-20261027.md",
+    "W1-A01": {
+      "disposition": "FIXED_WITH_BEHAVIORAL_TESTS",
+      "fix": "role-mismatch refused before reactivation in BOTH scopes (workspace wsRole, matter roleV); result never describes a role different from persisted state",
+      "tests": [
+        "TestGrantWorkspaceMembership_RevokedOwnerToMember_RefusedRoleMismatch",
+        "TestGrantMatterMembership_RevokedOwnerToViewer_RefusedRoleMismatch",
+        "TestGrantMatterMembership_RevokedEditorToOwner_RefusedRoleMismatch",
+        "TestGrantWorkspaceMembership_SameRoleReactivation_Succeeds (+subsequent create authorization)"
+      ],
+      "method": "TDD fail-first observed (nil/428 before fix) then pass"
+    },
+    "W1-A02": {
+      "disposition": "FIXED_WITH_BEHAVIORAL_TESTS",
+      "fix": "CreateMatterCmd.ExpectedRevision added; fresh-create path checks workspace-header CAS after authorization (428/412, hidden precedence for non-members); success bumps workspace revision; replay does NOT re-check CAS (timed-out create always retryable with same key)",
+      "tests": [
+        "TestCreateMatter_MissingPrecondition_Refused428",
+        "TestCreateMatter_StalePrecondition_Refused412",
+        "TestCreateMatter_MatchingPrecondition_SucceedsAndReplays",
+        "TestCreateMatter_SecondFreshCreateWithSameRevision_Refused412"
+      ],
+      "state_assertions": "refused writes mutate nothing (matters/receipts counts + records)"
+    },
+    "W1-A03": {
+      "disposition": "CONTRACT_REV4",
+      "fix": "local-contract revision 4 adds the per-operation receipt/CAS/lost-response/retry/readback table; port/workspace.go comment corrected; membership commands explicitly non-receipted with authorized re-read recovery; OUTCOME_UNKNOWN never inferred from state or 412"
+    },
+    "stale_summary": "workboard w1_backend_state.compile_gaps_exact reconciled: all items from that list are DONE (memory+pg WorkspaceByID, service complete, build green); see w1_backend_state.remaining_w1_backend for the live list"
+  },
+  "execution_owner_history": [
+    {
+      "owner": "actual ZCode (ZCode Desktop 3.16.3, model self-reported account:zai-start-plan/GLM-5.3-Flash via Z.AI)",
+      "role": "original execution owner, through quota exhaustion 2026-10-27",
+      "note": "authorship of earlier source/logs/evidence stays ZCode"
+    },
+    {
+      "owner": "actual Claude Code 2.1.311 (model claude-sonnet-5-5, Sonnet 5.5)",
+      "role": "execution owner from this entry (backend + frontend), per direct PO instruction and MC-P0-CLAUDE-TAKEOVER",
+      "since_utc": "2026-10-27T06:53:53.382889+00:00",
+      "conflict_note": "Root CLAUDE.md frames Claude as Solution Architect (no implementation); the PO takeover prompt/task explicitly supersede that for this assignment. Items PENDING-Claude/PENDING-architecture in contract v4 stay implementation mappings pending a nonauthor reviewer; Claude does not self-adopt them."
+    },
+    {
+      "owner": "actual Claude Code (claude-sonnet-5-5)",
+      "role": "execution owner for backend + frontend from the PO handover of 2026-10-28 (continuation MC-P0-CLAUDE-FINISH-AFTER-ZCODE-20261028)",
+      "since_utc": "2026-10-28T02:40:00+00:00",
+      "note": "ZCode authorship of earlier source/logs/evidence is preserved; gw_ledger_test.go (ZCode) was replaced by the shared SuiteGW ledgers"
+    },
+    {
+      "owner": "actual Claude Code (claude-sonnet-5-5); prior owner actual ZCode stopped and handed over (PO acknowledgement 2026-10-28); see execution_owner_history and claude_finish_20261028",
+      "role": "previous implementation owner; direct PO confirms stopped before Codex primary takeover",
+      "until_utc": "2026-10-28T05:04:21.897729+00:00"
+    }
+  ],
+  "review_findings": {
+    "CW1-F01..03": {
+      "source": "docs/reviews/p0-claude-w1-review-20261027.md",
+      "reviewer": "actual Local Codex (nonauthor)",
+      "disposition": "FIXED_AUTHOR_TESTED_PENDING_REVIEWER_RECHECK",
+      "F01": "unknown-outcome recovery is derived from whether the command carried an Idempotency-Key (McError.receipted): receipted creations keep same-key+frozen-payload retry; CAS-only membership grant/revoke at both scopes keep UNKNOWN, expose only 'Reload current state', and the form handler refuses resubmission; tested at the real action->repository->client seam for all 7 commands and at the organism/form/button level",
+      "F02": "fetch AND body consumption AND unusable 2xx payload are inside the lost-answer boundary: command -> outcome-unknown, read -> unavailable; 4xx keeps status meaning when its body is lost; 5xx on a command is unknown; programmer errors propagate",
+      "F03": "safeReturnTo rejects C0/C1/DEL controls and backslashes, protocol-relative/absolute/other-origin forms, auth routes and /login; canonicalizes against the configured origin; enforced when stored (login, beginLogin) and when used (callback resolveReturnTo)"
+    }
+  },
+  "owner_transition": {
+    "utc": "2026-10-27T15:22:24.479058+00:00",
+    "from": "Claude Code (PARTIAL_IMPLEMENTATION stop; author stop return 1663018d262fd2edd6eaf536cb388905dd5f4df715ebc6da0c643c2566f83290)",
+    "to": "actual ZCode (ZCode Desktop 3.16.3, darwin 27.0.0 arm64, model self-reported account:zai-start-plan/GLM-5.3-Flash via Z.AI)",
+    "authority": "PO resume prompt MC-P0-ZCODE-RESUME-AFTER-CLAUDE-STOP-PROMPT.md (supersedes owner/resume point in MC-P0-ZCODE-RESUME-AFTER-CLAUDE-PROMPT.md)",
+    "verified_snapshot": {
+      "inventory": "docs/testing/p0-claude-stop-zcode-handoff-20261027/inventory.json",
+      "inventory_sha256": "38eb3cc9b8220b4e:… (full sha retained in intake dir; declared aggregate c6821c3cf3d58fe9dbc8ba510711445f00d10bce5c1b064e373051f0af14e6d7 over 665 entries)",
+      "contract_rev9": "06b4c929cc9d7762f3acfc61950ccb691cf84488a9debdba20e1b98005cb3aaa (41,389 B) — verified at takeover",
+      "r9_return": "d4dc769f1958f486a17a9a90fa5b1060de3172a2b07b544c6f1adff788b14b3d — verified",
+      "r9_manifest": "2b68bc92431270dc456111590ca1de2231e2a10dba95829dccd0a3b68ba87563 — verified (102 payloads/992,101 B declared; full manifest validation at consumption)"
+    },
+    "claude_contribution": "PRESERVED — W1..W5 code+author tests both stacks, sheet codec; author-reported gates remain author-reported; no relabel",
+    "known_blockers_inherited": [
+      "ZITADEL effective redirect URI rejected — needs authorized admin/operator correction or permitted login evidence; takeover does not mint human tokens via machine identity",
+      "user-token audience unconfirmed (pin may be wrong)",
+      "no permitted browser: rendered/keyboard/touch/screen-reader/E2E NOT_RUN; AC-137 needs 5 real managers",
+      "delta brief outstanding-at-t2 historical reconstruction: implement compatible temporal/source-revision solution; Claude current-t2-only restriction NOT adopted without PO approval"
+    ],
+    "w6_state_reconciled": "NOT_STARTED label corrected: sheet codec (port/sheet.go, adapter/outbound/sheet stdlib CSV/XLSX, race 4 pass) exists; bulk/import/export/brief domain+service+API+FE remain"
+  },
+  "baseline_gates_zcode_takeover": {
+    "utc": "2026-10-27T15:20-15:35Z",
+    "make_check": {
+      "exit": 0,
+      "packages_ok": 19,
+      "skips": 0,
+      "cmd": "make check DB_URL=<native fixture> MC_TEST_DATABASE_URL=<product fixture>",
+      "fixtures": "mc-p0-zcode-pg-native-test :55441 + mc-p0-zcode-pg-product-test :55442 (fresh disposable, loopback-only verified, creds runtime-generated, process-env passthrough per Mimosa-safe pattern; dsns.env 0600)"
+    },
+    "pnpm_check": {
+      "exit": 0,
+      "test_files": 34,
+      "tests": 361
+    },
+    "pnpm_build": {
+      "exit": 0
+    },
+    "note": "These are actual ZCode receipts, not author-reported. PG suites ran against both fixtures (0 SKIP)."
+  },
+  "w6_state": {
+    "backend": [
+      "port/dataops.go + domain/dataops.go (Bulk/Import/Export/Brief; Receipt Kinds BULK_ROW_APPLIED/IMPORT_ROW_APPLIED)",
+      "service/dataops_service.go (per-row receipted bulk commits; group-tx import with import_sources RULE-014 registry; codec-based export; event-replay brief (t1,t2] + outstanding-at-t2 via ItemSnapshotsUpTo)",
+      "migrations 0006_dataops.sql (import_sources) + queries dataops.sql + sqlc regenerated",
+      "pg: matter_store_w6.go (DataOpsSnapshot EventsWindow/ItemSnapshotsUpTo + ImportRegistry on pgMatterTx); memory: memory_w6.go equivalents",
+      "receipt kind-aware encode/decode extended in matter_dto.go (BULK/IMPORT envelopes)",
+      "productapi: data_handlers.go (bulk:preview/:commit, import:preview/:commit multipart, export xlsx/csv streaming with formula-neutral codec, brief with window validation) + routes + Deps.DataOps/DataOpsCodec; body-limit skipper extended to import uploads",
+      "app wiring: DataOps service + sheet.Codec into product graph/HTTP server"
+    ],
+    "frontend": [
+      "features/data-transfer/{schemas.ts,repository.ts,actions.ts,components/data-transfer-panel.tsx}",
+      "routes (app)/matters/[matterId]/data/page.tsx; BFF export stream api/matters/[matterId]/export/route.ts",
+      "per-row results with SUCCESS/REPLAYED/FAILURE/UNKNOWN badges; group-rejected listing; brief (t1,t2] changes vs outstanding-at-t2 sections"
+    ],
+    "tests": [
+      "behavioral (memory, TDD): bulk partial success w/ distinct failures + unknown-item/stale codes (AC-133), retry replays & skips proven success, UNKNOWN then same-key recovery, RULE-014 identical replay/no-new-records + content-conflict (AC-132), connected-group whole rejection + independent commit, imported VERIFIED stays UNVERIFIED, brief window endpoints (t1 excl/t2 incl), t1=t2 empty changes + outstanding renders, reversed window refused (AC-138)",
+      "pg suites run via make check with both fixtures"
+    ],
+    "gates_zcode": {
+      "make_check": {
+        "exit": 0,
+        "packages": 19,
+        "skips": 0,
+        "fixtures": "mc-p0-zcode-pg-native-test :55441 + mc-p0-zcode-pg-product-test :55442 (fresh disposable loopback, task-owned)"
+      },
+      "pnpm_check": {
+        "exit": 0,
+        "files": 34,
+        "tests": 361
+      },
+      "pnpm_build": {
+        "exit": 0
+      },
+      "flake_note": "one proof-ui test timed out under full-suite load once (5000ms limit), passed on rerun and in isolation; recorded as observed load flake, not fixed by relabel"
+    },
+    "contract": "revision 10 sha recorded in local_contract pointer; §2.7 W6 catalogue binding"
+  },
+  "w7_state": {
+    "done": [
+      "GW-01/02/03 checkpoint ledger tests (service-level, memory store): gw_ledger_test.go — GW01 approval/signature/closing with PROOF gate + completion!=verification + execution_changed history; GW02 waiting-with-party (WAITING != BLOCKED, owner required) + no self-verification; GW03 filing completed != VERIFIED (receipt != approval); per-cycle detail rides W4 suite",
+      "api.md: MatterControl product API section appended (route groups W1-W6, normative pointer to contract, common headers)",
+      "api.http: product block appended (workspace/matter/requirement/receipt/brief/export examples)",
+      "template route cleanup: /dashboard and /tasks pages removed (no product callers); not-found.tsx now points at /workspaces",
+      "make check exit 0 after GW ledgers (19 pkg ok, 0 skips, both fixtures)"
+    ],
+    "domain_rules_discovered_by_ledger_tests": [
+      "NOT_STARTED -> COMPLETED requires CompletedAt (completion-time-required) — recorded work needs its time",
+      "WAITING requires WaitingPartyID + WaitingCondition + responsible owner (waiting-owner-required)",
+      "dependency edge: Source=prerequisite, Target=blocked; AddDependency CAS is on the blocked (target) item revision",
+      "completion emits work.execution_changed with after payload"
+    ],
+    "remaining_w7": [
+      "Isolated full-restore run (pg_dump/restore into fresh target + object dir readback) — needs owned dump/restore task, not done in this session",
+      "AC-137 five real managers (blocked: needs real participants)",
+      "Browser/E2E rows (blocked: no permitted browser)",
+      "Final combined suites after repair round; final-return consolidation to review-candidate label"
+    ],
+    "restore_receipt": {
+      "utc": "2026-10-28T01:10-01:15Z",
+      "source_db": "mc_native on mc-p0-zcode-pg-native-test (fresh fixture; migrations 0001-0006 applied via psql; synthetic rows seeded in ONE transaction: 2 users/1 ws/1 matter/1 requirement/1 event/1 receipt)",
+      "dump": "pg_dump -Fc, sha256 head 0dca67c0bfbdaf74…, file /tmp/mc-p0-zcode-testenv/restore-source.dump",
+      "target": "mc-p0-zcode-pg-restore-target :55443, fresh isolated container, DB mc_data_restored, pg_restore --no-owner",
+      "verified": "census 2/1/1/1/1/1 identical; requirement title/outcome/execution_state/revision identical; domain_events after-payload identical; import_sources present in schema",
+      "objects": "synthetic object probe sha256 2d04d930075b19ef3913a0661f114db4f9cd0bc84278baff76b01da761773979 identical across source/restore dirs (object bytes are adapter-copied files; production object lifecycle is NOT verified)",
+      "note": "restore used the disposable native-test fixture container as source because the run product DB has no synthetic dataset yet; the dump/restore/replay procedure is the runbook, not a claim about production tooling"
+    }
+  },
+  "final_label": "IMPLEMENTED_WITH_VERIFICATION_BLOCKERS",
+  "postrun_stop_checkpoint": {
+    "utc": "2026-10-28T01:5xZ (session clock)",
+    "actor": "actual ZCode (stopping per direct PO instruction)",
+    "what_was_done_since_last_checkpoint": [
+      "Postrun inputs read in full: qa/return.md (F01..F05), idp/return.md (skim: producer defect + operator delta, Cloud not an execution approval), cloud-free README (checkpoint actions), postrun prompt",
+      "F01 FIXED (domain): evidence.go claimStatus now computes the same-epoch open-dispute flag BEFORE the withdrawn/revoked early-returns; withdrawn/revoked still end satisfaction; DISPUTED keeps aggregation precedence; old-epoch assessments never block (cur==nil path unchanged)",
+      "F02 FIXED (port+service): AssessCmd.ExpectedAssessmentID (empty = first review expected); evidence_service stale guard after open-dispute check -> port.ErrPreconditionFailed on mismatch; no auto-resend semantics changed",
+      "F03 FIXED (domain+SQL, INCOMPLETE wiring): filing.go — Filing struct +SignatureNotRequired{Reason,By,At} fields; StagePackage guard now requires declared criteria for EVERY filing unless it.ProofRequired OR f.SignatureNotRequired (editor flag alone no longer waives); unsatisfied() no longer early-returns on !ProofRequired; StageSubmission/Response adds signature-observation-covers-submitted-versions guard unless SignatureNotRequired. Migration 0007_filing_signature_applicability.sql created (4 new filing_details columns). filings.sql: SetFilingSignatureApplicability query added + ListFilingDetailsOfMatter extended; sqlc REGENERATED (make sqlc-generate exit 0).",
+      "contract_w7_qa.go test file created (F01/F02/F03 shared contract tests) — DOES NOT COMPILE yet"
+    ],
+    "current_build_state": "go build ./internal/... FAILS only in package repotest/mattercontrol (contract_w7_qa.go type errors); everything else compiled through sqlc regeneration. Errors observed: ClaimStatus has no .Claim.Current (current assessment lives on ClaimStatus.Current, reached via claimOf return value); newBundle undefined in that file (Factory symbol name differs); CriterionReason is a typed string (cast needed); RaiseDispute returns (ProofChecklist, error) not a dispute handle — dispute id must come from checklist OpenDisputes; ClaimID is a typed string (cast in literals); Claim has no SubjectEpoch field (epoch lives on the item/assessment — derive via item read or checklist)",
+    "not_done": [
+      "F03 service layer: SetSignatureApplicability FilingService method + FilingTx.SetFilingSignatureApplicability + port cmd + HTTP route/DTO + FE — NONE written (test references them; they do not exist yet)",
+      "F03 stores: pg SaveFiling/InsertFiling/row->Filing mapping for the 4 new columns + memory store equivalents — NOT updated (loadFiling will silently drop the new fields until mapped)",
+      "F04/F05 (Control Room FE single-boundary + transitive blocker reasons): NOT started",
+      "Cloud profile integration (contract rev 11, overlay, key clientId validation, introspection checks): NOT started",
+      "acceptance-restore matrix reconciliation: NOT started",
+      "Gates NOT rerun after these edits (last green gates remain the pre-postrun make-check/pnpm receipts in baseline_gates + w6_state)",
+      "contract_w7_qa.go needs fixing against the actual ClaimStatus/Factory/RaiseDispute shapes listed above, plus time import"
+    ],
+    "commands_actually_run_this_segment": [
+      "read-only: qa/idp/cloud/acceptance-restore inputs; grep/sed of evidence.go, filing_service.go, filing.go, contract_w3/w4, filings.sql, models",
+      "make sqlc-generate — exit 0 (generated mcsqlc now includes SetFilingSignatureApplicability + extended ListFilingDetailsOfMatter)",
+      "go build ./internal/... — FAIL (errors confined to the new test file, listed above)",
+      "NO migrations applied to any DB; NO tests run; NO pnpm; NO commits/stages; NO background tasks started"
+    ],
+    "background_writers": "none — no background agent/task was spawned by ZCode in this assignment segment; nothing to stop",
+    "resources_retained": [
+      "fixtures: mc-p0-zcode-pg-native-test :55441 (contains the W7 restore-demo seeded dataset + migrations 0001-0006; 0007 NOT applied), mc-p0-zcode-pg-product-test :55442 (test schemas only), mc-p0-zcode-pg-restore-target :55443 (holds mc_data_restored restore proof) — all loopback-only, task-owned, creds in /tmp/mc-p0-zcode-testenv/dsns.env (0600)",
+      "ZITADEL local stack mc-p0-idp-* still up (task-owned); Cloud key untouched at keys/396983916088540712.json (0600, git-ignored, never opened by ZCode)",
+      "/tmp/mc-p0-zcode-testenv/: dsns.env, restore-source.dump, seed/count/verify SQL, gate logs (make-check-*, pnpm-*)"
+    ],
+    "handover": "Source handed over AS-IS to Claude Code under direct PO instruction. No reset/stash/clean/commit. Claude must start from this workboard entry + final-return.md takeover section."
+  },
+  "claude_finish_20261028": {
+    "task": "MC-P0-CLAUDE-FINISH-AFTER-ZCODE-20261028",
+    "parent": "MC-P0-ZCODE-EXECUTION",
+    "priority": "P0",
+    "opened_utc": "2026-10-28T02:30:00+00:00",
+    "updated_utc": "2026-10-28T03:58:08.575263+00:00",
+    "identity": "actual Claude Code (claude-sonnet-5-5), darwin",
+    "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "uncommitted": true,
+    "owner_transition": {
+      "from": "actual ZCode (stopped; see session_log last entry 2026-10-28T01:25-01:55Z and status STOPPED_ZCODE_HANDOVER_TO_CLAUDE_POSTRUN_REMEDIATION_INCOMPLETE)",
+      "to": "actual Claude Code",
+      "basis": "PO message 'ZCode da xac nhan dung implementation va ban giao' + prompt MC-P0-CLAUDE-FINISH-AFTER-ZCODE-20261028-PROMPT.md. Before that message Claude verified only read-only that zcode-cli/zcode-node-repl/mimosa processes were still alive and source had been written 18 minutes earlier; edits started only after the PO acknowledgement. Live processes were not treated as proof of a writer.",
+      "claude_first_edit_after_ack": "contract_w7_qa.go draft repaired, F03 service/PG wiring"
+    },
+    "inputs_verified": {
+      "review_report_sha256": "f5881148ff9d8e16390c9c0ea483d7389a151e710199b045fd1dbf174efbf45a",
+      "review_report_bytes": 11092,
+      "contract_rev10_sha256": "14fb18e302ffe2d71bfbfcbfbc50bf932d0e58e74abb9cbcab824503b2b5eb66",
+      "note": "workboard.local_contract still pointed at rev 9 (06b4c929...) until this entry; rev 10 is the actual file"
+    },
+    "fixtures": {
+      "native": "task-owned container mc-p0-zcode-pg-native-test; its default DB mc_native was found with product tables in public and no goose rows, so a fresh DB mc_native_claude was created beside it (nothing dropped); product fixture mc-p0-zcode-pg-product-test unchanged"
+    },
+    "disposition": {
+      "A_import_graph_atomicity": "FIXED by Claude: row keys resolve to persisted ids, one transaction per connected group, cycle/self/ref validation, rights recheck in tx, registry+receipt replay, UNKNOWN recovery by same keys. Tests: shared SuiteW6 on memory AND PostgreSQL, HTTP, FE. Found+fixed while testing: receipt request-hash was non-hex (PG rejected every row), InsertNode double-insert for Actions, memory registry fault seam, bulk/import routes collided in Echo ('bulk:preview' and 'bulk:commit' registered the same param route -> preview ran commit) now /bulk/preview etc, wire was PascalCase vs FE camelCase now explicit DTOs, FE minted UUIDv4 keys and re-minted on retry.",
+      "B_status_brief": "FIXED by Claude: full-history replay (EventsUpTo) with full-snapshot + patch semantics, expiry flag, ErrBriefUnreconstructable instead of silent skip, effective/late-recorded attribution, shared brief tests on memory+PG plus unit tests of replayBrief. Outstanding = not cancelled and not (completed and proven) - assumption, see final return.",
+      "C_w6_tests": "DONE: SuiteW6 (memory+PG), productapi data_server_test (HTTP), FE intent/ui/seam tests.",
+      "F01_dispute_precedence": "already_fixed_by_ZCode + tests added (SuiteW7QA F01 withdrawn/revoked, memory+PG)",
+      "F02_stale_assessments": "FIXED: ExpectedAssessmentID *string end to end (nil=428, ''=first review, mismatch=412 no mutation) port/service/HTTP/FE form (draft keyed by assessment) ; tests SuiteW7QA, HTTP, FE UI + seam",
+      "F03_filing_guards": "FIXED: OWNER SetSignatureApplicability (port/service/PG/memory/HTTP/FE). ZCode guard was inverted (waived package criteria for proofRequired=true); corrected: criteria check follows proof axis, signature guard (observed signature or OWNER decision) applies to no-proof filings; W4 fixtures updated; tests memory+PG+HTTP+FE.",
+      "F04_control_room_snapshot": "FIXED: room payload carries records+titles from the same snapshot; page labels only from room; edit form labelled with its own as-of. Tests: contract (memory+PG), HTTP, FE.",
+      "F05_causal_explanation": "FIXED in view: renders gate + reason per blocker (completed-but-upstream-blocked, proof gate vs completion gate).",
+      "W7_golden_workflows": "DONE_SERVICE_LEVEL: SuiteGW GW-01/02/03 checkpoint ledgers with five-axis assertions, refusals proven side-effect free, alternates (no supplement, rejection+closure, stale stage, revoked rights); memory and PostgreSQL; rows in docs/testing/p0-claude-finish-20261028/gw-ledger. The old gw_ledger_test.go (GW03 generic Action, always-true stageEvents>=0) was removed.",
+      "restore": "DONE_LOCAL_REHEARSAL: docs/testing/p0-claude-finish-20261028/restore/20261028T034456Z (two earlier attempts in sibling directories are incomplete script-bug runs, kept as evidence).",
+      "zitadel_cloud": "CONFIGURED_NOT_LOGIN_VERIFIED: overlay + A/B mapping + fail-closed client-id check; API starts, bogus bearer 401, BFF redirect correct, Cloud accepted the authorize request. Human login / token audience / A-B isolation / refresh / logout remain VERIFICATION_BLOCKED (no human credential, no permitted browser); exact steps in ops/p0-local/cloud/README.md.",
+      "design_r9_ux": "W6 screens follow SCR-10/11/12 (unchanged/set/clear, grouped row-atomic outcomes, frozen retry, access-loss purge). Screens of W1-W5 carry the R9 behaviours implemented earlier (drafts scoped by session, guarded promotion, causal Back) and were NOT re-audited against R9 in this continuation; no visual/geometry evidence (Screen Recording not granted)."
+    },
+    "gates": {
+      "backend_make_check": "exit 0 at 2026-10-28T03:04Z (19 packages, lint 0 issues) with native=mc_native_claude + product fixtures",
+      "frontend_pnpm_check": "exit 0 (38 files / 408 tests); one earlier run timed out on a new W6 test (flaky useTransition pattern) - fixed, log preserved"
+    },
+    "source_checkpoint": {
+      "id": "CKPT-CLAUDE-01-AFTER-F-FIXES",
+      "aggregate_sha256": "552551a121107a09cca59ce29232e9b0af226720114c790f14284e80307eafa2",
+      "files": 694,
+      "method": "same as CKPT-CLAUDE-00 (sorted '<sha256>  <path>' lines of apps/backend + apps/frontend)"
+    },
+    "next_exact_action": "W7 original GW-01/02/03 ledger assertions (replace gw_ledger_test GW03 and stageEvents>=0), full isolated restore, ZITADEL Cloud profile + A/B mapping, R9 UX items, docs (api.md/api.http/contract rev 11), final gate and one consolidated return",
+    "final_label": "IMPLEMENTED_WITH_VERIFICATION_BLOCKERS",
+    "evidence_dir": "docs/testing/p0-claude-finish-20261028",
+    "resources": {
+      "started_and_stopped": [
+        "mcapi (127.0.0.1:8081) and next start (:3000) for the Cloud smoke checks, both stopped; docker container mc-p0-claude-pg started then stopped again (it was Exited before)"
+      ],
+      "created_and_kept": [
+        "database mc_native_claude (native fixture container, fresh; mc_native left untouched with its product tables)",
+        "databases mc_rr_src_20261028t034456z (product-test container) and mc_rr_dst_20261028t034456z (restore-target container) + object roots under /tmp/mc-rr-20261028T034456Z — evidence of the rehearsal",
+        "run DB mc_p0_run migrated to 0007 and Cloud subjects A/B mapped (users only)"
+      ],
+      "created_and_removed": [
+        "databases of two incomplete restore runs (src+dst), their /tmp work dirs"
+      ],
+      "not_touched": [
+        "mc_p0_run existing users, IdP containers, other mc0*/INT-A containers, Open Design server on :3000-adjacent pid 11993, .mimosa, git state (nothing staged/committed/pushed)"
+      ],
+      "redaction_failure": "a first env.sh attempt printed a fragment of the native fixture DSN containing its password; the role password was rotated, dsns.env updated and no repository, scratchpad or evidence file contains the old value"
+    }
+  },
+  "codex_primary_remediation_20261028": {
+    "task": "MC-P0-CODEX-PRIMARY-REMEDIATION-20261028",
+    "authority": "Direct PO reply: Claude has stopped; Codex takes over primary source. Previous isolated-patch restriction superseded for this continuation. No commit/deploy/cost authority added.",
+    "started_utc": "2026-10-28T05:04:21.897729+00:00",
+    "baseline_manifest": "docs/testing/p0-codex-remediation-20261028/baseline-manifest.json",
+    "scope": [
+      "CL-01..07",
+      "remaining R9/UI/history gaps",
+      "integrated current-byte verification"
+    ],
+    "source_owner": "Local Codex",
+    "independent_review": "PINNED_CORE_PASS_WITH_LIMITATIONS; FINAL_5_PATH_DELTA_AND_SCOPE_HEADER_PENDING; reviewer quota exhausted",
+    "status": "IN_REVIEW_WITH_VERIFICATION_BLOCKERS",
+    "updated_utc": "2026-10-28T07:40:52.637078+00:00",
+    "final_source_manifest": "docs/testing/p0-codex-remediation-20261028/final-source-manifest.json",
+    "return_path": "docs/testing/p0-codex-remediation-20261028/return.md",
+    "closed_source_work": [
+      "CL01 filing execution replay/current owner snapshots;legacy missing owner failsclosed",
+      "CL02 actual domain proof/dependency evaluator at t2;legacy missing decision inputs failclosed",
+      "CL03 imported source claim retained/fingerprinted/readback;non-authoritative",
+      "CL04 session-owned predispatch attempt +terminal receipt retention,explicit recovery,matching ACK,access-loss purge",
+      "CL07 exact-boundary restore oracle/nonzero acceptance exit;structural DSN targeting"
+    ],
+    "partial_work": [
+      "CL05 R9 source primitives, five-axis grid,Data/History pagination/provenance,scope header; rendered/a11y/human and full localization remain open"
+    ],
+    "validation": "CL06 current-source backend/FE gates executed; exact logs andlimits in return"
+  },
+  "source_checkpoint_history": [
+    {
+      "id": "CKPT-CLAUDE-02-FINAL-CANDIDATE",
+      "utc": "2026-10-28T03:58:08.575263+00:00",
+      "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+      "branch": "codex/unified-project-flow",
+      "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+      "uncommitted": true,
+      "files": 701,
+      "aggregate_sha256": "c5c4f0cfb031f4a1ec456346d838437fe9388081d38b20da2095e5ab5cd1bf32",
+      "aggregate_method": "sorted '<sha256>  <path>' lines of apps/backend + apps/frontend, skipping .git/.mimosa/node_modules/.next/dist/build/bin/coverage/.turbo/.cache/test-results/playwright-report and secret-like files; includes tsconfig.tsbuildinfo",
+      "predecessor": "CKPT-CLAUDE-00-INTAKE-ACK (472 files, 1342a53a…); ZCode's final tree was not separately inventoried",
+      "gates_bound_to_this_tree": {
+        "backend": "make check exit 0 + go test -json -race: 695 pass, 4 skip (intentional), 0 fail",
+        "frontend": "pnpm check exit 0 (39 files / 413 tests, 0 skipped) + pnpm build exit 0"
+      }
+    }
+  ]
+}

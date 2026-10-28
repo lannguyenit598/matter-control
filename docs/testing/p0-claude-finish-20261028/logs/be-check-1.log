@@ -1,0 +1,22 @@
+2026-10-28T03:03:57Z
+go mod tidy -diff
+golangci-lint run ./...
+internal/core/service/brief_replay.go:31:5: briefCreationTypes is a global variable (gochecknoglobals)
+var briefCreationTypes = map[string]string{
+    ^
+internal/core/service/brief_replay.go:40:5: briefFullTypes is a global variable (gochecknoglobals)
+var briefFullTypes = map[string]bool{"work.updated": true, "work.execution_changed": true, "bulk.updated": true}
+    ^
+internal/core/service/brief_replay.go:42:5: briefPatchKeys is a global variable (gochecknoglobals)
+var briefPatchKeys = map[string][]string{
+    ^
+internal/core/service/brief_replay.go:50:5: briefAliases is a global variable (gochecknoglobals)
+var briefAliases = map[string]string{
+    ^
+internal/core/service/dataops_service.go:1111:6: func strOr is unused (unused)
+func strOr(m map[string]any, keys ...string) string {
+     ^
+5 issues:
+* gochecknoglobals: 4
+* unused: 1
+make: *** [check] Error 1

@@ -1,0 +1,23 @@
+# Public-key material only. Private key: secrets/system-user.pem (0600).
+SystemAPIUsers:
+  - mc-bootstrap:
+      KeyData: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFrYjY5bll5ODl4K0xsMklrdzNCMwo5STJGM2FzR1Y2R3l1b1MrWWVmV2hXVkM2dTNXYVJhcXJCczIrbEV0L2kzNnZ3Z1Q4d3FkZE0rU2ZhdnNIejcwCjhQS1hCeHNvekUvUU9zOW8xY3dVaEViMWhsa3JTd0ZnNFdQdmtNOWZ3M0lPSlpXeVcxWTFDVEtUR2x0L2VpalQKNllYZlpRVEF4ZEV4QnpEOXJTMTNNSFl5dG9xVmRydUMxbW5ZMnRWd2UwTzlWM3YrYlQ0WWZrQ0wvdzVRMmJnVgpwTEJMdHp3N0hHcnFObDhaeDlaK1JnbzhOSlpEMmp6ODg5REx6d1RtaGZxeHJoM2EyQnhGMy9CVlduT0lWaXh1CkFiZlAvUXVtSGtQMnhqczlPMW5abGg4d3pQNGFaWEt5QzVWZkNXUVFqbWZCb1BBTk9hZmhyZitjRFhtWDZSbVoKWFFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
+      Memberships:
+        - MemberType: System
+          Roles:
+            - "SYSTEM_OWNER"
+            - "IAM_OWNER"
+            - "ORG_OWNER"
+# Machine provisioner must come from the config FILE: viper unmarshals only keys
+# present in the loaded config map, so ZITADEL_FIRSTINSTANCE_ORG_MACHINE_* env vars
+# alone do not populate Org.Machine (Org.LoginClient has a defaults.yaml entry and
+# therefore works from env).
+FirstInstance:
+  PatPath: /zitadel/bootstrap/mc-provisioner.pat
+  Org:
+    Machine:
+      Machine:
+        Username: mc-provisioner
+        Name: MC Provisioner
+      Pat:
+        ExpirationDate: 2099-01-01T00:00:00Z

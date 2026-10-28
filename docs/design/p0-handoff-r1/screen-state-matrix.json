@@ -1,0 +1,600 @@
+{
+  "task": "MC-P0-DESIGN-R1",
+  "governance_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "status": "PREPARED_NOT_DISPATCHED",
+  "date_prepared": "2026-10-26T23:58:00+07:00",
+  "authority": "D-UX01..04 APPROVED_UNDER_PO_DELEGATION",
+  "scope": "Comprehensive 20 FR x 13 Screen x 7 Wave Traceability Matrix",
+  "screens": [
+    {
+      "id": "SCR-01",
+      "name": "App Shell & Session Navigation",
+      "route": "/(app)/[workspaceId]/[matterId]",
+      "wave": "P0-W1",
+      "purpose": "Global context frame, workspace and matter switching, user identity display, and cross-cutting navigation state.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-018"]
+    },
+    {
+      "id": "SCR-02",
+      "name": "Executive Control Room",
+      "route": "/(app)/[workspaceId]/[matterId]/control-room",
+      "wave": "P0-W5",
+      "purpose": "Executive triage dashboard displaying critical blockers, Next Actions, Important Decisions, Waiting On, Milestones, and Evidence gaps.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-002", "FR-003", "FR-004", "FR-011"]
+    },
+    {
+      "id": "SCR-03",
+      "name": "Operational Grid",
+      "route": "/(app)/[workspaceId]/[matterId]/grid",
+      "wave": "P0-W2",
+      "purpose": "High-density multi-column workspace for browsing, filtering, sorting, and inline editing of Requirements and Actions.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-001", "FR-011", "FR-012", "FR-020"]
+    },
+    {
+      "id": "SCR-04",
+      "name": "Requirement Detail & Lifecycle Drawer",
+      "route": "/(app)/[workspaceId]/[matterId]/requirements/[reqId]",
+      "wave": "P0-W1",
+      "purpose": "Inspection and lifecycle management for a legal/operational condition, including linked actions, criteria, and audit history.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-001", "FR-005", "FR-006", "FR-008", "FR-018"]
+    },
+    {
+      "id": "SCR-05",
+      "name": "Action Detail & Assignment Drawer",
+      "route": "/(app)/[workspaceId]/[matterId]/actions/[actionId]",
+      "wave": "P0-W2",
+      "purpose": "Operational execution panel for tracking discrete human tasks, internal assignees, waiting conditions, and upstream dependencies.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-001", "FR-003", "FR-004", "FR-005", "FR-017", "FR-018"]
+    },
+    {
+      "id": "SCR-06",
+      "name": "Dependency Graph & Impact Inspector",
+      "route": "/(app)/[workspaceId]/[matterId]/dependencies",
+      "wave": "P0-W2",
+      "purpose": "Visual and tabular representation of directed prerequisite edges, blocker chains, and causal impact analysis.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-005"]
+    },
+    {
+      "id": "SCR-07",
+      "name": "Evidence Submission & Verification Drawer",
+      "route": "/(app)/[workspaceId]/[matterId]/evidence/[evidenceId]",
+      "wave": "P0-W3",
+      "purpose": "Proof submission, verification evaluation by designated independent verifiers, and dispute logging.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-006", "FR-007", "FR-018"]
+    },
+    {
+      "id": "SCR-08",
+      "name": "Document Version & Signature History",
+      "route": "/(app)/[workspaceId]/[matterId]/documents/[docId]",
+      "wave": "P0-W3",
+      "purpose": "Awareness of document versions, authoritative promotion, and signatory completion tracking.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-009", "FR-010"]
+    },
+    {
+      "id": "SCR-09",
+      "name": "Regulatory Filing Tracker & Package Manager",
+      "route": "/(app)/[workspaceId]/[matterId]/filings/[filingId]",
+      "wave": "P0-W4",
+      "purpose": "Lifecycle tracking of regulatory submissions through draft, prepared, submitted, received, and final authority outcome.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-016", "FR-017"]
+    },
+    {
+      "id": "SCR-10",
+      "name": "Bulk Metadata Editor & Preview Modal",
+      "route": "/(app)/[workspaceId]/[matterId]/grid/bulk-edit",
+      "wave": "P0-W6",
+      "purpose": "Controlled batch editing of approved metadata fields (owner, due date, description note) with per-row atomic auditing.",
+      "allowed_roles": ["OWNER", "EDITOR"],
+      "primary_frs": ["FR-013"]
+    },
+    {
+      "id": "SCR-11",
+      "name": "Structured Import Wizard",
+      "route": "/(app)/[workspaceId]/[matterId]/import",
+      "wave": "P0-W6",
+      "purpose": "3-stage import pipeline (Upload -> Schema/Validation Preview -> Transactional Commit) with duplicate and cycle detection.",
+      "allowed_roles": ["OWNER", "EDITOR"],
+      "primary_frs": ["FR-014"]
+    },
+    {
+      "id": "SCR-12",
+      "name": "Delta Status Brief Generator & Viewer",
+      "route": "/(app)/[workspaceId]/[matterId]/brief",
+      "wave": "P0-W6",
+      "purpose": "Deterministic delta report generator contrasting changes in (t1, t2] with outstanding status at t2.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-015", "FR-019"]
+    },
+    {
+      "id": "SCR-13",
+      "name": "Scoped Event History & Audit Ledger",
+      "route": "/(app)/[workspaceId]/[matterId]/history",
+      "wave": "P0-W1",
+      "purpose": "Append-only immutable timeline of domain state mutations, administrative decisions, and access events.",
+      "allowed_roles": ["OWNER", "EDITOR", "VIEWER"],
+      "primary_frs": ["FR-008", "FR-018"]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "FR-001",
+      "capability": "REQ-MC-P0-01",
+      "title": "Requirement vs Action Distinction",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-03",
+      "secondary_screens": ["SCR-04", "SCR-05"],
+      "state_axes_applied": ["Execution", "Verification", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "Requirement & Action domain entities; distinct type descriptors; separate tables/endpoints",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-101", "AC-121", "AC-159"],
+      "nfr_ids": ["NFR-001", "NFR-004"],
+      "test_ids": ["TEST-FR001-MODEL-SEPARATION", "TEST-FR001-TYPE-SAFETY"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-018", "FR-020"],
+      "invariant_statement": "Finishing an Action NEVER implicitly verifies a Requirement. Requirement has criteria; Action has operational assignees."
+    },
+    {
+      "id": "FR-002",
+      "capability": "REQ-MC-P0-02",
+      "title": "Milestones Tracking & Roll-Up",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-02",
+      "secondary_screens": ["SCR-03"],
+      "state_axes_applied": ["Timing", "Attention"],
+      "data_contract_dependency": "Milestone entity; explicit required-prerequisite edge sets; rollup evaluation engine",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["OWNER"]
+      },
+      "acceptance_ids": ["AC-102", "AC-141"],
+      "nfr_ids": ["NFR-001", "NFR-005"],
+      "test_ids": ["TEST-FR002-MILESTONE-COUNTDOWN", "TEST-FR002-NO-PERCENTAGE-READINESS"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-018", "FR-020"],
+      "invariant_statement": "Zero percentage readiness displayed. Readiness is evaluated as satisfied/total counts plus explicit blocker list under RULE-008."
+    },
+    {
+      "id": "FR-003",
+      "capability": "REQ-MC-P0-03",
+      "title": "Next Action Queue & Deterministic Priority",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-02",
+      "secondary_screens": ["SCR-03", "SCR-05"],
+      "state_axes_applied": ["Execution", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "Action query filtering (assigned, NOT_STARTED/IN_PROGRESS, dependency: READY); critical chain flag; sorting engine",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-103", "AC-144"],
+      "nfr_ids": ["NFR-001", "NFR-004"],
+      "test_ids": ["TEST-FR003-NEXT-ACTION-SORT", "TEST-FR003-T0-EMPTY-EXPLAINED"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-018", "FR-020"],
+      "invariant_statement": "RULE-021: Next Action candidates must be assigned, active, and dependency READY. At Atlas T0, exactly 0 qualify; explicit reason rendered."
+    },
+    {
+      "id": "FR-004",
+      "capability": "REQ-MC-P0-04",
+      "title": "Waiting On Queue & External Dependencies",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-02",
+      "secondary_screens": ["SCR-03", "SCR-05"],
+      "state_axes_applied": ["Execution", "Timing", "Attention"],
+      "data_contract_dependency": "Action with execution: WAITING; explicit waiting_party, waiting_condition, and internal_owner",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-104", "AC-130"],
+      "nfr_ids": ["NFR-001", "NFR-005"],
+      "test_ids": ["TEST-FR004-WAITING-ON-INTERNAL-OWNER", "TEST-FR004-WAITING-VS-BLOCKED"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-017", "FR-018"],
+      "invariant_statement": "WAITING is an operational execution state requiring an internal accountable follow-up owner; it is distinct from dependency BLOCKED."
+    },
+    {
+      "id": "FR-005",
+      "capability": "REQ-MC-P0-05",
+      "title": "Prerequisite Dependencies and Blocker Logic",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-06",
+      "secondary_screens": ["SCR-04", "SCR-05"],
+      "state_axes_applied": ["Dependency", "Execution", "Verification"],
+      "data_contract_dependency": "Directed acyclic dependency edges; cycle validator; gate evaluator (execution completion vs proof-edge)",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-105", "AC-122", "AC-123", "AC-124", "AC-125", "AC-146"],
+      "nfr_ids": ["NFR-001", "NFR-004", "NFR-006"],
+      "test_ids": ["TEST-FR005-ACYCLIC-ENFORCEMENT", "TEST-FR005-PROOF-EDGE-EVALUATION"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-018", "FR-020"],
+      "invariant_statement": "Upstream edge satisfaction requires upstream READY + COMPLETED + (for proof-edge) VERIFIED with valid evidence. Self-edges and cycles rejected."
+    },
+    {
+      "id": "FR-006",
+      "capability": "REQ-MC-P0-06",
+      "title": "Evidence Requirements Specification",
+      "primary_wave": "P0-W3",
+      "primary_screen": "SCR-07",
+      "secondary_screens": ["SCR-04"],
+      "state_axes_applied": ["Verification"],
+      "data_contract_dependency": "EvidenceRequirement criteria model; validity period; version constraint descriptor",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["OWNER"]
+      },
+      "acceptance_ids": ["AC-106", "AC-127"],
+      "nfr_ids": ["NFR-001", "NFR-002"],
+      "test_ids": ["TEST-FR006-CRITERIA-DEFINITION", "TEST-FR006-MANDATORY-EVIDENCE-GUARD"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-018", "FR-020"],
+      "invariant_statement": "Evidence Requirements define subject, acceptable proof types, and version semantics. Zero criteria does not mean automatically verified."
+    },
+    {
+      "id": "FR-007",
+      "capability": "REQ-MC-P0-07",
+      "title": "Evidence Verification & Designated Verifiers",
+      "primary_wave": "P0-W3",
+      "primary_screen": "SCR-07",
+      "secondary_screens": ["SCR-04"],
+      "state_axes_applied": ["Verification", "Attention"],
+      "data_contract_dependency": "Evidence review command; verifier designation ledger; submitter-id check; dispute ledger",
+      "allowed_roles": {
+        "submit": ["OWNER", "EDITOR"],
+        "verify": ["OWNER", "EDITOR (must be matter-designated verifier and NOT submitter)"],
+        "challenge": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-107", "AC-121", "AC-126", "AC-127", "AC-140"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-006"],
+      "test_ids": ["TEST-FR007-NO-SELF-VERIFICATION", "TEST-FR007-DESIGNATED-VERIFIER-GUARD"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-018", "FR-020"],
+      "invariant_statement": "Submitter cannot verify own proof. Only a matter-designated verifier who is not the submitter can accept/reject/resolve disputes under RULE-006."
+    },
+    {
+      "id": "FR-008",
+      "capability": "REQ-MC-P0-08",
+      "title": "Append-Only Event History Ledger",
+      "primary_wave": "P0-W1",
+      "primary_screen": "SCR-13",
+      "secondary_screens": ["SCR-04", "SCR-05", "SCR-07"],
+      "state_axes_applied": ["Execution", "Verification", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "Domain event audit store; immutable event log; causation_id and correlation_id; actor context",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["SYSTEM ONLY (via state mutations)"]
+      },
+      "acceptance_ids": ["AC-108", "AC-136", "AC-149", "AC-153"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-006"],
+      "test_ids": ["TEST-FR008-IMMUTABLE-LEDGER", "TEST-FR008-MUTATION-EVENT-LINK"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-018", "FR-020"],
+      "invariant_statement": "All state changes produce append-only audit events recording actor, timestamp, prior/new values, and reason. No edit/delete of history."
+    },
+    {
+      "id": "FR-009",
+      "capability": "REQ-MC-P0-09",
+      "title": "Document Version Awareness & Authoritative State",
+      "primary_wave": "P0-W3",
+      "primary_screen": "SCR-08",
+      "secondary_screens": ["SCR-07"],
+      "state_axes_applied": ["Verification", "Attention"],
+      "data_contract_dependency": "Document entity; DocumentVersion records; authoritative promotion transaction; sha256 checksum",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "add_version": ["OWNER", "EDITOR"],
+        "promote_authoritative": ["OWNER"]
+      },
+      "acceptance_ids": ["AC-109", "AC-128", "AC-152"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-007"],
+      "test_ids": ["TEST-FR009-VERSION-PROMOTION", "TEST-FR009-SUPERSEDED-INVALIDATION"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-010", "FR-018"],
+      "invariant_statement": "Uploading a new document version does NOT auto-promote it to authoritative. Promotion is an audited OWNER action with impact summary."
+    },
+    {
+      "id": "FR-010",
+      "capability": "REQ-MC-P0-10",
+      "title": "Document Signature Status Tracking",
+      "primary_wave": "P0-W3",
+      "primary_screen": "SCR-08",
+      "secondary_screens": ["SCR-04", "SCR-05"],
+      "state_axes_applied": ["Execution", "Attention"],
+      "data_contract_dependency": "Signatory slot entity; signature execution status; version binding",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "update_status": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-110", "AC-128", "AC-152"],
+      "nfr_ids": ["NFR-001", "NFR-007"],
+      "test_ids": ["TEST-FR010-SIGNATORY-TRACKING", "TEST-FR010-PARTIAL-SIGNATURE-STATE"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-009", "FR-017", "FR-018"],
+      "invariant_statement": "Signature completeness tracks required signatories per version. Incomplete signatures cannot satisfy execution gates requiring signed docs."
+    },
+    {
+      "id": "FR-011",
+      "capability": "REQ-MC-P0-11",
+      "title": "Operational Views & Filter Presets",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-03",
+      "secondary_screens": ["SCR-02"],
+      "state_axes_applied": ["Execution", "Verification", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "Query filter coordinator; URL state sync; view preset schema",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "save_view": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-111", "AC-131", "AC-132"],
+      "nfr_ids": ["NFR-001", "NFR-003", "NFR-008"],
+      "test_ids": ["TEST-FR011-FILTER-PRESETS", "TEST-FR011-URL-STATE-ROUNDTRIP"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-012", "FR-018"],
+      "invariant_statement": "Operational view presets (All, Blocked, My Actions, Due Soon, Critical) filter deterministically without modifying underlying data."
+    },
+    {
+      "id": "FR-012",
+      "capability": "REQ-MC-P0-12",
+      "title": "High-Density Operational Grid",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-03",
+      "secondary_screens": [],
+      "state_axes_applied": ["Execution", "Verification", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "Paginated/virtualized Grid query; multi-column sorting; full-text search; inline edit mutation endpoint",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "inline_edit": ["OWNER", "EDITOR (metadata fields only)"]
+      },
+      "acceptance_ids": ["AC-112", "AC-132", "AC-148", "AC-150"],
+      "nfr_ids": ["NFR-001", "NFR-003", "NFR-008", "NFR-010"],
+      "test_ids": ["TEST-FR012-GRID-DENSITY-SWITCH", "TEST-FR012-MULTILINE-NO-ELLIPSIS", "TEST-FR012-KEYBOARD-ROW-NAV"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-001", "FR-018", "FR-020"],
+      "invariant_statement": "Comfortable default (min 44px) and Compact option (min 36px). Multiline rows expand; zero truncation of legal titles/reasons."
+    },
+    {
+      "id": "FR-013",
+      "capability": "REQ-MC-P0-13",
+      "title": "Bulk Metadata Editing & Validation",
+      "primary_wave": "P0-W6",
+      "primary_screen": "SCR-10",
+      "secondary_screens": ["SCR-03"],
+      "state_axes_applied": ["Timing", "Attention"],
+      "data_contract_dependency": "Batch mutation endpoint; allowlist validator; atomic per-record result aggregator; revision guard",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR"],
+        "execute": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-113", "AC-133", "AC-151"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-006"],
+      "test_ids": ["TEST-FR013-BULK-ALLOWLIST-ENFORCEMENT", "TEST-FR013-PER-ROW-ATOMIC-AUDIT"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-012", "FR-018"],
+      "invariant_statement": "Bulk edit restricted to metadata allowlist (owner, due date, description note). Per-record atomic results; partial success clearly reported."
+    },
+    {
+      "id": "FR-014",
+      "capability": "REQ-MC-P0-14",
+      "title": "Structured Import Pipeline",
+      "primary_wave": "P0-W6",
+      "primary_screen": "SCR-11",
+      "secondary_screens": [],
+      "state_axes_applied": ["Execution", "Dependency"],
+      "data_contract_dependency": "Import parser; validation schema engine; duplicate detector; graph cycle checker; batch insert transaction",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR"],
+        "execute": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-114", "AC-122", "AC-124", "AC-139", "AC-157"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-006"],
+      "test_ids": ["TEST-FR014-IMPORT-PREVIEW-VALIDATION", "TEST-FR014-NO-IMPORT-SELF-VERIFY"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-005", "FR-008", "FR-018"],
+      "invariant_statement": "Preview validates types, dates, references, and cycles before mutation. Imported verification claims are marked UNVERIFIED for review."
+    },
+    {
+      "id": "FR-015",
+      "capability": "REQ-MC-P0-15",
+      "title": "Scoped Excel Export & Security Controls",
+      "primary_wave": "P0-W6",
+      "primary_screen": "SCR-03",
+      "secondary_screens": ["SCR-12"],
+      "state_axes_applied": ["Execution", "Verification", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "Export stream generator; formula injection sanitizer; permission-scoped query filter; timezone formatter",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "export": ["OWNER", "EDITOR", "VIEWER (scoped to active matter membership only)"]
+      },
+      "acceptance_ids": ["AC-115", "AC-134", "AC-135", "AC-154", "AC-158"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-009"],
+      "test_ids": ["TEST-FR015-EXCEL-FORMULA-ESCAPING", "TEST-FR015-VIEWER-EXPORT-BOUNDARY"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-018"],
+      "invariant_statement": "Exports escape formula-leading text (=, +, -, @) as literals. Excluded matters/records never leak in totals, filenames, or metadata."
+    },
+    {
+      "id": "FR-016",
+      "capability": "REQ-MC-P0-16",
+      "title": "Regulatory Filing Lifecycle Tracking",
+      "primary_wave": "P0-W4",
+      "primary_screen": "SCR-09",
+      "secondary_screens": ["SCR-02", "SCR-03"],
+      "state_axes_applied": ["Execution", "Timing", "Attention"],
+      "data_contract_dependency": "RegulatoryFiling entity; stage transition validator; submission package assembler; external registry link",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "update_stage": ["OWNER", "EDITOR"],
+        "correct_rejection": ["OWNER"]
+      },
+      "acceptance_ids": ["AC-116", "AC-129", "AC-145"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-005"],
+      "test_ids": ["TEST-FR016-FILING-STAGE-LADDER", "TEST-FR016-RECEIPT-NOT-APPROVAL"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-017", "FR-018"],
+      "invariant_statement": "Filing moves through DRAFT -> PREPARED -> SUBMITTED -> RECEIVED -> APPROVED/REJECTED. A filing receipt is NOT regulatory approval."
+    },
+    {
+      "id": "FR-017",
+      "capability": "REQ-MC-P0-17",
+      "title": "External Parties Contextual Association",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-05",
+      "secondary_screens": ["SCR-09"],
+      "state_axes_applied": ["Timing", "Attention"],
+      "data_contract_dependency": "ExternalParty reference entity; contextual link table; no authentication credential",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "manage": ["OWNER", "EDITOR"]
+      },
+      "acceptance_ids": ["AC-117", "AC-130"],
+      "nfr_ids": ["NFR-001", "NFR-004"],
+      "test_ids": ["TEST-FR017-EXTERNAL-PARTY-LINK", "TEST-FR017-NO-EXTERNAL-USER-CREDENTIAL"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-004", "FR-016", "FR-018"],
+      "invariant_statement": "External parties (e.g. Cedar Seller, Harbor Registry) are contextual references; they do not possess user accounts or permissions."
+    },
+    {
+      "id": "FR-018",
+      "capability": "REQ-MC-P0-18",
+      "title": "Simple Roles and Ownership Enforcement",
+      "primary_wave": "P0-W1",
+      "primary_screen": "SCR-01",
+      "secondary_screens": ["SCR-04", "SCR-05", "SCR-07", "SCR-13"],
+      "state_axes_applied": ["Execution", "Verification", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "WorkspaceMember & MatterMember authorization tables; middleware role validator; 404 security responder",
+      "allowed_roles": {
+        "workspace_admin": ["Workspace OWNER"],
+        "matter_admin": ["Matter OWNER"],
+        "matter_contributor": ["Matter EDITOR"],
+        "matter_read_only": ["Matter VIEWER"]
+      },
+      "acceptance_ids": ["AC-118", "AC-134", "AC-135", "AC-140", "AC-147", "AC-149"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-006"],
+      "test_ids": ["TEST-FR018-ROLE-MATRIX-ENFORCEMENT", "TEST-FR018-404-ON-DENIED-MATTER"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-001", "FR-007", "FR-008", "FR-015"],
+      "invariant_statement": "Every operation requires active Workspace membership AND Matter membership AND role permission. Inaccessible matter yields 404, not 403."
+    },
+    {
+      "id": "FR-019",
+      "capability": "REQ-MC-P0-19",
+      "title": "Delta-Based Status Brief Drafting",
+      "primary_wave": "P0-W6",
+      "primary_screen": "SCR-12",
+      "secondary_screens": [],
+      "state_axes_applied": ["Timing", "Attention"],
+      "data_contract_dependency": "Event history windowed query engine; time-travel query at t2; delta calculator (t1, t2]; export formatter",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "generate": ["OWNER", "EDITOR", "VIEWER"]
+      },
+      "acceptance_ids": ["AC-119", "AC-138"],
+      "nfr_ids": ["NFR-001", "NFR-004", "NFR-009"],
+      "test_ids": ["TEST-FR019-DELTA-WINDOWING", "TEST-FR019-CHANGES-VS-OUTSTANDING"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-008", "FR-018"],
+      "invariant_statement": "Status Brief evaluates baseline t1 and as-of t2 (t1 <= t2). Changes in (t1, t2] are strictly distinct from outstanding items at t2."
+    },
+    {
+      "id": "FR-020",
+      "capability": "REQ-MC-P0-20",
+      "title": "Separate Five State Dimensions Representation",
+      "primary_wave": "P0-W2",
+      "primary_screen": "SCR-03",
+      "secondary_screens": ["SCR-02", "SCR-04", "SCR-05", "SCR-07", "SCR-09"],
+      "state_axes_applied": ["Execution", "Verification", "Dependency", "Timing", "Attention"],
+      "data_contract_dependency": "State model entities; separate typed columns/fields; discrete enumeration types",
+      "allowed_roles": {
+        "read": ["OWNER", "EDITOR", "VIEWER"],
+        "write": ["OWNER", "EDITOR (governed per axis)"]
+      },
+      "acceptance_ids": ["AC-120", "AC-121", "AC-139", "AC-142", "AC-143", "AC-160"],
+      "nfr_ids": ["NFR-001", "NFR-002", "NFR-005"],
+      "test_ids": ["TEST-FR020-FIVE-AXES-SEPARATION", "TEST-FR020-NO-OVERLOADED-STATUS"],
+      "backend_status": "NOT_VERIFIED_FULL_CAPABILITY",
+      "frontend_status": "NOT_IMPLEMENTED_AS_PRODUCT",
+      "acceptance_status": "NOT_RUN",
+      "cross_cutting": ["FR-001", "FR-005", "FR-007", "FR-008"],
+      "invariant_statement": "Execution, Verification, Dependency, Timing, Attention must remain separate fields and UI badges. No single overloaded 'Status' string."
+    }
+  ],
+  "golden_workflows": [
+    {
+      "id": "GW-01",
+      "title": "Corporate Restructuring Readiness Review",
+      "target_screen": "SCR-02",
+      "acceptance_id": "AC-161",
+      "final_wave": "P0-W7",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "GW-02",
+      "title": "Pre-Closing Signature & Evidence Reconciliation",
+      "target_screen": "SCR-08",
+      "acceptance_id": "AC-162",
+      "final_wave": "P0-W7",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "GW-03",
+      "title": "Regulatory Filing Submission & Follow-Up",
+      "target_screen": "SCR-09",
+      "acceptance_id": "AC-163",
+      "final_wave": "P0-W7",
+      "status": "NOT_RUN"
+    }
+  ]
+}

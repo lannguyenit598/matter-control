@@ -1,0 +1,13 @@
+2026-10-28T07:25:24Z preflight ok: src=mc-p0-zcode-pg-product-test/mc_rr_src_20261028t072524z dst=mc-p0-zcode-pg-restore-target/mc_rr_dst_20261028t072524z tools=pg_dump (PostgreSQL) 17.10 / pg_restore (PostgreSQL) 17.10
+2026-10-28T07:25:46Z seed done in 21.654s
+2026-10-28T07:25:49Z boundary B (quiescent: the seeding process has exited; nothing else writes this database): last event 2026-10-28 07:25:46.839328+00 seq-sum 12408;        3 object files
+2026-10-28T07:25:54Z backup done in 0.255s, 242272 bytes, sha256 1ccbb12250c47190e8ef29796c293f42291fcb554ef80e34d785babe9645156f
+2026-10-28T07:25:56Z restore done in 0.211s
+2026-10-28T07:25:58Z census=IDENTICAL objects=IDENTICAL marker(src=1,restored=0)
+2026-10-28T07:26:04Z readback restored-vs-source=IDENTICAL restart=IDENTICAL
+corrupt: pg_restore exit=1; tables left in the throwaway target=0
+truncated: pg_restore exit=1; tables left in the throwaway target=0
+altered object: readback exit=1 (non-zero = detected)
+missing object: readback exit=0, output differs from the good restore: DETECTED
+2026-10-28T07:26:11Z summary written to /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T072524Z/summary.json
+Restore acceptance checks passed

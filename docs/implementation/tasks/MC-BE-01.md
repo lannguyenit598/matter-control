@@ -1,6 +1,6 @@
 # MC-BE-01 — Requirement service transaction spine
 
-Status: REWORK_REQUIRED at source136eae6 after actual ZCode return and three Codex counterexamples (2026-10-26). Owner: actual ZCode. Priority:P0. Design coordinator/intake: Local Codex. Formal independent reviewer distinct from ZCode still pending (OpenCode when authorized/available). Historical preparation/WAITING_APPROVAL statements below are superseded only for this bounded BE01 implementation; no BE02/fullStep03B activation.
+Status: IN_REVIEW; actual OpenCode SOURCE/EVIDENCE PASS_WITH_LIMITATIONS for136eae6+patch33297560 (2026-10-26), F01/F02/F03 closed for that snapshot; commit completion BLOCKED after actual official-scan/PreToolUse refusal; reviewed bytes remain staged and intact. Current execution owner: actual ZCode, restored by direct PO instruction on 2026-10-26; this supersedes the temporary Codex subscription-recovery assignment. Historical implementation author remains actual ZCode; Codex-authored continuation retains its attribution. Ownership restoration does not authorize a commit retry, remove Mimosa or verify tool/quota availability. Priority:P0. Design coordinator/intake: Local Codex. Actual independent reviewer: OpenCode, route opencode/glm-5.3-flash-free, version not recorded; source/evidence review received through the human, no reviewer runtime replay. Historical preparation/WAITING_APPROVAL statements below are superseded only for this bounded BE01 implementation; no BE02/fullStep03B activation.
 
 ## Authority and dependencies
 
@@ -70,3 +70,27 @@ Owner raceJSON parsed391namedpasses/0fails/1intentionalnamedskip,15test-bearing/
 Codex independently wrote/executed3service-double overlayprobes on unchangedsource: F01 representedMatter authorization before receipt hash/replay; F02 unsupported elapsed temporalboundary accepted/cleared; F03 membershipunavailable becomesNotFound. All3reproduced (testexit1). No DB queries/sourceedits or acceptedbaseline replay. Formal independentOpenCode acceptance is stillPENDING; this intake can require rework but cannot grant architecture/releaseapproval.
 
 Acceptance still unresolved: BE01-T05/06(F01),T03/08(F02),T07/08(F03); other ownerPASS claims retained as evidence pending independentreview. MC-BE-01-ZCODE-REWORK-PROMPT.md is prepared for scoped correction, READY_NOT_DISPATCHED byCodex. Samebranch/existingbaseline, no newtask restart/fullbackend. Correctedhead requires actual meaningful regression/gate evidence and nonauthor review before acceptance. INT-A/f08/f10/parentgates unchanged.
+
+## Corrected owner return R1 received — 2026-10-26
+
+[Codex R1 intake](../../reviews/be01-r1-intake.md) verifies the nine-file/+929/-15 patch matches owner evidence,23/23 inventory hashes,441 owner namedrace passes/1intentional skip, and three original unchanged counterexamples nowPASS withoutDB. BE01-F01/F02/F03 are corrected/targeted-recheckPASS pending nonauthorreview, not formallyCLOSED. HEAD136eae6 alone is not corrected: immutable patch33297560 and source-manifest pin the dirty tree. Exact provenance errata retained; no fictional commit.
+
+OpenCode read-only source/evidence prompt: ../../testing/be01-r1-intake/OPENCODE-REVIEW-PROMPT.md, READY_NOT_DISPATCHED. Actual manualhumanreturn supersedes historical unstarted rework labels. Sourcecommit remains owner-reported MimosaBLOCKED; Codex confirms cited runtime-password expression lacks a hardcoded value but has not overridden/retried thegate. No bypass/scanconfigchange. Original acceptance scope/deviations persist, noBE02/HTTP/auth/INTAactivation. Both protectednativecheckouts clean52b60a4; noDB/lifecycle or externalprovider invocation. Governanceintake also leftuncommitted pending normalpermittedgateoutcome.
+
+## Independent OpenCode R1 review received — 2026-10-26
+
+[Actual review intake](../../reviews/be01-r1-opencode-review.md) supersedes earlier pending/notdispatched labels for this exact source/evidence packet. SOURCE andEVIDENCE PASS_WITH_LIMITATIONS; BE01-F01/F02/F03 RESOLVED/CLOSED for136eae6+reviewedpatch33297560. Original boundedspine has no newblockingfindings; minimalMakefile exception revieweraccepted; nullablepurge_after/zeroagepolicy acceptabletestseams only, no productdefaults. Reviewer ran noGo/PGtests. Owner441passes/1intentional skip andCodex3actualprobes retain separate attribution; historicalprovenance gaps/O1..O4 remain nonblockingnotes, no extra correctionloop.
+
+Codex reverified37payloads/45archivemembers andliveHEAD/patch equality. MC-BE-01 staysIN_REVIEW until ordinarypermittedcommit andCodexcompletionintake. Newcommit-only ZCodehandoff: ../../implementation/handoffs/MC-BE-01-R1-COMMIT-ZCODE-PROMPT.md, READY_NOT_DISPATCHED. Mimosa notcleared by author/orchestrator/reviewer opinion; no retry/bypass/scanstatechange. If supportedresolution unavailable, retainrecoverabletree+patch andreturnBLOCKED. No source/test/runtime/providerinvocation orcommit inthisintake. BE02/F08/F10/INTA/product/architecture/productiongates unchanged.
+
+## Actual commit-only return received — BLOCKED,2026-10-26
+
+[Blocked completion intake](../../reviews/be01-r1-commit-blocked-intake.md) receivesactualZCodeGLM5.3return; commitstageBLOCKED, parentMC-BE-01IN_REVIEW. CodexverifiesHEAD136eae6unchanged, exact9stagedpaths, bothstaged/treepatch33297560, zero unstaged/untracked,39/39sourcehashesmatch. No correctedcommit; existingOpenCodePASS/F01..03closuresretained. TestsNOT_RERUN.
+
+OfficialMimosa scanjob completed but sealedrunStatusinconclusive/coveragepartial/verdictEffectnone, onehighCWE798 finding:f4bd71af4f1cfebcec9cb0a4. Codex3sealedartifacthashesmatch; oneownerreportedordinarycommitattemptblockedpreexecution, no numericprocessexit/exactUTC fabricated. GOV-BE01-COMMIT-01records staging/attempt after nonclearing scan without explicitpermissionevidence; notretroactivelyauthorized, gateheld, reviewedbytesintact, no sourcerework/forcedunstage.
+
+Priorcommitprompt isactualattempted/BLOCKED, notreadyforrepeateddispatch. Preparedoperator/maintainerdossier: ../../testing/be01-r1-commit-intake/MIMOSA-FINDING-RESOLUTION.md, NOT_SENT. No further equivalentscan/commitattempt untilsupportedexternalgatestatechanges. Do noteditimmutableevidenceorhooks/ledgers/baselines, switchescontexttoevadegate, orreopenreview. NoMimosaresolutiontoolexposedtoCodex. BE02readonlypreparationcancontinuewithreviewedsnapshot, neverHEADaloneasacceptedbase; actualproductimplementation/gatesunchanged.
+
+## ZCode Mimosa investigation received — 2026-10-26
+
+[Codex intake](../../reviews/be01-zcode-mimosa-r1-intake.md) reverified seven input pins, seven decoded artifacts and exact nine-path staged patch33297560, with zero unstaged/untracked backend paths. Actual ZCode reports BLOCKED_NO_DISPOSITION_INTERFACE; plugin/hook observations remain owner evidence and live re-detection is inference only. No finding disposition or normal commit permission established. Maintainer-ready request prepared/not sent; no repeated scan/commit or evidence rewrite. ZCode remains backend owner; BE01 source/evidence PASS retained, commit blocked. Investigation return is received; old READY labels are historical.

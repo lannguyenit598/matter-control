@@ -1,0 +1,53 @@
+{
+  "task": "MC-P0-FINAL-SOURCE-RESTORE-R1",
+  "start_utc": "2026-10-28T08:02:15.987216+00:00",
+  "end_utc": "2026-10-28T08:02:16.014916+00:00",
+  "exit": 0,
+  "runtime_exit": 0,
+  "exact_boundary_comparison": {
+    "missing_matters": [],
+    "unexpected_matters": [],
+    "differing_matters": [],
+    "counters_match": true,
+    "object_failures": 0
+  },
+  "summary_errors": [],
+  "altered_readback_comparison": {
+    "missing_matters": [],
+    "unexpected_matters": [],
+    "differing_matters": [
+      "01a18185-47ca-7177-a7ae-b3c5aed5303a"
+    ],
+    "counters_match": false,
+    "object_failures": 1
+  },
+  "missing_readback_comparison": {
+    "missing_matters": [],
+    "unexpected_matters": [],
+    "differing_matters": [
+      "01a18185-47ca-7177-a7ae-b3c5aed5303a"
+    ],
+    "counters_match": false,
+    "object_failures": 0
+  },
+  "missing_readback_counters": {
+    "matterCount": 54,
+    "objectsChecked": 2,
+    "objectFailures": 0
+  },
+  "altered_readback_counters": {
+    "matterCount": 54,
+    "objectsChecked": 3,
+    "objectFailures": 1
+  },
+  "census_tables": 34,
+  "object_files": 3,
+  "restart_raw_sha256": "9741e49ac91bf9bdc29ef15c7ca42ed23fb48cb53ba00ad818d548d0fdbfe4ab",
+  "restored_raw_sha256": "9741e49ac91bf9bdc29ef15c7ca42ed23fb48cb53ba00ad818d548d0fdbfe4ab",
+  "conclusion": "PASS_LOCAL_SYNTHETIC_FINAL_SOURCE; independent QA acceptance pending",
+  "limits": [
+    "Fresh Go test processes, not a restarted application server/container",
+    "No HTTP/browser/IdP/production recovery or RPO/RTO claim",
+    "Pinned script did not trace every internal shell command timestamp; top-level argv/start/end/exit, pinned script bytes and runtime step timestamps retained"
+  ]
+}

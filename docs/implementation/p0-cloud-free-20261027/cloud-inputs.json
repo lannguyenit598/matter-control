@@ -1,0 +1,40 @@
+{
+  "task": "MC-P0-CLOUD-FREE-INPUT-INTAKE",
+  "source": "Direct Product Owner supplied Cloud setup metadata",
+  "scope": "Synthetic development/test profile; no production or paid upgrade approval",
+  "status": "INPUTS_RECEIVED_PUBLIC_DISCOVERY_VERIFIED_AUTH_RUNTIME_PENDING",
+  "plan": {"name": "Free", "region": "Australia", "evidence": "USER_REPORTED_NOT_AUTHENTICATED_READBACK"},
+  "issuer_as_supplied": "https://matter-control-legal-dev-fm2k48.au1.zitadel.cloud/",
+  "canonical_issuer": "https://matter-control-legal-dev-fm2k48.au1.zitadel.cloud",
+  "discovery_url": "https://matter-control-legal-dev-fm2k48.au1.zitadel.cloud/.well-known/openid-configuration",
+  "introspection_endpoint": "https://matter-control-legal-dev-fm2k48.au1.zitadel.cloud/oauth/v2/introspect",
+  "organization_id": "396978885222316422",
+  "project_id": "396983669648046470",
+  "web_application": {
+    "client_id": "396983754624613928",
+    "redirect_uri": "http://localhost:3000/api/auth/callback",
+    "development_mode": true,
+    "refresh_token_enabled": true,
+    "evidence": "USER_REPORTED_NOT_AUTHENTICATED_READBACK"
+  },
+  "api_application": {
+    "client_id": "396983864414715432",
+    "key_file": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/keys/396983916088540712.json",
+    "key_content_read_by_intake": false,
+    "key_content_hashed_or_exported": false,
+    "client_key_match_verified": false
+  },
+  "candidate_access_token_audience": {
+    "value": "396983669648046470",
+    "basis": "Requested project audience scope; not the API application's authentication client id",
+    "verified_against_real_user_token": false
+  },
+  "synthetic_identities": [
+    {"label": "A", "reported_subject": "396984919567415686", "token_subject_verified": false},
+    {"label": "B", "reported_subject": "396984802881878406", "token_subject_verified": false}
+  ],
+  "product_identity_mapping": "NOT_CHANGED; explicit authorized seed/mapping required; no email matching or automatic membership",
+  "runtime_configuration_changed": false,
+  "local_resources_removed_or_changed": false,
+  "login_or_introspection_executed": false
+}

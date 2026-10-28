@@ -1,0 +1,544 @@
+[
+  {
+    "action": "checker",
+    "argv": [
+      "rtk",
+      "proxy",
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_verify.py"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/ops/p0-local/restore-rehearsal",
+    "start_utc": "2026-10-28T07:57:35.085282+00:00",
+    "end_utc": "2026-10-28T07:57:35.274174+00:00",
+    "exit": 0,
+    "artifact": {
+      "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/checker.log",
+      "bytes": 1432,
+      "sha256": "beaa1473aecf3bb8f215f82daa2eb5ed3add0088b66bba2f9e663a37a1ade9e3"
+    },
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821",
+    "raw_combined_sha256": "beaa1473aecf3bb8f215f82daa2eb5ed3add0088b66bba2f9e663a37a1ade9e3",
+    "export_sha256": "beaa1473aecf3bb8f215f82daa2eb5ed3add0088b66bba2f9e663a37a1ade9e3"
+  },
+  {
+    "action": "shell-syntax",
+    "argv": [
+      "rtk",
+      "proxy",
+      "bash",
+      "-n",
+      "ops/p0-local/restore-rehearsal/run.sh"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:57:35.274453+00:00",
+    "end_utc": "2026-10-28T07:57:35.284233+00:00",
+    "exit": 0,
+    "artifact": {
+      "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/shell-syntax.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821",
+    "raw_combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "action": "versions",
+    "argv": [
+      "rtk",
+      "--version"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:57:35.284861+00:00",
+    "end_utc": "2026-10-28T07:57:35.292378+00:00",
+    "exit": 0,
+    "artifact": {
+      "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/versions.log",
+      "bytes": 10,
+      "sha256": "c372b35e6522ba854befd625bca8b3976ea0047b377212b2b5943c0e6e66db24"
+    },
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821",
+    "raw_combined_sha256": "c372b35e6522ba854befd625bca8b3976ea0047b377212b2b5943c0e6e66db24",
+    "export_sha256": "c372b35e6522ba854befd625bca8b3976ea0047b377212b2b5943c0e6e66db24"
+  },
+  {
+    "action": "go-version",
+    "argv": [
+      "rtk",
+      "proxy",
+      "go",
+      "version"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start_utc": "2026-10-28T07:57:35.292777+00:00",
+    "end_utc": "2026-10-28T07:57:35.351188+00:00",
+    "exit": 0,
+    "artifact": {
+      "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/go-version.log",
+      "bytes": 33,
+      "sha256": "70f94d37a097ca424ec1a1c0d5a81288ec60b4ceeae67edc3a75aeb6ce378600"
+    },
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821",
+    "raw_combined_sha256": "70f94d37a097ca424ec1a1c0d5a81288ec60b4ceeae67edc3a75aeb6ce378600",
+    "export_sha256": "70f94d37a097ca424ec1a1c0d5a81288ec60b4ceeae67edc3a75aeb6ce378600"
+  },
+  {
+    "action": "inspect-product-test",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "inspect",
+      "mc-p0-zcode-pg-product-test",
+      "--format",
+      "{{.Id}} {{.Name}} {{.State.Status}} {{json .Config.Labels}} {{json .NetworkSettings.Ports}}"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:12.486894+00:00",
+    "end_utc": "2026-10-28T07:59:12.531601+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/inspect-product-test.log",
+    "raw_combined_sha256": "e02943e9365faf9dff0cabb432c541a0824c29b3fd3aaa5e4d4651955fd4fdb8",
+    "export_sha256": "e02943e9365faf9dff0cabb432c541a0824c29b3fd3aaa5e4d4651955fd4fdb8",
+    "redaction": "exact in-memory credential values and URI patterns; no raw credential log exported",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "cluster-product-test",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "-i",
+      "mc-p0-zcode-pg-product-test",
+      "psql",
+      "-U",
+      "[DB_USER]",
+      "-d",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-At",
+      "-c",
+      "select system_identifier from pg_control_system()"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:12.532450+00:00",
+    "end_utc": "2026-10-28T07:59:12.624789+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/cluster-product-test.log",
+    "raw_combined_sha256": "b67e28bde0cf4c70f42914fdaa6de3e8e2ece4bef46977bf2169d41d63d372ac",
+    "export_sha256": "b67e28bde0cf4c70f42914fdaa6de3e8e2ece4bef46977bf2169d41d63d372ac",
+    "redaction": "exact in-memory credential values and URI patterns; no raw credential log exported",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "inspect-restore-target",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "inspect",
+      "mc-p0-zcode-pg-restore-target",
+      "--format",
+      "{{.Id}} {{.Name}} {{.State.Status}} {{json .Config.Labels}} {{json .NetworkSettings.Ports}}"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:12.625321+00:00",
+    "end_utc": "2026-10-28T07:59:12.660515+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/inspect-restore-target.log",
+    "raw_combined_sha256": "47d31cd6e6779c50a0187722779cab8d4d312e0dd11ff2e6686ff2a28249ecb6",
+    "export_sha256": "47d31cd6e6779c50a0187722779cab8d4d312e0dd11ff2e6686ff2a28249ecb6",
+    "redaction": "exact in-memory credential values and URI patterns; no raw credential log exported",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "cluster-restore-target",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "-i",
+      "mc-p0-zcode-pg-restore-target",
+      "psql",
+      "-U",
+      "[DB_USER]",
+      "-d",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-At",
+      "-c",
+      "select system_identifier from pg_control_system()"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:12.661072+00:00",
+    "end_utc": "2026-10-28T07:59:12.776150+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/cluster-restore-target.log",
+    "raw_combined_sha256": "b8d30888ae180b7ca678a487c3dc27d64e78489700248e7a456f900eaa5987b7",
+    "export_sha256": "b8d30888ae180b7ca678a487c3dc27d64e78489700248e7a456f900eaa5987b7",
+    "redaction": "exact in-memory credential values and URI patterns; no raw credential log exported",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "pinned-restore",
+    "argv": [
+      "rtk",
+      "proxy",
+      "bash",
+      "ops/p0-local/restore-rehearsal/run.sh"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T07:59:12.912118+00:00",
+    "end_utc": "2026-10-28T07:59:48.852523+00:00",
+    "exit": 0,
+    "private_raw_path": "/private/tmp/mc-p0-final-restore-stdout-20261028T075912Z.log",
+    "raw_sha256": "df5ab5d6c7021e5bf37a2a3bbf49edbd759d13da59f3697fc7c78e5925ef5949",
+    "export_path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/runtime.log",
+    "export_sha256": "df5ab5d6c7021e5bf37a2a3bbf49edbd759d13da59f3697fc7c78e5925ef5949",
+    "environment_overrides": {
+      "MC_RR_OUT": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z",
+      "MC_RR_WORK": "/private/tmp/mc-p0-final-restore-20261028T075912Z",
+      "MC_TESTENV": "[ALLOWLISTED_PRIVATE_FILE]",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "closing-id-product-test",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "inspect",
+      "mc-p0-zcode-pg-product-test",
+      "--format",
+      "{{.Id}} {{.State.Status}}"
+    ],
+    "stdin_query": null,
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:00:52.186456+00:00",
+    "end_utc": "2026-10-28T08:00:52.221670+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/closing-id-product-test.log",
+    "raw_combined_sha256": "1cb0e738e45a5f4953237a985b6354706969ff649093248781f141057d773c3e",
+    "export_sha256": "1cb0e738e45a5f4953237a985b6354706969ff649093248781f141057d773c3e",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "closing-db-product-test",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "-i",
+      "mc-p0-zcode-pg-product-test",
+      "psql",
+      "-U",
+      "[DB_USER]",
+      "-d",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-At"
+    ],
+    "stdin_query": "select datname from pg_database where datname in ('mc_rr_src_20261028t075912z','mc_rr_dst_20261028t075912z','mc_rr_neg_20261028t075912z') order by datname;",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:00:52.222431+00:00",
+    "end_utc": "2026-10-28T08:00:52.300708+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/closing-db-product-test.log",
+    "raw_combined_sha256": "ef36e4d2e996de1f8d588e7a945f24a325cdca324135341560ef3cd2b957e091",
+    "export_sha256": "ef36e4d2e996de1f8d588e7a945f24a325cdca324135341560ef3cd2b957e091",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "cleanup-container-archive-product-test",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "mc-p0-zcode-pg-product-test",
+      "rm",
+      "-f",
+      "/tmp/rr-20261028T075912Z.dump",
+      "/tmp/rr-neg-20261028T075912Z.dump"
+    ],
+    "stdin_query": null,
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:00:52.301267+00:00",
+    "end_utc": "2026-10-28T08:00:52.350429+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/cleanup-container-archive-product-test.log",
+    "raw_combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "closing-id-restore-target",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "inspect",
+      "mc-p0-zcode-pg-restore-target",
+      "--format",
+      "{{.Id}} {{.State.Status}}"
+    ],
+    "stdin_query": null,
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:00:52.350983+00:00",
+    "end_utc": "2026-10-28T08:00:52.374776+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/closing-id-restore-target.log",
+    "raw_combined_sha256": "712419e35f838647b40b819f0bb705e3fdf382cca6af9ca85a7dcbbc523996e2",
+    "export_sha256": "712419e35f838647b40b819f0bb705e3fdf382cca6af9ca85a7dcbbc523996e2",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "closing-db-restore-target",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "-i",
+      "mc-p0-zcode-pg-restore-target",
+      "psql",
+      "-U",
+      "[DB_USER]",
+      "-d",
+      "postgres",
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-At"
+    ],
+    "stdin_query": "select datname from pg_database where datname in ('mc_rr_src_20261028t075912z','mc_rr_dst_20261028t075912z','mc_rr_neg_20261028t075912z') order by datname;",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:00:52.375553+00:00",
+    "end_utc": "2026-10-28T08:00:52.442944+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/closing-db-restore-target.log",
+    "raw_combined_sha256": "d2fd629d61d1c91b4359ea7301f472d76ad5b4937a1784f62db26edcd066639f",
+    "export_sha256": "d2fd629d61d1c91b4359ea7301f472d76ad5b4937a1784f62db26edcd066639f",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "cleanup-container-archive-restore-target",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "exec",
+      "mc-p0-zcode-pg-restore-target",
+      "rm",
+      "-f",
+      "/tmp/rr-20261028T075912Z.dump",
+      "/tmp/rr-neg-20261028T075912Z.dump"
+    ],
+    "stdin_query": null,
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:00:52.443438+00:00",
+    "end_utc": "2026-10-28T08:00:52.498208+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/cleanup-container-archive-restore-target.log",
+    "raw_combined_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "python-version",
+    "argv": [
+      "rtk",
+      "proxy",
+      "python3",
+      "--version"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:01:39.085173+00:00",
+    "end_utc": "2026-10-28T08:01:39.103991+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/python-version.log",
+    "raw_combined_sha256": "63990b3ee50c49ab28d70e29c0f967f0c71330e39243ffeb4d3a8d5878c8a978",
+    "export_sha256": "63990b3ee50c49ab28d70e29c0f967f0c71330e39243ffeb4d3a8d5878c8a978",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "bash-version",
+    "argv": [
+      "rtk",
+      "proxy",
+      "bash",
+      "--version"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:01:39.104278+00:00",
+    "end_utc": "2026-10-28T08:01:39.113022+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/bash-version.log",
+    "raw_combined_sha256": "de9dadf321eb1d8a2dfe2e67f7c00652983f1fcf5cde14a28596fc3f0cbb508f",
+    "export_sha256": "de9dadf321eb1d8a2dfe2e67f7c00652983f1fcf5cde14a28596fc3f0cbb508f",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "docker-client-version",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "--version"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:01:39.113294+00:00",
+    "end_utc": "2026-10-28T08:01:39.184105+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/actions/docker-client-version.log",
+    "raw_combined_sha256": "a3e13f9c30328e68f9c1290f693cce3a8b79031e6aed9abff2a47df7b93da3a8",
+    "export_sha256": "a3e13f9c30328e68f9c1290f693cce3a8b79031e6aed9abff2a47df7b93da3a8",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "closing-pins-and-checkout",
+    "argv": [
+      "rtk",
+      "proxy",
+      "python3",
+      "[in-memory manifest comparison and git branch/head read]"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:01:39.185154+00:00",
+    "end_utc": "2026-10-28T08:01:39.332864+00:00",
+    "exit": 0,
+    "artifact": "docs/testing/p0-final-parallel-20261028/restore/inputs.json",
+    "result": "816 manifest entries and 9 direct/historical receipts unchanged; branch/head unchanged",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "initial-sandbox-docker-inspect",
+    "argv": [
+      "rtk",
+      "proxy",
+      "docker",
+      "inspect",
+      "mc-p0-zcode-pg-product-test",
+      "mc-p0-zcode-pg-restore-target",
+      "--format",
+      "ID NAME STATE LABELS PORTS only"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": null,
+    "end_utc": null,
+    "exit": 1,
+    "result": "permission denied on docker API unix socket in sandbox; official require_escalated retry succeeded",
+    "timestamp_limit": "Initial discovery call occurred before instrumented command recorder; exact UTC not captured. No runtime mutation attempted by denied call.",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "initial-process-executable-inventory",
+    "argv": [
+      "ps",
+      "-axo",
+      "comm="
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": null,
+    "end_utc": null,
+    "exit": null,
+    "result": "Sandbox PermissionError before process started. No process arguments or environments read. No retry needed: isolated generated databases and source checkpoints establish execution boundary.",
+    "timestamp_limit": "Initial discovery call occurred before instrumented command recorder; exact UTC not captured.",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "same-session-evidence-comparison-with-pinned-helper",
+    "argv": [
+      "rtk",
+      "proxy",
+      "python3",
+      "-B",
+      "[read-only in-memory compare_readback and summary_errors assertions]"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:02:15.987216+00:00",
+    "end_utc": "2026-10-28T08:02:16.020423+00:00",
+    "exit": 0,
+    "artifact": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/acceptance.json",
+    "source_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821"
+  },
+  {
+    "action": "unlink own temporary archive",
+    "path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr.dump",
+    "start_utc": "2026-10-28T08:00:52.517968+00:00",
+    "end_utc": "2026-10-28T08:00:52.518072+00:00",
+    "exit": 0,
+    "bytes": 241340,
+    "sha256": "8aaf4175a3a7ccac3dbd2ecdf0ce4ed57a6a6de3c80a931fbcdb5fa9fabe0054",
+    "argv": [
+      "python3",
+      "Path.unlink",
+      "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr.dump"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control"
+  },
+  {
+    "action": "unlink own temporary archive",
+    "path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-corrupt.dump",
+    "start_utc": "2026-10-28T08:00:52.518209+00:00",
+    "end_utc": "2026-10-28T08:00:52.518265+00:00",
+    "exit": 0,
+    "bytes": 241340,
+    "sha256": "3c1c0fb30f9306dcb1187e351a1ddc5a4a2fe4a4995814d68acb3d64645a379b",
+    "argv": [
+      "python3",
+      "Path.unlink",
+      "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-corrupt.dump"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control"
+  },
+  {
+    "action": "unlink own temporary archive",
+    "path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-truncated.dump",
+    "start_utc": "2026-10-28T08:00:52.518379+00:00",
+    "end_utc": "2026-10-28T08:00:52.518419+00:00",
+    "exit": 0,
+    "bytes": 120670,
+    "sha256": "70655e9e4039c944f26417ef2883897f6d1321e518440a82e90ee3614e938d3b",
+    "argv": [
+      "python3",
+      "Path.unlink",
+      "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-truncated.dump"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control"
+  },
+  {
+    "action": "final-public-privacy-integrity-and-pin-check",
+    "argv": [
+      "rtk",
+      "proxy",
+      "python3",
+      "-B",
+      "[in-memory JSON, evidence-link, actual-credential privacy and pinned hash assertions]"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-28T08:03:50.820689+00:00",
+    "end_utc": "2026-10-28T08:03:50.886166+00:00",
+    "exit": 0,
+    "result": {
+      "source_r9_entries": 816,
+      "direct_historical_receipts": 9,
+      "drift": 0,
+      "privacy_matches": 0,
+      "artifact_links": "all present"
+    },
+    "scope_limit": "Output manifest excludes itself to avoid a self-reference cycle."
+  }
+]

@@ -5,7 +5,15 @@
 
 Vertical ban đầu: Transactions & Corporate Legal Work. Product Discovery đã kết thúc.
 
-Đây là repository quản trị AI SDLC, chưa chứa product implementation. Bộ bootstrap được tạo ngày 2026-10-24 (Asia/Ho_Chi_Minh); nội dung quản trị mới ở trạng thái chờ review, không phải quyết định kiến trúc đã được phê duyệt.
+Repository này chứa governance/evidence và source đã được đưa về theo yêu cầu trực tiếp của Product Owner ngày 2026-10-26. Các thư mục source bên dưới hiện có trên filesystem; việc import chưa được commit vì gate Mimosa còn chặn. Repo hiện chưa có remote `origin`.
+
+| Source | Vị trí | Nội dung / revision nguồn |
+|---|---|---|
+| Backend | [apps/backend](apps/backend/README.md) | Go template + C01 + BE-01 Requirement service, domain, persistence và tests; nguồn `136eae6` cộng patch R1 `33297560…` đã được review nhưng chưa commit |
+| Frontend | [apps/frontend](apps/frontend/README.md) | Next.js Atomic Design baseline `3e5a642`; chưa phải đầy đủ UI nghiệp vụ MatterControl |
+| INT-A harness | [tools/inta-harness](tools/inta-harness/package.json) | Source harness tạm tại `48cc03e`; giữ nguyên snapshot và các alias `/tmp` cũ, chưa port runtime sang vị trí mới |
+
+Chi tiết vị trí, commit và giới hạn: [source layout](docs/implementation/source-layout.md). [Manifest import](docs/source-import/manifest.json) đối chiếu 485 file bằng SHA256, giữ cả mode/symlink. Không copy `.git`, `node_modules`, build cache, state runtime hoặc file env thật.
 
 - [Step 01 PRD](docs/requirements/prd.md)
 - [Step 01 SRS](docs/requirements/srs.md)
@@ -25,4 +33,4 @@ Vertical ban đầu: Transactions & Corporate Legal Work. Product Discovery đã
 - [Source-of-truth structure](docs/ai-sdlc/source-of-truth.md)
 - [Verification evidence](docs/tooling/verification-2026-10-24.md)
 
-Step 00A COMPLETED; MC-00A DONE cho baseline 20f12fe sau review độc lập OpenCode PASS. Step 01 COMPLETED / PRODUCT_REQUIREMENTS_APPROVED; MC-001 DONE sau [phê duyệt trực tiếp của PO](docs/ai-sdlc/step-01-approval.md) cho bộ requirements tại 572835a. Workload, retention và RPO/RTO được phép hoãn chốt số sang Step 02; vẫn phải kiểm chứng trước cam kết hoặc phát hành. [Architecture handoff](docs/architecture/solution-architecture-handoff.md) đã chuẩn bị nhưng chưa bắt đầu Step 02. [Provenance](docs/product/context-provenance.md) giữ approved prompts là nguồn hợp lệ. Không có product code, architecture/UI design hoặc deploy.
+Step 00A và Step 01 đã hoàn tất trong phạm vi được review/phê duyệt. Step 02 và các bước thiết kế/PoC có evidence trong [current workflow](docs/ai-sdlc/current-workflow.md); đọc checkpoint mới nhất thay vì coi baseline template là sản phẩm hoàn chỉnh. BE-01 có source/evidence review PASS_WITH_LIMITATIONS; BE-02 mới ở bước chuẩn bị contract. Import source không phê duyệt kiến trúc tổng thể, product authentication, production, chi phí hoặc triển khai. [Provenance](docs/product/context-provenance.md) giữ approved prompts là nguồn hợp lệ.

@@ -1,0 +1,63 @@
+{
+  "task": "MC-P0-UI-REST-E2E-QA-R1",
+  "generated_utc": "2026-10-28T08:10:00Z",
+  "evaluator": "actual Antigravity",
+  "total_findings": 5,
+  "findings": [
+    {
+      "id": "FINDING-UI-01",
+      "title": "Intermittent test flakiness in ConfirmActionButton recovery test under parallel jsdom load",
+      "severity": "MEDIUM",
+      "disposition": "CHANGES_REQUIRED",
+      "file_path": "apps/frontend/src/components/organisms/recovery.test.tsx",
+      "line_number": 163,
+      "description": "In recovery.test.tsx line 163, expect(router.refresh).toHaveBeenCalled() is asserted synchronously after fireEvent.click on 'Reload current state'. In confirm-action-button.tsx:49, reread() executes startTransition(() => router.refresh()). Under high parallel jsdom load across 44 test files, the transition callback is not guaranteed to flush in the same microtask tick, leading to intermittent failure (1 failed / 443 passed on initial run, passing 444/444 on sequential rerun).",
+      "proof": "vitest failure log: AssertionError: expected 'vi.fn()' to be called at least once at src/components/organisms/recovery.test.tsx:163:28",
+      "proposed_fix": "Update recovery.test.tsx:163 to use await waitFor(() => expect(router.refresh).toHaveBeenCalled()), consistent with the clickWhenReady helper in the same file."
+    },
+    {
+      "id": "FINDING-UI-02",
+      "title": "NFR-010 multi-language support incomplete across core product UI surfaces",
+      "severity": "HIGH",
+      "disposition": "CHANGES_REQUIRED",
+      "file_path": "apps/frontend/src/features/",
+      "line_number": null,
+      "description": "NFR-010 requires multi-language support (EN/VI) with form intent preservation and no translation of legal content. Audit confirmed that only MatterHistory (matter-history.tsx), locale-toggle, and the dashboard skip-link implement Vietnamese translations. Screens SCR-01 through SCR-12 (App Shell, Control Room, Work Grid, Requirement/Action Drawers, Planning, Proof, Documents, Filings, Bulk Edit, Import Wizard, Delta Brief) contain hardcoded English string literals with no translation dictionaries.",
+      "proof": "Grep audit confirms useLocale is imported and used in only 3 files: matter-history.tsx, locale-toggle.tsx, dashboard-template.tsx. Zero other feature components have Vietnamese localization strings.",
+      "proposed_fix": "Implement structured localization dictionaries (COPY[locale]) across all UI chrome, button labels, badges, table headers, and status messages for SCR-01..12, while preserving user legal content as pass-through text."
+    },
+    {
+      "id": "FINDING-UI-03",
+      "title": "409 urn:mc:rejected work-graph rejection status mapping preserved without CAS conflation",
+      "severity": "LOW",
+      "disposition": "IN_REVIEW",
+      "file_path": "docs/implementation/p0-zcode-execution/local-contract.md",
+      "line_number": null,
+      "description": "Contract revision 12 specifies 409 urn:mc:rejected for work-graph dependency rejections (dependency-blocked, cycle, transition-not-allowed), distinct from edit/version CAS concurrency conflicts (412 Precondition Failed, 428 Precondition Required, 422 Unprocessable). Frontend callMcAction in action-result.ts correctly extracts rejection details without treating 409 as a CAS concurrency conflict.",
+      "proof": "apps/frontend/src/lib/mc/action-result.ts:50-58 parses status 409 with rejection payload; apps/frontend/src/features/work/components/rejection-details.tsx renders structured gate/cycle explanations.",
+      "proposed_fix": "None required for product frontend; ensure design package check scripts recognize contract revision 12 error mapping rather than assuming 409 is absent."
+    },
+    {
+      "id": "FINDING-UI-04",
+      "title": "Product REST E2E and live browser verification blocked pending Zitadel runtime cue",
+      "severity": "MEDIUM",
+      "disposition": "VERIFICATION_BLOCKED",
+      "file_path": "docs/testing/p0-final-parallel-20261028/zitadel/",
+      "line_number": null,
+      "description": "Phase B runtime requires verified runtime-ready.json and auth-slot-released.json before starting browser-backed product REST E2E tests. apps/frontend/playwright.config.ts targets in-memory demo mode (/dashboard, API_MODE=demo). Testing against real REST backend must not use route mocks or demo mode. Per instructions, runtime execution is held at WAITING_RUNTIME_CUE.",
+      "proof": "Check for docs/testing/p0-final-parallel-20261028/zitadel/ returns No such file or directory. No live REST server or auth slot has been released to Antigravity.",
+      "proposed_fix": "Maintain dedicated Playwright config (playwright.rest.config.ts) and E2E spec (product-rest-validation.spec.ts) in QA output directory, ready to execute against externally managed baseURL once runtime cue is provided."
+    },
+    {
+      "id": "FINDING-UI-05",
+      "title": "AC-137 Five Real Managers Comprehension Trial awaiting human participant cohort",
+      "severity": "MEDIUM",
+      "disposition": "AWAITING_HUMAN_TRIAL",
+      "file_path": "docs/testing/p0-final-parallel-20261028/ui/ac-137-participant-packet.md",
+      "line_number": null,
+      "description": "AC-137 requires 5 real managers to evaluate Control Room and Work Grid comprehension with an 80% passing threshold. Automated scripts cannot satisfy this human trial requirement. In compliance with strict guidelines, no synthetic participant scores or simulated trial results have been fabricated.",
+      "proof": "Prepared ac-137-participant-packet.md (participant surface) and ac-137-facilitator-guide.md (facilitator rubric and answer key) as strictly decoupled documents.",
+      "proposed_fix": "Deliver participant and facilitator artifacts to Product Owner to conduct trial with 5 qualified legal/transaction managers."
+    }
+  ]
+}

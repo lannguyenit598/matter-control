@@ -1,0 +1,265 @@
+{
+  "preflight": {
+    "utc": "2026-10-28T07:59:12.911852+00:00",
+    "resources": [
+      {
+        "container": "mc-p0-zcode-pg-product-test",
+        "id": "4d09d047440d4f5d872b91f9169da1b092a061f2a29208316b88e229617e11e0",
+        "status": "running",
+        "labels": {
+          "mc.role": "product-test",
+          "mc.task": "MC-P0-ZCODE-EXECUTION"
+        },
+        "ports": {
+          "5432/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "55442"
+            }
+          ]
+        },
+        "system_identifier": "7701370528434774049",
+        "closing_verified_same_id_running": true,
+        "retained_database": "mc_rr_src_20261028t075912z",
+        "negative_database_absent": true,
+        "temporary_container_archives": "removed exact run paths only"
+      },
+      {
+        "container": "mc-p0-zcode-pg-restore-target",
+        "id": "3c207de99a03330e368b7abd151cdc349e3ba53fe1c97bbfa345e939977d25f6",
+        "status": "running",
+        "labels": {
+          "mc.role": "restore-target",
+          "mc.task": "MC-P0-ZCODE-EXECUTION"
+        },
+        "ports": {
+          "5432/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "55443"
+            }
+          ]
+        },
+        "system_identifier": "7701411304873082914",
+        "closing_verified_same_id_running": true,
+        "retained_database": "mc_rr_dst_20261028t075912z",
+        "negative_database_absent": true,
+        "temporary_container_archives": "removed exact run paths only"
+      }
+    ],
+    "dsn_structure": "loopback exact ports, structural helper validates path replacement with/without query and rejects target overrides",
+    "run_id": "20261028T075912Z",
+    "output": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z",
+    "work": "/private/tmp/mc-p0-final-restore-20261028T075912Z",
+    "paths_absent": true,
+    "database_names": "Pinned script derives mc_rr_src_/mc_rr_dst_/mc_rr_neg_ plus its actual UTC stamp; SELECT absence before each CREATE. No shared DB used.",
+    "source_pre_execution_all_714_match": true,
+    "concurrency": "Only selected restore test, no full Go race suite; unique databases checked by script. No process argv or private environments inspected."
+  },
+  "runtime": {
+    "exit": 0,
+    "start_utc": "2026-10-28T07:59:12.912118+00:00",
+    "end_utc": "2026-10-28T07:59:48.855287+00:00",
+    "private_raw_path": "/private/tmp/mc-p0-final-restore-stdout-20261028T075912Z.log",
+    "run_output": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z",
+    "work": "/private/tmp/mc-p0-final-restore-20261028T075912Z"
+  },
+  "existing_resources": "No lifecycle, configuration or existing DB/volume changes authorized or performed",
+  "postflight_utc": "2026-10-28T08:00:52.518461+00:00",
+  "counts": {
+    "source_matters": 54,
+    "restored_matters": 54,
+    "source_objects_checked": 3,
+    "restored_objects_checked": 3,
+    "object_failures": 0,
+    "census_tables": 34,
+    "object_files": 3,
+    "restart_byte_identical": true,
+    "missing_object_readback_exit": 0
+  },
+  "private_raw_to_public_lineage": [
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/marker.log",
+      "raw_bytes": 149,
+      "raw_sha256": "dbb8f941cf9a287fcea238a153474a1d50ab842de2a3ff0a91ca2190935d5f9b",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-marker.log",
+      "export_sha256": "dbb8f941cf9a287fcea238a153474a1d50ab842de2a3ff0a91ca2190935d5f9b",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-altered.json",
+      "raw_bytes": 1850815,
+      "raw_sha256": "f514d524a99e3ca9529ca640f23f242d590d42bd0aad4c998f109c537f79b80f"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-altered.log",
+      "raw_bytes": 218,
+      "raw_sha256": "84ddd83d7fddc771656cb49d0bc315dbdf0e5722e590527279bcf2ccbc4a2bdd",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-neg-altered.log",
+      "export_sha256": "84ddd83d7fddc771656cb49d0bc315dbdf0e5722e590527279bcf2ccbc4a2bdd",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-corrupt-status.txt",
+      "raw_bytes": 4,
+      "raw_sha256": "f4a8ae8e74ddfb896a256de4e3099911dcaa6a9302591713898069b0bcd6e3d7",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-neg-corrupt-status.txt",
+      "export_sha256": "f4a8ae8e74ddfb896a256de4e3099911dcaa6a9302591713898069b0bcd6e3d7",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-corrupt.log",
+      "raw_bytes": 67,
+      "raw_sha256": "c1afed38abcf377f551f9a23df7db39e9c15a5037575affd024c55cc49199795",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-neg-corrupt.log",
+      "export_sha256": "c1afed38abcf377f551f9a23df7db39e9c15a5037575affd024c55cc49199795",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-missing.json",
+      "raw_bytes": 1850687,
+      "raw_sha256": "98a90c97ccfce6c9675bfa90ea152c0bed9deefb83f5828f4643dea502599f1f"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-missing.log",
+      "raw_bytes": 254,
+      "raw_sha256": "80026f483207eab35be532ed0eac449add94d38aa3080380be7af676c293dbb4",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-neg-missing.log",
+      "export_sha256": "80026f483207eab35be532ed0eac449add94d38aa3080380be7af676c293dbb4",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-truncated-status.txt",
+      "raw_bytes": 4,
+      "raw_sha256": "f4a8ae8e74ddfb896a256de4e3099911dcaa6a9302591713898069b0bcd6e3d7",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-neg-truncated-status.txt",
+      "export_sha256": "f4a8ae8e74ddfb896a256de4e3099911dcaa6a9302591713898069b0bcd6e3d7",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/neg-truncated.log",
+      "raw_bytes": 63,
+      "raw_sha256": "03ce8e58e36a99b005f7cb476c87d0173cf6a7227c4e517eebd6de9e1a81bb5c",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-neg-truncated.log",
+      "export_sha256": "03ce8e58e36a99b005f7cb476c87d0173cf6a7227c4e517eebd6de9e1a81bb5c",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rb-boundary.log",
+      "raw_bytes": 254,
+      "raw_sha256": "fa5fd2454d75fb41fd85aac29f1a6293040c3877a1f8be3e5e4aa2c17c466ad0",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-rb-boundary.log",
+      "export_sha256": "fa5fd2454d75fb41fd85aac29f1a6293040c3877a1f8be3e5e4aa2c17c466ad0",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rb1.log",
+      "raw_bytes": 254,
+      "raw_sha256": "e33bec4b51f2c7520631714a8d284907cd1a0b1addfc668b9fa1319b64f9a477",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-rb1.log",
+      "export_sha256": "e33bec4b51f2c7520631714a8d284907cd1a0b1addfc668b9fa1319b64f9a477",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rb2.log",
+      "raw_bytes": 254,
+      "raw_sha256": "1cd980406179ff1d654548b0041c8ba55012effda475743c5fd2f4afaf467e2d",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-rb2.log",
+      "export_sha256": "1cd980406179ff1d654548b0041c8ba55012effda475743c5fd2f4afaf467e2d",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/readback-restart.json",
+      "raw_bytes": 1850814,
+      "raw_sha256": "9741e49ac91bf9bdc29ef15c7ca42ed23fb48cb53ba00ad818d548d0fdbfe4ab",
+      "public_identical_to": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/readback-restored.json",
+      "privacy_review": "same exact bytes as synthetic canonical restored JSON"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-corrupt.dump",
+      "raw_bytes": 241340,
+      "raw_sha256": "3c1c0fb30f9306dcb1187e351a1ddc5a4a2fe4a4995814d68acb3d64645a379b"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-truncated.dump",
+      "raw_bytes": 120670,
+      "raw_sha256": "70655e9e4039c944f26417ef2883897f6d1321e518440a82e90ee3614e938d3b"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr.dump",
+      "raw_bytes": 241340,
+      "raw_sha256": "8aaf4175a3a7ccac3dbd2ecdf0ce4ed57a6a6de3c80a931fbcdb5fa9fabe0054"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/seed.log",
+      "raw_bytes": 12160,
+      "raw_sha256": "3a700b464cccd60caaa5d300fcfabc6563c69d0ee661d37bc6ece9702718a2b2",
+      "export_path": "docs/testing/p0-final-parallel-20261028/restore/runs/20261028T075912Z/private-export-seed.log",
+      "export_sha256": "3a700b464cccd60caaa5d300fcfabc6563c69d0ee661d37bc6ece9702718a2b2",
+      "privacy_review": "exact credential/URI redaction; local synthetic fixture test output only"
+    },
+    {
+      "private_raw_path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/victim.bak",
+      "raw_bytes": 70029,
+      "raw_sha256": "448dc83fcd350f96909c8e63ac737579a528ad63411b3512aadf3b78eb8482dd"
+    }
+  ],
+  "cleanup": [
+    {
+      "action": "unlink own temporary archive",
+      "path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr.dump",
+      "start_utc": "2026-10-28T08:00:52.517968+00:00",
+      "end_utc": "2026-10-28T08:00:52.518072+00:00",
+      "exit": 0,
+      "bytes": 241340,
+      "sha256": "8aaf4175a3a7ccac3dbd2ecdf0ce4ed57a6a6de3c80a931fbcdb5fa9fabe0054"
+    },
+    {
+      "action": "unlink own temporary archive",
+      "path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-corrupt.dump",
+      "start_utc": "2026-10-28T08:00:52.518209+00:00",
+      "end_utc": "2026-10-28T08:00:52.518265+00:00",
+      "exit": 0,
+      "bytes": 241340,
+      "sha256": "3c1c0fb30f9306dcb1187e351a1ddc5a4a2fe4a4995814d68acb3d64645a379b"
+    },
+    {
+      "action": "unlink own temporary archive",
+      "path": "/private/tmp/mc-p0-final-restore-20261028T075912Z/rr-truncated.dump",
+      "start_utc": "2026-10-28T08:00:52.518379+00:00",
+      "end_utc": "2026-10-28T08:00:52.518419+00:00",
+      "exit": 0,
+      "bytes": 120670,
+      "sha256": "70655e9e4039c944f26417ef2883897f6d1321e518440a82e90ee3614e938d3b"
+    }
+  ],
+  "retained": {
+    "source_database": {
+      "container": "mc-p0-zcode-pg-product-test",
+      "database": "mc_rr_src_20261028t075912z"
+    },
+    "target_database": {
+      "container": "mc-p0-zcode-pg-restore-target",
+      "database": "mc_rr_dst_20261028t075912z"
+    },
+    "object_roots": [
+      "/private/tmp/mc-p0-final-restore-20261028T075912Z/objects-src",
+      "/private/tmp/mc-p0-final-restore-20261028T075912Z/objects-dst"
+    ],
+    "private_work": "/private/tmp/mc-p0-final-restore-20261028T075912Z",
+    "negative_object_copy": "/private/tmp/mc-p0-final-restore-20261028T075912Z/objects-neg",
+    "private_driver": "/private/tmp/mc-p0-final-restore-driver-20261028.py",
+    "private_postflight_driver": "/private/tmp/mc-p0-final-restore-postflight-20261028.py",
+    "disposition": "Retain databases, object roots and private logs for independent QA; no existing database/container/volume deleted or lifecycle modified."
+  },
+  "privacy_review": {
+    "utc": "2026-10-28T08:00:52.525981+00:00",
+    "files_scanned": 46,
+    "actual_private_value_matches": 0,
+    "credential_file_hashed_or_exported": false,
+    "scope": "Public files within Restore namespace only; compare exact in-memory allowlisted DSNs/passwords and URI patterns; fixture readback/IDs synthetic. No other private config read.",
+    "final_scan_utc": "2026-10-28T08:03:50.885503+00:00",
+    "final_files_scanned": 51,
+    "final_matches": 0
+  }
+}

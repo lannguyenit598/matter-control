@@ -1,0 +1,16 @@
+{
+  "command": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-count=1",
+    "./internal/core/service",
+    "./internal/adapter/outbound/repotest/mattercontrol",
+    "-run",
+    "TestReplayBrief_FilingCommands|TestSuiteW6_MemoryStore/import_retains"
+  ],
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+  "utc": "2026-10-28T05:07:06.784060+00:00",
+  "exit": 1
+}

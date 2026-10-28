@@ -1,0 +1,157 @@
+[
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Rejection",
+    "Variant": "EDITOR records",
+    "Actor": "01a180a3-4ae8-7003-b7e6-7e98b4d418d4",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4b15-7d1f-9a43-725df658fb6b",
+    "PreRevision": 6,
+    "PostRevision": 7,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "evidence.submitted",
+      "filing.negative_outcome"
+    ],
+    "FirstSeq": 22,
+    "LastSeq": 23,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval while the rejection stands",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4b15-7d1f-9a43-725df658fb6b",
+    "PreRevision": 7,
+    "PostRevision": 7,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: negative-outcome-open: a rejection or withdrawal is recorded; an owner must reopen the filing before approval"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Close by an editor",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4b15-7d1f-9a43-725df658fb6b",
+    "PreRevision": 7,
+    "PostRevision": 7,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "forbidden"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Closure",
+    "Variant": "OWNER",
+    "Actor": "01a180a3-4add-7ccd-a4e6-0bf0a9b722a5",
+    "ActorRole": "OWNER",
+    "Subject": "01a180a3-4b15-7d1f-9a43-725df658fb6b",
+    "PreRevision": 7,
+    "PostRevision": 8,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "CANCELLED",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.closed"
+    ],
+    "FirstSeq": 26,
+    "LastSeq": 26,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval of a cancelled filing",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4b15-7d1f-9a43-725df658fb6b",
+    "PreRevision": 8,
+    "PostRevision": 8,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: filing-closed: this filing is cancelled; an owner must reopen it first"
+  }
+]

@@ -1,0 +1,57 @@
+PASS  approved source defines dependency as READY/BLOCKED only
+PASS  approved source treats a graph cycle as a rejection, not a state
+PASS  approved source treats expiry as an input that recomputes the aggregate
+PASS  EXPIRED is not a verification axis member in the approved source
+PASS  current-ux-spec.md execution axis members match the approved set exactly
+PASS  current-ux-spec.md verification axis members match the approved set exactly
+PASS  current-ux-spec.md does not list EXPIRED as a verification member
+PASS  current-ux-spec.md dependency axis members match the approved set exactly
+PASS  current-ux-spec.md does not list CIRCULAR_CONFLICT as a dependency member
+PASS  current-ux-spec.md timing axis members match the approved set exactly
+PASS  current-ux-spec.md attention axis members match the approved set exactly
+PASS  screen-state-matrix.json publishes the axis vocabulary
+PASS  matrix execution axis members match the approved set exactly
+PASS  matrix verification axis members match the approved set exactly
+PASS  matrix records EXPIRED as a non-member with a stated reason
+PASS  matrix dependency axis members match the approved set exactly
+PASS  matrix records CIRCULAR_CONFLICT as a non-member with a stated reason
+PASS  matrix timing axis members match the approved set exactly
+PASS  matrix attention axis members match the approved set exactly
+PASS  prototype never enumerates EXPIRED as a verification axis member
+PASS  prototype never enumerates CIRCULAR_CONFLICT as a dependency axis member
+PASS  current-ux-spec.md never enumerates EXPIRED as a verification axis member
+PASS  current-ux-spec.md never enumerates CIRCULAR_CONFLICT as a dependency axis member
+PASS  current-ux-spec.md uses no status code the current contract does not define
+PASS  current-ux-spec.md carries no stale revision label (MC-P0-DESIGN-R5)
+PASS  current-ux-spec.md carries no stale revision label (MC-P0-DESIGN-R6)
+PASS  current-ux-spec.md carries no stale revision label (R6 — unified UX specification)
+PASS  zcode-handoff.md never enumerates EXPIRED as a verification axis member
+PASS  zcode-handoff.md never enumerates CIRCULAR_CONFLICT as a dependency axis member
+PASS  zcode-handoff.md uses no status code the current contract does not define
+PASS  zcode-handoff.md carries no stale revision label (MC-P0-DESIGN-R5)
+PASS  zcode-handoff.md carries no stale revision label (MC-P0-DESIGN-R6)
+PASS  zcode-handoff.md carries no stale revision label (R6 — unified UX specification)
+PASS  validation-plan.md never enumerates EXPIRED as a verification axis member
+PASS  validation-plan.md never enumerates CIRCULAR_CONFLICT as a dependency axis member
+PASS  validation-plan.md uses no status code the current contract does not define
+PASS  validation-plan.md carries no stale revision label (MC-P0-DESIGN-R5)
+PASS  validation-plan.md carries no stale revision label (MC-P0-DESIGN-R6)
+PASS  validation-plan.md carries no stale revision label (R6 — unified UX specification)
+PASS  design-delta.md never enumerates EXPIRED as a verification axis member
+PASS  design-delta.md never enumerates CIRCULAR_CONFLICT as a dependency axis member
+PASS  design-delta.md uses no status code the current contract does not define
+PASS  design-delta.md carries no stale revision label (MC-P0-DESIGN-R5)
+PASS  design-delta.md carries no stale revision label (MC-P0-DESIGN-R6)
+PASS  design-delta.md carries no stale revision label (R6 — unified UX specification)
+PASS  return.md never enumerates EXPIRED as a verification axis member
+PASS  return.md never enumerates CIRCULAR_CONFLICT as a dependency axis member
+PASS  return.md uses no status code the current contract does not define
+PASS  return.md carries no stale revision label (MC-P0-DESIGN-R5)
+PASS  return.md carries no stale revision label (MC-P0-DESIGN-R6)
+PASS  return.md carries no stale revision label (R6 — unified UX specification)
+PASS  prototype explains proof expiry as a recompute input
+PASS  prototype explains graph cycles as a validation rejection
+NOTE  EXPIRED appears 0 time(s) in prototype.html (it is not used at all)
+NOTE  CIRCULAR_CONFLICT appears 0 time(s) in prototype.html (it is not used at all)
+
+SOURCE_CHECKED: axis vocabulary matches the approved semantics in spec, matrix and prototype.

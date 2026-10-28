@@ -1,0 +1,34 @@
+{
+  "summary": {
+    "fails": 0,
+    "reflex": 1,
+    "warns": 1,
+    "waived": 0,
+    "rejected": 0,
+    "answered": 0,
+    "dismissed": 0,
+    "notes": 0,
+    "files": 1,
+    "render": "off"
+  },
+  "findings": [
+    {
+      "gate": "26b",
+      "grade": "REFLEX",
+      "tier": "reflex",
+      "file": "docs/design/p0-visual-polish-r1/polish.css",
+      "line": 1,
+      "evidence": "no :active styling anywhere",
+      "fix": "All eight states; guard: not a form control, no aria-disabled anywhere"
+    },
+    {
+      "gate": "F3",
+      "grade": "WARN",
+      "tier": "finish",
+      "file": "docs/design/p0-visual-polish-r1/polish.css",
+      "line": 47,
+      "evidence": "no text-wrap: balance on any display head (2 head rule(s), e.g. #mcApp .mc-pagehead h2, #mcApp …)",
+      "fix": "Add text-wrap: balance to h1/h2-level heads"
+    }
+  ]
+}

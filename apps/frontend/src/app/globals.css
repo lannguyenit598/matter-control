@@ -1,0 +1,207 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens.
+ * Raw values live ONLY here, as CSS variables. Components use the Tailwind utilities generated
+ * from @theme below (bg-primary, text-muted-foreground, rounded-md, shadow-sm...), never hex codes.
+ * The theme is switched by setting data-theme="light|dark" on <html> (see src/lib/theme.ts).
+ */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+:root {
+  color-scheme: light;
+
+  /* Selected R9 light roles; derived state axes remain independent. */
+  --background: #f6f8fa;
+  --foreground: #17212b;
+  --muted: #edf1f5;
+  --muted-foreground: #52606d;
+  --card: #ffffff;
+  --card-foreground: var(--foreground);
+  --border: #c6ced6;
+  --input: #c6ced6;
+  --ring: #174ea6;
+  --primary: #174ea6;
+  --primary-foreground: #ffffff;
+  --secondary: #edf1f5;
+  --secondary-foreground: var(--foreground);
+  --accent: #e8effa;
+  --accent-foreground: var(--foreground);
+  --selected: #e8effa;
+  --destructive: #a12622;
+  --destructive-foreground: #ffffff;
+  --disabled: #626973;
+  --execution: #364152;
+  --verification: #236341;
+  --dependency-ready: #174ea6;
+  --dependency-blocked: #8a2925;
+  --timing: #775317;
+  --attention: #783e14;
+  --header: #101820;
+  --header-foreground: #ffffff;
+  --success: var(--verification);
+  --success-foreground: #ffffff;
+  --warning: var(--timing);
+  --warning-foreground: #ffffff;
+  --overlay: oklch(0 0 0 / 0.5);
+
+  /* Radius / shadows (border width = Tailwind `border` = 1px) */
+  --radius: 0.25rem;
+  --shadow-color: 240 6% 10%;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --background: oklch(0.16 0.005 285.8);
+  --foreground: oklch(0.96 0.002 286);
+  --muted: oklch(0.24 0.006 286);
+  --muted-foreground: oklch(0.71 0.013 286);
+  --card: oklch(0.2 0.006 285.9);
+  --border: oklch(0.3 0.008 286);
+  --input: oklch(0.36 0.01 286);
+  --ring: oklch(0.72 0.15 262);
+  /* Lighter accent + dark text: readable both as text on dark surfaces and as a button fill. */
+  --primary: oklch(0.72 0.15 262);
+  --primary-foreground: oklch(0.16 0.005 285.8);
+  --secondary: oklch(0.27 0.006 286);
+  --accent: oklch(0.27 0.006 286);
+  --destructive: oklch(0.7 0.18 25);
+  --destructive-foreground: oklch(0.16 0.005 285.8);
+  --success: oklch(0.65 0.15 155);
+  --success-foreground: oklch(0.16 0.005 285.8);
+  --warning: oklch(0.78 0.15 75);
+  --overlay: oklch(0 0 0 / 0.7);
+  --selected: oklch(0.3 0.06 262);
+  --disabled: oklch(0.74 0.01 286);
+  --execution: oklch(0.82 0.01 286);
+  --verification: var(--success);
+  --dependency-ready: var(--primary);
+  --dependency-blocked: var(--destructive);
+  --timing: var(--warning);
+  --attention: oklch(0.8 0.12 60);
+  --shadow-color: 0 0% 0%;
+}
+
+/* Expose tokens as Tailwind utilities. `inline` keeps the var() reference so themes switch at runtime. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-overlay: var(--overlay);
+  --color-selected: var(--selected);
+  --color-disabled: var(--disabled);
+  --color-execution: var(--execution);
+  --color-verification: var(--verification);
+  --color-dependency-ready: var(--dependency-ready);
+  --color-dependency-blocked: var(--dependency-blocked);
+  --color-timing: var(--timing);
+  --color-attention: var(--attention);
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
+
+  --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 0.25rem);
+  --radius-xl: calc(var(--radius) + 0.5rem);
+
+  --shadow-xs: 0 1px 2px 0 hsl(var(--shadow-color) / 0.05);
+  --shadow-sm:
+    0 1px 3px 0 hsl(var(--shadow-color) / 0.1), 0 1px 2px -1px hsl(var(--shadow-color) / 0.1);
+  --shadow-md:
+    0 4px 6px -1px hsl(var(--shadow-color) / 0.1), 0 2px 4px -2px hsl(var(--shadow-color) / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px hsl(var(--shadow-color) / 0.1), 0 4px 6px -4px hsl(var(--shadow-color) / 0.1);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    /* Tailwind v4 defaults borders to currentColor; use the token instead. */
+    border-color: var(--border);
+  }
+
+  body {
+    @apply bg-background font-sans text-sm leading-[1.5] text-foreground antialiased;
+  }
+
+  ::selection {
+    background: var(--selected);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  dialog::backdrop {
+    background: var(--overlay);
+  }
+}
+
+/* Operational feedback only; body and legal content are never clipped to enforce geometry. */
+@layer base {
+  button,
+  input:not([type='checkbox']):not([type='radio']),
+  select {
+    min-height: 2rem;
+  }
+
+  @media (max-width: 639px), (pointer: coarse) {
+    button,
+    input:not([type='hidden']),
+    select,
+    textarea,
+    a[data-control] {
+      min-height: 2.75rem;
+    }
+
+    input[type='checkbox'],
+    input[type='radio'] {
+      min-width: 2.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@media (max-width: 639px), (pointer: coarse) {
+  .control-target {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+}
+
+.app-header :focus-visible {
+  outline-color: var(--header-foreground);
+}

@@ -1,0 +1,123 @@
+name: Template
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Proves scripts/rename.sh still turns the template into a clean, passing project.
+  rename-smoke:
+    # Template repo only; scripts/rename.sh deletes this file in generated projects.
+    if: github.repository == 'lannguyenit598/go-hexa-template'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - { name: orders, module: github.com/acme/orders }
+          # The module path contains "userapi": the name substitution must not mangle it.
+          - { name: billing, module: github.com/acme/userapi-billing }
+          # Module path only: the service keeps its name.
+          - { name: userapi, module: github.com/acme/userapi }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.x"
+          check-latest: true
+      - uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
+        with:
+          version: v2.14.0
+          install-only: true
+      - name: Rejects bad input without touching the tree
+        run: |
+          expect() { want=$1; shift; rc=0; "$@" || rc=$?; test "$rc" = "$want" || { echo "want exit $want, got $rc: $*"; exit 1; }; }
+          expect 2 scripts/rename.sh
+          expect 2 scripts/rename.sh Bad-Name github.com/acme/x
+          expect 2 scripts/rename.sh ok 'not a path'
+          git diff --quiet
+          touch dirty
+          expect 1 scripts/rename.sh ok github.com/acme/ok
+          expect 2 scripts/rename.sh ok 'not a path'
+          rm dirty
+          # Untracked files count as dirty even when git status is configured to hide them.
+          git config status.showUntrackedFiles no
+          touch dirty
+          expect 1 scripts/rename.sh ok github.com/acme/ok
+          rm dirty
+          git config --unset status.showUntrackedFiles
+          # Missing tools are an environment error, not bad arguments. The PATH holds only bash
+          # (for the shebang): the runner's /usr/bin ships go, so a system PATH cannot simulate this.
+          only_bash=$(mktemp -d)
+          ln -s "$(command -v bash)" "$only_bash/bash"
+          rc=0
+          env PATH="$only_bash" scripts/rename.sh ok github.com/acme/ok 2> "$RUNNER_TEMP/err" || rc=$?
+          test "$rc" = 1
+          grep -q 'missing required tool' "$RUNNER_TEMP/err"
+          git diff --quiet
+          # A copy without git (e.g. a ZIP download) is refused, and the repo in the cwd is not touched.
+          copy=$(mktemp -d)
+          git archive HEAD | tar -x -C "$copy"
+          expect 2 "$copy/scripts/rename.sh" ok github.com/acme/ok
+          git diff --quiet
+          grep -qx 'module github.com/example/userapi' "$copy/go.mod"
+      - name: A failed rename prints a working undo command
+        run: |
+          # A failing tool mid-run (gofmt, exiting 2 like a real parse error) and a failing make check
+          # both leave a half-renamed tree. Run from another repo: the undo must only touch the template.
+          repo=$PWD
+          other=$(mktemp -d)
+          git -C "$other" init -q
+          touch "$other/precious"
+          cp .env.example .env
+          for tool in gofmt make; do
+            fake=$(mktemp -d)
+            printf '#!/bin/sh\nexit 2\n' > "$fake/$tool"
+            chmod +x "$fake/$tool"
+            rc=0
+            (cd "$other" && PATH="$fake:$PATH" "$repo/scripts/rename.sh" ok github.com/acme/ok) 2> "$fake/err" || rc=$?
+            test "$rc" = 1 || { echo "$tool: want exit 1, got $rc"; cat "$fake/err"; exit 1; }
+            undo=$(sed -n 's/.*undo with: //p' "$fake/err")
+            test -n "$undo" || { cat "$fake/err"; exit 1; }
+            (cd "$other" && eval "$undo")
+            test -e "$other/precious"
+            test -z "$(git status --porcelain)"
+            # .env is gitignored, so undo cannot restore it: it must still be untouched.
+            cmp .env .env.example
+          done
+          rm .env
+      - name: Rename
+        run: |
+          # A developer's local .env (gitignored) is renamed too.
+          cp .env.example .env
+          scripts/rename.sh "${{ matrix.name }}" "${{ matrix.module }}"
+      - name: Renamed completely
+        env:
+          NAME: ${{ matrix.name }}
+          MODULE: ${{ matrix.module }}
+        run: |
+          test "$(go list -m)" = "$MODULE"
+          test -d "cmd/$NAME"
+          test ! -e scripts/rename.sh
+          test ! -e .github/workflows/template.yml
+          test -x .claude/hooks/session-start.sh
+          for d in .agents/skills/*/; do
+            s=$(basename "$d")
+            test -L ".claude/skills/$s" || exit 1
+            test -f ".claude/skills/$s/SKILL.md" || exit 1
+          done
+          # The generated READMEs must not point to the deleted script.
+          if grep -n 'scripts/rename.sh' README.md README.vi.md; then exit 1; fi
+          if [ "$NAME" != userapi ]; then
+            test ! -e cmd/userapi
+            # --untracked covers the moved cmd/<name>/; strip the module path so a stray "userapi" beside it still shows.
+            if git grep -n --untracked userapi -- ':!internal/adapter/outbound/postgres/migrations' \
+              | perl -pe 's/\Q$ENV{MODULE}\E//g' | grep userapi; then exit 1; fi
+            if grep -n userapi .env; then exit 1; fi
+          fi
+      - name: Image builds
+        run: docker build -t "${{ matrix.name }}:ci" .

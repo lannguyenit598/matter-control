@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # Run weekly on main: govulncheck catches newly disclosed vulnerabilities even without code changes.
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.x"
+          check-latest: true
+      - name: go mod tidy is clean
+        run: go mod tidy -diff
+      - name: Generated queries are up to date (sqlc, no database)
+        run: make sqlc-check
+      - uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
+        with:
+          version: v2.14.0
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: userapi
+          POSTGRES_PASSWORD: userapi
+          POSTGRES_DB: userapi
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U userapi -d userapi"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      # Enable contract and concurrency tests against real PostgreSQL.
+      TEST_DATABASE_URL: postgres://userapi:userapi@localhost:5432/userapi?sslmode=disable
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.x"
+          check-latest: true
+      - name: Test (unit, HTTP, PostgreSQL contract)
+        run: go test -race -count=1 -coverprofile=coverage.out ./...
+      - name: Coverage
+        run: go tool cover -func=coverage.out | tail -1
+      - name: Migrations apply cleanly and are idempotent
+        env:
+          DATABASE_URL: ${{ env.TEST_DATABASE_URL }}
+        run: |
+          go run ./cmd/userapi migrate
+          go run ./cmd/userapi migrate
+
+  vulncheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          # Use the same Go version as the production build image (Dockerfile), since standard-library
+          # vulnerabilities depend on the toolchain actually used to build the binary.
+          go-version: "1.26.x"
+          check-latest: true
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build image
+        run: docker build --build-arg VERSION=${{ github.sha }} -t userapi:ci .

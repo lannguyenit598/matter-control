@@ -1,0 +1,101 @@
+{
+  "pins": [
+    {
+      "path": "docs/testing/p0-codex-remediation-20261028/final-source-manifest.json",
+      "bytes": 139099,
+      "sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821",
+      "matches_assignment": true
+    },
+    {
+      "path": "docs/testing/p0-codex-remediation-20261028/return.md",
+      "bytes": 10478,
+      "sha256": "c3c81cbcc76bc93f563fc23b1a5681f4a75c3bc9d6bb80f1fecc96dfee673583",
+      "matches_assignment": true
+    },
+    {
+      "path": "docs/testing/p0-codex-remediation-20261028/review-intake.json",
+      "bytes": 993,
+      "sha256": "c611c7e3103f18a9d8558a56a23ba717099391f7456801e3be1b4b78cf2e57b1",
+      "matches_assignment": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/local-contract.md",
+      "bytes": 53744,
+      "sha256": "814c419222b966d6f340cb421ab8d8d44b3310ece336cc9cbe1b747472194e30",
+      "matches_assignment": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r9/return.md",
+      "bytes": 12863,
+      "sha256": "d4dc769f1958f486a17a9a90fa5b1060de3172a2b07b544c6f1adff788b14b3d",
+      "matches_assignment": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r9/manifest.json",
+      "bytes": 20096,
+      "sha256": "2b68bc92431270dc456111590ca1de2231e2a10dba95829dccd0a3b68ba87563",
+      "matches_assignment": true
+    }
+  ],
+  "source_entries_verified": 714,
+  "r9_entries_verified": 102,
+  "drift": [],
+  "private_files": {
+    "metadata_checks": true,
+    "api_client_matches": true,
+    "contents_hashed_or_exported": false
+  },
+  "tool_versions": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "rtk",
+        "--version"
+      ],
+      "exit": 0,
+      "version": "rtk 1.1.0"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "go",
+        "version"
+      ],
+      "exit": 0,
+      "version": "go version go1.27.3 darwin/arm64"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "--version"
+      ],
+      "exit": 0,
+      "version": "v24.22.1"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "--version"
+      ],
+      "exit": 0,
+      "version": "12.11.2"
+    }
+  ],
+  "context7": {
+    "library": "/vercel/next.js",
+    "official_docs": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/06-cli/next.mdx",
+    "verified": "next build --webpack; next start --hostname --port",
+    "installed_next": "16.4.2"
+  },
+  "closing_source_recheck": {
+    "utc": "2026-10-28T08:02:58.605124+00:00",
+    "entries": 714,
+    "drift": []
+  }
+}

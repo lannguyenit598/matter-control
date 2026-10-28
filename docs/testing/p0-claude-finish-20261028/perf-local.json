@@ -1,0 +1,94 @@
+{
+ "env": {
+  "arch": "arm64",
+  "cpus": 10,
+  "go": "go1.27.3",
+  "os": "darwin",
+  "postgres": "postgres:17.10-alpine (docker)"
+ },
+ "generatedAt": "2026-10-28T03:50:35Z",
+ "note": "30 repetitions after 3 warm-ups",
+ "scope": "service level against PostgreSQL 17 on one workstation; no HTTP/browser/network; not a budget or SLA",
+ "stats": [
+  {
+   "Read": "grid page (50 rows)",
+   "Items": 50,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 4.965,
+   "P95ms": 5.137,
+   "MinMs": 4.649,
+   "MaxMs": 5.164
+  },
+  {
+   "Read": "grid page (200 rows)",
+   "Items": 50,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 4.953,
+   "P95ms": 5.598,
+   "MinMs": 3.822,
+   "MaxMs": 5.723
+  },
+  {
+   "Read": "control room",
+   "Items": 50,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 5.194,
+   "P95ms": 5.662,
+   "MinMs": 5.032,
+   "MaxMs": 8.402
+  },
+  {
+   "Read": "my actions",
+   "Items": 50,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 4.751,
+   "P95ms": 5.092,
+   "MinMs": 4.575,
+   "MaxMs": 6.11
+  },
+  {
+   "Read": "grid page (50 rows)",
+   "Items": 200,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 5.367,
+   "P95ms": 5.639,
+   "MinMs": 5.054,
+   "MaxMs": 6.626
+  },
+  {
+   "Read": "grid page (200 rows)",
+   "Items": 200,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 5.365,
+   "P95ms": 5.505,
+   "MinMs": 5.055,
+   "MaxMs": 5.729
+  },
+  {
+   "Read": "control room",
+   "Items": 200,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 5.762,
+   "P95ms": 6.189,
+   "MinMs": 5.569,
+   "MaxMs": 9.786
+  },
+  {
+   "Read": "my actions",
+   "Items": 200,
+   "Reps": 30,
+   "Errors": 0,
+   "P50ms": 5.13,
+   "P95ms": 5.53,
+   "MinMs": 4.933,
+   "MaxMs": 8.033
+  }
+ ]
+}

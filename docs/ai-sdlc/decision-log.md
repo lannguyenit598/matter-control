@@ -60,3 +60,27 @@ APPROVED_INPUT is evidence from the supplied request, not an approval of all gen
 | ID | Date | Decision | Authority | Status | Evidence / consequence |
 |---|---|---|---|---|---|
 | DEC-028 | 2026-10-25 | Select INT-D01=INT-A at e7dbfbf; permit isolated local temporary Next harness→REST→unchanged Go52b60a4→new synthetic PostgreSQL after finalized contract/task prerequisites | Human Product Owner, direct chat approval | APPROVED_LOCAL_SCOPE / EXECUTION_PENDING | [Approval and limits](inta-po-approval.md), [frozen INTA-1 contract](../implementation/inta-approved-contract.md);36required/14product-deferred/1production-blocked, all51NOT_RUN. Stop at manual handoff if direct engineering unavailable. No auth/product/production/Cloudflare/$0/recovery waiver, no automatic fallback/merge/MC-002 DONE |
+
+## INT-A supported launch boundary — direct PO decision
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| INTA-LAUNCH-D01 | 2026-10-26 | Select optionA: official launcher executes existing guard before Next; rawCLI unsupported for never-listen, historicalFAIL retained | Human Product Owner, direct chat reply | APPROVED_ACCEPTANCE_BOUNDARY / RUNTIME_NOT_RELEASED | [Exact approval](../testing/inta-launch-approval-20261026/approval.json), [INTA-1-LAUNCH-01 addendum](../implementation/inta-launch-contract-addendum.md); originalINTA-1/source/evidence unchanged. ActualR2fixes, nonauthorreview, pinned launch binding/fresh prerequisites and explicitruntimecue still required; no formalPASS or product/release gate waiver. |
+
+## Backend ownership restored to ZCode — 2026-10-26
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| OWNER-BE-ZCODE-20261026 | 2026-10-26 | Restore backend execution to actual ZCode; supersede temporary MC-COORD-03 backend takeover | Human Product Owner, direct chat: “chốt lại backend vẫn là zcode đảm nhiệm” | APPROVED_ROUTING / DISPATCH_NOT_IMPLIED | [Current workflow](current-workflow.md), [RACI](raci-matrix.md); Antigravity retains FE, Codex PG/DevOps/privacy/evidence/orchestration. Historical authorship retained. No availability/quota claim, automatic fallback, Mimosa bypass, new BE02 implementation scope, gate or release approval. |
+
+## R5 independent source reviewer — direct PO reassignment
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| REVIEW-INTA-R5-ZCODE-20261026 | 2026-10-26 | Assign actual ZCode the current R5 frontend source/evidence review because OpenCode quota is exhausted | Direct human: “opencode đang hết quota. chuyển qua cho zcode review” | APPROVED_SCOPED_REASSIGNMENT / READY_NOT_DISPATCHED | [Named handoff](../implementation/handoffs/MC-002-INTA-ZCODE-FE-R5-SOURCE-REVIEW-PROMPT.md); exact nonauthor declaration, unique outputs, same static-only source+blocked-stage scope. No all-task transfer, provider switch, runtime or gate clearance. |
+
+## Full P0 staged delivery — direct PO scope and owner
+
+| ID | Date | Decision | Authority | Status | Evidence / consequence |
+|---|---|---|---|---|---|
+| P0-ZCODE-BEFE-20261026 | 2026-10-26 | Plan all20P0/3GoldenWorkflows, with actual ZCode futureBE+FEimplementation in waves after missing decisions/design settled | Direct human request plus explicit scope reply | APPROVED_PLANNING_AND_CONDITIONAL_DELIVERY / W0_READY_NOT_DISPATCHED | [Plan](../implementation/p0-zcode-delivery-plan.md); W0read/hash/static packet may start on delivery. Existing author/review/normal security/source gates retained; no product/design/architecture/cost/release waiver. Nonauthor QArequired for ZCodechanges. |

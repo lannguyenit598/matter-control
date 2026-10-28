@@ -1,0 +1,18 @@
+--- FAIL: TestReplayBrief_ProofExpiryAtT2 (0.00s)
+    --- FAIL: TestReplayBrief_ProofExpiryAtT2/boundary (0.00s)
+        brief_replay_test.go:47: got [{ItemID:a1 Kind:ACTION Title:Downstream Outcome: Owner:<nil> Due:<nil> Execution:NOT_STARTED Dependency:READY Verification: Revision:1 ProofExpired:false} {ItemID:r1 Kind:REQUIREMENT Title:Approval Outcome: Owner:<nil> Due:<nil> Execution:COMPLETED Dependency:READY Verification:VERIFIED Revision:3 ProofExpired:true}]
+    --- FAIL: TestReplayBrief_ProofExpiryAtT2/after (0.00s)
+        brief_replay_test.go:47: got [{ItemID:a1 Kind:ACTION Title:Downstream Outcome: Owner:<nil> Due:<nil> Execution:NOT_STARTED Dependency:READY Verification: Revision:1 ProofExpired:false} {ItemID:r1 Kind:REQUIREMENT Title:Approval Outcome: Owner:<nil> Due:<nil> Execution:COMPLETED Dependency:READY Verification:VERIFIED Revision:3 ProofExpired:true}]
+    --- FAIL: TestReplayBrief_ProofExpiryAtT2/revoked (0.00s)
+        brief_replay_test.go:47: got [{ItemID:a1 Kind:ACTION Title:Downstream Outcome: Owner:<nil> Due:<nil> Execution:NOT_STARTED Dependency:READY Verification: Revision:1 ProofExpired:false} {ItemID:r1 Kind:REQUIREMENT Title:Approval Outcome: Owner:<nil> Due:<nil> Execution:COMPLETED Dependency:READY Verification:VERIFIED Revision:3 ProofExpired:false}]
+    --- FAIL: TestReplayBrief_ProofExpiryAtT2/withdrawn (0.00s)
+        brief_replay_test.go:47: got [{ItemID:a1 Kind:ACTION Title:Downstream Outcome: Owner:<nil> Due:<nil> Execution:NOT_STARTED Dependency:READY Verification: Revision:1 ProofExpired:false} {ItemID:r1 Kind:REQUIREMENT Title:Approval Outcome: Owner:<nil> Due:<nil> Execution:COMPLETED Dependency:READY Verification:VERIFIED Revision:3 ProofExpired:true}]
+    --- FAIL: TestReplayBrief_ProofExpiryAtT2/open_dispute_survives_expiry (0.00s)
+        brief_replay_test.go:47: got [{ItemID:a1 Kind:ACTION Title:Downstream Outcome: Owner:<nil> Due:<nil> Execution:NOT_STARTED Dependency:READY Verification: Revision:1 ProofExpired:false} {ItemID:r1 Kind:REQUIREMENT Title:Approval Outcome: Owner:<nil> Due:<nil> Execution:COMPLETED Dependency:READY Verification:VERIFIED Revision:3 ProofExpired:true}]
+    --- FAIL: TestReplayBrief_ProofExpiryAtT2/new_epoch (0.00s)
+        brief_replay_test.go:47: got [{ItemID:a1 Kind:ACTION Title:Downstream Outcome: Owner:<nil> Due:<nil> Execution:NOT_STARTED Dependency:READY Verification: Revision:1 ProofExpired:false} {ItemID:r1 Kind:REQUIREMENT Title:Approval Outcome: Owner:<nil> Due:<nil> Execution:COMPLETED Dependency:READY Verification:VERIFIED Revision:3 ProofExpired:true}]
+    --- FAIL: TestReplayBrief_ProofExpiryAtT2/criterion_revision (0.00s)
+        brief_replay_test.go:47: got [{ItemID:a1 Kind:ACTION Title:Downstream Outcome: Owner:<nil> Due:<nil> Execution:NOT_STARTED Dependency:READY Verification: Revision:1 ProofExpired:false} {ItemID:r1 Kind:REQUIREMENT Title:Approval Outcome: Owner:<nil> Due:<nil> Execution:COMPLETED Dependency:READY Verification:VERIFIED Revision:3 ProofExpired:true}]
+FAIL
+FAIL	github.com/example/userapi/internal/core/service	0.521s
+FAIL

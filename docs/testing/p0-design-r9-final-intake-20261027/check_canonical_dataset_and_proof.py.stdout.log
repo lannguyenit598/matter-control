@@ -1,0 +1,33 @@
+PASS  24 canonical records (12 requirements + 12 actions)
+PASS  action census is 4 COMPLETED / 3 WAITING / 5 NOT_STARTED / 0 IN_PROGRESS
+PASS  7 dependency edges
+PASS  AC-DEMO-PROOF is not one of the canonical 24
+PASS  the approved Atlas document still lists 24 records
+PASS  every record's owner, execution, verification and due match the approved document
+PASS  the approved document declares the same 7 edges
+PASS  every stored dependency value equals the value derived from the edges
+PASS  the expected blocked set matches the approved document
+PASS  zero eligible Actions at Atlas T0
+PASS  DEP-05 is unsatisfied under the current independent-verification policy
+PASS  RQ-05 keeps its historical VERIFIED aggregate
+PASS  RQ-03 keeps its historical VERIFIED aggregate with the self-review caveat
+PASS  AC-06 is COMPLETED / READY, owned by U-03, with explicit NOT_REQUIRED applicability
+PASS  all 12 canonical Actions carry explicit NOT_REQUIRED applicability
+PASS  RQ-11 really does have an outgoing proof gate (DEP-07 to AC-12)
+PASS  RQ-07 has no incoming gate, so its dependency is READY
+PASS  AC-07, a different subject, is the blocked one
+PASS  the 12 evidence requirements and their subjects match the approved document
+PASS  the 5 supplied evidence records match the approved document
+PASS  5 documents with 10 versions in total
+PASS  2 filings, both bound to a Requirement subject
+PASS  the 9 filing stages match the approved RULE-012 sequence
+PASS  FIL-02 has a receipt and no outcome
+PASS  the permission matrix fixture is transcribed in full (24 operations)
+PASS  every transcribed permission row matches the approved matrix byte for byte
+PASS  the contract still binds a missing precondition to 428
+PASS  the contract still binds a stale precondition to 412
+FAIL  the contract still defines no 409 — 
+PASS  the contract still distinguishes non-receipted membership commands
+PASS  no mapped status is absent from the contract
+
+FAILED: 1 check(s)

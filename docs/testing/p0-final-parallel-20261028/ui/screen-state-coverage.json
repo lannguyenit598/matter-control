@@ -1,0 +1,303 @@
+{
+  "task": "MC-P0-UI-REST-E2E-QA-R1",
+  "generated_utc": "2026-10-28T08:08:00Z",
+  "evaluator": "actual Antigravity",
+  "total_screens": 13,
+  "states_per_screen": 9,
+  "total_cells": 117,
+  "summary": {
+    "implemented_in_source": 103,
+    "not_applicable_to_surface": 14,
+    "missing_or_gap": 0,
+    "unit_component_tested": 92,
+    "live_browser_executed": 0,
+    "browser_execution_status": "VERIFICATION_BLOCKED_WAITING_RUNTIME_CUE"
+  },
+  "states_vocabulary": [
+    "loading",
+    "empty",
+    "no_match",
+    "unavailable",
+    "forbidden",
+    "stale",
+    "conflict",
+    "partial",
+    "recovery"
+  ],
+  "screens": [
+    {
+      "id": "SCR-01",
+      "name": "App Shell & Session Navigation",
+      "routes": ["/workspaces", "/login", "layout.tsx"],
+      "primary_components": [
+        "apps/frontend/src/app/(app)/layout.tsx",
+        "apps/frontend/src/features/matters/components/app-header.tsx",
+        "apps/frontend/src/components/organisms/app-header.tsx",
+        "apps/frontend/src/components/organisms/app-sidebar.tsx",
+        "apps/frontend/src/components/organisms/mobile-nav.tsx",
+        "apps/frontend/src/features/auth/components/account-menu.tsx",
+        "apps/frontend/src/features/auth/components/sign-out-form.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "React 19 Streaming Suspense + Skeletons" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "EmptyState component for zero workspaces/matters" },
+        "no_match": { "status": "IMPLEMENTED", "mechanism": "Filtered empty search state on workspaces list" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=unavailable on BFF network error" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=forbidden / redirect to login" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "OIDC session re-verification, cookie expiry handling" },
+        "conflict": { "status": "NOT_APPLICABLE", "mechanism": "Shell navigation is read-only" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Degraded workspace member read isolated per panel" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Sign in / RetryHref links on ReadFailure" }
+      }
+    },
+    {
+      "id": "SCR-02",
+      "name": "Executive Control Room",
+      "routes": ["/matters/[matterId]/control-room"],
+      "primary_components": [
+        "apps/frontend/src/features/control/components/control-room-view.tsx",
+        "apps/frontend/src/features/control/components/context-forms.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Suspense fallback with h-64 Skeleton" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "Muted empty notices per section (No blockers, no open filings)" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Control room renders fixed executive sections, no free search" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=unavailable; section error never disguised as empty" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=forbidden for non-members" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "Snapshot boundary mismatch display (As of timestamp + sourceRevision)" },
+        "conflict": { "status": "NOT_APPLICABLE", "mechanism": "View surface is read-only aggregator" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Section error isolation; surviving sections render truthful data" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Retry link preserving matterId scope" }
+      }
+    },
+    {
+      "id": "SCR-03",
+      "name": "Operational Grid & My Actions",
+      "routes": ["/matters/[matterId]/work", "/my-actions"],
+      "primary_components": [
+        "apps/frontend/src/features/work/components/work-grid.tsx",
+        "apps/frontend/src/features/work/components/my-actions-view.tsx",
+        "apps/frontend/src/features/work/components/work-filters.tsx",
+        "apps/frontend/src/features/work/components/work-badges.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Skeleton fallback on server stream" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "EmptyState: 'No work items yet' / 'Nothing is assigned to you'" },
+        "no_match": { "status": "IMPLEMENTED", "mechanism": "EmptyState: 'No work items match these filters' (zero match != error)" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure with retryHref" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=forbidden" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "Inline title edit ETag mismatch warns out-of-date" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "412 Precondition Failed / 428 Precondition Required alerts" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Cursor pagination next page; independent axis columns preserved" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Clear filter action, re-read button on conflict" }
+      }
+    },
+    {
+      "id": "SCR-04",
+      "name": "Requirement Detail & Lifecycle Drawer",
+      "routes": ["/matters/[matterId]/work/[itemId]?type=REQUIREMENT"],
+      "primary_components": [
+        "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+        "apps/frontend/src/features/work/components/metadata-form.tsx",
+        "apps/frontend/src/features/work/components/dependency-panel.tsx",
+        "apps/frontend/src/features/work/components/escalation-panel.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Suspense Skeleton h-96" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "Empty dependencies / empty escalation notes" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Detail view keyed to specific ID" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=unavailable subject='record'" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=forbidden" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "ETag concurrency check on metadata update" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "409 urn:mc:rejected (transition-not-allowed, cycle-blocked)" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Proof read error does not hide the core requirement record" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Discard unsaved draft, re-read current state" }
+      }
+    },
+    {
+      "id": "SCR-05",
+      "name": "Action Detail & Assignment Drawer",
+      "routes": ["/matters/[matterId]/work/[itemId]?type=ACTION"],
+      "primary_components": [
+        "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+        "apps/frontend/src/features/work/components/execution-panel.tsx",
+        "apps/frontend/src/features/work/components/metadata-form.tsx",
+        "apps/frontend/src/features/work/components/dependency-panel.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Suspense Skeleton h-96" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "Unassigned owner state, empty prerequisites" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Detail view keyed to specific ID" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure with retryHref" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=forbidden" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "ETag check on execution transition" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Dependency prerequisite unfulfilled rejection" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Execution state independent from verification state" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "CAS unknown requires reread; receipted allows same-key retry" }
+      }
+    },
+    {
+      "id": "SCR-06",
+      "name": "Dependency Graph & Impact Inspector",
+      "routes": ["/matters/[matterId]/planning"],
+      "primary_components": [
+        "apps/frontend/src/features/work/components/planning-view.tsx",
+        "apps/frontend/src/features/work/components/planning-forms.tsx",
+        "apps/frontend/src/features/work/components/dependency-panel.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Suspense fallback" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "'No milestones yet', 'No workstreams yet'" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Direct list of planning items" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=unavailable" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=forbidden" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "Milestone prerequisite form validates ETag" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Cycle detection returns structured rejection" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Unsatisfied prerequisites list causal reasons per item" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Change prerequisites form with re-evaluation" }
+      }
+    },
+    {
+      "id": "SCR-07",
+      "name": "Evidence Submission & Verification Drawer",
+      "routes": ["/matters/[matterId]/work/[itemId]#proof"],
+      "primary_components": [
+        "apps/frontend/src/features/proof/components/proof-panel.tsx",
+        "apps/frontend/src/features/proof/components/document-forms.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Sub-resource promise resolution" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "'No criteria yet, so nothing can be verified'" },
+        "no_match": { "status": "IMPLEMENTED", "mechanism": "'No evidence offered for this criterion'" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "Checklist failure handled gracefully without breaking item" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "Author cannot verify; non-verifiers cannot assess" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "Item ETag sent as If-Match for applicability" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Dispute status prevents satisfied derivation" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "PARTIALLY_VERIFIED derived status" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Revoke assessment, resolve dispute actions" }
+      }
+    },
+    {
+      "id": "SCR-08",
+      "name": "Document Version & Signature History",
+      "routes": ["/matters/[matterId]/documents", "/matters/[matterId]/documents/[documentId]"],
+      "primary_components": [
+        "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+        "apps/frontend/src/features/proof/components/document-forms.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Suspense Skeleton h-96" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "'No versions yet'" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Document detail view" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure subject='document'" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "Only OWNER can promote version (role check)" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "promoteTo validation against current expected version" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Out-of-date expected version guard returns conflict message" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Download version binary independent of promotion state" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Separate promote-target select control" }
+      }
+    },
+    {
+      "id": "SCR-09",
+      "name": "Regulatory Filing Tracker & Package Manager",
+      "routes": ["/matters/[matterId]/filings", "/matters/[matterId]/filings/[filingId]"],
+      "primary_components": [
+        "apps/frontend/src/features/filings/components/filing-view.tsx",
+        "apps/frontend/src/features/filings/components/filing-forms.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Suspense Skeleton fallback" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "'Not submitted yet', 'No observations yet'" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Filing detail view" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure subject='filing'" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "Stage change actions restricted to OWNER" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "Filing ETag check on transition" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Negative outcome prevents approval until closed/reopened" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Observations corrected by appending with correctsId" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Append correction observation, reopen filing" }
+      }
+    },
+    {
+      "id": "SCR-10",
+      "name": "Bulk Metadata Editor & Preview Modal",
+      "routes": ["/matters/[matterId]/data#bulk"],
+      "primary_components": [
+        "apps/frontend/src/features/data-transfer/components/bulk-section.tsx",
+        "apps/frontend/src/features/data-transfer/components/outcome-list.tsx",
+        "apps/frontend/src/features/data-transfer/components/recovery-gate.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Pending transition and busy ref lock" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "No rows selected message" },
+        "no_match": { "status": "IMPLEMENTED", "mechanism": "Row key reconciliation on server replay" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "'Recovery could not be checked' alert" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "Access loss triggers payload purge and refusal marker" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "Per-row stale ETag returns failed outcome for that row" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Concurrent running attempt refused by session lock" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Per-row independent outcome reporting (SUCCESS vs REJECTED)" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "RecoveryGate: re-read receipts without POST; ACK releases lock" }
+      }
+    },
+    {
+      "id": "SCR-11",
+      "name": "Structured Import Wizard",
+      "routes": ["/matters/[matterId]/data#import"],
+      "primary_components": [
+        "apps/frontend/src/features/data-transfer/components/import-section.tsx",
+        "apps/frontend/src/features/data-transfer/components/outcome-list.tsx",
+        "apps/frontend/src/features/data-transfer/components/recovery-gate.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "File reading / preview loading status" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "Zero-row or empty file rejected" },
+        "no_match": { "status": "IMPLEMENTED", "mechanism": "Unrecognized column schema / invalid CSV structure" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "'The preview could not be loaded' error alert" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "Access loss invokes purge() clearing file, preview, and frozen plan" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "File content fingerprint mismatch forces re-preview" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Connected group with 1 invalid row rejected whole" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Independent valid groups committed while invalid group rejected" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Retry same frozen attempt key after lost network answer" }
+      }
+    },
+    {
+      "id": "SCR-12",
+      "name": "Delta Status Brief Generator & Viewer",
+      "routes": ["/matters/[matterId]/data#brief", "/api/matters/[matterId]/export"],
+      "primary_components": [
+        "apps/frontend/src/features/data-transfer/components/brief-section.tsx",
+        "apps/frontend/src/app/api/matters/[matterId]/export/route.ts"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Generation pending spinner" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "'No changes in this window' empty view" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Brief evaluated against exact t1..t2 window" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "Missing historical provenance fails closed (brief-unreconstructable)" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "Matter read access re-evaluated at export time" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "Proof and criteria evaluated strictly at declared boundary t2" },
+        "conflict": { "status": "IMPLEMENTED", "mechanism": "Reopened filing without resolution marks brief incomplete" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Delta lists requirement, action, document and filing deltas" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "Select broader or later window; retry export" }
+      }
+    },
+    {
+      "id": "SCR-13",
+      "name": "Scoped Event History & Audit Ledger",
+      "routes": ["/matters/[matterId]/history"],
+      "primary_components": [
+        "apps/frontend/src/features/matters/components/matter-history.tsx",
+        "apps/frontend/src/features/matters/components/matter-tabs.tsx"
+      ],
+      "states": {
+        "loading": { "status": "IMPLEMENTED", "mechanism": "Suspense Skeleton h-64" },
+        "empty": { "status": "IMPLEMENTED", "mechanism": "EmptyState: 'No recorded history yet'" },
+        "no_match": { "status": "NOT_APPLICABLE", "mechanism": "Cursor pagination over immutable log, no text search" },
+        "unavailable": { "status": "IMPLEMENTED", "mechanism": "ReadFailure subject='history'" },
+        "forbidden": { "status": "IMPLEMENTED", "mechanism": "ReadFailure kind=forbidden" },
+        "stale": { "status": "IMPLEMENTED", "mechanism": "As-of timestamp clearly stated; expired cursor restart" },
+        "conflict": { "status": "NOT_APPLICABLE", "mechanism": "Audit history is immutable append-only" },
+        "partial": { "status": "IMPLEMENTED", "mechanism": "Cursor page windowing (nextCursor pagination)" },
+        "recovery": { "status": "IMPLEMENTED", "mechanism": "First page restart link, retryHref on read failure" }
+      }
+    }
+  ]
+}

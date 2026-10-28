@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/adapter/outbound/identity/zitadel"
+  ],
+  "cwd": "apps/backend",
+  "started_utc": "2026-10-27T07:45:39.151230+00:00",
+  "completed_utc": "2026-10-27T07:45:43.178541+00:00",
+  "exit": 0,
+  "counts": {
+    "pass": 25,
+    "fail": 0,
+    "skip": 0
+  },
+  "scope": "Unit verifier tests with synthetic httptest loopback server; no live IdP/DB/credential reads. Standard sandbox escalation after bind refusal."
+}

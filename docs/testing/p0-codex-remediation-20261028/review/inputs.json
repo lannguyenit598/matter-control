@@ -1,0 +1,98 @@
+{
+  "task_id": "MC-P0-CODEX-PRIMARY-REMEDIATION-20261028-INDEPENDENT-REVIEW",
+  "reviewer": "Local Codex independent review subagent (non-author)",
+  "verdict": "PASS_SOURCE_REVIEW_WITH_LIMITATIONS",
+  "repository": {
+    "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "git_head": "a62d838791ba188838c4ff00b7b6e265ac775056"
+  },
+  "baseline": {
+    "snapshot": "/private/tmp/mc-p0-codex-takeover-20261028-qkwwennh",
+    "manifest": "docs/testing/p0-codex-remediation-20261028/baseline-manifest.json",
+    "manifest_sha256": "b7cf7ae375b4d0fe7a789ab0798eba2ca8f39bf6cb4e0da7a7d9d5f813eb434b"
+  },
+  "current_pin": {
+    "manifest": "docs/testing/p0-codex-remediation-20261028/final-source-manifest.json",
+    "manifest_sha256": "2e763e4ce6f6ce1838237dcb76bfa0c0b9937dd34657510544e6c76e4d8965ae",
+    "entries": 711,
+    "drift_check": "docs/testing/p0-codex-remediation-20261028/source-drift-check.json",
+    "drift_check_sha256": "9c82a3930e4db9c9453e9e48c7f6d676ed5f23ede9627ce47928f36f7762ca92",
+    "drift": []
+  },
+  "inspected_sha256": {
+    "apps/backend/internal/core/service/brief_proof.go": "f573cef761627fa7bff8333c8b4bcc26f461db8630d47df285c7d45fad8106d4",
+    "apps/backend/internal/core/service/brief_replay.go": "f7eebe221a7b416a00e27ed0273b6338c87dbcb416171b9243e3e693a2d3ccb5",
+    "apps/backend/internal/core/service/brief_replay_test.go": "128e7009265d518227736e33d3af1a31295a52742a7849018065a7788542db46",
+    "apps/backend/internal/core/service/dataops_service.go": "d00d18a565ded6a1f890ab871285a0356f72bd9be8c9ac8bcb07b1fb01a3672c",
+    "apps/backend/internal/core/service/evidence_service.go": "fafc4fe9dc4a0b4623367bae3ef44356b0fca9cf725d665ffc3728ff3ce9a35a",
+    "apps/backend/internal/core/service/filing_service.go": "ee3651eb4684a63a61efc35200953717f58844a03a80ba73ababbf0992863c8a",
+    "apps/backend/internal/core/service/work_service.go": "ff072f624d7cf11e164a9511ae0f4b5ed9fd5b6284819f3eef6cbc4bb1b62e8c",
+    "apps/backend/internal/core/domain/matter/dataops.go": "65458c2a023e1dd8c0a84c65c4324873259cbc6c8c19a649663e7f07b56dbfa5",
+    "apps/backend/internal/core/domain/matter/requirement.go": "3a8832e912ee864ed311975bddc2d8ea7560fc80594c041a3888a8a5a513ce38",
+    "apps/backend/internal/core/domain/matter/workgraph.go": "5b4de0a96237dd9c11e9631f365d834dbd07d9169d6226f8477b1b294f377990",
+    "apps/backend/internal/core/domain/matter/workview.go": "1cf26c42decc33e7d3a04730861ddf2ea0f7a397496cc82a4e8ddc9116788f7b",
+    "apps/backend/internal/adapter/inbound/productapi/data_dto.go": "1ab16512124102452f4536fcd185c6f0e5dc6d630174b42e986fdfcc0f400453",
+    "apps/backend/internal/adapter/outbound/postgres/matter_dto.go": "135780534a9c5601bca4b196b8d365d5e23464a6da4678e197c45419c11ee7ce",
+    "apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql": "eaef183e0982490f8d1956bfcb64c0a1845d2e9078759a2742d06adfa5671fbc",
+    "apps/backend/internal/adapter/outbound/postgres/work_store.go": "0e27aa0a33b145acba2ea5b7e21309a4ea32ed7c1e4e4fa8197c7311c1538c9e",
+    "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go": "a654542e12302af853abeeab3fd33b3bcdd67b939ec9d0987eb49ac19b55a9bd",
+    "apps/frontend/src/features/data-transfer/actions.ts": "eed7a52ab488ae196e1d1895b7a93e76fa3025cc7a6619ae2b4b799a1f92ab6f",
+    "apps/frontend/src/features/data-transfer/pending-attempts.ts": "924ad944dfcec143afa33a1d2f388963278533325c1df7c537c1064073e060d7",
+    "apps/frontend/src/features/data-transfer/pending-attempts.test.ts": "006781eeabb1be88295f0048a1d7d6b6ea55611d2c8ea5ae5c19b49adea69ccf",
+    "apps/frontend/src/features/data-transfer/recovery-session.ts": "7898920cce6e3be08ddaef7198e72b2d9a8799b9f80296c5318f1435d7bc6896",
+    "apps/frontend/src/features/data-transfer/repository.ts": "dccb90b60289f569c1f4f630fbb39b1d9f8d93dd47fcbec3d79eb3fa5586a9ce",
+    "apps/frontend/src/features/data-transfer/schemas.ts": "3f4593993106bd0343ceac4a1680550b3ffe364d6a2c11a387cb38052c198376",
+    "apps/frontend/src/features/data-transfer/intent.ts": "c9e7bac206e2ef6c5810962b62dd08a05102a86e7dc009528010a203ebd487b7",
+    "apps/frontend/src/features/data-transfer/components/recovery-gate.tsx": "61ed718b4795dd403f8fe278127ca47a038dd7018859a7f7689ada325a4299a6",
+    "apps/frontend/src/features/data-transfer/components/recovery-gate.test.tsx": "bf4a95ad2b6133b6896b5ecde7fe7cde31a415b2ed59f932cebc0834b1a43b64",
+    "apps/frontend/src/features/data-transfer/components/bulk-section.tsx": "06c5ad7fd27c15b0716094e7ef9c5d54618ff1be57759a8ec4a640f3767db353",
+    "apps/frontend/src/features/data-transfer/components/import-section.tsx": "f38b90b7dd07b233f843f5a2ac8fd0f6389fd0237bdf80f1880baf707db6edc7",
+    "apps/frontend/src/features/data-transfer/components/data-transfer-attempt.test.tsx": "fc5c3c164c0cc072064c0d7031388ef96390db727bc010913764fa206ef7f68a",
+    "ops/p0-local/restore-rehearsal/run.sh": "8e4af211f4b6fadedccafa853d0939d1ef6b91b3cd2a1f602ebbb571477ec288",
+    "ops/p0-local/restore-rehearsal/verify.py": "93e2177298915534e341594f2119d26ff9c66115abf5903d408ffd6d4a2f044b",
+    "ops/p0-local/restore-rehearsal/test_verify.py": "80d8c5ed14cbd6bff79479b7547434b3b4455209d1eefec7fee60c7aae4e64d3",
+    "docs/implementation/p0-zcode-execution/local-contract.md": "814c419222b966d6f340cb421ab8d8d44b3310ece336cc9cbe1b747472194e30"
+  },
+  "evidence_sha256": {
+    "docs/testing/p0-codex-remediation-20261028/validation/backend-r3/backend-gates.json": "8ae0ef80a93bc592752ac80cfccb2273a29318f0ef58d90aa8c86f2d6af66a16",
+    "docs/testing/p0-codex-remediation-20261028/validation/backend-r3/backend-race.stdout": "94ec9daca7ed3157763ba3aaf43ca3758373b30f1bb7ed8d0575370b3fec1b6b",
+    "docs/testing/p0-codex-remediation-20261028/validation/frontend-r2/commands.json": "13194d7b35cd397874ad0c483979f23605d3ab36dba8e89b11eed73e28e32283",
+    "docs/testing/p0-codex-remediation-20261028/validation/frontend-r2/check.stdout": "52dc3754b7e6c2368ee37ef68d61471e2e24c67163092d392eadc8f69476c853",
+    "docs/testing/p0-codex-remediation-20261028/validation/frontend-r2/build-webpack.stdout": "fddf30ee498ac0ce2fc663367f848bf813b51f59d0876ab7e7e03a39188c1c9b",
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T072524Z/summary.json": "23cebcfb18bc259e1907728ed2435fa46516ad35309e415c83ad93331ae8b49d",
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T072524Z/readback-restored.json": "aecb814a26a6cc69cd2778b4f947e2650f8ca098b199740ca5fdf2ccbcef4e1a",
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T072524Z/readback.diff": "3af58f12215accfa6f0de003a856e9edb3ba20f1513b6993a57c919a5e371683",
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T072524Z/refusals.txt": "a31bd66a82e9fd06019a9c52fe028d32d513a86acdcf9be0c60fbc0e559a4f21"
+  },
+  "reviewer_validation": [
+    {
+      "command": "rtk proxy env GOCACHE=/private/tmp/mc-p0-review-go-cache go test ./internal/core/service -run '^TestReplayBrief' -count=1",
+      "result": "exit 0"
+    },
+    {
+      "command": "rtk proxy env GOCACHE=/private/tmp/mc-p0-review-go-cache go test ./internal/adapter/outbound/repotest/mattercontrol -run 'TestSuiteW6_MemoryStore/brief:_filing_owner_survives_creation_before_later_transitions' -count=1",
+      "result": "exit 0"
+    },
+    {
+      "command": "rtk proxy pnpm test src/features/data-transfer/pending-attempts.test.ts src/features/data-transfer/components/data-transfer-attempt.test.tsx src/features/data-transfer/components/recovery-gate.test.tsx",
+      "result": "exit 0; 3 files, 22 tests passed"
+    },
+    {
+      "command": "rtk python3 -m unittest -v test_verify.py",
+      "result": "exit 0; 9 tests passed"
+    },
+    {
+      "command": "rtk bash -n ops/p0-local/restore-rehearsal/run.sh",
+      "result": "exit 0"
+    }
+  ],
+  "not_run_by_reviewer": [
+    "browser/E2E/visual/accessibility",
+    "Docker restore workflow",
+    "provider/cloud/private resources",
+    "credentials or keys",
+    "production data",
+    "Git mutation"
+  ]
+}

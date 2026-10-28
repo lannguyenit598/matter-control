@@ -1,0 +1,214 @@
+version: "2"
+
+linters:
+  enable:
+    - depguard # Enforce hexagonal dependency rules (see rules below).
+    - forbidigo # No global clock/logger in core (internal/core only; see exclusions).
+    - gochecknoglobals # No global state in core (internal/core only; see exclusions).
+    - errorlint # Compare errors with errors.Is/As and wrap with %w.
+    - bodyclose
+    - noctx # No network I/O without a context.
+    - gosec
+    - misspell
+    - unconvert
+  settings:
+    depguard:
+      rules:
+        # Core (domain, port, service) may depend only on itself and the standard library, excluding
+        # standard packages owned by adapters (HTTP, SQL) or the composition root (environment).
+        # Core tests may use adapters (such as the memory repository), so exclude $test.
+        core:
+          files:
+            - "**/internal/core/**"
+            - "!$test"
+          allow:
+            - $gostd
+            - github.com/example/userapi/internal/core/
+          deny:
+            - pkg: net/http
+              desc: the core must not know about HTTP; map errors in the inbound adapter
+            - pkg: database/sql
+              desc: the core must not know about the database; declare a port instead
+            - pkg: os
+              desc: configuration and the environment belong to the composition root
+        # Inbound adapters must not know storage; outbound adapters must not know transport.
+        inbound-adapters:
+          files:
+            - "**/internal/adapter/inbound/**"
+            - "!$test"
+          deny:
+            - pkg: github.com/example/userapi/internal/adapter/outbound
+              desc: inbound adapters must only talk to the core through ports
+            - pkg: github.com/jackc/pgx
+              desc: inbound adapters must not know about the database
+            - pkg: database/sql
+              desc: inbound adapters must not know about the database
+            - pkg: github.com/pressly/goose
+              desc: inbound adapters must not know about the database
+            - pkg: github.com/exaring/otelpgx
+              desc: inbound adapters must not know about the database
+            - pkg: github.com/twmb/franz-go
+              desc: inbound adapters must not know about the message broker; events go through the outbox
+            - pkg: github.com/example/userapi/internal/outbox
+              desc: events are written by the storage adapter inside its transaction, never from a transport
+            - pkg: github.com/example/userapi/internal/app
+              desc: only cmd may depend on the composition root
+            - pkg: go.uber.org/fx
+              desc: dependency injection belongs in the composition root (internal/app); take dependencies as constructor parameters
+            - pkg: go.uber.org/dig
+              desc: dependency injection belongs in the composition root (internal/app); take dependencies as constructor parameters
+        # Outbound adapters are independent: no imports of other outbound adapters or shared test suites.
+        outbound-adapters:
+          files:
+            - "**/internal/adapter/outbound/**"
+            - "!$test"
+          deny:
+            - pkg: github.com/example/userapi/internal/adapter/inbound
+              desc: outbound adapters must not depend on transports
+            - pkg: github.com/labstack/echo
+              desc: outbound adapters must not depend on the HTTP framework
+            - pkg: github.com/danielgtaylor/huma
+              desc: outbound adapters must not depend on the HTTP framework
+            - pkg: github.com/example/userapi/internal/adapter/outbound/memory
+              desc: outbound adapters must not depend on each other
+            - pkg: github.com/example/userapi/internal/adapter/outbound/system
+              desc: outbound adapters must not depend on each other
+            - pkg: github.com/example/userapi/internal/adapter/outbound/kafka
+              desc: outbound adapters must not depend on each other
+            - pkg: github.com/example/userapi/internal/adapter/outbound/repotest
+              desc: the shared contract test kit is for tests only
+            - pkg: github.com/example/userapi/internal/app
+              desc: only cmd may depend on the composition root
+            - pkg: go.uber.org/fx
+              desc: dependency injection belongs in the composition root (internal/app); take dependencies as constructor parameters
+            - pkg: go.uber.org/dig
+              desc: dependency injection belongs in the composition root (internal/app); take dependencies as constructor parameters
+        # Shared infrastructure (config, observability) must not know core, adapters, or app.
+        platform:
+          files:
+            - "**/internal/observability/**"
+            - "**/internal/config/**"
+            - "!$test"
+          deny:
+            - pkg: github.com/example/userapi/internal/adapter
+              desc: platform packages must not depend on adapters
+            - pkg: github.com/example/userapi/internal/core
+              desc: platform packages must not depend on the core
+            - pkg: github.com/example/userapi/internal/outbox
+              desc: platform packages must not depend on the outbox relay
+            - pkg: github.com/example/userapi/internal/app
+              desc: only cmd may depend on the composition root
+            - pkg: go.uber.org/fx
+              desc: dependency injection belongs in the composition root (internal/app)
+            - pkg: go.uber.org/dig
+              desc: dependency injection belongs in the composition root (internal/app)
+        # Other outbound adapters must not depend on the postgres adapter or its generated queries
+        # (postgres/sqlcgen); the postgres adapter itself imports sqlcgen.
+        outbound-adapters-not-postgres:
+          files:
+            - "**/internal/adapter/outbound/**"
+            - "!**/internal/adapter/outbound/postgres/**"
+            - "!$test"
+          deny:
+            - pkg: github.com/example/userapi/internal/adapter/outbound/postgres
+              desc: outbound adapters must not depend on each other; generated queries stay inside the postgres adapter
+        # Only the kafka adapter may use a Kafka client; direct publishing elsewhere would be a dual write.
+        outbound-adapters-no-broker:
+          files:
+            - "**/internal/adapter/outbound/**"
+            - "!**/internal/adapter/outbound/kafka/**"
+            - "!$test"
+          deny:
+            - pkg: github.com/twmb/franz-go
+              desc: only the kafka adapter may use the Kafka client; other adapters write events to the outbox
+        # internal/outbox defines Source/Sink and the relay loop; it knows no database, broker, or domain.
+        outbox:
+          files:
+            - "**/internal/outbox/**"
+            - "!$test"
+          allow:
+            - $gostd
+          deny:
+            - pkg: database/sql
+              desc: internal/outbox must not know the database; postgres.OutboxSource implements Source
+        # cmd reads config, creates a logger, handles signals, and calls internal/app, which wires adapters.
+        cmd:
+          files:
+            - "**/cmd/**"
+            - "!$test"
+          deny:
+            - pkg: github.com/example/userapi/internal/adapter
+              desc: adapters are wired in internal/app, not in cmd
+            - pkg: github.com/example/userapi/internal/core
+              desc: the core is wired in internal/app, not in cmd
+            - pkg: github.com/jackc/pgx
+              desc: adapters are wired in internal/app, not in cmd
+            - pkg: github.com/labstack/echo
+              desc: adapters are wired in internal/app, not in cmd
+            - pkg: github.com/danielgtaylor/huma
+              desc: adapters are wired in internal/app, not in cmd
+            - pkg: github.com/twmb/franz-go
+              desc: adapters are wired in internal/app, not in cmd
+            - pkg: github.com/pressly/goose
+              desc: migrations run through internal/app (app.Migrate), not from cmd
+            - pkg: go.uber.org/fx
+              desc: the fx graph is built in internal/app; cmd only calls app.Run/app.RunRelay
+            - pkg: go.uber.org/dig
+              desc: the fx graph is built in internal/app; cmd only calls app.Run/app.RunRelay
+        # All other packages (including new ones such as internal/worker): only the composition root may know adapters.
+        # A new package category allowed to import adapters needs its own rule.
+        everything-else:
+          files:
+            - $all
+            - "!**/internal/app/**"
+            - "!**/internal/adapter/**"
+            - "!**/cmd/**"
+            - "!$test"
+          deny:
+            - pkg: github.com/example/userapi/internal/adapter
+              desc: only the composition root (internal/app) may depend on adapters
+            - pkg: github.com/example/userapi/internal/app
+              desc: only cmd may depend on the composition root
+            - pkg: github.com/jackc/pgx
+              desc: only the postgres adapter may use the database driver
+            - pkg: github.com/pressly/goose
+              desc: only the postgres adapter may run migrations
+            - pkg: github.com/labstack/echo
+              desc: only the HTTP adapter may use the HTTP framework
+            - pkg: github.com/danielgtaylor/huma
+              desc: only the HTTP adapter may use Huma (operations and OpenAPI)
+            - pkg: github.com/twmb/franz-go
+              desc: only the kafka adapter may use the Kafka client (internal/outbox talks to it through Sink)
+            - pkg: go.uber.org/fx
+              desc: only the composition root (internal/app) may use the dependency injection container
+            - pkg: go.uber.org/dig
+              desc: only the composition root (internal/app) may use the dependency injection container
+    forbidigo:
+      forbid:
+        - pattern: ^time\.Now$
+          msg: inject port.Clock instead of reading the wall clock in the core
+        - pattern: ^slog\.(Debug|Info|Warn|Error|Log|Default|SetDefault)(Context)?$
+          msg: use the injected *slog.Logger instead of the global logger
+  exclusions:
+    presets:
+      - std-error-handling
+    rules:
+      # These linters enforce core-specific rules. Outside core (adapters, composition root, tests),
+      # using the real clock or package-level variables is allowed.
+      - path-except: internal/core/
+        linters:
+          - forbidigo
+          - gochecknoglobals
+      - path: _test\.go
+        linters:
+          - forbidigo
+          - gochecknoglobals
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/example/userapi

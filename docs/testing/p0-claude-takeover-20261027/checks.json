@@ -1,0 +1,32 @@
+{
+  "started_utc": "2026-10-27T06:39:53.243667+00:00",
+  "completed_utc": "2026-10-27T06:40:01.832845+00:00",
+  "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/core/service",
+    "./internal/core/domain/matter",
+    "./internal/core/policy",
+    "./internal/adapter/outbound/repotest/mattercontrol"
+  ],
+  "cwd": "apps/backend",
+  "exit": 0,
+  "test_event_counts": {
+    "pass": 137,
+    "fail": 0,
+    "skip": 0
+  },
+  "db_env_removed": [
+    "DATABASE_URL",
+    "TEST_DATABASE_URL",
+    "MC_TEST_DATABASE_URL"
+  ],
+  "network": "GOPROXY=off; GOTOOLCHAIN=local",
+  "cache": "/private/tmp/mc-p0-claude-takeover-20261027-go-cache",
+  "scope": "memory/core tests only; no PG fixture, auth provider or app lifecycle"
+}

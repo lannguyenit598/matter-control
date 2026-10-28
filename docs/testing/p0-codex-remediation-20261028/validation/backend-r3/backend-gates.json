@@ -1,0 +1,76 @@
+[
+  {
+    "name": "sqlc",
+    "argv": [
+      "rtk",
+      "proxy",
+      "make",
+      "sqlc-check",
+      "SQLC=/private/tmp/mc-p0-backend-gocache/b8/b851f750e9803b234af89188fda64c414dcd6dbf0d4a4051721616ef36b8c292-d/sqlc"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start": "2026-10-28T07:25:23.857774+00:00",
+    "end": "2026-10-28T07:25:24.744675+00:00",
+    "exit": 0
+  },
+  {
+    "name": "format",
+    "argv": [
+      "rtk",
+      "proxy",
+      "gofmt",
+      "-l",
+      "."
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start": "2026-10-28T07:25:24.745616+00:00",
+    "end": "2026-10-28T07:25:24.821365+00:00",
+    "exit": 0
+  },
+  {
+    "name": "tidy",
+    "argv": [
+      "rtk",
+      "proxy",
+      "go",
+      "mod",
+      "tidy",
+      "-diff"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start": "2026-10-28T07:25:24.822175+00:00",
+    "end": "2026-10-28T07:25:24.921863+00:00",
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "argv": [
+      "rtk",
+      "proxy",
+      "golangci-lint",
+      "run",
+      "./..."
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start": "2026-10-28T07:25:24.922161+00:00",
+    "end": "2026-10-28T07:25:31.051708+00:00",
+    "exit": 0
+  },
+  {
+    "name": "race",
+    "argv": [
+      "rtk",
+      "proxy",
+      "go",
+      "test",
+      "-race",
+      "-count=1",
+      "-json",
+      "./..."
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "start": "2026-10-28T07:25:31.052134+00:00",
+    "end": "2026-10-28T07:26:46.924812+00:00",
+    "exit": 0
+  }
+]

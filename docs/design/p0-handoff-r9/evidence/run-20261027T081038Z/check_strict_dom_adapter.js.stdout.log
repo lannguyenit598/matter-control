@@ -1,0 +1,12 @@
+PASS  a <textarea> with no value attribute hydrates .value from its own child text
+PASS  a <textarea> with an explicit value attribute is NOT overwritten by its child text
+PASS  an <option> with no value attribute falls back to its own (trimmed) text
+PASS  an <option> with an explicit value attribute keeps it, independent of its text
+PASS  a <select> takes its value from the LAST selected option, not from an unrelated empty-value placeholder
+PASS  a <select> with no selected option defaults to its first option
+PASS  input.type mirrors the type attribute, defaulting to "text" for a plain <input>
+PASS  checked reflects the checked attribute at parse time and stays a plain settable property
+PASS  strict missing-ID lookups still throw — the adapter fix did not weaken this negative guarantee
+
+SOURCE_CHECKED: 9 strict_dom.js adapter self-checks passed.
+Limits: isolated adapter unit checks only; not evidence about prototype.html or logic.js behaviour by themselves.

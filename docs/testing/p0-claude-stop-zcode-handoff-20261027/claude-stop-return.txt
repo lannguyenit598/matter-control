@@ -1,0 +1,62 @@
+Đã dừng. Trạng thái hiện tại: PARTIAL_IMPLEMENTATION. Chưa có gì được nộp là xong.
+
+Đã làm (code + test do tôi tự chạy)
+
+┌──────────────┬────────────────────────────────────────────────────────────────────┬──────────────────────────────────────────────┬───────────────────┐
+│     Wave     │                           Backend + API                            │                   Frontend                   │     Kiểm tra      │
+├──────────────┼────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────┼───────────────────┤
+│              │ PG store, ZITADEL introspection verifier, productapi (Echo),       │ BFF OIDC (PKCE, session phía server),        │ make check và     │
+│ W1           │ cmd/mcapi                                                          │ workspaces/matters/requirements              │ pnpm check đều    │
+│              │                                                                    │                                              │ exit 0            │
+├──────────────┼────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────┼───────────────────┤
+│ Sửa          │ Phân biệt receipted và CAS-only khi mất response; returnTo chặt    │ Cùng nhóm sửa này                            │ Có mutation check │
+│ CW1-F01..03  │ hơn                                                                │                                              │                   │
+├──────────────┼────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────┼───────────────────┤
+│ W2           │ Work graph: transition, AND-gate dependency, cycle, milestone,     │ Grid, record detail, planning, My Actions    │ Suite chung chạy  │
+│              │ waiting-on, My Actions                                             │                                              │ trên memory và PG │
+├──────────────┼────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────┼───────────────────┤
+│              │ Documents (version bất biến, promotion có impact token), criteria, │                                              │ Suite W3 chạy     │
+│ W3           │  claims, assess độc lập, dispute, applicability, verifier,         │ Card Proof, Documents, route upload/download │ trên memory và PG │
+│              │ upload/download                                                    │                                              │                   │
+├──────────────┼────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────┼───────────────────┤
+│              │ Filing 9 stage, cycle supplement lặp, submission chính xác theo    │ Danh sách và chi tiết filing, form theo      │ Suite W4; 3 guard │
+│ W4           │ cycle, negative path, reopen kèm proof epoch, correction           │ stage                                        │  đã mutation      │
+│              │                                                                    │                                              │ check             │
+├──────────────┼────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────┼───────────────────┤
+│ W5           │ Control Room từ 1 snapshot (blockers, next, waiting, milestone,    │ Trang Control Room, form context             │ Suite W5 trên     │
+│              │ gaps, changes) và context record Decision/Finding/Risk/Entity      │                                              │ memory và PG      │
+├──────────────┼────────────────────────────────────────────────────────────────────┼──────────────────────────────────────────────┼───────────────────┤
+│ W6 (mới bắt  │ Adapter bảng tính chỉ dùng stdlib: đọc CSV/XLSX, ghi XLSX/CSV; từ  │ Chưa có                                      │ Test pass         │
+│ đầu)         │ chối formula, macro, zip bomb                                      │                                              │                   │
+└──────────────┴────────────────────────────────────────────────────────────────────┴──────────────────────────────────────────────┴───────────────────┘
+
+- Lần chạy gần nhất: make check exit 0, 0 lint issue, PG fixture có gắn, -race.
+- pnpm check: 34 file, 361 test, exit 0 (trước W6). pnpm build exit 0.
+- Contract đã lên revision 9 (§2.1–2.6). Workboard và final-return.md đã cập nhật đến hết W5.
+
+Chưa làm
+
+- W6, phần còn lại:
+  - bulk edit (preview, commit từng dòng, partial failure);
+  - import CSV/XLSX (mapping, nhóm kết nối, idempotency theo source và row key, claim "VERIFIED" thành claim chờ review);
+  - export XLSX/CSV (đúng scope, có as-of và timezone);
+  - delta brief (t1,t2];
+  - route HTTP và FE cho cả bốn;
+  - ghi W6 vào contract, workboard, final-return.md.
+- W7: chưa có Golden Workflow 1–3, test restore, test tải, tính năng restart, regression. Template /dashboard và /tasks vẫn còn. docs/api.md và api.http chưa mô tả route product.
+- Chưa chạy lại sau adapter sheet: make check đầy đủ. Tôi mới chạy riêng test của package sheet.
+
+Chưa thể kiểm chứng (blocker, không phải bỏ sót)
+
+- Đăng nhập người thật chưa chạy được. ZITADEL từ chối cả hai redirect URI của web app. Sửa việc này cần quyền admin mà tôi không được dùng, nên cần Codex/PO re-apply redirect URI.
+- aud của token user chưa xác nhận. Pin hiện tại có thể sai.
+- Không có browser được phép. Playwright, bàn phím/touch, visual, screen-reader đều NOT_RUN. Kết quả FE mới là test component, chưa có UI→API→PG với session thật.
+- AC-137 cần 5 manager thật, không giả lập.
+- Mọi kết quả chỉ là test cục bộ, không chứng minh gì cho production, Cloudflare hay chi phí $0.
+- Chưa stage, commit hay push gì. Chưa có review độc lập.
+
+Còn rủi ro cần biết
+
+- Delta brief chỉ tạo được khi t2 là mốc hiện tại. Nếu matter đã đổi sau t2, tôi định trả lỗi rõ ràng chứ không đoán, vì store không có lịch sử trạng thái để dựng lại "outstanding at t2".
+- Object store mới là thư mục local, chưa có quét malware, retention hay mã hóa.
+- Bulk commit sẽ không dùng receipt; retry dựa vào CAS từng dòng.

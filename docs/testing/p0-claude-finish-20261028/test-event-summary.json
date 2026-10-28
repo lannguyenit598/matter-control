@@ -1,0 +1,24 @@
+{
+ "backend": {
+  "command": "go test -json -race -count=1 ./... (native=mc_native_claude fixture, product fixture mc-p0-zcode-pg-product-test)",
+  "tests": {
+   "pass": 695,
+   "skip": 4
+  },
+  "skipped": [
+   "adapter/outbound/postgres/pgtest :: TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip",
+   "adapter/outbound/postgres :: TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds",
+   "adapter/outbound/postgres :: TestPerf_LocalWorkloads",
+   "adapter/outbound/postgres :: TestRestoreRehearsal"
+  ],
+  "note": "every skip is intentional: two env-gated tooling tests, the skip-without-env test of the DSN helper, and the PostgreSQL step-fault seam (memory-only)"
+ },
+ "frontend": {
+  "command": "pnpm exec vitest run",
+  "files": 39,
+  "total": 413,
+  "passed": 413,
+  "failed": 0,
+  "skipped": 0
+ }
+}

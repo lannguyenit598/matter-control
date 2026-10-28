@@ -1,0 +1,169 @@
+package httpapi
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"log/slog"
+	"net/http"
+
+	"github.com/labstack/echo/v5"
+
+	"github.com/example/userapi/internal/core/domain"
+	"github.com/example/userapi/internal/core/port"
+)
+
+// problem is the RFC 9457 error body (application/problem+json),
+// extended with "errors" for field-level validation errors.
+type problem struct {
+	Type     string       `json:"type"`
+	Title    string       `json:"title"`
+	Status   int          `json:"status"`
+	Detail   string       `json:"detail,omitempty"`
+	Instance string       `json:"instance,omitempty"`
+	Errors   []fieldError `json:"errors,omitempty" nullable:"false"`
+	// RetryAfter advises a client, in whole seconds, when it may retry. Present only on the
+	// retryable 503 unavailable problem.
+	RetryAfter int `json:"retryAfter,omitempty"`
+}
+
+// fieldError is the DTO for domain.FieldError: JSON formatting belongs to the adapter, not domain.
+type fieldError struct {
+	Field   string `json:"field"`
+	Message string `json:"message"`
+}
+
+func toFieldErrors(in []domain.FieldError) []fieldError {
+	out := make([]fieldError, len(in))
+	for i, f := range in {
+		out[i] = fieldError{Field: f.Field, Message: f.Message}
+	}
+	return out
+}
+
+const problemContentType = "application/problem+json"
+
+// StatusClientClosedRequest (nginx convention): the client closed the connection before a
+// response. This is not a server error and must not count as 5xx, which would distort
+// SLO error rates and trigger false alerts whenever a mobile client changes networks.
+const StatusClientClosedRequest = 499
+
+func statusText(code int) string {
+	if code == StatusClientClosedRequest {
+		return "Client Closed Request"
+	}
+	return http.StatusText(code)
+}
+
+const (
+	// problemTypeUnavailable is the RFC 9457 type URI for the retryable unavailability problem.
+	problemTypeUnavailable = "/problems/unavailable"
+	// unavailableDetail is the fixed, non-sensitive detail of every 503 unavailable problem.
+	// It never asserts anything about the outcome of a failed write.
+	unavailableDetail = "service temporarily unavailable"
+	// retryAfterSeconds is the retryAfter value, in whole seconds, on 503 unavailable
+	// problems. NATIVE-TEMPLATE CONSTANT: a fixed local default, NOT a MatterControl
+	// production convention; the product unit and range remain an open decision.
+	retryAfterSeconds = 1
+)
+
+// unavailableProblem is the single 503 body for storage/request-deadline unavailability.
+func unavailableProblem() problem {
+	return problem{
+		Status:     http.StatusServiceUnavailable,
+		Type:       problemTypeUnavailable,
+		Detail:     unavailableDetail,
+		RetryAfter: retryAfterSeconds,
+	}
+}
+
+// toProblem is the ONLY mapping from service and transport errors to HTTP. It is shared by
+// the Huma operations (register in openapi.go) and the Echo error handler (newErrorHandler),
+// so every route renders errors through one table:
+//
+//  1. Domain and port outcomes keep their existing statuses and bodies.
+//  2. Actual request cancellation wins over every timeout classification: 499, never 5xx.
+//     A cancelled request context counts as cancellation even when the driver surfaced a
+//     timeout (for example a bare 57014 after pgx sent its own cancel).
+//  3. The request deadline (ContextTimeout, including pool-acquire waits) and the storage
+//     unavailability sentinel render as 503 /problems/unavailable with retryAfter.
+//  4. An Echo 503 on a non-probe route follows the same unavailable mapping; probe routes
+//     (probePaths) keep their current bytes exactly.
+//  5. Other Echo statuses keep their code and detail.
+//  6. Everything else stays 500 with no internal details and no retryAfter.
+//
+// No driver types are inspected here: the outbound adapter classifies those into the
+// port-owned sentinel, keeping pgx/pgconn out of this package (depguard enforces it).
+func toProblem(ctx context.Context, err error, probe bool) problem {
+	// Row 2 first: a disconnecting client must never be answered with a 5xx.
+	if errors.Is(err, context.Canceled) || (ctx != nil && ctx.Err() == context.Canceled) {
+		return problem{Status: StatusClientClosedRequest, Detail: "client closed request"}
+	}
+	var ve *domain.ValidationError
+	switch {
+	case errors.As(err, &ve):
+		return problem{Status: http.StatusUnprocessableEntity, Detail: "request failed validation", Errors: toFieldErrors(ve.Fields)}
+	case errors.Is(err, port.ErrNotFound):
+		return problem{Status: http.StatusNotFound, Detail: "resource not found"}
+	case errors.Is(err, domain.ErrEmailAlreadyExists):
+		return problem{Status: http.StatusConflict, Detail: "a user with this email already exists"}
+	case errors.Is(err, port.ErrVersionConflict):
+		return problem{Status: http.StatusConflict, Detail: "the user was modified concurrently, please retry"}
+	case errors.Is(err, context.DeadlineExceeded), errors.Is(err, port.ErrUnavailable):
+		return unavailableProblem()
+	}
+
+	// Errors generated by Echo (404 route, 405, bind 400, 413 body too large...).
+	if code := echo.StatusCode(err); code != 0 {
+		if code == http.StatusServiceUnavailable && !probe {
+			return unavailableProblem() // row 4
+		}
+		p := problem{Status: code}
+		var he *echo.HTTPError
+		if errors.As(err, &he) && code < 500 {
+			p.Detail = he.Message
+		}
+		return p
+	}
+
+	// Unexpected errors: do not expose internal details.
+	return problem{Status: http.StatusInternalServerError}
+}
+
+// newErrorHandler writes errors to the client. requestLogger handles logging (one entry per request).
+// Probe routes (/healthz, /readyz) pass probe=true so their current response bytes are
+// preserved exactly; every other request maps through the shared table in toProblem.
+//
+// The request context is NOT consulted here: by the time this handler runs, Echo's
+// ContextTimeout middleware has already canceled its derived request context (defer cancel),
+// so ctx.Err() would report cancellation for perfectly healthy requests. A background
+// context therefore flows in: its Err() is always nil, cancellation is detected through the
+// error chain, and live-context consultation happens only where errors are mapped during
+// handling (register in openapi.go).
+func newErrorHandler(logger *slog.Logger) echo.HTTPErrorHandler {
+	return func(c *echo.Context, err error) {
+		if resp, _ := echo.UnwrapResponse(c.Response()); resp != nil && resp.Committed {
+			return
+		}
+
+		p := toProblem(context.Background(), err, probePaths[c.Request().URL.Path])
+		if p.Type == "" {
+			p.Type = "about:blank" // default only when the mapping set no type
+		}
+		p.Title = statusText(p.Status)
+		p.Instance = c.Request().URL.Path
+
+		if c.Request().Method == http.MethodHead {
+			_ = c.NoContent(p.Status)
+			return
+		}
+		body, mErr := json.Marshal(p)
+		if mErr != nil {
+			_ = c.NoContent(http.StatusInternalServerError)
+			return
+		}
+		if wErr := c.Blob(p.Status, problemContentType, body); wErr != nil {
+			logger.ErrorContext(c.Request().Context(), "failed to write error response", "error", wErr)
+		}
+	}
+}
