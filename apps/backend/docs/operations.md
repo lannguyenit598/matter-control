@@ -17,8 +17,8 @@ Both commands need the full configuration below, because it is validated before 
 |---|---|---|
 | `MC_DATABASE_URL` | required | PostgreSQL URL of the **product** database. Never point it at another application's database |
 | `MC_OBJECT_DIR` | required | Private directory for document bytes (created `0700`). Local/PoC adapter, not a production object store |
-| `MC_OIDC_ISSUER` | required | The one canonical issuer; tokens from any other issuer are refused |
-| `MC_OIDC_INTROSPECTION_URL` | required | Token introspection endpoint of that issuer |
+| `MC_OIDC_ISSUER` | required | The one canonical issuer; tokens from any other issuer are refused. `https`, or `http` only for a loopback host |
+| `MC_OIDC_INTROSPECTION_URL` | required | Token introspection endpoint of that issuer. `https`, or `http` only for a loopback host |
 | `MC_OIDC_AUDIENCE` | required | Audience every accepted token must contain (the API application's client id) |
 | `MC_OIDC_API_KEY_FILE` | required | JSON key of the API application, used to sign the introspection client assertion. Keep mode `0600`; it is never printed or logged |
 | `MC_OIDC_API_CLIENT_ID` | empty | When set, startup fails if the key file belongs to another application |
@@ -29,12 +29,14 @@ Both commands need the full configuration below, because it is validated before 
 | `MC_SHUTDOWN_DELAY` | `0s` | Wait after SIGTERM, still serving, before the listener closes (give load balancers time to drain) |
 | `MC_SHUTDOWN_TIMEOUT` | `10s` | Drain budget for in-flight requests |
 | `MC_MAX_UPLOAD_BYTES` | `26214400` | Upper bound of one upload (25 MiB) |
+| `MC_MIGRATE_DATABASE_URL` | empty | Optional PostgreSQL URL of the **schema owner**, used only by `mcapi migrate` and `MC_MIGRATE_ON_START`. Empty means migrations use `MC_DATABASE_URL`. Set it in production so the serving process connects as a role with data rights only (SELECT/INSERT/UPDATE/DELETE and sequence usage; no DDL, no table ownership) and a bug or injection in the API cannot alter the schema or drop the append-only triggers. Not yet verified against a real database with a split role: run the PostgreSQL suite as the runtime role before relying on it |
+| `MC_MAX_IN_FLIGHT` | `0` (unlimited) | Maximum concurrent `/api/v1` requests. Over the cap the API answers at once with `503` `urn:mc:unavailable`, `retryable: true` and `Retry-After: 1`, before the request is read or executed (a refused command was never applied). `/healthz` and `/readyz` are never limited. The number is a workload decision for the Product Owner, so it is off by default; there is still no per-user rate limit |
 | `MC_MIGRATE_ON_START` | `false` | Development only: apply migrations at start. Production runs `mcapi migrate` separately |
 | `MC_LOCAL_PEOPLE_DIRECTORY` | `false` | Local/dev only: enables the people-directory endpoint used to pick members. Production needs an organization boundary first |
 
 OpenTelemetry uses the standard variables (`OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_SERVICE_NAME`, `OTEL_SDK_DISABLED`); without an endpoint nothing is exported.
 
-Security notes: use `https` for the issuer and introspection URLs. The configuration currently accepts `http` for any host, which sends bearer tokens and the client assertion in clear text; use `http` only for a loopback identity provider in development.
+Security notes: the issuer and introspection URLs must use `https`. Plain `http` is accepted only when the host is `localhost` or a loopback IP (`127.0.0.0/8`, `::1`), for a development identity provider on the same machine; any other `http` host fails startup with `must use https unless the host is loopback`, because bearer tokens and the client assertion would cross the network in clear text.
 
 ## Running
 

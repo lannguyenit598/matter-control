@@ -3,7 +3,9 @@ package config
 import (
 	"errors"
 	"log/slog"
+	"net"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -17,13 +19,19 @@ type ProductConfig struct {
 	ShutdownTimeout time.Duration
 
 	// DatabaseURL is the PRODUCT database. Never point it at a native userapi database.
-	DatabaseURL    string
-	MigrateOnStart bool
+	DatabaseURL string
+	// MigrateDatabaseURL is an optional connection for the schema owner. Only `mcapi migrate`
+	// and MC_MIGRATE_ON_START use it, so the serving role needs no DDL rights.
+	MigrateDatabaseURL string
+	MigrateOnStart     bool
 
 	// ObjectDir is the private directory that holds document bytes (local/PoC adapter).
 	ObjectDir string
 	// MaxUploadBytes bounds one document upload.
 	MaxUploadBytes int64
+	// MaxInFlight caps concurrent API requests; 0 = unlimited. The right number is a workload
+	// decision (owned by the Product Owner), so it defaults to off.
+	MaxInFlight int
 
 	OIDC OIDC
 }
@@ -47,15 +55,18 @@ type OIDC struct {
 // LoadProduct reads the MC_* variables. Every error is collected and reported together.
 func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 	p := &parser{lookup: lookup}
+	inFlight := p.int64("MC_MAX_IN_FLIGHT", 0)
 	cfg := ProductConfig{
-		HTTPAddr:        p.str("MC_HTTP_ADDR", "127.0.0.1:8081"),
-		RequestTimeout:  p.duration("MC_REQUEST_TIMEOUT", "10s"),
-		ShutdownDelay:   p.duration("MC_SHUTDOWN_DELAY", "0s"),
-		ShutdownTimeout: p.duration("MC_SHUTDOWN_TIMEOUT", "10s"),
-		DatabaseURL:     p.str("MC_DATABASE_URL", ""),
-		MigrateOnStart:  p.bool("MC_MIGRATE_ON_START", false),
-		ObjectDir:       p.str("MC_OBJECT_DIR", ""),
-		MaxUploadBytes:  p.int64("MC_MAX_UPLOAD_BYTES", 25<<20),
+		HTTPAddr:           p.str("MC_HTTP_ADDR", "127.0.0.1:8081"),
+		RequestTimeout:     p.duration("MC_REQUEST_TIMEOUT", "10s"),
+		ShutdownDelay:      p.duration("MC_SHUTDOWN_DELAY", "0s"),
+		ShutdownTimeout:    p.duration("MC_SHUTDOWN_TIMEOUT", "10s"),
+		DatabaseURL:        p.str("MC_DATABASE_URL", ""),
+		MigrateDatabaseURL: p.str("MC_MIGRATE_DATABASE_URL", ""),
+		MigrateOnStart:     p.bool("MC_MIGRATE_ON_START", false),
+		ObjectDir:          p.str("MC_OBJECT_DIR", ""),
+		MaxUploadBytes:     p.int64("MC_MAX_UPLOAD_BYTES", 25<<20),
+		MaxInFlight:        int(inFlight),
 		OIDC: OIDC{
 			Issuer:           p.str("MC_OIDC_ISSUER", ""),
 			IntrospectionURL: p.str("MC_OIDC_INTROSPECTION_URL", ""),
@@ -77,6 +88,9 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 	if cfg.MaxUploadBytes < 1 {
 		p.fail("MC_MAX_UPLOAD_BYTES: must be >= 1")
 	}
+	if inFlight < 0 || inFlight > 1<<20 {
+		p.fail("MC_MAX_IN_FLIGHT: must be between 0 (unlimited) and %d", 1<<20)
+	}
 	if cfg.OIDC.CacheTTL < 0 {
 		p.fail("MC_OIDC_CACHE_TTL: must be >= 0")
 	}
@@ -90,12 +104,36 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 		}
 	}
 	for key, v := range map[string]string{"MC_OIDC_ISSUER": cfg.OIDC.Issuer, "MC_OIDC_INTROSPECTION_URL": cfg.OIDC.IntrospectionURL} {
-		if u, err := url.Parse(v); v != "" && (err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "") {
+		u, err := url.Parse(v)
+		switch {
+		case v == "":
+		case err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "":
 			p.fail("%s: must be an absolute http(s) URL", key)
+		case u.Scheme == "http" && !isLoopback(u.Hostname()):
+			// The token check carries a signed client assertion and bearer tokens: plain http is
+			// acceptable only to a process on this machine (local development).
+			p.fail("%s: must use https unless the host is loopback", key)
 		}
 	}
 	if len(p.errs) > 0 {
 		return ProductConfig{}, errors.Join(p.errs...)
 	}
 	return cfg, nil
+}
+
+// MigrationURL is the connection migrations run on: MigrateDatabaseURL when set, else DatabaseURL.
+func (c ProductConfig) MigrationURL() string {
+	if c.MigrateDatabaseURL != "" {
+		return c.MigrateDatabaseURL
+	}
+	return c.DatabaseURL
+}
+
+// isLoopback reports whether host is "localhost" or a loopback IP literal.
+func isLoopback(host string) bool {
+	if strings.EqualFold(host, "localhost") {
+		return true
+	}
+	ip := net.ParseIP(host)
+	return ip != nil && ip.IsLoopback()
 }

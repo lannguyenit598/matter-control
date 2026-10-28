@@ -58,7 +58,7 @@ func RunProduct(ctx context.Context, cfg config.ProductConfig, logger *slog.Logg
 
 // MigrateProduct applies the product migration bundle and returns (`mcapi migrate`).
 func MigrateProduct(ctx context.Context, cfg config.ProductConfig, logger *slog.Logger) error {
-	return postgres.MigrateMatterControl(ctx, cfg.DatabaseURL, logger)
+	return postgres.MigrateMatterControl(ctx, cfg.MigrationURL(), logger)
 }
 
 func productOptions(ctx context.Context, cfg config.ProductConfig, logger *slog.Logger, opts ProductOptions, failed fatal) fx.Option {
@@ -110,7 +110,7 @@ func prepareProductDB(ctx context.Context, cfg config.ProductConfig, pool *pgxpo
 		return err
 	}
 	if cfg.MigrateOnStart {
-		if err := postgres.MigrateMatterControl(ctx, cfg.DatabaseURL, logger); err != nil {
+		if err := postgres.MigrateMatterControl(ctx, cfg.MigrationURL(), logger); err != nil {
 			return err
 		}
 	}
@@ -202,6 +202,7 @@ func newProductHTTPServer(lc fx.Lifecycle, cfg config.ProductConfig, logger *slo
 		Workspaces: ws, Matters: ms, Work: work, Evidence: evidence, Filings: filings, Control: control, DataOps: dataOps, DataOpsCodec: sheet.Codec{}, MaxUploadBytes: cfg.MaxUploadBytes, Verifier: verifier, Identities: ids, Logger: logger,
 		Ready:          readiness(&draining, nil),
 		RequestTimeout: cfg.RequestTimeout,
+		MaxInFlight:    cfg.MaxInFlight,
 	})
 	baseCtx, cancelRequests := context.WithCancel(context.Background())
 	srv := &http.Server{

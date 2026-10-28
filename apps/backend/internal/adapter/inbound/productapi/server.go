@@ -49,6 +49,8 @@ type Deps struct {
 	RequestTimeout time.Duration
 	// MaxUploadBytes bounds one document upload (the JSON body limit does not apply to it).
 	MaxUploadBytes int64
+	// MaxInFlight caps concurrent /api/v1 requests; 0 = unlimited (see inFlightLimit).
+	MaxInFlight int
 }
 
 type server struct{ Deps }
@@ -94,7 +96,7 @@ func NewServer(d Deps) *echo.Echo {
 		return c.JSON(http.StatusOK, map[string]string{"status": "ready"})
 	})
 
-	v1 := e.Group(apiPrefix, s.authenticate)
+	v1 := e.Group(apiPrefix, inFlightLimit(d.MaxInFlight), s.authenticate)
 	v1.GET("/workspaces", s.listWorkspaces)
 	v1.POST("/workspaces", s.createWorkspace)
 	v1.GET("/workspaces/:id", s.getWorkspace)

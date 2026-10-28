@@ -68,3 +68,55 @@ func TestLoadProduct_APIClientIDIsOptionalAndPublic(t *testing.T) {
 		t.Fatalf("set: %+v %v", cfg.OIDC, err)
 	}
 }
+
+func TestLoadProduct_IdentityURLsNeedTLSExceptLoopback(t *testing.T) {
+	with := func(k, v string) map[string]string { m := validProduct(); m[k] = v; return m }
+	for _, key := range []string{"MC_OIDC_ISSUER", "MC_OIDC_INTROSPECTION_URL"} {
+		for _, bad := range []string{
+			"http://idp.example.com", "http://10.0.0.5:8080", "http://localhost.evil.test",
+			"http://127.0.0.1.evil.test", "http://[::2]:8080",
+		} {
+			if _, err := config.LoadProduct(env(with(key, bad))); err == nil {
+				t.Errorf("%s=%s: plain http to a non-loopback host must be refused", key, bad)
+			}
+		}
+		for _, ok := range []string{
+			"https://idp.example.com", "http://localhost:8080", "http://127.0.0.1:8080", "http://[::1]:8080",
+		} {
+			if _, err := config.LoadProduct(env(with(key, ok))); err != nil {
+				t.Errorf("%s=%s: %v", key, ok, err)
+			}
+		}
+	}
+}
+
+func TestLoadProduct_MigrationURLDefaultsToRuntimeURL(t *testing.T) {
+	cfg, err := config.LoadProduct(env(validProduct()))
+	if err != nil || cfg.MigrationURL() != cfg.DatabaseURL {
+		t.Fatalf("unset: %q vs %q (%v)", cfg.MigrationURL(), cfg.DatabaseURL, err)
+	}
+	m := validProduct()
+	m["MC_MIGRATE_DATABASE_URL"] = "postgres://migrator@127.0.0.1:55440/mc"
+	cfg, err = config.LoadProduct(env(m))
+	if err != nil || cfg.MigrationURL() != "postgres://migrator@127.0.0.1:55440/mc" || cfg.DatabaseURL != "postgres://127.0.0.1:55440/mc" {
+		t.Fatalf("set: migration %q runtime %q (%v)", cfg.MigrationURL(), cfg.DatabaseURL, err)
+	}
+}
+
+func TestLoadProduct_MaxInFlight(t *testing.T) {
+	cfg, err := config.LoadProduct(env(validProduct()))
+	if err != nil || cfg.MaxInFlight != 0 {
+		t.Fatalf("default must be unlimited: %d %v", cfg.MaxInFlight, err)
+	}
+	m := validProduct()
+	m["MC_MAX_IN_FLIGHT"] = "32"
+	if cfg, err = config.LoadProduct(env(m)); err != nil || cfg.MaxInFlight != 32 {
+		t.Fatalf("set: %d %v", cfg.MaxInFlight, err)
+	}
+	for _, bad := range []string{"-1", "many", "3000000000"} {
+		m["MC_MAX_IN_FLIGHT"] = bad
+		if _, err := config.LoadProduct(env(m)); err == nil {
+			t.Errorf("MC_MAX_IN_FLIGHT=%s must be refused", bad)
+		}
+	}
+}
