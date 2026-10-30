@@ -1,8 +1,8 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
 import type { Metadata } from 'next'
+import { connection } from 'next/server'
 import { Suspense } from 'react'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/atoms/card'
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
@@ -26,6 +26,7 @@ export default function WorkspacePage({ params }: PageProps<'/workspaces/[worksp
 
 async function Workspace({ params }: Pick<PageProps<'/workspaces/[workspaceId]'>, 'params'>) {
   const { workspaceId } = await params
+  await connection()
   const here = `/workspaces/${workspaceId}`
   if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
   const read = await attempt(async () => {
@@ -48,29 +49,28 @@ async function Workspace({ params }: Pick<PageProps<'/workspaces/[workspaceId]'>
       <PageHeader
         title={workspace.name}
         description={
-          members ? 'You are an owner of this workspace.' : 'You are a member of this workspace.'
+          <LocalizedText
+            en="Matters organize each legal engagement. Choose an existing matter or create a new one to start tracking its work."
+            vi="Mỗi hồ sơ tập hợp một vụ việc hoặc giao dịch. Mở hồ sơ có sẵn hoặc tạo hồ sơ mới để bắt đầu theo dõi công việc."
+          />
         }
       />
-      <section aria-labelledby="matters-heading" className="flex flex-col gap-3">
-        <h2 id="matters-heading" className="text-lg font-semibold">
-          <LocalizedText en="Matters" vi="Hồ sơ" />
-        </h2>
-        <MatterList items={matters.items} total={matters.page.total} />
-      </section>
+      <MatterList
+        items={matters.items}
+        total={matters.page.total}
+        action={
+          members &&
+          etag && (
+            <CreateMatterForm
+              workspaceId={workspaceId}
+              workspaceName={workspace.name}
+              ifMatch={etag}
+            />
+          )
+        }
+      />
       {members && etag && (
-        <>
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                <LocalizedText en="New matter" vi="Hồ sơ mới" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CreateMatterForm workspaceId={workspaceId} ifMatch={etag} />
-            </CardContent>
-          </Card>
-          <WorkspaceMembers workspaceId={workspaceId} members={members.items} etag={etag} />
-        </>
+        <WorkspaceMembers workspaceId={workspaceId} members={members.items} etag={etag} />
       )}
     </div>
   )

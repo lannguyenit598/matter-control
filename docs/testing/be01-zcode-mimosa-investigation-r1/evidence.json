@@ -1,0 +1,145 @@
+{
+  "task": "MC-BE01-MIMOSA-ZCODE-INVESTIGATION-R1",
+  "actor": {
+    "tool": "ZCode (ZCode Desktop app 3.16.3, darwin 27.0.0 arm64)",
+    "model_self_reported": "account:zai-start-plan/GLM-5.3-Flash via Z.AI",
+    "session": "interactive; no login/provider/model/account change performed",
+    "quota_block": false
+  },
+  "window_utc": { "started": "2026-10-26T14:38:32Z", "outputs_written": "2026-10-26T14:52Z" },
+  "status": "BLOCKED_NO_DISPOSITION_INTERFACE",
+  "scope_confirmation": "Phase A read-only identification of the enforcing Mimosa PreToolUse hook; Phase B finding-scoped disposition only if officially documented and audited; no scan/commit/hook/baseline/settings changes; nine staged paths and reviewed patch preserved",
+  "pins_verified": {
+    "governance_root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "governance_branch": "codex/unified-project-flow",
+    "governance_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "handoff_prompt_sha256": "c876cbfa9d9329468d680ed0ce5548ed022fb46e0694c878a71747ce6385fe1b",
+    "direct_inputs": [
+      { "path": "docs/implementation/handoffs/MC-BE01-MIMOSA-OPERATOR-R1-PROMPT.md", "bytes": 2380, "sha256": "46c77040774c6bc7d638c767f5404518338d82cb1292c1ba02978d560917da0f", "match": true },
+      { "path": "docs/testing/be01-r1-commit-intake/MIMOSA-FINDING-RESOLUTION.md", "bytes": 3430, "sha256": "a365eb09cba1067189c7048006215a55c80c1a02c0af37fa30cc5ad51a400b7a", "match": true },
+      { "path": "docs/testing/be01-r1-commit-intake/flagged-source-analysis.json", "bytes": 1295, "sha256": "0847978fd64d8c15bf8db14ecbd89834cd509edd345447568b1398808f90c07d", "match": true },
+      { "path": "docs/testing/be01-r1-commit-intake/intake.json", "bytes": 6526, "sha256": "45c6d6ad66e782a6dabf7e61d24e36d0ba42eaebd9690c0c979f7e5a2b073493", "match": true },
+      { "path": "docs/testing/inta-returns/environment/env-intamvnmoems3pd/provision-command.py", "bytes": 9186, "sha256": "1200bddd386032bab5e820fb119a4e924de1d1c2012c14a697dbb2da9c7f6d12", "match": true },
+      { "path": "docs/reviews/be01-r1-commit-blocked-intake.md", "bytes": 5651, "sha256": "3101d12d725a29c5825f44ac9a5dcc5a520a6eb7bf6379909fb6ac1b69a6f7e9", "match": true },
+      { "path": "docs/testing/parallel-work-20261026/mimosa-operator-inputs.json", "bytes": 1499, "sha256": "66523b7e5a91aae7958ea2b6e2c6808e34cb642e71356ec4fd9a40fe9353709f", "match": true }
+    ],
+    "retained_artifacts_decoded": [
+      { "file": "owner-return.txt", "bytes": 9151, "sha256": "65ca650fac7da45d031c1ecd7b1f2abbb89d2f11c2ede549974d79ebb0b73a28", "match": true },
+      { "file": "32-commit-attempt-blocked.log", "bytes": 1760, "sha256": "8c75d072d6a4db68478e5daae246aabcb5dc8cbea1271fbbb83de07d6c522216", "match": true },
+      { "file": "seal.json", "bytes": 480, "sha256": "4f4974a25e1bb5f8f724c233d79b2cb99c6549f143ed835d27bc6d5db50a6f08", "match": true },
+      { "file": "scan-manifest.json", "bytes": 584, "sha256": "5f1fc9716a497330d56cef633bd44956bc99e1028ef55859e44696f985bf0e5a", "match": true },
+      { "file": "findings.json", "bytes": 1183, "sha256": "39e0ed480de2b3ffa47c7b1a411e548dfd502d5ba2b0d74be428e090a06dd0f7", "match": true },
+      { "file": "coverage.json", "bytes": 1282, "sha256": "acf474b56abdeb353c082ded23ac434fc0bbadfb817734f18985a81670267341", "match": true },
+      { "file": "report.md", "bytes": 691, "sha256": "323bcc9102a85bc6df72f25c361c9c6bf9db309e55b7790438bae0db2a329022", "match": true }
+    ]
+  },
+  "phase_a": {
+    "integration": {
+      "plugin": "mimosa@zcode-plugins-official",
+      "plugin_version": "1.0.4",
+      "scope": "user",
+      "install_record": "~/.zcode/cli/plugins/installed_plugins.json",
+      "install_source_sha256": "50d4da2cc1a24c63db06b51758699d5ffbf22aa4c79ae001a823e8177f0a1fe7",
+      "sealed_scan_producer_string": "mimosa0.1.0",
+      "mcp_server": "stdio node payload/dist/mcp/server.js; exposed this session as mcp__plugin_mimosa_mimosa__security_scan{,_start,_status,_cancel,_resume}",
+      "cli": "payload/dist/cli.js (same plugin version)"
+    },
+    "refusing_hook": {
+      "registration": "plugin hooks/hooks.json PreToolUse matcher 'Bash' -> node run-hook.cjs git-gate-hook.mjs (timeoutMs 120000)",
+      "documented_behavior": "L3 graded deep project audit before git commit/push; high=deny (README)",
+      "refusal_log_wording": "Mimosa L3 在 commit 前发现 1 个高危，最高等级 high",
+      "internals": "AES-256-GCM protected build (git-gate-hook.mjs.mimosa), Ed25519-signed manifest; not decrypted/executed — behavior from docs + artifacts only",
+      "native_repo_git_hooks": "mimosa git-gate status: installed=false for pre-commit and pre-push in both governance repo and backend main repo (/private/tmp/mattercontrol-step02-backend); governance .git/hooks contains only .sample files",
+      "scope_observation": "hook registration user-level; audit target = session project root (governance), not Bash cwd — refusal cites governance file while commit cwd was backend worktree; backend worktree has no .mimosa; scan job request.project = governance root. ZCODE_PROJECT_DIR binding is an inference, not hook-internal evidence"
+    },
+    "gate_record": {
+      "project_finding_ledger": ".mimosa/finding-ledger/v1: 14 batches, 0 events, 0 findings; checkpoints empty",
+      "ledger_show_receipt": "mimosa ledger show finding:f4bd71af4f1cfebcec9cb0a4 -> '✗ finding 不存在'",
+      "status_json": "overall=inconclusive, evidence=partial, findings.total=0, ledger complete with 0 events",
+      "reference_search": "zero grep hits for 'f4bd71af' and 'provision-command' under project .mimosa/",
+      "conclusion": "commit gate refusal derives from live static detection of source content (L3 audit), not from a stored per-finding gate record; no per-finding clearance state exists",
+      "unknowns": "whether the gate also consults the latest sealed scan is not provable without encrypted internals"
+    },
+    "mcp_exposed_tools": ["security_scan", "security_scan_start", "security_scan_status", "security_scan_cancel", "security_scan_resume"],
+    "mcp_contract": "scan lifecycle only (skill SKILL.md + references/scan-contract.md); no disposition operation; business-logic states vulnerable/safe/shadow/needs_runtime/inconclusive; verdictEffect none until product adopts a separate reviewed policy"
+  },
+  "phase_b_disposition_candidates": [
+    { "interface": "mimosa ledger list/show", "used": true, "mode": "read-only documented", "receipt": "findings=0 events=0; show -> finding 不存在", "disposition": false },
+    { "interface": "mimosa ledger record", "used": false, "receipt": "help: stdin batch, batchId idempotent, schema undocumented for hand-authoring; status vocabulary open/blocked/fixed_static/runtime_verified/reopened/needs_review/inconclusive has no false_positive/dismissed state", "disposition": false },
+    { "interface": "mimosa validate <finding-id>", "used": true, "mode": "read-only documented", "receipt": "'✗ finding ledger 为 partial 或包含读取错误，拒绝运行验证'; built-in validators only path-traversal-read-doc/v1 and command-exec-remote-runner/v1, fixed_static only — no credential validator", "disposition": false },
+    { "interface": "mimosa backlog import/triage", "used": false, "receipt": "help: imports stay unproven; triage max confirmed_candidate; '不会自动 dismissed'", "disposition": false },
+    { "interface": "mimosa policy init/check", "used": "check only", "receipt": "'⚠ 尚未配置项目安全策略'; coverage/threat-model config, not finding adjudication; init would write state", "disposition": false },
+    { "interface": "mimosa-ignore suppression comments", "used": false, "receipt": "--no-ignore-comments documented as the gate's trust mode; comment edits would also rewrite immutable evidence", "disposition": false },
+    { "interface": "MIMOSA_NO_GIT_GATE / MIMOSA_GIT_GATE_MODE / MIMOSA_GIT_GATE_FAILURE_MODE", "used": false, "receipt": "documented env switches; using them disables/weakens the hook — excluded by assignment", "disposition": false },
+    { "interface": "mimosa git-gate install/uninstall", "used": "status only (installed=false both repos)", "receipt": "install/uninstall modifies hooks — prohibited", "disposition": false },
+    { "interface": "MCP security_scan_start/cancel/resume/status", "used": false, "receipt": "no new scan assigned; lifecycle tools only, no disposition", "disposition": false }
+  ],
+  "target": {
+    "finding": "finding:f4bd71af4f1cfebcec9cb0a4",
+    "occurrence": "occurrence:457d6114dd662aa87811834e",
+    "scan": "scan-2026-10-26T00-40-19.307Z-e324c2f15ce2",
+    "producer": "mimosa0.1.0",
+    "scan_run_status": "inconclusive",
+    "coverage": "partial",
+    "verdict_effect": "none",
+    "counterevidence_retained": "provision-command.py line13 password=secrets.token_hex(32) runtime generation; line46 serializes the variable via exclusive 0600 private writer outside the repository (flagged-source-analysis.json, hash-verified)"
+  },
+  "commit_gate_state": {
+    "normal_commit_permission": "NOT_ESTABLISHED",
+    "tested_by_commit_attempt": false,
+    "native_git_hooks_installed": false,
+    "pretooluse_hook_assumed_still_enforcing": true,
+    "original_scan_clearance": "none; scan remains inconclusive/partial/verdictEffect none"
+  },
+  "required_maintainer_actions": [
+    "Preferred: scanner-maintainer corrects the native hardcoded-credential rule dataflow (runtime-generated secret serialized to exclusive-0600 private file outside the repo is not a hardcoded literal) and publishes a new protected rule pack; a separately authorized rescan then legitimately clears the finding",
+    "Alternative: add a documented, audited, finding/occurrence-scoped false_positive/wont_fix disposition state to the ledger/sealed-scan finding space AND make the L3 git gate honor it (today the gate re-detects from source and no such state exists); keyed to scan-2026-10-26T00-40-19.307Z-e324c2f15ce2 / finding:f4bd71af4f1cfebcec9cb0a4 / occurrence:457d6114dd662aa87811834e with actor, authority, reason, timestamp and receipt; partial coverage must remain visible",
+    "Fallback requiring separate explicit PO authorization: edit the immutable provisioning evidence provision-command.py and rescan; not authorized by this task",
+    "Explicitly rejected as bypasses: MIMOSA_NO_GIT_GATE=1, gate mode overrides, git-gate uninstall, hook/ledger/baseline edits, --no-verify, alternate host/context commit routes, scan retries, UUID fabrication for the legacy scanId"
+  ],
+  "preservation": {
+    "backend_root": "/private/tmp/mattercontrol-backend-be01",
+    "backend_branch": "codex/mc-be-01",
+    "backend_head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+    "staged_path_count": 9,
+    "staged_patch_bytes": 53067,
+    "staged_patch_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e",
+    "unstaged_diff_bytes": 0,
+    "untracked": 0,
+    "reverified_after_work_utc": "2026-10-26T14:50:53Z",
+    "source_or_index_modified": false,
+    "hooks_ledgers_baselines_global_settings_modified": false
+  },
+  "actions_log": [
+    { "step": "verify governance HEAD/branch, output dir absence, intake dir listing", "utc": "2026-10-26T14:38:32Z", "exit": 0, "mutation": "none" },
+    { "step": "verify backend HEAD/branch/status/nine staged paths/staged patch hash/unstaged bytes", "utc": "2026-10-26T14:38Z", "exit": 0, "mutation": "none" },
+    { "step": "hash+size verify 8 pinned input files", "utc": "2026-10-26T14:38Z", "exit": 0, "mutation": "none" },
+    { "step": "decode-hash 7 retained .gz intake artifacts and read refusal log + owner return", "utc": "2026-10-26T14:39Z", "exit": 0, "mutation": "none" },
+    { "step": "list mimosa plugin payload, ~/.mimosa store, ZCode config locations", "utc": "2026-10-26T14:39Z", "exit": 0, "mutation": "none" },
+    { "step": "read plugin manifest, hooks registrations, git-gate veneer, plugin.json, .mcp.json, README, scan-contract, installed_plugins.json", "utc": "2026-10-26T14:40-14:43Z", "exit": 0, "mutation": "none" },
+    { "step": "list repo .mimosa state stores, scan job record, app version (3.16.3)", "utc": "2026-10-26T14:41Z", "exit": 0, "mutation": "none" },
+    { "step": "mimosa-debug.log bounded grep: 1973 lines, 0 hits for f4bd71af/provision-command/git-gate", "utc": "2026-10-26T14:43Z", "exit": 0, "mutation": "none" },
+    { "step": "cli --help receipt (documented command surface)", "utc": "2026-10-26T14:44Z", "exit": 0, "mutation": "none" },
+    { "step": "ledger events/checkpoints listing + zero-reference grep (grep exit 1 = no matches, expected)", "utc": "2026-10-26T14:44Z", "exit": "expected-empty", "mutation": "none" },
+    { "step": "subcommand helps: ledger, ledger record (unknown-option error recorded), validate, policy, backlog, git-gate", "utc": "2026-10-26T14:45Z", "exit": "mixed, recorded", "mutation": "none" },
+    { "step": "documented read-only queries: mcp status, git-gate status, policy check, status --json, ledger list", "utc": "2026-10-26T14:45Z", "exit": 0, "mutation": "none" },
+    { "step": "git-gate status --json both repos; ledger show; validate (both refused, recorded)", "utc": "2026-10-26T14:47Z", "exit": 0, "mutation": "none" },
+    { "step": "read 2 ledger batch files (schema receipt)", "utc": "2026-10-26T14:47Z", "exit": 0, "mutation": "none" },
+    { "step": "output dir absence re-check + mkdir + final preservation re-verification", "utc": "2026-10-26T14:50:53Z", "exit": 0, "mutation": "created assigned output directory only" },
+    { "step": "write report.md and evidence.json (first report.md write interrupted before execution; dir confirmed empty; retried)", "utc": "2026-10-26T14:52Z", "exit": 0, "mutation": "only the two assigned output files" }
+  ],
+  "prohibitions_compliance": {
+    "new_scans": 0,
+    "commit_attempts": 0,
+    "disposition_writes": 0,
+    "hook_or_baseline_or_ledger_or_settings_edits": 0,
+    "credentials_read": false,
+    "protected_hook_internals_decrypted": false,
+    "external_contact": false,
+    "runtime_db_http_docker_operations": 0,
+    "backend_cli_avoided_to_prevent_state_init": true
+  },
+  "proposed_status": "BLOCKED — BLOCKED_NO_DISPOSITION_INTERFACE; awaiting maintainer action per report.md §4, then separate Codex intake; never BE01 DONE or full security PASS from this task",
+  "skipped": "disposition write (none exists), new scans, commit attempts, backend status/audit CLI runs to avoid initializing Mimosa state in the preserved worktree, doctor/knowledge/threat-model deep examination, external contact",
+  "remaining_risk": "gate internals encrypted — 're-detects from source' rests on documented behavior plus empty-ledger/zero-reference observations; plugin version drift may change interfaces; reviewed nine-path patch remains uncommitted; BE01 remains IN_REVIEW/BLOCKED"
+}

@@ -3,7 +3,7 @@ package system_test
 import (
 	"testing"
 
-	"github.com/example/userapi/internal/adapter/outbound/system"
+	"leonx.me/matter-control/internal/adapter/outbound/system"
 )
 
 // The record-ID capability generates canonical UUIDv7 strings and never the legacy

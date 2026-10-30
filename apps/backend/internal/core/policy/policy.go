@@ -3,7 +3,7 @@
 // the summarized access, and map the decision to outcomes.
 package policy
 
-import "github.com/example/userapi/internal/core/domain/matter"
+import "leonx.me/matter-control/internal/core/domain/matter"
 
 // Access summarizes the memberships a caller holds for one matter scope. Missing
 // facts are false; anything not explicitly granted is denied.

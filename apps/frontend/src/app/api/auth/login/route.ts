@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 import { oidcConfig } from '@/lib/oidc/config'
 import { beginLogin, OidcError, safeReturnTo } from '@/lib/oidc/flow'
+import { McError } from '@/lib/mc/errors'
 
 /** Starts Authorization Code + PKCE. The state cookie binds the callback to this browser. */
 export async function GET(request: NextRequest) {
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
     response.headers.set('Cache-Control', 'no-store')
     return response
   } catch (error) {
-    if (error instanceof OidcError) {
+    if (error instanceof OidcError || error instanceof McError) {
       return NextResponse.redirect(new URL('/login?error=unavailable', cfg.appOrigin))
     }
     throw error

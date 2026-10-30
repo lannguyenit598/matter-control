@@ -1,0 +1,62 @@
+{
+  "identity": "Actual Local Codex",
+  "fixture": "Synthetic local OIDC + real Go + owned PostgreSQL + filesystem object adapter; no cloud provider",
+  "checks": [
+    {
+      "name": "root entry redirect",
+      "pass": true
+    },
+    {
+      "name": "anonymous session",
+      "pass": true
+    },
+    {
+      "name": "PKCE authorize redirect",
+      "pass": true
+    },
+    {
+      "name": "durable callback login",
+      "pass": true
+    },
+    {
+      "name": "authenticated display-only session",
+      "pass": true
+    },
+    {
+      "name": "Worker to real Go and PostgreSQL read",
+      "pass": true
+    },
+    {
+      "name": "compiled CSS linked",
+      "pass": true
+    },
+    {
+      "name": "compiled CSS served",
+      "pass": true
+    },
+    {
+      "name": "streamed upload 1048576",
+      "pass": true
+    },
+    {
+      "name": "download hash 1048576",
+      "pass": true
+    },
+    {
+      "name": "streamed upload 26213376",
+      "pass": true
+    },
+    {
+      "name": "download hash 26213376",
+      "pass": true
+    },
+    {
+      "name": "durable logout",
+      "pass": true
+    },
+    {
+      "name": "old cookie refused after logout",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+[
+  {
+    "step": "initial",
+    "exit": null,
+    "next_config_sha": "988d905addfe1911",
+    "gitignore_sha": "196ce53eb64a6412",
+    "next_config_original_left": false,
+    "next_profile": {
+      "cacheComponents": null,
+      "partialPrefetching": null
+    },
+    "worker_js": false,
+    "worker_js_sha": null,
+    "apphosting_bundle": false,
+    "sentinel_hits_open_next": [],
+    "sentinel_hits_next_standalone": []
+  },
+  {
+    "step": "A0 build:worker with secret in .env.local (guard must refuse)",
+    "exit": 1,
+    "next_config_sha": "988d905addfe1911",
+    "gitignore_sha": "196ce53eb64a6412",
+    "next_config_original_left": false,
+    "next_profile": {
+      "cacheComponents": null,
+      "partialPrefetching": null
+    },
+    "worker_js": false,
+    "worker_js_sha": null,
+    "apphosting_bundle": false,
+    "sentinel_hits_open_next": [],
+    "sentinel_hits_next_standalone": []
+  },
+  {
+    "step": "A1 build:worker",
+    "exit": 0,
+    "next_config_sha": "988d905addfe1911",
+    "gitignore_sha": "196ce53eb64a6412",
+    "next_config_original_left": false,
+    "next_profile": {
+      "cacheComponents": false,
+      "partialPrefetching": false
+    },
+    "worker_js": true,
+    "worker_js_sha": "d05223bf4d44c841",
+    "apphosting_bundle": false,
+    "sentinel_hits_open_next": [],
+    "sentinel_hits_next_standalone": []
+  },
+  {
+    "step": "B App Hosting adapter",
+    "exit": 0,
+    "next_config_sha": "988d905addfe1911",
+    "gitignore_sha": "0826104e6f9997af",
+    "next_config_original_left": false,
+    "next_profile": {
+      "cacheComponents": true,
+      "partialPrefetching": true
+    },
+    "worker_js": true,
+    "worker_js_sha": "d05223bf4d44c841",
+    "apphosting_bundle": true,
+    "sentinel_hits_open_next": [],
+    "sentinel_hits_next_standalone": [
+      ".next/standalone/.dev.vars"
+    ]
+  },
+  {
+    "step": "A2 build:worker",
+    "exit": 0,
+    "next_config_sha": "988d905addfe1911",
+    "gitignore_sha": "0826104e6f9997af",
+    "next_config_original_left": false,
+    "next_profile": {
+      "cacheComponents": false,
+      "partialPrefetching": false
+    },
+    "worker_js": true,
+    "worker_js_sha": "d05223bf4d44c841",
+    "apphosting_bundle": true,
+    "sentinel_hits_open_next": [],
+    "sentinel_hits_next_standalone": []
+  }
+]

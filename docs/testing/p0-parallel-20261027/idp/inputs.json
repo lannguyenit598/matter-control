@@ -1,0 +1,388 @@
+{
+  "task": "MC-P0-IDP-PREFLIGHT",
+  "priority": "P0",
+  "owner": "Actual Local Codex subagent idp_preflight",
+  "agent_product": "Local Codex",
+  "model_version": "Not independently exposed/verified; no external-agent identity claimed",
+  "recorded_utc": "2026-10-27T15:21:28.812260+00:00",
+  "repo": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "branch": "codex/unified-project-flow",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "head_observed": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "snapshot": "/private/tmp/mc-p0-parallel-20261027-0da4q45k",
+  "snapshot_capture_utc": "2026-10-27T15:12:43.946969+00:00",
+  "manifest_path": "docs/testing/p0-parallel-20261027/snapshot-manifest.json",
+  "manifest_sha256": "679c30ec4b155124c57a50dd7321d6a53cce229fec002e9c6e8dee46bcd8d923",
+  "requirements": [
+    "FR-008",
+    "FR-018",
+    "NFR-001",
+    "NFR-002",
+    "NFR-004",
+    "NFR-012",
+    "AC-108",
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-147",
+    "AC-149"
+  ],
+  "tools": {
+    "shell": "zsh through exec_command; every command prefixed rtk",
+    "rtk": "1.1.0",
+    "python": "3.14.4; text/hash/JSON tooling only, no project import/execution",
+    "code_discovery": "mcp__semble__search, exact canonical repo; frozen counterpart inspection",
+    "documentation": "mcp__context7__resolve_library_id then query_docs; selected /websites/zitadel and /zitadel/zitadel; official web source checks",
+    "clock": "clock__curr_time UTC",
+    "writes": "apply_patch return.md; rtk proxy python3 inputs.json"
+  },
+  "commands_and_checks": [
+    {
+      "action": "rtk proxy cat /Users/nguyenvanlan/.codex/RTK.md; root AGENTS and exact assignment README/IDP prompt",
+      "result": "PASS; read fully"
+    },
+    {
+      "action": "rtk proxy python3 output absence check",
+      "result": "PASS; idp absent before creation; inputs absent before exclusive write"
+    },
+    {
+      "action": "rtk proxy git rev-parse HEAD; read-only root/branch check",
+      "result": "PASS; exact HEAD above; no Git mutation"
+    },
+    {
+      "action": "rtk proxy python3 selected frozen files SHA-256 vs snapshot manifest",
+      "result": "PASS; initial 27 pins; final 28 pins including productapi/server.go"
+    },
+    {
+      "action": "rtk proxy python3 JSON parse and return payload syntax/link/pin checks",
+      "result": "Run at closeout; result reported to coordinator; no product/source tests"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 9171,
+      "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318",
+      "closeout_sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/backend/AGENTS.md",
+      "bytes": 5653,
+      "sha256": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f",
+      "closeout_sha256": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/AGENTS.md",
+      "bytes": 4681,
+      "sha256": "d9f35173730630cdfbcd11727e6daf62e8e13b4e7581163d358adb8ef3871004",
+      "closeout_sha256": "d9f35173730630cdfbcd11727e6daf62e8e13b4e7581163d358adb8ef3871004",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "ops/p0-local/README.md",
+      "bytes": 6257,
+      "sha256": "738d4bae50bf1b7a9ade31dace85456ad47864d1f63ece867d2aa79accf644d4",
+      "closeout_sha256": "738d4bae50bf1b7a9ade31dace85456ad47864d1f63ece867d2aa79accf644d4",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "ops/p0-local/prepare.sh",
+      "bytes": 3085,
+      "sha256": "ef828035f0781067b5e8f3c5bd6610c6625916982cdab9a7351928bd21cd3726",
+      "closeout_sha256": "ef828035f0781067b5e8f3c5bd6610c6625916982cdab9a7351928bd21cd3726",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "ops/p0-local/provision.sh",
+      "bytes": 7557,
+      "sha256": "7d1c602c3997e7e8621acaf22b3aa3d6fb7eba17c336828bb57a426253c038de",
+      "closeout_sha256": "7d1c602c3997e7e8621acaf22b3aa3d6fb7eba17c336828bb57a426253c038de",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "ops/p0-local/provision-continue.sh",
+      "bytes": 4985,
+      "sha256": "5aaba6681cf1ec265f6b9ddd603c6224e3b018c3b810a447bf09c1a8493eec4b",
+      "closeout_sha256": "5aaba6681cf1ec265f6b9ddd603c6224e3b018c3b810a447bf09c1a8493eec4b",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "ops/p0-local/docker-compose.yml",
+      "bytes": 6651,
+      "sha256": "d28bc25a80cfce8fc1a8f3f2ffb059b8ed99a6197bac7c4a4b6da8d831f10c7f",
+      "closeout_sha256": "d28bc25a80cfce8fc1a8f3f2ffb059b8ed99a6197bac7c4a4b6da8d831f10c7f",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/backend/.env.example",
+      "bytes": 2700,
+      "sha256": "e6dca1461bb0f1662d24f0cc24924d06a82c83ea7d61fdab2a4eb41ee07d1838",
+      "closeout_sha256": "e6dca1461bb0f1662d24f0cc24924d06a82c83ea7d61fdab2a4eb41ee07d1838",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/.env.example",
+      "bytes": 931,
+      "sha256": "ce554680c3c7fc86e1ae4112fdc5b0b4452d07ede838dfe31c9a0cb7d26b818e",
+      "closeout_sha256": "ce554680c3c7fc86e1ae4112fdc5b0b4452d07ede838dfe31c9a0cb7d26b818e",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/.env.local.example",
+      "bytes": 393,
+      "sha256": "f27d324ba35e9a78f9e6d33cc86b81609b9cc3bdae4b1690bd22f8ff808c504a",
+      "closeout_sha256": "f27d324ba35e9a78f9e6d33cc86b81609b9cc3bdae4b1690bd22f8ff808c504a",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/backend/internal/config/product.go",
+      "bytes": 3445,
+      "sha256": "4b6e9940832b98a60d83924cea2f7a3bb0830c391ee3766720cd45776cca54ad",
+      "closeout_sha256": "4b6e9940832b98a60d83924cea2f7a3bb0830c391ee3766720cd45776cca54ad",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/backend/internal/app/product.go",
+      "bytes": 8811,
+      "sha256": "7d0113abbe5e70cd375268589a1bd710bf8ea1f0f5b8162c0c88812df3d0a9fe",
+      "closeout_sha256": "7d0113abbe5e70cd375268589a1bd710bf8ea1f0f5b8162c0c88812df3d0a9fe",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/backend/internal/adapter/outbound/identity/zitadel/verifier.go",
+      "bytes": 8742,
+      "sha256": "030063587f400ebb31d22d8930f0c73c7955a428d8ea4a5049105ff5d5e86494",
+      "closeout_sha256": "030063587f400ebb31d22d8930f0c73c7955a428d8ea4a5049105ff5d5e86494",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/backend/internal/adapter/outbound/postgres/identity_resolver.go",
+      "bytes": 1189,
+      "sha256": "3de68d4af1e16ce44431df535c4b14c13dec201318d291d2fae5ff877c1771f3",
+      "closeout_sha256": "3de68d4af1e16ce44431df535c4b14c13dec201318d291d2fae5ff877c1771f3",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/backend/internal/adapter/inbound/productapi/server.go",
+      "bytes": 12779,
+      "sha256": "21912968262b4634e2bc93aebe14215d4ddd20e70025f979e63a18d8c2893e50",
+      "closeout_sha256": "21912968262b4634e2bc93aebe14215d4ddd20e70025f979e63a18d8c2893e50",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/lib/oidc/config.ts",
+      "bytes": 1303,
+      "sha256": "5271371bbeb87021a38699f72b21ecb5a9b9dd3d4fa716be578df78d71989a5a",
+      "closeout_sha256": "5271371bbeb87021a38699f72b21ecb5a9b9dd3d4fa716be578df78d71989a5a",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/lib/oidc/flow.ts",
+      "bytes": 11260,
+      "sha256": "372d7e52b1f9e23881dc3aff790ce0bf3ad9a0edcb84f4d2ab0d8fea92b52daa",
+      "closeout_sha256": "372d7e52b1f9e23881dc3aff790ce0bf3ad9a0edcb84f4d2ab0d8fea92b52daa",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/lib/oidc/session.ts",
+      "bytes": 1893,
+      "sha256": "d24a58d83ac06dc8586d4f717c4aa7162efb09178a32794c61590cd7578db077",
+      "closeout_sha256": "d24a58d83ac06dc8586d4f717c4aa7162efb09178a32794c61590cd7578db077",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/lib/oidc/session-store.ts",
+      "bytes": 2597,
+      "sha256": "61bc21037fe4aaa1493790faf200848dfa614c1ee84b35f1cda3106a72b72ace",
+      "closeout_sha256": "61bc21037fe4aaa1493790faf200848dfa614c1ee84b35f1cda3106a72b72ace",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/lib/auth-provider.ts",
+      "bytes": 2529,
+      "sha256": "007b1dc53754975fc4d9c89c2d813af68ee906f14d1362102591a15d02117979",
+      "closeout_sha256": "007b1dc53754975fc4d9c89c2d813af68ee906f14d1362102591a15d02117979",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/app/api/auth/login/route.ts",
+      "bytes": 1062,
+      "sha256": "cb52d10d8379bcaa9992ed26e59aab1d610b296163e2cce24e10d2a8196acd46",
+      "closeout_sha256": "cb52d10d8379bcaa9992ed26e59aab1d610b296163e2cce24e10d2a8196acd46",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/app/api/auth/callback/route.ts",
+      "bytes": 1594,
+      "sha256": "b3ddbed8cd3c1b4ac010a02105dbf73a8568a21fa0010b93c85fe744ab11da46",
+      "closeout_sha256": "b3ddbed8cd3c1b4ac010a02105dbf73a8568a21fa0010b93c85fe744ab11da46",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/app/api/auth/logout/route.ts",
+      "bytes": 1180,
+      "sha256": "a784e141d4a58c39f1220542a935715ba5a2a9e1bb5b9089840321aa2f387ea5",
+      "closeout_sha256": "a784e141d4a58c39f1220542a935715ba5a2a9e1bb5b9089840321aa2f387ea5",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "apps/frontend/src/app/api/auth/session/route.ts",
+      "bytes": 796,
+      "sha256": "bf85ef4f7039dfecb74312f74f79f983f00b92e3fca99b119d1c80d9f63fc9d1",
+      "closeout_sha256": "bf85ef4f7039dfecb74312f74f79f983f00b92e3fca99b119d1c80d9f63fc9d1",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/local-contract.md",
+      "bytes": 41389,
+      "sha256": "06b4c929cc9d7762f3acfc61950ccb691cf84488a9debdba20e1b98005cb3aaa",
+      "closeout_sha256": "06b4c929cc9d7762f3acfc61950ccb691cf84488a9debdba20e1b98005cb3aaa",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/final-return.md",
+      "bytes": 15211,
+      "sha256": "ecbaf2279ebb4d716f177351243d15379dd0a09fa73758b212c06275dc26bd2a",
+      "closeout_sha256": "ecbaf2279ebb4d716f177351243d15379dd0a09fa73758b212c06275dc26bd2a",
+      "closeout_result": "PASS"
+    },
+    {
+      "path": "docs/requirements/srs.md",
+      "bytes": 30678,
+      "sha256": "9b813badd88a196c938d9e0503d904ad767f3090ff7522dcc6fae3eb689869f8",
+      "closeout_sha256": "9b813badd88a196c938d9e0503d904ad767f3090ff7522dcc6fae3eb689869f8",
+      "closeout_result": "PASS"
+    }
+  ],
+  "documentation_references": [
+    {
+      "id": "create",
+      "url": "https://zitadel.com/docs/reference/api/management/zitadel.management.v1.ManagementService.AddOIDCApp",
+      "supports": "Context7: correct REST JSON field names",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "update",
+      "url": "https://zitadel.com/docs/reference/api/management/zitadel.management.v1.ManagementService.UpdateOIDCAppConfig",
+      "supports": "PUT path and supported mutable field names; V1 deprecated",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "get",
+      "url": "https://zitadel.com/docs/reference/api/management/zitadel.management.v1.ManagementService.GetAppByID",
+      "supports": "GET path; appId distinct from clientId",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "list",
+      "url": "https://zitadel.com/docs/reference/api/management/zitadel.management.v1.ManagementService.ListApps",
+      "supports": "POST app search",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "v4-schema",
+      "url": "https://github.com/zitadel/zitadel/blob/v4.16.0/proto/zitadel/management.proto#L3238-L3448",
+      "supports": "Version-pinned GET/search/PUT routes, project.app.read/write; request schema at 9412-9513 and 9604-9696",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "v4-enums",
+      "url": "https://github.com/zitadel/zitadel/blob/v4.16.0/proto/zitadel/app.proto#L178-L210",
+      "supports": "Version-pinned OIDC enums",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "dev-mode",
+      "url": "https://zitadel.com/docs/examples/login/go",
+      "supports": "Context7 official HTTP localhost / devMode guidance",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "introspection",
+      "url": "https://zitadel.com/docs/guides/integrate/token-introspection/private-key-jwt",
+      "supports": "API key client assertion claims and separate user access token",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "v4-introspection",
+      "url": "https://github.com/zitadel/zitadel/blob/v4.16.0/internal/api/oidc/introspect.go#L130-L221",
+      "supports": "Project or client audience accepted; source fetched via raw.githubusercontent.com",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "scope",
+      "url": "https://zitadel.com/docs/apis/openidoauth/scopes",
+      "supports": "Project audience scope adds project ID",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "cloud-price",
+      "url": "https://zitadel.com/pricing",
+      "supports": "US$0/month advertised Free plan",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "cloud-limits",
+      "url": "https://zitadel.com/pricing/detail",
+      "supports": "1 instance; 100 DAU; 5000 Management requests; 1 admin; monthly billing; short provider audit/log retention; exact Free reset/enforcement unverified",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "dau-definition",
+      "url": "https://help.zitadel.com/how-is-daily-active-users-calculated",
+      "supports": "2026-04-30; sum of daily unique authentication users over month; includes refresh and service users",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    },
+    {
+      "id": "management-usage",
+      "url": "https://help.zitadel.com/management-api-requests-billing",
+      "supports": "2025-08-12; authenticated endpoint families and exclusions; no unverified OAuth introspection quota claim",
+      "verification": "Official public docs/source fetched 2026-10-27; provider live-state not checked"
+    }
+  ],
+  "unavailable_references": [
+    {
+      "url": "https://zitadel.com/docs/reference/api/management/update-oidc-app-config",
+      "result": "web tool unavailable; replaced with canonical ManagementService URL"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/zitadel/zitadel/v4.16.0/internal/api/grpc/server.go",
+      "result": "404; no conclusion drawn"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/zitadel/zitadel/v4.16.0/internal/api/grpc/management/app.go",
+      "result": "cache miss; no conclusion drawn"
+    }
+  ],
+  "cloud_update": "Parent relayed direct PO option to use ZITADEL Cloud Free; analysis only. No account/instance/login/billing/config action authorized in this subtask.",
+  "status": {
+    "source_report": "STATIC_REVIEWED",
+    "proposed_workflow": "IN_REVIEW",
+    "independent_review": "NOT_RUN",
+    "effective_local_idp": "UNKNOWN",
+    "actual_user_token_audience": "UNKNOWN",
+    "login": "NOT_RUN",
+    "api_principal_and_authorization": "NOT_RUN",
+    "cloud_instance": "UNKNOWN; not inspected/created",
+    "cloud_free_exact_reset_enforcement_overage": "NEEDS_OPERATOR_DISCOVERY"
+  },
+  "not_run": [
+    "private file reads",
+    "provider/admin/live HTTP probes",
+    "SQL/DB actions",
+    "Docker/process inspection or lifecycle",
+    "browser/capture/export",
+    "source execution/import/tests/build/install",
+    "provisioning",
+    "Cloud account/instance changes",
+    "git stage/scan/commit/push/merge/deploy",
+    "external agent or cross-thread messaging"
+  ],
+  "output_scope": [
+    "docs/testing/p0-parallel-20261027/idp/return.md",
+    "docs/testing/p0-parallel-20261027/idp/inputs.json"
+  ]
+}

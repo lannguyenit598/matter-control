@@ -1,0 +1,81 @@
+{
+  "actor": "Local Codex",
+  "type": "source intake observations for independent adjudication; not independent QA",
+  "findings": [
+    {
+      "id": "R5-I01",
+      "priority": "P1",
+      "basis": "CONFIRMED_STATIC",
+      "topic": "Real CLI stage gate disabled; receipt does not bind dispatch",
+      "references": [
+        "runner/coordinator.py:240,296-323,710,773-783",
+        "launcher/harness-dev.mjs:24-26,433-438",
+        "runner/guard-validator-r5.sh:17-20"
+      ],
+      "detail": "main calls run_plan with stage_receipt_required default False and no stage_dir; even opt-in only checks stageStatus string. No receipt hash/path/run binding or nested-link verification. Launcher CLI hard-codes original shared harness/Next and cwd, not staged values. Wrapper falls back to command -v python3. Missing binding routes through PROBE_ERROR rather than typed BINDING_ERROR.",
+      "effect": "Creating an honest private copy/receipt cannot fix or validate the actual execution path. No verified-stage readiness receipt may be issued."
+    },
+    {
+      "id": "R5-I02",
+      "priority": "P1",
+      "basis": "CONFIRMED_STATIC_WITH_TEMPORAL_LIMIT",
+      "topic": "Poll-before-probe still does not prove the full probe interval live",
+      "references": [
+        "runner/coordinator.py:505-571",
+        "runner/selfcheck-r5.py:582-613",
+        "proposals/fast-refusal-proof-basis-r5.md:29-47"
+      ],
+      "detail": "poll_before None followed by lsof and unconditional count increment; exit during probe still counted and no interval sample timestamps are retained. Test35 explicitly passes None then1; sampled absence remains weaker than never-listen. Dead-from-start test34 improves but does not close this temporal gap.",
+      "effect": "No continuous no-listen claim or genuine lifecycle-bound proof follows; independent reviewer must adjudicate exact source plus retained evidence basis."
+    },
+    {
+      "id": "R5-I03",
+      "priority": "P1",
+      "basis": "CONFIRMED_STATIC",
+      "topic": "Launcher record not correlated to the attempt or durable completion",
+      "references": [
+        "launcher/harness-dev.mjs:65-123",
+        "runner/guard_evaluator.py:126-147",
+        "runner/selfcheck-r5.py:604-613"
+      ],
+      "detail": "Evaluator only checks optional record dict, BINDING_ERROR, spawnCalled false and constant guard hash; does not require expected outcome/run/variant/PID/PPID/argv/cwd/start/exit/binary/launcher identity. Record has one timestamp, no start+exit interval or Node binary hash; writer catches errors and lacks file/dir fsync. Test35 supplies only four fields and passes.",
+      "effect": "A stale/foreign minimal record can satisfy claimed provenance checks; actual persisted identity/durability remains incomplete."
+    },
+    {
+      "id": "R5-I04",
+      "priority": "P1",
+      "basis": "CONFIRMED_STATIC",
+      "topic": "Signal identity weakens if start-time lookup fails",
+      "references": [
+        "runner/coordinator.py:88-157,448,483,524-537,589-633"
+      ],
+      "detail": "get_process_start_time returns None on query error; optional expected_start_time disables equality check. Executable identity remains basename substring matching. Bare ps/lsof use coordinator ambient resolution. Failed wait can be retried by subsequent cleanup sites; no guarded once-only cleanup disposition.",
+      "effect": "Do not run runner/owned cleanup before strict non-null identity, pinned helpers and no-retry handling are independently accepted."
+    },
+    {
+      "id": "R5-I05",
+      "priority": "P2",
+      "basis": "SOURCE_IMPROVEMENT_WITH_CONDITIONAL_RISK",
+      "topic": "Guard hash before import improved; exact-byte identity still path based",
+      "references": [
+        "launcher/harness-dev.mjs:47-59,248-260"
+      ],
+      "detail": "Static import removed and raw guard hash checked before dynamic import. Subsequent import rereads mutable path and module cache may apply; no private frozen source/realpath identity binding is enforced by the shipped CLI.",
+      "effect": "Carry source closure only as independently adjudicated; do not claim checked bytes are necessarily imported bytes under mutation."
+    },
+    {
+      "id": "R5-I06",
+      "priority": "P2",
+      "basis": "CONFIRMED_STATIC",
+      "topic": "Owner test/provenance claims exceed retained coverage",
+      "references": [
+        "runner/selfcheck-r5.py:582-613,751-861",
+        "r5-test-summary.json",
+        "launcher/test-launcher-mock.mjs:293-309",
+        "proposals/dependency-isolation-plan-r5.md:25-49"
+      ],
+      "detail": "Test44 opts in directly, so it does not cover real CLI default stage bypass. Suite cases45/46 use bare node; case46 uses summary substring. FakeClock is visible for case39, not every scenario. Standalone stderr and per-suite start/end receipts are absent. Plan cp wildcard omits dotfiles and preserves external node_modules symlink; concrete escape count142 is a proposal, not measured evidence.",
+      "effect": "46/46 and17/17 are retained owner evidence only; not executable readiness, all-findings closure or actual staging proof."
+    }
+  ]
+}

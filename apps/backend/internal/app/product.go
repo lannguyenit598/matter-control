@@ -21,17 +21,17 @@ import (
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
 
-	"github.com/example/userapi/internal/adapter/inbound/httpapi"
-	"github.com/example/userapi/internal/adapter/inbound/productapi"
-	"github.com/example/userapi/internal/adapter/outbound/identity/zitadel"
-	"github.com/example/userapi/internal/adapter/outbound/objectstore"
-	"github.com/example/userapi/internal/adapter/outbound/postgres"
-	"github.com/example/userapi/internal/adapter/outbound/sheet"
-	"github.com/example/userapi/internal/adapter/outbound/system"
-	"github.com/example/userapi/internal/config"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
-	"github.com/example/userapi/internal/core/service"
+	"leonx.me/matter-control/internal/adapter/inbound/httpapi"
+	"leonx.me/matter-control/internal/adapter/inbound/productapi"
+	"leonx.me/matter-control/internal/adapter/outbound/identity/zitadel"
+	"leonx.me/matter-control/internal/adapter/outbound/objectstore"
+	"leonx.me/matter-control/internal/adapter/outbound/postgres"
+	"leonx.me/matter-control/internal/adapter/outbound/sheet"
+	"leonx.me/matter-control/internal/adapter/outbound/system"
+	"leonx.me/matter-control/internal/config"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
+	"leonx.me/matter-control/internal/core/service"
 )
 
 // ProductOptions configures RunProduct.
@@ -165,11 +165,19 @@ type productServices struct {
 	Evidence   port.EvidenceService
 	Filings    port.FilingService
 	Control    port.ControlService
+	Review     port.ReviewService
 	DataOps    port.DataOpsService
 }
 
-// newObjectStore opens the private document directory; it is closed with the app.
+// newObjectStore opens the configured document store: a private bucket on Cloudflare R2, or the
+// private local directory (closed with the app).
 func newObjectStore(lc fx.Lifecycle, cfg config.ProductConfig) (port.ObjectStore, error) {
+	if cfg.ObjectBackend == "r2" {
+		return objectstore.NewR2(objectstore.R2Config{
+			Endpoint: cfg.R2.Endpoint, Bucket: cfg.R2.Bucket,
+			AccessKeyID: cfg.R2.AccessKeyID, SecretAccessKey: cfg.R2.SecretAccessKey,
+		})
+	}
 	s, err := objectstore.New(cfg.ObjectDir)
 	if err != nil {
 		return nil, err
@@ -185,6 +193,7 @@ func newProductServices(store *postgres.MatterStore, objects port.ObjectStore, l
 		Evidence:   service.NewEvidenceService(work, objects),
 		Filings:    service.NewFilingService(work),
 		Control:    service.NewControlService(work),
+		Review:     service.NewReviewService(work),
 		Workspaces: service.NewWorkspaceService(store, ids, logger, matter.KeyAgePolicy{}),
 		Matters:    service.NewMatterService(store, ids, logger, matter.KeyAgePolicy{}),
 		Work:       work,
@@ -195,22 +204,24 @@ func newProductServices(store *postgres.MatterStore, objects port.ObjectStore, l
 // newProductHTTPServer mirrors newHTTPServer's lifecycle: synchronous listen, serve in the
 // background, drain on stop, cancel request contexts before the pool closes.
 func newProductHTTPServer(lc fx.Lifecycle, cfg config.ProductConfig, logger *slog.Logger, opts ProductOptions,
-	ws port.WorkspaceService, ms port.MatterService, work port.WorkService, evidence port.EvidenceService, filings port.FilingService, control port.ControlService, dataOps port.DataOpsService, verifier port.TokenVerifier, ids port.IdentityResolver, failed fatal,
+	ws port.WorkspaceService, ms port.MatterService, work port.WorkService, evidence port.EvidenceService, filings port.FilingService, control port.ControlService, dataOps port.DataOpsService, review port.ReviewService, verifier port.TokenVerifier, ids port.IdentityResolver, pool *pgxpool.Pool, failed fatal,
 ) *http.Server {
 	var draining atomic.Bool
 	e := productapi.NewServer(productapi.Deps{
-		Workspaces: ws, Matters: ms, Work: work, Evidence: evidence, Filings: filings, Control: control, DataOps: dataOps, DataOpsCodec: sheet.Codec{}, MaxUploadBytes: cfg.MaxUploadBytes, Verifier: verifier, Identities: ids, Logger: logger,
-		Ready:          readiness(&draining, nil),
-		RequestTimeout: cfg.RequestTimeout,
-		MaxInFlight:    cfg.MaxInFlight,
+		Workspaces: ws, Matters: ms, Work: work, Evidence: evidence, Filings: filings, Control: control, Review: review, DataOps: dataOps, DataOpsCodec: sheet.Codec{}, MaxUploadBytes: cfg.MaxUploadBytes, Verifier: verifier, Identities: ids, Logger: logger,
+		Ready:                readiness(&draining, pool.Ping),
+		RequestTimeout:       cfg.RequestTimeout,
+		TransferTimeout:      cfg.TransferTimeout,
+		MaxInFlight:          cfg.MaxInFlight,
+		LocalPeopleDirectory: cfg.LocalPeopleDirectory,
 	})
 	baseCtx, cancelRequests := context.WithCancel(context.Background())
 	srv := &http.Server{
 		Handler:           httpapi.Instrument(e),
 		BaseContext:       func(net.Listener) context.Context { return baseCtx },
 		ReadHeaderTimeout: 5 * time.Second,
-		ReadTimeout:       30 * time.Second,
-		WriteTimeout:      cfg.RequestTimeout + 5*time.Second,
+		ReadTimeout:       max(30*time.Second, cfg.TransferTimeout),
+		WriteTimeout:      max(cfg.RequestTimeout, cfg.TransferTimeout) + 5*time.Second,
 		IdleTimeout:       75 * time.Second,
 		ErrorLog:          slog.NewLogLogger(logger.Handler(), slog.LevelWarn),
 	}

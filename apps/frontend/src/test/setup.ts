@@ -1,7 +1,11 @@
 import '@testing-library/jest-dom/vitest'
 
 import { cleanup, configure } from '@testing-library/react'
-import { afterEach } from 'vitest'
+import { afterEach, vi } from 'vitest'
+
+// connection() exists only inside a Next request scope, which a unit test does not have. Mocking this
+// tiny wrapper (not next/server) keeps the heavy Next server module out of every test that reads a session.
+vi.mock('@/lib/request-time', () => ({ awaitRequest: async () => {} }))
 
 // Whole-suite runs share CPU with many jsdom workers; the default 1s async budget is too tight.
 configure({ asyncUtilTimeout: 5000 })

@@ -1,0 +1,220 @@
+{
+ "utc": "2026-10-28T17:17:33Z",
+ "baseline": "apps/backend snapshot taken 2026-10-28T17:01Z before any edit (243 files)",
+ "removed": [
+  "apps/backend/.claude/rules/messaging.md",
+  "apps/backend/.github/dependabot.yml",
+  "apps/backend/.github/workflows/ci.yml",
+  "apps/backend/.github/workflows/template.yml",
+  "apps/backend/api.http",
+  "apps/backend/cmd/userapi/main.go",
+  "apps/backend/docs/architecture.md",
+  "apps/backend/docs/events.md",
+  "apps/backend/docs/new-project.md",
+  "apps/backend/internal/adapter/inbound/httpapi/contract_test.go",
+  "apps/backend/internal/adapter/inbound/httpapi/errors.go",
+  "apps/backend/internal/adapter/inbound/httpapi/errors_test.go",
+  "apps/backend/internal/adapter/inbound/httpapi/huma_adapter.go",
+  "apps/backend/internal/adapter/inbound/httpapi/huma_adapter_test.go",
+  "apps/backend/internal/adapter/inbound/httpapi/observability_test.go",
+  "apps/backend/internal/adapter/inbound/httpapi/openapi.go",
+  "apps/backend/internal/adapter/inbound/httpapi/openapi_test.go",
+  "apps/backend/internal/adapter/inbound/httpapi/server.go",
+  "apps/backend/internal/adapter/inbound/httpapi/service_unavailable_test.go",
+  "apps/backend/internal/adapter/inbound/httpapi/testdata/panic.golden",
+  "apps/backend/internal/adapter/inbound/httpapi/testdata/timeout.golden",
+  "apps/backend/internal/adapter/inbound/httpapi/testdata/unavailable.golden",
+  "apps/backend/internal/adapter/inbound/httpapi/testdata/unexpected_error.golden",
+  "apps/backend/internal/adapter/inbound/httpapi/testdata/user_api.golden",
+  "apps/backend/internal/adapter/inbound/httpapi/testdata/version_conflict.golden",
+  "apps/backend/internal/adapter/inbound/httpapi/user_handler.go",
+  "apps/backend/internal/adapter/inbound/httpapi/user_handler_test.go",
+  "apps/backend/internal/adapter/outbound/kafka/security_test.go",
+  "apps/backend/internal/adapter/outbound/kafka/sink.go",
+  "apps/backend/internal/adapter/outbound/kafka/sink_test.go",
+  "apps/backend/internal/adapter/outbound/memory/user_repository.go",
+  "apps/backend/internal/adapter/outbound/memory/user_repository_test.go",
+  "apps/backend/internal/adapter/outbound/postgres/faults_test.go",
+  "apps/backend/internal/adapter/outbound/postgres/migrate.go",
+  "apps/backend/internal/adapter/outbound/postgres/migrations/0001_create_users.sql",
+  "apps/backend/internal/adapter/outbound/postgres/migrations/0002_add_users_version.sql",
+  "apps/backend/internal/adapter/outbound/postgres/migrations/0003_create_outbox.sql",
+  "apps/backend/internal/adapter/outbound/postgres/migrations/0004_outbox_parking.sql",
+  "apps/backend/internal/adapter/outbound/postgres/migrations/0005_outbox_pending_index.sql",
+  "apps/backend/internal/adapter/outbound/postgres/migrations/0006_drop_outbox_unpublished_index.sql",
+  "apps/backend/internal/adapter/outbound/postgres/outbox.go",
+  "apps/backend/internal/adapter/outbound/postgres/outbox_test.go",
+  "apps/backend/internal/adapter/outbound/postgres/queries/outbox.sql",
+  "apps/backend/internal/adapter/outbound/postgres/queries/session.sql",
+  "apps/backend/internal/adapter/outbound/postgres/queries/users.sql",
+  "apps/backend/internal/adapter/outbound/postgres/sqlcgen/db.go",
+  "apps/backend/internal/adapter/outbound/postgres/sqlcgen/models.go",
+  "apps/backend/internal/adapter/outbound/postgres/sqlcgen/outbox.sql.go",
+  "apps/backend/internal/adapter/outbound/postgres/sqlcgen/session.sql.go",
+  "apps/backend/internal/adapter/outbound/postgres/sqlcgen/users.sql.go",
+  "apps/backend/internal/adapter/outbound/postgres/user_repository.go",
+  "apps/backend/internal/adapter/outbound/postgres/user_repository_test.go",
+  "apps/backend/internal/adapter/outbound/repotest/contract.go",
+  "apps/backend/internal/app/app_test.go",
+  "apps/backend/internal/app/relay.go",
+  "apps/backend/internal/config/config_test.go",
+  "apps/backend/internal/core/domain/email.go",
+  "apps/backend/internal/core/domain/user.go",
+  "apps/backend/internal/core/domain/user_test.go",
+  "apps/backend/internal/core/service/user_service.go",
+  "apps/backend/internal/core/service/user_service_test.go",
+  "apps/backend/internal/outbox/relay.go",
+  "apps/backend/internal/outbox/relay_internal_test.go",
+  "apps/backend/internal/outbox/relay_test.go",
+  "apps/backend/scripts/rename.sh"
+ ],
+ "added": [
+  {
+   "path": ".github/dependabot.yml",
+   "sha256": "b877bbeaf7a6fe0137668a9cde90d07db5c3aec8dc346c98aecc7a996e8614a7"
+  },
+  {
+   "path": ".github/workflows/backend.yml",
+   "sha256": "058c597d56384581ab6543b72556f85aa7f9ceb0ba08098a0a9749b1cdef8ae8"
+  },
+  {
+   "path": ".github/workflows/frontend.yml",
+   "sha256": "028f543a5e3ff2f6b9db60e8de86a51d8b991aec67c0bb2369134a5f098d5d74"
+  },
+  {
+   "path": "apps/backend/internal/adapter/inbound/httpapi/instrument.go",
+   "sha256": "db4245bbfd9ba422e1efa8fb6a47ae73ef50b7a15cbf6bf598ed56213194bc8c"
+  },
+  {
+   "path": "apps/backend/internal/adapter/outbound/postgres/pool.go",
+   "sha256": "e5d57a7197b21a42c3fec249b6ec9d84169a6133b4978557867b9abd4160367e"
+  },
+  {
+   "path": "apps/backend/internal/config/helpers_test.go",
+   "sha256": "01211d41c4e1f0a6d8b1b210a91ab3b6ee18a90ef7e7c1ee25e3df5bcee98ede"
+  }
+ ],
+ "modified": [
+  {
+   "path": "apps/backend/.dockerignore",
+   "before": "501854db12862b9b44df1ddb67012dc20bfb7b88fd7ddec5e45db8ced08d9979",
+   "after": "838c2a239318e84d56270327d83fc8b6ed32f8c406bf83e5e1a42aeaade2f77b"
+  },
+  {
+   "path": "apps/backend/.env.example",
+   "before": "e6dca1461bb0f1662d24f0cc24924d06a82c83ea7d61fdab2a4eb41ee07d1838",
+   "after": "b3fecc2626019896ce2d901c58d19e57980d4550f47d61ecff66763a04eba078"
+  },
+  {
+   "path": "apps/backend/.golangci.yml",
+   "before": "8b47d2561e65fcac1325b2208ec12cbc95fcb378533e15c01fd36cd773f201a2",
+   "after": "ad84a24aadebcc9b8561a7b1b8ac23e02eadb735d450ea272f3733015080ccf9"
+  },
+  {
+   "path": "apps/backend/AGENTS.md",
+   "before": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f",
+   "after": "a9d9d55a1e1829186633d249169d048056a33eaade869e220ac4d98750fc1ad4"
+  },
+  {
+   "path": "apps/backend/Dockerfile",
+   "before": "29ef785c2865c092c9d4d0a36bcd0509e22f72caf4a4883956308e56a46dffde",
+   "after": "e69181e350e514cbd267c49d149a29bdf4914c72ea70174f4f6541eb6c17ff25"
+  },
+  {
+   "path": "apps/backend/Makefile",
+   "before": "c5e0b60fc672fd0f6d3c45a68c4cb51b608cbd442c22154d6ea74de61e0304f3",
+   "after": "a40cdbec4c23927b8490ad2cc9672cd429c805fadc6d648dd6d2fd6815039338"
+  },
+  {
+   "path": "apps/backend/README.md",
+   "before": "d250af32909b22eb9c8ff021eb914f942c0e76c6b3aca86415bab87dd89bd4d2",
+   "after": "322feacd76b445b59beb39859cfd482b5a81c1f1a34b3dd541617ddd8ac057f5"
+  },
+  {
+   "path": "apps/backend/README.vi.md",
+   "before": "2c4093d43e0f71da04fe2e7f99f24617b2af06a2b388c52f4ada1bb059981551",
+   "after": "6f2211d4ce4fa7c066bf1248338acabb1d48b28d388a76835f7a70ec663cb5a3"
+  },
+  {
+   "path": "apps/backend/docker-compose.yml",
+   "before": "7954ef029e2428652a7129d730a466dcb031c79c7ae5b4e0d2bcdd06d0692ec1",
+   "after": "c5503cb5e1299e25b76035636113064d4265ed458ea59c1ac127461e6ae49568"
+  },
+  {
+   "path": "apps/backend/docs/operations.md",
+   "before": "1c724a7a9e3a09bc80023178930f91dcd3379203aa60cfc7efe6833daa0f9806",
+   "after": "102e9aa2eebe4f5fcd15f2a46659a37c85c508ca9eaaf83c5b78d90922af8f5f"
+  },
+  {
+   "path": "apps/backend/go.mod",
+   "before": "63eed6d9405dd929eb48c6dfcb53f9b5f4761185cfd6989d66f72863a14afe30",
+   "after": "80af2960d0663524d1a098a40a610f0a9bf326609e985626478fb70441f4e4be"
+  },
+  {
+   "path": "apps/backend/go.sum",
+   "before": "b34f484a93734fd4b6eda8c801fc149947d1e78f45639a948595687132d1f0b9",
+   "after": "841e7543a4960c1c0f009dca433a38935139261fe159e76fb1f2a39a580e4b4f"
+  },
+  {
+   "path": "apps/backend/internal/adapter/outbound/postgres/map_error_test.go",
+   "before": "834ab7ff08292b0167b1c918d951e12b6c900e3c215c32b15ba7be3b3711088d",
+   "after": "c1062f27aa3ec4ff9d3f95563894542688d0c59cc81f8dc5e58824196ca874f6"
+  },
+  {
+   "path": "apps/backend/internal/adapter/outbound/postgres/matter_migrate.go",
+   "before": "ae389d2e0ccbbdad14c3594839749399dab6c624ffff7a8db05ec43d5589d70f",
+   "after": "2c6d865951440506900bd3bf22691c48d6134118a79569d453eaa12232f3edf3"
+  },
+  {
+   "path": "apps/backend/internal/adapter/outbound/system/system.go",
+   "before": "b7357259d6a639d5f53b1c1449af72008c4109399110d51c74a65eecac66a90c",
+   "after": "9118f292ecccc345401b385d0e2b5920a730941d515d39ca79944aba7d9133a3"
+  },
+  {
+   "path": "apps/backend/internal/adapter/outbound/system/system_test.go",
+   "before": "bbfcd024458635f5af293bab2002d35a10364324fd1f7194f29b0ff4a92e8f97",
+   "after": "0b73858ddb8c9a012b052834074ff3441b0ceb89c43ced72fd60e1ca6437694f"
+  },
+  {
+   "path": "apps/backend/internal/app/app.go",
+   "before": "5e6cd64ac79762cb22c623e7077cc46f36bb52799e7af0a7fa27a18a6ec64ca8",
+   "after": "47238d69f5beab496a57d69ec9e79902c4ac6f1262ca207448de7e0679392034"
+  },
+  {
+   "path": "apps/backend/internal/app/graph_test.go",
+   "before": "a1fb3211c105e7b24c5e0b73e7b294ef58165ff7c25065878cb371e231f109e2",
+   "after": "c1d29f8e0394ffa2ecb324c50e4afc4260b86b8362bcba5f0fe094881811e5c7"
+  },
+  {
+   "path": "apps/backend/internal/config/config.go",
+   "before": "701051da09efbaf23bf2634449bea9e3f21c1c46851ada7c24f22221476eca64",
+   "after": "24f447559ffdf8e926c9ee92d3eeb27a73ce0a65f403bb3325c31bcc8f12eee2"
+  },
+  {
+   "path": "apps/backend/internal/core/domain/errors.go",
+   "before": "9366b192ac71ee7cc1de18e793fec486bbe86d583c91ac68c22fe7db6eb4662e",
+   "after": "4073523b55c599c764a86fee8945ccd80ea073619de03a66d5a1d97f240e3d72"
+  },
+  {
+   "path": "apps/backend/internal/core/domain/matter/matter_test.go",
+   "before": "2d99cb68da74501b79e3d1aefb696769e065bd63973869dc38c29b98c81ca7da",
+   "after": "e9ac6de4e0643f4af37870762feb5fed5c67fecab3552cc52620d91d6570224f"
+  },
+  {
+   "path": "apps/backend/internal/core/port/port.go",
+   "before": "551c60989f82fefd5c3c068c86c5d314f24447384b5822ce1cae066596e5c166",
+   "after": "afc0d21ab7fff0b124823bbb089fcaa41dc4d4aea76fc363776ccec2944c1c69"
+  },
+  {
+   "path": "apps/backend/sqlc.yaml",
+   "before": "9b7260b804e923a81afa56ae43c738b96b55019c09344bd26fee33d4c686b832",
+   "after": "5e4734f54292beb558d5320cde56a6ff026097768b140a7a0549f85688712424"
+  }
+ ],
+ "counts": {
+  "removed": 65,
+  "added": 6,
+  "modified": 23
+ },
+ "backup": "tar of apps/backend outside the repo, /private/tmp/mc-userapi-removal-backup-20261028T170145Z.tar"
+}

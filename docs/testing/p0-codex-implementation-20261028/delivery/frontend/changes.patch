@@ -1,0 +1,568 @@
+--- a/apps/frontend/src/features/data-transfer/intent.ts
++++ b/apps/frontend/src/features/data-transfer/intent.ts
+@@ -74,6 +74,14 @@
+   itemId?: string
+ }
+ 
++/** A missing or duplicate receipt cannot settle a submitted row. Keep its identity for recovery. */
++export function reconcileOutcomes(results: RowOutcome[], rowKeys: string[]): RowOutcome[] {
++  return rowKeys.map((rowKey) => {
++    const matches = results.filter((row) => row.rowKey === rowKey)
++    return matches.length === 1 ? matches[0]! : { rowKey, status: 'UNKNOWN' }
++  })
++}
++
+ export type GroupedOutcomes = {
+   succeeded: RowOutcome[]
+   failed: RowOutcome[]
+--- a/apps/frontend/src/features/data-transfer/components/import-section.tsx
++++ b/apps/frontend/src/features/data-transfer/components/import-section.tsx
+@@ -1,6 +1,6 @@
+ 'use client'
+ 
+-import { useState } from 'react'
++import { useRef, useState } from 'react'
+ 
+ import { Badge } from '@/components/atoms/badge'
+ import { Button } from '@/components/atoms/button'
+@@ -10,6 +10,7 @@
+ import {
+   freezeImportIntent,
+   importFingerprint,
++  reconcileOutcomes,
+   type FrozenImportIntent,
+   type RowOutcome,
+ } from '../intent'
+@@ -37,14 +38,35 @@
+   const [intent, setIntent] = useState<FrozenImportIntent | null>(null)
+   const [outcome, setOutcome] = useState<Outcome | null>(null)
+   const [pending, setPending] = useState(false)
++  const busy = useRef(false)
+   // Plain state rather than a transition: the work is an awaited Server Action and its result is
+   // stored by this handler once the answer has arrived.
+-  const start = (fn: () => Promise<void>) => {
++  const start = (fn: () => Promise<void>, command = false) => {
++    if (busy.current) return
++    busy.current = true
+     setPending(true)
+-    void fn().finally(() => setPending(false))
++    void fn()
++      .catch(() => {
++        if (command) {
++          setOutcome({
++            kind: 'failure',
++            message:
++              'We could not confirm whether this was saved. Retry the same attempt to confirm.',
++            retrySameKey: true,
++          })
++        } else {
++          setPreview(null)
++          setPreviewError('The preview could not be loaded. Please try again.')
++        }
++      })
++      .finally(() => {
++        busy.current = false
++        setPending(false)
++      })
+   }
+ 
+   const reset = (f: File | null) => {
++    if (busy.current || locked) return
+     setFile(f)
+     setPreview(null)
+     setPreviewError(null)
+@@ -66,16 +88,22 @@
+       setIntent(frozen)
+       const r = await importCommitAction(matterId, file, frozen.plan)
+       if (r.ok && r.results) {
+-        setOutcome({ kind: 'results', rows: r.results, submitted: rowKeys.length })
+-        if (!r.results.some((x) => x.status === 'UNKNOWN')) setIntent(null)
++        const receipts = reconcileOutcomes(r.results, rowKeys)
++        setOutcome({ kind: 'results', rows: receipts, submitted: rowKeys.length })
++        if (!receipts.some((x) => x.status === 'UNKNOWN')) {
++          setIntent(null)
++          setPreview(null)
++        }
+       } else if (!r.ok) {
+         setOutcome({
+           kind: 'failure',
+           message: r.error,
+-          retrySameKey: r.kind === 'outcome-unknown',
++          retrySameKey: locked || r.kind === 'outcome-unknown',
+         })
++      } else {
++        throw new Error('Missing command result')
+       }
+-    })
++    }, true)
+ 
+   return (
+     <section className="flex flex-col gap-3" aria-labelledby="import-heading">
+@@ -94,7 +122,7 @@
+         <input
+           type="file"
+           accept=".csv,.xlsx"
+-          disabled={locked}
++          disabled={pending || locked}
+           onChange={(e) => reset(e.target.files?.[0] ?? null)}
+         />
+       </label>
+@@ -132,11 +160,6 @@
+         >
+           {locked ? 'Retry the same attempt' : 'Commit valid groups'}
+         </Button>
+-        {locked && (
+-          <Button variant="secondary" onClick={() => reset(null)}>
+-            Discard this attempt
+-          </Button>
+-        )}
+       </div>
+       {previewError && (
+         <Alert variant="destructive" title="The file could not be previewed">
+@@ -181,6 +204,15 @@
+           {outcome.message}
+         </Alert>
+       )}
++      {outcome?.kind === 'failure' && outcome.retrySameKey && intent && (
++        <OutcomeList
++          results={Object.keys(intent.plan.rowKeys).map((rowKey) => ({
++            rowKey,
++            status: 'UNKNOWN',
++          }))}
++          submitted={Object.keys(intent.plan.rowKeys).length}
++        />
++      )}
+       {outcome?.kind === 'results' && (
+         <OutcomeList results={outcome.rows} submitted={outcome.submitted} />
+       )}
+--- a/apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx
++++ b/apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx
+@@ -111,7 +111,7 @@
+     expect(await screen.findByText('The answer was lost')).toBeInTheDocument()
+     const retry = screen.getByRole('button', { name: 'Retry the same attempt' })
+     expect(screen.getByLabelText(/Item id/)).toBeDisabled() // the attempt cannot be edited out from under its keys
+-    expect(screen.queryByText(/applied/i)).not.toBeInTheDocument()
++    expect(screen.getByText(/0 applied, 0 failed, 1 unknown of 1 submitted/)).toBeInTheDocument()
+ 
+     actions.bulkCommit.mockResolvedValueOnce({
+       ok: true,
+@@ -157,9 +157,26 @@
+       ),
+     ).toBeInTheDocument()
+     expect(screen.getByRole('button', { name: 'Retry the same attempt' })).toBeEnabled()
+-    // discarding is an explicit choice and unlocks editing
+-    fireEvent.click(screen.getByRole('button', { name: 'Discard this attempt' }))
+-    expect(screen.getAllByLabelText(/Item id/)[0]).toBeEnabled()
++    expect(screen.queryByRole('button', { name: 'Discard this attempt' })).not.toBeInTheDocument()
++    expect(screen.getAllByLabelText(/Item id/)[0]).toBeDisabled()
++  })
++
++  it('retains the attempt when the Server Action transport rejects and a later retry is refused', async () => {
++    await readyBulk()
++    actions.bulkCommit.mockRejectedValueOnce(new TypeError('synthetic lost response'))
++    fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
++    await screen.findByText('The answer was lost')
++    expect(screen.getByText(/0 applied, 0 failed, 1 unknown of 1 submitted/)).toBeInTheDocument()
++    actions.bulkCommit.mockResolvedValueOnce({
++      ok: false,
++      kind: 'forbidden',
++      error: 'Permission denied.',
++    })
++    fireEvent.click(screen.getByRole('button', { name: 'Retry the same attempt' }))
++    await screen.findByText('Permission denied.')
++    expect(actions.bulkCommit.mock.calls[1]![1]).toEqual(actions.bulkCommit.mock.calls[0]![1])
++    expect(screen.getByRole('button', { name: 'Retry the same attempt' })).toBeEnabled()
++    expect(screen.getByLabelText(/Item id/)).toBeDisabled()
+   })
+ 
+   it('says plainly when access was withdrawn and keeps the draft', async () => {
+@@ -283,6 +300,28 @@
+     expect(Object.keys(planA.rowKeys)).toEqual(['R1', 'A1'])
+     expect(Object.values(planA.rowKeys).every((k) => UUID_V7.test(k as string))).toBe(true)
+     expect(await screen.findByText(/2 applied \(2 already applied earlier\)/)).toBeInTheDocument()
++  })
++
++  it('retains the file and keys when the Server Action transport rejects', async () => {
++    actions.importPreview.mockResolvedValue(
++      importPreview([{ id: 1, rowIdx: [0], valid: true }], [planRow('R1')]),
++    )
++    render(<ImportSection matterId="m1" />)
++    chooseFile()
++    fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
++    await screen.findByRole('list', { name: 'Groups' })
++    actions.importCommit.mockRejectedValueOnce(new TypeError('synthetic lost response'))
++    fireEvent.click(screen.getByRole('button', { name: 'Commit valid groups' }))
++    await screen.findByText('The answer was lost')
++    expect(screen.getByText(/0 applied, 0 failed, 1 unknown of 1 submitted/)).toBeInTheDocument()
++    expect(screen.getByLabelText('File')).toBeDisabled()
++    actions.importCommit.mockResolvedValueOnce({
++      ok: true,
++      results: [{ rowKey: 'R1', status: 'SUCCESS_REPLAYED' }],
++    })
++    fireEvent.click(screen.getByRole('button', { name: 'Retry the same attempt' }))
++    await screen.findByText(/1 applied \(1 already applied earlier\)/)
++    expect(actions.importCommit.mock.calls[1]).toEqual(actions.importCommit.mock.calls[0])
+   })
+ 
+   it('discards the preview and the attempt when another file is chosen', async () => {
+--- a/apps/frontend/src/features/data-transfer/components/bulk-section.tsx
++++ b/apps/frontend/src/features/data-transfer/components/bulk-section.tsx
+@@ -10,7 +10,13 @@
+ import { FormField } from '@/components/molecules/form-field'
+ 
+ import { bulkCommitAction, bulkPreviewAction } from '../actions'
+-import { bulkFingerprint, intentFor, type FrozenBulkIntent, type RowOutcome } from '../intent'
++import {
++  bulkFingerprint,
++  intentFor,
++  reconcileOutcomes,
++  type FrozenBulkIntent,
++  type RowOutcome,
++} from '../intent'
+ import type { BulkPreviewResult, BulkRowInput } from '../schemas'
+ 
+ import { OutcomeList } from './outcome-list'
+@@ -66,18 +72,41 @@
+ export function BulkSection({ matterId }: { matterId: string }) {
+   const next = useRef(1)
+   const [rows, setRows] = useState<Draft[]>([])
+-  const [preview, setPreview] = useState<{ result: BulkPreviewResult; fingerprint: string } | null>(
+-    null,
+-  )
++  const [preview, setPreview] = useState<{
++    result: BulkPreviewResult
++    fingerprint: string
++    invalidated?: boolean
++    inputs: BulkRowInput[]
++  } | null>(null)
+   const [previewError, setPreviewError] = useState<string | null>(null)
+   const [intent, setIntent] = useState<FrozenBulkIntent | null>(null)
+   const [outcome, setOutcome] = useState<Outcome | null>(null)
+   const [pending, setPending] = useState(false)
++  const busy = useRef(false)
+   // Plain state rather than a transition: the work is an awaited Server Action and its result is
+   // stored by this handler once the answer has arrived.
+-  const start = (fn: () => Promise<void>) => {
++  const start = (fn: () => Promise<void>, command = false) => {
++    if (busy.current) return
++    busy.current = true
+     setPending(true)
+-    void fn().finally(() => setPending(false))
++    void fn()
++      .catch(() => {
++        if (command) {
++          setOutcome({
++            kind: 'failure',
++            message:
++              'We could not confirm whether this was saved. Retry the same attempt to confirm.',
++            retrySameKey: true,
++          })
++        } else {
++          setPreview(null)
++          setPreviewError('The preview could not be loaded. Please try again.')
++        }
++      })
++      .finally(() => {
++        busy.current = false
++        setPending(false)
++      })
+   }
+ 
+   const inputs = rows.map(toInput)
+@@ -86,7 +115,7 @@
+     outcome !== null &&
+     ((outcome.kind === 'results' && outcome.rows.some((r) => r.status === 'UNKNOWN')) ||
+       (outcome.kind === 'failure' && outcome.retrySameKey))
+-  const stale = preview !== null && preview.fingerprint !== fingerprint
++  const stale = preview !== null && (preview.invalidated || preview.fingerprint !== fingerprint)
+   const canCommit =
+     !pending &&
+     rows.length > 0 &&
+@@ -94,17 +123,26 @@
+     !stale &&
+     (preview.result.rows.some((r) => r.valid) || locked)
+ 
+-  const update = (i: number, patch: Partial<Draft>) =>
++  const invalidate = () => setPreview((current) => current && { ...current, invalidated: true })
++  const update = (i: number, patch: Partial<Draft>) => {
++    if (busy.current || locked) return
++    invalidate()
+     setRows((rs) => rs.map((r, j) => (j === i ? { ...r, ...patch } : r)))
++  }
+ 
+   const commit = () =>
+     start(async () => {
+-      const frozen = intentFor(inputs, intent)
++      if (!canCommit || !preview) return
++      const frozen = intentFor(preview.inputs, intent)
+       setIntent(frozen)
+       const r = await bulkCommitAction(matterId, frozen.input)
+       if (r.ok && r.results) {
+-        const unknown = r.results.some((x) => x.status === 'UNKNOWN')
+-        setOutcome({ kind: 'results', rows: r.results, submitted: frozen.input.rows.length })
++        const receipts = reconcileOutcomes(
++          r.results,
++          frozen.input.rows.map((row) => row.rowKey),
++        )
++        const unknown = receipts.some((x) => x.status === 'UNKNOWN')
++        setOutcome({ kind: 'results', rows: receipts, submitted: frozen.input.rows.length })
+         if (!unknown) {
+           setIntent(null) // settled: the next edit is a new intent against fresh revisions
+           setPreview(null)
+@@ -113,10 +151,12 @@
+         setOutcome({
+           kind: 'failure',
+           message: r.error,
+-          retrySameKey: r.kind === 'outcome-unknown',
++          retrySameKey: locked || r.kind === 'outcome-unknown',
+         })
++      } else {
++        throw new Error('Missing command result')
+       }
+-    })
++    }, true)
+ 
+   return (
+     <section className="flex flex-col gap-3" aria-labelledby="bulk-heading">
+@@ -135,7 +175,7 @@
+       {rows.map((row, i) => (
+         <fieldset
+           key={row.rowKey}
+-          disabled={locked}
++          disabled={pending || locked}
+           className="grid gap-3 rounded-md border p-3 md:grid-cols-2"
+         >
+           <legend className="px-1 text-sm font-medium">Row {i + 1}</legend>
+@@ -198,7 +238,10 @@
+           <Button
+             variant="secondary"
+             className="md:col-span-2 md:w-fit"
+-            onClick={() => setRows((rs) => rs.filter((_, j) => j !== i))}
++            onClick={() => {
++              invalidate()
++              setRows((rs) => rs.filter((_, j) => j !== i))
++            }}
+           >
+             Remove row {i + 1}
+           </Button>
+@@ -207,8 +250,9 @@
+       <div className="flex flex-wrap gap-2">
+         <Button
+           variant="secondary"
+-          disabled={locked}
+-          onClick={() =>
++          disabled={pending || locked}
++          onClick={() => {
++            invalidate()
+             setRows((rs) => [
+               ...rs,
+               {
+@@ -221,7 +265,7 @@
+                 due: unchanged(),
+               },
+             ])
+-          }
++          }}
+         >
+           Add row
+         </Button>
+@@ -233,7 +277,7 @@
+               setPreviewError(null)
+               const r = await bulkPreviewAction(matterId, inputs)
+               if (r.ok && r.preview) {
+-                setPreview({ result: r.preview, fingerprint })
++                setPreview({ result: r.preview, fingerprint, inputs })
+                 setOutcome(null)
+               } else if (!r.ok) {
+                 setPreview(null)
+@@ -247,18 +291,6 @@
+         <Button disabled={!canCommit} onClick={commit}>
+           {locked ? 'Retry the same attempt' : 'Commit'}
+         </Button>
+-        {locked && (
+-          <Button
+-            variant="secondary"
+-            onClick={() => {
+-              setIntent(null)
+-              setOutcome(null)
+-              setPreview(null)
+-            }}
+-          >
+-            Discard this attempt
+-          </Button>
+-        )}
+       </div>
+       {previewError && (
+         <Alert variant="destructive" title="Preview failed">
+@@ -296,6 +328,12 @@
+           {outcome.message}
+         </Alert>
+       )}
++      {outcome?.kind === 'failure' && outcome.retrySameKey && intent && (
++        <OutcomeList
++          results={intent.input.rows.map((row) => ({ rowKey: row.rowKey, status: 'UNKNOWN' }))}
++          submitted={intent.input.rows.length}
++        />
++      )}
+       {outcome?.kind === 'results' && (
+         <OutcomeList results={outcome.rows} submitted={outcome.submitted} />
+       )}
+--- /dev/null
++++ b/apps/frontend/src/features/data-transfer/components/data-transfer-attempt.test.tsx
+@@ -0,0 +1,156 @@
++import { File as NodeFile } from 'node:buffer'
++
++import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
++import { beforeEach, describe, expect, it, vi } from 'vitest'
++
++const request = vi.hoisted(() => vi.fn())
++vi.mock('@/lib/mc/client', () => ({ mcRequest: request, pathId: (id: string) => id }))
++vi.mock('@/lib/auth', () => ({ requireSession: async () => ({ userId: 'synthetic-user' }) }))
++vi.mock('next/cache', () => ({ revalidatePath: () => {} }))
++
++import { McError } from '@/lib/mc/errors'
++
++import { BulkSection } from './bulk-section'
++import { ImportSection } from './import-section'
++
++const bulkPreview = {
++  previewId: 'synthetic-preview',
++  asOf: '2026-10-28T00:00:00Z',
++  rows: [{ rowKey: 'row-1', itemId: 'item-1', title: 'Before', revision: 1, valid: true }],
++}
++const importPreview = {
++  sourceName: 'synthetic.csv',
++  asOf: '2026-10-28T00:00:00Z',
++  rows: [{ rowKey: 'R1', kind: 'ACTION', title: 'Synthetic', dependencies: [], errors: [] }],
++  groups: [{ id: 1, rowIdx: [0], valid: true }],
++}
++const result = (rowKey: string, status = 'SUCCESS') => ({ rowKey, status })
++
++beforeEach(() => request.mockReset())
++
++async function readyBulk() {
++  request.mockResolvedValueOnce({ data: bulkPreview })
++  render(<BulkSection matterId="matter-1" />)
++  fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
++  fireEvent.change(screen.getByLabelText(/Item id/), { target: { value: 'item-1' } })
++  fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'set' } })
++  fireEvent.change(screen.getByLabelText('Title new value'), { target: { value: 'After' } })
++  fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
++  await screen.findByRole('list', { name: 'Preview' })
++}
++
++async function readyImport() {
++  request.mockResolvedValueOnce({ data: importPreview })
++  render(<ImportSection matterId="matter-1" />)
++  fireEvent.change(screen.getByLabelText('File'), {
++    target: { files: [new NodeFile(['rowkey,kind,title\nR1,ACTION,Synthetic'], 'synthetic.csv')] },
++  })
++  fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
++  await screen.findByRole('list', { name: 'Groups' })
++}
++
++describe('bulk panel → actions → repository attempt', () => {
++  it('invalidates approval permanently on edit, add or remove, even if the payload is restored', async () => {
++    await readyBulk()
++    fireEvent.change(screen.getByLabelText('Title new value'), { target: { value: 'Changed' } })
++    fireEvent.change(screen.getByLabelText('Title new value'), { target: { value: 'After' } })
++    expect(screen.getByRole('button', { name: 'Commit' })).toBeDisabled()
++    request.mockResolvedValueOnce({ data: bulkPreview })
++    fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
++    await waitFor(() => expect(screen.getByRole('button', { name: 'Commit' })).toBeEnabled())
++    fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
++    fireEvent.click(screen.getByRole('button', { name: 'Remove row 2' }))
++    expect(screen.getByRole('button', { name: 'Commit' })).toBeDisabled()
++  })
++
++  it('locks pending edits and duplicate submission, then reconciles identical payload and keys', async () => {
++    await readyBulk()
++    let resolve!: (value: { data: object[] }) => void
++    request.mockImplementationOnce(
++      () =>
++        new Promise((done) => {
++          resolve = done
++        }),
++    )
++    fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
++    fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
++    expect(screen.getByLabelText('Title new value')).toBeDisabled()
++    expect(screen.getByRole('button', { name: 'Add row' })).toBeDisabled()
++    await waitFor(() => expect(request).toHaveBeenCalledTimes(2))
++    const previewRows = request.mock.calls[0]![1].body.rows
++    const frozen = request.mock.calls[1]![1].body
++    expect(frozen.rows).toEqual(
++      previewRows.map((row: object) => ({ ...row, idempotencyKey: expect.any(String) })),
++    )
++    await act(async () => resolve({ data: [result('row-1', 'UNKNOWN')] }))
++    expect(
++      await screen.findByText(/0 applied, 0 failed, 1 unknown of 1 submitted/),
++    ).toBeInTheDocument()
++    expect(screen.queryByRole('button', { name: 'Discard this attempt' })).not.toBeInTheDocument()
++    request.mockResolvedValueOnce({ data: [result('row-1', 'SUCCESS_REPLAYED')] })
++    fireEvent.click(screen.getByRole('button', { name: 'Retry the same attempt' }))
++    await screen.findByText(/1 applied \(1 already applied earlier\)/)
++    expect(request.mock.calls[2]![1].body).toEqual(frozen)
++    expect(screen.getByRole('button', { name: 'Commit' })).toBeDisabled()
++  })
++
++  it.each([
++    { receipts: [] },
++    { receipts: [result('row-1'), result('row-1')] },
++    { receipts: [result('unexpected')] },
++  ])('keeps missing or ambiguous row receipts unknown: %j', async ({ receipts }) => {
++    await readyBulk()
++    request.mockResolvedValueOnce({ data: receipts })
++    fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
++    expect(
++      await screen.findByText(/0 applied, 0 failed, 1 unknown of 1 submitted/),
++    ).toBeInTheDocument()
++    expect(screen.getByRole('button', { name: 'Retry the same attempt' })).toBeEnabled()
++  })
++})
++
++describe('import panel → actions → repository attempt', () => {
++  it('locks file replacement while pending, preserves run/file/row keys on UNKNOWN and consumes settled preview', async () => {
++    await readyImport()
++    let reject!: (reason: Error) => void
++    request.mockImplementationOnce(
++      () =>
++        new Promise((_done, fail) => {
++          reject = fail
++        }),
++    )
++    fireEvent.click(screen.getByRole('button', { name: 'Commit valid groups' }))
++    await waitFor(() => expect(request).toHaveBeenCalledTimes(2))
++    expect(screen.getByLabelText('File')).toBeDisabled()
++    const first = request.mock.calls[1]![1].raw.body as FormData
++    await act(async () => reject(new McError('outcome-unknown', 503, { receipted: true })))
++    await screen.findByText('The answer was lost')
++    expect(screen.queryByRole('button', { name: 'Discard this attempt' })).not.toBeInTheDocument()
++    request.mockResolvedValueOnce({ data: [result('R1', 'SUCCESS_REPLAYED')] })
++    fireEvent.click(screen.getByRole('button', { name: 'Retry the same attempt' }))
++    await screen.findByText(/1 applied \(1 already applied earlier\)/)
++    const retry = request.mock.calls[2]![1].raw.body as FormData
++    expect(retry.get('plan')).toBe(first.get('plan'))
++    expect(retry.get('sourceName')).toBe(first.get('sourceName'))
++    expect(retry.get('file')).toEqual(first.get('file'))
++    expect(screen.getByRole('button', { name: 'Commit valid groups' })).toBeDisabled()
++    request.mockResolvedValueOnce({ data: importPreview })
++    fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
++    await screen.findByRole('list', { name: 'Groups' })
++    request.mockResolvedValueOnce({ data: [result('R1')] })
++    fireEvent.click(screen.getByRole('button', { name: 'Commit valid groups' }))
++    await screen.findByText(/1 applied, 0 failed, 0 unknown/)
++    expect(request.mock.calls[4]![1].raw.body.get('plan')).not.toBe(first.get('plan'))
++  })
++
++  it('accounts for all submitted rows when an import receipt is missing', async () => {
++    await readyImport()
++    request.mockResolvedValueOnce({ data: [] })
++    fireEvent.click(screen.getByRole('button', { name: 'Commit valid groups' }))
++    await screen.findByText(/0 applied, 0 failed, 1 unknown of 1 submitted/)
++    expect(
++      within(screen.getByRole('region', { name: 'Unknown rows' })).getByText('R1'),
++    ).toBeInTheDocument()
++    expect(screen.getByLabelText('File')).toBeDisabled()
++  })
++})

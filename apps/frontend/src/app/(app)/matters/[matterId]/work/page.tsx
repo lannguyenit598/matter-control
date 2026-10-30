@@ -1,18 +1,19 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Rows2, Rows3 } from 'lucide-react'
 import { Suspense } from 'react'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/atoms/card'
 import { Skeleton } from '@/components/atoms/skeleton'
+import { buttonVariants } from '@/components/atoms/button'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
-import { MatterTabs } from '@/features/matters/components/matter-tabs'
 import { matterRepository } from '@/features/matters/repository'
 import { CreateRequirementForm } from '@/features/requirements/components/create-requirement-form'
 import { CreateActionForm } from '@/features/work/components/create-action-form'
 import { WorkFilters } from '@/features/work/components/work-filters'
 import { WorkGrid } from '@/features/work/components/work-grid'
+import { AddWorkDialog } from '@/features/work/components/add-work-dialog'
 import { workRepository } from '@/features/work/repository'
 import { gridQuerySchema } from '@/features/work/schemas'
 import { getSession } from '@/lib/auth'
@@ -109,27 +110,52 @@ async function Work({
       <PageHeader
         title={matter.title}
         description={asOf ? `Work items, read at ${asOf}` : 'Work items'}
+        actions={
+          canEdit && (
+            <AddWorkDialog
+              actionForm={<CreateActionForm matterId={matterId} />}
+              requirementForm={<CreateRequirementForm matterId={matterId} />}
+            />
+          )
+        }
       />
-      <MatterTabs matterId={matterId} active="work" />
-      <WorkFilters basePath={base} query={query} workstreams={workstreams} members={members} />
+      <WorkFilters
+        key={here}
+        basePath={base}
+        query={query}
+        workstreams={workstreams}
+        members={members}
+        density={density}
+      />
       <div
-        className="flex flex-wrap items-center gap-3 text-sm"
+        className="flex flex-wrap items-center gap-2 text-xs"
         role="group"
-        aria-label="Row density"
+        aria-labelledby="work-density-label"
       >
-        <span className="text-muted-foreground">
+        <span id="work-density-label" className="text-muted-foreground">
           <LocalizedText en="Density:" vi="Mật độ:" />
         </span>
-        {(['comfortable', 'compact'] as const).map((d) => (
-          <Link
-            key={d}
-            href={withParam({ density: d === 'comfortable' ? undefined : d })}
-            aria-current={density === d ? 'true' : undefined}
-            className={density === d ? 'font-semibold underline' : 'underline'}
-          >
-            {d === 'comfortable' ? 'Comfortable' : 'Compact'}
-          </Link>
-        ))}
+        <div className="inline-flex items-center gap-1 rounded-lg bg-muted p-1">
+          {(['comfortable', 'compact'] as const).map((d) => (
+            <Link
+              key={d}
+              href={withParam({ density: d === 'comfortable' ? undefined : d })}
+              scroll={false}
+              aria-current={density === d ? 'true' : undefined}
+              className={buttonVariants({
+                variant: density === d ? 'outline' : 'ghost',
+                size: 'sm',
+              })}
+            >
+              {d === 'comfortable' ? <Rows2 aria-hidden /> : <Rows3 aria-hidden />}
+              {d === 'comfortable' ? (
+                <LocalizedText en="Comfortable" vi="Thoáng" />
+              ) : (
+                <LocalizedText en="Compact" vi="Gọn" />
+              )}
+            </Link>
+          ))}
+        </div>
       </div>
       <WorkGrid
         matterId={matterId}
@@ -143,30 +169,7 @@ async function Work({
         filtered={filtered}
         nextHref={page.page.nextCursor ? withParam({ cursor: page.page.nextCursor }) : null}
       />
-      {canEdit ? (
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                <LocalizedText en="New action" vi="Hành động mới" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CreateActionForm matterId={matterId} />
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                <LocalizedText en="New requirement" vi="Yêu cầu mới" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CreateRequirementForm matterId={matterId} />
-            </CardContent>
-          </Card>
-        </div>
-      ) : (
+      {!canEdit && (
         <p className="text-sm text-muted-foreground">
           <LocalizedText
             en="You can read the work in this matter but not change it."

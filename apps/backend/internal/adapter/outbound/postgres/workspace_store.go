@@ -9,15 +9,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/netip"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 var (
@@ -117,12 +118,10 @@ func (t *pgWorkspaceTx) InsertWorkspaceMembership(ctx context.Context, m matter.
 	return insertWorkspaceMembership(ctx, t.q, m)
 }
 
-func (t *pgWorkspaceTx) UpdateWorkspaceMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRevision int64) (int64, error) {
-	if t.header.Revision != expectedRevision {
-		return 0, fmt.Errorf("workspace membership update: %w", port.ErrVersionConflict)
-	}
+func (t *pgWorkspaceTx) UpdateWorkspaceMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRowRevision int64) (int64, error) {
 	rev, err := t.q.UpdateWorkspaceMembershipStatus(ctx, mcsqlc.UpdateWorkspaceMembershipStatusParams{
-		WorkspaceID: t.header.ID.String(), UserID: user.String(), Status: string(status), Revision: expectedRevision + 1,
+		WorkspaceID: t.header.ID.String(), UserID: user.String(), Status: string(status),
+		ExpectedRevision: expectedRowRevision,
 	})
 	if errors.Is(err, pgx.ErrNoRows) {
 		return 0, fmt.Errorf("workspace membership update: %w", port.ErrVersionConflict)
@@ -205,12 +204,10 @@ func (t *pgMatterTx) InsertMatterMembership(ctx context.Context, m matter.Matter
 	return insertMatterMembership(ctx, t.q, m)
 }
 
-func (t *pgMatterTx) UpdateMatterMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRevision int64) (int64, error) {
-	if t.header.Revision != expectedRevision {
-		return 0, fmt.Errorf("matter membership update: %w", port.ErrVersionConflict)
-	}
+func (t *pgMatterTx) UpdateMatterMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRowRevision int64) (int64, error) {
 	rev, err := t.q.UpdateMatterMembershipStatus(ctx, mcsqlc.UpdateMatterMembershipStatusParams{
-		MatterID: t.header.MatterID.String(), UserID: user.String(), Status: string(status), Revision: expectedRevision + 1,
+		MatterID: t.header.MatterID.String(), UserID: user.String(), Status: string(status),
+		ExpectedRevision: expectedRowRevision,
 	})
 	if errors.Is(err, pgx.ErrNoRows) {
 		return 0, fmt.Errorf("matter membership update: %w", port.ErrVersionConflict)
@@ -448,10 +445,17 @@ func storeReceipt(ctx context.Context, q *mcsqlc.Queries, rc matter.Receipt) err
 }
 
 func recordSecurityAudit(ctx context.Context, q *mcsqlc.Queries, e matter.SecurityAuditEntry) error {
+	// A1: the dotted client IP lands in the INET column only when it parses; anything else
+	// (empty, hostnames, opaque proxy chains) records NULL rather than a wrong value.
+	var ip *netip.Addr
+	if a, err := netip.ParseAddr(e.ClientIP); err == nil {
+		ip = &a
+	}
 	return mapMatterError(q.InsertSecurityAuditEvent(ctx, mcsqlc.InsertSecurityAuditEventParams{
 		ID: e.EventID, OccurredAt: e.OccurredAt, ActorID: uuidString(e.Actor.String()),
 		Operation: e.Operation, Outcome: e.Outcome,
 		RequestedResourceKind: pgText(e.RequestedResourceKind), RequestedIDHash: e.RequestedIDHash,
+		ClientIp: ip, RequestID: pgText(e.RequestID),
 	}))
 }
 

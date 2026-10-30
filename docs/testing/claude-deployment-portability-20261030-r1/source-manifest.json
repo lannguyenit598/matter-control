@@ -1,0 +1,182 @@
+{
+ "generated_utc": "2026-10-30T03:43:00.321567+00:00",
+ "head": "20feedbf06c859a9806055d609f5b132fe8bb086",
+ "author": "actual Claude Code (claude-opus-5-5 / claude-sonnet-5-5 sessions)",
+ "note": "Regenerated as the last write; docs/ files were not in the pre-edit pin.",
+ "changed_files": [
+  {
+   "path": "apps/frontend/apphosting.yaml",
+   "sha256": "402fe9e6e32427249fd6c67a22ad7e0b18e4e9289e38a0d60b129f0e3019e528",
+   "bytes": 2067,
+   "kind": "new"
+  },
+  {
+   "path": "apps/frontend/src/lib/mc/deploy-profiles.test.ts",
+   "sha256": "b9496da97648033a39d087049b813a84c09b3f404fa51a327b0a7dab22577556",
+   "bytes": 4786,
+   "kind": "new"
+  },
+  {
+   "path": "apps/frontend/src/lib/mc/entry-route.test.ts",
+   "sha256": "fc0f777344f358e335461845e166d72cbb625898312072460755c65fe512e967",
+   "bytes": 1197,
+   "kind": "modified (pre-edit pin hash: 093bdb6c9472)"
+  },
+  {
+   "path": "apps/frontend/.gitignore",
+   "sha256": "e65b1b6f4880fb8cccb62d0742a2c3374836c677d2515ad0515afa7b8f378bd2",
+   "bytes": 859,
+   "kind": "modified (pre-edit pin hash: 196ce53eb64a)"
+  },
+  {
+   "path": "ops/deploy/profiles.mjs",
+   "sha256": "764fb30111d00eb502b6ca03d1e1a4cfe9667dc4c03c848fb11a7f9ea0937443",
+   "bytes": 5380,
+   "kind": "new"
+  },
+  {
+   "path": "ops/deploy/profiles.test.mjs",
+   "sha256": "bce288dd7e5a92f14827605a048ee0007c16dcbb5d035bd4b6a99f8295c1e8f6",
+   "bytes": 4702,
+   "kind": "new"
+  },
+  {
+   "path": "ops/deploy/cloud-run/service.yaml",
+   "sha256": "322feb611371cecd98542a18a2a7cc0998347a4371d45dc40be43ce95c80f509",
+   "bytes": 3461,
+   "kind": "new"
+  },
+  {
+   "path": "ops/deploy/cloud-run/migrate-job.yaml",
+   "sha256": "03161da1176c3f2f0f0621ef3ee25b749c09c78ec14a6aeef89f6dc0faca6ec3",
+   "bytes": 1942,
+   "kind": "new"
+  },
+  {
+   "path": "ops/deploy/compute-engine/cloud-init.yaml",
+   "sha256": "ea84127de380a3794bf15b3c4473ec314972a96de76208fa527c433d3464401a",
+   "bytes": 6700,
+   "kind": "new"
+  },
+  {
+   "path": "ops/deploy/cloud-run.values.example.json",
+   "sha256": "94c9c9b62eb50995e249cf94f890164985783e90b0d7a64e150c1330851d5f6b",
+   "bytes": 866,
+   "kind": "new"
+  },
+  {
+   "path": "ops/deploy/compute-engine.values.example.json",
+   "sha256": "703d4548ad2f98df25c2df83ef90782f9df5c2a19eb7f462c7c19a5bc10aaf71",
+   "bytes": 1064,
+   "kind": "new"
+  },
+  {
+   "path": "docs/architecture/adr/ADR-007-portable-fe-be-deployment-profiles.md",
+   "sha256": "473369c1eab77fb17ba5cc467b2eb742287d17485e1b092dc73db59ec3488a5f",
+   "bytes": 6731,
+   "kind": "new"
+  },
+  {
+   "path": "docs/architecture/adr/ADR-006-workers-cloud-run-supabase-r2-topology.md",
+   "sha256": "6e66070afc45edb70f569f916dfae72b449314d2a15574c24711eb6f25a5b416",
+   "bytes": 8722,
+   "kind": "modified doc (not in pre-edit pin; post-edit hash only)"
+  },
+  {
+   "path": "docs/deployment/portability-runbook.md",
+   "sha256": "38c1645a2d234ce5fea47fe8a65342591b6985b5a66590abfc9c62b230280699",
+   "bytes": 7345,
+   "kind": "new"
+  },
+  {
+   "path": "docs/deployment/portability-cloud-validation-packet.md",
+   "sha256": "75dd883a59d6ee424f562cb060432c036cb497eceaab02908c9b81f94a680732",
+   "bytes": 4374,
+   "kind": "new"
+  },
+  {
+   "path": "docs/deployment/README.md",
+   "sha256": "dc3c5813f0c59d1dbfa15a01f10d21ba096a17e1ba44c7aa927796aed9a8f884",
+   "bytes": 2174,
+   "kind": "modified doc (not in pre-edit pin; post-edit hash only)"
+  },
+  {
+   "path": "docs/deployment/free-phase-deploy-checklist.md",
+   "sha256": "21094011f6c5d9b2b40a7db034f8fe52899f918e4065e31f812b52380ad5b7ce",
+   "bytes": 14018,
+   "kind": "modified doc (not in pre-edit pin; post-edit hash only)"
+  },
+  {
+   "path": "docs/ai-sdlc/project-status.md",
+   "sha256": "22952ad05dc74f02db2753d2497c1f884c4a212fa97d72ba43d49616f084b02d",
+   "bytes": 102570,
+   "kind": "modified doc (not in pre-edit pin; post-edit hash only)"
+  },
+  {
+   "path": "docs/implementation/tasks/MC-CLAUDE-DEPLOYMENT-PORTABILITY-20261030.md",
+   "sha256": "7ab592d82021a4c5235aedba6fbe3e57794bbb0030417d011dfeb0f7922a19bd",
+   "bytes": 3442,
+   "kind": "new"
+  },
+  {
+   "path": "docs/implementation/plans/MC-CLAUDE-DEPLOYMENT-PORTABILITY-20261030.md",
+   "sha256": "b672bd8a768d482a6df32a1049cddf205cdc2f20887116c61129ba7509ccf63f",
+   "bytes": 10482,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/assessment.md",
+   "sha256": "16d694d8278f64d2034d625c5150afc9c095ace553d7a85590413f9023c2347d",
+   "bytes": 14962,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/return.md",
+   "sha256": "9754273b0b0ad3786f0696915daf3570de6f29df221f38f824a20d6be9ce7c6f",
+   "bytes": 14961,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/copy-vs-final.json",
+   "sha256": "142152f670982c1117df3b4f8a2f1dff5de5b39d8c4f542b0725ad45c4fbd8bc",
+   "bytes": 623,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/verification-programs/fixture-server.mjs",
+   "sha256": "895cb143c70af0f76942ffc6c5500036cdf47bf3420449bc8f7d13e19e4b7de4",
+   "bytes": 7095,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/verification-programs/portability-smoke.mjs",
+   "sha256": "4c3bdf9f653c0b193713d8d6a30e6b4844e520be459a906d0755d78bc8dabdb5",
+   "bytes": 15749,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/verification-programs/be-profiles.py",
+   "sha256": "2d3ed5703a2fca3760b2ade6fb565a1333e415cf1c3961a88260eb29bb0c9529",
+   "bytes": 8133,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/verification-programs/drain.mjs",
+   "sha256": "9ee1ac06712114b863bd47e0a7562b5c2fc73332a4f340be6a34d7d1ebacf10c",
+   "bytes": 3523,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/verification-programs/yaml-validate.mjs",
+   "sha256": "607a50c17825529a6ab503a3972428362552f0d1de9fd959b8f27621a8944163",
+   "bytes": 7705,
+   "kind": "new"
+  },
+  {
+   "path": "docs/testing/claude-deployment-portability-20261030-r1/verification-programs/measure-worker.mjs",
+   "sha256": "e8037960bb6b7431f15db447081fcf82addfe0f0d347f88899467ab38132bda1",
+   "bytes": 7453,
+   "kind": "new"
+  }
+ ]
+}

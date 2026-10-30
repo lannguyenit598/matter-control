@@ -1,6 +1,7 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import { ArrowRight, Scale } from 'lucide-react'
 
 import { buttonVariants } from '@/components/atoms/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/card'
@@ -18,10 +19,22 @@ const MESSAGES: Record<string, string> = {
 
 export default function LoginPage({ searchParams }: PageProps<'/login'>) {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-4 p-4">
-      <Suspense>
-        <LoginCard searchParams={searchParams} />
-      </Suspense>
+    <main className="flex min-h-dvh items-center justify-center bg-background px-5 py-12">
+      <div className="flex w-full max-w-sm flex-col gap-8">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <Scale aria-hidden className="size-8 stroke-[1.4] text-dependency-ready" />
+          <h1 className="text-xl font-semibold tracking-tight">{siteConfig.name}</h1>
+          <p className="text-sm text-muted-foreground">
+            <LocalizedText
+              en="A clear view of your legal work."
+              vi="Nhìn rõ toàn bộ công việc pháp lý."
+            />
+          </p>
+        </div>
+        <Suspense>
+          <LoginCard searchParams={searchParams} />
+        </Suspense>
+      </div>
     </main>
   )
 }
@@ -34,7 +47,9 @@ async function LoginCard({ searchParams }: Pick<PageProps<'/login'>, 'searchPara
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{siteConfig.name}</CardTitle>
+        <CardTitle>
+          <LocalizedText en="Sign in to your workspace" vi="Đăng nhập không gian làm việc" />
+        </CardTitle>
         <CardDescription>
           <LocalizedText en="Sign in to continue." vi="Đăng nhập để tiếp tục." />
         </CardDescription>
@@ -48,10 +63,11 @@ async function LoginCard({ searchParams }: Pick<PageProps<'/login'>, 'searchPara
         {error && <Alert variant="destructive">{MESSAGES[error] ?? MESSAGES.invalid}</Alert>}
         {/* A plain link on purpose: this route redirects to the identity provider and must not be prefetched. */}
         <a
-          className={buttonVariants()}
+          className={buttonVariants({ className: 'w-full justify-between' })}
           href={`/api/auth/login?returnTo=${encodeURIComponent(returnTo)}`}
         >
           <LocalizedText en="Sign in" vi="Đăng nhập" />
+          <ArrowRight aria-hidden className="size-4" />
         </a>
       </CardContent>
     </Card>

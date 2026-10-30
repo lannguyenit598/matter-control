@@ -1,0 +1,24 @@
+{
+  "command": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/adapter/outbound/postgres",
+    "-run",
+    "TestDurableSessionRotationSemantics"
+  ],
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+  "started_utc": "2026-10-30T01:28:45.335155+00:00",
+  "ended_utc": "2026-10-30T01:28:47.230680+00:00",
+  "exit": 1,
+  "counts": {
+    "pass": 4,
+    "fail": 2,
+    "skip": 0
+  },
+  "fixture_name": "mc-codex-adr006-e73a79343182"
+}

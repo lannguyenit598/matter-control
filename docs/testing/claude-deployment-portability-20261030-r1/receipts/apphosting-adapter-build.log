@@ -1,0 +1,31 @@
+Overriding Next Config to add configs optmized for Firebase App Hosting
+Successfully created next.config.ts with Firebase App Hosting overrides
+(node:74935) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+npm notice run atomic-design-project-template@0.1.0 build
+npm notice run next build && node scripts/check-built-css.mjs
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 13ms
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.5s
+  Running TypeScript ...
+src/lib/mc/entry-route.test.ts(3,8): error TS1192: Module '"/private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/w/ah/next.config"' has no default export.
+src/lib/mc/entry-route.test.ts(20,57): error TS2339: Property 'default' does not exist on type 'typeof import("/private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/w/ah/next.config")'.
+Failed to type check.
+
+Restoring original next config in project root
+/private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/apphosting-tool/node_modules/@apphosting/common/dist/index.js:64
+                reject(new Error(`Build process exited with error code ${code}.`));
+                       ^
+
+Error: Build process exited with error code 1.
+    at ChildProcess.<anonymous> (/private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/apphosting-tool/node_modules/@apphosting/common/dist/index.js:64:24)
+    at ChildProcess.emit (node:events:514:28)
+    at ChildProcess._handle.onexit (node:internal/child_process:324:12)
+
+Node.js v24.22.1

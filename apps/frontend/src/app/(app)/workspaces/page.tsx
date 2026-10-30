@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/atoms/card'
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
@@ -13,17 +12,17 @@ import { workspaceRepository } from '@/features/workspaces/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 
-export const metadata: Metadata = { title: 'Workspaces' }
+export const metadata: Metadata = { title: 'Matters' }
 
 export default function WorkspacesPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title={<LocalizedText en="Workspaces" vi="Không gian làm việc" />}
+        title={<LocalizedText en="Matters" vi="Hồ sơ" />}
         description={
           <LocalizedText
-            en="The workspaces you belong to."
-            vi="Các không gian làm việc bạn tham gia."
+            en="Choose a workspace, then open one of its matters or create a new one."
+            vi="Chọn không gian làm việc, rồi mở một hồ sơ của nó hoặc tạo hồ sơ mới."
           />
         }
       />
@@ -43,19 +42,7 @@ async function Workspaces() {
     return <ReadFailure kind={read.kind} retryHref="/workspaces" subject="workspace list" />
   const page = read.value
   return (
-    <div className="flex flex-col gap-6">
-      <WorkspaceList items={page.items} total={page.page.total} />
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <LocalizedText en="New workspace" vi="Không gian làm việc mới" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CreateWorkspaceForm />
-        </CardContent>
-      </Card>
-    </div>
+    <WorkspaceList items={page.items} total={page.page.total} action={<CreateWorkspaceForm />} />
   )
 }
 

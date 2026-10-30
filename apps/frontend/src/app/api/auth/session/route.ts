@@ -1,6 +1,7 @@
 import { connection, NextResponse } from 'next/server'
 
 import { currentPrincipal } from '@/lib/auth-provider'
+import { McError } from '@/lib/mc/errors'
 
 /**
  * Session currentness for the UI ("session rights and expiry"): display name and when the
@@ -9,7 +10,16 @@ import { currentPrincipal } from '@/lib/auth-provider'
 export async function GET() {
   // Opt into request-time rendering: without it this handler is prerendered at build time.
   await connection()
-  const principal = await currentPrincipal()
+  let principal
+  try {
+    principal = await currentPrincipal()
+  } catch (error) {
+    if (!(error instanceof McError)) throw error
+    return NextResponse.json(
+      { error: 'session storage unavailable' },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    )
+  }
   const res = NextResponse.json(
     principal
       ? {

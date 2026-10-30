@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // SeedRestoreFixture creates content-bearing documents and a second, inaccessible matter.

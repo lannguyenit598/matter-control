@@ -1,0 +1,34 @@
+{
+  "task": "MC-P0 independent review: draft access-loss boundary",
+  "written_utc": "2026-10-28T09:42:28.644620+00:00",
+  "reviewer": {
+    "actual_identity": "Claude Code (Anthropic), model claude-sonnet-5-5, local CLI session",
+    "requested_identity": "actual ZCode, non-author reviewer",
+    "is_requested_identity": false,
+    "is_author_of_reviewed_changes": true,
+    "mode": "AUTHOR_SELF_REVIEW_NOT_INDEPENDENT",
+    "independent_review_gate_satisfied": false,
+    "basis": "User chose author self-review after being told the identity and independence mismatch (AskUserQuestion, this session)."
+  },
+  "base_commit": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+  "branch": "codex/unified-project-flow",
+  "pins_required": {
+    "apps/frontend/src/components/organisms/read-failure.tsx": "3d117ffff5e3c0646d0e592ce1110322cf508c9b96959daa8e8b4bf4cf80a37e",
+    "apps/frontend/src/components/organisms/drafts.test.tsx": "6c77bb133ddfcd0ea82c82e5919c5a38cc7e08593c6cccfdd8844864dd8c02f5",
+    "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx": "d3c988e849715acf129571aaaedd80e2f8bdcfa8f8531df8bdad2647d14e45df",
+    "docs/design/p0-handoff-r9/return.md": "d4dc769f1958f486a17a9a90fa5b1060de3172a2b07b544c6f1adff788b14b3d"
+  },
+  "pins_verified_before_review": true,
+  "pins_verified_after_review": true,
+  "output_dir_absent_before_write": true,
+  "scope": [
+    "R8-N01",
+    "R8-N02"
+  ],
+  "not_opened": [
+    "credentials",
+    "ops/p0-local/secrets/**",
+    "hosted identity",
+    "browser/E2E"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R2",
+  "executor": "Actual Antigravity (Gemini 3.8 Flash High)",
+  "provider": "Google",
+  "workstation": "macOS (darwin arm64)",
+  "nodeVersion": "v24.22.1",
+  "pythonVersion": "3.9.6",
+  "branch": "codex/unified-project-flow",
+  "coordinationBase": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "launchScopeDecision": "INTA-LAUNCH-D01 Option A APPROVED by Human Product Owner on 2026-10-26 (Asia/Saigon)",
+  "normativeAddendum": "docs/implementation/inta-launch-contract-addendum.md (INTA-1-LAUNCH-01)",
+  "approvalRecord": "docs/testing/inta-launch-approval-20261026/approval.json",
+  "supportedLaunchBoundary": "node --experimental-strip-types bin/harness-dev.mjs (raw direct Next CLI unsupported for never-listen)",
+  "suite": "selfcheck-r2.py",
+  "startUTC": "2026-10-26T07:27:32.953330+00:00",
+  "endUTC": "2026-10-26T07:27:33.162136+00:00",
+  "totalCases": 29,
+  "passedCases": 29,
+  "failedCases": 0,
+  "allPassed": true,
+  "liveRuntimeExecuted": false,
+  "liveNextServerSpawned": false,
+  "liveObserverBound": false,
+  "productBuildExecuted": false,
+  "dependencyOperationsExecuted": false,
+  "gitMutationsExecuted": false,
+  "groups": {
+    "group1_baseline9": "9/9 PASS",
+    "group2_regressionProbes3": "3/3 PASS",
+    "group3_strictSchema5": "5/5 PASS",
+    "group4_coordinatorMarshaling5": "5/5 PASS",
+    "group5_persistenceLifecycle2": "2/2 PASS",
+    "group6_tsImportLauncher2": "2/2 PASS (includes 8/8 mock launcher tests)",
+    "group7_approvedLaunchScopeConditions3": "3/3 PASS (API_MODE nonempty/empty and NODE_ENV=production pre-listen proof)"
+  },
+  "dispositionsPreserved": {
+    "FEVAL_F01": "FAIL_OBSERVED_LISTENER (1 row retained for raw direct Next CLI)",
+    "FEVAL_F02": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN (21 rows retained for historical runs)",
+    "historicalVariantLogsReferenced": "docs/testing/inta-returns/frontend/validation-r1-20261026/retained-variant-evidence/ (66 files)",
+    "reportErrataReferenced": "docs/testing/inta-returns/frontend/validation-r1-20261026/report-errata-reconciliation.json"
+  }
+}

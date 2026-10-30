@@ -1,0 +1,29 @@
+{
+  "cwd": "/private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/backend/apps/backend",
+  "command": [
+    "rtk",
+    "proxy",
+    "env",
+    "-u",
+    "DATABASE_URL",
+    "-u",
+    "TEST_DATABASE_URL",
+    "-u",
+    "MC_TEST_DATABASE_URL",
+    "GOCACHE=/private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/backend-go-cache",
+    "GOPROXY=off",
+    "GOSUMDB=off",
+    "GOTOOLCHAIN=local",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "./internal/core/service",
+    "./internal/adapter/outbound/repotest/mattercontrol",
+    "./internal/adapter/inbound/productapi",
+    "-v"
+  ],
+  "started_utc": "2026-10-28T03:27:35.133341+00:00",
+  "finished_utc": "2026-10-28T03:27:38.406460+00:00",
+  "exit": 0
+}

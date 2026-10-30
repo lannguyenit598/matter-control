@@ -73,8 +73,8 @@ WHERE id = $1;
 
 -- name: InsertSecurityAuditEvent :exec
 INSERT INTO security_audit_events (id, occurred_at, actor_id, operation, outcome,
-                                   requested_resource_kind, requested_id_hash)
-VALUES ($1, $2, $3, $4, $5, $6, $7);
+                                   requested_resource_kind, requested_id_hash, client_ip, request_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, sqlc.narg('client_ip')::inet, sqlc.narg('request_id')::text);
 
 -- name: GetRequirementByID :one
 SELECT id, matter_id, title, outcome, execution_state, dependency_state,
@@ -103,8 +103,9 @@ SELECT count(*)::bigint AS n FROM workspace_memberships
 WHERE workspace_id = $1 AND role = 'OWNER' AND status = 'ACTIVE';
 
 -- name: UpdateWorkspaceMembershipStatus :one
-UPDATE workspace_memberships SET status = $3, revision = $4
-WHERE workspace_id = $1 AND user_id = $2
+-- A2: see UpdateMatterMembershipStatus — row-revision predicate added.
+UPDATE workspace_memberships SET status = sqlc.arg(status), revision = sqlc.arg(expected_revision) + 1
+WHERE workspace_id = $1 AND user_id = $2 AND revision = sqlc.arg(expected_revision)
 RETURNING revision;
 
 -- name: BumpWorkspaceRevision :exec
@@ -124,8 +125,12 @@ SELECT count(*)::bigint AS n FROM matter_memberships
 WHERE matter_id = $1 AND role = 'OWNER' AND status = 'ACTIVE';
 
 -- name: UpdateMatterMembershipStatus :one
-UPDATE matter_memberships SET status = $3, revision = $4
-WHERE matter_id = $1 AND user_id = $2
+-- A2: the membership-row revision predicate is defense-in-depth over the header FOR UPDATE
+-- lock and the Go guard. The row carries its own change counter (it drifts from the header
+-- revision as other commands run), so the CAS binds to the row's revision as loaded by the
+-- caller in this same transaction.
+UPDATE matter_memberships SET status = sqlc.arg(status), revision = sqlc.arg(expected_revision) + 1
+WHERE matter_id = $1 AND user_id = $2 AND revision = sqlc.arg(expected_revision)
 RETURNING revision;
 
 -- name: InsertDomainEvent :exec
@@ -173,6 +178,21 @@ WHERE m.workspace_id = $1 AND mm.status = 'ACTIVE';
 
 -- name: ResolveUserIdentity :one
 SELECT id FROM users WHERE idp_issuer = $1 AND idp_subject = $2;
+
+-- name: SearchLocalWorkspacePeople :many
+SELECT u.id, u.display_name
+FROM users u
+JOIN users actor ON actor.id = sqlc.arg(actor_id)::uuid
+JOIN workspace_memberships owner ON owner.user_id = actor.id
+  AND owner.workspace_id = sqlc.arg(workspace_id)::uuid
+  AND owner.role = 'OWNER' AND owner.status = 'ACTIVE'
+WHERE u.idp_issuer = actor.idp_issuer
+  AND strpos(lower(u.display_name), lower(sqlc.arg(search_name)::text)) > 0
+  AND NOT EXISTS (SELECT 1 FROM workspace_memberships current_member
+    WHERE current_member.workspace_id = owner.workspace_id AND current_member.user_id = u.id
+      AND current_member.status = 'ACTIVE')
+ORDER BY lower(u.display_name), u.id
+LIMIT 20;
 
 -- name: ListWorkspaceMembers :many
 SELECT wm.user_id, u.display_name, wm.role, wm.status, wm.revision

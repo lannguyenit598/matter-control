@@ -11,6 +11,8 @@ export type NavItem = {
   label: ReactNode
   /** Pass an element (<ListTodo />), not a component: elements can cross the server/client boundary. */
   icon?: ReactNode
+  /** Other path prefixes that belong to this destination, e.g. a matter lives under Matters. */
+  alsoActiveFor?: readonly string[]
 }
 
 export type NavMenuProps = {
@@ -25,7 +27,9 @@ export function NavMenu({ items, onNavigate, className }: NavMenuProps) {
   return (
     <ul className={cn('flex flex-col gap-1', className)}>
       {items.map((item) => {
-        const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
+        const active = [item.href, ...(item.alsoActiveFor ?? [])].some(
+          (base) => pathname === base || pathname.startsWith(`${base}/`),
+        )
         return (
           <li key={item.href}>
             <Link
@@ -33,8 +37,8 @@ export function NavMenu({ items, onNavigate, className }: NavMenuProps) {
               onClick={onNavigate}
               aria-current={active ? 'page' : undefined}
               className={cn(
-                'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground [&_svg]:size-4',
-                active && 'bg-accent text-accent-foreground',
+                'app-nav-link flex min-h-9 items-center gap-2.5 rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:stroke-[1.6]',
+                active && 'bg-accent font-medium text-foreground',
               )}
             >
               {item.icon}

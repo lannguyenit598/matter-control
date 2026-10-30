@@ -1,0 +1,77 @@
+{
+  "task": "MC-INTA-PRIVACY-QA-R1",
+  "reviewer": "Actual OpenCode (OpenCode harness), opencode CLI v2.1.4, model opencode/glm-5.3-flash-free (provider opencode), independent nonauthor",
+  "produced_utc": "2026-10-26T14:16Z (approx; after 10:13:43Z captured clock read; response-transport interruptions extended the session, analysis steps unchanged)",
+  "purpose": "Producer-output to measured scan-coverage disposition, raw-QA-root adjudication, time boundary and remaining expected artifacts.",
+  "scan_windows_utc": {
+    "original_scan": {"start": "2026-10-26T08:46:30.616339+00:00", "end": "2026-10-26T08:46:30.821494+00:00", "exit": 3},
+    "teardown_packet_creation": "2026-10-26T08:57:19Z (delivery-checks/manifest mtimes)",
+    "supplement_inventory_build": "2026-10-26T09:37:04Z (inventory.json mtime, local UTC+7 converted)",
+    "supplement_scan": {"start": "2026-10-26T09:39:01.290617+00:00", "end": "2026-10-26T09:39:01.403723+00:00", "exit": 0},
+    "coverage_boundary": "Selection fixed at supplement inventory build 09:37:04Z; measured time ends at supplement scan end 09:39:01.403723Z; anything arriving later is UNMEASURED",
+    "this_review_window_utc": "approx 09:50Z - 10:20Z (exact clock captures: 10:09:02Z, 10:11:09Z, 10:13:43Z)"
+  },
+  "combined_measured_corpus": {
+    "original": {"files": 1153, "bytes": 5944102, "archive_entries": 315, "archive_expanded_bytes": 3469483, "match_events": 0, "verdict": "PARTIAL", "gap": ["/tmp/mc002-inta-evidence/qa missing selected root"]},
+    "supplement": {"files": 123, "bytes": 1838578, "overlap_with_original": 0, "match_events": 0, "verdict": "PASS_SUPPLEMENT_SCOPE", "gaps": []},
+    "combined_unique_files": 1276,
+    "combined_archive_entries": 315,
+    "combined_match_events": 0,
+    "pin_recheck_today": "original 1153/1153 clean; supplement 123/123 clean (this review, 2026-10-26 ~10:01-10:02Z)"
+  },
+  "producer_to_artifact_to_coverage_table": [
+    {"producer_contract": "MC-002-INTA-OPENCODE-CLOSEOUT-REVIEW-PROMPT.md (closeout QA producer)", "declared_artifact": "docs/reviews/inta-opencode-closeout-review-r1.md", "measured_by": "supplement", "supplement_id": "S0057", "live_hash_matches": true, "note": "genuinely omitted from original inventory; four-narrative correction applies"},
+    {"producer_contract": "MC-002-INTA-OPENCODE-CLOSEOUT-REVIEW-PROMPT.md", "declared_artifact": "docs/testing/inta-returns/qa/closeout-review-r1/ (7 files incl. r1-addendum/)", "measured_by": "original scan", "note": "existed before 08:46Z; qa-tree walk confirms 7/7 measured; unchanged today"},
+    {"producer_contract": "MC-002-INTA-OPENCODE-R1-ADDENDUM-PROMPT.md", "declared_artifact": "r1-addendum subdirectory outputs (checks-log.json, inputs-pinned.json, required36-coverage.json)", "measured_by": "original scan", "note": "3/3 measured inside qa/closeout-review-r1/r1-addendum/"},
+    {"producer_contract": "MC-002-INTA-OPENCODE-FE-R2-SOURCE-REVIEW-PROMPT.md", "declared_artifact": "docs/reviews/inta-opencode-fe-r2-source-review.md", "measured_by": "supplement", "supplement_id": "S0059", "live_hash_matches": true, "note": "four-narrative correction applies"},
+    {"producer_contract": "MC-002-INTA-OPENCODE-FE-R2-SOURCE-REVIEW-PROMPT.md", "declared_artifact": "docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/ (review-inputs.json, checks-log.json)", "measured_by": "original scan", "note": "2/2 measured"},
+    {"producer_contract": "MC-002-INTA-OPENCODE-FE-R3-SOURCE-REVIEW-PROMPT.md", "declared_artifact": "docs/reviews/inta-opencode-fe-r3-source-review.md", "measured_by": "supplement", "supplement_id": "S0061", "live_hash_matches": true, "note": "four-narrative correction applies; later R3 evidence within time boundary"},
+    {"producer_contract": "MC-002-INTA-OPENCODE-FE-R3-SOURCE-REVIEW-PROMPT.md", "declared_artifact": "docs/testing/inta-returns/qa/fe-validation-r3-source-review-20261026/ (review-inputs.json, checks-log.json)", "measured_by": "supplement", "note": "2/2 measured (arrived between 08:46 and 09:37)"},
+    {"producer_contract": "qa/r4-source/zcode/review-meta.json (ZCode R4 review producer record)", "declared_artifact": "docs/reviews/inta-frontend-r4-zcode-review.md", "measured_by": "supplement", "supplement_id": "S0038", "live_hash_matches": true, "note": "four-narrative correction applies"},
+    {"producer_contract": "MC-002-INTA-CODEX-PRIVACY-TEARDOWN-PROMPT.md (privacy teardown producer)", "declared_artifact": "docs/reviews/inta-codex-privacy-teardown-return.md + 26-payload packet + manifest (governance 27 + raw 27)", "measured_by": "supplement", "note": "packet created 08:57Z (after original scan); supplement measured all 27 governance + 27 raw files incl. S0011 report; packet self-excludes manifest from its own pin list only"},
+    {"producer_contract": "MC-002-INTA-PRIVACY-SUPPLEMENT (the supplement task itself)", "declared_artifact": "supplement report docs/reviews/inta-codex-privacy-supplement-return.md + 6 supplement self-files", "measured_by": "NOT_ACTUAL_VALUE_SCANNED", "note": "self-exclusion by producer; report + self-files pinned by THIS review (direct pins / raw-export equality); no actual-value scan of these 6+1 files exists; residual limitation accepted, no waiver"},
+    {"producer_contract": "Antigravity R4 validation producer (validation-r4-20261026 packet + R4 intake + R4 returns)", "declared_artifact": "23 packet files (validation-r4-20261026/), 8 intake files (docs/testing/inta-fe-validation-r4-intake/), docs/reviews/inta-fe-validation-r4-antigravity-return.md, docs/reviews/inta-fe-validation-r4-intake.md", "measured_by": "NOT_COVERED", "note": "arrived at/after supplement inventory build (R4 manifest 09:37:20Z, R4 return 09:38:37Z in selection/execution gap; intake md 09:57:39Z after). R4 outputs are NOT presumed covered; future supplemental scan required"},
+    {"producer_contract": "Approved INT-A privacy scan scope (root list in scan-inventory.json)", "declared_artifact": "other pre-existing INT-A governance evidence (445-29 measured files across inta-returns subtrees) + raw /tmp roots (not re-traversed by this review per task prohibition)", "measured_by": "original scan", "note": "recheck today: clean; raw roots rest on retained pins + author preservation check"},
+    {"producer_contract": "raw QA root /tmp/mc002-inta-evidence/qa", "declared_artifact": "nothing (no pinned producer contract requires it)", "measured_by": "ABSENT_ROOT_DISPOSITIONED", "note": "see adjudication below"},
+    {"producer_contract": "This QA review (MC-INTA-PRIVACY-QA-R1)", "declared_artifact": "4 new output files", "measured_by": "NOT_COVERED", "note": "created post-boundary; need later privacy coverage; reported honestly"}
+  ],
+  "raw_qa_root_adjudication": {
+    "observed": "original scan-inventory gaps: [{path: /tmp/mc002-inta-evidence/qa, reason: missing selected root}]; directory absent at scan time and absent today (no synthetic copy created - producer-scope-evidence declares fabricated_raw_QA_copies=false and none observed)",
+    "producer_contract_review": "All pinned QA producer contracts (closeout, R1 addendum, FE-R2, FE-R3, zcode r4 review-meta) declare direct governance outputs under docs/reviews and docs/testing/inta-returns/qa; none declares raw originals under /tmp/mc002-inta-evidence/qa",
+    "conclusion": "ACCEPTED as producer-layout scope question / inventory over-selection, NOT as missing required originals and NOT as a waiver",
+    "conditions": [
+      "The gap remains recorded in the original packet (not erased)",
+      "The four genuinely omitted narrative outputs were measured additively by the supplement",
+      "No declared producer artifact maps to the absent root, so no required original is known lost",
+      "If any producer contract later proves a raw-QA requirement, this disposition must be revisited (NEEDS_SOURCE)"
+    ]
+  },
+  "four_narrative_confirmation": {
+    "claim": "Four declared QA narrative outputs were genuinely outside the original scan inventory and were measured in the supplement",
+    "verified": [
+      {"path": "docs/reviews/inta-opencode-closeout-review-r1.md", "bytes": 18228, "in_original": false, "in_supplement": true, "live_sha256_prefix": "11d7994b1625", "matches_supplement_pin": true},
+      {"path": "docs/reviews/inta-opencode-fe-r2-source-review.md", "bytes": 26979, "in_original": false, "in_supplement": true, "live_sha256_prefix": "1a1abebe0c68", "matches_supplement_pin": true},
+      {"path": "docs/reviews/inta-opencode-fe-r3-source-review.md", "bytes": 41708, "in_original": false, "in_supplement": true, "live_sha256_prefix": "7eb30ed94504", "matches_supplement_pin": true},
+      {"path": "docs/reviews/inta-frontend-r4-zcode-review.md", "bytes": 12827, "in_original": false, "in_supplement": true, "live_sha256_prefix": "8d4dd0ec9408", "matches_supplement_pin": true}
+    ],
+    "correction_confirmed": true
+  },
+  "remaining_expected_artifacts_unmeasured_as_of_review": [
+    {"group": "supplement self-files (self-exclusion; pinned by this review, not actual-value scanned)", "paths": ["docs/testing/inta-returns/environment/privacy-supplement-20261026/{execution.json, inventory.json, manifest.json, producer-scope-evidence.json, scan-result.json, supplement_scan.py}"]},
+    {"group": "supplement report (post-scan 09:40:11Z; pinned as direct input by this review)", "paths": ["docs/reviews/inta-codex-privacy-supplement-return.md"]},
+    {"group": "R4 packet (post-boundary; NOT presumed covered)", "paths": ["docs/testing/inta-returns/frontend/validation-r4-20261026/ (23 files incl. runner/, diffs/, launcher/, proposals/, selfcheck outputs)"]},
+    {"group": "R4 intake", "paths": ["docs/testing/inta-fe-validation-r4-intake/ (8 files)", "docs/reviews/inta-fe-validation-r4-intake.md"]},
+    {"group": "R4 owner return", "paths": ["docs/reviews/inta-fe-validation-r4-antigravity-return.md"]},
+    {"group": "this QA review outputs", "paths": ["docs/reviews/inta-opencode-privacy-teardown-review-r1.md", "docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/ (3 JSON files)"]},
+    {"group": "future outputs after 2026-10-26T09:39:01.403723Z", "paths": ["any"]},
+    {"group": "observation (scope-confirmation flag, not counted as INT-A evidence gap)", "paths": ["docs/testing/inta-runtime-status.json (2026-10-25 mtime; status file at docs/testing root, never inside any declared scan root)"]}
+  ],
+  "out_of_declared_scope_trees_not_counted_as_gaps": "docs/testing/step-00* step-01 step-02-* step-02-backend*/step-02-c01* step-02-frontend* be01*/be02* f10* parallel-work dirs other than privacy-qa-inputs.json, and docs/reviews/{step-*, be*, f10-*} were never in the approved INT-A privacy scan scope (roots list + intake copies + referenced archives); their absence from coverage is expected, not a privacy gap for this task.",
+  "verdict_summary": {
+    "original_scan": "PARTIAL - independently confirmed accurate (all pinned claims verified; gap honestly recorded; inventory omission of four declared narratives later corrected additively)",
+    "supplemental_coverage": "PASS_SUPPLEMENT_SCOPE - independently confirmed (123 files/1,838,578 bytes, 0 matches, exit 0, no gaps; hash-pinned matcher reuse verified)",
+    "combined_scoped_privacy": "PASS_WITH_LIMITATIONS for measured corpus (zero actual matches across 1,276 unique files + 315 streamed archive members as of 2026-10-26T09:39:01.403723Z); overall INT-PRIV-01 remains PARTIAL/PENDING: post-boundary (incl. R4) outputs unmeasured, supplement self-files not actual-value scanned, unselected/transformed credentials unprovable",
+    "scoped_pg_teardown": "PASS_SCOPED / PASS_WITH_LIMITATIONS - independently confirmed from retained records (point-in-time observations; preservation-checks.json generating program not retained, substance independently corroborated)",
+    "gates_NOT_awarded": ["36-case acceptance", "MC-002 DONE", "Step 03B", "production/security/recovery/Cloudflare/cost approval", "full INT-ISO-03 conformance", "automatic promotion of any formal row"]
+  }
+}

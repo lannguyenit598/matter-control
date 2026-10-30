@@ -1,0 +1,35 @@
+== go mod tidy -diff
+tidy_exit=0
+== golangci-lint
+internal/adapter/outbound/postgres/explain_access_paths_test.go:223:58: non-wrapping format verb for fmt.Errorf. Use `%w` to format errors (errorlint)
+		return explainResult{}, fmt.Errorf("explain rows: %v", err)
+		                                                       ^
+internal/adapter/outbound/postgres/matter_test.go:5:1: File is not properly formatted (gofmt)
+	"net/netip"
+^
+2 issues:
+* errorlint: 1
+* gofmt: 1
+lint_exit=1
+== go test -race
+?   	leonx.me/matter-control/cmd/mcapi	[no test files]
+?   	leonx.me/matter-control/internal/adapter/inbound/httpapi	[no test files]
+ok  	leonx.me/matter-control/internal/adapter/inbound/productapi	1.647s
+ok  	leonx.me/matter-control/internal/adapter/outbound/identity/zitadel	2.663s
+ok  	leonx.me/matter-control/internal/adapter/outbound/objectstore	11.407s
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	72.867s
+?   	leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc	[no test files]
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres/pgtest	1.855s
+ok  	leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol	1.693s
+?   	leonx.me/matter-control/internal/adapter/outbound/repotest/objectcontract	[no test files]
+ok  	leonx.me/matter-control/internal/adapter/outbound/sheet	1.810s
+ok  	leonx.me/matter-control/internal/adapter/outbound/system	1.806s
+ok  	leonx.me/matter-control/internal/app	2.147s
+ok  	leonx.me/matter-control/internal/config	1.361s
+?   	leonx.me/matter-control/internal/core/domain	[no test files]
+ok  	leonx.me/matter-control/internal/core/domain/matter	1.300s
+ok  	leonx.me/matter-control/internal/core/policy	1.286s
+?   	leonx.me/matter-control/internal/core/port	[no test files]
+ok  	leonx.me/matter-control/internal/core/service	1.322s
+ok  	leonx.me/matter-control/internal/observability	1.365s
+test_exit=0

@@ -1,6 +1,6 @@
 package policy
 
-import "github.com/example/userapi/internal/core/domain/matter"
+import "leonx.me/matter-control/internal/core/domain/matter"
 
 // WorkspaceAccess summarizes workspace-membership lookups for workspace-scoped
 // decisions. Only ErrNotFound means absence; lookup failures never become facts.

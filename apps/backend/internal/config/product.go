@@ -15,6 +15,7 @@ type ProductConfig struct {
 	HTTPAddr        string
 	LogLevel        slog.Level
 	RequestTimeout  time.Duration
+	TransferTimeout time.Duration
 	ShutdownDelay   time.Duration
 	ShutdownTimeout time.Duration
 
@@ -22,11 +23,19 @@ type ProductConfig struct {
 	DatabaseURL string
 	// MigrateDatabaseURL is an optional connection for the schema owner. Only `mcapi migrate`
 	// and MC_MIGRATE_ON_START use it, so the serving role needs no DDL rights.
-	MigrateDatabaseURL string
-	MigrateOnStart     bool
+	MigrateDatabaseURL   string
+	MigrateOnStart       bool
+	LocalPeopleDirectory bool
 
-	// ObjectDir is the private directory that holds document bytes (local/PoC adapter).
+	// ObjectBackend picks where document bytes live: "fs" (a private local directory, the
+	// local/PoC adapter) or "r2" (a private Cloudflare R2 bucket). Cloud Run's disk is
+	// per-instance and ephemeral, so a deployed API must use "r2".
+	ObjectBackend string
+	// ObjectDir is the private directory that holds document bytes (ObjectBackend "fs").
 	ObjectDir string
+	// R2 addresses the bucket for ObjectBackend "r2". The credentials are secrets: supply them from
+	// a secret store, scope the token to this bucket (Object Read & Write), never log them.
+	R2 R2
 	// MaxUploadBytes bounds one document upload.
 	MaxUploadBytes int64
 	// MaxInFlight caps concurrent API requests; 0 = unlimited. The right number is a workload
@@ -34,6 +43,14 @@ type ProductConfig struct {
 	MaxInFlight int
 
 	OIDC OIDC
+}
+
+// R2 is the connection to one Cloudflare R2 bucket (S3-compatible API).
+type R2 struct {
+	Endpoint        string
+	Bucket          string
+	AccessKeyID     string
+	SecretAccessKey string
 }
 
 // OIDC pins the one canonical issuer and the introspection client (contract §1).
@@ -57,23 +74,34 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 	p := &parser{lookup: lookup}
 	inFlight := p.int64("MC_MAX_IN_FLIGHT", 0)
 	cfg := ProductConfig{
-		HTTPAddr:           p.str("MC_HTTP_ADDR", "127.0.0.1:8081"),
-		RequestTimeout:     p.duration("MC_REQUEST_TIMEOUT", "10s"),
-		ShutdownDelay:      p.duration("MC_SHUTDOWN_DELAY", "0s"),
-		ShutdownTimeout:    p.duration("MC_SHUTDOWN_TIMEOUT", "10s"),
-		DatabaseURL:        p.str("MC_DATABASE_URL", ""),
-		MigrateDatabaseURL: p.str("MC_MIGRATE_DATABASE_URL", ""),
-		MigrateOnStart:     p.bool("MC_MIGRATE_ON_START", false),
-		ObjectDir:          p.str("MC_OBJECT_DIR", ""),
-		MaxUploadBytes:     p.int64("MC_MAX_UPLOAD_BYTES", 25<<20),
-		MaxInFlight:        int(inFlight),
+		HTTPAddr:             p.str("MC_HTTP_ADDR", "127.0.0.1:8081"),
+		RequestTimeout:       p.duration("MC_REQUEST_TIMEOUT", "10s"),
+		TransferTimeout:      p.duration("MC_TRANSFER_TIMEOUT", "60s"),
+		ShutdownDelay:        p.duration("MC_SHUTDOWN_DELAY", "0s"),
+		ShutdownTimeout:      p.duration("MC_SHUTDOWN_TIMEOUT", "10s"),
+		DatabaseURL:          p.str("MC_DATABASE_URL", ""),
+		MigrateDatabaseURL:   p.str("MC_MIGRATE_DATABASE_URL", ""),
+		MigrateOnStart:       p.bool("MC_MIGRATE_ON_START", false),
+		LocalPeopleDirectory: p.bool("MC_LOCAL_PEOPLE_DIRECTORY", false),
+		ObjectBackend:        p.str("MC_OBJECT_BACKEND", "fs"),
+		ObjectDir:            p.str("MC_OBJECT_DIR", ""),
+		R2: R2{
+			Endpoint:        p.str("MC_R2_ENDPOINT", ""),
+			Bucket:          p.str("MC_R2_BUCKET", ""),
+			AccessKeyID:     p.str("MC_R2_ACCESS_KEY_ID", ""),
+			SecretAccessKey: p.str("MC_R2_SECRET_ACCESS_KEY", ""),
+		},
+		MaxUploadBytes: p.int64("MC_MAX_UPLOAD_BYTES", 25<<20),
+		MaxInFlight:    int(inFlight),
 		OIDC: OIDC{
 			Issuer:           p.str("MC_OIDC_ISSUER", ""),
 			IntrospectionURL: p.str("MC_OIDC_INTROSPECTION_URL", ""),
 			Audience:         p.str("MC_OIDC_AUDIENCE", ""),
 			APIKeyFile:       p.str("MC_OIDC_API_KEY_FILE", ""),
 			APIClientID:      p.str("MC_OIDC_API_CLIENT_ID", ""),
-			CacheTTL:         p.duration("MC_OIDC_CACHE_TTL", "0s"),
+			// A5: a deliberate small TTL bounds the revocation window (a cached "active" answer
+			// can be up to TTL stale after a ZITADEL revocation); 0 disables the cache entirely.
+			CacheTTL: p.duration("MC_OIDC_CACHE_TTL", "15s"),
 		},
 	}
 	if err := cfg.LogLevel.UnmarshalText([]byte(p.str("MC_LOG_LEVEL", "info"))); err != nil {
@@ -81,6 +109,12 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 	}
 	if cfg.RequestTimeout <= 0 {
 		p.fail("MC_REQUEST_TIMEOUT: must be > 0")
+	}
+	if cfg.TransferTimeout <= 0 {
+		p.fail("MC_TRANSFER_TIMEOUT: must be > 0")
+	}
+	if cfg.OIDC.CacheTTL < 0 {
+		p.fail("MC_OIDC_CACHE_TTL: must be >= 0 (0 disables the introspection cache)")
 	}
 	if cfg.ShutdownDelay < 0 || cfg.ShutdownTimeout < 0 {
 		p.fail("MC_SHUTDOWN_DELAY and MC_SHUTDOWN_TIMEOUT must be >= 0")
@@ -95,7 +129,7 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 		p.fail("MC_OIDC_CACHE_TTL: must be >= 0")
 	}
 	for key, v := range map[string]string{
-		"MC_DATABASE_URL": cfg.DatabaseURL, "MC_OBJECT_DIR": cfg.ObjectDir, "MC_OIDC_ISSUER": cfg.OIDC.Issuer,
+		"MC_DATABASE_URL": cfg.DatabaseURL, "MC_OIDC_ISSUER": cfg.OIDC.Issuer,
 		"MC_OIDC_INTROSPECTION_URL": cfg.OIDC.IntrospectionURL, "MC_OIDC_AUDIENCE": cfg.OIDC.Audience,
 		"MC_OIDC_API_KEY_FILE": cfg.OIDC.APIKeyFile,
 	} {
@@ -103,7 +137,27 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 			p.fail("%s is required", key)
 		}
 	}
-	for key, v := range map[string]string{"MC_OIDC_ISSUER": cfg.OIDC.Issuer, "MC_OIDC_INTROSPECTION_URL": cfg.OIDC.IntrospectionURL} {
+	switch cfg.ObjectBackend {
+	case "fs":
+		if p.str("K_SERVICE", "") != "" {
+			p.fail("MC_OBJECT_BACKEND=fs is forbidden when K_SERVICE is set; use r2")
+		}
+		if cfg.ObjectDir == "" {
+			p.fail("MC_OBJECT_DIR is required")
+		}
+	case "r2":
+		for key, v := range map[string]string{
+			"MC_R2_ENDPOINT": cfg.R2.Endpoint, "MC_R2_BUCKET": cfg.R2.Bucket,
+			"MC_R2_ACCESS_KEY_ID": cfg.R2.AccessKeyID, "MC_R2_SECRET_ACCESS_KEY": cfg.R2.SecretAccessKey,
+		} {
+			if v == "" {
+				p.fail("%s is required when MC_OBJECT_BACKEND=r2", key)
+			}
+		}
+	default:
+		p.fail("MC_OBJECT_BACKEND: must be fs or r2")
+	}
+	for key, v := range map[string]string{"MC_OIDC_ISSUER": cfg.OIDC.Issuer, "MC_OIDC_INTROSPECTION_URL": cfg.OIDC.IntrospectionURL, "MC_R2_ENDPOINT": cfg.R2.Endpoint} {
 		u, err := url.Parse(v)
 		switch {
 		case v == "":

@@ -13,12 +13,12 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol"
-	"github.com/example/userapi/internal/adapter/outbound/sheet"
-	"github.com/example/userapi/internal/adapter/outbound/system"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
-	"github.com/example/userapi/internal/core/service"
+	"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol"
+	"leonx.me/matter-control/internal/adapter/outbound/sheet"
+	"leonx.me/matter-control/internal/adapter/outbound/system"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
+	"leonx.me/matter-control/internal/core/service"
 )
 
 const testIssuer = "http://issuer.test"
@@ -63,7 +63,7 @@ func newEnv(t *testing.T) *env { return newEnvSized(t, 64) }
 
 // newEnvSized builds the test server with the given upload limit (64 bytes keeps the document
 // upload-limit test small; the W6 import tests need a realistic sheet size).
-func newEnvSized(t *testing.T, maxUpload int64) *env {
+func newEnvSized(t *testing.T, maxUpload int64, localDirectory ...bool) *env {
 	t.Helper()
 	base := time.Date(2026, 10, 25, 12, 0, 0, 0, time.UTC)
 	n := 0
@@ -79,16 +79,18 @@ func newEnvSized(t *testing.T, maxUpload int64) *env {
 	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
 	ids := system.RecordIDv7{}
 	e.h = NewServer(Deps{
-		Workspaces:     service.NewWorkspaceService(store, ids, logger, matter.KeyAgePolicy{}),
-		Matters:        service.NewMatterService(store, ids, logger, matter.KeyAgePolicy{}),
-		Work:           service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{}),
-		Evidence:       service.NewEvidenceService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{}), e.objs),
-		Filings:        service.NewFilingService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{})),
-		Control:        service.NewControlService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{})),
-		DataOps:        service.NewDataOpsService(store, ids, sheet.Codec{}, logger),
-		DataOpsCodec:   sheet.Codec{},
-		MaxUploadBytes: maxUpload,
-		Verifier:       e.verifier, Identities: res, Logger: logger,
+		LocalPeopleDirectory: len(localDirectory) > 0 && localDirectory[0],
+		Workspaces:           service.NewWorkspaceService(store, ids, logger, matter.KeyAgePolicy{}),
+		Matters:              service.NewMatterService(store, ids, logger, matter.KeyAgePolicy{}),
+		Work:                 service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{}),
+		Evidence:             service.NewEvidenceService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{}), e.objs),
+		Filings:              service.NewFilingService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{})),
+		Control:              service.NewControlService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{})),
+		Review:               service.NewReviewService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{})),
+		DataOps:              service.NewDataOpsService(store, ids, sheet.Codec{}, logger),
+		DataOpsCodec:         sheet.Codec{},
+		MaxUploadBytes:       maxUpload,
+		Verifier:             e.verifier, Identities: res, Logger: logger,
 	})
 	return e
 }

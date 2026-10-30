@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/config"
+	"leonx.me/matter-control/internal/config"
 )
 
 func validProduct() map[string]string {
@@ -25,8 +25,18 @@ func TestLoadProduct_Defaults(t *testing.T) {
 		t.Fatal(err)
 	}
 	if cfg.HTTPAddr != "127.0.0.1:8081" || cfg.LogLevel != slog.LevelInfo || cfg.RequestTimeout != 10*time.Second ||
-		cfg.ShutdownTimeout != 10*time.Second || cfg.ShutdownDelay != 0 || cfg.MigrateOnStart || cfg.OIDC.CacheTTL != 0 || cfg.MaxUploadBytes != 25<<20 || cfg.ObjectDir == "" {
+		cfg.TransferTimeout != 60*time.Second || cfg.ShutdownTimeout != 10*time.Second || cfg.ShutdownDelay != 0 || cfg.MigrateOnStart || cfg.OIDC.CacheTTL != 15*time.Second || cfg.MaxUploadBytes != 25<<20 || cfg.ObjectDir == "" {
 		t.Fatalf("defaults: %+v", cfg)
+	}
+}
+
+// A5: a negative introspection cache TTL is refused — the revocation window must be a
+// deliberate, non-negative choice.
+func TestLoadProduct_NegativeCacheTTLRefused(t *testing.T) {
+	m := validProduct()
+	m["MC_OIDC_CACHE_TTL"] = "-1s"
+	if _, err := config.LoadProduct(env(m)); err == nil {
+		t.Fatal("a negative cache TTL must be refused")
 	}
 }
 
@@ -42,6 +52,9 @@ func TestLoadProduct_Errors(t *testing.T) {
 		"no key file":        mutate("MC_OIDC_API_KEY_FILE", ""),
 		"bad log level":      mutate("MC_LOG_LEVEL", "loud"),
 		"zero timeout":       mutate("MC_REQUEST_TIMEOUT", "0s"),
+		"zero transfer":      mutate("MC_TRANSFER_TIMEOUT", "0s"),
+		"negative transfer":  mutate("MC_TRANSFER_TIMEOUT", "-1s"),
+		"invalid transfer":   mutate("MC_TRANSFER_TIMEOUT", "later"),
 		"negative delay":     mutate("MC_SHUTDOWN_DELAY", "-1s"),
 		"negative cache ttl": mutate("MC_OIDC_CACHE_TTL", "-1s"),
 		"bad bool":           mutate("MC_MIGRATE_ON_START", "maybe"),
@@ -118,5 +131,75 @@ func TestLoadProduct_MaxInFlight(t *testing.T) {
 		if _, err := config.LoadProduct(env(m)); err == nil {
 			t.Errorf("MC_MAX_IN_FLIGHT=%s must be refused", bad)
 		}
+	}
+}
+
+func validR2() map[string]string {
+	m := validProduct()
+	delete(m, "MC_OBJECT_DIR")
+	m["MC_OBJECT_BACKEND"] = "r2"
+	m["MC_R2_ENDPOINT"] = "https://acct.r2.cloudflarestorage.com"
+	m["MC_R2_BUCKET"] = "mc-docs"
+	m["MC_R2_ACCESS_KEY_ID"] = "key-id"
+	m["MC_R2_SECRET_ACCESS_KEY"] = "secret"
+	return m
+}
+
+func TestLoadProduct_TransferTimeoutCanBeConfigured(t *testing.T) {
+	m := validProduct()
+	m["MC_TRANSFER_TIMEOUT"] = "45s"
+	cfg, err := config.LoadProduct(env(m))
+	if err != nil || cfg.TransferTimeout != 45*time.Second || cfg.RequestTimeout != 10*time.Second {
+		t.Fatalf("transfer=%v request=%v err=%v", cfg.TransferTimeout, cfg.RequestTimeout, err)
+	}
+}
+
+func TestLoadProduct_ObjectBackendDefaultsToTheLocalDirectory(t *testing.T) {
+	cfg, err := config.LoadProduct(env(validProduct()))
+	if err != nil || cfg.ObjectBackend != "fs" || cfg.R2 != (config.R2{}) {
+		t.Fatalf("%+v %v", cfg, err)
+	}
+}
+
+func TestLoadProduct_CloudFilesystemFailsClosed(t *testing.T) {
+	for _, backend := range []string{"", "fs", "r2"} {
+		t.Run(backend, func(t *testing.T) {
+			m := validProduct()
+			if backend == "r2" {
+				m = validR2()
+			}
+			if backend != "" {
+				m["MC_OBJECT_BACKEND"] = backend
+			}
+			m["K_SERVICE"] = "synthetic-service"
+			_, err := config.LoadProduct(env(m))
+			if (err != nil) != (backend != "r2") {
+				t.Fatalf("backend %q: %v", backend, err)
+			}
+		})
+	}
+}
+
+func TestLoadProduct_R2NeedsNoDirectoryButEverySetting(t *testing.T) {
+	cfg, err := config.LoadProduct(env(validR2()))
+	if err != nil || cfg.ObjectBackend != "r2" || cfg.R2.Bucket != "mc-docs" || cfg.R2.SecretAccessKey != "secret" {
+		t.Fatalf("%+v %v", cfg, err)
+	}
+	for _, key := range []string{"MC_R2_ENDPOINT", "MC_R2_BUCKET", "MC_R2_ACCESS_KEY_ID", "MC_R2_SECRET_ACCESS_KEY"} {
+		m := validR2()
+		m[key] = ""
+		if _, err := config.LoadProduct(env(m)); err == nil {
+			t.Errorf("%s: required when MC_OBJECT_BACKEND=r2", key)
+		}
+	}
+	m := validR2()
+	m["MC_R2_ENDPOINT"] = "http://objects.example.com"
+	if _, err := config.LoadProduct(env(m)); err == nil {
+		t.Error("a plain-http, non-loopback R2 endpoint carries signed requests and must be refused")
+	}
+	m = validR2()
+	m["MC_OBJECT_BACKEND"] = "s3"
+	if _, err := config.LoadProduct(env(m)); err == nil {
+		t.Error("an unknown backend must be refused, not fall back to the local disk")
 	}
 }

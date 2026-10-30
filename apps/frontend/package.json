@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/check-built-css.mjs",
+    "build:webpack": "next build --webpack && node scripts/check-built-css.mjs",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "eslint .",
@@ -19,23 +20,28 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "agents:sync": "node scripts/sync-agent-config.mjs",
-    "agents:check": "node scripts/sync-agent-config.mjs --check"
+    "agents:check": "node scripts/sync-agent-config.mjs --check",
+    "build:worker": "node scripts/build-worker.mjs",
+    "preview:worker": "wrangler dev --local"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.59.0",
     "next": "16.4.2",
+    "pg": "8.23.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "tailwind-merge": "^3.7.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.14",
     "@playwright/test": "^1.64.1",
     "@storybook/addon-a11y": "^10.6.2",
     "@storybook/addon-docs": "^10.6.2",
     "@storybook/nextjs-vite": "^10.6.2",
+    "@tailwindcss/postcss": "4.3.3",
     "@tailwindcss/turbopack": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/dom": "^10.4.2",
@@ -43,6 +49,7 @@
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",
     "@types/node": "^24.19.2",
+    "@types/pg": "8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.1.2",
@@ -59,7 +66,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "~5.9.3",
     "vite": "^8.3.4",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "wrangler": "4.156.0"
   },
   "packageManager": "pnpm@12.11.2",
   "engines": {

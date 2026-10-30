@@ -1,0 +1,52 @@
+{
+ "detected_utc": "2026-10-28T15:38:31Z (first), re-verified 2026-10-28T15:42:45Z (closing inventory)",
+ "opening_check": "719/719 matched at 2026-10-28T15:34:41Z",
+ "not_caused_by": "this session; no command of mine wrote these files (my package.json/lockfile reads and the snapshot copy only read them)",
+ "observed_change": "package.json: build script now \"next build && node scripts/check-built-css.mjs\", new build:webpack script, new dependency @tailwindcss/postcss 4.3.3; pnpm-lock.yaml updated to match; new postcss.config.mjs and a CSS-compiled check script. This matches the Webpack Tailwind defect reproduced in browser/webpack-css-reproduction.json.",
+ "source_freeze": "VIOLATED by an unidentified actor during this run",
+ "my_handling": "did not touch, revert or re-pin; the snapshot for all runtime evidence was built from the PINNED bytes (HEAD blobs for the two drifted files, which equal the pinned hashes); the two new files were excluded",
+ "files": [
+  {
+   "path": "apps/frontend/package.json",
+   "status": "MODIFIED_BY_UNOWNED_WRITER",
+   "pinned_sha256": "bdc96645980d33fd5152a856fc2a44c3dbad0fe952bb42351e0a1454ee9733b5",
+   "pinned_bytes": 2270,
+   "head_blob_sha256": "bdc96645980d33fd5152a856fc2a44c3dbad0fe952bb42351e0a1454ee9733b5",
+   "head_equals_pinned": true,
+   "current_sha256": "f56e8d4abbc044b2032fba09730697f63a2969a7014022c90a65bb67b4303f8e",
+   "current_bytes": 2424,
+   "mtime_utc": "2026-10-28T15:37:15Z"
+  },
+  {
+   "path": "apps/frontend/pnpm-lock.yaml",
+   "status": "MODIFIED_BY_UNOWNED_WRITER",
+   "pinned_sha256": "ac4822428e329ba634cfa860a840614c0c12915897196f4f7142ba66f298a1e7",
+   "pinned_bytes": 250081,
+   "head_blob_sha256": "ac4822428e329ba634cfa860a840614c0c12915897196f4f7142ba66f298a1e7",
+   "head_equals_pinned": true,
+   "current_sha256": "1cbcebbb2baf2e8a49fa994193b19447d8d3f289e701a380a4b2988e665eae0e",
+   "current_bytes": 250514,
+   "mtime_utc": "2026-10-28T15:36:42Z"
+  },
+  {
+   "path": "apps/frontend/next.config.ts",
+   "status": "TOUCHED_CONTENT_UNCHANGED",
+   "pinned_sha256_equals_current": true,
+   "mtime_utc": "2026-10-28T15:35:37Z"
+  },
+  {
+   "path": "apps/frontend/postcss.config.mjs",
+   "status": "NEW_UNTRACKED_NOT_IN_PINNED_MANIFEST",
+   "current_sha256": "6993a1b3cdf21cec2260d0d8ecaaf746f1e79893f0a5e622d3f1b9366469c973",
+   "current_bytes": 92,
+   "mtime_utc": "2026-10-28T15:39:20Z"
+  },
+  {
+   "path": "apps/frontend/scripts/check-built-css.mjs",
+   "status": "NEW_UNTRACKED_NOT_IN_PINNED_MANIFEST",
+   "current_sha256": "b48d6170bd1859b33578c864b8f330222408ffbdd880b52a87a7740b7d938448",
+   "current_bytes": 812,
+   "mtime_utc": "2026-10-28T15:39:21Z"
+  }
+ ]
+}

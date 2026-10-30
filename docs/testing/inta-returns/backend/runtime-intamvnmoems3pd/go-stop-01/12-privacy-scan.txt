@@ -1,0 +1,18 @@
+MC-002-INTA-GO-STOP marker/secret scan — 2026-10-26T00:40:02Z by actual ZCode. Counts only, no values.
+
+Scope A — synthetic fixture markers in Go application logs (before/after snapshots; expect 0):
+marker [inta-a-intamvnmoems3pd@example.test]: 0
+marker [inta-b-intamvnmoems3pd@example.test]: 0
+marker [inta-x-intamvnmoems3pd@example.test]: 0
+marker [INTA_A_INITIAL]: 0
+marker [INTA_A_UPDATED]: 0
+marker [INTA_A_OUTAGE]: 0
+
+Scope B — credential/DSN/token patterns across go-stop-01 evidence:
+pattern [postgres://]: 0
+pattern [postgresql://]: 0
+pattern [password=]: 0
+pattern [PGPASSWORD]: 0
+pattern [Bearer ]: 0
+pattern [backend.env]: 0
+pattern [DATABASE_URL]: 0

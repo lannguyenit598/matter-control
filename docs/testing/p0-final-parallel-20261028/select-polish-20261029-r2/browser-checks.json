@@ -1,0 +1,22 @@
+{
+  "task": "MC-P0-SELECT-POLISH-20261029",
+  "agent": "Local Codex",
+  "time": "2026-10-29T02:52:22.410141+00:00",
+  "mode": "author component/browser verification",
+  "source_pins": "677/677 matched at close",
+  "runtime_product_files": "select.tsx and globals.css byte-identical to frontend-select-polish-r1 on port 3000",
+  "observations": {
+    "app_person_picker": "Opened styled picker; 36px trigger, white rounded popup, selected checkmark; escaped without submitting membership",
+    "storybook": "Select stories render after per-story appDirectory=false; independent of Next router",
+    "disabled": true,
+    "invalid": "aria-invalid=true, red border observed",
+    "long_labels": "white-space normal observed",
+    "long_list": "41 options; picker maximum height 190px in preview iframe"
+  },
+  "not_verified": [
+    "ArrowDown/End/Enter probes did not change selected value through automation; keyboard selection not established",
+    "mobile/touch/screen-reader/cross-browser matrix",
+    "independent review"
+  ],
+  "cleanup": "Temporary Storybook Python child 81873 identified by parent/start/argv and terminated; product runtime/API/DB retained"
+}

@@ -1,0 +1,22 @@
+=== Reviewer verifier tests (TestSysrev*) — isolated copy, memory HTTP env, race ===
+=== RUN   TestSysrevHistoryCursorIsCellScoped
+--- PASS: TestSysrevHistoryCursorIsCellScoped (0.01s)
+=== RUN   TestSysrevHistoryForeignMatterAnchor
+--- PASS: TestSysrevHistoryForeignMatterAnchor (0.00s)
+=== RUN   TestSysrevIdempotencyKeyCrossMatterRefusal
+--- PASS: TestSysrevIdempotencyKeyCrossMatterRefusal (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/inbound/productapi	1.185s
+
+=== Focused RMV HTTP tests — same env ===
+--- PASS: TestReviewGrid_HTTPAnswerExpectationPresence (0.01s)
+--- PASS: TestReviewGrid_HTTPHistoryPagination (0.05s)
+--- PASS: TestReviewGrid_HTTPCrossMatterVersionLooksMissing (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/inbound/productapi	1.227s
+
+=== People directory PG test ===
+=== RUN   TestLocalPeopleDirectoryIssuerOwnerAndLimit
+--- PASS: TestLocalPeopleDirectoryIssuerOwnerAndLimit (0.39s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	1.805s

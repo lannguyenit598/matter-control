@@ -18,7 +18,7 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
 
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 const (
@@ -33,20 +33,23 @@ const (
 
 // Deps are the inbound ports and identity collaborators the adapter needs.
 type Deps struct {
-	Workspaces   port.WorkspaceService
-	Matters      port.MatterService
-	Work         port.WorkService
-	Evidence     port.EvidenceService
-	Filings      port.FilingService
-	Control      port.ControlService
-	DataOps      port.DataOpsService
-	DataOpsCodec port.SheetCodec
-	Verifier     port.TokenVerifier
-	Identities   port.IdentityResolver
-	Logger       *slog.Logger
+	Workspaces           port.WorkspaceService
+	Matters              port.MatterService
+	Work                 port.WorkService
+	Evidence             port.EvidenceService
+	Filings              port.FilingService
+	Control              port.ControlService
+	Review               port.ReviewService
+	DataOps              port.DataOpsService
+	DataOpsCodec         port.SheetCodec
+	Verifier             port.TokenVerifier
+	Identities           port.IdentityResolver
+	LocalPeopleDirectory bool
+	Logger               *slog.Logger
 	// Ready returns an error when the pod must not receive traffic; nil = always ready.
-	Ready          func(ctx context.Context) error
-	RequestTimeout time.Duration
+	Ready           func(ctx context.Context) error
+	RequestTimeout  time.Duration
+	TransferTimeout time.Duration
 	// MaxUploadBytes bounds one document upload (the JSON body limit does not apply to it).
 	MaxUploadBytes int64
 	// MaxInFlight caps concurrent /api/v1 requests; 0 = unlimited (see inFlightLimit).
@@ -63,6 +66,9 @@ func NewServer(d Deps) *echo.Echo {
 	}
 	if d.RequestTimeout == 0 {
 		d.RequestTimeout = 10 * time.Second
+	}
+	if d.TransferTimeout == 0 {
+		d.TransferTimeout = 60 * time.Second
 	}
 	if d.MaxUploadBytes == 0 {
 		d.MaxUploadBytes = 25 << 20
@@ -84,29 +90,36 @@ func NewServer(d Deps) *echo.Echo {
 				c.Path() == apiPrefix+"/matters/:id/import/commit"
 		},
 	}))
-	e.Use(middleware.ContextTimeout(d.RequestTimeout))
+	e.Use(middleware.ContextTimeoutWithConfig(middleware.ContextTimeoutConfig{
+		Timeout: d.RequestTimeout, Skipper: transferRequest,
+	}))
+	e.Use(middleware.ContextTimeoutWithConfig(middleware.ContextTimeoutConfig{
+		Timeout: d.TransferTimeout, Skipper: func(c *echo.Context) bool { return !transferRequest(c) },
+	}))
 
 	e.GET("/healthz", func(c *echo.Context) error { return c.JSON(http.StatusOK, map[string]string{"status": "ok"}) })
 	e.GET("/readyz", func(c *echo.Context) error {
 		if d.Ready != nil {
 			if err := d.Ready(c.Request().Context()); err != nil {
-				return echo.ErrServiceUnavailable
+				return port.ErrUnavailable
 			}
 		}
 		return c.JSON(http.StatusOK, map[string]string{"status": "ready"})
 	})
 
-	v1 := e.Group(apiPrefix, inFlightLimit(d.MaxInFlight), s.authenticate)
+	v1 := e.Group(apiPrefix, inFlightLimit(d.MaxInFlight), requestMeta, s.authenticate)
 	v1.GET("/workspaces", s.listWorkspaces)
 	v1.POST("/workspaces", s.createWorkspace)
 	v1.GET("/workspaces/:id", s.getWorkspace)
 	v1.GET("/workspaces/:id/matters", s.listMatters)
 	v1.POST("/workspaces/:id/matters", s.createMatter)
 	v1.GET("/workspaces/:id/members", s.listWorkspaceMembers)
+	v1.GET("/workspaces/:id/member-candidates", s.listWorkspaceMemberCandidates)
 	v1.POST("/workspaces/:id/members", s.grantWorkspaceMember)
 	v1.POST("/workspaces/:id/members/:userId/revocation", s.revokeWorkspaceMember)
 	v1.GET("/matters/:id", s.getMatter)
 	v1.GET("/matters/:id/members", s.listMatterMembers)
+	v1.GET("/matters/:id/member-candidates", s.listMatterMemberCandidates)
 	v1.POST("/matters/:id/members", s.grantMatterMember)
 	v1.POST("/matters/:id/members/:userId/revocation", s.revokeMatterMember)
 	v1.GET("/matters/:id/events", s.history)
@@ -161,6 +174,15 @@ func NewServer(d Deps) *echo.Echo {
 	v1.POST("/matters/:id/filings/:filingId/reopening", s.reopenFiling)
 	v1.POST("/matters/:id/filings/:filingId/signature-applicability", s.setSignatureApplicability)
 	v1.POST("/matters/:id/filings/:filingId/observations/:obsId/correction", s.correctObservation)
+	v1.GET("/matters/:id/review-grids", s.listReviewGrids)
+	v1.POST("/matters/:id/review-grids", s.createReviewGrid)
+	v1.GET("/matters/:id/review-grids/:gridId", s.getReviewGrid)
+	v1.POST("/matters/:id/review-grids/:gridId/versions", s.addReviewVersion)
+	v1.POST("/matters/:id/review-grids/:gridId/versions/:versionId/removal", s.removeReviewVersion)
+	v1.POST("/matters/:id/review-grids/:gridId/questions", s.addReviewQuestion)
+	v1.POST("/matters/:id/review-grids/:gridId/questions/:questionId/revision", s.reviseReviewQuestion)
+	v1.POST("/matters/:id/review-grids/:gridId/answers", s.recordReviewAnswer)
+	v1.GET("/matters/:id/review-grids/:gridId/cells/:versionId/:questionId/history", s.reviewHistory)
 	v1.GET("/matters/:id/control-room", s.controlRoom)
 	v1.GET("/matters/:id/context-records", s.listContext)
 	v1.POST("/matters/:id/context-records", s.createContext)
@@ -175,6 +197,23 @@ func NewServer(d Deps) *echo.Echo {
 	v1.POST("/matters/:id/verifiers", s.designateVerifier)
 	v1.POST("/matters/:id/verifiers/:userId/revocation", s.revokeVerifier)
 	return e
+}
+
+func transferRequest(c *echo.Context) bool {
+	switch c.Request().Method {
+	case http.MethodPost:
+		switch c.Path() {
+		case apiPrefix + uploadRoute, apiPrefix + "/matters/:id/import/preview",
+			apiPrefix + "/matters/:id/import/commit", apiPrefix + "/matters/:id/bulk/commit":
+			return true
+		}
+	case http.MethodGet:
+		switch c.Path() {
+		case apiPrefix + "/matters/:id/documents/:docId/versions/:versionId/content", apiPrefix + "/matters/:id/export":
+			return true
+		}
+	}
+	return false
 }
 
 func (s *server) errorHandler(c *echo.Context, err error) {

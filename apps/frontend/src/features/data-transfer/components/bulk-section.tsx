@@ -2,13 +2,14 @@
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 
-import { useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import { Badge } from '@/components/atoms/badge'
 import { Button } from '@/components/atoms/button'
 import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
 import { Alert } from '@/components/molecules/alert'
+import { UnresolvedReporter } from '@/components/organisms/intent-form'
 import { FormField } from '@/components/molecules/form-field'
 
 import { acknowledgeTransferAction, bulkCommitAction, bulkPreviewAction } from '../actions'
@@ -46,7 +47,7 @@ const FIELDS: {
 }[] = [
   { key: 'title', label: 'Title', clearable: false },
   { key: 'description', label: 'Description', clearable: false },
-  { key: 'internalOwner', label: 'Internal owner (user id)', clearable: true },
+  { key: 'internalOwner', label: 'Internal owner', clearable: true },
   { key: 'due', label: 'Due (RFC 3339)', clearable: true },
 ]
 
@@ -73,7 +74,16 @@ type Outcome =
  * Scoped bulk edit of four allow-listed fields. A commit freezes its keys once: a retry after a lost
  * answer resends the same keys, and editing the rows afterwards starts a different attempt.
  */
-export function BulkSection({ matterId }: { matterId: string }) {
+export type BulkChoices = {
+  items: { id: string; title: string; revision: number }[]
+  members: { userId: string; displayName: string }[]
+}
+
+export function BulkSection({
+  matterId,
+  items = [],
+  members = [],
+}: { matterId: string } & Partial<BulkChoices>) {
   const next = useRef(1)
   const [rows, setRows] = useState<Draft[]>([])
   const [preview, setPreview] = useState<{
@@ -119,6 +129,14 @@ export function BulkSection({ matterId }: { matterId: string }) {
     outcome !== null &&
     ((outcome.kind === 'results' && outcome.rows.some((r) => r.status === 'UNKNOWN')) ||
       (outcome.kind === 'failure' && outcome.retrySameKey))
+  // Tell the Data page, which can hide this task, that it still needs attention.
+  const report = useContext(UnresolvedReporter)
+  const attention = pending || locked || outcome?.kind === 'denied'
+  useEffect(() => {
+    report?.(attention)
+    // only the flag is a change; `report` is a state setter owned by the page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attention])
   const stale = preview !== null && (preview.invalidated || preview.fingerprint !== fingerprint)
   const canCommit =
     !pending &&
@@ -205,31 +223,19 @@ export function BulkSection({ matterId }: { matterId: string }) {
           className="grid gap-3 rounded-md border p-3 md:grid-cols-2"
         >
           <legend className="px-1 text-sm font-medium">Row {i + 1}</legend>
-          <FormField label={<LocalizedText en="Item id" vi="ID bản ghi" />} required>
+          <FormField label={<LocalizedText en="Work item" vi="Công việc" />} required>
             {(c) => (
-              <Input
+              <Select
                 value={row.itemId}
-                onChange={(e) => update(i, { itemId: e.target.value })}
-                {...c}
-              />
-            )}
-          </FormField>
-          <FormField
-            label={<LocalizedText en="Revision you read" vi="Phiên bản đã đọc" />}
-            required
-            hint={
-              <LocalizedText
-                en="The edit is refused if the item moved on."
-                vi="Thay đổi bị từ chối nếu bản ghi đã có phiên bản mới."
-              />
-            }
-          >
-            {(c) => (
-              <Input
-                type="number"
-                min={1}
-                value={row.expectedRevision}
-                onChange={(e) => update(i, { expectedRevision: e.target.value })}
+                placeholder="Select a work item…"
+                options={items.map((item) => ({ value: item.id, label: item.title }))}
+                onChange={(e) => {
+                  const selected = items.find((item) => item.id === e.target.value)
+                  update(i, {
+                    itemId: selected?.id ?? '',
+                    expectedRevision: String(selected?.revision ?? 1),
+                  })
+                }}
                 {...c}
               />
             )}
@@ -244,7 +250,7 @@ export function BulkSection({ matterId }: { matterId: string }) {
                       {
                         title: 'Tiêu đề',
                         description: 'Mô tả',
-                        internalOwner: 'Người phụ trách nội bộ (ID)',
+                        internalOwner: 'Người phụ trách nội bộ',
                         due: 'Hạn (RFC 3339)',
                       }[f.key]
                     }
@@ -274,13 +280,25 @@ export function BulkSection({ matterId }: { matterId: string }) {
                   />
                 )}
               </FormField>
-              {row[f.key].mode === 'set' && (
-                <Input
-                  aria-label={`${f.label} new value`}
-                  value={row[f.key].value}
-                  onChange={(e) => update(i, { [f.key]: { mode: 'set', value: e.target.value } })}
-                />
-              )}
+              {row[f.key].mode === 'set' &&
+                (f.key === 'internalOwner' ? (
+                  <Select
+                    aria-label={`${f.label} new value`}
+                    value={row[f.key].value}
+                    placeholder="Select a person…"
+                    options={members.map((member) => ({
+                      value: member.userId,
+                      label: member.displayName,
+                    }))}
+                    onChange={(e) => update(i, { [f.key]: { mode: 'set', value: e.target.value } })}
+                  />
+                ) : (
+                  <Input
+                    aria-label={`${f.label} new value`}
+                    value={row[f.key].value}
+                    onChange={(e) => update(i, { [f.key]: { mode: 'set', value: e.target.value } })}
+                  />
+                ))}
             </div>
           ))}
           <Button
@@ -377,7 +395,7 @@ export function BulkSection({ matterId }: { matterId: string }) {
               <Badge variant={r.valid ? 'success' : 'destructive'}>
                 {r.valid ? 'Ready' : 'Will fail'}
               </Badge>{' '}
-              <span className="font-mono">{r.itemId}</span>
+              <span>{items.find((item) => item.id === r.itemId)?.title ?? 'Work item'}</span>
               {r.found === false
                 ? ' — not found in this matter'
                 : r.title

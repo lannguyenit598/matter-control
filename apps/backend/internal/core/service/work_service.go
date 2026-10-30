@@ -10,10 +10,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/policy"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/policy"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // WorkService implements the W2 work-graph use cases: typed Actions, metadata, the execution
@@ -45,6 +45,8 @@ type workEnv struct {
 	role   matter.MatterRole
 	seq    int64
 	ids    port.RecordIDGenerator
+	// A saved receipt may have lost authority independently of the command target.
+	replayHidden bool
 }
 
 // emit appends one history event with the next sequence number and returns it.
@@ -118,6 +120,10 @@ func (s *WorkService) execute(
 		}
 		env := &workEnv{tx: tx, g: gtx, header: header, tCmd: tCmd, actor: actor, role: mm.Role, seq: header.EventSeq, ids: s.ids}
 		if err := body(env); err != nil {
+			if env.replayHidden && errors.Is(err, port.ErrNotFound) {
+				outcome = s.matterDeny(ctx, tx, tCmd, actor, matterID, operation, "DENIED_HIDDEN", err)
+				return nil
+			}
 			return err
 		}
 		if env.seq > header.EventSeq {
@@ -373,6 +379,14 @@ func (s *WorkService) CreateAction(ctx context.Context, cmd port.CreateActionCmd
 			return rcptErr
 		}
 		if rcptErr == nil {
+			if err := authorizeReceiptScope(ctx, env.tx, actor, rcpt); err != nil {
+				env.replayHidden = errors.Is(err, port.ErrNotFound)
+				return err
+			}
+			if rcpt.ScopeKind != matter.ScopeMatter || rcpt.WorkspaceID != env.header.WorkspaceID ||
+				rcpt.MatterID == nil || *rcpt.MatterID != matterID {
+				return port.ErrIdempotencyKeyReuse
+			}
 			if rcpt.Kind != matter.SnapshotActionCreate || rcpt.ItemSnapshot == nil {
 				return matter.ErrSnapshotKind
 			}
@@ -1307,7 +1321,9 @@ func assignedReason(it matter.WorkItem, class matter.ActionClass) string {
 // matterDeny records the restricted audit row for a committed denial and returns err.
 func (s *WorkService) matterDeny(ctx context.Context, tx port.MatterTx, tCmd time.Time, actor matter.ActorID, matterID matter.MatterID, operation, result string, err error) error {
 	if auditErr := tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-		EventID: s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor, Operation: operation, Outcome: result,
+		ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+		RequestID: port.RequestMetaFromContext(ctx).RequestID,
+		EventID:   s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor, Operation: operation, Outcome: result,
 		RequestedResourceKind: "MATTER", RequestedIDHash: matter.HashID(matterID.String()),
 	}); auditErr != nil {
 		return auditErr

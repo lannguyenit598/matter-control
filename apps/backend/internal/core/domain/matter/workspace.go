@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain"
+	"leonx.me/matter-control/internal/core/domain"
 )
 
 // Workspace is the locked workspace state a workspace-scoped command runs against.

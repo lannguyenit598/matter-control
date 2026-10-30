@@ -1,0 +1,547 @@
+## codex/unified-project-flow...origin/codex/unified-project-flow
+ M apps/backend/.claude/rules/tooling-and-deps.md
+ M apps/backend/.env.example
+ M apps/backend/.golangci.yml
+ M apps/backend/cmd/mcapi/main.go
+ M apps/backend/docs/api.md
+ M apps/backend/docs/operations.md
+ M apps/backend/go.mod
+ M apps/backend/go.sum
+ M apps/backend/internal/adapter/inbound/productapi/control_dto.go
+ M apps/backend/internal/adapter/inbound/productapi/control_handlers.go
+ M apps/backend/internal/adapter/inbound/productapi/data_dto.go
+ M apps/backend/internal/adapter/inbound/productapi/data_handlers.go
+ M apps/backend/internal/adapter/inbound/productapi/data_server_test.go
+ M apps/backend/internal/adapter/inbound/productapi/dto.go
+ M apps/backend/internal/adapter/inbound/productapi/evidence_dto.go
+ M apps/backend/internal/adapter/inbound/productapi/evidence_handlers.go
+ M apps/backend/internal/adapter/inbound/productapi/evidence_server_test.go
+ M apps/backend/internal/adapter/inbound/productapi/filing_dto.go
+ M apps/backend/internal/adapter/inbound/productapi/filing_handlers.go
+ M apps/backend/internal/adapter/inbound/productapi/handlers.go
+ M apps/backend/internal/adapter/inbound/productapi/inflight_test.go
+ M apps/backend/internal/adapter/inbound/productapi/problems.go
+ M apps/backend/internal/adapter/inbound/productapi/server.go
+ M apps/backend/internal/adapter/inbound/productapi/server_test.go
+ M apps/backend/internal/adapter/inbound/productapi/work_dto.go
+ M apps/backend/internal/adapter/inbound/productapi/work_handlers.go
+ M apps/backend/internal/adapter/outbound/identity/zitadel/verifier.go
+ M apps/backend/internal/adapter/outbound/identity/zitadel/verifier_test.go
+ M apps/backend/internal/adapter/outbound/objectstore/store.go
+ M apps/backend/internal/adapter/outbound/objectstore/store_test.go
+ M apps/backend/internal/adapter/outbound/postgres/context_store.go
+ M apps/backend/internal/adapter/outbound/postgres/evidence_store.go
+ M apps/backend/internal/adapter/outbound/postgres/filing_store.go
+ M apps/backend/internal/adapter/outbound/postgres/identity_resolver.go
+ M apps/backend/internal/adapter/outbound/postgres/map_error_test.go
+ M apps/backend/internal/adapter/outbound/postgres/matter_dto.go
+ M apps/backend/internal/adapter/outbound/postgres/matter_rework_test.go
+ M apps/backend/internal/adapter/outbound/postgres/matter_store.go
+ M apps/backend/internal/adapter/outbound/postgres/matter_store_w6.go
+ M apps/backend/internal/adapter/outbound/postgres/matter_test.go
+ M apps/backend/internal/adapter/outbound/postgres/mcsqlc/matter.sql.go
+ M apps/backend/internal/adapter/outbound/postgres/mcsqlc/models.go
+ M apps/backend/internal/adapter/outbound/postgres/perf_test.go
+ M apps/backend/internal/adapter/outbound/postgres/pool.go
+ M apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql
+ M apps/backend/internal/adapter/outbound/postgres/restore_rehearsal_test.go
+ M apps/backend/internal/adapter/outbound/postgres/work_store.go
+ M apps/backend/internal/adapter/outbound/postgres/workspace_store.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw2.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_memory_test.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_perf.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_restore.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w1.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w2.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w3.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w4.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w5.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w7_qa.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_context.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_evidence.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_filing.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_objects.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_w1.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_w6.go
+ M apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_work.go
+ M apps/backend/internal/adapter/outbound/sheet/codec.go
+ M apps/backend/internal/adapter/outbound/sheet/codec_test.go
+ M apps/backend/internal/adapter/outbound/system/record_id_test.go
+ M apps/backend/internal/adapter/outbound/system/system.go
+ M apps/backend/internal/adapter/outbound/system/system_test.go
+ M apps/backend/internal/app/app.go
+ M apps/backend/internal/app/graph_test.go
+ M apps/backend/internal/app/product.go
+ M apps/backend/internal/app/product_verifier_test.go
+ M apps/backend/internal/config/product.go
+ M apps/backend/internal/config/product_test.go
+ M apps/backend/internal/core/domain/matter/context.go
+ M apps/backend/internal/core/domain/matter/evidence_test.go
+ M apps/backend/internal/core/domain/matter/identity.go
+ M apps/backend/internal/core/domain/matter/matter_test.go
+ M apps/backend/internal/core/domain/matter/requirement.go
+ M apps/backend/internal/core/domain/matter/workgraph_test.go
+ M apps/backend/internal/core/domain/matter/workspace.go
+ M apps/backend/internal/core/policy/policy.go
+ M apps/backend/internal/core/policy/policy_test.go
+ M apps/backend/internal/core/policy/workspace.go
+ M apps/backend/internal/core/port/control.go
+ M apps/backend/internal/core/port/dataops.go
+ M apps/backend/internal/core/port/evidence.go
+ M apps/backend/internal/core/port/filing.go
+ M apps/backend/internal/core/port/identity.go
+ M apps/backend/internal/core/port/matter.go
+ M apps/backend/internal/core/port/work.go
+ M apps/backend/internal/core/port/workspace.go
+ M apps/backend/internal/core/service/brief_proof.go
+ M apps/backend/internal/core/service/brief_replay.go
+ M apps/backend/internal/core/service/brief_replay_test.go
+ M apps/backend/internal/core/service/control_service.go
+ M apps/backend/internal/core/service/dataops_service.go
+ M apps/backend/internal/core/service/dataops_service_w6_test.go
+ M apps/backend/internal/core/service/evidence_service.go
+ M apps/backend/internal/core/service/filing_service.go
+ M apps/backend/internal/core/service/matter_service.go
+ M apps/backend/internal/core/service/matter_service_rework_test.go
+ M apps/backend/internal/core/service/matter_service_test.go
+ M apps/backend/internal/core/service/work_service.go
+ M apps/backend/internal/core/service/workspace_service.go
+ M apps/backend/internal/core/service/workspace_service_w1_test.go
+ M apps/backend/internal/observability/observability_test.go
+ M apps/frontend/next.config.ts
+ M apps/frontend/package.json
+ M apps/frontend/playwright.config.ts
+ M apps/frontend/pnpm-lock.yaml
+ M apps/frontend/src/app/(app)/layout.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.test.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/data/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/documents/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/filings/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/history/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/planning/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx
+ M apps/frontend/src/app/(app)/matters/[matterId]/work/page.tsx
+ M apps/frontend/src/app/(app)/my-actions/page.tsx
+ M apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx
+ M apps/frontend/src/app/(app)/workspaces/page.tsx
+ M apps/frontend/src/app/globals.css
+ M apps/frontend/src/app/layout.tsx
+ M apps/frontend/src/app/login/page.tsx
+ M apps/frontend/src/components/atoms/button.tsx
+ M apps/frontend/src/components/atoms/card.tsx
+ M apps/frontend/src/components/atoms/input.tsx
+ M apps/frontend/src/components/atoms/select.tsx
+ M apps/frontend/src/components/molecules/dialog.test.tsx
+ M apps/frontend/src/components/molecules/dialog.tsx
+ M apps/frontend/src/components/molecules/empty-state.tsx
+ M apps/frontend/src/components/molecules/locale-toggle.tsx
+ M apps/frontend/src/components/molecules/localized-instant.test.tsx
+ M apps/frontend/src/components/molecules/nav-menu.tsx
+ M apps/frontend/src/components/molecules/page-header.tsx
+ M apps/frontend/src/components/organisms/app-header.tsx
+ M apps/frontend/src/components/organisms/app-sidebar.tsx
+ M apps/frontend/src/components/organisms/confirm-action-button.tsx
+ M apps/frontend/src/components/organisms/drafts.test.tsx
+ M apps/frontend/src/components/organisms/intent-form.tsx
+ M apps/frontend/src/components/organisms/mobile-nav.tsx
+ M apps/frontend/src/components/organisms/read-failure.tsx
+ M apps/frontend/src/components/templates/dashboard-template.tsx
+ M apps/frontend/src/config/navigation.tsx
+ M apps/frontend/src/features/auth/components/account-menu.tsx
+ M apps/frontend/src/features/auth/components/draft-scope-server.tsx
+ M apps/frontend/src/features/auth/components/sign-out-form.tsx
+ M apps/frontend/src/features/data-transfer/actions.ts
+ M apps/frontend/src/features/data-transfer/components/bulk-section.tsx
+ M apps/frontend/src/features/data-transfer/components/data-transfer-attempt.test.tsx
+ M apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx
+ M apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx
+ M apps/frontend/src/features/data-transfer/components/import-section.tsx
+ M apps/frontend/src/features/filings/components/filing-forms.tsx
+ M apps/frontend/src/features/filings/components/filing-ui.test.tsx
+ M apps/frontend/src/features/matters/components/create-matter-form.tsx
+ M apps/frontend/src/features/matters/components/grant-matter-member-form.tsx
+ M apps/frontend/src/features/matters/components/matter-history.test.tsx
+ M apps/frontend/src/features/matters/components/matter-history.tsx
+ M apps/frontend/src/features/matters/components/matter-list.tsx
+ M apps/frontend/src/features/matters/components/matter-members.tsx
+ M apps/frontend/src/features/matters/components/matter-scope.test.tsx
+ M apps/frontend/src/features/matters/components/matter-scope.tsx
+ M apps/frontend/src/features/matters/components/matter-tabs.tsx
+ M apps/frontend/src/features/matters/repository.ts
+ M apps/frontend/src/features/matters/schemas.ts
+ M apps/frontend/src/features/proof/components/document-forms.tsx
+ M apps/frontend/src/features/proof/components/proof-ui.test.tsx
+ M apps/frontend/src/features/requirements/components/create-requirement-form.tsx
+ M apps/frontend/src/features/work/components/my-actions-view.tsx
+ M apps/frontend/src/features/work/components/planning-view.tsx
+ M apps/frontend/src/features/work/components/work-filters.tsx
+ M apps/frontend/src/features/work/components/work-grid.tsx
+ M apps/frontend/src/features/work/components/work-ui.test.tsx
+ M apps/frontend/src/features/workspaces/actions.ts
+ M apps/frontend/src/features/workspaces/components/create-workspace-form.tsx
+ M apps/frontend/src/features/workspaces/components/grant-workspace-member-form.tsx
+ M apps/frontend/src/features/workspaces/components/workspace-list.tsx
+ M apps/frontend/src/features/workspaces/components/workspace-members.tsx
+ M apps/frontend/src/features/workspaces/repository.ts
+ M apps/frontend/src/features/workspaces/schemas.ts
+ M apps/frontend/src/hooks/use-time-zone.ts
+ M apps/frontend/src/lib/auth.ts
+ M apps/frontend/src/lib/env.test.ts
+ M apps/frontend/src/lib/env.ts
+ M apps/frontend/src/lib/locale.ts
+ M apps/frontend/src/lib/mc/paths.test.ts
+ M apps/frontend/src/lib/mc/paths.ts
+ M apps/frontend/src/lib/oidc/flow.test.ts
+ M apps/frontend/src/lib/oidc/flow.ts
+ M apps/frontend/src/test/data-transfer-seam.test.ts
+ M apps/frontend/src/test/membership-recovery.test.tsx
+ M apps/frontend/src/test/setup.ts
+ M docs/ai-sdlc/project-status.md
+?? .pnpm-store/
+?? .taste-skill/
+?? apps/backend/docs/api.md.orig
+?? apps/backend/internal/adapter/inbound/productapi/content_problem_test.go
+?? apps/backend/internal/adapter/inbound/productapi/data_server_test.go.orig
+?? apps/backend/internal/adapter/inbound/productapi/member_candidates_test.go
+?? apps/backend/internal/adapter/inbound/productapi/review_dto.go
+?? apps/backend/internal/adapter/inbound/productapi/review_handlers.go
+?? apps/backend/internal/adapter/inbound/productapi/review_server_test.go
+?? apps/backend/internal/adapter/inbound/productapi/timeout_test.go
+?? apps/backend/internal/adapter/outbound/objectstore/contract_test.go
+?? apps/backend/internal/adapter/outbound/objectstore/r2.go
+?? apps/backend/internal/adapter/outbound/objectstore/r2_test.go
+?? apps/backend/internal/adapter/outbound/postgres/mcsqlc/review.sql.go
+?? apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0008_review_matrix.sql
+?? apps/backend/internal/adapter/outbound/postgres/people_directory_test.go
+?? apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/review.sql
+?? apps/backend/internal/adapter/outbound/postgres/review_store.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_review.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_review.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/objects_contract_test.go
+?? apps/backend/internal/adapter/outbound/repotest/objectcontract/
+?? apps/backend/internal/app/product_readiness_test.go
+?? apps/backend/internal/core/domain/matter/review.go
+?? apps/backend/internal/core/domain/matter/review_test.go
+?? apps/backend/internal/core/port/review.go
+?? apps/backend/internal/core/service/member_candidates.go
+?? apps/backend/internal/core/service/review_isolation_test.go
+?? apps/backend/internal/core/service/review_service.go
+?? apps/backend/internal/core/service/review_service_test.go
+?? apps/frontend/.dockerignore
+?? apps/frontend/Dockerfile
+?? apps/frontend/postcss.config.mjs
+?? apps/frontend/scripts/check-built-css.mjs
+?? apps/frontend/src/app/(app)/matters/[matterId]/agenda/
+?? apps/frontend/src/app/(app)/matters/[matterId]/filings/new/
+?? apps/frontend/src/app/(app)/matters/[matterId]/reviews/
+?? apps/frontend/src/app/fonts/
+?? apps/frontend/src/components/atoms/select.stories.tsx
+?? apps/frontend/src/components/atoms/select.test.tsx
+?? apps/frontend/src/components/molecules/list-section.stories.tsx
+?? apps/frontend/src/components/molecules/list-section.tsx
+?? apps/frontend/src/components/molecules/nav-menu.test.tsx
+?? apps/frontend/src/components/molecules/search-picker.stories.tsx
+?? apps/frontend/src/components/molecules/search-picker.test.tsx
+?? apps/frontend/src/components/molecules/search-picker.tsx
+?? apps/frontend/src/components/molecules/task-choice.stories.tsx
+?? apps/frontend/src/components/molecules/task-choice.tsx
+?? apps/frontend/src/components/organisms/form-dialog.stories.tsx
+?? apps/frontend/src/components/organisms/form-dialog.test.tsx
+?? apps/frontend/src/components/organisms/form-dialog.tsx
+?? apps/frontend/src/components/organisms/read-failure-callers.test.ts
+?? apps/frontend/src/components/templates/dashboard-template.test.tsx
+?? apps/frontend/src/features/data-transfer/components/data-transfer-panel.test.tsx
+?? apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx.orig
+?? apps/frontend/src/features/matters/components/matter-list.test.tsx
+?? apps/frontend/src/features/matters/components/matter-tabs.test.tsx
+?? apps/frontend/src/features/matters/components/role-label.tsx
+?? apps/frontend/src/features/proof/components/evidence-basis.tsx
+?? apps/frontend/src/features/proof/evidence-basis.test.tsx
+?? apps/frontend/src/features/proof/evidence-basis.ts
+?? apps/frontend/src/features/requirements/components/create-requirement-form.test.tsx
+?? apps/frontend/src/features/review/
+?? apps/frontend/src/features/work/agenda.test.ts
+?? apps/frontend/src/features/work/agenda.ts
+?? apps/frontend/src/features/work/components/add-work-dialog.tsx
+?? apps/frontend/src/features/work/components/agenda-filters.tsx
+?? apps/frontend/src/features/work/components/agenda-view.test.tsx
+?? apps/frontend/src/features/work/components/agenda-view.tsx
+?? apps/frontend/src/features/work/components/matter-attention.test.tsx
+?? apps/frontend/src/features/work/components/matter-attention.tsx
+?? apps/frontend/src/features/work/components/my-actions-view.test.tsx
+?? apps/frontend/src/features/work/my-work-selection.ts
+?? apps/frontend/src/features/workspaces/actions.test.ts
+?? apps/frontend/src/features/workspaces/components/role-label.tsx
+?? apps/frontend/src/hooks/use-time-zone.test.tsx
+?? apps/frontend/src/lib/request-time.ts
+?? apps/frontend/src/test/action-entry.test.tsx
+?? apps/frontend/src/test/creation-reload.test.tsx
+?? apps/frontend/src/test/matter-grant-eligibility.test.tsx
+?? apps/frontend/src/test/people-picker-flow.test.tsx
+?? apps/frontend/src/test/search-navigation.test.tsx
+?? design-prototypes/
+?? docs/architecture/adr/ADR-004-production-hosting-topology-review.md
+?? docs/architecture/adr/ADR-005-design-to-infrastructure-fit.md
+?? docs/deployment/free-phase-deploy-checklist.md
+?? docs/design/action-entry-ux-20261029/
+?? docs/design/creation-flow-ux-r1/
+?? docs/design/legal-team-experience-20261029/
+?? docs/design/step-03a/commissioned-brief.md
+?? docs/design/step-03a/execution.json
+?? docs/design/step-03a/export-manifest.json
+?? docs/design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/
+?? docs/design/step-03a/handoff/step-03a-8a/opencode-f10-l2-l5-review-r1/
+?? docs/design/step-03a/handoff/step-03a-8a/opencode-f10-rereview-r2/
+?? docs/design/step-03a/handoff/step-03a-8a/zcode-f10-cycle-clarification-r1/
+?? docs/design/step-03a/intake-checklist.md
+?? docs/design/step-03a/intake-report.md
+?? docs/design/step-03a/local-checks.json
+?? docs/design/step-03a/owner-correction-prompt.md
+?? docs/design/step-03a/qa-input-manifest.json
+?? docs/design/step-03a/qa/authorization.md
+?? docs/design/step-03a/qa/authorized-manifest.json
+?? docs/design/step-03a/qa/execution.json
+?? docs/design/step-03a/qa/opencode-events.jsonl
+?? docs/design/step-03a/qa/opencode-stderr.txt
+?? docs/design/step-03a/qa/opendesign-remediation-prompt.md
+?? docs/design/step-03a/qa/preflight.json
+?? docs/design/step-03a/qa/result.json
+?? docs/design/step-03a/qa/review-attempt-report.md
+?? docs/design/step-03a/qa/session-after-attempt.json
+?? docs/design/step-03a/qa/session-created.json
+?? docs/design/step-03a/terminal-result.json
+?? docs/implementation/handoffs/MC-P0-CLAUDE-ACTION-ENTRY-UX-ADDENDUM.md
+?? docs/implementation/handoffs/MC-P0-CLAUDE-BACKEND-HANDOFF-INTEGRATION-AND-FIX-PROMPT.md
+?? docs/implementation/handoffs/MC-P0-CLAUDE-EIGENWELT-FEATURES-CONTINUATION-PROMPT.md
+?? docs/implementation/handoffs/MC-P0-CLAUDE-EVIDENCE-BASIS-REVIEW-FIX-PROMPT.md
+?? docs/implementation/handoffs/MC-P0-CLAUDE-FOCUSED-WORKBENCH-IMPLEMENTATION-PROMPT.md
+?? docs/implementation/handoffs/MC-P0-CLAUDE-FOCUSED-WORKBENCH-SELECTED-DESIGN.md
+?? docs/implementation/handoffs/MC-P0-CLAUDE-PEOPLE-MEMBERSHIP-MATTER-UX-PROMPT.md
+?? docs/implementation/handoffs/MC-P0-CLAUDE-WORKBENCH-VISUAL-FIDELITY-ADDENDUM.md
+?? docs/implementation/handoffs/MC-P0-CODEX-BACKEND-INTAKE-AND-LOCAL-READINESS-PROMPT.md
+?? docs/implementation/handoffs/p0-rv001-verification-20261028/
+?? docs/implementation/tasks/MC-CLAUDE-RETURN-INTAKE-20261029.md
+?? docs/implementation/tasks/MC-EIGENWELT-FEATURES-CONTINUATION.md
+?? docs/implementation/tasks/MC-EIGENWELT-REVIEW-MATRIX.md
+?? docs/implementation/tasks/MC-P0-CLAUDE-BACKEND-HANDOFF-INTEGRATION-20261029.md
+?? docs/implementation/tasks/MC-P0-CLAUDE-EVIDENCE-BASIS-REVIEW-FIX-20261029.md
+?? docs/implementation/tasks/MC-P0-CODEX-BACKEND-LOCAL-20261029.md
+?? docs/implementation/tasks/MC-P0-CODEX-UI-FIDELITY-20261029.md
+?? docs/implementation/tasks/MC-P0-CREATION-FLOW-UX-20261029.md
+?? docs/implementation/tasks/MC-P0-READABLE-IDENTITY-UX-20261028.md
+?? docs/implementation/tasks/MC-P0-UX-FOCUSED-WORKBENCH.md
+?? docs/research/
+?? docs/reviews/be01-r1-commit-blocked-intake.md
+?? docs/reviews/be01-r1-intake.md
+?? docs/reviews/be01-r1-opencode-review.md
+?? docs/reviews/be01-rework-return.md
+?? docs/reviews/be01-zcode-mimosa-r1-intake.md
+?? docs/reviews/be02-codex-correction-return.md
+?? docs/reviews/be02-n1-delta-r2-intake.md
+?? docs/reviews/be02-n1-opencode-contract-review-r1.md
+?? docs/reviews/be02-n1-opencode-delta-review-r2.md
+?? docs/reviews/be02-n1-routing-reconfirm-intake.md
+?? docs/reviews/be02-n1-targeted-author-response-r1.md
+?? docs/reviews/be02-preflight-intake.md
+?? docs/reviews/f10-codex-n1-completion.md
+?? docs/reviews/f10-opencode-l2-l5-review-intake.md
+?? docs/reviews/f10-opencode-rereview-r2.md
+?? docs/reviews/f10-zcode-cycle-clarification-intake.md
+?? docs/reviews/inta-backend-go-stop-intake.md
+?? docs/reviews/inta-backend-go-stop-return.md
+?? docs/reviews/inta-closeout-readiness-codex-return.md
+?? docs/reviews/inta-closeout-readiness-return.md
+?? docs/reviews/inta-codex-privacy-supplement-return.md
+?? docs/reviews/inta-codex-privacy-teardown-return.md
+?? docs/reviews/inta-fe-validation-antigravity-return.md
+?? docs/reviews/inta-fe-validation-intake.md
+?? docs/reviews/inta-fe-validation-r1-antigravity-return.md
+?? docs/reviews/inta-fe-validation-r1-intake.md
+?? docs/reviews/inta-fe-validation-r2-antigravity-return.md
+?? docs/reviews/inta-fe-validation-r2-approval-update-intake.md
+?? docs/reviews/inta-fe-validation-r2-intake.md
+?? docs/reviews/inta-fe-validation-r3-antigravity-return.md
+?? docs/reviews/inta-fe-validation-r3-intake.md
+?? docs/reviews/inta-fe-validation-r4-antigravity-return.md
+?? docs/reviews/inta-fe-validation-r4-intake.md
+?? docs/reviews/inta-fe-validation-r5-antigravity-return.md
+?? docs/reviews/inta-fe-validation-r5-intake.md
+?? docs/reviews/inta-frontend-runtime-stage6-intake.md
+?? docs/reviews/inta-frontend-runtime-stage6-return.md
+?? docs/reviews/inta-frontend-runtime-stage7-intake.md
+?? docs/reviews/inta-frontend-runtime-stage7-return.md
+?? docs/reviews/inta-opencode-closeout-r1-intake.md
+?? docs/reviews/inta-opencode-closeout-review-r1-original-session.md
+?? docs/reviews/inta-opencode-closeout-review-r1.md
+?? docs/reviews/inta-opencode-fe-r2-intake.md
+?? docs/reviews/inta-opencode-fe-r2-source-review.md
+?? docs/reviews/inta-opencode-fe-r3-intake.md
+?? docs/reviews/inta-opencode-fe-r3-source-review.md
+?? docs/reviews/inta-opencode-fe-r4-source-review.md
+?? docs/reviews/inta-opencode-privacy-teardown-review-r1.md
+?? docs/reviews/inta-opencode-rounds-consolidated-intake.md
+?? docs/reviews/inta-r5-zcode-review-intake.md
+?? docs/reviews/inta-zcode-fe-r5-source-review.md
+?? docs/reviews/p0-claude-quota-zcode-resume-intake-20261027.md
+?? docs/reviews/p0-claude-stop-zcode-handoff-20261027.md
+?? docs/reviews/p0-claude-w1-review-20261027.md
+?? docs/reviews/p0-design-r2-source-review-20261027.md
+?? docs/reviews/p0-design-r4-intake-20261027.md
+?? docs/reviews/p0-design-r5-intake-20261027.md
+?? docs/reviews/p0-design-r6-intake-20261027.md
+?? docs/reviews/p0-design-r7-full-review-20261027.md
+?? docs/reviews/p0-design-r8-intake-20261027.md
+?? docs/reviews/p0-design-r9-final-intake-20261027.md
+?? docs/reviews/p0-design-r9-intake-20261027.md
+?? docs/reviews/p0-design-r9-progress-review-20261027.md
+?? docs/reviews/p0-design-r9-recheck-20261027.md
+?? docs/reviews/p0-design-uiux-source-review-20261027.md
+?? docs/reviews/p0-zcode-progress-check-20261028.md
+?? docs/reviews/p0-zcode-quota-takeover-intake-20261027.md
+?? docs/reviews/p0-zcode-w1-slice-a-intake-20261027.md
+?? docs/reviews/parallel-opencode-reviews-intake-20261026.md
+?? docs/reviews/zcode-subscription-recovery.md
+?? docs/source-import/
+?? docs/superpowers/
+?? docs/testing/be01-mimosa-operator-return-20261026/
+?? docs/testing/be01-r1-commit-intake/
+?? docs/testing/be01-r1-intake/
+?? docs/testing/be01-r1-opencode-review/
+?? docs/testing/be01-zcode-mimosa-investigation-r1/
+?? docs/testing/be01-zcode-mimosa-r1-intake/
+?? docs/testing/be02-n1-contract-review-r1/
+?? docs/testing/be02-n1-contract-review-r2/
+?? docs/testing/be02-n1-delta-r2-intake/
+?? docs/testing/be02-n1-routing-reconfirm-intake/
+?? docs/testing/be02-preflight-intake/
+?? docs/testing/be02-preparation/
+?? docs/testing/claude-backend-handoff-integration-20261029-r1/
+?? docs/testing/claude-eigenwelt-features-r1/
+?? docs/testing/claude-evidence-basis-review-fix-20261029-r1/
+?? docs/testing/claude-review-matrix-r1/
+?? docs/testing/codex-backend-local-readiness-20261029-r1/
+?? docs/testing/codex-claude-return-intake-20261029-r1/
+?? docs/testing/codex-client-timezone-20261029-r1/
+?? docs/testing/codex-client-timezone-20261029-r2/
+?? docs/testing/codex-icon-navigation-20261029-r1/
+?? docs/testing/codex-owner-takeover-20261026/
+?? docs/testing/codex-review-matrix-verification-20261029-r1/
+?? docs/testing/codex-ui-density-20261029-r1/
+?? docs/testing/codex-vietnamese-font-20261029-r1/
+?? docs/testing/codex-workbench-fidelity-20261029-r1/
+?? docs/testing/inta-closeout-continuation/
+?? docs/testing/inta-fe-validation-handoff/
+?? docs/testing/inta-fe-validation-intake/
+?? docs/testing/inta-fe-validation-r1-intake/
+?? docs/testing/inta-fe-validation-r2-approval-update-intake/
+?? docs/testing/inta-fe-validation-r2-intake/
+?? docs/testing/inta-fe-validation-r3-intake/
+?? docs/testing/inta-fe-validation-r4-intake/
+?? docs/testing/inta-fe-validation-r5-intake/
+?? docs/testing/inta-fe-validation-r5-zcode-review-handoff/
+?? docs/testing/inta-go-stop-intake/
+?? docs/testing/inta-launch-approval-20261026/
+?? docs/testing/inta-opencode-fe-r2-intake/
+?? docs/testing/inta-opencode-fe-r3-intake/
+?? docs/testing/inta-opencode-r1-intake/
+?? docs/testing/inta-opencode-rounds-consolidation/
+?? docs/testing/inta-r5-zcode-review-intake/
+?? docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-stop-01/
+?? docs/testing/inta-returns/environment/privacy-supplement-20261026/
+?? docs/testing/inta-returns/environment/privacy-teardown-20261026/
+?? docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/
+?? docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage6/
+?? docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage7/
+?? docs/testing/inta-returns/frontend/validation-20261026/
+?? docs/testing/inta-returns/frontend/validation-r1-20261026/
+?? docs/testing/inta-returns/frontend/validation-r2-20261026/
+?? docs/testing/inta-returns/frontend/validation-r3-20261026/
+?? docs/testing/inta-returns/frontend/validation-r4-20261026/
+?? docs/testing/inta-returns/frontend/validation-r5-20261026/
+?? docs/testing/inta-returns/qa/closeout-review-r1/
+?? docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/
+?? docs/testing/inta-returns/qa/fe-validation-r3-source-review-20261026/
+?? docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026/
+?? docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/
+?? docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/
+?? docs/testing/inta-stage6-intake/
+?? docs/testing/inta-stage7-intake/
+?? docs/testing/p0-codex-implementation-20261028/
+?? docs/testing/p0-codex-parallel-20261028/
+?? docs/testing/p0-codex-sessions-intake-20261028/
+?? docs/testing/p0-design-consolidated-inputs-20261027.json
+?? docs/testing/p0-design-handoff-20261026/
+?? docs/testing/p0-design-r2-source-review-20261027/
+?? docs/testing/p0-design-r4-intake-20261027/
+?? docs/testing/p0-design-r5-intake-20261027/
+?? docs/testing/p0-design-r6-intake-20261027/
+?? docs/testing/p0-design-r7-full-review-20261027/
+?? docs/testing/p0-design-r8-intake-20261027/
+?? docs/testing/p0-design-r9-progress-review-20261027.json
+?? docs/testing/p0-design-r9-recheck-20261027/
+?? docs/testing/p0-design-uiux-review-20261027/
+?? docs/testing/p0-final-parallel-20261028/claude-action-entry-ux-r1/
+?? docs/testing/p0-final-parallel-20261028/claude-b2-frontend-image-r1/
+?? docs/testing/p0-final-parallel-20261028/claude-backend-hardening-r1/
+?? docs/testing/p0-final-parallel-20261028/claude-backend-review-plan-r1/decisions-and-change-record.md
+?? docs/testing/p0-final-parallel-20261028/claude-backend-review-plan-r1/findings.json
+?? docs/testing/p0-final-parallel-20261028/claude-backend-review-plan-r1/outputs-manifest.json
+?? docs/testing/p0-final-parallel-20261028/claude-backend-review-plan-r1/review-and-plan.md
+?? docs/testing/p0-final-parallel-20261028/claude-backend-review-plan-r1/userapi-removal-delta.json
+?? docs/testing/p0-final-parallel-20261028/claude-browser-r3/
+?? docs/testing/p0-final-parallel-20261028/claude-comprehensive-review-r1/
+?? docs/testing/p0-final-parallel-20261028/claude-focused-workbench-r1/
+?? docs/testing/p0-final-parallel-20261028/claude-people-membership-matter-ux-r1/
+?? docs/testing/p0-final-parallel-20261028/claude-people-membership-matter-ux-r2/
+?? docs/testing/p0-final-parallel-20261028/claude-r2-object-store-r1/
+?? docs/testing/p0-final-parallel-20261028/claude-runtime-r2/
+?? docs/testing/p0-final-parallel-20261028/claude-rv001-fix/
+?? docs/testing/p0-final-parallel-20261028/integration/MC-P0-CLAUDE-COMPREHENSIVE-REVIEW-AND-FIX-PROMPT.md
+?? docs/testing/p0-final-parallel-20261028/integration/MC-P0-CLAUDE-FINAL-CANDIDATE-HARDENING-PROMPT.md
+?? docs/testing/p0-final-parallel-20261028/integration/MC-P0-CLAUDE-HARDENING-RETURN-PROMPT.md
+?? docs/testing/p0-final-parallel-20261028/integration/MC-P0-CLAUDE-RV001-OPEN-REDIRECT-FIX-PROMPT.md
+?? docs/testing/p0-final-parallel-20261028/integration/MC-P0-ZCODE-COMPREHENSIVE-DELTA-REVIEW-R1-PROMPT.md
+?? docs/testing/p0-final-parallel-20261028/integration/MC-P0-ZCODE-DRAFT-ACCESS-LOSS-REVIEW-PROMPT.md
+?? docs/testing/p0-final-parallel-20261028/integration/gates/frontend-check-r4/
+?? docs/testing/p0-final-parallel-20261028/integration/gates/frontend-check-r5/
+?? docs/testing/p0-final-parallel-20261028/integration/gates/frontend-storybook-r4/
+?? docs/testing/p0-final-parallel-20261028/integration/gates/frontend-storybook-r5/
+?? docs/testing/p0-final-parallel-20261028/integration/gates/frontend-webpack-r4/
+?? docs/testing/p0-final-parallel-20261028/integration/gates/frontend-webpack-r5/
+?? docs/testing/p0-final-parallel-20261028/integration/r9-gap-matrix-r3.md
+?? docs/testing/p0-final-parallel-20261028/integration/review-request-r3.md
+?? docs/testing/p0-final-parallel-20261028/integration/source-delta-r2.json
+?? docs/testing/p0-final-parallel-20261028/integration/source-delta-r3.json
+?? docs/testing/p0-final-parallel-20261028/integration/source-manifest-r2.json
+?? docs/testing/p0-final-parallel-20261028/integration/source-manifest-r3.json
+?? docs/testing/p0-final-parallel-20261028/local-admin-medusa-r1/
+?? docs/testing/p0-final-parallel-20261028/local-creation-flow-20261029/
+?? docs/testing/p0-final-parallel-20261028/local-login-20261028/
+?? docs/testing/p0-final-parallel-20261028/local-readable-ux-r1/
+?? docs/testing/p0-final-parallel-20261028/local-readable-ux-r2/
+?? docs/testing/p0-final-parallel-20261028/local-ui-css-fix-20261028/
+?? docs/testing/p0-final-parallel-20261028/returns-reconciled-r1/
+?? docs/testing/p0-final-parallel-20261028/review/codex-people-membership-matter-ux-r1/
+?? docs/testing/p0-final-parallel-20261028/review/comprehensive-delta-r1/
+?? docs/testing/p0-final-parallel-20261028/review/draft-access-loss-r1/
+?? docs/testing/p0-final-parallel-20261028/review/opencode-post-rv001-r1/
+?? docs/testing/p0-final-parallel-20261028/review/opencode-ui-restore-r2/
+?? docs/testing/p0-final-parallel-20261028/search-navigation-20261029-r2/
+?? docs/testing/p0-final-parallel-20261028/search-navigation-20261029-r3/
+?? docs/testing/p0-final-parallel-20261028/search-navigation-20261029/
+?? docs/testing/p0-final-parallel-20261028/select-polish-20261029-r2/
+?? docs/testing/p0-final-parallel-20261028/select-polish-20261029/
+?? docs/testing/p0-parallel-20261027/
+?? docs/testing/p0-zcode-design-r2-intake-20261027/
+?? docs/testing/p0-zcode-w0-intake-20261027/
+?? docs/testing/parallel-review-intake-20261026/
+?? docs/testing/parallel-work-20261026/
+?? docs/testing/zcode-recovery-20261026/

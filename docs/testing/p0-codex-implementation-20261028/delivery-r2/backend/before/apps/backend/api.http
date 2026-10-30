@@ -1,0 +1,119 @@
+### Use with REST Client (VS Code) or HTTP Client (JetBrains).
+### Full documentation: docs/api.md
+@base = http://localhost:8080
+
+### OpenAPI 3.1 document (requires API_DOCS_ENABLED=true; SwaggerUI at {{base}}/docs)
+GET {{base}}/openapi.json
+
+### Create a user. Response includes Location (new user path) and ETag: "1"
+POST {{base}}/api/v1/users
+Content-Type: application/json
+X-Request-Id: demo-create-1
+
+{"email": "lan@example.com", "name": "Lan Nguyen"}
+
+### List users (paginated). limit > 100 is capped at 100; maximum offset is 10000
+GET {{base}}/api/v1/users?limit=20&offset=0
+
+### Get one user (replace id). Save the ETag header for If-Match below
+GET {{base}}/api/v1/users/REPLACE_WITH_ID
+
+### Update with a version check: replace "1" with the ETag from GET. Wrong version => 412
+### (Response includes a new ETag; repeating this request returns 412)
+PATCH {{base}}/api/v1/users/REPLACE_WITH_ID
+Content-Type: application/json
+If-Match: "1"
+
+{"name": "Lan Tran"}
+
+### Partial update without a version check: omitted fields (or null) are unchanged
+PATCH {{base}}/api/v1/users/REPLACE_WITH_ID
+Content-Type: application/json
+
+{"name": "Lan Pham"}
+
+### --- Error examples ---
+
+### 422: invalid input, with errors for individual fields
+POST {{base}}/api/v1/users
+Content-Type: application/json
+
+{"email": "not-an-email", "name": ""}
+
+### 409: email already exists (run after the Create user request above)
+POST {{base}}/api/v1/users
+Content-Type: application/json
+
+{"email": "LAN@example.com", "name": "Someone Else"}
+
+### 415: missing Content-Type (or Content-Type other than application/json)
+POST {{base}}/api/v1/users
+
+{"email": "x@example.com", "name": "X"}
+
+### 404: malformed IDs also return 404
+GET {{base}}/api/v1/users/not-a-uuid
+
+### 503: storage temporarily unavailable (stop PostgreSQL to reproduce).
+### Body: type /problems/unavailable, detail "service temporarily unavailable",
+### retryAfter: 1 (seconds; a native-template constant, not a MatterControl convention).
+### A 503 on POST/PATCH/DELETE does NOT mean the change was not applied: the outcome is unknown.
+GET {{base}}/api/v1/users
+
+### --- Delete (run after the error examples: 409 above requires the user to exist) ---
+
+### DELETE does not check If-Match
+DELETE {{base}}/api/v1/users/REPLACE_WITH_ID
+
+### --- Probe ---
+GET {{base}}/healthz
+
+###
+GET {{base}}/readyz
+
+### --- MatterControl product API (cmd/mcapi, separate server; see docs/implementation/p0-zcode-execution/local-contract.md §2–§2.7) ---
+@mc = http://localhost:8081
+
+### Bearer token comes from the BFF session or a real IdP grant; never a shared token.
+### Replace REPLACE_WITH_* values with actual ids from your local seed.
+
+### Create a workspace (receipted)
+POST {{mc}}/api/v1/workspaces
+Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
+Idempotency-Key: 01910000-0000-7000-8000-000000000001
+Content-Type: application/json
+
+{"name":"Local workspace"}
+
+### Create a matter (receipted; CAS via If-Match on workspace revision)
+POST {{mc}}/api/v1/workspaces/REPLACE_WITH_WS_ID/matters
+Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
+Idempotency-Key: 01910000-0000-7000-8000-000000000002
+If-Match: "1"
+Content-Type: application/json
+
+{"title":"Local matter"}
+
+### Create a requirement (receipted; no CAS)
+POST {{mc}}/api/v1/matters/REPLACE_WITH_MATTER_ID/requirements
+Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
+Idempotency-Key: 01910000-0000-7000-8000-000000000003
+Content-Type: application/json
+
+{"title":"Sign the SPA","outcome":"Executed SPA countersigned by both parties"}
+
+### Read one requirement (uniform 404 for inaccessible/nonexistent)
+GET {{mc}}/api/v1/requirements/REPLACE_WITH_REQ_ID
+Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
+
+### Own-operation receipt lookup
+GET {{mc}}/api/v1/operations/01910000-0000-7000-8000-000000000003
+Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
+
+### Delta brief: (t1,t2] changes vs outstanding at t2
+GET {{mc}}/api/v1/matters/REPLACE_WITH_MATTER_ID/brief?t1=2026-10-27T00%3A00%3A00Z&t2=2026-10-28T00%3A00%3A00Z
+Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
+
+### Export the matter (xlsx|csv; rights rechecked at retrieval)
+GET {{mc}}/api/v1/matters/REPLACE_WITH_MATTER_ID/export?format=csv
+Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN

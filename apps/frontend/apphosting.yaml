@@ -1,0 +1,48 @@
+# Firebase App Hosting profile (ADR-007). Alternative to the Cloudflare Worker profile (wrangler.jsonc);
+# the selected default stays Workers. App Hosting builds this directory with its Next.js adapter
+# (`npm run build` -> `next build`, Node profile: Cache Components on) and runs the standalone server
+# on Cloud Run. Do not set scripts.buildCommand/runCommand: an override opts out of the adapter.
+#
+# Per-environment values (APP_ORIGIN, OIDC_ISSUER, OIDC_CLIENT_ID, OIDC_PROJECT_ID, the real
+# API_BASE_URL and BFF_DATABASE_CA) belong in apphosting.<environment>.yaml, never in the console:
+# console values are always available at BUILD and RUNTIME. Secrets must be Secret Manager references
+# with RUNTIME-only availability (src/lib/mc/deploy-profiles.test.ts enforces this file's invariants).
+# Runbook: docs/deployment/portability-runbook.md
+
+runConfig:
+  minInstances: 0
+  # Durable BFF state is shared (mc_bff.state), so >1 instance is safe; the cap bounds cost and
+  # PostgreSQL connections (one short connection per state transaction, at most concurrency x instances).
+  maxInstances: 2
+  concurrency: 20
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  # Build in REST mode with an unroutable endpoint, as the Worker build does; the real API URL is a
+  # RUNTIME value in apphosting.<environment>.yaml.
+  - variable: API_MODE
+    value: rest
+    availability: [BUILD, RUNTIME]
+  - variable: API_BASE_URL
+    value: https://unconfigured.invalid/api/v1
+    availability: [BUILD, RUNTIME]
+  - variable: AUTH_ALLOW_ANONYMOUS
+    value: 'false'
+    availability: [RUNTIME]
+  - variable: SESSION_COOKIE_SECURE
+    value: 'true'
+    availability: [RUNTIME]
+  # Several instances and scale-to-zero: process memory is never a session store here.
+  - variable: BFF_STATE_BACKEND
+    value: postgres
+    availability: [RUNTIME]
+  - variable: BFF_STATE_KEY_ID
+    value: v1
+    availability: [RUNTIME]
+  - variable: BFF_DATABASE_URL
+    secret: mc-bff-database-url
+    availability: [RUNTIME]
+  - variable: BFF_STATE_KEYS
+    secret: mc-bff-state-keys
+    availability: [RUNTIME]

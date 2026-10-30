@@ -1,0 +1,335 @@
+{
+  "task": "MC-BE-02-PREP",
+  "kind": "PROPOSED_ACCEPTANCE_PLAN",
+  "existing_ct_inta_ids_changed": false,
+  "cases": [
+    {
+      "id": "BE02-T01",
+      "name": "Product route isolation",
+      "layer": "HTTP/composition",
+      "trigger": "Product composition route inventory",
+      "expected": "Only the explicitly assigned product routes register; native User/C01/INT-A route behavior and goldens remain unchanged.",
+      "requires": [
+        "BG-03"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T02",
+      "name": "Identity required",
+      "layer": "identity integration",
+      "trigger": "Missing, malformed, expired or wrong-audience token; provider unavailable separately",
+      "expected": "No MatterService call without a verified per-user identity; credential failure and provider outage are distinguished according to the decided error contract.",
+      "requires": [
+        "BG-01",
+        "BG-02"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T03",
+      "name": "Actor and hash trust boundary",
+      "layer": "HTTP adapter",
+      "trigger": "Create body/header/query attempts actorId or requestHash injection",
+      "expected": "Reject forbidden writable identity/hash fields; actor comes from verified identity and hash from trusted canonicalization.",
+      "requires": [
+        "BG-01",
+        "BG-04"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T04",
+      "name": "Issuer-subject identity mapping",
+      "layer": "identity/PG",
+      "trigger": "Same subject under two issuers, unknown identity and disabled identity if lifecycle supported",
+      "expected": "Map only the exact verified issuer+subject according to the decided lifecycle; no automatic membership or legacy email identity.",
+      "requires": [
+        "BG-01"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T05",
+      "name": "Membership operation matrix",
+      "layer": "HTTP plus service/PG",
+      "trigger": "OWNER/EDITOR/VIEWER, workspace OWNER only, revoked workspace/Matter and foreign scope",
+      "expected": "Approved create/read matrix enforced in service transaction/snapshot; workspace role alone grants no Matter operation.",
+      "requires": [
+        "BG-01"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T06",
+      "name": "Uniform hidden body",
+      "layer": "HTTP privacy",
+      "trigger": "Read missing, foreign, revoked or wrong-kind ID using controlled request metadata",
+      "expected": "Fixed404 problem body is byte-identical and contains no resource path/title/count; correlation remains in headers.",
+      "requires": [
+        "BG-02"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T07",
+      "name": "Strict JSON decoding",
+      "layer": "HTTP parsing",
+      "trigger": "Malformed JSON, wrong type, duplicate property, unknown property, trailing second document",
+      "expected": "Reject per explicit status-precedence/decoder contract; never use native ignore-unknown behavior as product policy.",
+      "requires": [
+        "BG-04"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T08",
+      "name": "Read-only derived state",
+      "layer": "HTTP validation",
+      "trigger": "Create supplies dependency/verification/timing/attention or unsupported editable metadata",
+      "expected": "Reject writes outside title/outcome allowlist; no fake derived-state mutation.",
+      "requires": [
+        "BG-04"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T09",
+      "name": "Create CAS scope none",
+      "layer": "HTTP preconditions",
+      "trigger": "Valid create with If-Match, including weak/star/multiple variants",
+      "expected": "Candidate400 precondition-not-applicable; absence does not cause428. No PATCH endpoint invented to exercise future CAS.",
+      "requires": [
+        "BG-04",
+        "BG-08"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T10",
+      "name": "Intent key syntax",
+      "layer": "HTTP validation",
+      "trigger": "Missing/malformed/multiple Idempotency-Key values",
+      "expected": "One accepted UUIDv7 key per intent; exact field/status precedence specified before implementation.",
+      "requires": [
+        "BG-04",
+        "BG-07"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T11",
+      "name": "Fingerprint equivalence",
+      "layer": "pure adapter vectors",
+      "trigger": "Equivalent accepted JSON differing only in member order/insignificant whitespace/string escape spelling",
+      "expected": "Same deterministic trusted digest; request ID and bearer token changes do not alter intent.",
+      "requires": [
+        "BG-04"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T12",
+      "name": "Fingerprint separation",
+      "layer": "pure adapter vectors",
+      "trigger": "Different title/outcome, target Matter, method/template or accepted precondition; ambiguous concatenation pairs",
+      "expected": "Different framed canonical intent; no caller hash and no unintended string normalization.",
+      "requires": [
+        "BG-04"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T13",
+      "name": "Immutable HTTP replay",
+      "layer": "HTTP plus PG",
+      "trigger": "Create then same-key repeat after live Requirement state changes",
+      "expected": "Exactly one effect; original committed status/body/relevant headers remain stable; only allowed replay/correlation headers differ.",
+      "requires": [
+        "BG-05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T14",
+      "name": "Replay after restart/codec change",
+      "layer": "receipt compatibility",
+      "trigger": "Repeat committed key after repository/process restart and an explicitly simulated supported codec version change",
+      "expected": "Stable immutable committed outcome under the decided codec/receipt compatibility contract, no current-clock or live-row substitution.",
+      "requires": [
+        "BG-05",
+        "BG-06"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T15",
+      "name": "Saved-scope replay authorization",
+      "layer": "HTTP plus service/PG",
+      "trigger": "Revoke saved workspace or one represented Matter while caller remains authorized on request target",
+      "expected": "Uniform404 before saved hash/age/body disclosure; authorized demotion retains read replay.",
+      "requires": [
+        "BG-01",
+        "BG-05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T16",
+      "name": "Authorized key reuse versus hidden receipt",
+      "layer": "HTTP plus PG",
+      "trigger": "Same actor/key with different intent, first authorized then with saved-scope access removed",
+      "expected": "Authorized mismatch uses candidate422 key-reuse; inaccessible saved receipt remains404 and emits no body.",
+      "requires": [
+        "BG-02",
+        "BG-04",
+        "BG-05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T17",
+      "name": "Explicit age policy",
+      "layer": "config plus service/PG",
+      "trigger": "Explicit synthetic positive policy; expired/future key; missing/invalid product policy config",
+      "expected": "Correct age check at t_cmd; no silent production zero-policy default or invented retention value/purge job.",
+      "requires": [
+        "BG-07"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T18",
+      "name": "Lost acknowledgment",
+      "layer": "controlled HTTP/PG fault",
+      "trigger": "Commit may succeed then response is lost or deadline/cancellation is observed",
+      "expected": "Never infer rollback from transport failure; no automatic new-key mutation; same-key reconciliation follows the decided protocol.",
+      "requires": [
+        "BG-02",
+        "BG-05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T19",
+      "name": "Own-key operation reconciliation",
+      "layer": "HTTP snapshot/PG",
+      "trigger": "Own committed key, another actor key, in-flight/not-visible key, expired key, revoked represented scope",
+      "expected": "Decided200/404/410 semantics with fresh current authorization;404 is never final absence and nested committed outcome is immutable.",
+      "requires": [
+        "BG-01",
+        "BG-05",
+        "BG-07"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T20",
+      "name": "Truthful provenance and temporal read",
+      "layer": "snapshot/projection",
+      "trigger": "Independent Matter mutations and read at/past pending temporal boundary",
+      "expected": "DB-captured asOf/sourceRevision/fence from the right boundary; no fabricated complete-history/derived-state claim. Apply approved evaluator or fail-closed/reduced representation decision.",
+      "requires": [
+        "BG-06"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T21",
+      "name": "ETag representation compatibility",
+      "layer": "HTTP contract",
+      "trigger": "Two reads with same Requirement revision but different asOf/Matter sourceRevision; create response versus resource GET",
+      "expected": "Selected validator/representation/CAS design is coherent; equal strong validator cannot silently cover changed selected representation data.",
+      "requires": [
+        "BG-08"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T22",
+      "name": "Error-cause matrix",
+      "layer": "HTTP faults",
+      "trigger": "Validation, hidden/role denial, boundary_due, unavailable, outcome_unknown, deadline, cancellation and unexpected wrapped failure",
+      "expected": "Both HTTP error paths match the decided product mapping; preserve causes, fixed privacy-safe body, no fake success/empty and no indiscriminate retryable503.",
+      "requires": [
+        "BG-02",
+        "BG-06"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T23",
+      "name": "Privacy and correlation",
+      "layer": "HTTP/log evidence",
+      "trigger": "Synthetic distinctive body markers and synthetic token/credential markers across success/replay/error logs and traces",
+      "expected": "No body/title/token/credential values in application evidence; safe request IDs correlate client/header/server; user-scoped responses never cross users through caches.",
+      "requires": [
+        "BG-01",
+        "BG-02",
+        "BG-05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    },
+    {
+      "id": "BE02-T24",
+      "name": "Product startup/schema fail-closed",
+      "layer": "composition/PG",
+      "trigger": "Missing verifier/explicit policy, wrong migration bundle/database or incomplete product schema; native graph unchanged",
+      "expected": "Product graph refuses invalid configuration before serving; correct product migration/readiness selected; no implicit native schema migration, auth fallback or global User behavior change.",
+      "requires": [
+        "BG-01",
+        "BG-03",
+        "BG-07"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null,
+      "note": "Planned acceptance only; synthetic fixtures and exact contract/source authorization required before execution."
+    }
+  ]
+}

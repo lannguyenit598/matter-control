@@ -1,0 +1,23 @@
+=== RUN   TestAccessPathExplainVerification
+    explain_access_paths_test.go:199: ListMattersOfActor       before                             0.462 ms  nodes=[Sort Nested Loop Nested Loop Seq Scan Index Scan Index Scan]
+    explain_access_paths_test.go:199: ListMattersOfActor       after-proposed-indexes             0.568 ms  nodes=[Sort Nested Loop Nested Loop Seq Scan Bitmap Heap Scan Bitmap Index Scan Memoize Index Scan]
+    explain_access_paths_test.go:199: ListMattersOfActor       after-proposed-indexes-repeat      0.516 ms  nodes=[Sort Nested Loop Nested Loop Seq Scan Bitmap Heap Scan Bitmap Index Scan Memoize Index Scan]
+    explain_access_paths_test.go:199: ListAccessibleMatters    before                             0.032 ms  nodes=[Limit Sort Nested Loop Seq Scan Index Scan]
+    explain_access_paths_test.go:199: ListAccessibleMatters    after-proposed-indexes             0.004 ms  nodes=[Limit Nested Loop Index Scan Bitmap Heap Scan Bitmap Index Scan]
+    explain_access_paths_test.go:199: ListAccessibleMatters    after-proposed-indexes-repeat      0.005 ms  nodes=[Limit Nested Loop Index Scan Bitmap Heap Scan Bitmap Index Scan]
+    explain_access_paths_test.go:199: CountAccessibleMatters   before                             0.227 ms  nodes=[Aggregate Nested Loop Seq Scan Index Scan]
+    explain_access_paths_test.go:199: CountAccessibleMatters   after-proposed-indexes             8.233 ms  nodes=[Aggregate Nested Loop Bitmap Heap Scan Bitmap Index Scan Bitmap Heap Scan Bitmap Index Scan]
+    explain_access_paths_test.go:199: CountAccessibleMatters   after-proposed-indexes-repeat      7.843 ms  nodes=[Aggregate Nested Loop Bitmap Heap Scan Bitmap Index Scan Bitmap Heap Scan Bitmap Index Scan]
+    explain_access_paths_test.go:199: ListMyWorkspaces         before                             0.015 ms  nodes=[Limit Sort Nested Loop Seq Scan Index Scan]
+    explain_access_paths_test.go:199: ListMyWorkspaces         after-proposed-indexes             0.016 ms  nodes=[Limit Sort Nested Loop Seq Scan Index Scan]
+    explain_access_paths_test.go:199: ListMyWorkspaces         after-proposed-indexes-repeat      0.012 ms  nodes=[Limit Sort Nested Loop Seq Scan Index Scan]
+    explain_access_paths_test.go:199: CountMyWorkspaces        before                             0.005 ms  nodes=[Aggregate Seq Scan]
+    explain_access_paths_test.go:199: CountMyWorkspaces        after-proposed-indexes             0.005 ms  nodes=[Aggregate Seq Scan]
+    explain_access_paths_test.go:199: CountMyWorkspaces        after-proposed-indexes-repeat      0.006 ms  nodes=[Aggregate Seq Scan]
+    explain_access_paths_test.go:199: ReviewHistoryCell        before                             0.750 ms  nodes=[Limit Sort Index Scan]
+    explain_access_paths_test.go:199: ReviewHistoryCell        after-proposed-indexes             0.038 ms  nodes=[Limit Index Scan]
+    explain_access_paths_test.go:199: ReviewHistoryCell        after-proposed-indexes-repeat      0.024 ms  nodes=[Limit Index Scan]
+--- PASS: TestAccessPathExplainVerification (1.09s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	1.292s
+EXPLAIN_EXIT=0

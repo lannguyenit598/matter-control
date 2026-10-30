@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/policy"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/policy"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // DataOpsService implements the W6 data operations (contract §2.7): scoped bulk edit
@@ -364,7 +364,9 @@ func (s *DataOpsService) BulkCommit(ctx context.Context, cmd port.BulkCommitCmd)
 			row.Status = matter.BulkRowSuccess
 			row.Revision = updated.Revision
 			return tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-				EventID: s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
+				ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+				RequestID: port.RequestMetaFromContext(ctx).RequestID,
+				EventID:   s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
 				Operation: "BULK_ROW", Outcome: "OK",
 				RequestedResourceKind: string(updated.Kind), RequestedIDHash: matter.HashID(updated.ID.String()),
 			})
@@ -796,7 +798,9 @@ func (s *DataOpsService) commitImportGroup(ctx context.Context, actor matter.Act
 			}
 			setAll(matter.ImportRowFailure, code, "access to import into this matter was withdrawn")
 			return tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-				EventID: s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
+				ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+				RequestID: port.RequestMetaFromContext(ctx).RequestID,
+				EventID:   s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
 				Operation: "IMPORT_GROUP", Outcome: "DENIED", RequestedResourceKind: "MATTER", RequestedIDHash: matter.HashID(matterID.String()),
 			})
 		}
@@ -941,7 +945,9 @@ func (s *DataOpsService) commitImportGroup(ctx context.Context, actor matter.Act
 				return err
 			}
 			if err := tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-				EventID: s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
+				ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+				RequestID: port.RequestMetaFromContext(ctx).RequestID,
+				EventID:   s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
 				Operation: "IMPORT_ROW", Outcome: "OK",
 				RequestedResourceKind: plan.Kind, RequestedIDHash: matter.HashID(itemID.String()),
 			}); err != nil {

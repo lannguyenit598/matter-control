@@ -1,0 +1,61 @@
+{
+  "task": "MC-BE02-N1-DELTA-REVIEW-R2-INTAKE",
+  "actor": "Local Codex",
+  "recorded_at": "2026-10-26T14:56:20.543967+00:00",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "identity_as_returned": {
+    "agent": "actual OpenCode harness",
+    "model": "DeepSeek V4.1 Flash Free",
+    "provider": "opencode",
+    "cli_version": "NOT_RECORDED_IN_THIS_RETURN"
+  },
+  "outputs": [
+    {
+      "path": "docs/reviews/be02-n1-opencode-delta-review-r2.md",
+      "bytes": 36909,
+      "sha256": "68d43d9221ebb80f2d5fc25ed54c68f120e3d403c2aa2d0da6d813fea2db047f"
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r2/review-inputs.json",
+      "bytes": 9766,
+      "sha256": "d750290e6012fd6180e97ce0d63448a71a49f9fb4977f19ee6c6379ffc9dd08f"
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r2/checks-log.json",
+      "bytes": 14621,
+      "sha256": "5e75ac284c80e73a0e0a106b8c623d3e21cc7e803684a1745f61ba151e12e226"
+    }
+  ],
+  "review_verdict": "DELTA_RESPONSE_PASS_DOCUMENT_ONLY_WITH_LIMITATIONS",
+  "status": "IN_REVIEW / ROUTING_RECONFIRM_PENDING / NOT_ADOPTED",
+  "original_manifest": {
+    "path": "docs/testing/parallel-review-intake-20261026/be02-delta-inputs.json",
+    "bytes": 3047,
+    "sha256": "8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd"
+  },
+  "agents_before": {
+    "path": "docs/testing/be02-n1-delta-r2-intake/agents-pinned-reconstructed.md",
+    "bytes": 8886,
+    "sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb"
+  },
+  "agents_after": {
+    "path": "AGENTS.md",
+    "bytes": 9093,
+    "sha256": "861e874c00cbaba4b2fbe6db6f08e9217b7564fd7a6d3eff6eaf27de05a5d03d"
+  },
+  "drift_cause": "Codex applied direct PO backend ownership restoration during external review. Exact reverse of three replacements reproduces original pin. Reconstructed snapshot is not an independently retained original.",
+  "materiality": "Backend routing changed from temporary Codex to actual ZCode; technical BE02/N1 inputs and acceptance gates unchanged. Independent bounded routing reconfirmation remains pending.",
+  "review_records_precedence": "Review main report and review-inputs pre/pass3 claims all match. Final checks-log PIN-04 and human completion report correctly disclose 13/14 with AGENTS drift; use final record, preserve originals.",
+  "remaining": [
+    "fixed representation presence/shape and stored-value producers",
+    "422 boundaries, 415 wording and catalogue/slice scope",
+    "T25 canonical path and create header policy",
+    "command eventSeqs/derivedChanges envelope, provenance headers and wrapper validator",
+    "one N1 normative home and exact BE02/Filing edit anchors",
+    "Mimosa resolution/accepted corrected BE01 base and bounded implementation assignment"
+  ],
+  "formal_tests": "27 BE02 NOT_RUN; 51 INT-A unchanged; 79 author checks cited only",
+  "no_dispatch": true,
+  "no_runtime": true,
+  "no_canonical_adoption": true
+}

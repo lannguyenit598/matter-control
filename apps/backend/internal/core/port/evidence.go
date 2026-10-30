@@ -3,10 +3,11 @@ package port
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 // ---------- ObjectStore (local stored bytes) ----------
@@ -17,6 +18,16 @@ var ErrObjectTooLarge = errors.New("object exceeds the configured size limit")
 // ErrObjectUnavailable reports content that cannot be read (missing, corrupt, store down). The
 // boundary surfaces it as unavailable content, never as an empty document or a false version.
 var ErrObjectUnavailable = errors.New("object content is unavailable")
+
+// ErrObjectMissing and ErrObjectCorrupt say WHY content is unavailable when the store knows: the
+// bytes a recorded version points to are not there, or no longer match their digest. Unlike a store
+// that is merely down, both mean the record and its bytes disagree, an integrity incident an
+// operator must hear about. They wrap ErrObjectUnavailable, so `errors.Is(err, ErrObjectUnavailable)`
+// and the retryable 503 the boundary answers with stay exactly as before.
+var (
+	ErrObjectMissing = fmt.Errorf("%w: no stored bytes for this digest", ErrObjectUnavailable)
+	ErrObjectCorrupt = fmt.Errorf("%w: stored bytes do not match their digest", ErrObjectUnavailable)
+)
 
 // ObjectRef identifies stored content by its SHA-256 and size.
 type ObjectRef struct {

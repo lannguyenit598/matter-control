@@ -10,6 +10,11 @@ export type InputProps = ComponentProps<'input'>
 
 export function Input({ className, type = 'text', ...props }: InputProps) {
   return (
-    <input type={type} className={cn(fieldControlClass, 'min-h-8 py-1', className)} {...props} />
+    <input
+      type={type}
+      data-slot="input"
+      className={cn(fieldControlClass, 'min-h-10 py-2', className)}
+      {...props}
+    />
   )
 }

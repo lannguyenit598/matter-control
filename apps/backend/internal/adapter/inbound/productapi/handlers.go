@@ -6,12 +6,36 @@ import (
 
 	"github.com/labstack/echo/v5"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 type nameRequest struct {
 	Name string `json:"name"`
+}
+
+func (s *server) listWorkspaceMemberCandidates(c *echo.Context) error {
+	if !s.LocalPeopleDirectory {
+		return port.ErrNotFound
+	}
+	_, err := s.Workspaces.ListWorkspaceMembers(c.Request().Context(), port.ListMembersQuery{ActorID: actorOf(c), ScopeID: c.Param("id")})
+	if err != nil {
+		return err
+	}
+	name := c.QueryParam("q")
+	if len(name) > 100 {
+		return errBadRequest
+	}
+	directory, ok := s.Identities.(port.LocalPeopleDirectory)
+	if !ok {
+		return port.ErrUnavailable
+	}
+	people, err := directory.SearchWorkspacePeople(c.Request().Context(), c.Param("id"), actorOf(c), name)
+	if err != nil {
+		return err
+	}
+	_, err = respond(c, http.StatusOK, map[string]any{"items": people}, false)
+	return err
 }
 
 type titleRequest struct {
@@ -164,6 +188,18 @@ func (s *server) listMatterMembers(c *echo.Context) error {
 		return err
 	}
 	return respondMembers(c, ms)
+}
+
+func (s *server) listMatterMemberCandidates(c *echo.Context) error {
+	directory, ok := s.Workspaces.(port.MatterMemberCandidates)
+	if !ok {
+		return port.ErrUnavailable
+	}
+	members, err := directory.ListMatterMemberCandidates(c.Request().Context(), port.ListMembersQuery{ActorID: actorOf(c), ScopeID: c.Param("id")})
+	if err != nil {
+		return err
+	}
+	return respondMembers(c, members)
 }
 
 func respondMembers(c *echo.Context, ms []matter.Member) error {

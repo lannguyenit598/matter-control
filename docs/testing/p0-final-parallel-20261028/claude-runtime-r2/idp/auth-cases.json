@@ -1,0 +1,104 @@
+{
+ "task": "MC-P0-CLAUDE-BROWSER-IDP-RESTORE-R2",
+ "lineage": {
+  "prior": "zitadel/auth-cases.json",
+  "prior_sha256": "2e452b527c2d04cdd61ba9bf116a9cfacd7d459823588275968500d5129c31a1"
+ },
+ "cases": [
+  {
+   "id": "health",
+   "r2_status": "PASS",
+   "evidence_or_reason": "api-healthz"
+  },
+  {
+   "id": "ready",
+   "r2_status": "PASS",
+   "evidence_or_reason": "api-readyz"
+  },
+  {
+   "id": "no-token",
+   "r2_status": "PASS",
+   "evidence_or_reason": "api-no-token-401"
+  },
+  {
+   "id": "bogus-token",
+   "r2_status": "PASS",
+   "evidence_or_reason": "api-bogus-token-401-via-cloud-introspection (answered by the Cloud introspection endpoint with the API app assertion)"
+  },
+  {
+   "id": "unauthenticated-session",
+   "r2_status": "PASS",
+   "evidence_or_reason": "bff-signed-out-session"
+  },
+  {
+   "id": "callback-missing-parameters",
+   "r2_status": "PASS",
+   "evidence_or_reason": "callback-missing-params"
+  },
+  {
+   "id": "callback-unbound-state",
+   "r2_status": "PASS",
+   "evidence_or_reason": "callback-unbound-state"
+  },
+  {
+   "id": "login-redirect-shape",
+   "r2_status": "PASS",
+   "evidence_or_reason": "bff-login-redirect-shape: client_id, S256, response_type=code, state, nonce; redirect_uri is the unregistered :3104 origin by design; nothing followed"
+  },
+  {
+   "id": "signed-out-route-sweep",
+   "r2_status": "PASS",
+   "evidence_or_reason": "12 product routes show Sign-in required"
+  },
+  {
+   "id": "hosted-login-reachable",
+   "r2_status": "NOT_RUN",
+   "evidence_or_reason": "A follow-up request to the Cloud authorize endpoint was not made (one authorize probe at most). The earlier acceptance recorded in ops/p0-local/cloud/README.md is historical, not repeated."
+  },
+  {
+   "id": "human-login-A",
+   "r2_status": "BLOCKED_EMAIL_VERIFICATION",
+   "evidence_or_reason": "Last known state per zitadel/auth-slot-released.json: no usable mailbox for the verification code. Not re-attempted; no evidence in this run that A or B is now verified. Also: port 3000 (the registered callback origin) is held by an unowned runtime."
+  },
+  {
+   "id": "real-token-issuer-audience-subject",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "depends on human-login-A"
+  },
+  {
+   "id": "A-B-workspace-matter-isolation",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "depends on human login A and B"
+  },
+  {
+   "id": "viewer-write-denial",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "same"
+  },
+  {
+   "id": "cross-matter-denial",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "same"
+  },
+  {
+   "id": "role-change-revoke",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "same"
+  },
+  {
+   "id": "real-refresh",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "depends on a real session; WAITING_REAL_EXPIRY applies afterwards"
+  },
+  {
+   "id": "session-expiry-logout-relogin",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "same"
+  },
+  {
+   "id": "API-outage-unavailable",
+   "r2_status": "BLOCKED",
+   "evidence_or_reason": "needs a signed-in read to show the unavailable state; my own API process (not the unowned one) would be the one stopped"
+  }
+ ]
+}

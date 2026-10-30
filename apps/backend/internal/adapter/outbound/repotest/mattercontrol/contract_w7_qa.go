@@ -6,8 +6,8 @@ package mattercontrol
 import (
 	"testing"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // SuiteW7QA runs the postrun QA regressions against any Bundle whose Store supports evidence and filings.

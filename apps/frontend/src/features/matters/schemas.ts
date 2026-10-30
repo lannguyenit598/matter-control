@@ -71,7 +71,7 @@ export const createMatterInputSchema = z.object({
 
 export const grantMatterMemberInputSchema = z.object({
   matterId: idSchema,
-  userId: z.string().trim().min(1, 'Enter the user id of an active workspace member').max(100),
+  userId: z.string().trim().min(1, 'Select a workspace member').max(100),
   role: z.enum(MATTER_ROLES),
   ifMatch: z.string().min(1),
 })

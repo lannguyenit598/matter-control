@@ -1,0 +1,36 @@
+{
+  "task": "MC-P0-CODEX-FE-PATCH-20261028",
+  "actualAgent": "Local Codex /root continuation; not independent review",
+  "cwd": "/private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/frontend/apps/frontend",
+  "command": [
+    "rtk",
+    "proxy",
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "src/features/data-transfer",
+    "src/test/data-transfer-seam.test.ts",
+    "--config",
+    "/private/tmp/mc-p0-fe-vitest.config.mts",
+    "--configLoader",
+    "runner",
+    "--maxWorkers",
+    "1"
+  ],
+  "startedUtc": "2026-10-28T03:41:05.582384+00:00",
+  "finishedUtc": "2026-10-28T03:41:08.240536+00:00",
+  "seconds": 2.658,
+  "exit": 0,
+  "environment": {
+    "policy": "cleared child environment; parent HOME/home/CODEX_HOME untouched; these three absent from child, no override; no private env files loaded",
+    "keys": [
+      "NO_COLOR",
+      "PATH",
+      "TMPDIR"
+    ],
+    "TMPDIR": "/private/tmp",
+    "NO_COLOR": "1"
+  },
+  "log": "corrected-env-20261028T034105457961Z-focused.log",
+  "logSha256": "0fa8026dc6b95ee389e3acde76aff459999049623de58ddc82e9464334f636fa"
+}

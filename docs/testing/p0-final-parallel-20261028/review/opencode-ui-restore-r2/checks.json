@@ -1,0 +1,106 @@
+{
+  "reviewer": "OpenCode CLI v2.1.4 (provider opencode, model glm-5.3-flash-free) — independent non-author",
+  "environment": {
+    "cwd_root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head_observed_open": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc (2026-10-28T16:04:17Z)",
+    "head_observed_close": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc (2026-10-28T16:22:28Z)",
+    "node": "v24.22.1",
+    "timezone": "UTC (all stamps UTC)",
+    "subsecond_format_note": "printf %N subsecond fields on this host render as '.3NZ'; treat subsecond digits as approximate millisecond observations",
+    "rtk": "every shell command rtk/rtk-proxy prefixed",
+    "round2_permissions": "read/hash/static; focused pure tests via installed entries only (none needed); no pnpm exec/install; no source edits; no Docker/PG/IdP/browser/lifecycle/credential access"
+  },
+  "receipts": {
+    "identity_probe": { "utc": "2026-10-28T16:20:53Z", "argv": ["rtk proxy opencode --version", "rtk proxy node --version"], "exit": ["0", "0"], "result": ["opencode v2.1.4", "v24.22.1"] },
+    "packet_pins": {
+      "utc": "2026-10-28T16:19:18Z",
+      "tool": "rtk proxy shasum -a 256 (13 files)",
+      "exit": 0,
+      "result": "all contract pins matched: local-admin-medusa-r1/source-manifest.json f43738bf…1028; local-ui-css-fix-20261028/source-manifest.json 91e3904a…abe6; local-ui-css-fix-20261028/source-delta.json 1595bdde…cdab; local-ui-css-fix-20261028/return.md 1af28465…8ce4; local-admin-medusa-r1/source-delta.json 41c80cbb…d4d4; claude-rv001-fix/source-manifest.json de8424ea…4489; claude-rv001-fix/source-delta.json 38e9eb4f…3b54; claude-runtime-r2/outputs-manifest.json d77db579…7826f; own r1 outputs-manifest.json a734e3f2…ba27 + return/inputs/checks/findings payloads; intake.md b2eb0b5a…ae26"
+    },
+    "claude_runtime_r2_member_recheck": { "utc_start": "2026-10-28T16:18:38Z", "utc_end": "2026-10-28T16:18:38Z", "exit": 0, "matched": 46, "bad": [], "note": "sha256+bytes vs outputs-manifest.json files[]" },
+    "opening_member_receipt": {
+      "utc_start_observed": "2026-10-28T16:04:59Z",
+      "script": "/private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/r2-verify.py (reviewer scratch, outside repo)",
+      "exit": 0,
+      "manifest": "local-admin-medusa-r1/source-manifest.json (721 entries, captured 15:54:09.908900Z)",
+      "entries": 721, "duplicate_paths": 0, "missing": 0,
+      "mismatch_count": 5,
+      "mismatch": [
+        { "path": "apps/frontend/src/features/matters/components/matter-members.tsx", "manifest": [2107, "928b39e8a34c2ea82f42abef40063926c2ae3068a83f3808730cfaaf3403a0c0"], "fs": [1969, "7c430c77fc3ea8a7e55c362edf3aabe8fcabcec7fed7437f87edd208c6d2fb3e"] },
+        { "path": "apps/frontend/src/features/matters/components/matter-scope.test.tsx", "manifest": [2416, "38d1e160f528a2f158be50f07a052a7111be69c571ccf47731396bdebef29e75"], "fs": [2613, "57db1fba301c2d1dc39d4a29f685f7e96248316f2cb26687f80ab50bcd346656"] },
+        { "path": "apps/frontend/src/features/matters/components/matter-scope.tsx", "manifest": [2062, "e75562694980d40d8430582b0d64c442f16bb9bf699aed0706910764bb891c49"], "fs": [2111, "ecaf544c06fd0d4febfdad6b9b5d67e143e271f5986a22b32369c05c87166ce0"] },
+        { "path": "apps/frontend/src/features/matters/repository.ts", "manifest": [1839, "783187e58d6a50739ef696ab85aaed646b2323a35649e6f6c0131015009184a9"], "fs": [1999, "55f8174928d0608b18aa8a6fb18416b6b8ab39897617d8a2b19a4dd10f9a5e2f"] },
+        { "path": "apps/frontend/src/features/workspaces/components/workspace-members.tsx", "manifest": [2306, "7c1b7ead7624b7364047c014d26443666a27f6dfbe853b623c6fc5b26234a285"], "fs": [2168, "46192d5a91d38c1f5cf2ce72920fbc540c8b4009674d669db8fc940cf98a494"] }
+      ],
+      "selection_files": 724, "extras": ["apps/backend/.claude/skills/add-migration", "apps/backend/.claude/skills/add-use-case", "apps/backend/.claude/skills/steward"], "absent_from_selection": 0,
+      "delta_pin_check": "all 20 pinned delta paths matched",
+      "end_stamp": "not separately printed; next observed UTC 2026-10-28T16:05:22Z",
+      "mismatch_sha_caveat": "full manifest pins and observed fs pairs recorded per opening run; the closing and stability receipts re-derived every pair in full against the same C manifest"
+    },
+    "closing_member_receipt": {
+      "utc_start": "2026-10-28T16:17:20Z",
+      "utc_end": "2026-10-28T16:17:20Z",
+      "exit": 0,
+      "entries": 721, "missing": 0, "mismatch_count": 31,
+      "mismatch_pairs_bytes_only": true,
+      "mismatch": [
+        ["apps/backend/docs/api.md", 15462, 16464], ["apps/backend/internal/adapter/inbound/productapi/handlers.go", 10931, 12023], ["apps/backend/internal/adapter/inbound/productapi/server.go", 13408, 13673], ["apps/backend/internal/adapter/inbound/productapi/server_test.go", 16439, 16593], ["apps/backend/internal/adapter/outbound/postgres/identity_resolver.go", 1189, 1731], ["apps/backend/internal/adapter/outbound/postgres/mcsqlc/matter.sql.go", 67462, 68920], ["apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql", 19997, 20676], ["apps/backend/internal/app/product.go", 9326, 9388], ["apps/backend/internal/config/product.go", 3713, 3860], ["apps/backend/internal/core/port/identity.go", 1984, 2321], ["apps/backend/internal/core/port/workspace.go", 11878, 12187],
+        ["apps/frontend/src/app/(app)/matters/[matterId]/data/page.tsx", 997, 1974], ["apps/frontend/src/app/(app)/matters/[matterId]/page.tsx", 3434, 3684], ["apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx", 3276, 3773], ["apps/frontend/src/features/data-transfer/components/bulk-section.tsx", 14895, 15363], ["apps/frontend/src/features/data-transfer/components/data-transfer-attempt.test.tsx", 12250, 12318], ["apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx", 1801, 1888], ["apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx", 23020, 23308], ["apps/frontend/src/features/matters/components/grant-matter-member-form.tsx", 1844, 2601], ["apps/frontend/src/features/matters/components/matter-members.tsx", 2107, 2592], ["apps/frontend/src/features/matters/components/matter-scope.test.tsx", 2416, 2613], ["apps/frontend/src/features/matters/components/matter-scope.tsx", 2062, 2163], ["apps/frontend/src/features/matters/repository.ts", 1839, 2177], ["apps/frontend/src/features/matters/schemas.ts", 2310, 2288], ["apps/frontend/src/features/workspaces/components/grant-workspace-member-form.tsx", 2011, 2701], ["apps/frontend/src/features/workspaces/components/workspace-members.tsx", 2306, 3327], ["apps/frontend/src/features/workspaces/repository.ts", 1731, 2043], ["apps/frontend/src/features/workspaces/schemas.ts", 1750, 1720], ["apps/frontend/src/lib/oidc/flow.test.ts", 10110, 10517], ["apps/frontend/src/lib/oidc/flow.ts", 11613, 11615], ["apps/frontend/src/test/membership-recovery.test.tsx", 3360, 3745]
+      ],
+      "selection_files": 727,
+      "extras": ["apps/backend/.claude/skills/add-migration", "apps/backend/.claude/skills/add-use-case", "apps/backend/.claude/skills/steward", "apps/backend/internal/adapter/inbound/productapi/member_candidates_test.go", "apps/backend/internal/adapter/outbound/postgres/people_directory_test.go", "apps/backend/internal/core/service/member_candidates.go"],
+      "absent_from_selection": 0,
+      "delta_pin_check": "all 20 pinned delta paths matched",
+      "raw_receipt_path": "/private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/r2-close-receipt.json (full manifest/fs sha256 pairs retained in scratch)"
+    },
+    "stability_recheck_receipt": {
+      "utc_start": "2026-10-28T16:22:28Z",
+      "utc_end": "2026-10-28T16:22:28Z",
+      "exit": 0,
+      "result": "721 entries, 0 missing, 31 mismatches — identical path set and byte deltas as closing receipt; extras and selection unchanged (727/6); all 20 delta pins matched",
+      "raw_receipt_path": "/private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/r2-r3-receipt.json"
+    },
+    "writer_activity_mtiles": [
+      "16:04:43Z matter-members.tsx, matter-scope.test.tsx, matter-scope.tsx, workspace-members.tsx",
+      "16:05:58Z repository.ts, schemas.ts, grant-matter-member-form.tsx, matter-members.tsx, app/(app)/matters/[matterId]/page.tsx",
+      "16:10:52Z apps/backend/internal/core/port/identity.go",
+      "16:13:53Z apps/frontend/src/lib/oidc/flow.ts, apps/frontend/src/lib/oidc/flow.test.ts",
+      "quiet from 16:13:53Z to 16:22:28Z (no further mtime movement observed; HEAD never moved)"
+    ],
+    "intermediate_probe_error": {
+      "utc": "2026-10-28T16:22:00-16:22:01Z",
+      "what": "an ad-hoc delta recheck wrongly indexed the 16 presentation paths into the B (local-ui-css-fix) manifest — those paths carry pre-delta pins there — producing a false '16 presentation mismatches' alarm",
+      "resolution": "superseded by the proper full-member receipts (r2-verify.py uses the C manifest for every entry): no drift touched the 20 delta paths; documented here for transparency, not used in any verdict",
+      "correct_delta_pin_recheck": "python recheck against the C manifest only, at 16:22:01Z-adjacent R3 run: 4 CSS paths OK (f56e8d4a…, 1cbcebbb…, 6993a1b3…, b48d6170…) and 16 presentation paths matched via C (see closing/stability receipts)"
+    }
+  },
+  "checks": [
+    { "id": "D1", "what": "target directory absence check", "utc": "2026-10-28T16:18:38Z", "exit": 0, "result": "review/opencode-ui-restore-r2 ABSENT-CLEAR; sibling review namespaces listed and left untouched" },
+    { "id": "D2", "what": "three-way manifest inventory diff (artifact level)", "utc": "2026-10-28T16:05-16:06Z window (script r2-3way.py)", "exit": 0, "result": "A(719)→B(721): 2 modified (package.json bdc96645→f56e8d4a 2270→2424; pnpm-lock.yaml ac482242→1cbcebbb 250081→250514), 2 added (postcss.config.mjs 6993a1b3 92 B; scripts/check-built-css.mjs b48d6170 812 B), 0 removed — exactly the claimed CSS-build contract; B→C: 16 modified, 0 added/removed" },
+    { "id": "D3", "what": "CSS-fix delta baselines vs A-era manifest", "utc": "2026-10-28T16:06Z window", "exit": 0, "result": "all four baseline pins equal the de8424ea manifest entries for the same paths (package.json bdc96645, pnpm-lock ac482242); added files absent from A" },
+    { "id": "D4", "what": "next build --webpack flag validity for the pinned Next 16.4.2", "utc": "2026-10-28T16:11Z window", "exit": 0, "result": "bundled docs node_modules/next/dist/docs/01-app/03-api-reference/06-cli/next.md:101 documents --webpack ('Build using the bundled Webpack'); dist/lib/bundler.js parseBundlerArgs maps options.webpack → Bundler.Webpack (=1); dist/cli/next-build.js threads the bundler into build" },
+    { "id": "D5", "what": "full read of the 4 CSS-fix paths", "utc": "2026-10-28T16:12Z window", "exit": 0, "result": "package.json exact devDependency @tailwindcss/postcss 4.3.3 + build/build:webpack chained with node scripts/check-built-css.mjs; lock resolves @tailwindcss/node + @tailwindcss/oxide 4.3.3 and postcss 8.5.31; postcss.config.mjs minimal '@tailwindcss/postcss' plugin; check-built-css.mjs asserts ≥1 CSS asset, no raw @theme|@apply|@tailwind|@custom-variant, and .flex/.sr-only/.bg-background utility rules" },
+    { "id": "D6", "what": "git diff HEAD on the 16 presentation paths (presented in 6 batches)", "utc": "2026-10-28T16:11-16:14Z window", "exit": 0, "result": "172 insertions / 79 deletions across 16 files; presentation-only at read level: no auth/returnTo change (login plain-link preserved verbatim), no label removal, no new routes/mock data; role badge OWNER emphasis replaced by uniform neutral variants (value text truthful); native <details> block contains only toggles (no unmount risk for mutation forms); token mapping + light/dark state-axis tokens verified (design tokens @ globals.css; --color-dependency-ready at :114; light #174ea6 at :36)" },
+    { "id": "D7", "what": "lucide icon existence + custom class token resolution", "utc": "2026-10-28T16:10Z window", "exit": 0, "result": "require('lucide-react') probe: Scale/Settings2/ArrowRight/UserRound/Building2/Briefcase all non-null; globals.css maps --color-background/muted/card/secondary/accent/input/dependency-ready" },
+    { "id": "R1", "what": "claude-runtime-r2 restore numeric cross-check", "utc": "2026-10-28T16:14-16:16Z window", "exit": 0, "result": "summary.json ≡ steps.log ≡ restore-run-sh.log (exit 0, 15:35:36→15:36:07Z); census TSV rows=34 with matters 54, workspaces 51, workspace_memberships 176; objects=3 identical hashes; marker src 1 / restored 0; boundary 15:35:48.507148+00 seq-sum 12408; archive 241230 B + ef18448f…404=bash-file+steps+summary; refusals corrupt/truncated exit 1 with 0 tables, altered readback exit 1, missing-object DETECTED by comparison; readback.diff is the 133-byte verdict JSON (empty missing/unexpected/differing, counters_match true, object_failures 0); census/objects/readback twin files byte-identical (same sha pins)" },
+    { "id": "R2", "what": "probes/auth/browser case-count verification", "utc": "2026-10-28T16:15Z window", "exit": 0, "result": "http-negative-probes.json: 26 cases; summary pass 21 / fail 0 / not_observable 5; per-case rows match (21 PASS rows incl. 307 redirect shapes and 401s; 5 RV-001 NOT_OBSERVABLE HTTP 200); auth-cases.json lineage-pinned, rest BLOCKED as returned; browser/cases.json: 31 rows (24 blocked-browser, 1 awaiting-human AC-137, R2-CSS-01 PASS / R2-CSS-02 FAIL with hashed CSS artifacts 41045B fed285a0… vs 25313B f443e3e6…, R2-RV001-SRV/BACK/CR002/GW rows)" },
+    { "id": "R3", "what": "static corroboration of RV-001 NOT_OBSERVABLE explanation", "utc": "2026-10-28T16:16Z window", "exit": 0, "result": "apps/frontend/src/app/(app)/matters/[matterId]/layout.tsx mounts MatterScope; matter-scope.tsx renders <ReadFailure kind='sign-in'> before children when getSession() falsy → signed-out probes cannot expose the work-item page; the 5-probe correction (first FAIL then NOT_OBSERVABLE) is recorded in the returned JSON, not silently rewritten" },
+    { "id": "R4", "what": "ownership/privacy artifact verification", "utc": "2026-10-28T16:14-16:16Z window", "exit": 0, "result": "containers-before-restore.json: distinct ids 4d09d047…(product-test :55442, started 15:25:50Z, not by author) and 3c207de9…(restore-target :55443, started 15:35:05Z by approved docker start); owned-runtime.json pids 62449 (:8084) / 65851 (:3104) with stop receipts; resource-ledger consistent; secret-scan.json 41 files, zero credential patterns; inventory opening/closing receipts show the unowned mc-local-login runtime was never reused; source-drift.json current pins equal the B/C delta pins (f56e8d4a/1cbcebbb/6993a1b3/b48d6170) — cross-namespace coherence" },
+    { "id": "R5", "what": "author deviation and failure-log honesty", "utc": "2026-10-28T16:14-16:16Z window", "exit": 0, "result": "fe-snapshot-build.log retains the failed pnpm pre-script install (resolved 535/reused 535/added 520, 'workspace hoist directory is not a real directory') and the invalid-API_MODE collect-page-data failure; go-build-mcapi.log is empty (weak build receipt — binary existence instead evidenced via ps/ledger/probes); docker-identity-check.log stderr contains template-parse errors while pg_isready succeeded and identity is separately recorded in containers-before-restore.json" },
+    { "id": "C-R1", "what": "round-1 outputs preservation + reconciliation", "utc": "2026-10-28T16:19-16:21Z window", "exit": 0, "result": "old outputs-manifest a734e3f2…ba27 unaudited-hash matched; four payload hashes re-verified incl. findings.json f3d91454…edf7; old checks.json C4 (~15:18Z) is the only full-member receipt of r1; old C12 (15:36:39Z) = 9 packet hashes + HEAD + porcelain dc0f69bee6b002bf; old 're-checked at close' wording limited, old artifacts untouched" },
+    { "id": "C-REST", "what": "restore script pins re-verified", "utc": "at write time (see stamp near outputs-manifest creation)", "exit": 0, "result": "ops/p0-local/restore-rehearsal/{run.sh 8e4af211…488, verify.py 93e21772…f42b, test_verify.py 80d8c5ed…14cb} byte-identical to the claude-runtime-r2 inputs.json pins" }
+  ],
+  "cited_not_rerun_from_authors": [
+    "Codex: pnpm check 48 files/482 tests exit 0; build:webpack prerendered 24 pages + compiled-CSS gate; frozen-lockfile install; peers/audit — round-2 permission forbids re-running",
+    "Claude: TestRestoreRehearsal compile/pass (9.17s receipt retained), turbopack-2 build exit 0 (24 pages), hosted-IdP acceptance history (historical, not repeated), browser cases marked blocked/awaiting"
+  ],
+  "not_run": [
+    "any test suite this round (none necessary; permission-consistent)",
+    "builds (turbopack + postcss double-application behavior unevaluated at source level)",
+    "browser/visual/keyboard/contrast/AC-137/IdP/real-token/cycle checks",
+    "Docker/PostgreSQL",
+    "anything outside the 20 pinned delta paths and the claude-runtime-r2 namespace"
+  ]
+}

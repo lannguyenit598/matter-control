@@ -1,0 +1,118 @@
+{
+  "checks_run_personally": [
+    {
+      "id": "C1",
+      "what": "pin SHA-256 of 4 required files vs requested pins",
+      "by": "reviewer (this session)",
+      "argv": [
+        "shasum",
+        "-a",
+        "256",
+        "<4 files>"
+      ],
+      "result": "4/4 match, before and after the other checks",
+      "exit": 0
+    },
+    {
+      "id": "C2",
+      "what": "HEAD equals base",
+      "by": "reviewer",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "result": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+      "exit": 0
+    },
+    {
+      "id": "C3",
+      "what": "diff hunks of the three files vs base",
+      "by": "reviewer",
+      "argv": [
+        "git",
+        "diff",
+        "-U0",
+        "--",
+        "<3 files>"
+      ],
+      "result": "page.tsx:275 +partial; read-failure.tsx:16-20,24-28; drafts.test.tsx:207-215",
+      "exit": 0
+    },
+    {
+      "id": "C4",
+      "what": "enumerate every ReadFailure reference and every partial use",
+      "by": "reviewer",
+      "argv": [
+        "grep",
+        "-rn",
+        "ReadFailure|partial",
+        "apps/frontend/src"
+      ],
+      "result": "31 JSX call sites in 15 files; exactly 1 passes partial (work/[itemId]/page.tsx:275, proof section); the other 30 are primary reads that return in place of the page (14 route pages with a sign-in and a read site each, plus the work/[itemId] page second site, plus matter-scope.tsx used by the matters/[matterId] layout)",
+      "exit": 0
+    },
+    {
+      "id": "C5",
+      "what": "focused test drafts.test.tsx",
+      "by": "reviewer",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "src/components/organisms/drafts.test.tsx"
+      ],
+      "cwd": "apps/frontend",
+      "start": "2026-10-28T09:41:03.571039+00:00",
+      "end": "2026-10-28T09:41:04.756235+00:00",
+      "exit": 0,
+      "counts": "1 file, 20/20 passed"
+    },
+    {
+      "id": "C6",
+      "what": "pnpm check (typecheck, eslint, prettier, vitest, agents:check)",
+      "by": "reviewer",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "check"
+      ],
+      "cwd": "apps/frontend",
+      "start": "2026-10-28T09:41:04.779879+00:00",
+      "end": "2026-10-28T09:41:52.727897+00:00",
+      "exit": 0,
+      "counts": "47 files, 457/457 passed",
+      "logs": "scratchpad only: .../scratchpad/final-hardening/review-{drafts-test,check}/"
+    }
+  ],
+  "author_evidence_cited_only": [
+    {
+      "what": "pnpm build (Turbopack) exit 0, Compiled successfully",
+      "by": "author, earlier this session",
+      "window_utc": "2026-10-28T09:32:12Z-09:32:19Z",
+      "same_bytes_as_pins": "not re-verified by this review; file pins matched at that time"
+    },
+    {
+      "what": "webpack build and storybook build exit 0 (gates frontend-webpack-r5, frontend-storybook-r5)",
+      "by": "author",
+      "same_bytes_as_pins": "not re-verified"
+    },
+    {
+      "what": "partial tests failed (2) before the partial fix, passed after",
+      "by": "author TDD red/green",
+      "same_bytes_as_pins": "n/a"
+    }
+  ],
+  "not_run": [
+    "pnpm build in this review",
+    "webpack/storybook builds",
+    "mutation test of the partial guard (source must not be altered)",
+    "browser, keyboard, touch, screen reader",
+    "hosted identity",
+    "AC-137"
+  ]
+}

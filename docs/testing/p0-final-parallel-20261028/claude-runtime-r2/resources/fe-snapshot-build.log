@@ -1,0 +1,48 @@
+--- stdout
+▲ Next.js 16.4.2 (webpack)
+✓ Running next.config.ts took 953ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.8s
+  Running TypeScript ...
+  Finished TypeScript in 3.3s ...
+  Collecting page data using 9 workers ...
+
+--- stderr
+✓ Lockfile passes supply-chain policies (verified 1m ago)
+Lockfile is up to date, resolution step is skipped
+Packages are cloned from the content-addressable store to the virtual store.
+  Content-addressable store is at: /Users/nguyenvanlan/Library/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 535, reused 535, downloaded 0, added 520
+Packages: +545
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "/private/tmp/mc-p0-r2-runtime/frontend/
+      node_modules": workspace hoist directory is not a real directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+Error: Failed to collect configuration for /api/auth/session
+    at ignore-listed frames {
+  [cause]: Error: Invalid environment configuration:
+  ✖ Invalid discriminator value. Expected 'demo' | 'rest'
+    → at API_MODE
+      at <unknown> (.next/server/chunks/1180.js:1:8709)
+      at 81484 (.next/server/chunks/1180.js:2:34)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at 53639 (.next/server/chunks/1180.js:1:707)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at 74910 (.next/server/chunks/1180.js:1:6451)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at 42645 (.next/server/app/api/auth/session/route.js:1:676)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at userland (.next/server/app/api/auth/session/route.js:1:2580)
+}
+
+> Build error occurred
+Error: Failed to collect page data for /api/auth/session
+    at ignore-listed frames {
+  type: 'Error'
+}

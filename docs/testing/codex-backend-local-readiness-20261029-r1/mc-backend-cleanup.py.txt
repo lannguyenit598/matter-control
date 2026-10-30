@@ -1,0 +1,16 @@
+import subprocess,json,pathlib,datetime
+out=pathlib.Path('/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/codex-backend-local-readiness-20261029-r1')
+events=[]
+for name in ['mc-codex-be-local-20261029-r1','mc-codex-be-local-20261029-r2']:
+    def run(args):
+        p=subprocess.run(args,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        events.append({'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'argv':args,'exit':p.returncode,'output':p.stdout.decode()})
+        (out/'cleanup.json').write_text(json.dumps(events,indent=2)+'\n')
+        return p
+    p=run(['docker','inspect','--format','{{ index .Config.Labels "mc.owner" }} {{.Id}} {{.State.Status}}',name])
+    assert p.returncode==0 and p.stdout.startswith(b'MC-P0-CODEX-BACKEND-LOCAL-20261029 ')
+    p=run(['docker','inspect','--format','{{json .Mounts}}',name]); assert p.returncode==0
+    p=run(['docker','stop','--time','5',name]); assert p.returncode==0
+    p=run(['docker','rm','-v',name]); assert p.returncode==0
+    p=run(['docker','ps','-a','--filter','name=^/'+name+'$','--format','{{.Names}}']); assert p.returncode==0 and not p.stdout.strip()
+print('Both task-owned containers and their anonymous volumes removed; all existing containers untouched.')

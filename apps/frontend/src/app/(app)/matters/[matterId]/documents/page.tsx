@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
-import { MatterTabs } from '@/features/matters/components/matter-tabs'
 import { matterRepository } from '@/features/matters/repository'
 import { CreateDocumentForm } from '@/features/proof/components/document-forms'
 import { proofRepository } from '@/features/proof/repository'
@@ -45,8 +44,8 @@ async function Documents({ params }: Pick<PageProps<'/matters/[matterId]/documen
         description={
           <LocalizedText en="Documents and their versions" vi="Tài liệu và các phiên bản" />
         }
+        actions={canEdit && <CreateDocumentForm matterId={matterId} matterTitle={matter.title} />}
       />
-      <MatterTabs matterId={matterId} active="documents" />
       <Card>
         <CardHeader>
           <CardTitle>
@@ -62,7 +61,13 @@ async function Documents({ params }: Pick<PageProps<'/matters/[matterId]/documen
         <CardContent>
           {docs.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              <LocalizedText en="No documents yet." vi="Chưa có tài liệu." />
+              <LocalizedText en="No documents yet." vi="Chưa có tài liệu." />{' '}
+              {canEdit && (
+                <LocalizedText
+                  en="Use New document at the top of the page."
+                  vi="Dùng nút Tài liệu mới ở đầu trang."
+                />
+              )}
             </p>
           ) : (
             <ul className="flex flex-col divide-y">
@@ -80,18 +85,6 @@ async function Documents({ params }: Pick<PageProps<'/matters/[matterId]/documen
           )}
         </CardContent>
       </Card>
-      {canEdit && (
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <LocalizedText en="New document" vi="Tài liệu mới" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CreateDocumentForm matterId={matterId} />
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }

@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol"
-	"github.com/example/userapi/internal/adapter/outbound/sheet"
+	"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol"
+	"leonx.me/matter-control/internal/adapter/outbound/sheet"
 )
 
 // The shared spine contract runs against the in-memory double first: it must pass the
@@ -120,6 +120,19 @@ func TestSuiteW6_MemoryStore(t *testing.T) {
 // The original Golden Workflow ledgers (AC-161..163) run against the same in-memory double.
 func TestSuiteGW_MemoryStore(t *testing.T) {
 	mattercontrol.SuiteGW(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}
+
+// The review-matrix contract runs against the same in-memory double.
+func TestSuiteReview_MemoryStore(t *testing.T) {
+	mattercontrol.SuiteReview(t, func(t *testing.T) mattercontrol.Bundle {
 		base := time.Now().UTC().Add(-time.Minute)
 		n := 0
 		store := mattercontrol.NewMemoryStore(func() time.Time {

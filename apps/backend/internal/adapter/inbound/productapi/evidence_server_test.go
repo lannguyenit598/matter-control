@@ -8,7 +8,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 // proofFixture: alice OWNER, bob EDITOR (designated verifier), carol VIEWER, a Requirement.

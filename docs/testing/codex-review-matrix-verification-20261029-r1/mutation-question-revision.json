@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "./internal/adapter/outbound/repotest/mattercontrol",
+    "-run",
+    "TestSuiteReview_MemoryStore",
+    "-count=1",
+    "-race",
+    "-v"
+  ],
+  "cwd": "/private/tmp/mc-review-verifier-20261029-r1/backend",
+  "utc_start": "2026-10-29T12:36:15.117544+00:00",
+  "utc_end": "2026-10-29T12:36:17.274832+00:00",
+  "exit": 1,
+  "mutation": {
+    "file": "internal/core/service/review_service.go",
+    "before": "if cmd.ExpectedQuestionRevision != q.Revision {",
+    "after": "if false && cmd.ExpectedQuestionRevision != q.Revision {",
+    "expected_nonzero": true
+  }
+}

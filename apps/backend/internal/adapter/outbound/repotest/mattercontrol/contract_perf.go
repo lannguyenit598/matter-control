@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // PerfRead is one named repeatable read.

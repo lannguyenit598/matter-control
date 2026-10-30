@@ -9,7 +9,7 @@ import (
 
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/example/userapi/internal/observability"
+	"leonx.me/matter-control/internal/observability"
 )
 
 func TestContextHandler_AddsContextAttrsAndTraceIDs(t *testing.T) {

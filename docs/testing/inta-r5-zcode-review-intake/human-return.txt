@@ -1,0 +1,62 @@
+Nhiệm vụ mới: MC-002-INTA-FE-VALIDATION-R5-SOURCE-REVIEW-ZCODE — review độc lập nguồn FE R4/R5 do Antigravity tác giả (OpenCode hết quota, PO chuyển cho ZCode). Tôi lập kế hoạch và bắt đầu bằng xác minh trạng thái + inputs.json.
+
+Head khớp `a62d838…`, cả ba output path đều ABSENT. inputs.json khai báo 17 input trực tiếp + 2 manifest bắc cầu + 23 raw file được phép + guard pin. Bắt đầu hash-verify toàn bộ pin trực tiếp, đồng thời đọc assignment.json, checks.json và hai manifest R4/R5.
+
+Tất cả 18 pin trực tiếp khớp (bytes + SHA256). Cả hai manifest ghi executor = **Actual Antigravity (Gemini 3.8 Flash High)** — xác nhận ZCode nonauthor. Giờ hash 22 payload R5 + 22 baseline R4, so 23 cặp raw/export, và kiểm tra cây file để phát hiện file chưa khai báo.
+
+Cross-verification Phase đầu: **22/22 hash R5 khớp**, **22/22 hash R4 khớp**, **23/23 cặp raw/export PAIR_OK**, cây file đúng 23 file mỗi nơi — **không có file chưa khai báo**; tổng byte 22 payload R5 = **332.773 đúng chuẩn**. Giờ đọc các tài liệu quản trị: checks.json, intake Codex, báo cáo R5 của Antigravity (nơi chứa claim I01–I06), và 4 JSON intake.
+
+Tuyệt vời — Codex intake cho 6 quan sát R5-I01..I06 kèm dòng tham chiếu chính xác, preflight thật bị chặn (`BLOCKED_CONTRACT_NOT_BINDING`), và input drift AGENTS (8886→9171) đã được disposition. Tổng byte 22 payload tính tay = **332.773 ✓**. Giờ đọc báo cáo R5 của Antigravity và review R4 của OpenCode (để nhắm đúng các gap R4-C01..05/S1..6/NF).
+
+Phát hiện đầu tiên đáng chú ý: **§4 của báo cáo R5 (Antigravity return) liệt kê SHA256 không khớp với manifest thật cho 14/22 payload** (mục 9–22: `launcher-mock.stdout.txt` → `selfcheck-r5.stdout.txt`), trong khi byte count khớp hết và 9 mục đầu khớp hash — chuỗi provenance trong báo cáo bị đứt ở cột hash (chain thật qua manifest + raw/export vẫn nguyên vẹn, đã verify độc lập). Ghi nhận thành finding của tôi. Giờ đọc review R4 của OpenCode để nhắm đúng các gap.
+
+Đã nắm đủ bối cảnh R4 (C01..C05/S1..6/NF-1..6 + hai P1 blocking). Giờ đọc nguồn R5 để adjudicate từng I01–I06 tại đúng dòng: coordinator.py, guard-validator-r5.sh, harness-dev.mjs trước.
+
+`coordinator.py` xác nhận nhiều điểm intake: default `stage_receipt_required=False` (L240, L710), main không truyền stage (L783), poll-before-probe vẫn đếm mẫu sau khi probe (L507→L513-514), `get_process_start_time` trả None làm tắt so sánh lstart (L155), identity vẫn là substring (L151), 5 cleanup site không SIGKILL nhưng có thể re-signal qua site sau (L575→L598). Giờ đọc harness-dev.mjs, guard_evaluator.py, observer.py.
+
+`harness-dev.mjs` + `guard_evaluator.py` + `observer.py` xác nhận tiếp: record chỉ có MỘT timestamp (không start/exit interval), không hash binary Next, writer rename-nguyên-tử nhưng **không fsync** và **bắt lỗi** (L115-123); evaluator chỉ kiểm record **khi có** (L126-144), không correlate run/variant/PID/argv; guard hash trước import cải thiện thật nhưng import lại đọc path mutable (L258-259); observer fsync dir propagate đúng (L62-68); strict int/identity đã đóng R4-C05. Giờ đọc selfcheck-r5.py và test-launcher-mock.mjs để adjudicate test-reach (I02/I06).
+
+`selfcheck-r5.py` đọc xong — xác nhận chính xác intake I02/I06: test 35 poll `None→1` vẫn PASS (mẫu chỉ ràng buộc "sống tại instant poll", không phải suốt probe), test 44 opt-in trực tiếp không qua `main()`, FakeClock chỉ ở test 39, test 45/46 dùng bare `node` + substring "17 PASS / 0 FAIL", và phát hiện thêm của tôi: **test 30 (dir-fsync isolation) không cô lập được nhánh dir-fsync** vì mock `os.fsync` toàn cục chặn file-fsync tại observer L59 trước với cùng thông điệp. Giờ đọc test-launcher-mock.mjs và 3 proposal.
+
+Cập nhật tiến độ và hoàn tất phần evidence còn lại: r5-test-summary, credential scan, hai stdout, kết quả selfcheck, và xác minh 7 diff R4→R5 bằng so sánh line-set tự tính (chỉ-đọc, không ghi file).
+
+Bằng chứng owner corroborate xong: 46/46 + 17/17 khớp giữa stdout, results JSON và test-summary (có argv/cwd/exitCode/version transcripts cấp suite); credential scan tự khai `actualSecretScanEstablished: false` (trung thực). Giờ xác minh 7 diff R4→R5 bằng so sánh line-set tự tính với diff đã nộp.
+
+Cả 7 diff đều **DIFF_EXACT** — line-set thay đổi khớp tuyệt đối với diff tự tính từ hai bản pinned. Mọi xác minh chéo hoàn tất. Giờ kiểm tra collision lần cuối rồi viết ba file output.
+
+Cả ba path ABSENT, HEAD `a62d838` không đổi. Tạo thư mục QA và viết ba file output.
+
+Ba file đã ghi. Xác minh after-state: HEAD, tồn tại + kích thước 3 output, và re-hash inputs.json + hai manifest (after-verify theo yêu cầu).
+
+# Hoàn tất — R5 source review: `CHANGES_REQUIRED_SOURCE_ONLY + PROOF_BASIS_BLOCKED`, stage `BLOCKED_CONTRACT_NOT_BINDING`, runtime NOT_RELEASED
+
+Review độc lập đã xong. Cả bốn P1 intake observations **R5-I01..I04 đều CONFIRMED tại đúng dòng nguồn** — không thể trao source PASS; claim "lifecycle-bound proof" liên tục bị chặn nền tảng bằng chứng (PROOF_BASIS_BLOCKED); và CLI giao đúng như Codex preflight kết luận — **không thể tiêu thụ stage đã verify**, nên không bao giờ có READY_RUNTIME.
+
+## Kết quả adjudication R5-I01..I06 (tất cả CONFIRMED)
+
+- **I01 (P1)**: `coordinator.py:240,710` default `stage_receipt_required=False`, `main()` (:783) không truyền stage → CLI thật không bao giờ bật gate; receipt chỉ được check chuỗi `stageStatus=="VERIFIED"` (:309), không hash/realpath/binding; lỗi binding đi qua `PROBE_ERROR` thay vì typed `BINDING_ERROR`; `harness-dev.mjs:24-26,432-440` hard-code harness gốc; wrapper còn fallback PATH python3.
+- **I02 (P1)**: poll-before-probe là cải thiện thật (child chết → 0 mẫu, test 34/36 fail-closed) nhưng **thoát giữa lúc probe vẫn được đếm mẫu** (:513-514), không có timestamp/interval nào được giữ; **test 35 poll `None→1` vẫn PASS** — semantics được chấp nhận là sampling tại một instant, không phải interval sống liên tục ⇒ với claim never-listen liên tục tôi ghi **PROOF_BASIS_BLOCKED**, không bịa delay/retry/interval.
+- **I03 (P1)**: record launcher chỉ có MỘT timestamp, không hash binary Next, không trường variant/run → không thể correlate; ghi rename-nguyên-tử nhưng **không fsync** và **bắt lỗi**; evaluator chỉ check record *khi có*, chấp nhận record 4 trường của test 35.
+- **I04 (P1)**: `get_process_start_time` trả None → so sánh lstart bị tắt âm thầm (:155); identity vẫn substring; ps/lsof qua ambient PATH; 5 cleanup site có thật, **không SIGKILL**, nhưng site sau có thể re-SIGTERM sau khi wait fail; test không chạm Popen thật (an toàn giữ nguyên).
+- **I05/I06 (P2)**: hash-trước-import thật nhưng import đọc lại path mutable + module cache; test 44 opt-in trực tiếp (không qua `main`), FakeClock chỉ test 39, CLI adapter thật chưa được test (claim "CLI adapter execution" bị nói quá), test 45/46 dùng bare `node` + substring đếm.
+
+## Cải thiện thật đã ghi nhận (không tự phong closure)
+
+Strict int + identity bắt buộc trong evaluator; bỏ mẫu pre-flight bịa; spawnCalled được persist; observer fsync propagate; private HOME/TMPDIR; raising fakes; wrapper tests; caller sites 3/4. R4: **C01 CLOSED_SOURCE_ONLY** (class dead-child) nhưng NF-4 continuity PROOF_BASIS_BLOCKED; **C04 CLOSED**; C02/C03/C05, S2/S5/S6, NF-5 PARTIAL; NF-2/NF-6 giữ CLOSED.
+
+## Finding mới của tôi
+
+- **R5-Z01 (P3)**: §4 báo cáo Antigravity liệt kê SHA256 **stale cho 14/22 payload** (byte count khớp, 9 mục đầu khớp) — chuỗi provenance thật (manifest + 23 raw/export pairs) nguyên vẹn, cần errata.
+- **R5-Z02 (P3)**: test 30 "dir-fsync isolation" vô hiệu — mock `os.fsync` toàn cục chặn file-fsync trước với cùng message.
+- **R5-Z03 (P3)**: hai proposal chỉ định **schema receipt khác nhau** trong khi coordinator chỉ check `stageStatus` — contract không ràng buộc.
+- **R5-Z04 (P4)**: wrapper không-đối-số mặc định attempt dir vào raw evidence root.
+
+## Xác minh gói (độc lập, toàn khớp)
+
+18/18 pin trực tiếp; 22/22 payload R5 (**tổng đúng 332.773 bytes**); 22/22 baseline R4; **23/23 raw/export pairs**; **7/7 diff R4→R5 EXACT** (so line-set tự tính); không file lạ; guard pin `0f5f2453…` nhất quán qua receipt + payload + owner stdout; input drift AGENTS 8886→9171 đã dispositioned; 46/46 + 17/17 corroborate từ JSON/stdout (không replay). 51 formal results giữ nguyên; T11c `OUTCOME_UNKNOWN`; D-14 riêng; không gate nào được thông qua.
+
+## Đầu ra & giới hạn
+
+Ba file đã giao (kiểm collision trước khi ghi, HEAD `a62d838` bất biến): [inta-zcode-fe-r5-source-review.md](/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/reviews/inta-zcode-fe-r5-source-review.md), [review-inputs.json](/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/review-inputs.json), [checks-log.json](/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/checks-log.json). Tuyên bố độc lập: ZCode nonauthor (executor Antigravity ghi trong cả hai manifest), đã công bố 2 overlap lịch sử (review vòng trước + runtime driver stages), không có NEEDS_OTHER_REVIEWER.
+
+**Bỏ qua có chủ ý:** không chạy/import bất kỳ code nộp; không test/build/probe/signal (kể cả 0); không PG/Docker; không retry OpenCode hay đổi provider; không git stage/commit; không sửa canonical; không lặp audit 36 hàng/7 stages/BE02. **Rủi ro còn lại:** gate vẫn là sampled-absence cho đến khi có quyết định criterion; record launcher chưa correlate/độ bền; contract staging chưa ràng buộc; Z01 không được dùng làm nguồn pin. Codex tiếp nhận return qua human; báo cáo này không giao việc sửa cho Antigravity.

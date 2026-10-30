@@ -5,11 +5,12 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"io"
 	"sync"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // MemoryObjects is the in-memory port.ObjectStore used by the shared contract: content is
@@ -33,7 +34,7 @@ func (o *MemoryObjects) Count() int {
 func (o *MemoryObjects) Put(_ context.Context, m matter.MatterID, r io.Reader, maxBytes int64) (port.ObjectRef, error) {
 	b, err := io.ReadAll(io.LimitReader(r, maxBytes+1))
 	if err != nil {
-		return port.ObjectRef{}, err
+		return port.ObjectRef{}, fmt.Errorf("%w: %w", port.ErrObjectUnavailable, err)
 	}
 	if int64(len(b)) > maxBytes {
 		return port.ObjectRef{}, port.ErrObjectTooLarge
@@ -51,7 +52,26 @@ func (o *MemoryObjects) Open(_ context.Context, m matter.MatterID, sha string) (
 	b, ok := o.data[m.String()+"/"+sha]
 	o.mu.Unlock()
 	if !ok {
-		return nil, port.ErrObjectUnavailable
+		return nil, port.ErrObjectMissing
+	}
+	// Like the real adapters, never serve bytes that do not match their digest.
+	if sum := sha256.Sum256(b); hex.EncodeToString(sum[:]) != sha {
+		return nil, port.ErrObjectCorrupt
 	}
 	return io.NopCloser(bytes.NewReader(b)), nil
+}
+
+// Damage overwrites the stored bytes of (matter, sha) so they no longer match their digest
+// (test observation for the shared ObjectStore contract).
+func (o *MemoryObjects) Damage(m matter.MatterID, sha string) {
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	o.data[m.String()+"/"+sha] = []byte("tampered")
+}
+
+// Remove deletes the stored bytes of (matter, sha), as if the object had been lost.
+func (o *MemoryObjects) Remove(m matter.MatterID, sha string) {
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	delete(o.data, m.String()+"/"+sha)
 }

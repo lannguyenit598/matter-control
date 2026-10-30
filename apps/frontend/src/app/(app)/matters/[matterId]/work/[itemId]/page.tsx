@@ -1,3 +1,4 @@
+import { ArrowLeft, ListTodo } from 'lucide-react'
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
@@ -10,6 +11,7 @@ import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
 import { matterRepository } from '@/features/matters/repository'
+import { EvidenceBasis } from '@/features/proof/components/evidence-basis'
 import { ProofPanel } from '@/features/proof/components/proof-panel'
 import { proofRepository } from '@/features/proof/repository'
 import { DependencyPanel } from '@/features/work/components/dependency-panel'
@@ -49,6 +51,8 @@ async function WorkItem({
   const { matterId, itemId } = await params
   const raw = await searchParams
   const fromRaw = Array.isArray(raw.from) ? raw.from[0] : raw.from
+  const criterionRaw = Array.isArray(raw.criterion) ? raw.criterion[0] : raw.criterion
+  const criterionId = criterionRaw && criterionRaw.length <= 100 ? criterionRaw : undefined
   const gridPath = `/matters/${matterId}/work`
   // Back goes to where this record was opened from (another record, the grid with its filters,
   // My Actions...), never to a guess.
@@ -107,9 +111,11 @@ async function WorkItem({
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <Link href={from} className="underline">
-          <LocalizedText en="← Back" vi="← Quay lại" />
+          <ArrowLeft aria-hidden className="inline size-4 shrink-0" />{' '}
+          <LocalizedText en="Back" vi="Quay lại" />
         </Link>
         <Link href={gridPath} className="text-muted-foreground underline">
+          <ListTodo aria-hidden className="inline size-4 shrink-0" />{' '}
           <LocalizedText en="All work items" vi="Tất cả bản ghi công việc" />
         </Link>
       </div>
@@ -272,7 +278,22 @@ async function WorkItem({
                 }}
               />
             ) : (
-              <ReadFailure kind={proof.kind} retryHref={here} subject="proof" />
+              <ReadFailure kind={proof.kind} retryHref={here} subject="proof" partial />
+            )}
+            {proof.ok && (
+              <EvidenceBasis
+                checklist={proof.value.checklist}
+                docs={proof.value.details}
+                names={names}
+                selectedId={criterionId}
+                linkTo={(id) => {
+                  const base = `/matters/${matterId}/work/${itemId}`
+                  const qs = new URLSearchParams()
+                  if (fromRaw) qs.set('from', from)
+                  if (id) qs.set('criterion', id)
+                  return qs.size ? `${base}?${qs}` : base
+                }}
+              />
             )}
           </CardContent>
         </Card>

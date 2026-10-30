@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 
+import type { PickerResult } from '@/components/molecules/search-picker'
 import { requireSession } from '@/lib/auth'
 import { toMcFailure, type McActionResult } from '@/lib/mc/action-result'
 
@@ -10,6 +11,7 @@ import {
   createWorkspaceInputSchema,
   grantWorkspaceMemberInputSchema,
   revokeWorkspaceMemberInputSchema,
+  searchWorkspacePeopleInputSchema,
 } from './schemas'
 
 /*
@@ -65,5 +67,41 @@ export async function revokeWorkspaceMemberAction(input: unknown): Promise<McAct
     return { ok: true }
   } catch (error) {
     return toMcFailure(error)
+  }
+}
+
+/** The API returns at most this many people per query; reaching it means there may be more. */
+const PEOPLE_LIMIT = 20
+
+/**
+ * Read for the person picker. It is a Server Action only to give the client one authenticated,
+ * bounded read path (session first, Zod, repository): nothing here grants access, and the grant
+ * command re-authorizes. 404 is ambiguous by API design (directory off, or the workspace is no
+ * longer visible), so it is reported as `unavailable`, never as an empty result.
+ */
+export async function searchWorkspacePeopleAction(input: unknown): Promise<PickerResult> {
+  try {
+    await requireSession()
+    const parsed = searchWorkspacePeopleInputSchema.safeParse(input)
+    if (!parsed.success) return { status: 'invalid' }
+    const { items } = await workspaceRepository.candidates(
+      parsed.data.workspaceId,
+      parsed.data.query,
+    )
+    return {
+      status: 'ok',
+      options: items.map((p) => ({ value: p.userId, label: p.displayName })),
+      truncated: items.length >= PEOPLE_LIMIT,
+    }
+  } catch (error) {
+    const failure = toMcFailure(error)
+    if (failure.ok) return { status: 'error' }
+    if (failure.kind === 'validation') return { status: 'invalid' }
+    if (failure.kind === 'unauthenticated' || failure.kind === 'forbidden')
+      return { status: 'denied' }
+    return {
+      status:
+        failure.kind === 'not-found' || failure.kind === 'unavailable' ? 'unavailable' : 'error',
+    }
   }
 }

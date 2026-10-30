@@ -3,6 +3,8 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
@@ -34,10 +36,39 @@ export function CreateFilingForm({
   parties: Option[]
   members: Option[]
 }) {
+  const router = useRouter()
+  if (!requirements.length || !parties.length)
+    return (
+      <div className="flex flex-col gap-3 text-sm">
+        <p>
+          <LocalizedText
+            en="A filing needs a Requirement to serve and an external authority. Add the missing details first, then return here."
+            vi="Thủ tục cần gắn với một Yêu cầu và cơ quan phụ trách. Thêm thông tin còn thiếu rồi quay lại đây."
+          />
+        </p>
+        {!requirements.length && (
+          <Link className="control-target w-fit underline" href={`/matters/${matterId}/work`}>
+            <LocalizedText
+              en="Open Work, then choose Add work and Requirement"
+              vi="Mở Công việc, rồi chọn Thêm công việc và Yêu cầu"
+            />
+          </Link>
+        )}
+        {!parties.length && (
+          <Link className="control-target w-fit underline" href={`/matters/${matterId}/planning`}>
+            <LocalizedText
+              en="Add an authority under Planning"
+              vi="Thêm cơ quan phụ trách trong Kế hoạch"
+            />
+          </Link>
+        )}
+      </div>
+    )
   return (
     <IntentForm
       receipted
       draftKey={`matter:${matterId}:new-filing`}
+      onSuccess={(r) => r.id && router.push(`/matters/${matterId}/filings/${r.id}`)}
       submitLabel={<LocalizedText en="Create filing" vi="Tạo thủ tục" />}
       run={(v, key) =>
         createFilingAction({

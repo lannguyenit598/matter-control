@@ -1,0 +1,234 @@
+{
+  "task": "MC-P0-ZCODE-DESIGN-R2-COORDINATION-INTAKE",
+  "actor": "Actual Codex / Local Codex",
+  "recorded_at": "2026-10-27T00:28:42.988256+00:00",
+  "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "mode": "READ_HASH_PARSE_DOCUMENT_ONLY",
+  "status": "R2_INTEGRITY_AND_CONTRACT_INTEGRATION_CONFIRMED_WITH_NARROW_CONTINUATION_NOTES",
+  "inputs": [
+    {
+      "path": "docs/design/p0-handoff-r2/return.md",
+      "bytes": 34372,
+      "sha256": "4eb3ed8b56304e0740bebca65cf839e2c98c279f3afd36047beed4613b7e7237"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/local-contract.md",
+      "bytes": 14608,
+      "sha256": "8fe1199897a4927941079f986c24527c0f95c7d0c06e3c732e0b71a15f5a8ec5"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/workboard.json",
+      "bytes": 49498,
+      "sha256": "7dcdae43de084eb75455915520984ec6aab11965245ad4c8f3f9d9405705a1bf"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/w1-implementation-notes.md",
+      "bytes": 9006,
+      "sha256": "96cbbe84baf19733b7613f536818ab59338a8d765779360e1a0072329c262678"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-end-to-end-execution-plan.md",
+      "bytes": 23598,
+      "sha256": "d4809bc50b50e9948ee877612e5ba4ae3ad842772797fe72e0bb189d8378f1b3"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-P0-ZCODE-END-TO-END-PROMPT.md",
+      "bytes": 14511,
+      "sha256": "16ede916e9fc5393c3374ec0fbf43579a28ed7277af01be726d9d5b6c17dc94a"
+    }
+  ],
+  "r2_payload_checks": [
+    {
+      "path": "docs/design/p0-handoff-r2/current-ux-spec.md",
+      "bytes": 42136,
+      "sha256": "348db0556a612fab7e032da2c039fe31c8321635194852ba0cf8b5fb4d0ed702",
+      "declared_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r2/design-delta.md",
+      "bytes": 8493,
+      "sha256": "f1f1ee7a638de2ce34e8ad7bad98a8c4b76979ce18d453a6dcfd675d10aee336",
+      "declared_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r2/findings-disposition.json",
+      "bytes": 50123,
+      "sha256": "a62e6f32842475cb2c3571cb48150317b5f1aa6c77a07269d72780cd3faf13f2",
+      "declared_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r2/polish.css",
+      "bytes": 7718,
+      "sha256": "9ff8deeb5e25e166c3a2f509d349baca3c245ca6c159a74a107b7fa0bc539b37",
+      "declared_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r2/prototype.html",
+      "bytes": 45557,
+      "sha256": "27dc7b748bc3a5f910c31f99d1dca915db876d865af1e4ad892d88789c11b4f5",
+      "declared_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r2/screen-state-matrix.json",
+      "bytes": 41690,
+      "sha256": "3faaf353ff9b4d4262c553f7d84216b2b0d473d763254cf88d49c322e0220963",
+      "declared_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r2/validation-plan.md",
+      "bytes": 24601,
+      "sha256": "3b91d36184f8c01a485a834ccf87e05e74c175908df420aae1ab1418b74152ad",
+      "declared_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r2/zcode-handoff.md",
+      "bytes": 12899,
+      "sha256": "5e862886b324ab52c862d6bbeb72b59268a904cf0b203814e28dcc044a6b318e",
+      "declared_match": true
+    }
+  ],
+  "r2_return_comparison": "Full hash matches workboard declaration; user message supplied abbreviated prefix only.",
+  "contract_comparison": "Full hash matches step0.local_contract revision2; two reported catalogue additions present.",
+  "source_acceptance": "NOT_AWARDED; no full semantic, architecture or implementation review performed",
+  "design_authorship_observed": "R2 return identifies actual Codex / Local Codex author; not independent visual acceptance by this intake",
+  "workboard_snapshot": {
+    "status": "IN_PROGRESS_STEP0_DONE_W1_STARTING",
+    "waves": [
+      {
+        "id": "P0-W1",
+        "status": "IN_PROGRESS_W1_BACKEND_NOT_STARTED",
+        "author_checkpoint": "STEP0_DONE: baseline manifest 464 files pinned (1e937f7a…); contract v1 frozen (sha 5c08a03467f816be…); ZITADEL provisioned + pinned; W1 backend implementation starting",
+        "external_review_required_before_next_wave": false,
+        "evidence": [
+          {
+            "path": "ops/p0-local/runtime/provisioning.json",
+            "kind": "identity_provisioning_receipt"
+          }
+        ],
+        "resume_sheet": "docs/implementation/p0-zcode-execution/w1-implementation-notes.md",
+        "design_baseline": "R2 revision MC-P0-DESIGN-R2-local-20261027-01 (source proposal; visual/semantic acceptance separate)"
+      },
+      {
+        "id": "P0-W2",
+        "status": "NOT_STARTED",
+        "author_checkpoint": null,
+        "external_review_required_before_next_wave": false,
+        "evidence": []
+      },
+      {
+        "id": "P0-W3",
+        "status": "NOT_STARTED",
+        "author_checkpoint": null,
+        "external_review_required_before_next_wave": false,
+        "evidence": []
+      },
+      {
+        "id": "P0-W4",
+        "status": "NOT_STARTED",
+        "author_checkpoint": null,
+        "external_review_required_before_next_wave": false,
+        "evidence": []
+      },
+      {
+        "id": "P0-W5",
+        "status": "NOT_STARTED",
+        "author_checkpoint": null,
+        "external_review_required_before_next_wave": false,
+        "evidence": []
+      },
+      {
+        "id": "P0-W6",
+        "status": "NOT_STARTED",
+        "author_checkpoint": null,
+        "external_review_required_before_next_wave": false,
+        "evidence": []
+      },
+      {
+        "id": "P0-W7",
+        "status": "NOT_STARTED",
+        "author_checkpoint": null,
+        "external_review_required_before_next_wave": false,
+        "evidence": []
+      }
+    ],
+    "top_level_local_contract": null,
+    "canonical_step0_local_contract": {
+      "path": "docs/implementation/p0-zcode-execution/local-contract.md",
+      "revision": 2,
+      "sha256": "8fe1199897a4927941079f986c24527c0f95c7d0c06e3c732e0b71a15f5a8ec5",
+      "revision2_reason": "R2 W1 consumer contract integration: accessible-matter list + BFF session-currentness endpoints"
+    },
+    "local_oidc": {
+      "provider": "ZITADEL self-hosted local",
+      "status": "PO_SELECTED_LOCAL_PENDING_PROVISIONING",
+      "receipt": "docs/implementation/p0-zcode-execution/local-identity-approval.json",
+      "actual_issuer": null,
+      "production_identity": "NOT_SELECTED"
+    }
+  },
+  "coordination_notes": [
+    {
+      "id": "W1-C01",
+      "scope": "Before BFF auth implementation",
+      "issue": "Contract mixes server-only token requirement and encrypted JWE cookie; require explicit opaque-handle/server-side-token storage."
+    },
+    {
+      "id": "W1-C02",
+      "scope": "Resume checklist and contract wording",
+      "issue": "Include new accessible-Matter-list/BFF-session operations in implementation reach; do not call additive routes no wire change."
+    },
+    {
+      "id": "W1-C03",
+      "scope": "Auth evidence classification",
+      "issue": "Client-credentials introspection probe is not human PKCE/login proof; no surrogate human acceptance from seeded machine subject."
+    },
+    {
+      "id": "W1-C04",
+      "scope": "Owner-maintained checkpoint",
+      "issue": "Canonical step0 contract is v2 but other fields say v1/null and local IdP top-level pending conflicts with owner provisioning narrative. Reconcile owner receipt, no repeated provisioning."
+    }
+  ],
+  "execution_boundary": {
+    "no_new_per_wave_review_hold": true,
+    "continues": "W1 backend+frontend author checks, then W2-W7",
+    "active_owner_files_modified": false,
+    "reviewed_material_executed": false,
+    "private_runtime_files_read": false,
+    "network_docker_http_sql_probes": false,
+    "external_agent_message": false,
+    "git_mutation": false
+  },
+  "output_prompt": {
+    "path": "docs/implementation/handoffs/MC-P0-ZCODE-W1-CONTINUATION-NOTES.md",
+    "bytes": 5613,
+    "sha256": "44748eabb3af3fc3e9cc05d0f58f8de4d953c2ed3e1b7c90fa70cdedeb155b27"
+  },
+  "closing_input_checks": [
+    {
+      "path": "docs/design/p0-handoff-r2/return.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/local-contract.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/workboard.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/w1-implementation-notes.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-end-to-end-execution-plan.md",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-P0-ZCODE-END-TO-END-PROMPT.md",
+      "unchanged": true
+    }
+  ],
+  "inputs_stable": true
+}

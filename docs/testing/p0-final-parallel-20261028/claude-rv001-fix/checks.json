@@ -1,0 +1,86 @@
+{
+  "checks": [
+    {
+      "id": "T-RED",
+      "what": "regression cases added first (paths.test.ts, flow.test.ts) against the unfixed source",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "src/lib/mc/paths.test.ts",
+        "src/lib/oidc/flow.test.ts"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T15:09:32Z",
+      "end_utc": "2026-10-28T15:09:35Z",
+      "exit": "non-zero (exit code not captured; vitest reported failures)",
+      "counts": "13 failed / 77 passed (90). Failing: 6 safeInternalPath fallback cases, 6 safeReturnTo fallback cases, 1 resolveReturnTo origin test. Passing at the same time: the new normal dot-segment keep cases."
+    },
+    {
+      "id": "T-GREEN",
+      "what": "same command after the fix",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "src/lib/mc/paths.test.ts",
+        "src/lib/oidc/flow.test.ts"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T15:09:47Z",
+      "end_utc": "2026-10-28T15:09:49Z",
+      "exit": "0 (vitest reported pass; exit code not captured)",
+      "counts": "2 files, 90/90 passed"
+    },
+    {
+      "id": "P-REAL",
+      "what": "real paths.ts executed on the original trigger and ordinary paths after the fix",
+      "argv": [
+        "node",
+        "--experimental-strip-types",
+        "real2.mjs"
+      ],
+      "result": "/..//evil.test, /x/..//evil.test, /a/../..//evil.test, /..///evil.test, /%2e%2e//evil.test, /.//evil.test all return the fallback; /matters/1/work?execution=WAITING&q=spa, /my-actions, /a/b/../c?x=1 (-> /a/c?x=1), /a/./b (-> /a/b), /a%2F%2Fb unchanged",
+      "exit": 0,
+      "note": "probe script is in the Claude scratchpad, not the repo; flow.ts is covered by T-GREEN because it could not be loaded under strip-only mode"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "check"
+      ],
+      "start": "2026-10-28T15:10:09.904501+00:00",
+      "end": "2026-10-28T15:11:03.657493+00:00",
+      "exit": 0,
+      "id": "G-CHECK",
+      "what": "pnpm check (typecheck, eslint, prettier, vitest, agents:check)",
+      "cwd": "apps/frontend",
+      "counts": "48 files, 482/482 passed"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "build"
+      ],
+      "start": "2026-10-28T15:11:03.753152+00:00",
+      "end": "2026-10-28T15:11:07.466638+00:00",
+      "exit": 0,
+      "id": "G-BUILD",
+      "what": "pnpm build (Next.js 16.4.2 Turbopack)",
+      "cwd": "apps/frontend",
+      "result": "Compiled successfully; no host limitation hit"
+    }
+  ],
+  "not_run": [
+    "Storybook and webpack build (no shared component or route changed)",
+    "backend gates (no backend byte changed)",
+    "Playwright e2e, browser, hosted IdP, rendering of the work-item page (needs a session)"
+  ],
+  "logs": "gate logs live only in the Claude scratchpad (final-hardening/rv-check, rv-build)"
+}

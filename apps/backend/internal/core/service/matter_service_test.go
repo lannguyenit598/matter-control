@@ -13,12 +13,12 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol"
-	"github.com/example/userapi/internal/adapter/outbound/system"
-	"github.com/example/userapi/internal/core/domain"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
-	"github.com/example/userapi/internal/core/service"
+	"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol"
+	"leonx.me/matter-control/internal/adapter/outbound/system"
+	"leonx.me/matter-control/internal/core/domain"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
+	"leonx.me/matter-control/internal/core/service"
 )
 
 // Deterministic world fixtures.

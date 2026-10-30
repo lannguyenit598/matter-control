@@ -1,0 +1,40 @@
+{
+  "reviewer": "OpenCode independent QA (actual OpenCode, GLM via opencode harness)",
+  "updated_utc": "2026-10-30T04:05:00Z",
+  "stage": "A",
+  "note": "Per-case results recorded here against master cases.csv (81 execution rows + PIN-01..04). IDs and expectations unchanged; full raw evidence under commands/ and qa-probes/.",
+  "cases": [
+    {
+      "case_id": "PIN-01",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "identity.json records actual OpenCode independent QA (no ZCode/Claude/Codex impersonation), provider/model captured unchanged; author-overlap probe (static) ran: no 'opencode'-authored product .go files found in apps/backend/internal",
+      "execution_ref": "identity.json + author-overlap-probe.json (pending append)",
+      "source_pin": "repo 20feedbf + dirty source frozen in snapshot-manifest.json"
+    },
+    {
+      "case_id": "PIN-02",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "151 pin rows rehashed (47 prep/input pins + 40 source members + 64 outputs members): 148 OK, 3 MISMATCH with exact paths and dispositions (ADR-006 doc drift; pre-disclosed entry-route.test.ts delta; undisclosed apps/frontend/.gitignore change). Two consecutive rehash runs stable (no further movement). Snapshot checksum re-copy verification: 0 files differing.",
+      "execution_ref": "rehash-pins-run1.json + rehash-pins.json + snapshot-boundary.json",
+      "source_pin": "snapshot-manifest.json (809 files, byte_total 8831134)"
+    },
+    {
+      "case_id": "PIN-03",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "Snapshot at /private/tmp (0700 tree root, private/ 0600 files); post-copy assertions: no .env/.env.local/.dev.vars/node_modules present; .env.local exists only in live tree and was excluded without reading its content; docker fixture bound to 127.0.0.1 only.",
+      "execution_ref": "snapshot-boundary.json + fixture-identity.json",
+      "source_pin": "work-dir.txt"
+    },
+    {
+      "case_id": "BE-01",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "make check exit 0 in 101s with owned fixture DSN: sqlc-check generated-query diff clean (no regeneration to force pass), gofmt clean, go mod tidy -diff clean, golangci-lint '0 issues', go test -race -count=1 all packages ok including postgres suite 88s (PG tests executed with DSN — unlike author's no-DSN make check).",
+      "execution_ref": "commands/backend-check/{stdout.final,stderr.final,meta.json}",
+      "source_pin": "snapshot apps/backend"
+    }
+  ]
+}

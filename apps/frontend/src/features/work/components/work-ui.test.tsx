@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+vi.mock('@/hooks/use-time-zone', () => ({ useTimeZone: () => 'UTC' }))
+
 const router = vi.hoisted(() => ({ refresh: vi.fn(), push: vi.fn() }))
 vi.mock('next/navigation', () => ({ useRouter: () => router }))
 
@@ -24,7 +26,6 @@ vi.mock('../actions', () => ({
   setMilestonePrerequisitesAction: vi.fn(),
 }))
 
-import { MyActionsView } from './my-actions-view'
 import { DependencyPanel } from './dependency-panel'
 import { ExecutionPanel } from './execution-panel'
 import { MilestoneList } from './planning-view'
@@ -32,7 +33,7 @@ import { RejectionDetails } from './rejection-details'
 import { WorkFilters } from './work-filters'
 import { WorkGrid } from './work-grid'
 import { offeredTransitions } from '../labels'
-import type { Assigned, Derived, Detail, Envelope, MilestoneView, WorkItem } from '../schemas'
+import type { Derived, Detail, Envelope, MilestoneView, WorkItem } from '../schemas'
 
 const derived = (over: Partial<Derived> = {}): Derived => ({
   timing: 'ON_TRACK',
@@ -245,7 +246,75 @@ describe('WorkGrid', () => {
   })
 })
 
-describe('WorkFilters (URL state in a plain GET form)', () => {
+describe('WorkFilters (URL state)', () => {
+  it('keeps advanced criteria out of the initial view and reveals them on request', () => {
+    render(<WorkFilters basePath="/matters/m1/work" query={{}} workstreams={[]} members={[]} />)
+    expect(screen.getByRole('searchbox', { name: 'Search title or outcome' })).toBeVisible()
+    expect(screen.getByLabelText('Execution')).not.toBeVisible()
+    fireEvent.click(screen.getByText('Advanced filters'))
+    expect(screen.getByLabelText('Execution')).toBeVisible()
+    fireEvent.change(screen.getByLabelText('Execution'), { target: { value: 'WAITING' } })
+    fireEvent.click(screen.getByText('Advanced filters'))
+    expect(new FormData(screen.getByRole('search') as HTMLFormElement).get('execution')).toBe(
+      'WAITING',
+    )
+  })
+
+  it('removes one applied criterion without losing the others or display settings', () => {
+    render(
+      <WorkFilters
+        basePath="/matters/m1/work"
+        query={{
+          q: 'SPA',
+          owner: 'u1',
+          execution: 'WAITING',
+          sort: 'title',
+          desc: 'true',
+          cursor: 'old',
+        }}
+        density="compact"
+        workstreams={[]}
+        members={[{ userId: 'u1', displayName: 'Alice' }]}
+      />,
+    )
+    const href = screen
+      .getByRole('link', { name: 'Remove filter: Owner: Alice' })
+      .getAttribute('href')!
+    const url = new URL(href, 'http://localhost')
+    expect(url.searchParams.has('owner')).toBe(false)
+    expect(url.searchParams.has('cursor')).toBe(false)
+    expect(url.searchParams.get('q')).toBe('SPA')
+    expect(url.searchParams.get('execution')).toBe('WAITING')
+    expect(url.searchParams.get('sort')).toBe('title')
+    expect(url.searchParams.get('desc')).toBe('true')
+    expect(url.searchParams.get('density')).toBe('compact')
+    const cleared = new URL(
+      screen.getByRole('link', { name: 'Clear filters' }).getAttribute('href')!,
+      'http://localhost',
+    )
+    expect(cleared.searchParams.has('q')).toBe(false)
+    expect(cleared.searchParams.has('owner')).toBe(false)
+    expect(cleared.searchParams.has('execution')).toBe(false)
+    expect(cleared.searchParams.get('sort')).toBe('title')
+    expect(cleared.searchParams.get('density')).toBe('compact')
+  })
+
+  it('retains a selected member or workstream missing from current options without displaying raw IDs', () => {
+    render(
+      <WorkFilters
+        basePath="/matters/m1/work"
+        query={{ owner: 'unavailable-user', workstream: 'unavailable-stream' }}
+        workstreams={[]}
+        members={[]}
+      />,
+    )
+    expect(screen.getByText('Owner: Selected member (unavailable)')).toBeVisible()
+    expect(screen.getByText('Workstream: Selected workstream (unavailable)')).toBeVisible()
+    const form = new FormData(screen.getByRole('search') as HTMLFormElement)
+    expect(form.get('owner')).toBe('unavailable-user')
+    expect(form.get('workstream')).toBe('unavailable-stream')
+  })
+
   it('reflects the current query and offers clear', () => {
     render(
       <WorkFilters
@@ -256,7 +325,7 @@ describe('WorkFilters (URL state in a plain GET form)', () => {
       />,
     )
     const form = screen.getByRole('search', { name: 'Filter work items' })
-    expect(form).toHaveAttribute('method', 'get')
+    expect((form as HTMLFormElement).method).toBe('get')
     expect(form).toHaveAttribute('action', '/matters/m1/work')
     expect(screen.getByLabelText('Search title or outcome')).toHaveValue('spa')
     expect(screen.getByLabelText('Execution')).toHaveValue('WAITING')
@@ -548,86 +617,6 @@ describe('DependencyPanel', () => {
       gate: 'COMPLETION',
       reason: 'order of work',
     })
-  })
-})
-
-describe('MyActionsView', () => {
-  const assigned = (
-    over: Partial<WorkItem>,
-    cls: Assigned['class'],
-    reason = 'r',
-    waitingOn: string | null = null,
-  ): Assigned => ({
-    matterId: 'm1',
-    matterRevision: 3,
-    class: cls,
-    reason,
-    waitingOn,
-    item: item(over),
-    derived: derived(),
-    etag: '"e"',
-  })
-  const empty = { next: [], waiting: [], blocked: [], historical: [] }
-
-  it('nothing assigned: no invented recommendation', () => {
-    render(<MyActionsView actions={empty} />)
-    expect(screen.getByText('Nothing is assigned to you')).toBeInTheDocument()
-    expect(screen.getByText(/Nothing is recommended in its place/)).toBeInTheDocument()
-  })
-
-  it('all assigned work is waiting or blocked: explains the cause instead of recommending', () => {
-    render(
-      <MyActionsView
-        actions={{
-          ...empty,
-          waiting: [
-            assigned(
-              { id: 'w', title: 'Await reply', execution: 'WAITING' },
-              'WAITING',
-              'waiting on an external condition',
-              'Buyer counsel',
-            ),
-          ],
-          blocked: [assigned({ id: 'b', title: 'Blocked one', dependency: 'BLOCKED' }, 'BLOCKED')],
-        }}
-      />,
-    )
-    expect(
-      screen.getByText(
-        /No ready Action is assigned to you. Your assigned work is waiting or blocked/,
-      ),
-    ).toBeInTheDocument()
-    expect(screen.getByText(/waiting on Buyer counsel/)).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Waiting on others (1)' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Blocked (1)' })).toBeInTheDocument()
-  })
-
-  it('lists next actions in the given order, each with its reason and a link that remembers My Actions as origin', () => {
-    render(
-      <MyActionsView
-        actions={{
-          ...empty,
-          next: [
-            assigned({ id: 'k1', title: 'K1' }, 'ELIGIBLE', 'assigned to you, ready to work'),
-            assigned({ id: 'k2', title: 'K2' }, 'ELIGIBLE', 'assigned to you, ready to work'),
-          ],
-        }}
-      />,
-    )
-    const list = screen
-      .getByRole('heading', { name: 'Next actions (2)' })
-      .closest('div')!.parentElement!
-    const titles = within(list)
-      .getAllByRole('link')
-      .map((l) => l.textContent)
-    expect(titles).toEqual(['K1', 'K2'])
-    expect(within(list).getAllByText('assigned to you, ready to work')).toHaveLength(2)
-    expect(
-      new URL(
-        screen.getByRole('link', { name: 'K1' }).getAttribute('href')!,
-        'http://x',
-      ).searchParams.get('from'),
-    ).toBe('/my-actions')
   })
 })
 

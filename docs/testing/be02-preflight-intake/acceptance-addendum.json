@@ -1,0 +1,60 @@
+{
+  "task": "MC-BE-02-PREP",
+  "base_cases": "docs/testing/be02-preparation/acceptance-cases.json retained unchanged",
+  "additional_cases": [
+    {
+      "id": "BE02-T25",
+      "name": "Path canonicalization fingerprint vector",
+      "trigger": "Percent-encoded/case-variant/raw-path forms representing candidate canonical UUIDs",
+      "expected": "Explicitly decided normalization/rejection happens before fingerprinting; equal accepted canonical inputs hash equally, rejected forms do not reach the service. No implicit URI policy adoption.",
+      "requires": [
+        "BG-04"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null
+    },
+    {
+      "id": "BE02-T26",
+      "name": "Product media type and charset matrix",
+      "trigger": "application/json with charset, missing/wrong Content-Type, unsupported charset and valid versus malformed body",
+      "expected": "The corrected explicit media-type/JSON/schema precedence matrix determines one result per combination, with native behavior unchanged.",
+      "requires": [
+        "BG-04",
+        "BG-02"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null
+    },
+    {
+      "id": "BE02-T27",
+      "name": "Pending boundary refusal over HTTP",
+      "trigger": "Seeded due next_boundary_at then authorized create",
+      "expected": "If the proposed product503 mapping is accepted, ErrBoundaryDue surfaces as unavailable with no receipt/mutation/fence advancement; preserve pending boundary and privacy-safe body. This plan does not approve retry policy or503 mapping.",
+      "requires": [
+        "BG-06",
+        "BG-02"
+      ],
+      "status": "NOT_RUN",
+      "evidence": null
+    }
+  ],
+  "additional_assertions": {
+    "BE02-T13/BE02-T14": [
+      "Do not infer original wire-byte preservation from JSONB",
+      "Specify first response and replay byte fidelity under supported encoder versions",
+      "Legacy unversioned persistence DTO remains readable without public RequestHash leakage"
+    ],
+    "BE02-T21": [
+      "Envelope metadata inside body still participates in representation",
+      "Defined provenance headers consumed by relevant client; no frontend support claimed without change/test"
+    ],
+    "BE02-T07/BE02-T26": [
+      "Wrong-type/content-type rows follow one explicit matrix"
+    ],
+    "BE02-T02/BE02-T03/BE02-T24": [
+      "HTTP headers do not enter core identity contract; fake principal injection unavailable from product env/config"
+    ]
+  },
+  "existing_CT_INTA_ids_changed": false,
+  "runtime": "NOT_RUN"
+}

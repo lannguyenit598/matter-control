@@ -1,5 +1,5 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import { CloudOff, LockKeyhole, SearchX, TriangleAlert } from 'lucide-react'
+import { CloudOff, LockKeyhole, LogIn, RefreshCw, SearchX, TriangleAlert } from 'lucide-react'
 import Link from 'next/link'
 
 import { buttonVariants } from '@/components/atoms/button'
@@ -13,12 +13,20 @@ export type ReadFailureProps = {
   retryHref?: string
   /** Shown for not-found, e.g. "workspace". */
   subject?: string
+  /**
+   * A section of a page the user can still read (a role-limited or sub-resource read): its
+   * denial is not a loss of the page's scope, so it keeps drafts. An ended session is never
+   * partial. Default is a primary read.
+   */
+  partial?: boolean
 }
 
 /** One truthful state per read failure: never an empty list, a zero, or a spinner that never ends. */
-export function ReadFailure(props: ReadFailureProps) {
-  // The right to see this ended (or the session did): keep no draft typed under it.
-  const lost = props.kind === 'sign-in' || props.kind === 'forbidden' || props.kind === 'not-found'
+export function ReadFailure({ partial, ...props }: ReadFailureProps) {
+  // The session ended, or a primary read was denied (the right to see this ended): keep no draft.
+  const lost =
+    props.kind === 'sign-in' ||
+    (!partial && (props.kind === 'forbidden' || props.kind === 'not-found'))
   return (
     <>
       {lost && <PurgeDrafts />}
@@ -45,6 +53,7 @@ function ReadFailureState({ kind, retryHref, subject = 'item' }: ReadFailureProp
               href={`/login${retryHref ? `?returnTo=${encodeURIComponent(retryHref)}` : ''}`}
               className={buttonVariants()}
             >
+              <LogIn aria-hidden />
               <LocalizedText en="Sign in" vi="Đăng nhập" />
             </Link>
           }
@@ -85,6 +94,7 @@ function ReadFailureState({ kind, retryHref, subject = 'item' }: ReadFailureProp
           action={
             retryHref ? (
               <Link href={retryHref} className={buttonVariants({ variant: 'outline' })}>
+                <RefreshCw aria-hidden />
                 <LocalizedText en="Try again" vi="Thử lại" />
               </Link>
             ) : undefined

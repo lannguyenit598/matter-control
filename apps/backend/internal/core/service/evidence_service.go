@@ -12,9 +12,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/policy"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/policy"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // EvidenceService implements the W3 use cases: documents with immutable versions and explicit
@@ -68,6 +68,14 @@ func (s *WorkService) createdReceipt(ctx context.Context, env *workEnv, actor ma
 		return matter.CreatedResult{}, err
 	}
 	if err == nil {
+		if err := authorizeReceiptScope(ctx, env.tx, actor, rcpt); err != nil {
+			env.replayHidden = errors.Is(err, port.ErrNotFound)
+			return matter.CreatedResult{}, err
+		}
+		if rcpt.ScopeKind != matter.ScopeMatter || rcpt.WorkspaceID != env.header.WorkspaceID ||
+			rcpt.MatterID == nil || *rcpt.MatterID != env.header.MatterID {
+			return matter.CreatedResult{}, port.ErrIdempotencyKeyReuse
+		}
 		if rcpt.Kind != matter.SnapshotCreated || rcpt.CreatedSnapshot == nil {
 			return matter.CreatedResult{}, matter.ErrSnapshotKind
 		}
@@ -1388,9 +1396,44 @@ func (s *EvidenceService) OpenVersion(ctx context.Context, q port.VersionContent
 	}
 	rc, err := s.objects.Open(ctx, mid, ver.SHA256)
 	if err != nil {
+		s.reportContentIncident(ctx, mid, ver.SHA256, err)
 		return matter.DocumentVersion{}, nil, fmt.Errorf("open version content: %w", err)
 	}
-	return ver, rc, nil
+	// A damaged object is only found while reading, after the response has started.
+	return ver, &incidentReader{ReadCloser: rc, report: func(err error) { s.reportContentIncident(ctx, mid, ver.SHA256, err) }}, nil
+}
+
+// reportContentIncident logs, at error level, content the store says is missing or damaged. The
+// record exists but its bytes do not: an integrity incident an operator must hear about, unlike a
+// store that is merely down (which the caller already retries). Only the matter and the digest are
+// logged: no file name, no actor, no content.
+func (s *EvidenceService) reportContentIncident(ctx context.Context, m matter.MatterID, sha256 string, err error) {
+	var problem string
+	switch {
+	case errors.Is(err, port.ErrObjectMissing):
+		problem = "missing"
+	case errors.Is(err, port.ErrObjectCorrupt):
+		problem = "corrupt"
+	default:
+		return
+	}
+	s.w.logger.ErrorContext(ctx, "document content integrity incident", "matter", m.String(), "sha256", sha256, "problem", problem)
+}
+
+// incidentReader reports the first read failure once, however often the caller reads again.
+type incidentReader struct {
+	io.ReadCloser
+	report   func(error)
+	reported bool
+}
+
+func (r *incidentReader) Read(p []byte) (int, error) {
+	n, err := r.ReadCloser.Read(p)
+	if err != nil && !errors.Is(err, io.EOF) && !r.reported {
+		r.reported = true
+		r.report(err)
+	}
+	return n, err
 }
 
 func (s *EvidenceService) ProofChecklist(ctx context.Context, q port.SubjectQuery) (matter.ProofChecklist, error) {

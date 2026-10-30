@@ -9,6 +9,8 @@ import { randomBytes } from 'node:crypto'
  * swappable behind these functions.
  */
 export type SessionRecord = {
+  /** Server-only identity for durable pending-command storage; never returned by the session route. */
+  sessionHandle?: string
   /** Issuer subject. Display/identity only; it grants nothing. */
   sub: string
   name: string

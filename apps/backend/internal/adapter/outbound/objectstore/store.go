@@ -17,8 +17,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 var shaRe = regexp.MustCompile(`^[0-9a-f]{64}$`)
@@ -99,7 +99,8 @@ func (s *Store) Put(_ context.Context, m matter.MatterID, r io.Reader, maxBytes 
 }
 
 // Open returns the content, verifying the digest at EOF: a corrupted object ends the read with
-// port.ErrObjectUnavailable instead of being served as if it were the recorded version.
+// port.ErrObjectCorrupt (an ErrObjectUnavailable) instead of being served as if it were the
+// recorded version; absent bytes are port.ErrObjectMissing.
 func (s *Store) Open(_ context.Context, m matter.MatterID, sum string) (io.ReadCloser, error) {
 	if !shaRe.MatchString(sum) {
 		return nil, port.ErrObjectUnavailable
@@ -108,7 +109,7 @@ func (s *Store) Open(_ context.Context, m matter.MatterID, sum string) (io.ReadC
 	f, err := s.root.Open(p)
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
-			return nil, port.ErrObjectUnavailable
+			return nil, port.ErrObjectMissing
 		}
 		return nil, fmt.Errorf("%w: %w", port.ErrObjectUnavailable, err)
 	}
@@ -116,7 +117,7 @@ func (s *Store) Open(_ context.Context, m matter.MatterID, sum string) (io.ReadC
 }
 
 type verifying struct {
-	f *os.File
+	f io.ReadCloser
 	h interface {
 		io.Writer
 		Sum([]byte) []byte
@@ -128,7 +129,7 @@ func (v *verifying) Read(p []byte) (int, error) {
 	n, err := v.f.Read(p)
 	_, _ = v.h.Write(p[:n]) // skip: hash.Hash.Write never fails
 	if errors.Is(err, io.EOF) && hex.EncodeToString(v.h.Sum(nil)) != v.want {
-		return n, fmt.Errorf("%w: checksum mismatch", port.ErrObjectUnavailable)
+		return n, port.ErrObjectCorrupt
 	}
 	return n, err
 }

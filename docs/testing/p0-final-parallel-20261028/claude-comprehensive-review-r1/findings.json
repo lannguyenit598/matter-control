@@ -1,0 +1,136 @@
+{
+  "task": "MC-P0 comprehensive source review and fix pass",
+  "findings": [
+    {
+      "id": "CR-001",
+      "severity": "P2",
+      "status": "FIXED",
+      "area": "frontend error mapping, W6 import",
+      "title": "An unreadable spreadsheet showed \"Something went wrong\"",
+      "evidence": "Backend maps port.ErrSheetInvalid to 400 urn:mc:bad-request with a fixable message (problems.go:60-61, data_server_test.go). importPreviewAction passed every error to toMcFailure, whose default branch logs console.error and returns kind \"error\" / \"Something went wrong. Please try again.\" (action-result.ts default).",
+      "requirement": "contract rev 12 section 2.7 (import limits/atomicity), local-contract section 3 problem codes; R9 error presentation (state, not a generic fault)",
+      "callers": "ImportSection preview path (import-section.tsx r.error); importCommitAction left unchanged on purpose: it carries a previously previewed file, so a 400 there is ambiguous (missing plan fields would be a frontend bug).",
+      "regression": "src/test/data-transfer-seam.test.ts \"an unreadable spreadsheet at the import seam\": red before (kind \"error\"), green after",
+      "fix": "importPreviewAction returns kind \"validation\" with fieldErrors.file for McError code \"bad-request\"",
+      "changed_paths": [
+        "apps/frontend/src/features/data-transfer/actions.ts",
+        "apps/frontend/src/test/data-transfer-seam.test.ts"
+      ],
+      "sha256_after": {
+        "apps/frontend/src/features/data-transfer/actions.ts": "807ff73a7fe5aa1f5a698f321764c2408ce01f0c610dae4782af6b0efddae1b2",
+        "apps/frontend/src/test/data-transfer-seam.test.ts": "3a2b977b8d2ce582f34f55b9499d1d9dcc3130769328b5c355dd1f1d77a9f008"
+      }
+    },
+    {
+      "id": "CR-002",
+      "severity": "P2",
+      "status": "DECISION_REQUIRED",
+      "area": "frontend retry identity",
+      "title": "A same-key retry after OUTCOME_UNKNOWN does not survive a page reload for IntentForm creates and version upload",
+      "evidence": "IntentForm keeps the idempotency key in useState and the frozen payload in a ref (intent-form.tsx:62,69); UploadVersionForm keeps its key in useState (document-forms.tsx). After a reload or remount a new key is minted; the draft restores field values but not the attempt identity. Contract rev 12 section 0 guarantees reload survival only for bulk/import (server-memory slots). R9 handoff section 4 says a retry under a new key is disabled, which the client can only enforce while it still knows the attempt.",
+      "impact": "A receipted creation (for example create action or create document) whose answer was lost, followed by a reload and a re-submit, can create a duplicate: the backend dedupes by key only.",
+      "options": [
+        "A: persist {key, frozen payload} next to the draft in sessionStorage (conflicts with the no-browser-persistence-of-legal-payload principle used for CL04)",
+        "B: extend the BFF session slot used by bulk/import to these commands (new server state; contract change)",
+        "C: accept and document as a local-profile limitation"
+      ],
+      "why_not_fixed": "Needs a product/security decision and, for B, a contract revision. Not guessed."
+    },
+    {
+      "id": "CR-003",
+      "severity": "P3",
+      "status": "LIMITATION",
+      "area": "frontend drafts",
+      "title": "A primary denial purges every draft in the tab",
+      "evidence": "Draft namespace is a hash of the session handle only; keys carry entity ids, only matter:<id>: carries a Matter id; not-found is indistinguishable from hidden. See review/draft-access-loss-r1 and its addendum.",
+      "residual": "Unobserved revoke and re-grant (no denied screen shown) revives a draft; purge runs after hydration."
+    },
+    {
+      "id": "CR-004",
+      "severity": "INFO",
+      "status": "CLOSED",
+      "area": "backend Brief replay",
+      "title": "Prior advisory F1: legacy Filing without a numeric revision",
+      "evidence": "brief_replay.go:193-195 returns ErrBriefUnreconstructable unless revision is numeric, >= 1 and integral; TestReplayBrief_LegacyFilingRevisionUnavailable passes (missing key and \"bad\" value)."
+    },
+    {
+      "id": "CR-005",
+      "severity": "INFO",
+      "status": "NO_DEFECT_PRIOR_ADVISORY_NOT_APPLIED",
+      "area": "frontend ids in hrefs",
+      "title": "Prior advisory F2: encode matterId consistently",
+      "evidence": "Probe P1: Next 16.4.2 passes route params percent-encoded (not decoded). Raw interpolation therefore reproduces the requested URL, and encodeURIComponent double-encodes any id containing %. For allowlisted ids ([A-Za-z0-9_-]) both are identical; any other id stops at pathId with not-found. No exploitable difference was found.",
+      "note": "MatterScope and history/page.tsx already encode and would double-encode only ids that cannot be valid. Adding more encoding would spread that inconsistency; none was added."
+    },
+    {
+      "id": "CR-006",
+      "severity": "INFO",
+      "status": "NOT_A_DEFECT",
+      "area": "frontend fetch in component",
+      "title": "document-forms.tsx calls fetch() for the version upload",
+      "evidence": "It posts to the same-origin BFF route (app/api/matters/.../versions), never to the backend, with a streamed binary body; the route validates ids with pathId and the session first. Deviates from \"no fetch in components\" only for a binary upload."
+    }
+  ],
+  "examined_no_finding": [
+    {
+      "id": "EX-01",
+      "area": "problem codes backend vs frontend",
+      "result": "23 named backend URNs plus the http-* family diffed against McCode and toMcFailure. invalid-window, bad-request (brief) and brief-unreconstructable are handled in briefAction; precondition-required/not-applicable/malformed/unsupported-media fall to the documented \"frontend bug\" branch; client-closed-request (499) and http-* fall to status classification. Only the import-preview gap (CR-001) was real."
+    },
+    {
+      "id": "EX-02",
+      "area": "routes vs contract section 2",
+      "result": "77 registered routes; 76 are registered on the authenticate group (server.go:97), only /healthz and /readyz are outside it; no route is registered on the echo root otherwise. A literal path scan did not match 17 code routes to contract text (health probes and routes the contract documents under shorthand such as .../{id}/execution); not individually verified, so no claim of full catalogue parity."
+    },
+    {
+      "id": "EX-03",
+      "area": "redirect safety",
+      "result": "safeInternalPath and safeReturnTo already covered //, /\\t/, backslash, javascript:, absolute URL, /login and /api/auth. Added dot-segment cases (/x/../login, /matters/../api/auth/logout); they passed."
+    },
+    {
+      "id": "EX-04",
+      "area": "Server Actions session-first",
+      "result": "51 exported actions across features: each runs requireSession first (directly or inside the command wrapper, which is session then Zod then run)."
+    },
+    {
+      "id": "EX-05",
+      "area": "untrusted URL input",
+      "result": "gridQuerySchema uses .catch(undefined) on every field (never throws); promoteTo is regex-bounded; history cursor length-bounded; export format is a two-value switch."
+    },
+    {
+      "id": "EX-06",
+      "area": "raw backend access from components",
+      "result": "No fetch() or API_BASE_URL use in components or feature components except the BFF upload (CR-006); lib/mc/client.ts is the single server-side client."
+    },
+    {
+      "id": "EX-07",
+      "area": "receipted flags (contract 2.1)",
+      "result": "Create workspace, Matter and requirement forms are receipted; workspace and Matter membership grant forms are not, as 2.1 requires. Later-wave operations were not individually mapped."
+    },
+    {
+      "id": "EX-08",
+      "area": "restore checker",
+      "result": "9 unit tests OK; run.sh syntax OK. Final-source restore rehearsal NOT run (needs the approved rehearsal mechanism)."
+    },
+    {
+      "id": "EX-09",
+      "area": "baseline gates",
+      "result": "Backend: sqlc-check, gofmt, tidy, lint all exit 0; tests 586 pass / 144 skip without a DB, 765 pass / 4 skip with isolated PG. Frontend: pnpm check 48 files / 465 tests, pnpm build, Storybook exit 0."
+    },
+    {
+      "id": "EX-10",
+      "area": "R9 access-loss/form-intent",
+      "result": "Reconciled in review/draft-access-loss-r1 (+ addendum): primary denial purges, partial section keeps drafts, sign-in always purges, placement of partial pinned by read-failure-callers.test.ts. Whole-tab breadth is CR-003."
+    }
+  ],
+  "not_examined": [
+    "Line-by-line check that every productapi handler authorizes before doing work (covered only by existing HTTP/service tests and the authenticate group)",
+    "Role matrix and workspace/Matter authorization inside services beyond the passing suites",
+    "Import group atomicity, replay/content identity and imported-claim provenance by code reading (relied on SuiteW6 on memory and PostgreSQL)",
+    "Proof/assessment epoch semantics, filing package and signature-applicability guards by code reading",
+    "Accessible labels, empty states and locale rendering beyond what unit tests assert",
+    "Webpack production build and Playwright e2e for the final bytes",
+    "Mapping of every later-wave operation to its receipted/CAS rule",
+    "Browser, keyboard, touch, screen reader, hosted ZITADEL, AC-137, final-byte restore rehearsal, Cloudflare/cost"
+  ]
+}

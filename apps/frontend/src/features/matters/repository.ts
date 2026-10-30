@@ -1,6 +1,7 @@
 import 'server-only'
 
 import { mcRequest, pathId } from '@/lib/mc/client'
+import { z } from 'zod'
 
 import {
   eventPageSchema,
@@ -11,6 +12,8 @@ import {
 } from './schemas'
 
 export const matterRepository = {
+  workspace: async (id: string) =>
+    (await mcRequest(`/workspaces/${pathId(id)}`, { schema: z.object({ name: z.string() }) })).data,
   listInWorkspace: async (workspaceId: string, cursor?: string) =>
     (
       await mcRequest(`/workspaces/${pathId(workspaceId)}/matters`, {
@@ -26,6 +29,13 @@ export const matterRepository = {
 
   members: async (id: string) =>
     (await mcRequest(`/matters/${pathId(id)}/members`, { schema: matterMemberPageSchema })).data,
+
+  memberCandidates: async (id: string) =>
+    (
+      await mcRequest(`/matters/${pathId(id)}/member-candidates`, {
+        schema: matterMemberPageSchema,
+      })
+    ).data,
 
   history: async (id: string, cursor?: string) => {
     const res = await mcRequest(`/matters/${pathId(id)}/events`, {

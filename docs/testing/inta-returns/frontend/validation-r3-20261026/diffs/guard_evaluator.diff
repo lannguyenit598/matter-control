@@ -1,0 +1,110 @@
+--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/runner-scripts/guard_evaluator.py	2026-10-26 14:28:26
++++ /tmp/mc002-inta-fe-validation-r3-20261026/runner/guard_evaluator.py	2026-10-26 15:03:08
+@@ -1,8 +1,11 @@
+ #!/usr/bin/env python3
+ """
+-MC-002-INTA-FE-VALIDATION-R2: Guard Evaluator
+-Strict, fail-closed validation evaluator addressing R1-C02.
+-Pure evaluation logic with explicit evidence schema and typed checks.
++MC-002-INTA-FE-VALIDATION-R3: Guard Evaluator
++Strict, fail-closed validation evaluator addressing R1-C02 and R2-I04.
++- Strict evidence schema with type checking (no bool for int).
++- Mandatory during_sample_count > 0 (fast-exit zero-sample is fail-closed LISTENER_UNKNOWN).
++- Mandatory isFinal is True, cleanShutdown is True, observer_exit_code == 0.
++- Scoped sampling wording: no unproven absolute never-listen claims.
+ """
+ 
+ from typing import Any, Dict, Optional
+@@ -18,10 +21,12 @@
+     stderr: str,
+     listener_during: Any,
+     listener_after: Any,
++    during_sample_count: int = 1,
+     probe_error: Optional[str] = None,
+     observer_data: Optional[Dict[str, Any]] = None,
+     observer_file_exists: bool = False,
+     observer_parse_error: Optional[str] = None,
++    observer_exit_code: Optional[int] = 0,
+     expected_refusal_phrase: Optional[str] = None,
+     expected_variant: Optional[str] = None,
+     expected_pid: Optional[int] = None,
+@@ -39,8 +44,11 @@
+         "exitCode": exit_code,
+         "observerHTTPRequests": None,
+         "observerCleanShutdown": False,
++        "observerIsFinal": False,
++        "observerExitCode": observer_exit_code,
+         "listenerObservedDuring": listener_during,
+         "listenerObservedAfter": listener_after,
++        "duringSampleCount": during_sample_count,
+         "probeError": probe_error,
+         "notes": "",
+     }
+@@ -64,6 +72,16 @@
+         res["notes"] = "Port 18085 listener was acquired during execution (violates never-listen criterion)"
+         return res
+ 
++    # Fast-exit observation gap (R2-I04): if zero during-run samples were taken,
++    # listener absence cannot be claimed as False. Must fail closed.
++    if during_sample_count <= 0:
++        res["verdictCode"] = "LISTENER_UNKNOWN"
++        res["notes"] = (
++            f"Child exited before any during-execution listener sample was taken (duringSampleCount={during_sample_count}); "
++            "cannot establish listener absence during execution"
++        )
++        return res
++
+     # Strict check (R1-C02): listener state MUST be explicitly boolean False.
+     # None, missing, non-boolean, or unknown values must NOT pass.
+     if listener_during is not False or listener_after is not False:
+@@ -92,7 +110,7 @@
+         res["notes"] = f"Expected refusal phrase '{expected_refusal_phrase}' missing in stderr/stdout"
+         return res
+ 
+-    # 6. Observer evidence validation (FEVAL-F02, R1-C02)
++    # 6. Observer evidence validation (FEVAL-F02, R1-C02, R2-I04)
+     if not observer_file_exists:
+         res["verdictCode"] = "MISSING_COUNTER"
+         res["notes"] = "Observer counter file missing; zero-upstream calls not established"
+@@ -114,6 +132,14 @@
+         res["notes"] = f"Observer encountered runtime error: {observer_data['error']}"
+         return res
+ 
++    # Strict isFinal check (R2-I04): final record must have isFinal is True
++    is_final = observer_data.get("isFinal")
++    if is_final is not True:
++        res["verdictCode"] = "INCOMPLETE_OBSERVER_RECORD"
++        res["notes"] = f"Observer state is incomplete (isFinal is {is_final!r}, expected True)"
++        return res
++    res["observerIsFinal"] = True
++
+     # Check cleanShutdown: must be STRICTLY boolean True (no bool("false") coercion)
+     clean_shutdown = observer_data.get("cleanShutdown")
+     if clean_shutdown is not True:
+@@ -124,6 +150,12 @@
+         return res
+     res["observerCleanShutdown"] = True
+ 
++    # Check observer exit code (R2-I04): observer process must have exited cleanly with code 0
++    if observer_exit_code is None or observer_exit_code != 0:
++        res["verdictCode"] = "OBSERVER_EXIT_ERROR"
++        res["notes"] = f"Observer process failed or unverified exit (observerExitCode={observer_exit_code!r}, expected 0)"
++        return res
++
+     # Check requestCount: must be strict int (not bool, since bool is subclass of int in Python)
+     req_count = observer_data.get("requestCount")
+     if req_count is None:
+@@ -159,10 +191,11 @@
+         return res
+ 
+     # 7. All checks passed: valid complete input
++    # Scoped wording (R2-I04): explicitly state sampled windows instead of blanket never-acquired claim
+     res["verdict"] = "PASS"
+     res["verdictCode"] = "VALID_COMPLETE_INPUT"
+     res["notes"] = (
+-        "Finite exit=1, exact refusal phrase present, port 18085 never acquired, "
+-        "observer confirmed 0 HTTP requests via durable clean shutdown"
++        f"Finite exit=1, exact refusal phrase present, no listener observed in {during_sample_count} "
++        "sampled during-execution windows and 1 post-probe, observer confirmed 0 HTTP requests via clean shutdown"
+     )
+     return res

@@ -13,6 +13,10 @@ export function safeInternalPath(raw: string | null | undefined, fallback: strin
     return fallback
   }
   if (url.origin !== 'http://local.invalid') return fallback
+  // Canonicalization resolves dot segments: "/..//host" becomes "//host" although the raw value did
+  // not start with "//". The value returned here is rendered as a link, where a leading "//" is
+  // scheme-relative, so the canonical result is checked too.
+  if (url.pathname.startsWith('//')) return fallback
   if (url.pathname.startsWith('/api/') || url.pathname === '/login') return fallback
   return url.pathname + url.search
 }

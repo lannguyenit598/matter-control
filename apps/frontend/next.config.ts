@@ -1,11 +1,12 @@
 import type { NextConfig } from 'next'
 
 const isDev = process.env.NODE_ENV === 'development'
+const isWorkerBuild = process.env.MC_WORKER_BUILD === '1'
 
 /**
  * CSP without nonces (docs: 02-guides/content-security-policy.md, "Without Nonces").
  * Nonces would force every page to render dynamically and are incompatible with Partial
- * Prerendering, which /dashboard and /tasks use. 'unsafe-inline' is required for Next.js' own
+ * Prerendering, which the product routes use. 'unsafe-inline' is required for Next.js' own
  * inline scripts and the theme script in app/layout.tsx; everything else is locked to 'self'.
  * Add third-party origins (analytics, CDN, API called from the browser) here when you need them.
  */
@@ -36,15 +37,24 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  // Self-contained server (`node server.js`) for the container image; see Dockerfile.
+  output: 'standalone',
+  // Node tracing selects pg-cloudflare's empty default export; the Worker bundle resolves
+  // the conditional workerd branch too. Keep that package's published runtime files.
+  outputFileTracingIncludes: {
+    '/*': ['./node_modules/.pnpm/pg-cloudflare@*/node_modules/pg-cloudflare/**/*'],
+  },
   // Next.js 16 defaults: Cache Components (explicit caching with 'use cache', streaming with <Suspense>).
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Next16.4 atomic timers hang on workerd with this adapter; the tested Worker profile
+  // uses dynamic SSR. The Node/local profile retains Cache Components and prefetching.
+  cacheComponents: !isWorkerBuild,
+  partialPrefetching: !isWorkerBuild,
   poweredByHeader: false,
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }]
   },
   async redirects() {
-    return [{ source: '/', destination: '/dashboard', permanent: false }]
+    return [{ source: '/', destination: '/workspaces', permanent: false }]
   },
   turbopack: {
     rules: {

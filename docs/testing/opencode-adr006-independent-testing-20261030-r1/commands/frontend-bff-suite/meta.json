@@ -1,0 +1,23 @@
+{
+  "run": "frontend-bff-suite",
+  "argv": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "src/lib/oidc/durable-state.test.ts",
+    "src/features/data-transfer/durable-attempts.test.ts"
+  ],
+  "cwd": "/private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/snapshot/apps/frontend",
+  "env_file": "/private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/private/dsn.env",
+  "env_keys": [
+    "MC_BFF_TEST_DATABASE_URL",
+    "MC_TEST_DATABASE_URL"
+  ],
+  "started_utc": "2026-10-30T03:43:23Z",
+  "ended_utc": "2026-10-30T03:43:28Z",
+  "duration_seconds": 5,
+  "exit": 0,
+  "identity": "OpenCode independent QA",
+  "sanitize": "postgres://user:<redacted>@ URLs scrubbed in public stdout/stderr copies; secrets never in argv",
+  "evidence_class": "INDEPENDENT_EXECUTION"
+}

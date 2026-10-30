@@ -37,4 +37,20 @@ describe('Dialog', () => {
     expect(dialog).toHaveAttribute('open')
     expect(input).toBeInTheDocument()
   })
+
+  // keepMounted lets an unresolved form (e.g. unknown outcome) survive close and reopen.
+  it('keeps children mounted while closed only with keepMounted', () => {
+    const { rerender } = render(
+      <Dialog open={false} onOpenChange={() => {}} title="Edit">
+        <input aria-label="Name" />
+      </Dialog>,
+    )
+    expect(screen.queryByLabelText('Name')).toBeNull()
+    rerender(
+      <Dialog open={false} onOpenChange={() => {}} title="Edit" keepMounted>
+        <input aria-label="Name" />
+      </Dialog>,
+    )
+    expect(screen.getByLabelText('Name')).toBeInTheDocument()
+  })
 })

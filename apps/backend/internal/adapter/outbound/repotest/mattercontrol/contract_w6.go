@@ -15,9 +15,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
-	"github.com/example/userapi/internal/core/service"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
+	"leonx.me/matter-control/internal/core/service"
 )
 
 // SheetCodecFactory supplies the spreadsheet codec (an adapter the kit itself must not import).

@@ -7,19 +7,21 @@ import { cn } from '@/lib/utils'
 export type AppSidebarProps = {
   brand: ReactNode
   items: readonly NavItem[]
+  footer?: ReactNode
   className?: string
 }
 
 /** Desktop navigation column. On small screens use MobileNav instead. */
-export function AppSidebar({ brand, items, className }: AppSidebarProps) {
+export function AppSidebar({ brand, items, footer, className }: AppSidebarProps) {
   return (
-    <aside className={cn('flex h-full flex-col gap-4 border-r bg-card p-4', className)}>
-      <Link href="/" className="px-3 py-1 text-base font-semibold">
+    <aside className={cn('app-sidebar flex h-full flex-col', className)}>
+      <Link href="/" className="app-brand flex items-center font-bold tracking-tight">
         {brand}
       </Link>
-      <nav aria-label="Main" className="flex-1">
+      <nav aria-label="Main" className="app-navigation flex-1">
         <NavMenu items={items} />
       </nav>
+      {footer && <div className="mt-6 border-t pt-4">{footer}</div>}
     </aside>
   )
 }

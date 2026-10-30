@@ -1,0 +1,42 @@
+{
+  "canonicalId": "INT-ISO-03",
+  "historicalProcesses": {
+    "go_98134_absent": true,
+    "next_88444_absent": true,
+    "next_88453_absent": true,
+    "historicalNextTerminationDisposition": "TERMINATION_NOT_OBSERVED (retained limitation per DEC-028/Codex cue; no retrospective repair claimed)"
+  },
+  "ports": {
+    "port_18085_unbound": true,
+    "port_18086_unbound": true
+  },
+  "retainedPostgreSQL": {
+    "container": "mc002-inta-pg-intamvnmoems3pd",
+    "status": {
+      "containerId": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+      "name": "/mc002-inta-pg-intamvnmoems3pd",
+      "state": "running",
+      "healthy": true,
+      "startedAt": "2026-10-26T00:26:58.345144717Z",
+      "image": "postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "publishedPorts": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "15457"
+        }
+      ]
+    },
+    "untouched": true,
+    "note": "Codex-owned resource retained running; no docker lifecycle/SQL/Go interaction executed in this FE validation"
+  },
+  "ledgerIntegrity": {
+    "stateDir": "/tmp/mc002-inta-state-intamvnmoems3pd",
+    "totalFiles": 59,
+    "all59HashesMatchStage7Ledger": true
+  },
+  "validationRuntimeProcesses": {
+    "lingeringProcesses": 0,
+    "lingeringProcessLines": [],
+    "cleanTeardown": true
+  }
+}

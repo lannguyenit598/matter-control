@@ -174,6 +174,22 @@ describe('import at the same seam', () => {
   })
 })
 
+describe('an unreadable spreadsheet at the import seam', () => {
+  const file = () => new File([new Uint8Array([1, 2, 3])], 'broken.xlsx')
+
+  it('is a fixable problem with the file, not a generic fault', async () => {
+    const logged = vi.spyOn(console, 'error').mockImplementation(() => {})
+    fetchMock.mockResolvedValueOnce(json({ type: 'urn:mc:bad-request' }, 400))
+    const r = await importPreviewAction(M, file())
+    if (r.ok) throw new Error('an unreadable file must be refused')
+    expect(r).toMatchObject({ kind: 'validation' })
+    expect(r.error).toMatch(/could not be read/i)
+    expect(r.fieldErrors?.file?.[0]).toMatch(/format|columns|limit/i)
+    expect(logged).not.toHaveBeenCalled()
+    logged.mockRestore()
+  })
+})
+
 describe('brief at the same seam', () => {
   const T1 = '2026-10-01T00:00:00Z'
   const T2 = '2026-10-27T00:00:00Z'

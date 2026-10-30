@@ -8,12 +8,12 @@ import { toMcFailure, type McActionResult } from '@/lib/mc/action-result'
 import { McError } from '@/lib/mc/errors'
 
 import {
-  acknowledgeAttempt,
+  acknowledgeAttemptAsync as acknowledgeAttempt,
   attemptRows,
-  attemptSlots,
-  beginAttempt,
-  endAttempt,
-  revokeAttempts,
+  attemptSlotsAsync as attemptSlots,
+  beginAttemptAsync as beginAttempt,
+  endAttemptAsync as endAttempt,
+  revokeAttemptsAsync as revokeAttempts,
   type PendingAttempt,
 } from './pending-attempts'
 import { recoverySession } from './recovery-session'
@@ -93,6 +93,17 @@ export async function importPreviewAction(
     })
     return { ok: true, preview }
   } catch (error) {
+    // Both an unreadable sheet and a malformed upload may return this generic 400.
+    // Preview stores nothing, so this message does not claim a commit outcome.
+    if (error instanceof McError && error.code === 'bad-request')
+      return {
+        ok: false,
+        kind: 'validation',
+        error: 'The file could not be read. Nothing was stored.',
+        fieldErrors: {
+          file: ['Check the file format, the required columns and the upload limit.'],
+        },
+      }
     return toMcFailure(error)
   }
 }
@@ -128,7 +139,7 @@ async function executeAttempt(
   proposed: PendingAttempt,
 ): Promise<BulkCommitOutcome | ImportCommitOutcome> {
   const session = await recoverySession()
-  const attempt = beginAttempt(session, proposed)
+  const attempt = await beginAttempt(session, proposed)
   if (!attempt)
     return {
       ok: false,
@@ -147,14 +158,18 @@ async function executeAttempt(
           )
         : await dataTransferRepository.importCommit(attempt.matterId, attempt.upload, attempt.plan)
     if (results.some((row) => row.status === 'FAILURE' && ROW_ACCESS_LOST.has(row.code ?? ''))) {
-      revokeAttempts(session, attempt.matterId)
-    } else endAttempt(session, attempt, results)
+      await revokeAttempts(session, attempt.matterId)
+    } else await endAttempt(session, attempt, results)
     revalidatePath(`/matters/${attempt.matterId}/work`)
     return { ok: true, results }
   } catch (error) {
-    endAttempt(session, attempt)
+    try {
+      await endAttempt(session, attempt)
+    } catch {
+      return toMcFailure(new McError('outcome-unknown', 503, { receipted: true }))
+    }
     const failure = toMcFailure(error)
-    if (ACCESS_LOST.has(failure.kind)) revokeAttempts(session, attempt.matterId)
+    if (ACCESS_LOST.has(failure.kind)) await revokeAttempts(session, attempt.matterId)
     return failure
   }
 }
@@ -178,7 +193,7 @@ export async function recoverTransfersAction(
     await requireSession()
     session = await recoverySession()
     await dataTransferRepository.authorizeRecovery(matterId)
-    const retained = [...attemptSlots(session)].filter(
+    const retained = [...(await attemptSlots(session))].filter(
       ([, slot]) => slot.attempt?.matterId === matterId || slot.blocked === matterId,
     )
     const results: NonNullable<RecoveryOutcome['recoveries']> = retained.flatMap(([kind, slot]) =>
@@ -216,7 +231,7 @@ export async function recoverTransfersAction(
     return {
       ok: true,
       recoveries: results,
-      attempts: [...attemptSlots(session)]
+      attempts: [...(await attemptSlots(session))]
         .filter(([, slot]) => slot.attempt?.matterId === matterId || slot.blocked === matterId)
         .map(([kind, slot]) => ({
           kind: kind as 'bulk' | 'import',
@@ -226,7 +241,7 @@ export async function recoverTransfersAction(
     }
   } catch (error) {
     const failure = toMcFailure(error)
-    if (session && ACCESS_LOST.has(failure.kind)) revokeAttempts(session, matterId)
+    if (session && ACCESS_LOST.has(failure.kind)) await revokeAttempts(session, matterId)
     return failure
   }
 }
@@ -279,5 +294,5 @@ export async function acknowledgeTransferAction(
   key: string,
 ): Promise<void> {
   await requireSession()
-  acknowledgeAttempt(await recoverySession(), kind, matterId, key)
+  await acknowledgeAttempt(await recoverySession(), kind, matterId, key)
 }

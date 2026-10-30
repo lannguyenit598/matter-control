@@ -16,18 +16,18 @@ export type DashboardTemplateProps = {
  */
 export function DashboardTemplate({ sidebar, header, children }: DashboardTemplateProps) {
   return (
-    <div className="flex min-h-dvh">
+    <div className="app-shell flex min-h-dvh bg-background">
       <a
         href="#main-content"
         className="sr-only z-50 rounded-md bg-background px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
       >
         <LocalizedText en="Skip to content" vi="Đến nội dung" />
       </a>
-      <div className="sticky top-0 hidden h-dvh w-60 shrink-0 md:block">{sidebar}</div>
+      <div className="app-sidebar-slot">{sidebar}</div>
       <div className="flex min-w-0 flex-1 flex-col">
-        {header}
-        <main id="main-content" className="mx-auto w-full max-w-[90rem] flex-1 p-4">
-          {children}
+        <div className="app-mobile-header">{header}</div>
+        <main id="main-content" className="app-main min-w-0 flex-1">
+          <div className="w-full">{children}</div>
         </main>
       </div>
     </div>

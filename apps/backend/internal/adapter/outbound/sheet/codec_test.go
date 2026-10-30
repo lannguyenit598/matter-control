@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/example/userapi/internal/adapter/outbound/sheet"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/sheet"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 func zipOf(t *testing.T, parts map[string]string) []byte {

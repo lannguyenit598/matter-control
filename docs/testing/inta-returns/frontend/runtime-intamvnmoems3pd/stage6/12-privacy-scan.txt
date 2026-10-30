@@ -1,0 +1,21 @@
+MC-002-INTA-FE stage6 marker/secret scan — 2026-10-26T00:31:00Z by actual ZCode. Counts only, no values.
+
+Scope A — synthetic fixture markers in APPLICATION logs (expect 0):
+  Go: 02-go-log-before.log + 03-go-log-after.log; Next: 04-next-stdout-after.log; Driver: 10-driver.std{out,err}.log
+marker [inta-a-intamvnmoems3pd@example.test]: go=0 next=0 driver=0
+marker [inta-b-intamvnmoems3pd@example.test]: go=0 next=0 driver=0
+marker [inta-x-intamvnmoems3pd@example.test]: go=0 next=0 driver=0
+marker [INTA_A_INITIAL]: go=0 next=0 driver=0
+marker [INTA_A_UPDATED]: go=0 next=0 driver=0
+marker [INTA_A_OUTAGE]: go=0 next=0 driver=0
+
+Scope B — credential/DSN/token patterns across stage6 evidence + live state dir:
+pattern [postgres://]: evidence=0 state=0
+pattern [postgresql://]: evidence=0 state=0
+pattern [password=]: evidence=0 state=0
+pattern [PGPASSWORD]: evidence=0 state=0
+pattern [Bearer ]: evidence=0 state=0
+pattern [backend.env]: evidence=0 state=0
+
+Scope C — envelope cap: new envelopes truncated=false:
+new envelopes truncated=false: 2 (expected 2; complete-equality assertions stand)

@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const api = vi.hoisted(() => ({ session: vi.fn(), get: vi.fn() }))
+vi.mock('@/hooks/use-time-zone', () => ({ useTimeZone: () => 'UTC' }))
+
+const api = vi.hoisted(() => ({ session: vi.fn(), get: vi.fn(), workspace: vi.fn() }))
 vi.mock('@/lib/auth', () => ({ getSession: api.session }))
-vi.mock('../repository', () => ({ matterRepository: { get: api.get } }))
+vi.mock('../repository', () => ({ matterRepository: { get: api.get, workspace: api.workspace } }))
 
 import { McError } from '@/lib/mc/errors'
 
@@ -12,6 +14,7 @@ import { MatterScope } from './matter-scope'
 beforeEach(() => {
   api.session.mockReset()
   api.get.mockReset()
+  api.workspace.mockReset().mockResolvedValue({ name: 'Corporate Legal' })
 })
 
 describe('authorized scope header', () => {
@@ -22,7 +25,7 @@ describe('authorized scope header', () => {
       asOf: '2026-10-28T00:00:00Z',
     })
     render(await MatterScope({ matterId: 'matter-1', children: <p>Child screen</p> }))
-    expect(screen.getByRole('link', { name: /Workspace/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Corporate Legal' })).toHaveAttribute(
       'href',
       '/workspaces/workspace-1',
     )
@@ -36,6 +39,7 @@ describe('authorized scope header', () => {
       '2026-10-28T00:00:00Z',
     )
     expect(screen.getByText('Child screen')).toBeInTheDocument()
+    expect(screen.queryByText('workspace-1')).not.toBeInTheDocument()
   })
   it('does not present a stale scope or child content after read access ends', async () => {
     api.session.mockResolvedValue({ userId: 'synthetic' })

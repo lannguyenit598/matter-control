@@ -20,7 +20,7 @@ export function MobileNav({ items }: MobileNavProps) {
         variant="ghost"
         size="icon"
         aria-label="Open navigation"
-        className="md:hidden"
+        className="min-[801px]:hidden"
         onClick={() => setOpen(true)}
       >
         <Menu aria-hidden />

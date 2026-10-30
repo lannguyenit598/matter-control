@@ -1,0 +1,97 @@
+=== RUN   TestNewReviewGridValidates
+--- PASS: TestNewReviewGridValidates (0.00s)
+=== RUN   TestNewReviewQuestionBounds
+--- PASS: TestNewReviewQuestionBounds (0.00s)
+=== RUN   TestNewReviewAnswerRules
+--- PASS: TestNewReviewAnswerRules (0.00s)
+=== RUN   TestBuildReviewCellsPendingWhenNoAnswer
+--- PASS: TestBuildReviewCellsPendingWhenNoAnswer (0.00s)
+=== RUN   TestBuildReviewCellsPicksCurrentAnswer
+--- PASS: TestBuildReviewCellsPicksCurrentAnswer (0.00s)
+=== RUN   TestBuildReviewCellsStaleOnlyForRevisedQuestion
+--- PASS: TestBuildReviewCellsStaleOnlyForRevisedQuestion (0.00s)
+=== RUN   TestBuildReviewCellsIgnoresAnswersOfRemovedVersion
+--- PASS: TestBuildReviewCellsIgnoresAnswersOfRemovedVersion (0.00s)
+=== RUN   TestReviewLimitsCountCharactersNotBytes
+--- PASS: TestReviewLimitsCountCharactersNotBytes (0.00s)
+=== RUN   TestReviewIndependence
+--- PASS: TestReviewIndependence (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/core/domain/matter	1.411s
+=== RUN   TestBriefStillReconstructsAfterReviewEvents
+--- PASS: TestBriefStillReconstructsAfterReviewEvents (0.00s)
+=== RUN   TestReviewEventsCarryNoAnswerText
+--- PASS: TestReviewEventsCarryNoAnswerText (0.00s)
+=== RUN   TestReviewDoesNotChangeVerification
+--- PASS: TestReviewDoesNotChangeVerification (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/core/service	1.528s
+=== RUN   TestReviewGrid_HTTPFlow
+--- PASS: TestReviewGrid_HTTPFlow (0.02s)
+=== RUN   TestReviewGrid_HTTPCrossMatterVersionLooksMissing
+--- PASS: TestReviewGrid_HTTPCrossMatterVersionLooksMissing (0.01s)
+=== RUN   TestVerifierReviewHTTPHidden
+=== RUN   TestVerifierReviewHTTPHidden/nonmember
+=== RUN   TestVerifierReviewHTTPHidden/revoked
+--- PASS: TestVerifierReviewHTTPHidden (0.01s)
+    --- PASS: TestVerifierReviewHTTPHidden/nonmember (0.01s)
+    --- PASS: TestVerifierReviewHTTPHidden/revoked (0.01s)
+=== RUN   TestVerifierReviewHTTPMissingExpectation
+    verifier_review_test.go:18: status = 201, want 428; body={"id":"01a187a8-5106-782d-9dfd-f06f3c847904","kind":"REVIEW_ANSWER","seq":8}
+--- FAIL: TestVerifierReviewHTTPMissingExpectation (0.01s)
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/inbound/productapi	0.512s
+=== RUN   TestSuiteReview_MemoryStore
+=== RUN   TestSuiteReview_MemoryStore/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels
+=== RUN   TestSuiteReview_MemoryStore/a_version_of_another_matter_and_a_missing_id_are_rejected_identically
+=== RUN   TestSuiteReview_MemoryStore/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing
+=== RUN   TestSuiteReview_MemoryStore/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another
+=== RUN   TestSuiteReview_MemoryStore/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable
+=== RUN   TestSuiteReview_MemoryStore/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing
+=== RUN   TestSuiteReview_MemoryStore/removing_a_version_hides_its_row_but_keeps_its_answers_attributable
+=== RUN   TestSuiteReview_MemoryStore/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing
+--- PASS: TestSuiteReview_MemoryStore (0.01s)
+    --- PASS: TestSuiteReview_MemoryStore/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/a_version_of_another_matter_and_a_missing_id_are_rejected_identically (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/removing_a_version_hides_its_row_but_keeps_its_answers_attributable (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol	1.545s
+?   	leonx.me/matter-control/internal/adapter/outbound/repotest/objectcontract	[no test files]
+=== RUN   TestMatterSuiteReview_Postgres
+=== RUN   TestMatterSuiteReview_Postgres/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels
+=== RUN   TestMatterSuiteReview_Postgres/a_version_of_another_matter_and_a_missing_id_are_rejected_identically
+=== RUN   TestMatterSuiteReview_Postgres/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing
+=== RUN   TestMatterSuiteReview_Postgres/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another
+=== RUN   TestMatterSuiteReview_Postgres/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable
+=== RUN   TestMatterSuiteReview_Postgres/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing
+=== RUN   TestMatterSuiteReview_Postgres/removing_a_version_hides_its_row_but_keeps_its_answers_attributable
+=== RUN   TestMatterSuiteReview_Postgres/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing
+--- PASS: TestMatterSuiteReview_Postgres (8.03s)
+    --- PASS: TestMatterSuiteReview_Postgres/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels (5.48s)
+    --- PASS: TestMatterSuiteReview_Postgres/a_version_of_another_matter_and_a_missing_id_are_rejected_identically (0.42s)
+    --- PASS: TestMatterSuiteReview_Postgres/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing (0.37s)
+    --- PASS: TestMatterSuiteReview_Postgres/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another (0.36s)
+    --- PASS: TestMatterSuiteReview_Postgres/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable (0.38s)
+    --- PASS: TestMatterSuiteReview_Postgres/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing (0.35s)
+    --- PASS: TestMatterSuiteReview_Postgres/removing_a_version_hides_its_row_but_keeps_its_answers_attributable (0.36s)
+    --- PASS: TestMatterSuiteReview_Postgres/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing (0.31s)
+=== RUN   TestVerifierReviewPostgres
+=== RUN   TestVerifierReviewPostgres/concurrent_same_predecessor
+=== RUN   TestVerifierReviewPostgres/answer_races_question_revision
+    contract_verifier.go:32: answer result=RECORD_REVIEW_ANSWER: postgres: precondition failed, revised column stale=false
+=== RUN   TestVerifierReviewPostgres/concurrent_structure
+=== RUN   TestVerifierReviewPostgres/fifty_by_twenty_five_and_Vietnamese_limits
+    contract_verifier.go:39: grid versions=50 questions=25 cells=1250 read=8.006958ms
+--- PASS: TestVerifierReviewPostgres (2.55s)
+    --- PASS: TestVerifierReviewPostgres/concurrent_same_predecessor (0.36s)
+    --- PASS: TestVerifierReviewPostgres/answer_races_question_revision (0.39s)
+    --- PASS: TestVerifierReviewPostgres/concurrent_structure (0.34s)
+    --- PASS: TestVerifierReviewPostgres/fifty_by_twenty_five_and_Vietnamese_limits (1.46s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	12.103s
+FAIL

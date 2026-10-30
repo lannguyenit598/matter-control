@@ -72,7 +72,11 @@ describe('an upload whose answer was lost survives a reload', () => {
     stored()
     const second = render(<Form />)
     choose(second.container, pdf('another text, other bytes'))
-    fireEvent.click(await screen.findByRole('button', { name: 'Upload version' }))
+    const button = await screen.findByRole('button', { name: 'Upload version' })
+    // The control stays disabled while the chosen file is being fingerprinted; clicking it
+    // during that check would be swallowed, so wait until it accepts input again.
+    await waitFor(() => expect(button).not.toBeDisabled())
+    fireEvent.click(button)
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2))
     expect(keyOf(1)).not.toBe(keyOf(0))
   })

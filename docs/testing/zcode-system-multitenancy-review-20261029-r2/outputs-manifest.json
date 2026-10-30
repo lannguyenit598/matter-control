@@ -1,0 +1,41 @@
+{
+  "namespace": "docs/testing/zcode-system-multitenancy-review-20261029-r2/",
+  "note": "Phase A output manifest (excludes itself). All shared writes confined to this directory.",
+  "inputs": {
+    "candidate_pin": "candidate-manifest.csv (512 files: apps/backend + apps/frontend source/config/docs subset; excludes .env*, keys, node_modules, .next, .mimosa, other-writer *.orig flagged)",
+    "other_namespace_observed": "docs/testing/zcode-system-multitenancy-review-20261029-r1/ contained only inputs-manifest.json (128819 bytes, mtime 2026-10-29 23:19) created by a different session — NOT this audit's output; r2 chosen per absence rule",
+    "consumed_docs": [
+      "docs/implementation/handoffs/MC-P0-ZCODE-INDEPENDENT-SYSTEM-MULTITENANCY-REVIEW-PROMPT.md",
+      "docs/implementation/handoffs/MC-ZCODE-SYSTEM-REVIEW-THEN-SOLID-GLASS-IMPLEMENT-PROMPT.md",
+      "docs/research/eigenwelt-20261029/implementation-status-20261029-r2.md",
+      "docs/testing/codex-review-matrix-verification-20261029-r1/return.md",
+      "docs/testing/zcode-review-matrix-rework-20261029-r1/{return.md,final-source-manifest.csv,contract-delta.md,runtime-handoff.md}",
+      "docs/testing/codex-review-matrix-rework-intake-20261029-r1/return.md",
+      "docs/testing/zcode-ui-ux-consistency-audit-20261029-r1/* (Phase B input)",
+      "docs/testing/codex-ui-consistency-intake-20261029-r1/return.md (Phase B input)"
+    ]
+  },
+  "outputs": [
+    "return.md",
+    "system-review.md",
+    "database-review.md",
+    "tenant-isolation-matrix.json",
+    "findings.json",
+    "remediation-plan.md",
+    "candidate-manifest.csv",
+    "drift-at-close.txt (0 lines = zero drift)",
+    "verifier-tests.log",
+    "verifier-frontend.log"
+  ],
+  "reviewer_added_files_isolated_copy_only": [
+    "/private/tmp/mc-sysrev-20261029-r2/candidate/apps/backend/internal/adapter/inbound/productapi/verifier_sysrev_test.go"
+  ],
+  "runtime_resources": {
+    "created_and_removed": "docker container mc-sysrev-pg-20261029-r2 (label mc.owner=MC-ZCODE-SYSTEM-MULTITENANCY-REVIEW-ZCODE-R2) + its anonymous volume + /private/tmp/mc-sysrev-pg-20261029-r2 secrets dir — removed after label check",
+    "retained": "nothing; no retained container/DB/runtime touched; isolated copy /private/tmp/mc-sysrev-20261029-r2 left for the delta reviewer (contains no secrets)"
+  },
+  "integrity": {
+    "pin_time": "2026-10-29 ~23:31+0700",
+    "drift_at_close": "0 of 512 files changed (drift-at-close.txt)"
+  }
+}

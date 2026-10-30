@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol"
+	"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol"
 )
 
 func TestPerf_LocalWorkloads(t *testing.T) {

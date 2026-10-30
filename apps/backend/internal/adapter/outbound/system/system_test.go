@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/adapter/outbound/system"
+	"leonx.me/matter-control/internal/adapter/outbound/system"
 )
 
 // PostgreSQL stores timestamptz at microsecond precision: truncate the clock beforehand so

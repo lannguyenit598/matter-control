@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain"
+	"leonx.me/matter-control/internal/core/domain"
 )
 
 // ActorID identifies a product user (users.id, backed by an issuer+subject identity).

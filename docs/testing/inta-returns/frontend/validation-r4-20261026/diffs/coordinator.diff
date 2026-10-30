@@ -1,0 +1,458 @@
+--- docs/testing/inta-returns/frontend/validation-r3-20261026/runner/coordinator.py	2026-10-26 15:17:01
++++ /tmp/mc002-inta-fe-validation-r4-20261026/runner/coordinator.py	2026-10-26 16:33:29
+@@ -1,17 +1,17 @@
+ #!/usr/bin/env python3
+ """
+-MC-002-INTA-FE-VALIDATION-R3: Runner Coordinator & Adapter
+-Addresses R2-I01, R2-I02, R2-I03, R2-I04, R2-I06:
+-- Dispatches through the approved guard-first launcher with strict bounded environment allowlist.
+-- Passes MC_INTA_STATE_DIR explicitly to prevent unmanaged writes to cwd/.run-state.
+-- Strict owned lifecycle with try/finally, PID identity validation, bounded waits, and captured logs.
+-- Strict lsof probe classification: rc=1 with ANY stderr (including ENOENT) is PROBE_ERROR.
+-- Tracks during_sample_count: fast-exit with 0 during-samples yields LISTENER_UNKNOWN (fail-closed).
+-- Provides entrypoint looping through the 22-variant plan with immediate abort on failure.
+-- Refuses occupied attempt directories to prevent accidental overwrite or truncation.
++MC-002-INTA-FE-VALIDATION-R4: Coordinated Variant Runner
++Addresses R1-C04, R2-I01..I05, R3-N01, R3-N02, NF-1, NF-2, NF-6:
++- Dispatches approved guard-first launcher (harness-dev.mjs) using Node 24 native type stripping
++- Canonical 25-variant plan (24 = 11 remaining forbidden variables × {nonempty, empty} + API_MODE {nonempty, empty},
++  plus 1 = NODE_ENV=production supported-path subcheck per addendum L20)
++- Strict bounded environments for child and observer (reconciled allowlist including MC_INTA_STATE_DIR, SHELL, TMPDIR)
++- Single try/finally block covering observer spawn, child spawn, monitoring, and cleanup
++- Strict owned lifecycle: immutable identity verification (executable name + parent PID), handle reap via wait(),
++  and error escalation from all five termination call sites
++- Strict collision check refusing existing attempt directories
+ """
+ 
+-from datetime import datetime, timezone
+ import json
+ import os
+ import shutil
+@@ -19,13 +19,18 @@
+ import subprocess
+ import sys
+ import time
++from datetime import datetime, timezone
+ from typing import Any, Dict, List, Optional, Tuple
+ 
+ from guard_evaluator import evaluate_guard_run
+ 
+ 
+-# Canonical 22 startup guard variants (INTA-1 §2, R07)
+-CANONICAL_22_VARIANTS = [
++# Canonical 25-variant validation plan for supported launcher path (NF-2, addendum L20):
++# - 22 variants: 11 remaining forbidden variables × {nonempty, empty}
++# - 2 variants: API_MODE × {nonempty, empty}
++# - 1 variant: NODE_ENV=production supported-path subcheck (addendum L20)
++# Total = 25 variants.
++PLAN_VARIANTS_25 = [
+     ("API_TOKEN", "nonempty", "sample_secret_token"),
+     ("API_TOKEN", "empty", ""),
+     ("API_MODE", "nonempty", "mock"),
+@@ -50,6 +55,7 @@
+     ("DATABASE_URL", "empty", ""),
+     ("JWT_SECRET", "nonempty", "sample_jwt_secret"),
+     ("JWT_SECRET", "empty", ""),
++    ("NODE_ENV", "production", "production"),
+ ]
+ 
+ 
+@@ -138,14 +144,21 @@
+     timeout_sec: float = 3.0,
+     expected_name: Optional[str] = None,
+     expected_parent: Optional[int] = None,
++    process_handle: Optional[Any] = None,
+     subprocess_runner=subprocess.run,
+     kill_func=os.kill,
+ ) -> Tuple[bool, Optional[str]]:
+     """
+     Gracefully terminates an owned process with SIGTERM after strict identity verification.
+-    Waits bounded time for exit.
++    Waits bounded time for exit using process_handle reap if available.
+     Returns (True, None) if cleanly exited, (False, error_reason) otherwise.
+     """
++    if process_handle:
++        if getattr(process_handle, "pid", None) != pid:
++            return False, f"Process handle PID {getattr(process_handle, 'pid', None)} does not match target PID {pid}"
++        if hasattr(process_handle, "poll") and process_handle.poll() is not None:
++            return True, None
++
+     if not verify_pid_identity(pid, expected_name, expected_parent, subprocess_runner, kill_func=kill_func):
+         return False, f"PID {pid} failed identity verification (unowned or mismatched); refusing signal"
+ 
+@@ -154,6 +167,13 @@
+     except OSError as e:
+         return False, f"SIGTERM delivery failed for PID {pid}: {e}"
+ 
++    if process_handle and hasattr(process_handle, "wait"):
++        try:
++            process_handle.wait(timeout=timeout_sec)
++            return True, None
++        except Exception as e:
++            return False, f"PID {pid} did not exit within {timeout_sec}s timeout after SIGTERM (handle wait error: {e})"
++
+     deadline = time.time() + timeout_sec
+     while time.time() < deadline:
+         try:
+@@ -188,7 +208,11 @@
+         self.harness_dir = harness_dir
+         self.port = port
+         self.observer_port = observer_port
+-        self.node_bin = node_bin or shutil.which("node") or "node"
++        
++        # Settle absolute path to Node (R3-N02)
++        resolved_node = node_bin or shutil.which("node") or "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node"
++        self.node_bin = os.path.abspath(resolved_node) if os.path.isabs(resolved_node) else shutil.which(resolved_node) or resolved_node
++
+         self.popen_factory = popen_factory
+         self.subprocess_runner = subprocess_runner
+         self.kill_func = kill_func
+@@ -217,7 +241,7 @@
+     def run(self, timeout_sec: float = 4.0) -> Dict[str, Any]:
+         """
+         Executes pre-probe, observer start, child run, sample probe, post-probe,
+-        and fail-closed evaluation within a strict try/finally block.
++        and fail-closed evaluation within a strict single try/finally block.
+         """
+         # 1. Pre-probe
+         pre_listen, pre_err = probe_tcp_listener(self.port, self.subprocess_runner)
+@@ -260,8 +284,11 @@
+         sample_probe_err = None
+         cleanup_errors: List[str] = []
+ 
++        child_comm = "node"
++        obs_comm = "python"
++
+         try:
+-            # 2. Start observer process with captured diagnostic streams
++            # 2. Start observer process with bounded environment (R3-N02, NF-1)
+             observer_script = os.path.join(
+                 os.path.dirname(os.path.abspath(__file__)), "observer.py"
+             )
+@@ -272,12 +299,22 @@
+                 "--state-file", self.observer_file,
+                 "--variant", self.variant_name,
+             ]
++            obs_env = {
++                "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
++                "PYTHONPATH": os.path.dirname(os.path.abspath(__file__)),
++                "HOME": os.environ.get("HOME", "/tmp"),
++                "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
++                "LANG": os.environ.get("LANG", "en_US.UTF-8"),
++                "LC_ALL": os.environ.get("LC_ALL", "en_US.UTF-8"),
++                "TERM": os.environ.get("TERM", "xterm"),
++            }
+ 
+             obs_out_fp = open(self.obs_stdout_file, "w", encoding="utf-8")
+             obs_err_fp = open(self.obs_stderr_file, "w", encoding="utf-8")
+             try:
+                 obs_proc = self.popen_factory(
+                     obs_cmd,
++                    env=obs_env,
+                     stdout=obs_out_fp,
+                     stderr=obs_err_fp,
+                 )
+@@ -296,46 +333,36 @@
+                 time.sleep(0.05)
+ 
+             if not obs_bound:
+-                return evaluate_guard_run(
+-                    canonical_id="INT-ENV-05",
+-                    key=self.key,
+-                    variant=self.variant,
+-                    exit_code=None,
+-                    timed_out=False,
+-                    stdout="",
+-                    stderr="",
+-                    listener_during=False,
+-                    listener_after=False,
+-                    during_sample_count=0,
+-                    probe_error=f"Observer failed to bind on loopback port {self.observer_port}",
+-                )
++                sample_probe_err = f"Observer failed to bind on loopback port {self.observer_port}"
++            else:
++                # 3. Construct strict bounded child environment (NF-1)
++                is_prod_subcheck = (self.key == "NODE_ENV" and self.variant == "production")
++                child_env = {
++                    "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
++                    "NODE_ENV": "production" if is_prod_subcheck else "development",
++                    "MC_INTA_ENABLE": "1",
++                    "MC_INTA_GO_BASE_URL": f"http://127.0.0.1:{self.observer_port}",
++                    "MC_INTA_STATE_DIR": self.state_dir,
++                    "PORT": str(self.port),
++                    "HOSTNAME": "127.0.0.1",
++                    "HOME": os.environ.get("HOME", "/tmp"),
++                    "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
++                    "TERM": os.environ.get("TERM", "xterm"),
++                    "SHELL": os.environ.get("SHELL", "/bin/sh"),
++                }
++                if not is_prod_subcheck:
++                    child_env[self.key] = self.env_value
+ 
+-            # 3. Construct strict bounded child environment
+-            # Pass MC_INTA_STATE_DIR explicitly to prevent unmanaged cwd writes
+-            child_env = {
+-                "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
+-                "NODE_ENV": "development",
+-                "MC_INTA_ENABLE": "1",
+-                "MC_INTA_GO_BASE_URL": f"http://127.0.0.1:{self.observer_port}",
+-                "MC_INTA_STATE_DIR": self.state_dir,
+-                "PORT": str(self.port),
+-                "HOSTNAME": "127.0.0.1",
+-                "HOME": os.environ.get("HOME", "/tmp"),
+-                "TERM": os.environ.get("TERM", "xterm"),
+-            }
+-            child_env[self.key] = self.env_value
++                # 4. Spawn child via approved guard-first launcher
++                child_cmd = [
++                    self.node_bin,
++                    "--experimental-strip-types",
++                    self.launcher_path,
++                ]
+ 
+-            # 4. Spawn child via approved guard-first launcher
+-            child_cmd = [
+-                self.node_bin,
+-                "--experimental-strip-types",
+-                self.launcher_path,
+-            ]
+-
+-            child_stdout_fp = open(self.stdout_file, "w", encoding="utf-8")
+-            child_stderr_fp = open(self.stderr_file, "w", encoding="utf-8")
+-            child_start_utc = datetime.now(timezone.utc).isoformat()
+-            try:
++                child_stdout_fp = open(self.stdout_file, "w", encoding="utf-8")
++                child_stderr_fp = open(self.stderr_file, "w", encoding="utf-8")
++                child_start_utc = datetime.now(timezone.utc).isoformat()
+                 try:
+                     child_proc = self.popen_factory(
+                         child_cmd,
+@@ -356,7 +383,7 @@
+                     "childParentPid": os.getpid(),
+                     "childStartUTC": child_start_utc,
+                     "childCmd": child_cmd,
+-                    "observerPid": obs_proc.pid,
++                    "observerPid": obs_proc.pid if obs_proc else None,
+                     "port": self.port,
+                     "observerPort": self.observer_port,
+                     "stateDir": self.state_dir,
+@@ -367,20 +394,25 @@
+                 # 5. Monitor loop
+                 deadline = time.time() + timeout_sec
+                 while time.time() < deadline:
+-                    poll_ret = child_proc.poll()
+-                    if poll_ret is not None:
+-                        child_exit = poll_ret
+-                        break
+-
+-                    # Probe listener during child execution
++                    # Probe listener during child execution window (NF-4)
+                     listening, err = probe_tcp_listener(self.port, self.subprocess_runner)
+                     during_sample_count += 1
+                     if err:
+                         sample_probe_err = err
+                     elif listening is True:
+                         listener_during = True
+-                        # Immediate abort on listener acquisition
+-                        bounded_terminate(child_proc.pid, 2.0, subprocess_runner=self.subprocess_runner, kill_func=self.kill_func)
++                        # Site 1: Immediate abort on listener acquisition (R3-N01)
++                        term_ok, term_err = bounded_terminate(
++                            child_proc.pid,
++                            2.0,
++                            expected_name=child_comm,
++                            expected_parent=os.getpid(),
++                            process_handle=child_proc,
++                            subprocess_runner=self.subprocess_runner,
++                            kill_func=self.kill_func,
++                        )
++                        if not term_ok and term_err:
++                            cleanup_errors.append(term_err)
+                         break
+                     else:
+                         if listener_during is None:
+@@ -392,39 +424,74 @@
+                             with open(self.observer_file, "r", encoding="utf-8") as f:
+                                 obs_state = json.load(f)
+                             if obs_state.get("requestCount", 0) > 0:
+-                                bounded_terminate(child_proc.pid, 2.0, subprocess_runner=self.subprocess_runner, kill_func=self.kill_func)
++                                # Site 2: Immediate abort on positive counter (R3-N01)
++                                term_ok, term_err = bounded_terminate(
++                                    child_proc.pid,
++                                    2.0,
++                                    expected_name=child_comm,
++                                    expected_parent=os.getpid(),
++                                    process_handle=child_proc,
++                                    subprocess_runner=self.subprocess_runner,
++                                    kill_func=self.kill_func,
++                                )
++                                if not term_ok and term_err:
++                                    cleanup_errors.append(term_err)
+                                 break
+                         except Exception:
+                             pass
+ 
++                    poll_ret = child_proc.poll()
++                    if poll_ret is not None:
++                        child_exit = poll_ret
++                        break
++
+                     time.sleep(0.05)
+ 
+                 if child_proc.poll() is None:
+                     timed_out = True
++                    # Site 3: Timeout termination (R3-N01)
+                     term_ok, term_err = bounded_terminate(
+-                        child_proc.pid, 2.0, subprocess_runner=self.subprocess_runner, kill_func=self.kill_func
++                        child_proc.pid,
++                        2.0,
++                        expected_name=child_comm,
++                        expected_parent=os.getpid(),
++                        process_handle=child_proc,
++                        subprocess_runner=self.subprocess_runner,
++                        kill_func=self.kill_func,
+                     )
+                     if not term_ok and term_err:
+                         cleanup_errors.append(term_err)
+ 
+                 child_exit = child_proc.poll()
+ 
+-            except Exception as e:
+-                cleanup_errors.append(f"Child process failure: {e}")
++        except Exception as e:
++            cleanup_errors.append(f"Child process failure: {e}")
+ 
+         finally:
+-            # Owned child cleanup
++            # Site 4: Owned child cleanup in finally (R3-N01, R2-I03)
+             if child_proc and child_proc.poll() is None:
+                 term_ok, term_err = bounded_terminate(
+-                    child_proc.pid, 2.0, subprocess_runner=self.subprocess_runner, kill_func=self.kill_func
++                    child_proc.pid,
++                    2.0,
++                    expected_name=child_comm,
++                    expected_parent=os.getpid(),
++                    process_handle=child_proc,
++                    subprocess_runner=self.subprocess_runner,
++                    kill_func=self.kill_func,
+                 )
+                 if not term_ok and term_err:
+                     cleanup_errors.append(term_err)
+ 
+-            # Owned observer cleanup: distinguish already exited child from running
++            # Site 5: Owned observer cleanup in finally (R3-N01, R2-I03)
+             if obs_proc and obs_proc.poll() is None:
+                 term_ok, term_err = bounded_terminate(
+-                    obs_proc.pid, 3.0, subprocess_runner=self.subprocess_runner, kill_func=self.kill_func
++                    obs_proc.pid,
++                    3.0,
++                    expected_name=obs_comm,
++                    expected_parent=os.getpid(),
++                    process_handle=obs_proc,
++                    subprocess_runner=self.subprocess_runner,
++                    kill_func=self.kill_func,
+                 )
+                 if not term_ok and term_err:
+                     cleanup_errors.append(term_err)
+@@ -447,9 +514,9 @@
+             with open(self.stderr_file, "r", encoding="utf-8", errors="replace") as f:
+                 stderr_content = f.read()
+ 
+-        # 8. Read observer final state
+-        observer_data = None
++        # 8. Read observer final record
+         observer_exists = os.path.exists(self.observer_file)
++        observer_data = None
+         observer_parse_err = None
+         if observer_exists:
+             try:
+@@ -460,9 +527,10 @@
+ 
+         probe_err_final = sample_probe_err or post_probe_err
+         if cleanup_errors:
+-            probe_err_final = (probe_err_final or "") + "; Cleanup errors: " + ", ".join(cleanup_errors)
++            prefix = (probe_err_final + "; ") if probe_err_final else ""
++            probe_err_final = prefix + "Cleanup errors: " + ", ".join(cleanup_errors)
+ 
+-        # 9. Evaluate
++        # 9. Single unified evaluation capturing all errors (including finally)
+         return evaluate_guard_run(
+             canonical_id="INT-ENV-05",
+             key=self.key,
+@@ -494,17 +562,16 @@
+     launcher_path: Optional[str] = None,
+     popen_factory=subprocess.Popen,
+     subprocess_runner=subprocess.run,
++    kill_func=os.kill,
+ ) -> int:
+     """
+     Executes the variant plan sequentially, stopping immediately upon any failure.
+-    Refuses occupied attempt directories.
++    Refuses existing attempt directories without reuse or truncation.
+     Returns 0 on complete pass, 2 on failure/abort.
+     """
+     if os.path.exists(attempt_dir):
+-        # Refuse collision if directory is non-empty
+-        if os.listdir(attempt_dir):
+-            sys.stderr.write(f"Refusing execution: attempt directory already occupied: {attempt_dir}\n")
+-            return 2
++        sys.stderr.write(f"Refusing execution: attempt directory already exists: {attempt_dir}\n")
++        return 2
+ 
+     os.makedirs(attempt_dir, exist_ok=True)
+     results_path = os.path.join(attempt_dir, "results.json")
+@@ -525,34 +592,43 @@
+             launcher_path=launcher_path,
+             popen_factory=popen_factory,
+             subprocess_runner=subprocess_runner,
++            kill_func=kill_func,
+         )
+         res = runner.run()
+         all_results.append(res)
+ 
+-        with open(results_path, "w", encoding="utf-8") as f:
++        # Write cumulative results atomically
++        tmp_res = f"{results_path}.tmp"
++        with open(tmp_res, "w", encoding="utf-8") as f:
+             json.dump(all_results, f, indent=2)
++        os.replace(tmp_res, results_path)
+ 
+         verdict = res.get("verdict")
+         code = res.get("verdictCode")
+-        print(f"  Result: {verdict} ({code}) - {res.get('notes')}")
++        notes = res.get("notes", "")
++        print(f"  Result: {verdict} ({code}) - {notes}")
+ 
+         if verdict != "PASS":
+             print(f"HALTING: Variant {key}_{variant} failed with {code}. Stopping execution.")
+             return 2
+ 
+-    print("All variants completed successfully.")
++    print("All variants executed and passed successfully.")
+     return 0
+ 
+ 
+-if __name__ == "__main__":
+-    if len(sys.argv) < 3:
+-        sys.stderr.write("Usage: coordinator.py <attempt_dir> <harness_dir> [port] [observer_port]\n")
++def main():
++    if len(sys.argv) < 2:
++        sys.stderr.write("Usage: coordinator.py <attempt_dir> [harness_dir] [port] [observer_port]\n")
+         sys.exit(2)
+ 
+-    att_dir = sys.argv[1]
+-    harn_dir = sys.argv[2]
+-    p = int(sys.argv[3]) if len(sys.argv) > 3 else 18085
+-    obs_p = int(sys.argv[4]) if len(sys.argv) > 4 else 18086
++    attempt_dir = sys.argv[1]
++    harness_dir = sys.argv[2] if len(sys.argv) > 2 else "/tmp/mc002-inta-harness"
++    port = int(sys.argv[3]) if len(sys.argv) > 3 else 18085
++    observer_port = int(sys.argv[4]) if len(sys.argv) > 4 else 18086
+ 
+-    exit_code = run_plan(CANONICAL_22_VARIANTS, att_dir, harn_dir, p, obs_p)
+-    sys.exit(exit_code)
++    ret = run_plan(PLAN_VARIANTS_25, attempt_dir, harness_dir, port, observer_port)
++    sys.exit(ret)
++
++
++if __name__ == "__main__":
++    main()

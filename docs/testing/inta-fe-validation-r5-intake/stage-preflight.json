@@ -1,0 +1,65 @@
+{
+  "task": "MC-002-INTA-R5-CODEX-STAGE-PREFLIGHT",
+  "status": "BLOCKED_CONTRACT_NOT_BINDING",
+  "actual_actions": [
+    "read/hash explicit Node and Python binaries and frozen guard",
+    "readlink/realpath explicit original harness node_modules and Next entrypoint",
+    "read source stage-gate/CLI wiring; check candidate stage path absent"
+  ],
+  "not_executed": [
+    "CoW copy",
+    "dependency install/download",
+    "stage directory creation",
+    "stage-receipt.json VERIFIED",
+    "submitted runner/launcher/reference/test execution",
+    "probe/signal/process/resource operations"
+  ],
+  "reserved_stage": "/tmp/mc002-inta-runtime-stage-r5-20261026",
+  "stage_exists_at_check": false,
+  "binaries": [
+    {
+      "path": "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node",
+      "bytes": 122545856,
+      "sha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+      "realpath": "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node",
+      "is_symlink": false,
+      "version": "OWNER_TRANSCRIPT_ONLY"
+    },
+    {
+      "path": "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3",
+      "bytes": 135696,
+      "sha256": "a6a412ff830271043f7730e2527455bdbf52c9e1712f753dc2d90089949e9943",
+      "realpath": "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "is_symlink": true,
+      "version": "OWNER_TRANSCRIPT_ONLY"
+    }
+  ],
+  "guard": {
+    "path": "/tmp/mc002-inta-harness/src/guards.ts",
+    "bytes": 3128,
+    "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928"
+  },
+  "original_dependency_path_observations": [
+    {
+      "path": "/tmp/mc002-inta-harness/node_modules",
+      "exists": true,
+      "is_symlink": true,
+      "realpath": "/private/tmp/mc002-inta-fe/node_modules"
+    },
+    {
+      "path": "/tmp/mc002-inta-harness/node_modules/.bin/next",
+      "exists": true,
+      "is_symlink": false,
+      "realpath": "/private/tmp/mc002-inta-fe/node_modules/.bin/next"
+    }
+  ],
+  "blockers": [
+    "Production CLI defaults stage_receipt_required False and does not accept/bind the stage receipt",
+    "Launcher CLI hard-codes shared original guard/Next/cwd rather than verified stage paths",
+    "Receipt schema does not bind binaries/source/paths/realpath inventory or nested links; documents differ in field names",
+    "Original node_modules is external symlink; plan CoW cp preserving links would not isolate dependencies",
+    "Claimed lifecycle/attempt proof still incomplete, as intake findings record"
+  ],
+  "reason_not_to_copy": "A private copy would be unused by this CLI. No supported exact stage-consumer interface exists to verify honestly; copying now cannot meet the requested readiness condition.",
+  "next": "Independent OpenCode adjudicates R5 source plus this actual blocked staging preflight. If confirmed, owner implements one precise source/binding correction; actual safe CoW stage follows stable binding, before later combined readiness review. No runtime cue."
+}

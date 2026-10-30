@@ -1,0 +1,109 @@
+{
+  "personally_run": [
+    {
+      "id": "V1",
+      "what": "author manifest/delta SHA-256 and all 719 entries vs disk",
+      "by": "python hashlib",
+      "result": "both pins match; 719 verified, 0 missing, 0 mismatch",
+      "exit": 0
+    },
+    {
+      "id": "V2",
+      "what": "HEAD and output-directory absence",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "result": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc; output dir absent before write",
+      "exit": 0
+    },
+    {
+      "id": "V3",
+      "what": "focused tests of the delta",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "src/test/data-transfer-seam.test.ts",
+        "src/components/organisms/drafts.test.tsx",
+        "src/components/organisms/read-failure-callers.test.ts",
+        "src/lib/mc/paths.test.ts",
+        "src/lib/oidc/flow.test.ts"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T14:58:04Z",
+      "end_utc": "2026-10-28T14:58:06Z",
+      "exit": 0,
+      "counts": "5 files, 107/107 passed"
+    },
+    {
+      "id": "V4",
+      "what": "real safeInternalPath executed on adversarial paths",
+      "argv": [
+        "node",
+        "--experimental-strip-types",
+        "real.mjs"
+      ],
+      "result": "\"/..//evil.test\", \"/x/..//evil.test\", \"/%2e%2e//evil.test\", \"/a/../..//evil.test\" return \"//evil.test\"; \"/..///evil.test\" returns \"///evil.test\"",
+      "exit": 0,
+      "note": "script lives in the Claude scratchpad, not the repo"
+    },
+    {
+      "id": "V5",
+      "what": "safeReturnTo and resolveReturnTo, verbatim replica of flow.ts:96-118 (the module itself would not load under strip-only mode)",
+      "argv": [
+        "node",
+        "replica.mjs"
+      ],
+      "result": "safeReturnTo returns \"//evil.test\" for the same payloads, but the callback resolves to http://app.test/workspaces because resolveReturnTo re-validates",
+      "exit": 0,
+      "note": "replica, not the module; treat as strong but indirect evidence"
+    },
+    {
+      "id": "V6",
+      "what": "callers-test regex probe on contrived tags (no source edit)",
+      "argv": [
+        "node",
+        "-e",
+        "<regex probe>"
+      ],
+      "result": "a tag with \">\" inside an attribute (for example \"=>\") does not match and a \"partial\" in it would be invisible; \"{...props}\" spread matches but carries no visible partial",
+      "exit": 0
+    },
+    {
+      "id": "V7",
+      "what": "static greps for line references and backend bad-request producers",
+      "result": "see inputs.json examined_paths",
+      "exit": 0
+    }
+  ],
+  "author_evidence_cited_not_rerun": [
+    {
+      "what": "pnpm check 48 files / 465 tests, pnpm build (Turbopack), build-storybook, all exit 0",
+      "source": "author checks.json F4-F6"
+    },
+    {
+      "what": "backend sqlc-check, gofmt, tidy, lint exit 0; go test 586 pass/144 skip without a DB; 765 pass/4 skip against isolated PostgreSQL test DBs",
+      "source": "author checks.json B1-B6"
+    },
+    {
+      "what": "seam test red (kind \"error\") then green (11/11)",
+      "source": "author checks.json T1-T2"
+    },
+    {
+      "what": "restore checker 9 tests OK",
+      "source": "author checks.json R1"
+    },
+    {
+      "what": "params arrive percent-encoded (Next 16.4.2 probe)",
+      "source": "author checks.json P1"
+    }
+  ],
+  "not_run": [
+    "pnpm check, pnpm build, Storybook (cited only)",
+    "backend tests (Docker/PostgreSQL are out of this review mode)",
+    "browser, e2e, hosted identity, restore rehearsal, any source edit, commit or push"
+  ]
+}

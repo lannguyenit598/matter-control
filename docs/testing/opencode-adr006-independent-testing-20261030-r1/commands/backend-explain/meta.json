@@ -1,0 +1,27 @@
+{
+  "run": "backend-explain",
+  "argv": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/adapter/outbound/postgres",
+    "-run",
+    "TestAccessPathExplainVerification"
+  ],
+  "cwd": "/private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/snapshot/apps/backend",
+  "env_file": "/private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/private/explain.env",
+  "env_keys": [
+    "MC_BFF_TEST_DATABASE_URL",
+    "MC_EXPLAIN_VERIFY",
+    "MC_TEST_DATABASE_URL"
+  ],
+  "started_utc": "2026-10-30T03:43:45Z",
+  "ended_utc": "2026-10-30T03:43:49Z",
+  "duration_seconds": 4,
+  "exit": 0,
+  "identity": "OpenCode independent QA",
+  "sanitize": "postgres://user:<redacted>@ URLs scrubbed in public stdout/stderr copies; secrets never in argv",
+  "evidence_class": "INDEPENDENT_EXECUTION"
+}

@@ -1,0 +1,567 @@
+{
+  "actor": "Local Codex",
+  "observed_utc": "2026-10-26T08:48:20.020897+00:00",
+  "metadata_only_no_environment": true,
+  "commands": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Labels\":{{json .Config.Labels}},\"Running\":{{json .State.Running}},\"Status\":{{json .State.Status}},\"ExitCode\":{{json .State.ExitCode}},\"StartedAt\":{{json .State.StartedAt}},\"FinishedAt\":{{json .State.FinishedAt}},\"Health\":{{json .State.Health.Status}},\"Memory\":{{json .HostConfig.Memory}},\"NanoCpus\":{{json .HostConfig.NanoCpus}},\"PidsLimit\":{{json .HostConfig.PidsLimit}},\"Ports\":{{json .HostConfig.PortBindings}},\"Mounts\":{{json .Mounts}}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.382585+00:00",
+      "end_utc": "2026-10-26T08:48:19.575199+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Name\":\"/mc002-inta-pg-intamvnmoems3pd\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"Running\":true,\"Status\":\"running\",\"ExitCode\":0,\"StartedAt\":\"2026-10-26T00:26:58.345144717Z\",\"FinishedAt\":\"2026-10-26T00:14:55.81924409Z\",\"Health\":\"healthy\",\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128,\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Mounts\":[{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}]}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:15457",
+        "-sTCP:LISTEN"
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.575273+00:00",
+      "end_utc": "2026-10-26T08:48:19.617805+00:00",
+      "exit": 0,
+      "stdout": "COMMAND     PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\ncom.docke 45782 nguyenvanlan   56u  IPv4 0x1f0aca98a2511b4b      0t0  TCP 127.0.0.1:15457 (LISTEN)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:15457",
+        "-sTCP:ESTABLISHED"
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.617836+00:00",
+      "end_utc": "2026-10-26T08:48:19.653266+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18085",
+        "-sTCP:LISTEN"
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.653295+00:00",
+      "end_utc": "2026-10-26T08:48:19.689010+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18085",
+        "-sTCP:ESTABLISHED"
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.689049+00:00",
+      "end_utc": "2026-10-26T08:48:19.725848+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18086",
+        "-sTCP:LISTEN"
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.725891+00:00",
+      "end_utc": "2026-10-26T08:48:19.762738+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18086",
+        "-sTCP:ESTABLISHED"
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.762796+00:00",
+      "end_utc": "2026-10-26T08:48:19.800663+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "98134,88444,88453",
+        "-o",
+        "pid=,ppid=,lstart=,comm="
+      ],
+      "cwd": null,
+      "start_utc": "2026-10-26T08:48:19.800726+00:00",
+      "end_utc": "2026-10-26T08:48:19.829760+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "ledger": [
+    {
+      "path": "assertions/intamvnmoems3pd.json",
+      "bytes": 4112,
+      "sha256": "88946ddf9c98f9ce600ee60b66237e0c5503890064e98524f472582985d9da45"
+    },
+    {
+      "path": "checkpoints/intamvnmoems3pd/checkpointA.baseline.json",
+      "bytes": 238,
+      "sha256": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15"
+    },
+    {
+      "path": "checkpoints/intamvnmoems3pd/checkpointA.current.json",
+      "bytes": 238,
+      "sha256": "8562b4189a6bc4a15efb119e19fc61836cba0f988fb7784ef80e01a04835f524"
+    },
+    {
+      "path": "checkpoints/intamvnmoems3pd/state.json",
+      "bytes": 206,
+      "sha256": "7272c7796eccea89ee3091ea1fe4c0ef9eb129ae0a4b790b538c7269ae1cfa7f"
+    },
+    {
+      "path": "checkpoints/intamvnmoems3pd.json",
+      "bytes": 464,
+      "sha256": "5d75c1bc79970e128e6c3e4206ae49b26aa911e0d489ba88e3ee21aabc046a48"
+    },
+    {
+      "path": "counters.json",
+      "bytes": 27,
+      "sha256": "94c78270b06535b8728567b8be526ae7df9f6d8e4afa211b10352ecbe5cc3469"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/INT-PERS-01.json",
+      "bytes": 882,
+      "sha256": "906b8c246dca4e5662505ba1632974335ffaef478847b935888bc9215712bb98"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/INT-PERS-02.json",
+      "bytes": 882,
+      "sha256": "cf090a94c6512322b7a1847a551d24996eb187d741bea70804533c59e27cca72"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/INT-PERS-03.json",
+      "bytes": 882,
+      "sha256": "e6ec988ef5be9aa4ae296913af9168b4f1ccc4afe1acc3a4ccac89b6e428a5f4"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/INT-PERS-04.json",
+      "bytes": 881,
+      "sha256": "ef3659d13a8f9f1bd282b3a6d77ced081c69d0d6105b0efc72b9f4e8f25172b8"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T1.json",
+      "bytes": 859,
+      "sha256": "aaf934463218948754e8e556d8aeee618484c672dbeda4bde37e2cc3202b3218"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T10.json",
+      "bytes": 1873,
+      "sha256": "bb29da180b9218c543e9049ef60b6549cd47a9e40d925f7c6f9a66197272cb10"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T11a.json",
+      "bytes": 999,
+      "sha256": "6c4cf2b15bfa50262c4563061afb59c61b5576349ccb35ea35517ca41c21d05f"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T11b.json",
+      "bytes": 1000,
+      "sha256": "655a53e56c8f4b6d32b8789cafd88d0129fbd25c4d170cb87cbd115bdd4d8fe6"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T11c.json",
+      "bytes": 957,
+      "sha256": "eb69a31ffa2875b3df53740b04f1e24a0eeef7728b15fbc3936314a95e314916"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T12.json",
+      "bytes": 725,
+      "sha256": "311e20cbc51eba0fc9f7f624b38209ce4215cdac8facc5ff095707f4631c4c97"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T2.json",
+      "bytes": 862,
+      "sha256": "68c8fbd7f0b0bdb409eb28d6016c88f41a4c4b7ad6b9d70fc9b22446890ca898"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T3.json",
+      "bytes": 912,
+      "sha256": "7e22996435ccf690565f944b52b73f0af2ee5b65c06cd6664820ba6444e2594d"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T4.json",
+      "bytes": 1796,
+      "sha256": "be2fe5066d083e9b0bcae8a362299f1acae0a3ce90f4244631831e94fbb99e2a"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T5.json",
+      "bytes": 1884,
+      "sha256": "7e35bf0813f0d63871bfe3aa7483901b401cd8f83fa21b6465fd1ad4461bd59b"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T6-W.json",
+      "bytes": 945,
+      "sha256": "8b80fb6f572041284a65a637e352ba482c90a15d43650c212a1fbdda6abc0e9d"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T7-W.json",
+      "bytes": 904,
+      "sha256": "ecd791341928b2807fef37ad55cd10bc206a59a73f87f5189e5dfef1792f2a3b"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T8.json",
+      "bytes": 1771,
+      "sha256": "d54b4f79cd1650b64cdf8fd075f79d41bd6ce94a3b5ece7c14a5ff76235e643e"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/T9.json",
+      "bytes": 866,
+      "sha256": "7bfad3ec620a396ab9d7cf59966de1ebb7ed821ffda7c0ede6d1151bb70f373a"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/W1.json",
+      "bytes": 1010,
+      "sha256": "23e2d1b5441850fc7c7ecdaa351185b2d825dd8b2535be02aedfa0c7df7b3aad"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/W11.json",
+      "bytes": 1036,
+      "sha256": "ce54f40e27e1f3784b084b33ac787f476cba169ccc7294ec34095ef9810b3ae3"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/W2.json",
+      "bytes": 940,
+      "sha256": "cc972e7c070073876bc01a4e358ceeb1a98778ae1f5140fcc5c98a13ec63455c"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/W3.json",
+      "bytes": 965,
+      "sha256": "6d14bc0364b6a6c7c9c7d5d4fb1c51821c71c59614e4046613fe8684d9b13a26"
+    },
+    {
+      "path": "envelopes/intamvnmoems3pd/W9.json",
+      "bytes": 942,
+      "sha256": "4d6da318a96f96e780396d4baa900484921136716e8fcf619e775692291ef4e2"
+    },
+    {
+      "path": "stages/intamvnmoems3pd/stage1.completed",
+      "bytes": 64,
+      "sha256": "16c9513311fb4b1f118fe3fcb2848c6e007fe125ba12ae6cb3aad539891a534f"
+    },
+    {
+      "path": "stages/intamvnmoems3pd/stage2.completed",
+      "bytes": 64,
+      "sha256": "1e2786bc0a8b04609130cc3e8f33ef9b04e564145f6974067d605c515668daa7"
+    },
+    {
+      "path": "stages/intamvnmoems3pd/stage3.completed",
+      "bytes": 64,
+      "sha256": "4640ea64a2d73e2acfbb8de495b0c3d29a1da12a2885372f8f22cf8393195464"
+    },
+    {
+      "path": "stages/intamvnmoems3pd/stage4.completed",
+      "bytes": 64,
+      "sha256": "21c4923a746785de7b3d0e244fe019c5a229bcaf85a7632401ece3ee3d37a212"
+    },
+    {
+      "path": "stages/intamvnmoems3pd/stage5.completed",
+      "bytes": 64,
+      "sha256": "cb09b9e564ff77cde2bcf7257d11d2aec93c29cb49208607fd82dca8a56d5f2b"
+    },
+    {
+      "path": "stages/intamvnmoems3pd/stage6.completed",
+      "bytes": 64,
+      "sha256": "fe0a00668b91405fc8857c2d7dd0108113a3e31624bb45fb5a158343eac193d1"
+    },
+    {
+      "path": "stages/intamvnmoems3pd/stage7.completed",
+      "bytes": 64,
+      "sha256": "e4e7d576b61344d45b4a8cc3e0673bd6c9cdc7ceef38d43d92c33dfee35da400"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/INT-PERS-01.status",
+      "bytes": 101,
+      "sha256": "715d2718c036e5fd8e09b61d9138e052bf8554d5a236e861c6df1afd1e2b01f7"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/INT-PERS-02.status",
+      "bytes": 101,
+      "sha256": "b257fb39f6ce0863b23dd8826fa09d04a8722d1c85edacf71381c517e26d47d6"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/INT-PERS-03.status",
+      "bytes": 101,
+      "sha256": "71f9a8c3ca5a0a2f15cf229d47f950b264a5dce6f5d99bb4298e54e39de9d077"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/INT-PERS-04.status",
+      "bytes": 101,
+      "sha256": "58dd54e8ab695970546578a6f8ead1a231773a4a999cef4331f44488d3317928"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T1.status",
+      "bytes": 92,
+      "sha256": "34c628e5338632bed18a846745bba82a47b28e54347737abf0332233ee1407af"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T10.status",
+      "bytes": 93,
+      "sha256": "a2a375897c7d911a884a1cae3ba264714b5fa9fe605bf5a7787ce0a0eaf94c83"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T11a.status",
+      "bytes": 94,
+      "sha256": "cff014887c803e1fbb6aa91331794c4e400480b46614f1a58ae13f4ccec66fd1"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T11b.status",
+      "bytes": 94,
+      "sha256": "718e095dd476d8b22e85b179946ba1bf62494d2c6e1ddc0d6a9146666e815c83"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T11c.status",
+      "bytes": 92,
+      "sha256": "fe27c0b65361c8cbebc7eceddb96fe1941747a57651bf58fabc86f1dd1900e0a"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T12.status",
+      "bytes": 93,
+      "sha256": "2fa4a9736bd0b691a85cc60abfa68b1e53fff68024f2418b4277120090dac6bc"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T2.status",
+      "bytes": 92,
+      "sha256": "8f570a3ee3f4e6be2577274c5828d11eedef996d4d3481dbb6f63c4476b26066"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T3.status",
+      "bytes": 92,
+      "sha256": "a32ab55b05c99312fd9b60575d7a95d8e603258a4c0220770e53922da7f0ce22"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T4.status",
+      "bytes": 92,
+      "sha256": "86dfae3a5974317e3383ab5db30f84a20eda956e537aa360bd8502f70fbaef03"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T5.status",
+      "bytes": 92,
+      "sha256": "455ad1459e0d28c4cc3689f01191c580b2c5dcf4f86d7c3335fece6a46bdd0eb"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T6-W.status",
+      "bytes": 94,
+      "sha256": "64b1a6ef7ff129596eb27dbd6ceec29d1569f425dd4b2e9d1e82a089dc09af20"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T7-W.status",
+      "bytes": 94,
+      "sha256": "1553b56f8c3456191db3b1cea677c344a9d081b81dbe5af100eae5de15e032af"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T8.status",
+      "bytes": 92,
+      "sha256": "e367de62c6e8cac7e0b78eeef72a0513f83907d2c92a507ce60ed12ef93b25fe"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/T9.status",
+      "bytes": 92,
+      "sha256": "06fd6b26ad9120136715f19d0be75dc776ef782b520f3d50073d9c2a82490974"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/W1.status",
+      "bytes": 92,
+      "sha256": "c264c0e470ce5b9e5544be8da985255bec447d07fb3412eecf7e44498bca3734"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/W11.status",
+      "bytes": 93,
+      "sha256": "682469e7d61eef54699340b334d39fe4ea447570fabe57ec3224aa1a7f762921"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/W2.status",
+      "bytes": 92,
+      "sha256": "84839bcc586f174d4f9ec503a43b4ec517c1acad5b0e5f74721a111a7777e91c"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/W3.status",
+      "bytes": 92,
+      "sha256": "38b4bb9bfd2e7b74f71d6e2c165958fe6ae0f33ca01c01c8cc2793cd23f7f197"
+    },
+    {
+      "path": "substeps/intamvnmoems3pd/W9.status",
+      "bytes": 92,
+      "sha256": "9005a6578beb3b4830ac03b7c92e23e8391d25b19c3b6fdd71eb032cf8e0f9ef"
+    }
+  ],
+  "ledger_count": 59,
+  "ledger_matches_stage7": true,
+  "sources": [
+    {
+      "path": "/tmp/mc002-inta-be",
+      "head": {
+        "argv": [
+          "rtk",
+          "proxy",
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/tmp/mc002-inta-be",
+        "start_utc": "2026-10-26T08:48:19.842266+00:00",
+        "end_utc": "2026-10-26T08:48:19.862799+00:00",
+        "exit": 0,
+        "stdout": "52b60a4617081c41b949f2242e1784238c170f75\n",
+        "stderr": ""
+      },
+      "status": {
+        "argv": [
+          "rtk",
+          "proxy",
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/tmp/mc002-inta-be",
+        "start_utc": "2026-10-26T08:48:19.862826+00:00",
+        "end_utc": "2026-10-26T08:48:19.889384+00:00",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/tmp/mc002-inta-fe",
+      "head": {
+        "argv": [
+          "rtk",
+          "proxy",
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/tmp/mc002-inta-fe",
+        "start_utc": "2026-10-26T08:48:19.889437+00:00",
+        "end_utc": "2026-10-26T08:48:19.910743+00:00",
+        "exit": 0,
+        "stdout": "3e5a642479acb789eb210e73fba956f3e85082e3\n",
+        "stderr": ""
+      },
+      "status": {
+        "argv": [
+          "rtk",
+          "proxy",
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/tmp/mc002-inta-fe",
+        "start_utc": "2026-10-26T08:48:19.910782+00:00",
+        "end_utc": "2026-10-26T08:48:19.942225+00:00",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/tmp/mc002-inta-harness",
+      "head": {
+        "argv": [
+          "rtk",
+          "proxy",
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/tmp/mc002-inta-harness",
+        "start_utc": "2026-10-26T08:48:19.942276+00:00",
+        "end_utc": "2026-10-26T08:48:19.961405+00:00",
+        "exit": 0,
+        "stdout": "48cc03e949d66fc47a7d304413621eb79804e6c1\n",
+        "stderr": ""
+      },
+      "status": {
+        "argv": [
+          "rtk",
+          "proxy",
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/tmp/mc002-inta-harness",
+        "start_utc": "2026-10-26T08:48:19.961441+00:00",
+        "end_utc": "2026-10-26T08:48:19.984172+00:00",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    }
+  ],
+  "governance_head": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-26T08:48:19.984219+00:00",
+    "end_utc": "2026-10-26T08:48:20.002714+00:00",
+    "exit": 0,
+    "stdout": "a62d838791ba188838c4ff00b7b6e265ac775056\n",
+    "stderr": ""
+  },
+  "governance_branch": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "git",
+      "branch",
+      "--show-current"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_utc": "2026-10-26T08:48:20.002755+00:00",
+    "end_utc": "2026-10-26T08:48:20.020859+00:00",
+    "exit": 0,
+    "stdout": "codex/unified-project-flow\n",
+    "stderr": ""
+  }
+}

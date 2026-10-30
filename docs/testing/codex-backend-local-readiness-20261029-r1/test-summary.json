@@ -1,0 +1,54 @@
+{
+  "baseline": {
+    "counts": {
+      "pass": 574,
+      "skip": 5
+    },
+    "nonpass": [
+      {
+        "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres/pgtest",
+        "Test": "TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip",
+        "Action": "skip"
+      },
+      {
+        "Package": "leonx.me/matter-control/internal/adapter/outbound/objectstore",
+        "Test": "TestContract_R2_RealBucket",
+        "Action": "skip"
+      },
+      {
+        "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres",
+        "Test": "TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds",
+        "Action": "skip"
+      },
+      {
+        "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres",
+        "Test": "TestPerf_LocalWorkloads",
+        "Action": "skip"
+      },
+      {
+        "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres",
+        "Test": "TestRestoreRehearsal",
+        "Action": "skip"
+      }
+    ]
+  },
+  "final": {
+    "pass": 593,
+    "fail": 0,
+    "skip": 5
+  },
+  "final_nonpass_or_no_test_files": [
+    "?   \tleonx.me/matter-control/cmd/mcapi\t[no test files]",
+    "?   \tleonx.me/matter-control/internal/adapter/inbound/httpapi\t[no test files]",
+    "--- SKIP: TestContract_R2_RealBucket (0.00s)",
+    "--- SKIP: TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds (0.27s)",
+    "--- SKIP: TestPerf_LocalWorkloads (0.00s)",
+    "--- SKIP: TestRestoreRehearsal (0.00s)",
+    "?   \tleonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc\t[no test files]",
+    "--- SKIP: TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip (0.00s)",
+    "?   \tleonx.me/matter-control/internal/adapter/outbound/repotest/objectcontract\t[no test files]",
+    "?   \tleonx.me/matter-control/internal/core/domain\t[no test files]",
+    "?   \tleonx.me/matter-control/internal/core/port\t[no test files]"
+  ],
+  "note": "Counts include named parent tests and subtests; no-test packages are separate. Final command used GOFLAGS=-v and MC_TEST_DATABASE_URL only for the labelled synthetic fixture."
+}

@@ -46,3 +46,13 @@ next-env.d.ts
 
 # python (vendored ui-ux-pro-max skill scripts)
 __pycache__/
+
+# Worker build output and local runtime secrets
+.open-next/
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Firebase App Hosting adapter output (ADR-007); listed so a local adapter build edits nothing tracked
+/.apphosting/

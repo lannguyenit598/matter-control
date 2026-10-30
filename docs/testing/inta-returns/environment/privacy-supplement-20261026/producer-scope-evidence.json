@@ -1,0 +1,39 @@
+{
+  "actor": "Local Codex author analysis; not independent adjudication",
+  "input_pins": [
+    {
+      "path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-CLOSEOUT-REVIEW-PROMPT.md",
+      "bytes": 9425,
+      "sha256": "ca2c65bbbcabf0433472621141c0f66f8fbbcaa6e34d936107f3440b58478cb1"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-R1-ADDENDUM-PROMPT.md",
+      "bytes": 2069,
+      "sha256": "765ed66e1188e36fd174f697743a6fa9e435573972e82e770f2cfdc44722da5e"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R2-SOURCE-REVIEW-PROMPT.md",
+      "bytes": 5196,
+      "sha256": "0b364a17693d89aac452a4506ca6543e347585aa2a71aeaf21e0588299c3c5f5"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R3-SOURCE-REVIEW-PROMPT.md",
+      "bytes": 7179,
+      "sha256": "8305219ab5c4fbf32520efbf68a61296dcf59305f5f8b68eb39e7ffb3caf7374"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/closeout-review-r1/outputs-manifest.json",
+      "bytes": 11916,
+      "sha256": "3a74ebf262663f1e7b94659182dbd5be32f36095b4a31b498f27ea6879f0d2d6"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/r4-source/zcode/review-meta.json",
+      "bytes": 2829,
+      "sha256": "ed18d4e65fcc3c481efb15ab2196aec3ab7724ce20fa055981444a58cfc943d3"
+    }
+  ],
+  "finding": "Relevant QA producer contracts declare direct docs/reviews and docs/testing/inta-returns/qa outputs, without requiring /tmp/mc002-inta-evidence/qa. Four declared QA narrative outputs were actually outside the original scan inventory; these plus later evidence are now measured in this supplement.",
+  "proposal": "Treat the absent raw QA root as a producer-layout scope question, not proof of lost originals. Independent QA must map expected outputs to scanned bytes and adjudicate before full privacy acceptance.",
+  "old_PARTIAL_unchanged": true,
+  "fabricated_raw_QA_copies": false
+}

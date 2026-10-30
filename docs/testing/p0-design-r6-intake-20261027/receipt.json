@@ -1,0 +1,167 @@
+{
+  "task": "MC-P0-DESIGN-R6-INTAKE-20261027",
+  "actual_inspector": "Codex / Local Codex",
+  "recorded_utc": "2026-10-27T03:47:20.489610+00:00",
+  "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "branch": "codex/unified-project-flow",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "mode": "Read/hash/parse/static source verification and syntax-only compilation; no DOM/runtime/render",
+  "design_pins": [
+    {
+      "path": "docs/design/p0-handoff-r6/current-ux-spec.md",
+      "bytes": 28931,
+      "sha256": "cb726b3e53558357144b21402f491a93183e2da218893ab15e6c219493643130"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/design-delta.md",
+      "bytes": 20116,
+      "sha256": "0f44459a2a0b89316db34e1662007e9f2812b813ed777038e4a8e79bc1e7daa3"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/findings-disposition.json",
+      "bytes": 73840,
+      "sha256": "83afe8aadd8c5ae7a01baadd4fc4c45561564a9d8ed487f40ad29ec10e2ec4e1"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/polish.css",
+      "bytes": 12239,
+      "sha256": "2e58a60eb7d41c09e902750d35f2002ab2b1cddb5f94d76926e155a20b12aabd"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/prototype.html",
+      "bytes": 83796,
+      "sha256": "ad9d6ca9955e46c1dd95c34fc18eef2d5efb1962721220bf16d70325d4ca4d5e"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/screen-state-matrix.json",
+      "bytes": 49028,
+      "sha256": "aa74b140fd1fb5d26793c47d162d06d64c70dfd537c384d17dc26b80d042f26b"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/validation-plan.md",
+      "bytes": 21556,
+      "sha256": "160e95778ebc02b5b021434c5c1911bef1fd5743ff92829c67f90e98e8575d0a"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/zcode-handoff.md",
+      "bytes": 14241,
+      "sha256": "33085a03f0ce24406e2e068feaa11cf2ae7ba8ebb2854cde5905734d932a6f6a"
+    },
+    {
+      "path": "docs/design/p0-handoff-r6/return.md",
+      "bytes": 11844,
+      "sha256": "583a18a48ed89caaec7aedebfb796789dd0399df2cc375f40b6de3ea5f0423c5"
+    }
+  ],
+  "reference_pins": [
+    {
+      "path": "docs/requirements/acceptance-criteria.md",
+      "bytes": 39092,
+      "sha256": "809c206e576e6d4cc0f3642caeec4ee6997b465ffe2f0b316368f7e106e97fa7"
+    },
+    {
+      "path": "docs/requirements/state-semantics.md",
+      "bytes": 11469,
+      "sha256": "156ca1dd2f75a7374a59d2aa4af4a9815ce62a2f11c03f84977bad2860a2ad51"
+    },
+    {
+      "path": "docs/testing/p0-zcode-plan-20261026/coverage.json",
+      "bytes": 13177,
+      "sha256": "d3bd69271e8b83d460d282484866d898f9f8c611d9ff78b0df3532eb1c60f621"
+    },
+    {
+      "path": "docs/design/p0-handoff-r3/validation-plan.md",
+      "bytes": 24601,
+      "sha256": "ba51b4acfd44a94d1d2e19613a84d62bf70b3e8d38f27b465870db4a1e7a479c"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/screen-state-matrix.json",
+      "bytes": 47169,
+      "sha256": "10ca9b1add138666ea72cd53ba5d44f3d04a7fc41d05ba40923e713914e83b08"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/findings-disposition.json",
+      "bytes": 67272,
+      "sha256": "c98db3c2e3fb95cbbf465367c2bb2540c7ff0854b53c72712415df4cc1e4bb61"
+    }
+  ],
+  "structural_checks_recorded_from_this_turn": {
+    "20_FR_AC_wave": true,
+    "63_AC": true,
+    "14_NFR": true,
+    "13_nine_states": true,
+    "reciprocal_links": true,
+    "3_GW_sequences": true,
+    "GW3_two_cycles": true,
+    "Atlas_24_12_12_7": true,
+    "action_census": true,
+    "CSS_identity": true,
+    "48_history_unchanged": true,
+    "5_R5_dispositions": true
+  },
+  "structural_checks_passed": 12,
+  "syntax_check": {
+    "command": "rtk proxy node --check /private/tmp/mc-p0-design-r6-intake-20261027-syntax.js",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "exit_code": 0,
+    "combined_output": "",
+    "preserved_input": {
+      "path": "docs/testing/p0-design-r6-intake-20261027/syntax-input.js",
+      "bytes": 45066,
+      "sha256": "75f0aaec448ab60e5d06a3ae5c996b13127d7710d9ce27f150f4d8d09c8c4f4d"
+    },
+    "runtime_executed": false
+  },
+  "browser_inventory": {
+    "tool": "mcp__cua_repl.js",
+    "code": "await cua.getState();",
+    "browsers": [],
+    "error": "Browsers: Error: Local browser use is disabled in Work settings",
+    "fallback_capture_or_renderer": false
+  },
+  "source_corrections": {
+    "R5-N01": "SOURCE_CORRECTED",
+    "R5-N02": "PARTIAL; remaining canonical proof and fixture caveats",
+    "R5-N03": "SOURCE_CORRECTED",
+    "R5-N04": "PARTIAL; reproducibility and AC-137 corrections pending",
+    "R5-N05": "SOURCE_CORRECTED"
+  },
+  "remaining_findings": [
+    {
+      "id": "R6-E01",
+      "priority": "P2",
+      "subject": "Proof snapshot consistency and unreachable demo fixture"
+    },
+    {
+      "id": "R6-E02",
+      "priority": "P2",
+      "subject": "Approved AC-137 protocol changed"
+    },
+    {
+      "id": "R6-E03",
+      "priority": "P2",
+      "subject": "Reported check scripts/results not reproducible from packet"
+    }
+  ],
+  "missing_referenced_scripts": [
+    "/tmp/r6-extracted-logic.js",
+    "/tmp/r6-mock-dom-bootstrap.js",
+    "/tmp/check_canonical_facts.py"
+  ],
+  "report": {
+    "path": "docs/reviews/p0-design-r6-intake-20261027.md",
+    "bytes": 7835,
+    "sha256": "7f4ced49fbadc8add2e0eecff84ce2d6ac04a3bde40dde87402162738c42e98c"
+  },
+  "completion": "Core source corrections verified; bounded corrections and visual/independent acceptance remain",
+  "not_run": [
+    "Reviewed-source DOM execution",
+    "new render/capture",
+    "interactive focus/keyboard/touch/screen reader",
+    "product/DB/provider",
+    "AC-137",
+    "external dispatch",
+    "Git mutations"
+  ],
+  "no_formal_gate_promotion": true
+}

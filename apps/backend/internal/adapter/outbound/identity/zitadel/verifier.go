@@ -22,7 +22,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 const (
@@ -50,8 +50,9 @@ type Config struct {
 	HTTPClient    *http.Client
 	Timeout       time.Duration
 	Clock         func() time.Time
-	// CacheTTL bounds the per-token result cache. Zero disables caching. A cached
-	// result is NOT a revocation guarantee; it is only a load shield.
+	// CacheTTL bounds the per-token result cache. Zero disables caching. A cached result is
+	// NOT a revocation guarantee; it is only a load shield: a revoked token may keep passing
+	// for up to TTL after revocation (config default 15s — a deliberate, documented window).
 	CacheTTL time.Duration
 }
 

@@ -1,0 +1,74 @@
+--- /dev/null
++++ b/apps/backend/internal/adapter/inbound/productapi/verifier_expected_answer_test.go
+@@ -0,0 +1,8 @@
++package productapi
++import "testing"
++func TestVerifierReviewHTTPMissingExpectation(t *testing.T){e:=newEnv(t);base,v,g,tag:=reviewFixture(t,e);p:=base+"/review-grids/"+g
++ q:=e.do("POST",p+"/questions","t-bob",ifMatch(tag),`{"text":"Q?"}`);e.expect(q,200,"");qid:=q.json()["questions"].([]any)[0].(map[string]any)["id"].(string)
++ add:=e.do("POST",p+"/versions","t-bob",ifMatch(q.Header().Get("ETag")),`{"versionId":"`+v+`"}`);e.expect(add,200,"")
++ body:=`{"versionId":"`+v+`","questionId":"`+qid+`","questionRevision":1,"state":"ABSENT"}`
++ e.expect(e.do("POST",p+"/answers","t-bob",key(),body),428,"urn:mc:precondition-required")
++}
+--- /dev/null
++++ b/apps/backend/internal/adapter/inbound/productapi/verifier_history_test.go
+@@ -0,0 +1,11 @@
++package productapi
++import("testing";"encoding/json";"fmt")
++func TestVerifierReviewHistorySignalsTruncation(t *testing.T){
++ e:=newEnv(t);base,v,g,tag:=reviewFixture(t,e);p:=base+"/review-grids/"+g
++ q:=e.do("POST",p+"/questions","t-bob",ifMatch(tag),`{"text":"Q?"}`);e.expect(q,200,"");qid:=q.json()["questions"].([]any)[0].(map[string]any)["id"].(string)
++ e.expect(e.do("POST",p+"/versions","t-bob",ifMatch(q.Header().Get("ETag")),`{"versionId":"`+v+`"}`),200,"")
++ expected:="";for i:=0;i<101;i++ {body,_:=json.Marshal(map[string]any{"versionId":v,"questionId":qid,"expectedAnswerId":expected,"questionRevision":1,"state":"REVIEWED","text":fmt.Sprintf("Answer %d",i)});r:=e.do("POST",p+"/answers","t-bob",key(),string(body));e.expect(r,201,"");expected=r.json()["id"].(string)}
++ r:=e.do("GET",p+"/cells/"+v+"/"+qid+"/history","t-bob",nil,"");e.expect(r,200,"");j:=r.json();items:=j["items"].([]any);page:=j["page"].(map[string]any)
++ t.Logf("history rows=%d envelope=%v",len(items),page)
++ if len(items)==100 && page["total"]==float64(100) && (page["nextCursor"]==nil||page["nextCursor"]=="") {t.Fatal("101 recorded answers are silently presented as total=100 with no continuation or partial marker")}
++}
+--- /dev/null
++++ b/apps/frontend/src/features/review/verifier-review-ui.test.tsx
+@@ -0,0 +1,46 @@
++import { fireEvent,render,screen,waitFor } from '@testing-library/react'
++import { beforeEach,it,expect,vi } from 'vitest'
++const actions=vi.hoisted(()=>({record:vi.fn()}))
++vi.mock('next/navigation',()=>({useRouter:()=>({refresh:vi.fn()})}))
++vi.mock('./actions',()=>({recordReviewAnswerAction:actions.record}))
++import { AnswerForm } from './components/answer-form'
++import { CellDetail } from './components/cell-detail'
++import type { ReviewGridView } from './schemas'
++import { createReviewGridInputSchema,reviewQuestionInputSchema,recordAnswerInputSchema } from './schemas'
++beforeEach(()=>{actions.record.mockReset();window.sessionStorage.clear()})
++const id='0192b1c4-0000-7000-8000-000000000001'
++it('UNKNOWN retry retains the exact answer expectation even after a refreshed view changes props',async()=>{
++ actions.record.mockResolvedValueOnce({ok:false,kind:'outcome-unknown',error:'unknown',retrySameKey:true})
++ const props={matterId:id,gridId:id,versionId:id,questionId:id,expectedAnswerId:'',questionRevision:1}
++ const {rerender}=render(<AnswerForm {...props}/> )
++ fireEvent.change(screen.getByLabelText(/^What you found/),{target:{value:'careful original answer'}})
++ fireEvent.click(screen.getByRole('button',{name:'Record answer'}))
++ await screen.findByText('Outcome not confirmed')
++ await waitFor(()=>expect(screen.getByRole('button',{name:/Retry the same request/})).not.toBeDisabled())
++ const first={...actions.record.mock.calls[0]![0]}
++ rerender(<AnswerForm {...props} expectedAnswerId={id} questionRevision={2}/>)
++ actions.record.mockResolvedValueOnce({ok:true,id:'synthetic-answer',replayed:true})
++ fireEvent.click(screen.getByRole('button',{name:/Retry the same request/}))
++ await waitFor(()=>expect(actions.record).toHaveBeenCalledTimes(2))
++ expect(actions.record.mock.calls[1]![0]).toEqual(first)
++})
++it('Vietnamese text at every client limit is accepted; one more is refused',()=>{
++ const base={idempotencyKey:id,matterId:id,gridId:id,versionId:id,questionId:id,expectedAnswerId:'',expectedQuestionRevision:1,state:'REVIEWED'}
++ expect(createReviewGridInputSchema.safeParse({idempotencyKey:id,matterId:id,name:'ế'.repeat(200)}).success).toBe(true)
++ expect(reviewQuestionInputSchema.safeParse({matterId:id,gridId:id,ifMatch:'"x"',text:'ế'.repeat(1000)}).success).toBe(true)
++ const answer={...base,text:'ế'.repeat(4000),pageRef:'ế'.repeat(40),quoteRef:'ế'.repeat(1000)}
++ expect(recordAnswerInputSchema.safeParse(answer).success).toBe(true)
++ for(const [key,n] of [['text',4001],['pageRef',41],['quoteRef',1001]] as const)expect(recordAnswerInputSchema.safeParse({...answer,[key]:'ế'.repeat(n)}).success).toBe(false)
++})
++it('a confirmed loss of access clears the protected cell detail',async()=>{
++ actions.record.mockResolvedValue({ok:false,kind:'not-found',error:'The record is no longer available.'})
++ const a={id:'a1',versionId:id,questionId:id,questionRevision:1,state:'REVIEWED' as const,text:'PRIVATE EXISTING ANSWER',pageRef:'7',quoteRef:'PRIVATE QUOTE',author:'u1',answeredAt:'2026-10-29T08:00:00Z',supersedesId:null}
++ const q={id,position:0,revision:1,text:'Synthetic question',revisedBy:'u1',revisedAt:'2026-10-29T08:00:00Z'}
++ const view:ReviewGridView={id,name:'Synthetic grid',revision:1,createdBy:'u1',createdAt:q.revisedAt,versionCount:1,questionCount:1,versions:[{versionId:id,documentId:id,documentName:'PRIVATE DOCUMENT',filename:'synthetic.pdf',no:1,current:true}],questions:[q],questionHistory:[q],cells:[{versionId:id,questionId:id,state:'REVIEWED',stale:false,answer:a}]}
++ render(<CellDetail matterId={id} view={view} cell={{versionId:id,questionId:id}} filter={{}} history={null} names={{u1:'Synthetic user'}} canWrite/> )
++ fireEvent.change(screen.getByLabelText(/^What you found/),{target:{value:'new note'}})
++ fireEvent.click(screen.getByRole('button',{name:'Record answer'}))
++ await screen.findByText('The record is no longer available.')
++ expect(screen.queryByText('PRIVATE EXISTING ANSWER')).toBeNull()
++ expect(screen.queryByText('PRIVATE QUOTE')).toBeNull()
++})

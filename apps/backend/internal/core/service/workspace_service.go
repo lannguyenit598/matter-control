@@ -7,9 +7,9 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/policy"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/policy"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // WorkspaceService implements the W1 administration and read use cases on top of the
@@ -39,6 +39,8 @@ type auditTx interface {
 // outcome error. Workspace-scoped denials reference the workspace in the audit hash.
 func (s *WorkspaceService) deny(ctx context.Context, tx auditTx, wCmd time.Time, actor matter.ActorID, workspace matter.WorkspaceID, operation, result string, err error) error {
 	if auditErr := tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
+		ClientIP:              port.RequestMetaFromContext(ctx).ClientIP,
+		RequestID:             port.RequestMetaFromContext(ctx).RequestID,
 		EventID:               s.ids.NewRecordID(),
 		OccurredAt:            wCmd,
 		Actor:                 actor,
@@ -140,7 +142,9 @@ func (s *WorkspaceService) CreateWorkspace(ctx context.Context, cmd port.CreateW
 			return err
 		}
 		return tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-			EventID: s.ids.NewRecordID(), OccurredAt: wCmd, Actor: actor,
+			ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+			RequestID: port.RequestMetaFromContext(ctx).RequestID,
+			EventID:   s.ids.NewRecordID(), OccurredAt: wCmd, Actor: actor,
 			Operation: "CREATE_WORKSPACE", Outcome: "OK",
 			RequestedResourceKind: "WORKSPACE", RequestedIDHash: matter.HashID(wsID.String()),
 		})
@@ -365,7 +369,9 @@ func (s *WorkspaceService) CreateMatter(ctx context.Context, cmd port.CreateMatt
 			return err
 		}
 		return tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-			EventID: s.ids.NewRecordID(), OccurredAt: wCmd, Actor: actor,
+			ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+			RequestID: port.RequestMetaFromContext(ctx).RequestID,
+			EventID:   s.ids.NewRecordID(), OccurredAt: wCmd, Actor: actor,
 			Operation: "CREATE_MATTER", Outcome: "OK",
 			RequestedResourceKind: "WORKSPACE", RequestedIDHash: matter.HashID(wsID.String()),
 		})
@@ -411,6 +417,8 @@ func (s *WorkspaceService) authorizeReceiptMatter(ctx context.Context, tx port.W
 // matterDeny records the restricted audit row for a committed matter-scoped denial.
 func (s *WorkspaceService) matterDeny(ctx context.Context, tx port.MatterTx, tCmd time.Time, actor matter.ActorID, matterID matter.MatterID, operation, result string, err error) error {
 	if auditErr := tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
+		ClientIP:              port.RequestMetaFromContext(ctx).ClientIP,
+		RequestID:             port.RequestMetaFromContext(ctx).RequestID,
 		EventID:               s.ids.NewRecordID(),
 		OccurredAt:            tCmd,
 		Actor:                 actor,
@@ -536,7 +544,7 @@ func (s *WorkspaceService) changeWorkspaceMembership(ctx context.Context, actorI
 			}
 			newRev := header.Revision + 1
 			if exErr == nil { // REVOKED row: reactivate
-				if _, err := tx.UpdateWorkspaceMembershipStatus(ctx, target, matter.StatusActive, expectedRevision); err != nil {
+				if _, err := tx.UpdateWorkspaceMembershipStatus(ctx, target, matter.StatusActive, existing.Revision); err != nil {
 					return err
 				}
 			} else if err := tx.InsertWorkspaceMembership(ctx, matter.WorkspaceMembership{WorkspaceID: wsID, ActorID: target, Role: wsRole, Status: matter.StatusActive, Revision: newRev}); err != nil {
@@ -562,7 +570,7 @@ func (s *WorkspaceService) changeWorkspaceMembership(ctx context.Context, actorI
 				}
 			}
 			newRev := header.Revision + 1
-			if _, err := tx.UpdateWorkspaceMembershipStatus(ctx, target, matter.StatusRevoked, expectedRevision); err != nil {
+			if _, err := tx.UpdateWorkspaceMembershipStatus(ctx, target, matter.StatusRevoked, existing.Revision); err != nil {
 				return err
 			}
 			if err := tx.BumpWorkspaceRevision(ctx, newRev); err != nil {
@@ -571,7 +579,9 @@ func (s *WorkspaceService) changeWorkspaceMembership(ctx context.Context, actorI
 			result = matter.MembershipChangeResult{ScopeKind: matter.ScopeWorkspace, WorkspaceID: wsID, UserID: target, Role: string(existing.Role), Status: matter.StatusRevoked, Revision: newRev, RecordedAt: wCmd}
 		}
 		return tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-			EventID: s.ids.NewRecordID(), OccurredAt: wCmd, Actor: actor,
+			ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+			RequestID: port.RequestMetaFromContext(ctx).RequestID,
+			EventID:   s.ids.NewRecordID(), OccurredAt: wCmd, Actor: actor,
 			Operation: operation, Outcome: "OK",
 			RequestedResourceKind: "WORKSPACE", RequestedIDHash: matter.HashID(wsID.String()),
 		})
@@ -683,7 +693,7 @@ func (s *WorkspaceService) changeMatterMembership(ctx context.Context, actorID, 
 			}
 			newRev := header.Revision + 1
 			if exErr == nil {
-				if _, err := admin.UpdateMatterMembershipStatus(ctx, target, matter.StatusActive, expectedRevision); err != nil {
+				if _, err := admin.UpdateMatterMembershipStatus(ctx, target, matter.StatusActive, existing.Revision); err != nil {
 					return err
 				}
 			} else if err := admin.InsertMatterMembership(ctx, matter.MatterMembership{MatterID: matterID, ActorID: target, Role: roleV, Status: matter.StatusActive, Revision: newRev}); err != nil {
@@ -712,7 +722,7 @@ func (s *WorkspaceService) changeMatterMembership(ctx context.Context, actorID, 
 				}
 			}
 			newRev := header.Revision + 1
-			if _, err := admin.UpdateMatterMembershipStatus(ctx, target, matter.StatusRevoked, expectedRevision); err != nil {
+			if _, err := admin.UpdateMatterMembershipStatus(ctx, target, matter.StatusRevoked, existing.Revision); err != nil {
 				return err
 			}
 			if err := admin.AppendMembershipEvent(ctx, matterID, header.EventSeq+1, s.ids.NewRecordID(), "membership.revoked", "MATTER_MEMBERSHIP", target.String(), actor, target, "", tCmd, tCmd); err != nil {
@@ -724,7 +734,9 @@ func (s *WorkspaceService) changeMatterMembership(ctx context.Context, actorID, 
 			result = matter.MembershipChangeResult{ScopeKind: matter.ScopeMatter, WorkspaceID: header.WorkspaceID, MatterID: &matterID, UserID: target, Role: string(existing.Role), Status: matter.StatusRevoked, Revision: newRev, RecordedAt: tCmd}
 		}
 		return tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
-			EventID: s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
+			ClientIP:  port.RequestMetaFromContext(ctx).ClientIP,
+			RequestID: port.RequestMetaFromContext(ctx).RequestID,
+			EventID:   s.ids.NewRecordID(), OccurredAt: tCmd, Actor: actor,
 			Operation: operation, Outcome: "OK",
 			RequestedResourceKind: "MATTER", RequestedIDHash: matter.HashID(matterID.String()),
 		})

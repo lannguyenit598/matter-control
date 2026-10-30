@@ -1,0 +1,54 @@
+
+ RUN  v5.0.5 /private/tmp/mc-local-login-cij0dm22/frontend-select-polish-r2
+
+ ❯ src/test/search-navigation.test.tsx (2 tests | 2 failed) 64ms
+   ❯ Search navigation (2)
+     × searches people without native submission and keeps scroll position 53ms
+     × applies work filters with internal navigation and starts at the first page 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/search-navigation.test.tsx > Search navigation > searches people without native submission and keeps scroll position
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/test/search-navigation.test.tsx:42:36
+     40|     })
+     41|     const form = screen.getByRole('button', { name: 'Search', exact: t…
+     42|     expect(fireEvent.submit(form)).toBe(false)
+       |                                    ^
+     43|     expect(router.push).toHaveBeenCalledOnce()
+     44|     const [destination, , options] = router.push.mock.calls[0]!
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/test/search-navigation.test.tsx > Search navigation > applies work filters with internal navigation and starts at the first page
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/test/search-navigation.test.tsx:58:89
+     56|       />,
+     57|     )
+     58|     expect(fireEvent.submit(screen.getByRole('search', { name: 'Filter…
+       |                                                                                         ^
+     59|     const [destination, , options] = router.push.mock.calls[0]!
+     60|     const url = new URL(destination)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  09:56:58
+   Duration  699ms (environment 55%, setup 14%, import 12%, tests 10%, transform 9%)
+

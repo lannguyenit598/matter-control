@@ -1,0 +1,220 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend[39m
+
+ [32m✓[39m src/app/api/auth/auth-routes.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 2650[2mms[22m[39m
+   [32m✓[39m login + callback [2m(6)[22m
+     [33m[2m✓[22m[39m refuses an issuer error and creates no session[33m 440[2mms[22m[39m
+     [33m[2m✓[22m[39m an unreachable issuer during login is "unavailable", never a denial or a session[33m 322[2mms[22m[39m
+   [32m✓[39m resolveSession + session route [2m(4)[22m
+     [33m[2m✓[22m[39m session endpoint exposes only a display name and an end time, never tokens[33m 321[2mms[22m[39m
+ [32m✓[39m src/features/tasks/services/demo-task-repository.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1058[2mms[22m[39m
+   [32m✓[39m demo task repository [2m(6)[22m
+     [33m[2m✓[22m[39m caps the shared demo store[33m 951[2mms[22m[39m
+ [32m✓[39m src/components/organisms/intent-attempt.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[33m 697[2mms[22m[39m
+ [32m✓[39m src/features/tasks/components/task-form.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 729[2mms[22m[39m
+   [32m✓[39m TaskForm [2m(5)[22m
+     [33m[2m✓[22m[39m validates on the client before calling the server[33m 397[2mms[22m[39m
+ [32m✓[39m src/features/proof/components/proof-ui.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 882[2mms[22m[39m
+ [32m✓[39m src/features/work/components/work-ui.test.tsx [2m([22m[2m36 tests[22m[2m)[22m[33m 1091[2mms[22m[39m
+ [32m✓[39m src/features/data-transfer/components/data-transfer-attempt.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[33m 1603[2mms[22m[39m
+   [32m✓[39m bulk panel → actions → repository attempt [2m(6)[22m
+     [33m[2m✓[22m[39m invalidates approval permanently on edit, add or remove, even if the payload is restored[33m 471[2mms[22m[39m
+ [32m✓[39m src/features/data-transfer/components/data-transfer-ui.test.tsx [2m([22m[2m22 tests[22m[2m)[22m[33m 2416[2mms[22m[39m
+   [32m✓[39m BulkSection [2m(8)[22m
+     [33m[2m✓[22m[39m defaults every field to Unchanged and offers Clear only where clearing is allowed[33m 316[2mms[22m[39m
+ [32m✓[39m src/test/membership-recovery.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 538[2mms[22m[39m
+   [32m✓[39m workspace grant form [2m(1)[22m
+     [33m[2m✓[22m[39m never offers or performs a second mutation after an ambiguous result[33m 446[2mms[22m[39m
+[90mstderr[2m | src/components/organisms/recovery.test.tsx[2m > [22m[2mIntentForm: CAS-only command (CW1-F01)[2m > [22m[2ma rejected server-action call (network drop) is treated the same way
+[22m[39mTypeError: Failed to fetch
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/components/organisms/recovery.test.tsx:136:67
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:1632:35
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:2801:26
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3338:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3333:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3318:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3276:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3904:64
+
+[90mstderr[2m | src/components/organisms/recovery.test.tsx[2m > [22m[2mIntentForm: CAS-only command (CW1-F01)[2m > [22m[2mthe same dropped call for a receipted command offers the same-key retry
+[22m[39mTypeError: Failed to fetch
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/components/organisms/recovery.test.tsx:144:67
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:1632:35
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:2801:26
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3338:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3333:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3318:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3276:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3904:64
+
+ [32m✓[39m src/features/filings/components/filing-ui.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 564[2mms[22m[39m
+ [32m✓[39m src/components/organisms/recovery.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[33m 615[2mms[22m[39m
+ [32m✓[39m src/features/proof/components/upload-attempt.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 606[2mms[22m[39m
+   [32m✓[39m an upload whose answer was lost survives a reload [2m(4)[22m
+     [33m[2m✓[22m[39m retries with the original key when the same file is chosen again[33m 340[2mms[22m[39m
+ [32m✓[39m src/features/control/components/control-ui.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 625[2mms[22m[39m
+ [32m✓[39m src/components/organisms/drafts.test.tsx [2m([22m[2m21 tests[22m[2m)[22m[33m 511[2mms[22m[39m
+ [32m✓[39m src/features/tasks/components/task-form-dialog.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 377[2mms[22m[39m
+   [32m✓[39m TaskFormDialog [2m(1)[22m
+     [33m[2m✓[22m[39m cannot be dismissed while the form is submitting[33m 376[2mms[22m[39m
+ [32m✓[39m src/features/matters/components/matter-history.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 378[2mms[22m[39m
+   [32m✓[39m MatterHistory [2m(2)[22m
+     [33m[2m✓[22m[39m retains and presents the attributed event payload instead of stripping provenance[33m 369[2mms[22m[39m
+ [32m✓[39m src/test/creation-reload.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 366[2mms[22m[39m
+   [33m[2m✓[22m[39m retains the workspace create identity and submitted values across a reload[33m 328[2mms[22m[39m
+ [32m✓[39m src/lib/oidc/flow.test.ts [2m([22m[2m63 tests[22m[2m)[22m[33m 7111[2mms[22m[39m
+   [32m✓[39m beginLogin [2m(3)[22m
+     [33m[2m✓[22m[39m builds a PKCE S256 request with state, nonce and the project audience scope[33m 312[2mms[22m[39m
+   [32m✓[39m completeLogin [2m(16)[22m
+     [33m[2m✓[22m[39m never uses the technical subject as the display name when profile claims are absent[33m 611[2mms[22m[39m
+     [33m[2m✓[22m[39m rejects a token signed with another key (signature is really verified)[33m 472[2mms[22m[39m
+ [32m✓[39m src/components/molecules/localized-instant.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 247[2mms[22m[39m
+ [32m✓[39m src/components/atoms/select.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 216[2mms[22m[39m
+[90mstderr[2m | src/app/(app)/matters/[matterId]/control-room/page.test.tsx[2m > [22m[2mControl Room page orchestration (F04)[2m > [22m[2mshows an explicit failure instead of a mixed page when the room cannot be read
+[22m[39mError: boom
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/app/(app)/matters/[matterId]/control-room/page.test.tsx:145:34
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:1632:35
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:2801:26
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3338:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3333:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3318:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3276:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3904:64
+
+ [32m✓[39m src/app/(app)/matters/[matterId]/control-room/page.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 282[2mms[22m[39m
+ [32m✓[39m src/components/atoms/button.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 311[2mms[22m[39m
+ [32m✓[39m src/features/data-transfer/components/recovery-gate.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 301[2mms[22m[39m
+ [32m✓[39m src/features/requirements/components/create-requirement-form.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 248[2mms[22m[39m
+ [32m✓[39m src/features/data-transfer/components/outcome-list.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 214[2mms[22m[39m
+ [32m✓[39m src/components/molecules/search-input.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 223[2mms[22m[39m
+ [32m✓[39m src/features/tasks/components/task-filters.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 466[2mms[22m[39m
+   [32m✓[39m TaskFilters [2m(4)[22m
+     [33m[2m✓[22m[39m debounces search into the URL and resets to page 1[33m 368[2mms[22m[39m
+ [32m✓[39m src/features/work/components/work-creation-panel.test.tsx [2m([22m[2m1 test[22m[2m)[22m[33m 310[2mms[22m[39m
+   [33m[2m✓[22m[39m explains the choice before exposing either form and preserves entered intent while changing choices[33m 309[2mms[22m[39m
+ [32m✓[39m src/features/matters/components/matter-list.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 301[2mms[22m[39m
+[90mstderr[2m | src/app/global-error.test.tsx[2m > [22m[2mrenders title text as a primitive and follows the interface locale
+[22m[39mIn HTML, <html> cannot be a child of <div>.
+This will cause a hydration error.
+Error: synthetic
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/app/global-error.test.tsx:11:30
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:1632:35
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:2801:26
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3338:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3333:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3318:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3276:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3904:64
+
+ [32m✓[39m src/app/global-error.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 262[2mms[22m[39m
+ [32m✓[39m src/components/molecules/confirmation-dialog.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 443[2mms[22m[39m
+ [32m✓[39m src/features/matters/components/matter-scope.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 211[2mms[22m[39m
+ [32m✓[39m src/components/molecules/form-field.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 168[2mms[22m[39m
+[90mstderr[2m | src/test/review-filing-seam.test.ts[2m > [22m[2massessing a claim (F02) at the action → repository → client seam[2m > [22m[2mmaps a stale review (412) and a missing binding (428) apart from an unknown outcome
+[22m[39mMcError: product API problem: precondition-required
+    at problemFrom [90m(/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/lib/mc/client.ts:193:10[90m)[39m
+    at mcRequest [90m(/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/lib/mc/client.ts:116:22[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/features/proof/actions.ts:180:3
+    at Module.<anonymous> [90m(/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/features/proof/actions.ts:55:19[90m)[39m
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/test/review-filing-seam.test.ts:81:21
+    at async [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:2801:20 {
+  code: [32m'precondition-required'[39m,
+  status: [33m428[39m,
+  retryable: [33mfalse[39m,
+  fieldErrors: [],
+  receipted: [33mfalse[39m,
+  rejection: [90mundefined[39m,
+  [cause]: [90mundefined[39m
+}
+
+ [32m✓[39m src/test/review-filing-seam.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m src/components/molecules/dialog.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 243[2mms[22m[39m
+ [32m✓[39m src/test/data-transfer-seam.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 94[2mms[22m[39m
+ [32m✓[39m src/features/tasks/services/rest-task-repository.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 363[2mms[22m[39m
+ [32m✓[39m src/components/molecules/pagination.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 390[2mms[22m[39m
+   [32m✓[39m Pagination [2m(2)[22m
+     [33m[2m✓[22m[39m marks the current page and disables Previous on the first page[33m 353[2mms[22m[39m
+ [32m✓[39m src/test/operation-recovery.test.ts [2m([22m[2m29 tests[22m[2m)[22m[33m 335[2mms[22m[39m
+ [32m✓[39m src/lib/auth.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 236[2mms[22m[39m
+ [32m✓[39m src/components/organisms/data-table.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 644[2mms[22m[39m
+   [32m✓[39m DataTable [2m(2)[22m
+     [33m[2m✓[22m[39m renders a captioned table with one row per item[33m 638[2mms[22m[39m
+ [32m✓[39m src/lib/api/http-client.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m src/lib/mc/client.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/app/api/matters/documents-routes.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/test/search-navigation.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 237[2mms[22m[39m
+ [32m✓[39m src/lib/env.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 105[2mms[22m[39m
+ [32m✓[39m src/components/organisms/read-failure-callers.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 51[2mms[22m[39m
+ [32m✓[39m src/lib/api/backend.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 92[2mms[22m[39m
+ [32m✓[39m src/features/tasks/schemas.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+[90mstderr[2m | src/lib/mc/errors.test.ts[2m > [22m[2mtoMcFailure: one distinct recovery per outcome[2m > [22m[2ma missing precondition is a frontend bug: generic message, never shown as a user error
+[22m[39mMcError: product API problem: precondition-required
+    at kindOf [90m(/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/lib/mc/errors.test.ts:34:17[90m)[39m
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/lib/mc/errors.test.ts:83:12
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:1632:35
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:2801:26
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3338:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3333:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3318:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3276:10[90m)[39m {
+  code: [32m'precondition-required'[39m,
+  status: [33m400[39m,
+  retryable: [33mfalse[39m,
+  fieldErrors: [],
+  receipted: [33mfalse[39m,
+  rejection: [90mundefined[39m,
+  [cause]: [90mundefined[39m
+}
+
+[90mstderr[2m | src/lib/mc/errors.test.ts[2m > [22m[2mtoMcFailure: one distinct recovery per outcome[2m > [22m[2munknown errors are generic and leak nothing
+[22m[39mError: secret stack detail
+    at [90m/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39msrc/lib/mc/errors.test.ts:86:27
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:1632:35
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:2801:26
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3338:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3333:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3318:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3276:10[90m)[39m
+    at [90mfile:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/[39mnode_modules/[4m.pnpm[24m/vitest@5.0.5_@types+node@24.19.2_@vitest+coverage-v8@5.0.5_jsdom@30.1.3_vite@8.3.4_@typ_c3ec37b236d4f7789e16ab393f25f209/node_modules/[4mvitest[24m/dist/chunks/run.BPv-BBRv.js:3904:64
+
+ [32m✓[39m src/lib/mc/errors.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/lib/mc/paths.test.ts [2m([22m[2m28 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m src/features/data-transfer/intent.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m src/features/tasks/actions.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/lib/mc/idempotency.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m src/lib/oidc/session-store.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m src/features/data-transfer/pending-attempts.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m56 passed[39m[22m[90m (56)[39m
+[2m      Tests [22m [1m[32m511 passed[39m[22m[90m (511)[39m
+[2m   Start at [22m 09:58:24
+[2m   Duration [22m 13.92s[2m (environment 45%, tests 26%, setup 13%, import 11%, transform 4%)[22m
+
+[2mEnvironment [22m [33mjsdom was created 56 times[39m[2m · 51.27s total, 45% of tracked time[22m
+[2m            [22m [2mcreate it once per worker with [22m[33mpool: 'vmThreads'[39m[2m (keeps per-file isolation) or [22m[33misolate: false[39m[2m (shares it across files)[22m
+[2m            [22m [2mlearn more: https://vitest.dev/guide/improving-performance#test-environments[22m
+
+$ node scripts/sync-agent-config.mjs --check
+agent config OK: 17 skills, 3 scoped rules

@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // Clock returns UTC time truncated to microseconds to match PostgreSQL precision.

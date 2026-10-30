@@ -1,0 +1,64 @@
+
+ RUN  v5.0.5 /private/tmp/mc-claude-ux-review-20261029
+
+ ❯ src/test/reviewer-picker.test.tsx (2 tests | 2 failed) 539ms
+   × removes a no-longer-eligible person after the server reread updates candidates 455ms
+   × does not offer unselected results from the previous query while a new query is pending 83ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/reviewer-picker.test.tsx > removes a no-longer-eligible person after the server reread updates candidates
+AssertionError: expected <input required …(4)></input> to be null
+
+- Expected:
+null
+
++ Received:
+<input
+  class="size-4 shrink-0 accent-primary"
+  name="userId"
+  required=""
+  type="radio"
+  value="u1"
+/>
+
+ ❯ src/test/reviewer-picker.test.tsx:14:52
+     12|  view.rerender(<GrantMatterMemberForm matterId="m1" ifMatch='"2"' cand…
+     13|  await new Promise(r=>setTimeout(r,350))
+     14|  expect(screen.queryByRole('radio',{name:'Alex'})).toBeNull()
+       |                                                    ^
+     15| })
+     16|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/test/reviewer-picker.test.tsx > does not offer unselected results from the previous query while a new query is pending
+AssertionError: expected <input …(4)></input> to be null
+
+- Expected:
+null
+
++ Received:
+<input
+  class="size-4 shrink-0 accent-primary"
+  name="userId"
+  type="radio"
+  value="u1"
+/>
+
+ ❯ src/test/reviewer-picker.test.tsx:24:52
+     22|  fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Bao'}})
+     23|  await waitFor(()=>expect(search).toHaveBeenCalledWith('Bao'))
+     24|  expect(screen.queryByRole('radio',{name:'Alex'})).toBeNull()
+       |                                                    ^
+     25| })
+     26|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  11:06:58
+   Duration  1.19s (tests 48%, environment 32%, import 10%, setup 7%, transform 3%)
+

@@ -1,0 +1,11 @@
+{
+  "identity": "Actual Local Codex",
+  "fixture": "Synthetic local OIDC + real Go + owned PostgreSQL + filesystem object adapter; no cloud provider",
+  "checks": [
+    {
+      "name": "runtime failure",
+      "pass": false,
+      "error": "Command failed (go build -o): # leonx.me/matter-control/internal/core/service\ninternal/core/service/evidence_service.go:72:8: env.replayHidden undefined (type *workEnv has no field or method replayHidden)\ninternal/core/service/work_service.go:123:11: env.replayHidden undefined (type *workEnv has no field or method replayHidden)\ninternal/core/service/work_service.go:383:9: env.replayHidden undefined (type *workEnv has no field or method replayHidden)\n"
+    }
+  ]
+}

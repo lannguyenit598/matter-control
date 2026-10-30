@@ -1,21 +1,31 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { setUiLocale } from '@/hooks/use-locale'
-import { setUiTimeZone } from '@/hooks/use-time-zone'
 import { Select } from '@/components/atoms/select'
 
 import { LocalizedInstant } from './localized-instant'
 import { LocalizedText } from './localized-text'
 import { LocaleToggle } from './locale-toggle'
+import { ThemeToggle } from './theme-toggle'
 
 const iso = '2026-10-28T09:15:00Z'
+const resolvedOptions = Intl.DateTimeFormat.prototype.resolvedOptions
+let deviceZone = 'UTC'
+beforeEach(() => {
+  deviceZone = 'UTC'
+  vi.spyOn(Intl.DateTimeFormat.prototype, 'resolvedOptions').mockImplementation(function (
+    this: Intl.DateTimeFormat,
+  ) {
+    return { ...resolvedOptions.call(this), timeZone: deviceZone }
+  })
+})
 afterEach(() => {
   act(() => {
     setUiLocale('en')
-    setUiTimeZone('UTC')
   })
   localStorage.clear()
+  vi.restoreAllMocks()
 })
 
 describe('localized display without mutation of legal intent', () => {
@@ -23,6 +33,7 @@ describe('localized display without mutation of legal intent', () => {
     render(
       <>
         <LocaleToggle />
+        <ThemeToggle />
         <label>
           <LocalizedText en="Title" vi="Tiêu đề" />
           <input defaultValue="Legal content: Completed but Unverified" />
@@ -31,19 +42,28 @@ describe('localized display without mutation of legal intent', () => {
       </>,
     )
     const input = screen.getByRole('textbox')
+    expect(screen.getByRole('button', { name: 'Toggle color theme' })).toBeInTheDocument()
     fireEvent.change(input, { target: { value: 'Unsaved legal clause / điều khoản gốc' } })
     fireEvent.change(screen.getByRole('combobox', { name: 'Interface language' }), {
       target: { value: 'vi' },
     })
     expect(screen.getByRole('textbox', { name: 'Tiêu đề' })).toBe(input)
+    expect(screen.getByRole('button', { name: 'Đổi giao diện sáng/tối' })).toHaveAttribute(
+      'title',
+      'Đổi giao diện sáng/tối',
+    )
     expect(input).toHaveValue('Unsaved legal clause / điều khoản gốc')
-    fireEvent.change(screen.getByRole('combobox', { name: 'Múi giờ hiển thị' }), {
-      target: { value: 'Asia/Ho_Chi_Minh' },
+    act(() => {
+      deviceZone = 'Asia/Ho_Chi_Minh'
+      window.dispatchEvent(new Event('focus'))
     })
     expect(screen.getByTestId('instant')).toHaveAttribute('dateTime', iso)
     expect(screen.getByTestId('instant')).toHaveTextContent('16:15')
     expect(screen.getByTestId('instant')).toHaveTextContent(/GMT\+7|UTC\+7/)
-    act(() => setUiTimeZone('UTC'))
+    act(() => {
+      deviceZone = 'UTC'
+      window.dispatchEvent(new Event('focus'))
+    })
     expect(screen.getByTestId('instant')).toHaveTextContent('09:15')
     expect(screen.getByTestId('instant')).toHaveAttribute('dateTime', iso)
     expect(input).toHaveValue('Unsaved legal clause / điều khoản gốc')

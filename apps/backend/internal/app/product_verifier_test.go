@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/example/userapi/internal/config"
+	"leonx.me/matter-control/internal/config"
 )
 
 // A key file that belongs to another application is refused at startup, and neither id is leaked.

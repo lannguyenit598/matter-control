@@ -12,7 +12,7 @@ import (
 
 	"go.uber.org/fx"
 
-	"github.com/example/userapi/internal/observability"
+	"leonx.me/matter-control/internal/observability"
 )
 
 // Options carries process-wide values the shared lifecycle helpers need.

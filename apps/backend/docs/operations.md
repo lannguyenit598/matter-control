@@ -16,7 +16,11 @@ Both commands need the full configuration below, because it is validated before 
 | Variable | Default | Meaning |
 |---|---|---|
 | `MC_DATABASE_URL` | required | PostgreSQL URL of the **product** database. Never point it at another application's database |
-| `MC_OBJECT_DIR` | required | Private directory for document bytes (created `0700`). Local/PoC adapter, not a production object store |
+| `MC_OBJECT_BACKEND` | `fs` | Where document bytes live: `fs` (local directory, local/PoC) or `r2` (private Cloudflare R2 bucket). **A deployed API (Cloud Run: per-instance, ephemeral disk) must use `r2`**; the default `fs` would lose documents |
+| `MC_OBJECT_DIR` | required for `fs` | Private directory for document bytes (created `0700`). Local/PoC adapter, not a production object store |
+| `MC_R2_ENDPOINT` | required for `r2` | `https://<account>.r2.cloudflarestorage.com` (or the jurisdiction form). `https`, or `http` only for a loopback host |
+| `MC_R2_BUCKET` | required for `r2` | Private bucket (no public access, no custom public domain) |
+| `MC_R2_ACCESS_KEY_ID`, `MC_R2_SECRET_ACCESS_KEY` | required for `r2` | R2 API token limited to this bucket, Object Read & Write only. Supply from a secret store; never commit or log. Rotate by issuing a new token, deploying it, then revoking the old one |
 | `MC_OIDC_ISSUER` | required | The one canonical issuer; tokens from any other issuer are refused. `https`, or `http` only for a loopback host |
 | `MC_OIDC_INTROSPECTION_URL` | required | Token introspection endpoint of that issuer. `https`, or `http` only for a loopback host |
 | `MC_OIDC_AUDIENCE` | required | Audience every accepted token must contain (the API application's client id) |
@@ -26,6 +30,7 @@ Both commands need the full configuration below, because it is validated before 
 | `MC_HTTP_ADDR` | `127.0.0.1:8081` | Listen address. Containers must use `:8081` |
 | `MC_LOG_LEVEL` | `info` | `debug`, `info`, `warn`, `error` |
 | `MC_REQUEST_TIMEOUT` | `10s` | Per-request deadline |
+| `MC_TRANSFER_TIMEOUT` | `60s` | Deadline for document upload/content download, import preview/commit, export and bulk commit. Must be positive. Local engineering default, not a production SLA; measure deployed workload before release. Other routes keep `MC_REQUEST_TIMEOUT`. Server read timeout is at least this budget (minimum 30s); write timeout is the larger request budget plus 5s |
 | `MC_SHUTDOWN_DELAY` | `0s` | Wait after SIGTERM, still serving, before the listener closes (give load balancers time to drain) |
 | `MC_SHUTDOWN_TIMEOUT` | `10s` | Drain budget for in-flight requests |
 | `MC_MAX_UPLOAD_BYTES` | `26214400` | Upper bound of one upload (25 MiB) |
@@ -47,8 +52,12 @@ Security notes: the issuer and introspection URLs must use `https`. Plain `http`
 ## Health and shutdown
 
 - `GET /healthz` returns 200 while the process is up.
-- `GET /readyz` returns 200 unless the process is draining; after SIGTERM it returns 503 for `MC_SHUTDOWN_DELAY`, the listener then closes and in-flight requests drain for up to `MC_SHUTDOWN_TIMEOUT`. It does **not** ping the database, so a 200 says nothing about database availability; requests made while the database is down fail individually with 503 `unavailable`.
+- `GET /readyz` pings the product database with a 500ms deadline (also honors request cancellation), returning 503 if that fails or the process is draining. The probe response hides database error details. After SIGTERM it returns 503 for `MC_SHUTDOWN_DELAY`, the listener then closes and in-flight requests drain for up to `MC_SHUTDOWN_TIMEOUT`; on expiry, request contexts are canceled and connections close before the pool closes.
 - All product routes live under `/api/v1` and require a verified bearer token.
+
+When `K_SERVICE` is nonempty, configuration rejects `MC_OBJECT_BACKEND=fs` (including its default); use `r2`. Local filesystem mode remains available when `K_SERVICE` is absent or empty. This guard does not prove deployment readiness.
+
+A request deadline after a possible write means OUTCOME_UNKNOWN. Reconcile using the original receipt/key; do not blindly replay writes or mint a replacement key. The 60s transfer budget allows a 25 MiB upload at 1 MiB/s that cannot fit the former 10s context; it does not prove a full-size workload completes. Database statements remain bounded to 5s individually.
 
 ## Backups
 

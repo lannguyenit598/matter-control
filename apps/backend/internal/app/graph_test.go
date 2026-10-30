@@ -7,7 +7,7 @@ import (
 
 	"go.uber.org/fx"
 
-	"github.com/example/userapi/internal/config"
+	"leonx.me/matter-control/internal/config"
 )
 
 // Wiring is resolved at runtime, so a missing provider must fail here rather than at startup.

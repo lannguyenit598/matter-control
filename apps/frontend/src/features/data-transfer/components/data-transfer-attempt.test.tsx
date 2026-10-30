@@ -35,9 +35,11 @@ beforeEach(() => {
 
 async function readyBulk() {
   request.mockResolvedValueOnce({ data: bulkPreview })
-  render(<BulkSection matterId="matter-1" />)
+  render(
+    <BulkSection matterId="matter-1" items={[{ id: 'item-1', title: 'Before', revision: 1 }]} />,
+  )
   fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
-  fireEvent.change(screen.getByLabelText(/Item id/), { target: { value: 'item-1' } })
+  fireEvent.change(screen.getByLabelText(/Work item/), { target: { value: 'item-1' } })
   fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'set' } })
   fireEvent.change(screen.getByLabelText('Title new value'), { target: { value: 'After' } })
   fireEvent.click(screen.getByRole('button', { name: 'Preview' }))

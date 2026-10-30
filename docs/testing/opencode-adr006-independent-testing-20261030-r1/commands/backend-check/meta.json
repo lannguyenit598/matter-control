@@ -1,0 +1,20 @@
+{
+  "run": "backend-check",
+  "argv": [
+    "make",
+    "check"
+  ],
+  "cwd": "/private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/snapshot/apps/backend",
+  "env_file": "/private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/private/dsn.env",
+  "env_keys": [
+    "MC_BFF_TEST_DATABASE_URL",
+    "MC_TEST_DATABASE_URL"
+  ],
+  "started_utc": "2026-10-30T03:40:19Z",
+  "ended_utc": "2026-10-30T03:42:00Z",
+  "duration_seconds": 101,
+  "exit": 0,
+  "identity": "OpenCode independent QA",
+  "sanitize": "postgres://user:<redacted>@ URLs scrubbed in public stdout/stderr copies; secrets never in argv",
+  "evidence_class": "INDEPENDENT_EXECUTION"
+}

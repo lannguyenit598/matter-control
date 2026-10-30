@@ -1,0 +1,611 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-INTAKE",
+  "actor": "Local Codex",
+  "utc": "2026-10-26T06:16:32.050116+00:00",
+  "branch": "codex/unified-project-flow",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "checks": [
+    {
+      "name": "coordination HEAD",
+      "result": "PASS"
+    },
+    {
+      "name": "coordination branch",
+      "result": "PASS"
+    },
+    {
+      "name": "lossless supplied return",
+      "result": "PASS"
+    },
+    {
+      "name": "18payloads64321bytes",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest app-path-routes-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export app-path-routes-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest app-paths-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export app-paths-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest build-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export build-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest credential-pattern-scan.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export credential-pattern-scan.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest emitted-assets-inventory.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export emitted-assets-inventory.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest guard-startup-subchecks.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export guard-startup-subchecks.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest nft-traces-summary.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export nft-traces-summary.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest pnpm-build.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export pnpm-build.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest pnpm-build.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export pnpm-build.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest prerender-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export prerender-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest product-exclusion-report.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export product-exclusion-report.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest resource-and-process-disposition.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export resource-and-process-disposition.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest routes-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export routes-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest runner-scripts/guard-validator.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export runner-scripts/guard-validator.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest runner-scripts/product-exclusion-validator.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export runner-scripts/product-exclusion-validator.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest runner-scripts/selfcheck.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export runner-scripts/selfcheck.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest vitest-list.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export vitest-list.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner manifest vitest-list.stdout.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw export vitest-list.stdout.json",
+      "result": "PASS"
+    },
+    {
+      "name": "manifest raw export",
+      "result": "PASS"
+    },
+    {
+      "name": "exact owner payload set",
+      "result": "PASS"
+    },
+    {
+      "name": "22unique required variants",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal API_TOKEN/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TOKEN/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TOKEN/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TOKEN/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal API_TOKEN/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TOKEN/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TOKEN/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TOKEN/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal API_BASE_URL/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_BASE_URL/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_BASE_URL/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_BASE_URL/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal API_BASE_URL/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_BASE_URL/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_BASE_URL/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_BASE_URL/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal AUTH_ALLOW_ANONYMOUS/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_ALLOW_ANONYMOUS/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_ALLOW_ANONYMOUS/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_ALLOW_ANONYMOUS/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal AUTH_ALLOW_ANONYMOUS/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_ALLOW_ANONYMOUS/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_ALLOW_ANONYMOUS/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_ALLOW_ANONYMOUS/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal API_TIMEOUT_MS/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TIMEOUT_MS/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TIMEOUT_MS/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TIMEOUT_MS/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal API_TIMEOUT_MS/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TIMEOUT_MS/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TIMEOUT_MS/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns API_TIMEOUT_MS/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal AUTH_SECRET/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_SECRET/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_SECRET/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_SECRET/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal AUTH_SECRET/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_SECRET/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_SECRET/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns AUTH_SECRET/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal NEXTAUTH_SECRET/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns NEXTAUTH_SECRET/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns NEXTAUTH_SECRET/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns NEXTAUTH_SECRET/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal NEXTAUTH_SECRET/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns NEXTAUTH_SECRET/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns NEXTAUTH_SECRET/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns NEXTAUTH_SECRET/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal CLERK_SECRET_KEY/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns CLERK_SECRET_KEY/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns CLERK_SECRET_KEY/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns CLERK_SECRET_KEY/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal CLERK_SECRET_KEY/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns CLERK_SECRET_KEY/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns CLERK_SECRET_KEY/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns CLERK_SECRET_KEY/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal SESSION_SECRET/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns SESSION_SECRET/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns SESSION_SECRET/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns SESSION_SECRET/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal SESSION_SECRET/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns SESSION_SECRET/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns SESSION_SECRET/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns SESSION_SECRET/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal COOKIE_SECRET/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns COOKIE_SECRET/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns COOKIE_SECRET/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns COOKIE_SECRET/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal COOKIE_SECRET/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns COOKIE_SECRET/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns COOKIE_SECRET/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns COOKIE_SECRET/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal DATABASE_URL/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns DATABASE_URL/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns DATABASE_URL/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns DATABASE_URL/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal DATABASE_URL/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns DATABASE_URL/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns DATABASE_URL/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns DATABASE_URL/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal JWT_SECRET/nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns JWT_SECRET/nonempty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns JWT_SECRET/nonempty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns JWT_SECRET/nonempty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "actual refusal JWT_SECRET/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns JWT_SECRET/empty/stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns JWT_SECRET/empty/stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "bounded variant credential patterns JWT_SECRET/empty/meta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "all22observer files missing is explicitly recorded",
+      "result": "PASS"
+    },
+    {
+      "name": "one reported listener is explicitly recorded",
+      "result": "PASS"
+    },
+    {
+      "name": "18actual product test paths",
+      "result": "PASS"
+    },
+    {
+      "name": "collection agrees ownerreport",
+      "result": "PASS"
+    },
+    {
+      "name": "31asset entries actualbyteshashes",
+      "result": "PASS"
+    },
+    {
+      "name": "15chunk entries actualbyteshashes",
+      "result": "PASS"
+    },
+    {
+      "name": "build artifact original equality routes-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "build artifact original equality app-path-routes-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "build artifact original equality app-paths-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "build artifact original equality prerender-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "build artifact original equality build-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "8actual readable NFT traces no harness",
+      "result": "PASS"
+    },
+    {
+      "name": "actual text emitted scan no harness tokens",
+      "result": "PASS"
+    },
+    {
+      "name": "original clean and snapshot exact /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "original clean and snapshot exact /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "59original ledger unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "canonical51remainNOT_RUN",
+      "result": "PASS"
+    },
+    {
+      "name": "44prior readiness payloads unchanged",
+      "result": "PASS"
+    }
+  ],
+  "pass": 149,
+  "fail": 0,
+  "kind": "Integrity/corroboration checks, not guard/build execution or independent acceptance",
+  "author_result": "REWORK_REQUIRED / GUARD_VERDICT_NOT_ACCEPTED / PRODUCT_ARTIFACTS_CORROBORATED_WITH_LIMITATIONS",
+  "runtime_commands": "NONE",
+  "provider_calls": "NONE"
+}

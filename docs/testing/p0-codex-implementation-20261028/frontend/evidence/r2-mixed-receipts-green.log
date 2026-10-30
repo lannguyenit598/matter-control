@@ -1,0 +1,284 @@
+
+ RUN  v5.0.5 /private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/frontend/apps/frontend
+
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx (18 tests) 351ms
+ ✓ src/test/data-transfer-seam.test.ts (10 tests) 20ms
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx (9 tests | 1 failed) 408ms
+   ✓ bulk panel → actions → repository attempt (6)
+     ✓ invalidates approval permanently on edit, add or remove, even if the payload is restored 113ms
+     ✓ locks pending edits and duplicate submission, then reconciles identical payload and keys 89ms
+     ✓ keeps missing or ambiguous row receipts unknown: {"receipts":[]} 27ms
+     ✓ keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"row-1","status":"SUCCESS"}]} 25ms
+     ✓ keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"unexpected","status":"SUCCESS"}]} 24ms
+     ✓ keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"unexpected","status":"SUCCESS"}]} 19ms
+   ❯ import panel → actions → repository attempt (3)
+     ✓ locks file replacement while pending, preserves run/file/row keys on UNKNOWN and consumes settled preview 82ms
+     × keeps a mixed expected and unexpected receipt response unresolved 19ms
+     ✓ accounts for all submitted rows when an import receipt is missing 11ms
+ ✓ src/features/data-transfer/intent.test.ts (6 tests) 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > import panel → actions → repository attempt > keeps a mixed expected and unexpected receipt response unresolved
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Commit valid groups"
+
+Here are the accessible roles:
+
+  region:
+
+  Name "Import CSV or XLSX":
+  [36m<section[39m
+    [33maria-labelledby[39m=[32m"import-heading"[39m
+    [33mclass[39m=[32m"flex flex-col gap-3"[39m
+  [36m/>[39m
+
+  Name "Unknown rows":
+  [36m<section[39m
+    [33maria-label[39m=[32m"Unknown rows"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  heading:
+
+  Name "Import CSV or XLSX":
+  [36m<h2[39m
+    [33mclass[39m=[32m"text-lg font-semibold"[39m
+    [33mid[39m=[32m"import-heading"[39m
+  [36m/>[39m
+
+  Name "Unknown":
+  [36m<h4[39m
+    [33mclass[39m=[32m"font-medium"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p />[39m
+
+  Name "":
+  [36m<p />[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Preview":
+  [36m<button[39m
+    [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-4"[39m
+    [33mdisabled[39m=[32m""[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Retry the same attempt":
+  [36m<button[39m
+    [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  list:
+
+  Name "Groups":
+  [36m<ul[39m
+    [33maria-label[39m=[32m"Groups"[39m
+    [33mclass[39m=[32m"flex flex-col gap-2 text-sm"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<ul[39m
+    [33mclass[39m=[32m"mt-1 list-disc pl-5"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<ul[39m
+    [33mclass[39m=[32m"mt-1 flex flex-col gap-1"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  listitem:
+
+  Name "":
+  [36m<li[39m
+    [33mclass[39m=[32m"rounded-md border p-2"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<li />[39m
+
+  Name "":
+  [36m<li />[39m
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  [36m<p[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33maria-labelledby[39m=[32m"import-heading"[39m
+      [33mclass[39m=[32m"flex flex-col gap-3"[39m
+    [36m>[39m
+      [36m<h2[39m
+        [33mclass[39m=[32m"text-lg font-semibold"[39m
+        [33mid[39m=[32m"import-heading"[39m
+      [36m>[39m
+        [0mImport CSV or XLSX[0m
+      [36m</h2>[39m
+      [36m<p[39m
+        [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+      [36m>[39m
+        [0mRequired columns: rowkey, kind, title. Optional: description, internalowner, due, dependencies (semicolon-separated row keys of this file or existing item ids). Nothing in the file is evaluated: a value starting with = + - or @ stays literal text. A repeat of the same source replays; changed content is a conflict and never overwrites. An imported VERIFIED claim stays a claim.[0m
+      [36m</p>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m"flex flex-col gap-1 text-sm"[39m
+      [36m>[39m
+        [0mFile[0m
+        [36m<input[39m
+          [33maccept[39m=[32m".csv,.xlsx"[39m
+          [33mdisabled[39m=[32m""[39m
+          [33mtype[39m=[32m"file"[39m
+        [36m/>[39m
+      [36m</label>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-wrap gap-2"[39m
+      [36m>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-4"[39m
+          [33mdisabled[39m=[32m""[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mPreview[0m
+        [36m</button>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mRetry the same attempt[0m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<ul[39m
+        [33maria-label[39m=[32m"Groups"[39m
+        [33mclass[39m=[32m"flex flex-col gap-2 text-sm"[39m
+      [36m>[39m
+        [36m<li[39m
+          [33mclass[39m=[32m"rounded-md border p-2"[39m
+        [36m>[39m
+          [36m<p>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium whitespace-nowrap border-transparent bg-success/15 text-success"[39m
+            [36m>[39m
+              [0mValid group[0m
+            [36m</span>[39m
+            [0m [0m
+            [0mGroup [0m
+            [0m1[0m
+            [0m: [0m
+            [0m1[0m
+            [0m row(s)[0m
+          [36m</p>[39m
+          [36m<ul[39m
+            [33mclass[39m=[32m"mt-1 list-disc pl-5"[39m
+          [36m>[39m
+            [36m<li>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"font-mono"[39m
+              [36m>[39m
+                [0mR1[0m
+              [36m</span>[39m
+              [0m — [0m
+              [0mACTION[0m
+              [0m “[0m
+              [0mSynthetic[0m
+              [0m”[0m
+            [36m</li>[39m
+          [36m</ul>[39m
+        [36m</li>[39m
+      [36m</ul>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mt-3 flex flex-col gap-3 text-sm"[39m
+        [33mdata-testid[39m=[32m"outcomes"[39m
+      [36m>[39m
+        [36m<p[39m
+          [33mrole[39m=[32m"status"[39m
+        [36m>[39m
+          [0m0[0m
+          [0m applied[0m
+          [0m, [0m
+          [0m0[0m
+          [0m [0m
+          [0mfailed, [0m
+          [0m1[0m
+          [0m unknown of [0m
+          [0m1[0m
+          [0m submitted.[0m
+        [36m</p>[39m
+        [36m<p>[39m
+          [0mUnknown rows may or may not have been applied. Retry the same attempt to find out; nothing is applied twice.[0m
+        [36m</p>[39m
+        [36m<section[39m
+          [33maria-label[39m=[32m"Unknown rows"[39m
+        [36m>[39m
+          [36m<h4[39m
+            [33mclass[39m=[32m"font-medium"[39m
+          [36m>[39m
+            [0mUnknown[0m
+          [36m</h4>[39m
+          [36m<ul[39m
+            [33mclass[39m=[32m"mt-1 flex flex-col gap-1"[39m
+          [36m>[39m
+            [36m<li>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium whitespace-nowrap border-transparent bg-warning/20 text-foreground"[39m
+              [36m>[39m
+                [0mUnknown[0m
+              [36m</span>[39m
+              [0m [0m
+              [36m<span[39m
+                [33mclass[39m=[32m"font-mono"[39m
+              [36m>[39m
+                [0mR1[0m
+              [36m</span>[39m
+              [0m — the answer was lost; attempt identity kept.[0m
+            [36m</li>[39m
+          [36m</ul>[39m
+        [36m</section>[39m
+      [36m</div>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:154:19
+    152|     expect(screen.getByLabelText('File')).toBeDisabled()
+    153|     expect(screen.getByRole('button', { name: 'Retry the same attempt'…
+    154|     expect(screen.getByRole('button', { name: 'Commit valid groups' })…
+       |                   ^
+    155|   })
+    156|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 42 passed (43)
+   Start at  10:42:45
+   Duration  2.41s (environment 38%, tests 36%, setup 12%, import 9%, transform 5%)
+
+    Isolate  4 workers spawned · ~262ms startup each (spawn + environment, per file)
+             at least ~785ms faster with isolate: false — reuses workers across files instead of one per file
+

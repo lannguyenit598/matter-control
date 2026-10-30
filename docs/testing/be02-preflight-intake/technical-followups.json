@@ -1,0 +1,71 @@
+{
+  "task": "MC-BE-02-PREP technical followups",
+  "author": "Local Codex intake, not independent architecture approval",
+  "findings": [
+    {
+      "id": "BE02-PF-01",
+      "gaps": [
+        "BG-05"
+      ],
+      "classification": "FACTUAL_AND_DESIGN_CORRECTION_REQUIRED",
+      "trigger": "Preflight calls the existing JSONB DTO already version-pinned and proposes serving stored bytes verbatim without re-encoding across codec versions.",
+      "evidence": [
+        "matter_dto.go createdResultDTO has no schemaVersion; encode/decode are ordinary JSON marshal/unmarshal",
+        "product migration command_receipts.response is JSONB",
+        "PostgreSQL18 JSON types documentation distinguishes JSONB normalization from input-text preservation"
+      ],
+      "impact": "Proposed wrapper alone cannot establish exact original wire-byte replay or codec compatibility; existing persistence DTO includes requestHash and is not a safe public body.",
+      "required_delta": "Describe existing domain snapshot accurately. Choose explicit versioned deterministic encoding of immutable data with compatibility tests OR separately preserved wire bytes/status/headers in the command transaction. Explain legacy receipt readability and exact first-response/replay/lookup projection; never expose internal RequestHash.",
+      "status": "OPEN_TECHNICAL_RECOMMENDATION"
+    },
+    {
+      "id": "BE02-PF-02",
+      "gaps": [
+        "BG-08",
+        "BG-06"
+      ],
+      "classification": "REPRESENTATION_CLARIFICATION_REQUIRED",
+      "trigger": "OptionA permits headers OR a documented envelope metadata zone while retaining revision strong ETag.",
+      "evidence": [
+        "Candidate api-contracts body provenance changes with read snapshot",
+        "RFC9110 section8.8.1 concerns all observable selected representation data"
+      ],
+      "impact": "A metadata zone inside the JSON body still changes representation bytes; revision alone is insufficient. Native/INTA ETag observations do not approve a product representation.",
+      "required_delta": "If recommending stable body, put volatile provenance genuinely outside body (for example defined response headers), pin validator scope and deterministic codec conditions, and list frontend/client header exposure/consumption changes. Otherwise choose a representation validator/CAS alternative and state the contract trade-off.",
+      "status": "OPEN_TECHNICAL_RECOMMENDATION"
+    },
+    {
+      "id": "BE02-PF-03",
+      "gaps": [
+        "BG-04",
+        "BG-02"
+      ],
+      "classification": "STATUS_MATRIX_INCONSISTENCY",
+      "trigger": "BG04 proposes400 for wrong media type and422 for wrong type as mirroring native, but later T26 asks415-vs400; candidate/native use different rows.",
+      "evidence": [
+        "user_handler.go109-110 returns UnsupportedMediaType",
+        "user_handler.go125-130 returns400 for syntax/type errors",
+        "candidate API table400 includes JSON/syntax/type errors"
+      ],
+      "impact": "No deterministic expected result for strict decoder/Content-Type tests; native precedent is misdescribed.",
+      "required_delta": "Give one explicit product matrix for unsupported/missing Content-Type, charset handling, malformed/trailing JSON, wrong root/field type, unknown/duplicate/forbidden fields and business validation. Clearly label any candidate change; keep native behavior unchanged.",
+      "status": "OPEN_TECHNICAL_RECOMMENDATION"
+    },
+    {
+      "id": "BE02-PF-04",
+      "gaps": [
+        "BG-01"
+      ],
+      "classification": "BOUNDARY_DESIGN_CLARIFICATION",
+      "trigger": "Suggested core port PrincipalResolver.ResolveRequest(ctx, headers) makes the core abstraction depend on HTTP request shape.",
+      "evidence": [
+        "Backend inward-dependency/core conventions",
+        "Existing MatterService accepts trusted primitive ActorID supplied by boundary"
+      ],
+      "impact": "Proposed port couples application identity lookup to transport concerns, despite no imported HTTP type being shown. This is a proposal concern, not a defect in nonexistent code.",
+      "required_delta": "Keep header extraction and token verification at the inbound/identity-adapter boundary. If core needs identity lookup, accept a minimal verified issuer/subject or transport-neutral identity value. State how test-only identity cannot be selected by product config and how claims become trusted; no real provider choice.",
+      "status": "OPEN_TECHNICAL_RECOMMENDATION"
+    }
+  ],
+  "scope": "Four narrow proposal corrections, no new product source defect asserted; do not reopen BE01"
+}

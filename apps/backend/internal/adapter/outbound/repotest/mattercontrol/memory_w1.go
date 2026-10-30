@@ -9,8 +9,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // ExecuteWorkspace implements port.WorkspaceStore with the same atomic semantics as
@@ -125,17 +125,17 @@ func (t *memWorkspaceTx) InsertWorkspaceMembership(_ context.Context, m matter.W
 	return nil
 }
 
-func (t *memWorkspaceTx) UpdateWorkspaceMembershipStatus(_ context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRevision int64) (int64, error) {
+func (t *memWorkspaceTx) UpdateWorkspaceMembershipStatus(_ context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRowRevision int64) (int64, error) {
 	if err := t.fail("update_workspace_membership"); err != nil {
 		return 0, err
 	}
 	k := wsKey{t.header.ID, user}
 	m, ok := t.store.wsMemberships[k]
-	if !ok || t.header.Revision != expectedRevision {
+	if !ok || m.Revision != expectedRowRevision {
 		return 0, fmt.Errorf("workspace membership update: %w", port.ErrVersionConflict)
 	}
 	m.Status = status
-	m.Revision = expectedRevision + 1
+	m.Revision = expectedRowRevision + 1
 	t.store.wsMemberships[k] = m
 	return m.Revision, nil
 }
@@ -297,17 +297,17 @@ func (t *memTx) InsertMatterMembership(_ context.Context, m matter.MatterMembers
 	return nil
 }
 
-func (t *memTx) UpdateMatterMembershipStatus(_ context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRevision int64) (int64, error) {
+func (t *memTx) UpdateMatterMembershipStatus(_ context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRowRevision int64) (int64, error) {
 	if err := t.fail("update_matter_membership"); err != nil {
 		return 0, err
 	}
 	k := mmKey{t.header.MatterID, user}
 	m, ok := t.store.mMemberships[k]
-	if !ok || t.header.Revision != expectedRevision {
+	if !ok || m.Revision != expectedRowRevision {
 		return 0, fmt.Errorf("matter membership update: %w", port.ErrVersionConflict)
 	}
 	m.Status = status
-	m.Revision = expectedRevision + 1
+	m.Revision = expectedRowRevision + 1
 	t.store.mMemberships[k] = m
 	return m.Revision, nil
 }

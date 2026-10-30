@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // ErrInjected is the sentinel carried by every injected seam failure so tests can
@@ -108,7 +108,11 @@ type Store struct {
 	filingObs  []matter.FilingObservation
 	// W5 context records.
 	contexts map[string]matter.ContextRecord
-	events   []matter.RequirementCreatedEvent
+
+	reviewGrids        map[string]matter.ReviewGrid
+	reviewAnswers      []matter.ReviewAnswer
+	reviewQuestionRevs []reviewQuestionRev
+	events             []matter.RequirementCreatedEvent
 	// records holds the W1 read model: every matter-scoped history event as a
 	// generic record (requirement.created, matter.created, membership.*).
 	records []matter.EventRecord
@@ -178,6 +182,7 @@ func NewMemoryStore(clock func() time.Time) *Store {
 		verifiers:     map[mmKey]bool{},
 		filings:       map[matter.NodeID]matter.Filing{},
 		contexts:      map[string]matter.ContextRecord{},
+		reviewGrids:   map[string]matter.ReviewGrid{},
 		receipts:      map[receiptKey]matter.Receipt{},
 		importSources: map[importSourceKey]matter.ImportSource{},
 		clock:         clock,
@@ -264,6 +269,9 @@ func (s *Store) snapshot() *Store {
 	cp.verifiers = copyMap(s.verifiers)
 	cp.filings = copyMap(s.filings)
 	cp.contexts = copyMap(s.contexts)
+	cp.reviewGrids = copyMap(s.reviewGrids)
+	cp.reviewAnswers = append([]matter.ReviewAnswer(nil), s.reviewAnswers...)
+	cp.reviewQuestionRevs = append([]reviewQuestionRev(nil), s.reviewQuestionRevs...)
 	cp.filingCyc = append([]matter.FilingCycle(nil), s.filingCyc...)
 	cp.filingSubs = append([]matter.FilingSubmission(nil), s.filingSubs...)
 	cp.filingObs = append([]matter.FilingObservation(nil), s.filingObs...)
@@ -358,6 +366,7 @@ func (s *Store) adopt(work *Store) {
 	s.assessments, s.disputes, s.verifiers = work.assessments, work.disputes, work.verifiers
 	s.filings, s.filingCyc, s.filingSubs, s.filingObs = work.filings, work.filingCyc, work.filingSubs, work.filingObs
 	s.contexts = work.contexts
+	s.reviewGrids, s.reviewAnswers, s.reviewQuestionRevs = work.reviewGrids, work.reviewAnswers, work.reviewQuestionRevs
 	s.events = work.events
 	s.records = work.records
 	s.importSources = work.importSources

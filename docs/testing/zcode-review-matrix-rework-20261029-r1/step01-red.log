@@ -1,0 +1,444 @@
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+ ❯ src/features/review/components/cell-detail.test.tsx (5 tests | 3 failed) 195ms
+   × a not-found refusal clears every protected word of the cell detail 108ms
+   × a forbidden refusal clears every protected word of the cell detail 23ms
+   × a unauthenticated refusal clears every protected word of the cell detail 26ms
+   ✓ a stale conflict (412) keeps the loaded content and the typed text 21ms
+   ✓ an UNKNOWN outcome keeps the loaded content for safe recovery 17ms
+ ❯ src/features/review/components/answer-form.test.tsx (4 tests | 3 failed) 208ms
+   × an UNKNOWN retry keeps the exact command after the view refreshes its props 124ms
+   × after a reload the stored attempt replays the original key and CAS, not the refreshed props 24ms
+   ✓ editing the text after an UNKNOWN does not mutate the retried command 26ms
+   × a resolved outcome starts a different intent: a new key and the freshly edited values 33ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/review/components/answer-form.test.tsx > an UNKNOWN retry keeps the exact command after the view refreshes its props
+AssertionError: expected { …(11) } to deeply equal { …(11) }
+
+- Expected
++ Received
+
+@@ -1,8 +1,8 @@
+  {
+-   "expectedAnswerId": "",
+-   "expectedQuestionRevision": 1,
++   "expectedAnswerId": "0192b1c4-0000-7000-8000-000000000001",
++   "expectedQuestionRevision": 2,
+    "gridId": "0192b1c4-0000-7000-8000-000000000001",
+    "idempotencyKey": "01a187cd-7ced-768f-ab66-129dd051704c",
+    "matterId": "0192b1c4-0000-7000-8000-000000000001",
+    "pageRef": "",
+    "questionId": "0192b1c4-0000-7000-8000-000000000001",
+
+ ❯ src/features/review/components/answer-form.test.tsx:48:44
+     46|   fireEvent.click(screen.getByRole('button', { name: /Retry the same r…
+     47|   await waitFor(() => expect(actions.record).toHaveBeenCalledTimes(2))
+     48|   expect(actions.record.mock.calls[1]![0]).toEqual(first)
+       |                                            ^
+     49| })
+     50|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/features/review/components/answer-form.test.tsx > after a reload the stored attempt replays the original key and CAS, not the refreshed props
+TypeError: screen.unmount is not a function
+ ❯ src/features/review/components/answer-form.test.tsx:59:10
+     57|   await unknownOutcome()
+     58|   const first = { ...actions.record.mock.calls[0]![0] }
+     59|   screen.unmount()
+       |          ^
+     60|
+     61|   // The page reloaded and the refreshed view shows a new current answ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/features/review/components/answer-form.test.tsx > a resolved outcome starts a different intent: a new key and the freshly edited values
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name `/Discard and start a different request/`
+
+Here are the accessible roles:
+
+  combobox:
+
+  Name "Your conclusion":
+  [36m<select[39m
+    [33maria-describedby[39m=[32m"_r_c_-hint"[39m
+    [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive ui-select min-h-9 appearance-none truncate py-1.5 pr-9 text-left whitespace-nowrap"[39m
+    [33mid[39m=[32m"_r_c_"[39m
+    [33mname[39m=[32m"state"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  option:
+
+  Name "Reviewed":
+  [36m<option[39m
+    [33mselected[39m=[32m""[39m
+    [33mvalue[39m=[32m"REVIEWED"[39m
+  [36m/>[39m
+
+  Name "Absent in this document":
+  [36m<option[39m
+    [33mvalue[39m=[32m"ABSENT"[39m
+  [36m/>[39m
+
+  Name "Unable to review":
+  [36m<option[39m
+    [33mvalue[39m=[32m"UNABLE"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  paragraph:
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+    [33mid[39m=[32m"_r_c_-hint"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<p[39m
+    [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+    [33mid[39m=[32m"_r_e_-hint"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "What you found":
+  [36m<textarea[39m
+    [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive py-2"[39m
+    [33mid[39m=[32m"_r_d_"[39m
+    [33mmaxlength[39m=[32m"4000"[39m
+    [33mname[39m=[32m"text"[39m
+    [33mrows[39m=[32m"3"[39m
+  [36m/>[39m
+
+  Name "Page (optional)":
+  [36m<input[39m
+    [33maria-describedby[39m=[32m"_r_e_-hint"[39m
+    [33mautocomplete[39m=[32m"off"[39m
+    [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive min-h-10 py-2"[39m
+    [33mid[39m=[32m"_r_e_"[39m
+    [33mmaxlength[39m=[32m"40"[39m
+    [33mname[39m=[32m"pageRef"[39m
+    [33mtype[39m=[32m"text"[39m
+  [36m/>[39m
+
+  Name "Quotation (optional)":
+  [36m<textarea[39m
+    [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive py-2"[39m
+    [33mid[39m=[32m"_r_f_"[39m
+    [33mmaxlength[39m=[32m"1000"[39m
+    [33mname[39m=[32m"quoteRef"[39m
+    [33mrows[39m=[32m"2"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  [36m<div[39m
+    [33mclass[39m=[32m"flex gap-3 rounded-md border p-3 text-sm [&_svg]:mt-0.5 [&_svg]:size-4 bg-muted/50"[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  button:
+
+  Name "Record answer":
+  [36m<button[39m
+    [33maria-busy[39m=[32m"true"[39m
+    [33mclass[39m=[32m"control-target inline-flex max-w-full min-w-0 items-center justify-center gap-2 rounded-md text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 min-h-9 px-3 py-1.5"[39m
+    [33mdisabled[39m=[32m""[39m
+    [33mtype[39m=[32m"submit"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<form[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+      [33mnovalidate[39m=[32m""[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+          [33mfor[39m=[32m"_r_c_"[39m
+        [36m>[39m
+          [0mYour conclusion[0m
+        [36m</label>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"relative min-w-0"[39m
+        [36m>[39m
+          [36m<select[39m
+            [33maria-describedby[39m=[32m"_r_c_-hint"[39m
+            [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive ui-select min-h-9 appearance-none truncate py-1.5 pr-9 text-left whitespace-nowrap"[39m
+            [33mid[39m=[32m"_r_c_"[39m
+            [33mname[39m=[32m"state"[39m
+          [36m>[39m
+            [36m<option[39m
+              [33mselected[39m=[32m""[39m
+              [33mvalue[39m=[32m"REVIEWED"[39m
+            [36m>[39m
+              [0mReviewed[0m
+            [36m</option>[39m
+            [36m<option[39m
+              [33mvalue[39m=[32m"ABSENT"[39m
+            [36m>[39m
+              [0mAbsent in this document[0m
+            [36m</option>[39m
+            [36m<option[39m
+              [33mvalue[39m=[32m"UNABLE"[39m
+            [36m>[39m
+              [0mUnable to review[0m
+            [36m</option>[39m
+          [36m</select>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-chevron-down pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 text-muted-foreground"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"m6 9 6 6 6-6"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+          [33mid[39m=[32m"_r_c_-hint"[39m
+        [36m>[39m
+          [0mAbsent and unable-to-review are conclusions you record. Nothing here verifies a requirement.[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+          [33mfor[39m=[32m"_r_d_"[39m
+        [36m>[39m
+          [0mWhat you found[0m
+        [36m</label>[39m
+        [36m<textarea[39m
+          [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive py-2"[39m
+          [33mid[39m=[32m"_r_d_"[39m
+          [33mmaxlength[39m=[32m"4000"[39m
+          [33mname[39m=[32m"text"[39m
+          [33mrows[39m=[32m"3"[39m
+        [36m/>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+          [33mfor[39m=[32m"_r_e_"[39m
+        [36m>[39m
+          [0mPage (optional)[0m
+        [36m</label>[39m
+        [36m<input[39m
+          [33maria-describedby[39m=[32m"_r_e_-hint"[39m
+          [33mautocomplete[39m=[32m"off"[39m
+          [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive min-h-10 py-2"[39m
+          [33mid[39m=[32m"_r_e_"[39m
+          [33mmaxlength[39m=[32m"40"[39m
+          [33mname[39m=[32m"pageRef"[39m
+          [33mtype[39m=[32m"text"[39m
+        [36m/>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+          [33mid[39m=[32m"_r_e_-hint"[39m
+        [36m>[39m
+          [0mTyped by you; the system does not check it against the document.[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+          [33mfor[39m=[32m"_r_f_"[39m
+        [36m>[39m
+          [0mQuotation (optional)[0m
+        [36m</label>[39m
+        [36m<textarea[39m
+          [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive py-2"[39m
+          [33mid[39m=[32m"_r_f_"[39m
+          [33mmaxlength[39m=[32m"1000"[39m
+          [33mname[39m=[32m"quoteRef"[39m
+          [33mrows[39m=[32m"2"[39m
+        [36m/>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex gap-3 rounded-md border p-3 text-sm [&_svg]:mt-0.5 [&_svg]:size-4 bg-muted/50"[39m
+        [33mrole[39m=[32m"status"[39m
+      [36m>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"lucide lucide-info shrink-0"[39m
+          [33mfill[39m=[32m"none"[39m
+          [33mheight[39m=[32m"24"[39m
+          [33mstroke[39m=[32m"currentColor"[39m
+          [33mstroke-linecap[39m=[32m"round"[39m
+          [33mstroke-linejoin[39m=[32m"round"[39m
+          [33mstroke-width[39m=[32m"2"[39m
+          [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [33mwidth[39m=[32m"24"[39m
+          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+        [36m>[39m
+          [36m<circle[39m
+            [33mcx[39m=[32m"12"[39m
+            [33mcy[39m=[32m"12"[39m
+            [33mr[39m=[32m"10"[39m
+          [36m/>[39m
+          [36m<path[39m
+            [33md[39m=[32m"M12 16v-4"[39m
+          [36m/>[39m
+          [36m<path[39m
+            [33md[39m=[32m"M12 8h.01"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col gap-1"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [0mAlready saved: this request had been recorded before.[0m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-wrap gap-2"[39m
+      [36m>[39m
+        [36m<button[39m
+          [33maria-busy[39m=[32m"true"[39m
+          [33mclass[39m=[32m"control-target inline-flex max-w-full min-w-0 items-center justify-center gap-2 rounded-md text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 min-h-9 px-3 py-1.5"[39m
+          [33mdisabled[39m=[32m""[39m
+          [33mtype[39m=[32m"submit"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-loader-circle lucide-loader-2 size-4 animate-spin"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 1 1-6.219-8.56"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+          [0mRecord answer[0m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</form>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/review/components/answer-form.test.tsx:92:26
+     90|   fireEvent.click(screen.getByRole('button', { name: /Retry the same r…
+     91|   await waitFor(() => expect(actions.record).toHaveBeenCalledTimes(2))
+     92|   fireEvent.click(screen.getByRole('button', { name: /Discard and star…
+       |                          ^
+     93|   fireEvent.change(screen.getByLabelText(/^What you found/), { target:…
+     94|   actions.record.mockResolvedValueOnce({ ok: true, id: 'synthetic-answ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/features/review/components/cell-detail.test.tsx > a not-found refusal clears every protected word of the cell detail
+AssertionError: expected <dd …(1)></dd> to be null
+
+- Expected:
+null
+
++ Received:
+<dd
+  class="break-words whitespace-pre-line"
+>
+  PRIVATE EXISTING ANSWER
+</dd>
+
+ ❯ src/features/review/components/cell-detail.test.tsx:96:57
+     94|   detail({ history: [answer({ id: 'h1' })] })
+     95|   await submitAndExpect(kind, error)
+     96|   expect(screen.queryByText('PRIVATE EXISTING ANSWER')).toBeNull()
+       |                                                         ^
+     97|   expect(screen.queryByText('PRIVATE QUOTE')).toBeNull()
+     98|   expect(screen.queryByText('PRIVATE DOCUMENT')).toBeNull()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/features/review/components/cell-detail.test.tsx > a forbidden refusal clears every protected word of the cell detail
+AssertionError: expected <dd …(1)></dd> to be null
+
+- Expected:
+null
+
++ Received:
+<dd
+  class="break-words whitespace-pre-line"
+>
+  PRIVATE EXISTING ANSWER
+</dd>
+
+ ❯ src/features/review/components/cell-detail.test.tsx:96:57
+     94|   detail({ history: [answer({ id: 'h1' })] })
+     95|   await submitAndExpect(kind, error)
+     96|   expect(screen.queryByText('PRIVATE EXISTING ANSWER')).toBeNull()
+       |                                                         ^
+     97|   expect(screen.queryByText('PRIVATE QUOTE')).toBeNull()
+     98|   expect(screen.queryByText('PRIVATE DOCUMENT')).toBeNull()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/features/review/components/cell-detail.test.tsx > a unauthenticated refusal clears every protected word of the cell detail
+AssertionError: expected <dd …(1)></dd> to be null
+
+- Expected:
+null
+
++ Received:
+<dd
+  class="break-words whitespace-pre-line"
+>
+  PRIVATE EXISTING ANSWER
+</dd>
+
+ ❯ src/features/review/components/cell-detail.test.tsx:96:57
+     94|   detail({ history: [answer({ id: 'h1' })] })
+     95|   await submitAndExpect(kind, error)
+     96|   expect(screen.queryByText('PRIVATE EXISTING ANSWER')).toBeNull()
+       |                                                         ^
+     97|   expect(screen.queryByText('PRIVATE QUOTE')).toBeNull()
+     98|   expect(screen.queryByText('PRIVATE DOCUMENT')).toBeNull()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  6 failed | 3 passed (9)
+   Start at  20:15:52
+   Duration  1.04s (environment 51%, tests 21%, setup 15%, import 10%, transform 3%)
+

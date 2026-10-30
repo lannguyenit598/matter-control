@@ -1,0 +1,120 @@
+{
+  "task": "MC-P0 independent OpenCode review after RV-001 fix (delta review: RV-001 fix, import/draft/access-loss, causal navigation)",
+  "reviewer_identity": {
+    "tool": "OpenCode CLI v2.1.4",
+    "provider": "opencode",
+    "model": "glm-5.3-flash-free",
+    "mode": "INDEPENDENT_NON_AUTHOR_SOURCE_REVIEW",
+    "reviewed_tree": "uncommitted dirty state of codex/unified-project-flow at 2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc, pinned by claude-rv001-fix/source-manifest.json de8424ea…4489 (719/719 verified)"
+  },
+  "verdict": "PASS_SOURCE_ONLY_WITH_LIMITATIONS",
+  "rv001_disposition": "CLOSED_SOURCE_ONLY — the fix is correct and behavior-preserving at source and test level; browser/IdP/network runtime evidence remains a separate open gate",
+  "findings": [
+    {
+      "id": "OR1-001",
+      "severity": "P3",
+      "status": "OPEN_NOTE_CARRIED",
+      "kind": "test adequacy",
+      "title": "read-failure-callers.test.ts scan is fail-open: tags with '>' inside attributes, aliased imports and partial passed through {...props} are invisible to the regex and to the partial placement assertion",
+      "where": ["apps/frontend/src/components/organisms/read-failure-callers.test.ts:7 (const TAG = /<ReadFailure\\b[^>]*?\\/>/g)"],
+      "trigger": "a future call site like <ReadFailure href={cond ? a : b} kind={kind} partial /> (a '>' inside JSX) or an aliased import (Import ReadFailure as RF) would neither increment the matched list nor be flagged for a missing/misplaced partial",
+      "observed": "today all 31 tags in 15 files match and exactly one carries partial, so the guard is correct for the current tree (C9/C13)",
+      "expected": "a placement tripwire that cannot silently miss occurrences",
+      "evidence": "same limitation as comprehensive-delta-r1 RV-004 (AUTHOR_SELF_REVIEW_NOT_INDEPENDENT round) — independently re-confirmed this round from source; no repeat fix was made, nothing changed",
+      "minimum_fix": "tie the scan to a negative test: count of '<ReadFailure' occurrences must equal count of matched tags; or scan with the TS compiler API"
+    },
+    {
+      "id": "OR1-002",
+      "severity": "P3",
+      "status": "ACCEPTED_WITH_NOTE",
+      "kind": "comment precision (CR-001)",
+      "title": "importPreviewAction comment still overstates: a preview 400 can also come from a malformed multipart, not only an unreadable spreadsheet — NOT certified as 'only invalid sheet'",
+      "where": ["apps/frontend/src/features/data-transfer/actions.ts:96-106 (comment :96-97, mapping :98-106)"],
+      "trigger": "any byte the server receives that is not a well-formed multipart (truncation through a proxy, duplicate/missing \"file\" part) is surfaced as the same urn:mc:bad-request, indistinguishable client-side because McError drops the problem detail",
+      "observed": "backend: dataops_service.go:443-466 (byte limit, decode error, empty sheet, missing column, row limit) → port.ErrSheetInvalid; problems.go:60 → urn:mc:bad-request; data_handlers.go readSheetUpload returns errBadRequest independently for multipart faults",
+      "expected": "comment must not claim a single source for 400 at preview",
+      "evidence": "both backend sources read this round; the user-facing message ('The file could not be read. Nothing was stored.') remains true in every case because preview writes nothing; the mapping decision (fixable-file validation instead of a generic fault) is reasonable for both sources",
+      "minimum_fix": "reword the comment to name both sources or keep the detail inside McError so the two can be told apart later"
+    },
+    {
+      "id": "OR1-003",
+      "severity": "INFO",
+      "status": "DECISION_REQUIRED_UNCHANGED (CR-002)",
+      "kind": "product decision",
+      "title": "Same-key retry after OUTCOME_UNKNOWN does not survive a page reload for IntentForm creates and version upload; scope and options unchanged, no waiver implemented",
+      "where": [
+        "apps/frontend/src/components/organisms/intent-form.tsx:62 (key in useState), :69 (frozen payload in ref)",
+        "apps/frontend/src/features/proof/components/document-forms.tsx:61 (key in useState; :83/:130 re-mint on new intent)"
+      ],
+      "trigger": "receipted creation whose answer was lost, followed by reload and re-submit → new idempotency key → backend key-only dedupe does not apply → possible duplicate",
+      "observed": "fingerprint untouched by this delta: independent two-artifact diff (f596b7c6 → de8424ea) changed exactly the 4 src/lib files; contract rev 12 §0 guarantees reload survival only for bulk/import (server-memory slots); drafts restore field values but not attempt identity",
+      "expected": "a PO decision among (A) browser persistence of {key, frozen payload}, (B) server-side session slot + contract revision, (C) explicit local-profile limitation; reviewer does not select one and does not waive",
+      "evidence": "backend dedupe-by-key-only was NOT re-verified beyond the contract table (same limitation as prior rounds)",
+      "minimum_fix": "none by reviewer; PO disposition + possible contract revision"
+    },
+    {
+      "id": "OR1-004",
+      "severity": "INFO",
+      "status": "LIMITATION_DOCUMENTED",
+      "kind": "draft scope breadth",
+      "title": "Primary-denial purge is deliberately whole-tab (drafts are not indexed by Matter); documented, not presented as per-Matter",
+      "where": [
+        "apps/frontend/src/components/organisms/draft-scope.tsx:27-35 (PurgeDrafts comment + clearAllDrafts)",
+        "apps/frontend/src/components/organisms/read-failure.tsx:25-35 (lost = sign-in always, or forbidden/not-found when not partial)"
+      ],
+      "trigger": "a primary denial on any record purges drafts of other records in the same tab",
+      "observed": "code comment documents tab-wide semantics ('Drafts are not indexed by Matter, so the purge is tab-wide rather than guessing which keys belonged to the lost scope'); CR-003 recorded in the author packet",
+      "evidence": "read directly this round; drafts tests cover keep/purge/partial/sign-in/no-revival (C9)",
+      "minimum_fix": "PO-level product decision if breadth bothers product; not a source defect"
+    },
+    {
+      "id": "OR1-005",
+      "severity": "P3",
+      "status": "LINEAGE_UNPROVEN",
+      "kind": "provenance",
+      "title": "Pre-fix baseline manifest f9cbbdf4…5595 exists only as an author-declared hash; the actual artifact is absent, so file-level pre-fix lineage cannot be proven",
+      "where": [
+        "docs/testing/p0-final-parallel-20261028/claude-rv001-fix/inputs.json:7",
+        "docs/testing/p0-final-parallel-20261028/claude-rv001-fix/source-delta.json:2"
+      ],
+      "observed": "hash search under docs/ finds f9cbbdf4 only inside prose (the three packet files and this round's handoff prompt)", 
+      "expected": "one of: the actual baseline manifest exported into the packet, or the hash recorded as unreconstructable",
+      "evidence": "entry-level lineage IS independently corroborated: (1) all four delta baseline_sha256 equal the comprehensive manifest (f596b7c6) entries on the same paths; (2) the independent f596b7c6 → de8424ea two-artifact diff reproduces exactly the same 4-file delta (C6/C7); the hash mismatch f5cbbdf4 vs f596b7c6 remains unexplained by the available artifacts",
+      "minimum_fix": "author exports the actual pre-fix manifest artifact if it was retained; otherwise record as provenance limitation. NOT rebuilt by the reviewer per assignment"
+    },
+    {
+      "id": "OR1-006",
+      "severity": "INFO",
+      "status": "NOTE",
+      "kind": "manifest coverage rule deviation",
+      "title": "Manifest selection rule states git ls-files -co --exclude-standard but omits 3 untracked symlink paths under apps/backend/.claude/skills",
+      "where": ["docs/testing/p0-final-parallel-20261028/claude-rv001-fix/source-manifest.json (selection_rule field)"],
+      "observed": "selection-rule reproduction yields 722 paths; manifest has 719; the 3 extras are symlink dirs (add-migration, add-use-case, steward → ../../.agents/skills/*); the SKILL.md content behind them is already covered via apps/backend/.agents/skills/* entries",
+      "expected": "rule text and implementation should agree or the deviation should be stated",
+      "evidence": "C4 + direct ls of the symlink targets; non-product-source, no impact on the RV-001 verdict",
+      "minimum_fix": "note the symlink filter in the manifest metadata (author-side)"
+    }
+  ],
+  "verified_no_finding": [
+    { "id": "VF-01", "area": "RV-001 fix correctness (paths.ts)", "result": "paths.ts:19 checks the canonical output (url.pathname.startsWith('//')) after URL normalization and before the deny list; raw checks (length ≤2048; C0/C1/DEL controls + backslash at :7; leading '/' without '//' at :8) intact; origin probe http://local.invalid with origin equality; deny list /api/ prefix, exact /login; return url.pathname + url.search" },
+    { "id": "VF-02", "area": "RV-001 fix correctness (flow.ts)", "result": "flow.ts:112 same canonical-output check inside safeReturnTo (origin-equality vs caller-provided appOrigin at :108, deny /api/auth/ prefix + /login at :115); DEFAULT_RETURN '/workspaces'; PROBE_ORIGIN comment accurate (:85-86)" },
+    { "id": "VF-03", "area": "Back-link sink", "result": "work/[itemId]/page.tsx:51 fromRaw ← searchParams; :55 safeInternalPath(fromRaw, gridPath); :109 <Link href={from}> — the href can no longer start with '//' in canonical form; :56 embeds the SANITIZED from into retryHref via encodeURIComponent (query value, not a sink)" },
+    { "id": "VF-04", "area": "login lifecycle", "result": "login/page.tsx:33 safeReturnTo(raw.returnTo) → :52 href /api/auth/login?returnTo=<encoded>; api/auth/login/route.ts:13 safeReturnTo(query, cfg.appOrigin) → beginLogin stores safeReturnTo (flow.ts:137) → completeLogin returns pending.returnTo → api/auth/callback/route.ts:26 NextResponse.redirect(resolveReturnTo(returnTo, cfg.appOrigin)) — sanitized at every hop; the single-application resolveReturnTo('/..//x.test') regression is pinned by flow.test.ts:256 (resolves to http://app.test/workspaces)" },
+    { "id": "VF-05", "area": "payload/test coverage", "result": "paths.test.ts adds 6 protocol-relative fallback payloads (:33-38) + keep cases (:13-15); flow.test.ts adds the same 6 classes (:230-235) + keeps (:196-198) + 10-case resolveReturnTo hostile table (:239-257); personally executed: 5 files 124/124 (C9); beyond the tables, node probe on the real function fell back /%2f/.., /.%2E//, /x/../%2E%2e//, /..//?a=1 and kept /a//b, legit queries, /a%2F%2Fb (C10) — no second percent-decode demanded" },
+    { "id": "VF-06", "area": "access-loss / ReadFailure", "result": "purge exactly for sign-in (always) and forbidden/not-found (unless partial); 31 call sites in 15 files, exactly one partial (proof section of the work-item page, after the primary Promise.all succeeded); drafts.test.tsx covers keep-through-remount, cross-session/scope isolation, purge on denied kinds, keep on unavailable/error, partial keep, sign-in+partial purge, no-revival-after-re-grant (C9/C13)" },
+    { "id": "VF-07", "area": "CR-001 mapping", "result": "importPreviewAction maps McError bad-request → kind validation, fieldErrors.file, truthful message; seam test executes the real fetch→McError→action seam and asserts no console.error; executed this round (C9, file 5 of 5)" },
+    { "id": "VF-08", "area": "commit/unavailable/UNKNOWN semantics", "result": "executeAttempt: beginAttempt refusals (running/settled/blocked/identity-mismatch) return outcome-unknown + retrySameKey without any request; transport drop → outcome-unknown + retrySameKey with fetch called exactly once (no behind-the-back resend, seam test); commit-catch → endAttempt without results leaves the attempt retained and unresolved → recovery re-executes the SAME identity/key via executeAttempt(slot.attempt) (pending-attempts.ts:59-67); ACCESS_LOST → revokeAttempts keeps a refusal marker, never revives on re-grant; no server key minting anywhere; no result presented as a certain failure" },
+    { "id": "VF-09", "area": "manifest integrity", "result": "file hashes of manifest+delta match the handoff contract at open AND close; 719/719 member sha256+bytes match filesystem twice; manifest head == actual HEAD; delta candidate entries == manifest == filesystem; delta baseline entries == comprehensive manifest entries" }
+  ],
+  "not_examined": [
+    "Other link/redirect sinks fed by unvalidated query parameters elsewhere in the app (out of this delta's scope; author packet flags the same limitation)",
+    "Backend key-only dedupe behavior for creation commands beyond the contract table",
+    "Rendered work-item page / login page (needs a live session; browser evidence belongs to the runtime owner)",
+    "Anything outside the review scope defined by this assignment (no full repository audit)"
+  ],
+  "monitoring_limitations": [
+    "T-RED (red-before-fix) is author-cited, not independently reproducible without editing source; accepted as declared evidence",
+    "pnpm check/build and all backend gates are author-cited \"for the same bytes\"; reviewer did not re-run them",
+    "Author identity (Claude Code, claude-sonnet-5-5) is declared, not independently verifiable; reviewer identity similarly self-describes tooling"
+  ]
+}

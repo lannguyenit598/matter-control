@@ -16,9 +16,9 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/example/userapi/internal/app"
-	"github.com/example/userapi/internal/config"
-	"github.com/example/userapi/internal/observability"
+	"leonx.me/matter-control/internal/app"
+	"leonx.me/matter-control/internal/config"
+	"leonx.me/matter-control/internal/observability"
 )
 
 // version is set at build time: go build -ldflags "-X main.version=$(git describe --tags)".

@@ -17,7 +17,7 @@ paths:
 - If govulncheck flags a module, upgrade to its reported "Fixed in" version and handle the consequences above.
 - `.golangci.yml`:
   - do not disable linters or add exclusions to bypass a specific error; fix the code;
-  - module path changes must also update depguard package paths (`grep -c github.com/example/userapi .golangci.yml` counts them; stale paths silently disable rules);
+  - module path changes must also update depguard package paths (`grep -c leonx.me/matter-control .golangci.yml` counts them; stale paths silently disable rules);
   - after changing depguard rules, temporarily add a violating import, confirm lint rejects it, then remove it. Import a **real** package, or typecheck fails before depguard runs;
   - `forbidigo` and `gochecknoglobals` apply only to `internal/core` (`path-except` exclusion); this defines scope rather than bypassing lint.
 - sqlc is a code generator, not a module dependency: its version is pinned once in the Makefile (`SQLC`) and run with `go run` by `make sqlc-generate`/`make sqlc-check` locally and in CI. Do not add it as a `tool` in `go.mod` (its dependency graph would enter `go.mod` and could raise shared runtime dependencies). To upgrade, check the release's Go directive as for modules, change `SQLC`, run `make sqlc-generate`, and review the generated diff. Dependabot does not see it: check for sqlc releases when upgrading pgx or Go.

@@ -1,0 +1,27 @@
+--- FAIL: TestLoadProduct_CloudFilesystemFailsClosed (0.00s)
+    --- FAIL: TestLoadProduct_CloudFilesystemFailsClosed/#00 (0.00s)
+        product_test.go:155: backend "": <nil>
+    --- FAIL: TestLoadProduct_CloudFilesystemFailsClosed/fs (0.00s)
+        product_test.go:155: backend "fs": <nil>
+FAIL
+FAIL	leonx.me/matter-control/internal/config	0.463s
+--- FAIL: TestProductReadiness_ClosedPoolIsUnavailable (0.00s)
+    product_readiness_test.go:44: /readyz: got 200, want 503
+FAIL
+FAIL	leonx.me/matter-control/internal/app	0.697s
+--- FAIL: TestTimeout_TransferRoutesHaveSeparateBudget (0.00s)
+    --- FAIL: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/documents/d/versions (0.00s)
+        timeout_test.go:39: status=401 budget=9.999998125s want=1m0s
+    --- FAIL: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/documents/d/versions/v/content (0.00s)
+        timeout_test.go:39: status=401 budget=9.999996166s want=1m0s
+    --- FAIL: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/import/preview (0.00s)
+        timeout_test.go:39: status=401 budget=9.999998958s want=1m0s
+    --- FAIL: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/import/commit (0.00s)
+        timeout_test.go:39: status=401 budget=9.999998875s want=1m0s
+    --- FAIL: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/bulk/commit (0.00s)
+        timeout_test.go:39: status=401 budget=9.999999125s want=1m0s
+    --- FAIL: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/export (0.00s)
+        timeout_test.go:39: status=401 budget=9.999999125s want=1m0s
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/inbound/productapi	0.666s
+FAIL

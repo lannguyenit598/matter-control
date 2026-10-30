@@ -1,0 +1,13 @@
+utc_start: 2026-10-29T09:08:34Z
+cwd: apps/frontend
+argv: rtk pnpm typecheck && rtk pnpm lint && rtk pnpm format:check && rtk pnpm agents:check && rtk pnpm test
+TypeScript: No errors found
+$ eslint .
+All matched files use Prettier code style!
+agent config OK: 17 skills, 3 scoped rules
+     × keeps a typed draft across close and reopen, then closes on a confirmed save 48ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/test/action-entry.test.tsx > Planning: each section owns its button > keeps a typed draft across close and reopen, then closes on a confirmed save
+ Test Files  1 failed | 71 passed (72)
+      Tests  1 failed | 664 passed (665)
+utc_end: 2026-10-29T09:09:41Z

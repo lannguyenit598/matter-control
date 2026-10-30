@@ -1,9 +1,15 @@
 .next
+.open-next
+.wrangler
+.dev.vars*
 playwright-report
 test-results
 storybook-static
 pnpm-lock.yaml
 next-env.d.ts
+
+# Machine-local hook runtime state is generated; never rewrite it as product source.
+.mimosa/hook-state/
 
 # Vendored upstream skills (docs/ai/README.md section 3): do not reformat, keeps upstream diffs small
 .agents/skills/vercel-*/

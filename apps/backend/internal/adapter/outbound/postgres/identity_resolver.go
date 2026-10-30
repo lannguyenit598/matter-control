@@ -8,8 +8,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // IdentityResolver maps a verified (issuer, subject) to the product user id. Lookup
@@ -32,4 +32,16 @@ func (r *IdentityResolver) Resolve(ctx context.Context, issuer, subject string) 
 		return "", fmt.Errorf("resolve identity: %w", mapMatterError(err))
 	}
 	return id, nil
+}
+
+func (r *IdentityResolver) SearchWorkspacePeople(ctx context.Context, workspaceID, actorID, name string) ([]port.PersonOption, error) {
+	rows, err := mcsqlc.New(r.pool).SearchLocalWorkspacePeople(ctx, mcsqlc.SearchLocalWorkspacePeopleParams{WorkspaceID: workspaceID, ActorID: actorID, SearchName: name})
+	if err != nil {
+		return nil, mapMatterError(err)
+	}
+	out := make([]port.PersonOption, 0, len(rows))
+	for _, row := range rows {
+		out = append(out, port.PersonOption{UserID: row.ID, DisplayName: row.DisplayName})
+	}
+	return out, nil
 }

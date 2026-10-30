@@ -1,0 +1,2692 @@
+{
+  "task_id": "MC-P0-CODEX-PARALLEL-20261028/FE-ALIGNMENT",
+  "agent": "actual Local Codex internal subagent /root/p0_fe_alignment_20261028",
+  "snapshot": "/private/tmp/mc-p0-codex-parallel-20261028-h9mtoxwx",
+  "manifest_sha256": "39fc4961995958e850d9261c77db7514c983bd0c9b22dab8b68f6d9d6b2ad841",
+  "captured_utc": "2026-10-28T03:10:38.929789+00:00",
+  "audit_utc": "2026-10-28T03:14:26.024976+00:00",
+  "branch": "codex/unified-project-flow",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "source_line_references": "Paths relative to frozen snapshot root; lines are 1-based frozen bytes, not current live source.",
+  "status": "AUTHOR_COMPLETE_STATIC_AUDIT_PENDING_INDEPENDENT_REVIEW",
+  "coverage": {
+    "screen_ids": 13,
+    "screen_state_cells": 117,
+    "source_present_means": "A corresponding source branch/composition is present, not behavioral correctness or visual acceptance.",
+    "partial_alignment_count": 13,
+    "complete_visual_acceptance_count": 0
+  },
+  "screens": [
+    {
+      "id": "SCR-01",
+      "name": "App Shell & Session Navigation",
+      "requirements": [
+        "FR-018"
+      ],
+      "routes": [
+        "/workspaces",
+        "/workspaces/[workspaceId]",
+        "/matters/[matterId]"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/auth",
+        "apps/frontend/src/features/workspaces",
+        "apps/frontend/src/features/matters"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/app/(app)/layout.tsx",
+          "line_start": 14,
+          "line_end": 46
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx",
+          "line_start": 26,
+          "line_end": 70
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+          "line_start": 27,
+          "line_end": 73
+        },
+        {
+          "path": "apps/frontend/src/features/matters/components/create-matter-form.tsx",
+          "line_start": 21,
+          "line_end": 33
+        }
+      ],
+      "source_assessment": "Accessible workspace/matter lists, create/member forms and session account controls exist. Persistent workspace/matter/as-of shell context and list search are absent; CreateMatterForm omits draftKey; shared read-denial rendering does not purge stored scope drafts.",
+      "priority_findings": [
+        "F01",
+        "F04"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Membership loading keeps neutral shell; no Matter name/count until access confirmed.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No accessible Matters; Workspace OWNER may create through guarded flow, others request access outside this UI.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Membership service unavailable: neutral shell and retry.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Invalidate pending navigation; remove protected content and names, return to authorized Matter list.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Membership snapshot stale: suspend writes and refresh rights.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Mixed independent memberships shown only from accepted reads; unavailable groups explicitly unknown.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Revalidate session, reopen only authorized scope; no cached grant survives.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/layout.tsx",
+              "line_start": 14,
+              "line_end": 46
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-02",
+      "name": "Executive Control Room",
+      "requirements": [
+        "FR-002",
+        "FR-003",
+        "FR-004",
+        "FR-009",
+        "FR-020"
+      ],
+      "routes": [
+        "/matters/[matterId]/control-room"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/control"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+          "line_start": 34,
+          "line_end": 67
+        },
+        {
+          "path": "apps/frontend/src/features/control/components/control-room-view.tsx",
+          "line_start": 82,
+          "line_end": 263
+        }
+      ],
+      "source_assessment": "Server-supplied blocker/next/waiting/milestone/gap/change sections exist. KPI strip precedes blockers; no full-width root/co-root/critical causal chain, and separately-fetched labels have no common-boundary comparison.",
+      "priority_findings": [
+        "F07"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Keep section headings and shape skeletons; no derived values while loading.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No exceptions in accepted snapshot; no claim of legal completion.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Failed overview region says unavailable with as-of; Next Actions/readiness never assume empty/READY.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Remove full Matter view, including counts and causal titles.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Show historical as-of and suspend action eligibility claims until fresh.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "One unavailable region leaves other authorized regions labelled with their own freshness.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Refresh failed region; preserve filter, focused chain node and return context.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+              "line_start": 34,
+              "line_end": 67
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-03",
+      "name": "Operational Grid",
+      "requirements": [
+        "FR-001",
+        "FR-003",
+        "FR-004",
+        "FR-005",
+        "FR-010",
+        "FR-011",
+        "FR-014",
+        "FR-020"
+      ],
+      "routes": [
+        "/matters/[matterId]/work",
+        "/my-actions",
+        "/matters/[matterId]/planning"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/work"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+          "line_start": 28,
+          "line_end": 163
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/page.tsx",
+          "line_start": 82,
+          "line_end": 142
+        },
+        {
+          "path": "apps/frontend/src/features/work/components/work-filters.tsx",
+          "line_start": 35,
+          "line_end": 110
+        },
+        {
+          "path": "apps/frontend/src/features/work/components/my-actions-view.tsx",
+          "line_start": 24,
+          "line_end": 120
+        },
+        {
+          "path": "apps/frontend/src/features/work/components/planning-view.tsx",
+          "line_start": 205,
+          "line_end": 265
+        }
+      ],
+      "source_assessment": "Grid, four My Actions sections and separate Waiting On list exist. Grid has URL density/filter state, but no selection, verification column, card composition under 640px, sticky header or enforced row minima; filter GET omits density. Waiting On retains internal owner in planning view; My Actions waiting text lacks explicit overlap explanation.",
+      "priority_findings": [
+        "F05",
+        "F06"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Retain headers/toolbar with row skeletons and aria-busy; selection inactive.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "Zero typed records; EDITOR/OWNER can create typed record, VIEWER sees explanation.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "WorkGrid filtered empty and own-route Clear filters exist; search scope/density preservation differ from R9.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Grid read failed: retain last-good as stale if still authorized; editing unavailable.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Purge unauthorized rows, drafts and selected IDs; no failure title leak.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Keep draft/selection, visibly label source as-of; require current revision before send.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Independent row results visible; failed rows/drafts remain selected; unknown rows not retried.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Reset filters or reopen retained draft; restore row/cell/focus after navigation.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/work-grid.tsx",
+              "line_start": 28,
+              "line_end": 163
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-04",
+      "name": "Requirement Detail & Lifecycle Drawer",
+      "requirements": [
+        "FR-001",
+        "FR-002",
+        "FR-005",
+        "FR-006",
+        "FR-018",
+        "FR-020"
+      ],
+      "routes": [
+        "/matters/[matterId]/work/[itemId] (REQUIREMENT)",
+        "/requirements/[requirementId] (legacy/read summary)"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/work",
+        "apps/frontend/src/features/requirements",
+        "apps/frontend/src/features/proof"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          "line_start": 104,
+          "line_end": 275
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/requirements/[requirementId]/page.tsx",
+          "line_start": 23,
+          "line_end": 41
+        },
+        {
+          "path": "apps/frontend/src/features/requirements/components/requirement-detail.tsx",
+          "line_start": 16,
+          "line_end": 62
+        }
+      ],
+      "source_assessment": "Unified work route composes five state axes, outcome, execution, proof, dependency and metadata. Alternate requirement route is a smaller three-axis read summary with fixed Back-to-Matter. Neither is a causal drawer/proof-node trail with sticky navigation and demonstrated equivalent focus/context.",
+      "priority_findings": [
+        "F01",
+        "F06"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Drawer title skeleton until authorized read; criteria/links load independently.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "Requirement with zero Actions is valid; unspecified criteria means UNVERIFIED unless explicit applicability decision.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Evaluation unavailable stays unknown; cannot attest readiness from cached fields.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Close detail and clear protected context; safe draft handling under revocation policy.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Show criteria/resource revision and as-of; current-version proof may be stale.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Criterion/relations partly unavailable: mark affected claims unknown, retain available evidence context.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Return to origin Grid/Control Room/tab; readable reason for prohibited completion.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 104,
+              "line_end": 275
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-05",
+      "name": "Action Detail & Assignment Drawer",
+      "requirements": [
+        "FR-001",
+        "FR-003",
+        "FR-004",
+        "FR-005",
+        "FR-010",
+        "FR-017",
+        "FR-020"
+      ],
+      "routes": [
+        "/matters/[matterId]/work/[itemId] (ACTION)"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/work",
+        "apps/frontend/src/features/proof"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          "line_start": 43,
+          "line_end": 54
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          "line_start": 104,
+          "line_end": 285
+        },
+        {
+          "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+          "line_start": 25,
+          "line_end": 103
+        }
+      ],
+      "source_assessment": "Typed Action detail, assignment/metadata, waiting/execution and gates exist in a full route; safe from path preserves one route origin. Sticky Back/Close, focus return, proof-node modes, scroll/selection restoration and full trail are unproven/absent from reviewed composition.",
+      "priority_findings": [
+        "F01",
+        "F06"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Header, assignment and causal reason placeholders; no inferred eligibility.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No linked Requirement is not proof of completion; require explicit scoped relationship when needed.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Dependency result unavailable; start/complete disabled with readable reason.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Remove protected record and revoke pending commands; show generic access loss.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Keep draft, disable send pending current permission/revision.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Metadata success independent of failed transition is explicit; never combine into one success.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Return to My Actions/Waiting On with actor/filter/row preserved.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 43,
+              "line_end": 54
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-06",
+      "name": "Dependency Graph & Impact Inspector",
+      "requirements": [
+        "FR-002",
+        "FR-005"
+      ],
+      "routes": [
+        "/matters/[matterId]/work/[itemId] (Prerequisites and dependents)",
+        "/matters/[matterId]/planning (milestone prerequisites)"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/work"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+          "line_start": 40,
+          "line_end": 174
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          "line_start": 244,
+          "line_end": 259
+        }
+      ],
+      "source_assessment": "Incoming/outgoing typed gate lists, current satisfied/reason badges, links and ordinary-edge forms exist. No separate impact inspector, transitive critical-path explanation or side-by-side recorded-T0/current-policy treatment appears in EdgeLine. Long gate reason is placed in nowrap Badge.",
+      "priority_findings": [
+        "F03",
+        "F06",
+        "F07"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Label edge table columns while reading graph.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No incoming edges means READY only from successful authoritative evaluation.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Graph/evaluator unavailable: no READY default.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Redact inaccessible graph targets and all derived counts.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Stale graph cannot accept edits until revalidated.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "One relation page unavailable marks graph incomplete; do not imply full impact census.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Accessible edge list is equivalent to diagram; return to originating record/gate.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+              "line_start": 40,
+              "line_end": 174
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-07",
+      "name": "Evidence Submission & Verification Drawer",
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "FR-015",
+        "FR-018",
+        "FR-020"
+      ],
+      "routes": [
+        "/matters/[matterId]/work/[itemId] (Proof section)"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/proof"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          "line_start": 66,
+          "line_end": 78
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          "line_start": 206,
+          "line_end": 239
+        },
+        {
+          "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+          "line_start": 53,
+          "line_end": 146
+        }
+      ],
+      "source_assessment": "Proof checklist, current aggregate, criterion revision, evidence/version, submitted/claimed and reviewer identities plus self-review denial are present. Proof read failure stays local to panel. No proof node in causal trail or full incoming/outgoing/history-vs-current context inside proof composition.",
+      "priority_findings": [
+        "F01",
+        "F06"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Criterion/version/submitter/reviewer placeholders; review action unavailable.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "Missing proof: criterion remains visible, no fabricated EV-04.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "File or validity unavailable: do not accept; retain criterion and allowed next step.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Clear protected bytes/metadata/draft and pending review; generic access-loss recovery.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Criterion/version/reviewer designation changed: retain rationale in authorized context, refetch.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Some mandatory components accepted: PARTIALLY_VERIFIED, list missing components.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Submitter can submit replacement; designated non-submitter reviews; no independent verifier means pending.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+              "line_start": 66,
+              "line_end": 78
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-08",
+      "name": "Document Version & Signature History",
+      "requirements": [
+        "FR-015"
+      ],
+      "routes": [
+        "/matters/[matterId]/documents",
+        "/matters/[matterId]/documents/[documentId]?promoteTo=[versionId]"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/proof"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+          "line_start": 32,
+          "line_end": 52
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+          "line_start": 62,
+          "line_end": 158
+        },
+        {
+          "path": "apps/frontend/src/features/proof/components/document-forms.tsx",
+          "line_start": 150,
+          "line_end": 224
+        },
+        {
+          "path": "apps/frontend/src/features/proof/repository.ts",
+          "line_start": 20,
+          "line_end": 25
+        },
+        {
+          "path": "apps/frontend/src/features/proof/repository.ts",
+          "line_start": 48,
+          "line_end": 54
+        }
+      ],
+      "source_assessment": "Immutable version list, download/upload, exact-version signature observations and promotion forms exist. Target version is already separate from expected-current guard, fetched impact token, reason and acknowledgement. Complete lineage/reference/signature-criterion completeness and stale/no-op messaging need coverage. Lifecycle after target/snapshot change needs focused check: draft restore changes DOM only for stored values and does not reset a fresh target.",
+      "priority_findings": [
+        "F01",
+        "F03",
+        "F06"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Version list skeleton; no current default guessed.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No versions: add allowed version, no proof claim.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Bytes unavailable differs from missing metadata; do not substitute current bytes.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Recheck every retrieval; remove URLs/metadata after revocation.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Expected prior authoritative version changed; promotion suspended.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Upload pending/unknown does not promote; partial signature observation does not verify all criteria.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Inspect historical fixed version; current-version criteria may need new independent review.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+              "line_start": 32,
+              "line_end": 52
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-09",
+      "name": "Regulatory Filing Tracker & Package Manager",
+      "requirements": [
+        "FR-004",
+        "FR-016",
+        "FR-017",
+        "FR-020"
+      ],
+      "routes": [
+        "/matters/[matterId]/filings",
+        "/matters/[matterId]/filings/[filingId]"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/filings"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+          "line_start": 14,
+          "line_end": 162
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+          "line_start": 88,
+          "line_end": 199
+        }
+      ],
+      "source_assessment": "Stage stepper, cycles, exact submission versions, signatures/applicability and separate append-only observations/forms exist. Package checklist and prominent stage/execution/verification axes need composition completion; stage \"passed\" is inferred from enum order, requiring real skipped/negative/reopen path review. No rendered filing acceptance.",
+      "priority_findings": [
+        "F03",
+        "F06"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Timeline/package/cycle placeholders, stages not guessed.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No filing yet: create typed scope/package when allowed; no submission implied.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Package or authority observation unavailable: disable next stage with persistent reason.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Remove submitted-package metadata/links, revoke pending stage update.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Package version changed since preview; recheck guards before recording observation.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Receipt without outcome remains Authority Review/WAITING with partial proof.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "OWNER rejection/withdrawal/correction/reopen preserves cycles; no automatic requirement to reissue authority decision under ARCH-Q5.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/filings/components/filing-view.tsx",
+              "line_start": 14,
+              "line_end": 162
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-10",
+      "name": "Bulk Metadata Editor & Preview Modal",
+      "requirements": [
+        "FR-012"
+      ],
+      "routes": [
+        "/matters/[matterId]/data (BulkSection)"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/data-transfer"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+          "line_start": 39,
+          "line_end": 142
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/actions.ts",
+          "line_start": 44,
+          "line_end": 82
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/intent.ts",
+          "line_start": 11,
+          "line_end": 41
+        }
+      ],
+      "source_assessment": "Manual row entry, preview validity and result badges exist. Missing selection from Grid, exact IDs/hidden count, explicit Unchanged/Set/Clear, title/owner controls, before/proposed view, preview invalidation and safe UNKNOWN reconciliation. Actions mint keys per call despite existing frozen-intent helpers.",
+      "priority_findings": [
+        "F01",
+        "F02",
+        "F04"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Load exact selected IDs/current permitted values for preview, not all-match inference.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Buttons disable while useTransition is pending; dedicated screen/read loading state not established.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "Nothing selected: return to Grid; never target all records implicitly.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Preview validation unavailable: keep draft and selection, do not send.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            }
+          ],
+          "note": "Bulk commit/import commit failures lack visible error branches; preview/brief coverage varies.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Recheck each row and redact inaccessible values; retain permitted failure identity only.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Accepted row revision differs: re-preview that row.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Persistent succeeded/failed/unknown results; success deselects, failed drafts remain; unknown reconciliation before retry.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Row badges exist but succeeded/failed/unknown balanced grouping and reconciliation are incomplete (F02).",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Unchanged separate from clear; only description/due can propose clear subject to adopted validation; title/active owner cannot be empty.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 39,
+              "line_end": 142
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-11",
+      "name": "Structured Import Wizard",
+      "requirements": [
+        "FR-013"
+      ],
+      "routes": [
+        "/matters/[matterId]/data (ImportSection)"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/data-transfer"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+          "line_start": 149,
+          "line_end": 242
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/intent.ts",
+          "line_start": 43,
+          "line_end": 60
+        }
+      ],
+      "source_assessment": "File/preview, row errors, invalid group labels and per-row status badges exist; four-step mapping composition, offending-cell/group context, accessible persistent preview error and stable attempt-key recovery are incomplete. File input has no associated visible label in the reviewed source.",
+      "priority_findings": [
+        "F01",
+        "F02",
+        "F04"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Read/parse/validate stages labelled; no imported count until result known.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Buttons disable while useTransition is pending; dedicated screen/read loading state not established.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "Empty input is not success; choose source again.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "Parser unavailable: keep mapping/source identity when safe, do not execute formulas/macros/links.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            }
+          ],
+          "note": "Bulk commit/import commit failures lack visible error branches; preview/brief coverage varies.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Revoke commit and remove protected reference resolutions.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Scoped reference revisions changed: revalidate groups.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Connected invalid group rejected whole; independent valid groups may commit; persistent result per group.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Row badges exist but succeeded/failed/unknown balanced grouping and reconciliation are incomplete (F02).",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Return failed group drafts; resolve refs then re-preview; unknown outcome reconciles before resend.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 149,
+              "line_end": 242
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-12",
+      "name": "Delta Status Brief Generator & Viewer",
+      "requirements": [
+        "FR-014",
+        "FR-019"
+      ],
+      "routes": [
+        "/matters/[matterId]/data (BriefSection and ExportSection)",
+        "/api/matters/[matterId]/export?format=csv|xlsx"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/data-transfer"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+          "line_start": 249,
+          "line_end": 354
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/schemas.ts",
+          "line_start": 70,
+          "line_end": 104
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/actions.ts",
+          "line_start": 150,
+          "line_end": 171
+        }
+      ],
+      "source_assessment": "Time-window inputs, error state, separate changes/outstanding lists, asOf and export links exist. Returned t1/t2 are not shown with report, inputs can change while old report remains, outstanding unavailable has no discriminant in this schema, and source provenance is only asOf. Local allowed state retention/read-access purge remains missing.",
+      "priority_findings": [
+        "F01",
+        "F04"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Window/provenance headings kept; no generated draft while source incomplete.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Buttons disable while useTransition is pending; dedicated screen/read loading state not established.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No changes in (t1,t2] is explicit; outstanding may still exist.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "History/source unavailable: cannot claim complete brief; label incomplete or block export.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            }
+          ],
+          "note": "Bulk commit/import commit failures lack visible error branches; preview/brief coverage varies.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "Recheck generation AND retrieval rights; purge protected draft.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Source/window/permissions changed: regenerate visibly under new provenance.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Any source gap identified, never output an apparently complete issued report.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "t1=t2 excludes events; stable recorded-time ordering with stable tie order; explicit draft.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/features/data-transfer/components/data-transfer-panel.tsx",
+              "line_start": 249,
+              "line_end": 354
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    },
+    {
+      "id": "SCR-13",
+      "name": "Scoped Event History & Audit Ledger",
+      "requirements": [
+        "FR-008",
+        "FR-018"
+      ],
+      "routes": [
+        "/matters/[matterId] (History section)"
+      ],
+      "actual_feature_folders": [
+        "apps/frontend/src/features/matters"
+      ],
+      "composition_status": "PARTIAL_SOURCE_ALIGNMENT",
+      "evidence": [
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+          "line_start": 31,
+          "line_end": 40
+        },
+        {
+          "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+          "line_start": 69,
+          "line_end": 73
+        },
+        {
+          "path": "apps/frontend/src/features/matters/components/matter-history.tsx",
+          "line_start": 14,
+          "line_end": 42
+        },
+        {
+          "path": "apps/frontend/src/features/matters/schemas.ts",
+          "line_start": 38,
+          "line_end": 50
+        }
+      ],
+      "source_assessment": "Domain event list exists with seq/type/recorded time. Actor/effective time/reason/target are parsed but not rendered; before/after/correlation/causal fields are absent from this schema; no search/entity filter/paging control. Restricted security surface is not established by these files.",
+      "priority_findings": [
+        "F08"
+      ],
+      "states": {
+        "loading": {
+          "r9_contract": "Timeline row skeletons with actor/time/reference headings.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Route Suspense skeleton is present; identity-neutral geometry is not measured.",
+          "execution": "NOT_RUN"
+        },
+        "empty": {
+          "r9_contract": "No domain events in scope/window; denied security events are not invented domain events.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Empty list/section branches are present; scope-specific distinctions still need execution coverage.",
+          "execution": "NOT_RUN"
+        },
+        "no_match": {
+          "r9_contract": "This screen’s own search or filter matched nothing. The reset control clears this screen’s filter and stays on this screen; it never redirects to another screen, and it never implies the Matter is empty.",
+          "source_status": "ABSENT_FROM_REVIEWED_COMPOSITION",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No screen-specific searchable no-match/reset branch was found in this composition; do not manufacture a runtime state.",
+          "execution": "NOT_RUN"
+        },
+        "unavailable": {
+          "r9_contract": "History service/page unavailable: missing portion labelled, not zero.",
+          "source_status": "SOURCE_PRESENT",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/components/organisms/read-failure.tsx",
+              "line_start": 15,
+              "line_end": 73
+            },
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            }
+          ],
+          "note": "ReadFailure displays service/read failure separately from empty and zero.",
+          "execution": "NOT_RUN"
+        },
+        "forbidden": {
+          "r9_contract": "No restricted audit metadata or inaccessible target title in denial.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Server read-denial/role visibility branches exist but shared scoped purge is absent; mutation 403 currently clears local stored draft (F01).",
+          "execution": "NOT_RUN"
+        },
+        "stale": {
+          "r9_contract": "Show source as-of; refresh appends new accepted history without rewriting old.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "Generic IntentForm stale Reload exists; scope draft retention/rebase/changed preview acknowledgement needs targeted checks.",
+          "execution": "NOT_RUN"
+        },
+        "conflict": {
+          "r9_contract": "Precondition failure, distinguished: absent precondition is 428 and has nothing to reconcile; stale precondition is 412 and routes to refresh-and-rebase. The draft is preserved in both. Blind overwrite is not offered.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "412 maps to stale, but 428/non-CAS precondition errors fall to generic error in action-result.ts:129–132. Per-operation differences need explicit binding.",
+          "execution": "NOT_RUN"
+        },
+        "partial": {
+          "r9_contract": "Paged timeline incomplete until authorized relation traversal completes; counts unavailable if not supplied.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "No complete screen-specific partial-success/partial-availability binding established.",
+          "execution": "NOT_RUN"
+        },
+        "recovery": {
+          "r9_contract": "Return origin and exact event anchor; preserve filter/time window; no normal-user delete.",
+          "source_status": "PARTIAL_SOURCE_BINDING",
+          "evidence": [
+            {
+              "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+              "line_start": 31,
+              "line_end": 40
+            },
+            {
+              "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+              "line_start": 85,
+              "line_end": 188
+            }
+          ],
+          "note": "IntentForm has same-key frozen payload/re-read controls; refresh alone resets local failure before an authorised read is confirmed (120–126); access-loss and key-conflict paths need review.",
+          "execution": "NOT_RUN"
+        }
+      },
+      "rendered_keyboard_touch_a11y": "NOT_RUN"
+    }
+  ]
+}

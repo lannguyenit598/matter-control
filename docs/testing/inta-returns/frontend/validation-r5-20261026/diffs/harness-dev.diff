@@ -1,0 +1,353 @@
+--- docs/testing/inta-returns/frontend/validation-r4-20261026/launcher/harness-dev.mjs	2026-10-26 16:37:20
++++ /tmp/mc002-inta-fe-validation-r5-20261026/launcher/harness-dev.mjs	2026-10-26 21:45:59
+@@ -1,8 +1,11 @@
+ /**
+- * MC-002-INTA-FE-VALIDATION-R4: Pre-Listen Harness Launcher Prototype
+- * Addresses R1-C04, R2-I02, R2-I05, R3-N02, NF-1, NF-3:
+- * - Executes runtime integrity check and startup guard before opening ANY socket or spawning Next.js
+- * - Imports directly from frozen src/guards.ts using Node 24 native type stripping
++ * MC-002-INTA-FE-VALIDATION-R5: Pre-Listen Harness Launcher
++ * Addresses R4-C01, R4-C02, R4-C03, NF-1, NF-3, NF-4:
++ * - Dynamic import with strict pre-evaluation guard byte verification (eliminating static import)
++ * - Verifies cryptographic SHA-256 of src/guards.ts BEFORE any module loading or code evaluation
++ * - Persists an attempt-bound launcher-execution.json record with complete execution provenance
++ * - Validates pre-spawn existence and executability of nextBin and cwd
++ * - Fails closed with BINDING_ERROR/NOT_READY upon any guard integrity, loader, or binding failure
+  * - Constructs an explicit bounded environment allowlist including MC_INTA_STATE_DIR, SHELL, TMPDIR
+  * - Binds cwd, nextBin, nextArgs, and private state directory explicitly without PATH fallback
+  * - Exposes visible signal-forwarding error logging and lifecycle hooks for in-process testing
+@@ -14,11 +17,9 @@
+ import os from 'node:os';
+ import { resolve } from 'node:path';
+ import process from 'node:process';
+-import { fileURLToPath } from 'node:url';
++import { fileURLToPath, pathToFileURL } from 'node:url';
+ 
+-// Direct import of existing frozen TypeScript guard via Node 24 native type stripping
+-import { validateHarnessStartup } from '/tmp/mc002-inta-harness/src/guards.ts';
+-
++// Pinned expected guard hash (NF-3, R4-C03)
+ export const EXPECTED_GUARD_SHA256 = '0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928';
+ export const DEFAULT_GUARD_PATH = '/tmp/mc002-inta-harness/src/guards.ts';
+ export const DEFAULT_NEXT_BIN = '/tmp/mc002-inta-harness/node_modules/.bin/next';
+@@ -40,7 +41,8 @@
+ ];
+ 
+ /**
+- * Verifies the existence, readability, and cryptographic hash of the guard file (NF-3).
++ * Verifies the existence, readability, and cryptographic hash of the guard file (NF-3, R5).
++ * Evaluates raw bytes BEFORE any code evaluation or module import.
+  * Fails closed if the guard is missing, unreadable, or tampered with.
+  */
+ export function verifyGuardIntegrity(guardPath = DEFAULT_GUARD_PATH, expectedSha = EXPECTED_GUARD_SHA256) {
+@@ -58,6 +60,70 @@
+ }
+ 
+ /**
++ * Atomically persists an attempt-bound launcher execution record to disk (NF-4, R5 Item 1).
++ * Records exact provenance: binary, versions, hashes, args, cwd, start UTC, and outcome.
++ */
++export function writeLauncherExecutionRecord({
++  stateDir,
++  env,
++  guardPath,
++  guardSha256 = null,
++  outcome,
++  refusalMessage = null,
++  error = null,
++  spawnCalled = false,
++  childPid = null,
++  exitCode = 0,
++}) {
++  const targetDir = stateDir || env?.MC_INTA_STATE_DIR;
++  if (!targetDir) return null;
++
++  try {
++    if (!fs.existsSync(targetDir)) {
++      fs.mkdirSync(targetDir, { recursive: true });
++    }
++    const currentScript = fileURLToPath(import.meta.url);
++    let launcherSha256 = null;
++    try {
++      launcherSha256 = crypto.createHash('sha256').update(fs.readFileSync(currentScript)).digest('hex');
++    } catch {
++      // Best-effort script hash read
++    }
++
++    const record = {
++      launcherPath: resolve(currentScript),
++      launcherSha256,
++      guardPath: guardPath ? resolve(guardPath) : null,
++      guardSha256,
++      nodePath: process.execPath,
++      nodeVersion: process.version,
++      pid: process.pid,
++      ppid: process.ppid,
++      argv: process.argv,
++      cwd: process.cwd(),
++      timestampUTC: new Date().toISOString(),
++      outcome, // 'REFUSED_BEFORE_SPAWN' | 'SPAWNED' | 'BINDING_ERROR' | 'SPAWN_ERROR'
++      spawnCalled,
++      refusalMessage,
++      error: error ? String(error) : null,
++      childPid,
++      exitCode,
++    };
++
++    const targetFile = resolve(targetDir, 'launcher-execution.json');
++    const tmpFile = `${targetFile}.tmp.${process.pid}`;
++    fs.writeFileSync(tmpFile, JSON.stringify(record, null, 2), 'utf-8');
++    fs.renameSync(tmpFile, targetFile);
++    return record;
++  } catch (err) {
++    if (process.stderr && process.stderr.write) {
++      process.stderr.write(`Failed to write launcher execution record: ${err?.message || err}\n`);
++    }
++    return null;
++  }
++}
++
++/**
+  * Builds an explicit, bounded environment allowlist.
+  * Ensures no unvetted or sensitive environment variables leak to the child.
+  * Includes MC_INTA_STATE_DIR to prevent default fallback to cwd/.run-state.
+@@ -104,7 +170,6 @@
+ 
+   const onChildClose = (code, signal) => {
+     if (signal) {
+-      // Map signal to standard Unix exit code (128 + signal_number) without re-raising to self
+       const sigNum = os.constants?.signals?.[signal] || 15;
+       processObj.exit(128 + sigNum);
+     } else {
+@@ -145,40 +210,101 @@
+  * Executes runtime guard verification, startup validation, and conditional child spawn.
+  * Returns an execution result object.
+  */
+-export function launchHarness({
++export async function launchHarness({
+   env = process.env,
+   spawnFn = defaultSpawn,
+   guardPath = DEFAULT_GUARD_PATH,
++  expectedGuardSha = EXPECTED_GUARD_SHA256,
++  validatorFn = null,
+   nextBin = DEFAULT_NEXT_BIN,
+   nextArgs = ['dev', '-H', '127.0.0.1', '-p', '18085', '--webpack'],
+   cwd = DEFAULT_HARNESS_CWD,
+   stateDir = null,
+ } = {}) {
+-  // Step 1: Verify guard file cryptographic integrity before execution (NF-3)
++  const effectiveStateDir = stateDir || env?.MC_INTA_STATE_DIR || null;
++
++  // Step 1: Verify guard file cryptographic integrity BEFORE module loading or execution (NF-3, R5 Item 5)
+   try {
+-    verifyGuardIntegrity(guardPath);
++    verifyGuardIntegrity(guardPath, expectedGuardSha);
+   } catch (err) {
+-    const integrityError = err?.message || String(err);
++    const integrityError = `[BINDING_ERROR/NOT_READY] ${err?.message || err}`;
+     if (process.stderr && process.stderr.write) {
+       process.stderr.write(`${integrityError}\n`);
+     }
++    writeLauncherExecutionRecord({
++      stateDir: effectiveStateDir,
++      env,
++      guardPath,
++      guardSha256: null,
++      outcome: 'BINDING_ERROR',
++      error: integrityError,
++      spawnCalled: false,
++      exitCode: 1,
++    });
+     return {
+       success: false,
+       exitCode: 1,
++      errorType: 'BINDING_ERROR/NOT_READY',
+       refusalMessage: integrityError,
+       spawnCalled: false,
+       child: null,
+     };
+   }
+ 
+-  // Step 2: Execute startup guard BEFORE any process spawn or socket listener
++  // Step 2: Dynamically load guard module ONLY AFTER byte integrity is proven
++  let validateStartup = validatorFn;
++  if (!validateStartup) {
++    try {
++      const guardUrl = pathToFileURL(resolve(guardPath)).href;
++      const guardModule = await import(guardUrl);
++      validateStartup = guardModule.validateHarnessStartup;
++      if (typeof validateStartup !== 'function') {
++        throw new Error(`validateHarnessStartup function is not exported from ${guardPath}`);
++      }
++    } catch (err) {
++      const loadError = `[BINDING_ERROR/NOT_READY] Failed to dynamically load guard module: ${err?.message || err}`;
++      if (process.stderr && process.stderr.write) {
++        process.stderr.write(`${loadError}\n`);
++      }
++      writeLauncherExecutionRecord({
++        stateDir: effectiveStateDir,
++        env,
++        guardPath,
++        guardSha256: expectedGuardSha,
++        outcome: 'BINDING_ERROR',
++        error: loadError,
++        spawnCalled: false,
++        exitCode: 1,
++      });
++      return {
++        success: false,
++        exitCode: 1,
++        errorType: 'BINDING_ERROR/NOT_READY',
++        refusalMessage: loadError,
++        spawnCalled: false,
++        child: null,
++      };
++    }
++  }
++
++  // Step 3: Execute startup guard BEFORE any process spawn or socket listener
+   try {
+-    validateHarnessStartup(env);
++    validateStartup(env);
+   } catch (err) {
+     const refusalMessage = err?.message || String(err);
+     if (process.stderr && process.stderr.write) {
+       process.stderr.write(`${refusalMessage}\n`);
+     }
++    writeLauncherExecutionRecord({
++      stateDir: effectiveStateDir,
++      env,
++      guardPath,
++      guardSha256: expectedGuardSha,
++      outcome: 'REFUSED_BEFORE_SPAWN',
++      refusalMessage,
++      spawnCalled: false,
++      exitCode: 1,
++    });
+     return {
+       success: false,
+       exitCode: 1,
+@@ -188,14 +314,66 @@
+     };
+   }
+ 
+-  // Step 3: Build strictly bounded environment
++  // Step 4: Build strictly bounded environment
+   const effectiveEnv = { ...env };
+-  if (stateDir && !effectiveEnv.MC_INTA_STATE_DIR) {
+-    effectiveEnv.MC_INTA_STATE_DIR = stateDir;
++  if (effectiveStateDir && !effectiveEnv.MC_INTA_STATE_DIR) {
++    effectiveEnv.MC_INTA_STATE_DIR = effectiveStateDir;
+   }
+   const boundedEnv = buildBoundedEnvironment(effectiveEnv);
+ 
+-  // Step 4: Spawn child process only after successful guard validation
++  // Step 5: Pre-spawn validation of executable and working directory
++  if (typeof spawnFn === 'function' && spawnFn === defaultSpawn) {
++    if (!fs.existsSync(cwd)) {
++      const cwdError = `[BINDING_ERROR/NOT_READY] Harness working directory does not exist: ${cwd}`;
++      if (process.stderr && process.stderr.write) {
++        process.stderr.write(`${cwdError}\n`);
++      }
++      writeLauncherExecutionRecord({
++        stateDir: effectiveStateDir,
++        env,
++        guardPath,
++        guardSha256: expectedGuardSha,
++        outcome: 'BINDING_ERROR',
++        error: cwdError,
++        spawnCalled: false,
++        exitCode: 127,
++      });
++      return {
++        success: false,
++        exitCode: 127,
++        errorType: 'BINDING_ERROR/NOT_READY',
++        refusalMessage: cwdError,
++        spawnCalled: false,
++        child: null,
++      };
++    }
++    if (!fs.existsSync(nextBin)) {
++      const binError = `[BINDING_ERROR/NOT_READY] Next.js binary does not exist at ${nextBin}`;
++      if (process.stderr && process.stderr.write) {
++        process.stderr.write(`${binError}\n`);
++      }
++      writeLauncherExecutionRecord({
++        stateDir: effectiveStateDir,
++        env,
++        guardPath,
++        guardSha256: expectedGuardSha,
++        outcome: 'BINDING_ERROR',
++        error: binError,
++        spawnCalled: false,
++        exitCode: 127,
++      });
++      return {
++        success: false,
++        exitCode: 127,
++        errorType: 'BINDING_ERROR/NOT_READY',
++        refusalMessage: binError,
++        spawnCalled: false,
++        child: null,
++      };
++    }
++  }
++
++  // Step 6: Spawn child process only after successful guard validation
+   let child;
+   try {
+     child = spawnFn(nextBin, nextArgs, {
+@@ -204,9 +382,20 @@
+       stdio: 'inherit',
+     });
+   } catch (err) {
++    const spawnError = `Spawn failure: ${err?.message || err}`;
+     if (process.stderr && process.stderr.write) {
+-      process.stderr.write(`Spawn failure: ${err?.message || err}\n`);
++      process.stderr.write(`${spawnError}\n`);
+     }
++    writeLauncherExecutionRecord({
++      stateDir: effectiveStateDir,
++      env,
++      guardPath,
++      guardSha256: expectedGuardSha,
++      outcome: 'SPAWN_ERROR',
++      error: spawnError,
++      spawnCalled: true,
++      exitCode: 127,
++    });
+     return {
+       success: false,
+       exitCode: 127,
+@@ -217,6 +406,18 @@
+     };
+   }
+ 
++  // Record successful spawn execution
++  writeLauncherExecutionRecord({
++    stateDir: effectiveStateDir,
++    env,
++    guardPath,
++    guardSha256: expectedGuardSha,
++    outcome: 'SPAWNED',
++    spawnCalled: true,
++    childPid: child?.pid ?? null,
++    exitCode: 0,
++  });
++
+   return {
+     success: true,
+     exitCode: 0,
+@@ -227,9 +428,9 @@
+   };
+ }
+ 
+-// Direct CLI invocation entrypoint (R3-N02, R2-I05)
++// Direct CLI invocation entrypoint (R3-N02, R2-I05, R5)
+ if (isCliEntry()) {
+-  const result = launchHarness({
++  const result = await launchHarness({
+     env: process.env,
+     spawnFn: defaultSpawn,
+     guardPath: DEFAULT_GUARD_PATH,

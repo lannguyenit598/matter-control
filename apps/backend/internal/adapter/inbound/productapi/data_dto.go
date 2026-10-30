@@ -3,7 +3,7 @@ package productapi
 // Wire shapes of the W6 data operations. The domain values carry no JSON tags, so every response
 // is mapped here to the camelCase contract the frontend validates.
 
-import "github.com/example/userapi/internal/core/domain/matter"
+import "leonx.me/matter-control/internal/core/domain/matter"
 
 type bulkPreviewRowBody struct {
 	RowKey   string  `json:"rowKey"`

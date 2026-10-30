@@ -1,0 +1,53 @@
+{
+  "task": "MC-P0 independent review of comprehensive-fix candidate",
+  "written_utc": "2026-10-28T14:58:45.207855+00:00",
+  "reviewer": {
+    "actual_identity": "Claude Code (Anthropic), model claude-sonnet-5-5, local CLI session",
+    "requested_identity": "actual ZCode, independent non-author reviewer",
+    "is_requested_identity": false,
+    "is_author_of_reviewed_changes": true,
+    "mode": "AUTHOR_SELF_REVIEW_NOT_INDEPENDENT",
+    "independent_review_gate_satisfied": false,
+    "basis": "The user chose author self-review for the earlier draft-access-loss review when told of the same mismatch; applied here on that precedent and flagged to the user at the start of this task."
+  },
+  "pins": {
+    "base_commit": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+    "head_verified": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+    "branch": "codex/unified-project-flow",
+    "required_manifest_sha256": "f596b7c64a996ab821747de652485c26ca52910b959c63a4dd215e560d5fb868",
+    "manifest_sha256_on_disk": "f596b7c64a996ab821747de652485c26ca52910b959c63a4dd215e560d5fb868",
+    "required_delta_sha256": "d7a2ab12249634ecb8c4fc3b0ac666fdc5b46a38f98e0076231a9300719ca4e8",
+    "delta_sha256_on_disk": "d7a2ab12249634ecb8c4fc3b0ac666fdc5b46a38f98e0076231a9300719ca4e8",
+    "manifest_entries_verified_against_disk": 719,
+    "manifest_missing": 0,
+    "manifest_mismatch": 0,
+    "author_packet_files": {
+      "return.md": "cf8ef4920a6deb8cf3701ef31415256891c9b0b56e370585b122ef94048952cd",
+      "findings.json": "f9734568cd11704eb7b5b1f97f7b0345aead8f0c0173ae0df78f4c20160f22dd",
+      "checks.json": "278bba6838161a90d7a472b9f24591fb2c004e2e741447b6c72c1072fd54d22d",
+      "source-manifest.json": "f596b7c64a996ab821747de652485c26ca52910b959c63a4dd215e560d5fb868",
+      "source-delta.json": "d7a2ab12249634ecb8c4fc3b0ac666fdc5b46a38f98e0076231a9300719ca4e8"
+    }
+  },
+  "output_dir_absent_before_write": true,
+  "examined_paths": [
+    "apps/frontend/src/features/data-transfer/actions.ts:85-105 (importPreviewAction), :158-170 (executeAttempt catch), :268 (briefAction)",
+    "apps/frontend/src/test/data-transfer-seam.test.ts (new describe \"an unreadable spreadsheet at the import seam\")",
+    "apps/frontend/src/features/data-transfer/components/import-section.tsx:160-198 (previewError rendering)",
+    "apps/frontend/src/features/data-transfer/pending-attempts.ts:59-81 (beginAttempt, endAttempt)",
+    "apps/backend/internal/adapter/inbound/productapi/problems.go:60-63, data_handlers.go:129-160, apps/backend/internal/core/service/dataops_service.go:436-470",
+    "apps/frontend/src/components/organisms/read-failure.tsx, drafts.test.tsx, read-failure-callers.test.ts",
+    "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx:55-56,59-92,109,275",
+    "apps/frontend/src/lib/mc/paths.ts:5-18, paths.test.ts; apps/frontend/src/lib/oidc/flow.ts:96-118, flow.test.ts",
+    "apps/frontend/src/components/organisms/intent-form.tsx:62,69; apps/frontend/src/features/proof/components/document-forms.tsx:61",
+    "docs/implementation/p0-zcode-execution/local-contract.md rev 12 section 0; docs/design/p0-handoff-r9/zcode-handoff.md:95"
+  ],
+  "not_opened": [
+    "credentials",
+    "secret files",
+    "Docker",
+    "PostgreSQL",
+    "browser",
+    "hosted identity"
+  ]
+}

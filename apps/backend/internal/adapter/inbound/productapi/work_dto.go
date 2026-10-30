@@ -3,7 +3,7 @@ package productapi
 import (
 	"encoding/json"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 // W2 wire DTOs. A work item's ETag is the hash of its canonical `item` member only: that member

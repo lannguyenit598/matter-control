@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/.archify/architecture-adr006-deploy-20261030-000243/candidate.json",
+    "sha256": "91961db7141a610c52cccf338f64db75411f9b6f5f1af207c68939d9bec49ccb",
+    "bytes": 4032
+  },
+  "artifact": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/.archify/architecture-adr006-deploy-20261030-000243/adr006-deploy-topology.html",
+    "sha256": "cbf22b96ba2ad137029414c49e28fb4341ccfce853119dd6084a1fe4eb41680f",
+    "bytes": 821797
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [
+    {
+      "code": "i18n/locale-fallback",
+      "severity": "warning",
+      "message": "meta.locale \"vi\" has no bundled catalog and no usable meta.translations; the Viewer chrome and <html lang> fall back to English.",
+      "subject": {
+        "diagramType": "architecture",
+        "path": "/meta/locale"
+      },
+      "evidence": {
+        "locale": "vi",
+        "bundledLocales": [
+          "en",
+          "zh-CN",
+          "zh-TW",
+          "es",
+          "ko",
+          "ar"
+        ]
+      },
+      "supportedFixes": [
+        "Supply meta.translations for this locale.",
+        "Use a bundled locale: en, zh-CN, zh-TW, es, ko, ar."
+      ]
+    }
+  ],
+  "diagnosticSummary": {
+    "total": 1,
+    "shown": 1,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/.archify/architecture-adr006-deploy-20261030-000243/adr006-deploy-topology.finalize.json",
+    "summaryReceipt": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/.archify/architecture-adr006-deploy-20261030-000243/adr006-deploy-topology.finalize-summary.json",
+    "browserCheckReceipt": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/.archify/architecture-adr006-deploy-20261030-000243/adr006-deploy-topology.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-29T17:03:56.537Z",
+    "source": "network",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2955,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

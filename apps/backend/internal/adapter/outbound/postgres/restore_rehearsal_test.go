@@ -19,13 +19,13 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/example/userapi/internal/adapter/outbound/objectstore"
-	"github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol"
-	"github.com/example/userapi/internal/adapter/outbound/sheet"
-	"github.com/example/userapi/internal/adapter/outbound/system"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
-	"github.com/example/userapi/internal/core/service"
+	"leonx.me/matter-control/internal/adapter/outbound/objectstore"
+	"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol"
+	"leonx.me/matter-control/internal/adapter/outbound/sheet"
+	"leonx.me/matter-control/internal/adapter/outbound/system"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
+	"leonx.me/matter-control/internal/core/service"
 )
 
 func restoreEnv(t *testing.T, keys ...string) map[string]string {

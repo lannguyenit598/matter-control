@@ -40,9 +40,9 @@ const previewOf = (valid = true) => ({
 
 async function readyBulk() {
   actions.bulkPreview.mockResolvedValue(previewOf())
-  render(<BulkSection matterId="m1" />)
+  render(<BulkSection matterId="m1" items={[{ id: ITEM, title: 'Old title', revision: 1 }]} />)
   fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
-  fireEvent.change(screen.getByLabelText(/Item id/), { target: { value: ITEM } })
+  fireEvent.change(screen.getByLabelText(/Work item/), { target: { value: ITEM } })
   fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'set' } })
   fireEvent.change(screen.getByLabelText('Title new value'), { target: { value: 'Renamed' } })
   fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
@@ -51,9 +51,9 @@ async function readyBulk() {
 
 describe('BulkSection', () => {
   it('defaults every field to Unchanged and offers Clear only where clearing is allowed', () => {
-    render(<BulkSection matterId="m1" />)
+    render(<BulkSection matterId="m1" items={[{ id: ITEM, title: 'Old title', revision: 1 }]} />)
     fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
-    for (const label of ['Title', 'Description', 'Internal owner (user id)', 'Due (RFC 3339)'])
+    for (const label of ['Title', 'Description', 'Internal owner', 'Due (RFC 3339)'])
       expect(screen.getByLabelText(label)).toHaveValue('unchanged')
     const optionsOf = (label: string) =>
       within(screen.getByLabelText(label))
@@ -65,7 +65,7 @@ describe('BulkSection', () => {
   })
 
   it('cannot commit before a preview, nor after the rows changed since it', async () => {
-    render(<BulkSection matterId="m1" />)
+    render(<BulkSection matterId="m1" items={[{ id: ITEM, title: 'Old title', revision: 1 }]} />)
     fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
     expect(screen.getByRole('button', { name: 'Commit' })).toBeDisabled()
     cleanup()
@@ -111,7 +111,7 @@ describe('BulkSection', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
     expect(await screen.findByText('The answer was lost')).toBeInTheDocument()
     const retry = screen.getByRole('button', { name: 'Retry the same attempt' })
-    expect(screen.getByLabelText(/Item id/)).toBeDisabled() // the attempt cannot be edited out from under its keys
+    expect(screen.getByLabelText(/Work item/)).toBeDisabled() // the attempt cannot be edited out from under its keys
     expect(screen.getByText(/0 applied, 0 failed, 1 unknown of 1 submitted/)).toBeInTheDocument()
 
     actions.bulkCommit.mockResolvedValueOnce({
@@ -127,11 +127,11 @@ describe('BulkSection', () => {
 
   it('groups per-row results as applied, failed and unknown, and the counts add up', async () => {
     actions.bulkPreview.mockResolvedValue(previewOf())
-    render(<BulkSection matterId="m1" />)
+    render(<BulkSection matterId="m1" items={[{ id: ITEM, title: 'Old title', revision: 1 }]} />)
     fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
     fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
     fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
-    for (const el of screen.getAllByLabelText(/Item id/))
+    for (const el of screen.getAllByLabelText(/Work item/))
       fireEvent.change(el, { target: { value: ITEM } })
     fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
     await screen.findByRole('list', { name: 'Preview' })
@@ -159,7 +159,7 @@ describe('BulkSection', () => {
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Retry the same attempt' })).toBeEnabled()
     expect(screen.queryByRole('button', { name: 'Discard this attempt' })).not.toBeInTheDocument()
-    expect(screen.getAllByLabelText(/Item id/)[0]).toBeDisabled()
+    expect(screen.getAllByLabelText(/Work item/)[0]).toBeDisabled()
   })
 
   it('retains the attempt when the Server Action transport rejects and a later retry is refused', async () => {
@@ -177,7 +177,7 @@ describe('BulkSection', () => {
     await screen.findByText('Permission denied.')
     expect(actions.bulkCommit.mock.calls[1]![1]).toEqual(actions.bulkCommit.mock.calls[0]![1])
     expect(screen.getByRole('button', { name: 'Retry the same attempt' })).toBeEnabled()
-    expect(screen.getByLabelText(/Item id/)).toBeDisabled()
+    expect(screen.getByLabelText(/Work item/)).toBeDisabled()
   })
 
   it('keeps the draft and says why when the commit is refused for another reason', async () => {
@@ -190,7 +190,7 @@ describe('BulkSection', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
     expect(await screen.findByText('Commit failed')).toBeInTheDocument()
     expect(screen.getByText('The service is temporarily unavailable.')).toBeInTheDocument()
-    expect(screen.getByLabelText(/Item id/)).toHaveValue(ITEM)
+    expect(screen.getByLabelText(/Work item/)).toHaveValue(ITEM)
   })
 
   it('shows a failed preview instead of silently doing nothing', async () => {
@@ -199,7 +199,7 @@ describe('BulkSection', () => {
       kind: 'validation',
       error: 'Please fix the highlighted fields.',
     })
-    render(<BulkSection matterId="m1" />)
+    render(<BulkSection matterId="m1" items={[{ id: ITEM, title: 'Old title', revision: 1 }]} />)
     fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
     fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
     expect(await screen.findByText('Preview failed')).toBeInTheDocument()
@@ -469,12 +469,12 @@ describe('access ends while the page is open (R8-N01)', () => {
     actions.bulkCommit.mockResolvedValueOnce(denied)
     fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
     expect(await screen.findByText('Access ended')).toBeInTheDocument()
-    expect(screen.queryByLabelText(/Item id/)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/Work item/)).not.toBeInTheDocument()
     expect(screen.queryByRole('list', { name: 'Preview' })).not.toBeInTheDocument()
     expect(screen.queryByText(ITEM)).not.toBeInTheDocument()
     // a later re-grant starts from an empty page: the earlier rows are not revived
     fireEvent.click(screen.getByRole('button', { name: 'Add row' }))
-    expect(screen.getByLabelText(/Item id/)).toHaveValue('')
+    expect(screen.getByLabelText(/Work item/)).toHaveValue('')
     expect(screen.getByRole('button', { name: 'Commit' })).toBeDisabled()
   })
 
@@ -489,7 +489,7 @@ describe('access ends while the page is open (R8-N01)', () => {
     expect(
       screen.getByText(/still UNKNOWN: it has not been confirmed or rolled back/),
     ).toBeInTheDocument()
-    expect(screen.queryByLabelText(/Item id/)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/Work item/)).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Retry the same attempt' })).not.toBeInTheDocument()
     // nothing is re-sent under a new identity
     expect(actions.bulkCommit).toHaveBeenCalledTimes(2)

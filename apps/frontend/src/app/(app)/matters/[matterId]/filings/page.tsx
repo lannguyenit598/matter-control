@@ -3,14 +3,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
+import { buttonVariants } from '@/components/atoms/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/card'
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
-import { CreateFilingForm } from '@/features/filings/components/filing-forms'
 import { STAGE_LABEL } from '@/features/filings/labels'
 import { filingRepository } from '@/features/filings/repository'
-import { MatterTabs } from '@/features/matters/components/matter-tabs'
 import { matterRepository } from '@/features/matters/repository'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
@@ -31,23 +30,21 @@ async function Filings({ params }: Pick<PageProps<'/matters/[matterId]/filings'>
   const here = `/matters/${matterId}/filings`
   if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
   const read = await attempt(async () => {
-    const [matter, filings, members, parties, reqs] = await Promise.all([
+    const [matter, filings, parties, reqs] = await Promise.all([
       matterRepository.get(matterId),
       filingRepository.list(matterId),
-      matterRepository.members(matterId),
       workRepository.parties(matterId),
       workRepository.list(matterId, { kind: 'REQUIREMENT' }, 200),
     ])
     return {
       matter: matter.matter,
       filings: filings.items,
-      members: members.items,
       parties: parties.items,
       reqs: reqs.page.items,
     }
   })
   if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="matter" />
-  const { matter, filings, members, parties, reqs } = read.value
+  const { matter, filings, parties, reqs } = read.value
   const canEdit = matter.callerRole === 'OWNER' || matter.callerRole === 'EDITOR'
   const partyName = Object.fromEntries(parties.map((p) => [p.id, p.name]))
   const reqTitle = Object.fromEntries(reqs.map((r) => [r.item.id, r.item.title]))
@@ -56,8 +53,14 @@ async function Filings({ params }: Pick<PageProps<'/matters/[matterId]/filings'>
       <PageHeader
         title={matter.title}
         description={<LocalizedText en="Regulatory filings" vi="Thủ tục với cơ quan quản lý" />}
+        actions={
+          canEdit && (
+            <Link href={`/matters/${matterId}/filings/new`} className={buttonVariants()}>
+              <LocalizedText en="New filing" vi="Thủ tục mới" />
+            </Link>
+          )
+        }
       />
-      <MatterTabs matterId={matterId} active="filings" />
       <Card>
         <CardHeader>
           <CardTitle>
@@ -97,25 +100,6 @@ async function Filings({ params }: Pick<PageProps<'/matters/[matterId]/filings'>
           )}
         </CardContent>
       </Card>
-      {canEdit && (
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <LocalizedText en="New filing" vi="Thủ tục mới" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CreateFilingForm
-              matterId={matterId}
-              requirements={reqs.map((r) => ({ id: r.item.id, label: r.item.title }))}
-              parties={parties.map((p) => ({ id: p.id, label: p.name }))}
-              members={members
-                .filter((m) => m.status === 'ACTIVE')
-                .map((m) => ({ id: m.userId, label: m.displayName }))}
-            />
-          </CardContent>
-        </Card>
-      )}
     </div>
   )
 }

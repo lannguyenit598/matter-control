@@ -1,0 +1,41 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R3-SOURCE-REVIEW-INTAKE",
+  "actor": "Local Codex",
+  "reviewer": "Actual OpenCode, CLI v2.1.4 / opencode/glm-5.3-flash-free, independent nonauthor; human-returned evidence",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "outputs": [
+    {
+      "path": "docs/reviews/inta-opencode-fe-r3-source-review.md",
+      "bytes": 41708,
+      "sha256": "7eb30ed9450482c95d695bb18601c8bddad9d4b27bbb65032414f3be0e1d92c1"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r3-source-review-20261026/review-inputs.json",
+      "bytes": 14217,
+      "sha256": "e7d8bab81a1574ef1c6b096df75aed0fc2c29053f66239165425003cc963b2b5"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r3-source-review-20261026/checks-log.json",
+      "bytes": 7490,
+      "sha256": "4d05cb937148a17bcd48e9db8d29585b100336f23eacbdba91f5db96d130edda"
+    }
+  ],
+  "verdict": "CHANGES_REQUIRED_SOURCE_ONLY",
+  "accepted_dispositions": {
+    "C01": "CLOSED_SOURCE_ONLY",
+    "C02": "PARTIAL",
+    "C03": "PARTIAL",
+    "C04": "PARTIAL",
+    "R2-I01": "CLOSED_SOURCE_ONLY_WITH_WRAPPER_TEST_CAVEAT",
+    "R2-I02..06": "PARTIAL",
+    "R3-N01..06": "CONFIRMED",
+    "NF-1..6": "CARRIED_FOR_CORRECTION"
+  },
+  "review_completion": "DELIVERABLE_RECEIVED; does not award task/product/runtime DONE",
+  "coordination_notes": [
+    "Report section 1 says manifest lives in export only, but actual raw/export manifest exists and matches; correct as narrative erratum without rewriting reviewer files.",
+    "Report section 9 retains privacy/PG OPEN from its frozen read set; later Codex author evidence has privacy PARTIAL, exact PG stopped/retained, independent teardown acceptance pending.",
+    "Section 10 has seven numbered groups, with multiple subcorrections; human summary calls eight items. Use exact finding mapping, not an invented eighth numbered group.",
+    "Nonauthor runtime cue and formal 51 results remain unchanged."
+  ]
+}

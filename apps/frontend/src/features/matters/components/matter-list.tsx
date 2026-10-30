@@ -1,41 +1,75 @@
-import { LocalizedText } from '@/components/molecules/localized-text'
-import { Briefcase } from 'lucide-react'
+import { ArrowRight, Briefcase } from 'lucide-react'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 
 import { Badge } from '@/components/atoms/badge'
 import { EmptyState } from '@/components/molecules/empty-state'
+import { ListSection, LIST_CLASS, ROW_CLASS } from '@/components/molecules/list-section'
+import { LocalizedText } from '@/components/molecules/localized-text'
 
 import type { Matter } from '../schemas'
 
-export function MatterList({ items, total }: { items: Matter[]; total: number | null }) {
-  if (items.length === 0) {
-    return (
-      <EmptyState
-        icon={<Briefcase />}
-        title={<LocalizedText en="No matters you can open" vi="Chưa có hồ sơ bạn được mở" />}
-        description="Matters appear here only when you have explicit membership in them. Workspace ownership alone does not grant access."
-      />
-    )
-  }
+import { MatterRoleLabel } from './role-label'
+
+/** `action` is the section's one primary action, e.g. the create-matter dialog trigger. */
+export function MatterList({
+  items,
+  total,
+  action,
+}: {
+  items: Matter[]
+  total: number | null
+  action?: ReactNode
+}) {
   return (
-    <div className="flex flex-col gap-2">
-      <p className="text-sm text-muted-foreground" aria-live="polite">
-        {total ?? items.length} {(total ?? items.length) === 1 ? 'matter' : 'matters'}{' '}
-        <LocalizedText en="you can access" vi="bạn được truy cập" />
-      </p>
-      <ul className="divide-y rounded-lg border">
-        {items.map((m) => (
-          <li key={m.id} className="flex items-center justify-between gap-3 p-3">
-            <Link
-              href={`/matters/${m.id}`}
-              className="min-w-0 font-medium break-words hover:underline"
-            >
-              {m.title}
-            </Link>
-            <Badge variant={m.callerRole === 'OWNER' ? 'primary' : 'neutral'}>{m.callerRole}</Badge>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ListSection
+      title={<LocalizedText en="Matters" vi="Hồ sơ" />}
+      count={
+        items.length > 0 ? (
+          <>
+            {total ?? items.length} <LocalizedText en="you can access" vi="bạn được truy cập" />
+          </>
+        ) : undefined
+      }
+      action={action}
+    >
+      {items.length === 0 ? (
+        <EmptyState
+          icon={<Briefcase />}
+          title={<LocalizedText en="No matters you can open" vi="Chưa có hồ sơ bạn được mở" />}
+          description={
+            <LocalizedText
+              en="Matters appear here only when you have explicit membership in them. Workspace ownership alone does not grant access."
+              vi="Hồ sơ chỉ hiện ở đây khi bạn được cấp quyền rõ ràng. Chỉ là chủ sở hữu không gian làm việc thì chưa có quyền vào hồ sơ."
+            />
+          }
+        />
+      ) : (
+        <ul className={LIST_CLASS}>
+          {items.map((m) => (
+            <li key={m.id}>
+              <Link
+                href={`/matters/${m.id}`}
+                className={`${ROW_CLASS} group transition-colors hover:bg-muted/60`}
+              >
+                <span className="flex min-w-0 items-center gap-3 font-medium break-words">
+                  <Briefcase aria-hidden className="size-5 shrink-0 text-muted-foreground" />
+                  <span className="min-w-0 break-words">{m.title}</span>
+                </span>
+                <span className="flex shrink-0 items-center gap-3">
+                  <Badge variant="neutral">
+                    <MatterRoleLabel role={m.callerRole} />
+                  </Badge>
+                  <ArrowRight
+                    aria-hidden
+                    className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+                  />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </ListSection>
   )
 }

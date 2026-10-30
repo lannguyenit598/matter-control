@@ -46,3 +46,13 @@ type TokenVerifier interface {
 type IdentityResolver interface {
 	Resolve(ctx context.Context, issuer, subject string) (ActorID string, err error)
 }
+
+type PersonOption struct {
+	UserID      string `json:"userId"`
+	DisplayName string `json:"displayName"`
+}
+
+// LocalPeopleDirectory is local/dev only; production needs an organization boundary.
+type LocalPeopleDirectory interface {
+	SearchWorkspacePeople(ctx context.Context, workspaceID, actorID, name string) ([]PersonOption, error)
+}

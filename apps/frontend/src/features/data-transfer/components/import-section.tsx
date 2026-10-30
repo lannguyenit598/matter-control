@@ -2,11 +2,12 @@
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 
-import { useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import { Badge } from '@/components/atoms/badge'
 import { Button } from '@/components/atoms/button'
 import { Alert } from '@/components/molecules/alert'
+import { UnresolvedReporter } from '@/components/organisms/intent-form'
 
 import { acknowledgeTransferAction, importCommitAction, importPreviewAction } from '../actions'
 import { ACCESS_LOST, ACCESS_LOST_TEXT, ROW_ACCESS_LOST } from '../labels'
@@ -90,6 +91,14 @@ export function ImportSection({ matterId }: { matterId: string }) {
     outcome !== null &&
     ((outcome.kind === 'results' && outcome.rows.some((r) => r.status === 'UNKNOWN')) ||
       (outcome.kind === 'failure' && outcome.retrySameKey))
+  // Tell the Data page, which can hide this task, that it still needs attention.
+  const report = useContext(UnresolvedReporter)
+  const attention = pending || locked || outcome?.kind === 'denied'
+  useEffect(() => {
+    report?.(attention)
+    // only the flag is a change; `report` is a state setter owned by the page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attention])
   const validGroups = preview?.result.groups.filter((g) => g.valid).length ?? 0
 
   const commit = () =>

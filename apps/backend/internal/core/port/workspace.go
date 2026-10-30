@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 // ---------- Inbound (driving): workspace/matter administration (W1) ----------
@@ -109,6 +109,12 @@ type OwnReceiptQuery struct {
 	IdempotencyKey string
 }
 
+// MatterMemberCandidates lists names of active workspace members for a Matter OWNER.
+// It grants no membership; commands still reauthorize and enforce CAS independently.
+type MatterMemberCandidates interface {
+	ListMatterMemberCandidates(ctx context.Context, q ListMembersQuery) ([]matter.Member, error)
+}
+
 // WorkspaceService defines the W1 administration and read use cases.
 type WorkspaceService interface {
 	CreateWorkspace(ctx context.Context, cmd CreateWorkspaceCmd) (matter.WorkspaceCreatedResult, error)
@@ -190,7 +196,7 @@ type WorkspaceTx interface {
 	// it), returning the new workspace revision. A zero-rows update is
 	// ErrVersionConflict. Implementations bump BOTH the membership row revision and
 	// the workspace header revision to newRevision.
-	UpdateWorkspaceMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRevision int64) (int64, error)
+	UpdateWorkspaceMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRowRevision int64) (int64, error)
 	// BumpWorkspaceRevision advances the locked workspace header revision.
 	BumpWorkspaceRevision(ctx context.Context, newRevision int64) error
 	// InsertMatter creates the matter header row (revision 1, empty fences).
@@ -217,7 +223,7 @@ type MatterMembershipAdminTx interface {
 	InsertMatterMembership(ctx context.Context, m matter.MatterMembership) error
 	// UpdateMatterMembershipStatus flips status under revision CAS and returns the
 	// new revision; zero updated rows is ErrVersionConflict.
-	UpdateMatterMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRevision int64) (int64, error)
+	UpdateMatterMembershipStatus(ctx context.Context, user matter.ActorID, status matter.MembershipStatus, expectedRowRevision int64) (int64, error)
 	// AppendMembershipEvent appends a matter-scoped membership history event with the
 	// next seq supplied by the service.
 	AppendMembershipEvent(ctx context.Context, matterID matter.MatterID, seq int64, id, eventType, targetKind string, targetID string, actor matter.ActorID, targetUser matter.ActorID, reason string, effectiveAt, recordedAt time.Time) error

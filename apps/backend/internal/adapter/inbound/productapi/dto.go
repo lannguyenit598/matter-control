@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 // Wire DTOs. Resource bodies carry only revision-determined fields; per-read provenance

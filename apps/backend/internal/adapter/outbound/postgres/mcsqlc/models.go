@@ -345,6 +345,57 @@ type Requirement struct {
 	WaitingCondition          pgtype.Text
 }
 
+type ReviewAnswer struct {
+	ID               string
+	MatterID         string
+	GridID           string
+	VersionID        string
+	QuestionID       string
+	QuestionRevision int32
+	State            string
+	Text             string
+	PageRef          string
+	QuoteRef         string
+	Author           string
+	AnsweredAt       time.Time
+	SupersedesID     pgtype.UUID
+}
+
+type ReviewGrid struct {
+	ID        string
+	MatterID  string
+	Name      string
+	CreatedBy string
+	CreatedAt time.Time
+	Revision  int64
+}
+
+type ReviewGridVersion struct {
+	GridID    string
+	MatterID  string
+	VersionID string
+	Position  int32
+}
+
+type ReviewQuestion struct {
+	ID        string
+	MatterID  string
+	GridID    string
+	Position  int32
+	Revision  int32
+	Text      string
+	RevisedBy string
+	RevisedAt time.Time
+}
+
+type ReviewQuestionRevision struct {
+	QuestionID string
+	Revision   int32
+	Text       string
+	RevisedBy  string
+	RevisedAt  time.Time
+}
+
 type SecurityAuditEvent struct {
 	ID                    string
 	OccurredAt            time.Time

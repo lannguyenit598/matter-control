@@ -1,10 +1,11 @@
-import { LocalizedText } from '@/components/molecules/localized-text'
 import { Badge } from '@/components/atoms/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/card'
+import { ListSection, LIST_CLASS, ROW_CLASS } from '@/components/molecules/list-section'
+import { LocalizedText } from '@/components/molecules/localized-text'
 
 import type { MatterMember } from '../schemas'
 
 import { GrantMatterMemberForm } from './grant-matter-member-form'
+import { MatterRoleLabel } from './role-label'
 import { RevokeMatterMemberButton } from './revoke-matter-member-button'
 
 export function MatterMembers({
@@ -12,46 +13,61 @@ export function MatterMembers({
   members,
   etag,
   canAdminister,
+  candidates,
 }: {
   matterId: string
   members: MatterMember[]
   etag: string
   canAdminister: boolean
+  candidates: MatterMember[] | null
 }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <LocalizedText en="Matter members" vi="Thành viên hồ sơ" />
-        </CardTitle>
-        <CardDescription>
+    <div id="matter-members" className="scroll-mt-20">
+      <ListSection
+        title={<LocalizedText en="Matter members" vi="Thành viên hồ sơ" />}
+        count={members.length}
+        description={
           <LocalizedText
             en="Access to this matter is explicit and separate from workspace membership."
             vi="Quyền truy cập hồ sơ được cấp rõ ràng, tách biệt với tư cách thành viên không gian làm việc."
           />
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-5">
-        <ul className="divide-y rounded-md border">
+        }
+        action={
+          canAdminister &&
+          (candidates ? (
+            <GrantMatterMemberForm
+              matterId={matterId}
+              ifMatch={etag}
+              candidates={candidates.filter(
+                (person) => !members.some((member) => member.userId === person.userId),
+              )}
+            />
+          ) : (
+            <p role="status" className="text-sm text-muted-foreground">
+              <LocalizedText
+                en="Could not load people. Reload this page to try again."
+                vi="Chưa tải được danh sách người dùng. Tải lại trang để thử lại."
+              />
+            </p>
+          ))
+        }
+      >
+        <ul className={LIST_CLASS}>
           {members.map((m) => (
-            <li key={m.userId} className="flex flex-wrap items-center justify-between gap-3 p-3">
-              <div className="flex min-w-0 flex-col">
-                <span className="font-medium break-words">{m.displayName}</span>
-                <span className="font-mono text-xs break-all text-muted-foreground">
-                  {m.userId}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant={m.role === 'OWNER' ? 'primary' : 'neutral'}>{m.role}</Badge>
+            <li key={m.userId} className={ROW_CLASS}>
+              <span className="min-w-0 font-medium break-words">{m.displayName}</span>
+              <span className="flex items-center gap-3">
+                <Badge variant={m.role === 'OWNER' ? 'primary' : 'neutral'}>
+                  <MatterRoleLabel role={m.role} />
+                </Badge>
                 {canAdminister && (
                   <RevokeMatterMemberButton matterId={matterId} userId={m.userId} ifMatch={etag} />
                 )}
-              </div>
+              </span>
             </li>
           ))}
         </ul>
-        {canAdminister && <GrantMatterMemberForm matterId={matterId} ifMatch={etag} />}
-      </CardContent>
-    </Card>
+      </ListSection>
+    </div>
   )
 }

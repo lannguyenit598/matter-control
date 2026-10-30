@@ -12,8 +12,8 @@ import { ReadFailure } from '@/components/organisms/read-failure'
 import { matterRepository } from '@/features/matters/repository'
 import {
   PromoteForm,
-  SignatureForm,
-  UploadVersionForm,
+  SignatureDialog,
+  UploadVersionDialog,
 } from '@/features/proof/components/document-forms'
 import { formatBytes } from '@/features/proof/labels'
 import { proofRepository } from '@/features/proof/repository'
@@ -60,7 +60,15 @@ async function DocumentView({ params, searchParams }: Pick<Props, 'params' | 'se
       <Link href={`/matters/${matterId}/documents`} className="text-sm underline">
         <LocalizedText en="← All documents" vi="← Tất cả tài liệu" />
       </Link>
-      <PageHeader title={doc.name} description={`Read at ${detail.asOf}`} />
+      <PageHeader
+        title={doc.name}
+        description={`Read at ${detail.asOf}`}
+        actions={
+          canEdit && (
+            <UploadVersionDialog matterId={matterId} documentId={doc.id} documentName={doc.name} />
+          )
+        }
+      />
 
       <Card>
         <CardHeader>
@@ -118,15 +126,13 @@ async function DocumentView({ params, searchParams }: Pick<Props, 'params' | 'se
                       </p>
                     ))}
                   {canEdit && (
-                    <details>
-                      <summary className="cursor-pointer underline">
-                        <LocalizedText
-                          en="Record an observed signature"
-                          vi="Ghi nhận chữ ký đã quan sát"
-                        />
-                      </summary>
-                      <SignatureForm matterId={matterId} versionId={v.id} />
-                    </details>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <SignatureDialog
+                        matterId={matterId}
+                        versionId={v.id}
+                        versionLabel={`Version ${v.no} · ${v.filename}`}
+                      />
+                    </div>
                   )}
                 </li>
               ))}
@@ -157,19 +163,6 @@ async function DocumentView({ params, searchParams }: Pick<Props, 'params' | 'se
               unaffected={impact.unaffectedCriteria}
               titles={{}}
             />
-          </CardContent>
-        </Card>
-      )}
-
-      {canEdit && (
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <LocalizedText en="Upload a new version" vi="Tải lên phiên bản mới" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <UploadVersionForm matterId={matterId} documentId={doc.id} />
           </CardContent>
         </Card>
       )}

@@ -8,9 +8,9 @@ import (
 	"sort"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/policy"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/policy"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // MatterService implements the MatterControl transaction spine use cases:
@@ -324,6 +324,8 @@ func authorizeReceiptScope(ctx context.Context, tx port.MatterTx, actor matter.A
 // event exists. Audit rows carry no titles or content, only a hash of the matter id.
 func (s *MatterService) deny(ctx context.Context, tx port.MatterTx, tCmd time.Time, actor matter.ActorID, matterID matter.MatterID, result string, err error) error {
 	auditErr := tx.RecordSecurityAudit(ctx, matter.SecurityAuditEntry{
+		ClientIP:              port.RequestMetaFromContext(ctx).ClientIP,
+		RequestID:             port.RequestMetaFromContext(ctx).RequestID,
 		EventID:               s.ids.NewRecordID(),
 		OccurredAt:            tCmd,
 		Actor:                 actor,

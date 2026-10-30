@@ -71,6 +71,12 @@ describe('beginLogin', () => {
 })
 
 describe('completeLogin', () => {
+  it('never uses the technical subject as the display name when profile claims are absent', async () => {
+    const { params, state } = await start()
+    respondWith(params.get('nonce')!, { name: null, preferred_username: null, email: null })
+    const out = await completeLogin(cfg, { code: 'c', state, cookieState: state })
+    expect(out.tokens).toMatchObject({ sub: 'user-1', name: 'My account' })
+  })
   it('exchanges the code with the matching PKCE verifier and returns verified identity', async () => {
     const { params, state } = await start()
     respondWith(params.get('nonce')!)
@@ -194,6 +200,8 @@ describe('safeReturnTo', () => {
     ['/workspaces/a-b/c', '/workspaces/a-b/c'],
     ['/matters/1#frag', '/matters/1'],
     ['/a%2F%2Fb', '/a%2F%2Fb'], // an encoded slash stays inside the path
+    ['/a/b/../c?x=1', '/a/c?x=1'], // normal dot segments are canonicalized as before
+    ['/a/./b', '/a/b'],
     [null, '/workspaces'],
     [undefined, '/workspaces'],
     ['', '/workspaces'],
@@ -223,6 +231,14 @@ describe('safeReturnTo', () => {
     ['auth route (loop)', '/api/auth/logout'],
     ['sign-in page (loop)', '/login'],
     ['sign-in page with query', '/login?returnTo=/x'],
+    ['dot segments into the sign-in page', '/x/../login'],
+    ['dot segments into the auth routes', '/matters/../api/auth/logout'],
+    ['dot segments normalize to protocol-relative', '/..//attacker.invalid'],
+    ['dot segments below a path', '/x/..//attacker.invalid'],
+    ['dot segments, deeper', '/a/../..//attacker.invalid'],
+    ['dot segments, triple slash', '/..///attacker.invalid'],
+    ['encoded dot segments', '/%2e%2e//attacker.invalid'],
+    ['single dot then slash', '/.//attacker.invalid'],
     ['too long', '/' + 'a'.repeat(3000)],
   ])('falls back for %s', (_name, input) => expect(safeReturnTo(input, ORIGIN)).toBe('/workspaces'))
 
@@ -235,11 +251,15 @@ describe('safeReturnTo', () => {
       'http://x.test',
       '/\r\n/x.test',
       '/ /x.test',
+      '/..//x.test', // canonicalizes to //x.test
+      '/a/../..//x.test',
+      '/%2e%2e//x.test',
     ]
     for (const input of hostile) {
       expect(resolveReturnTo(input, ORIGIN).origin).toBe(ORIGIN)
     }
     expect(resolveReturnTo('/matters/1?a=b', ORIGIN).href).toBe('http://app.test/matters/1?a=b')
+    expect(resolveReturnTo('/..//x.test', ORIGIN).href).toBe('http://app.test/workspaces')
   })
 
   it('canonicalizes with the configured origin, not a guessed one', () => {

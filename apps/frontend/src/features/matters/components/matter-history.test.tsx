@@ -25,6 +25,20 @@ const event = {
 }
 
 describe('MatterHistory', () => {
+  it('shows the member name for a known actor id and the recorded id otherwise', () => {
+    const { rerender } = render(
+      <MatterHistory
+        events={[eventSchema.parse(event)]}
+        nextHref={null}
+        actorNames={{ 'member-1': 'Alice' }}
+      />,
+    )
+    expect(screen.getByText('Alice')).toBeInTheDocument()
+    expect(screen.queryByText('member-1')).toBeNull()
+    rerender(<MatterHistory events={[eventSchema.parse(event)]} nextHref={null} actorNames={{}} />)
+    expect(screen.getByText('member-1')).toBeInTheDocument()
+  })
+
   it('retains and presents the attributed event payload instead of stripping provenance', () => {
     const parsed = eventSchema.parse(event)
     expect(parsed).toEqual(event)

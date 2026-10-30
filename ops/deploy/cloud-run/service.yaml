@@ -1,0 +1,73 @@
+# mcapi on Cloud Run (ADR-007 backend profile A). Render with `node ops/deploy/profiles.mjs cloud-run ...`;
+# apply only after authorization: gcloud run services replace service.yaml --region {{REGION}}.
+# Transport: public ingress + per-user ZITADEL bearer (application boundary). Cloud Run IAM is NOT
+# enabled: Workers cannot mint Google ID tokens without a stored credential; see ADR-007 before adding it.
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: {{SERVICE_NAME}}
+  labels:
+    cloud.googleapis.com/location: {{REGION}}
+  annotations:
+    run.googleapis.com/ingress: all
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: '0'
+        # Cost and PostgreSQL bound: pgx MaxConns 10 x maxScale must fit the database budget.
+        autoscaling.knative.dev/maxScale: '{{MAX_INSTANCES}}'
+    spec:
+      serviceAccountName: {{SERVICE_ACCOUNT}}
+      # Uploads are buffered (<= 25 MiB) before the R2 PUT: concurrency x 25 MiB must fit memory.
+      containerConcurrency: 10
+      # >= MC_TRANSFER_TIMEOUT (60s) + write margin, or the platform cuts transfers first.
+      timeoutSeconds: 75
+      containers:
+        - image: {{IMAGE}}
+          ports:
+            - name: http1
+              containerPort: 8080
+          resources:
+            limits:
+              cpu: '1'
+              memory: 512Mi
+          env:
+            - { name: MC_HTTP_ADDR, value: '0.0.0.0:8080' }
+            - { name: MC_OBJECT_BACKEND, value: r2 }
+            - { name: MC_R2_ENDPOINT, value: '{{R2_ENDPOINT}}' }
+            - { name: MC_R2_BUCKET, value: '{{R2_BUCKET}}' }
+            - { name: MC_OIDC_ISSUER, value: '{{OIDC_ISSUER}}' }
+            - { name: MC_OIDC_INTROSPECTION_URL, value: '{{OIDC_INTROSPECTION_URL}}' }
+            - { name: MC_OIDC_AUDIENCE, value: '{{OIDC_AUDIENCE}}' }
+            - { name: MC_OIDC_API_CLIENT_ID, value: '{{OIDC_API_CLIENT_ID}}' }
+            - { name: MC_OIDC_API_KEY_FILE, value: /secrets/oidc/api-key.json }
+            - { name: MC_OIDC_CACHE_TTL, value: 15s }
+            - { name: MC_REQUEST_TIMEOUT, value: 10s }
+            - { name: MC_TRANSFER_TIMEOUT, value: 60s }
+            - { name: MC_MAX_IN_FLIGHT, value: '10' }
+            # SIGTERM -> SIGKILL is 10 s on Cloud Run; it stops routing before SIGTERM, so no delay.
+            - { name: MC_SHUTDOWN_DELAY, value: 0s }
+            - { name: MC_SHUTDOWN_TIMEOUT, value: 8s }
+            - name: MC_DATABASE_URL
+              valueFrom: { secretKeyRef: { name: '{{DATABASE_URL_SECRET}}', key: latest } }
+            - name: MC_R2_ACCESS_KEY_ID
+              valueFrom: { secretKeyRef: { name: '{{R2_ACCESS_KEY_ID_SECRET}}', key: latest } }
+            - name: MC_R2_SECRET_ACCESS_KEY
+              valueFrom: { secretKeyRef: { name: '{{R2_SECRET_ACCESS_KEY_SECRET}}', key: latest } }
+          # Probe paths end in "z": Cloud Run reserves some such public paths, so they are probes only.
+          startupProbe:
+            httpGet: { path: /readyz, port: 8080 }
+            periodSeconds: 2
+            failureThreshold: 15
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            periodSeconds: 15
+          volumeMounts:
+            - { name: oidc-key, mountPath: /secrets/oidc, readOnly: true }
+      volumes:
+        - name: oidc-key
+          secret:
+            secretName: '{{OIDC_KEY_SECRET}}'
+            items:
+              - { key: latest, path: api-key.json }

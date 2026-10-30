@@ -1,0 +1,39 @@
+# `mcapi migrate` as a Cloud Run job (separate step; serving instances never apply DDL).
+# Apply/execute only after authorization: gcloud run jobs replace migrate-job.yaml --region {{REGION}};
+# gcloud run jobs execute {{SERVICE_NAME}}-migrate --region {{REGION}} --wait.
+# The command validates the whole configuration, so it receives the same non-secret values.
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: {{SERVICE_NAME}}-migrate
+  labels:
+    cloud.googleapis.com/location: {{REGION}}
+spec:
+  template:
+    spec:
+      taskCount: 1
+      template:
+        spec:
+          serviceAccountName: {{SERVICE_ACCOUNT}}
+          maxRetries: 0
+          timeoutSeconds: 600
+          containers:
+            - image: {{IMAGE}}
+              args: [migrate]
+              env:
+                - { name: MC_OBJECT_BACKEND, value: r2 }
+                - { name: MC_R2_ENDPOINT, value: '{{R2_ENDPOINT}}' }
+                - { name: MC_R2_BUCKET, value: '{{R2_BUCKET}}' }
+                - { name: MC_OIDC_ISSUER, value: '{{OIDC_ISSUER}}' }
+                - { name: MC_OIDC_INTROSPECTION_URL, value: '{{OIDC_INTROSPECTION_URL}}' }
+                - { name: MC_OIDC_AUDIENCE, value: '{{OIDC_AUDIENCE}}' }
+                - { name: MC_OIDC_API_KEY_FILE, value: /secrets/oidc/api-key.json }
+                - name: MC_DATABASE_URL
+                  valueFrom: { secretKeyRef: { name: '{{DATABASE_URL_SECRET}}', key: latest } }
+                # Schema-owner role, used only by this job.
+                - name: MC_MIGRATE_DATABASE_URL
+                  valueFrom: { secretKeyRef: { name: '{{MIGRATE_DATABASE_URL_SECRET}}', key: latest } }
+                - name: MC_R2_ACCESS_KEY_ID
+                  valueFrom: { secretKeyRef: { name: '{{R2_ACCESS_KEY_ID_SECRET}}', key: latest } }
+                - name: MC_R2_SECRET_ACCESS_KEY
+                  valueFrom: { secretKeyRef: { name: '{{R2_SECRET_ACCESS_KEY_SECRET}}', key: latest } }

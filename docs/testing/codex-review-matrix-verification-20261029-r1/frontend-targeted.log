@@ -1,0 +1,291 @@
+[WARN] The store at /Users/nguyenvanlan/Library/pnpm/store/v11 is not used because packages cannot be hard linked from it into this project. Using the store at /private/tmp/.pnpm-store/v11 instead. Set storeDir to choose the store.
+✓ Lockfile passes supply-chain policies (verified 20h ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "/private/tmp/mc-review-verifier-20261029-
+      r1/frontend/node_modules": workspace hoist directory is not a real
+      directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+[WARN] The store at /Users/nguyenvanlan/Library/pnpm/store/v11 is not used because packages cannot be hard linked from it into this project. Using the store at /private/tmp/.pnpm-store/v11 instead. Set storeDir to choose the store.
+✓ Lockfile passes supply-chain policies (verified 20h ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "/private/tmp/mc-review-verifier-20261029-
+      r1/frontend/node_modules": workspace hoist directory is not a real
+      directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+
+ RUN  v5.0.5 /private/tmp/mc-review-verifier-20261029-r1/frontend
+
+ ❯ src/features/review/components/review-list.test.tsx (4 tests | 1 failed) 5625ms
+   ❯ CreateGridDialog (2)
+     × after a lost answer, the retry reuses the SAME key and never makes a new request on its own 5072ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/review/components/review-list.test.tsx > CreateGridDialog > after a lost answer, the retry reuses the SAME key and never makes a new request on its own
+AssertionError: expected "vi.fn()" to be called 2 times, but got 1 times
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mlang[39m=[32m"en"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<button[39m
+        [33maria-haspopup[39m=[32m"dialog"[39m
+        [33mclass[39m=[32m"control-target inline-flex max-w-full min-w-0 items-center justify-center gap-2 rounded-md text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 min-h-9 px-3 py-1.5"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"lucide lucide-plus"[39m
+          [33mfill[39m=[32m"none"[39m
+          [33mheight[39m=[32m"24"[39m
+          [33mstroke[39m=[32m"currentColor"[39m
+          [33mstroke-linecap[39m=[32m"round"[39m
+          [33mstroke-linejoin[39m=[32m"round"[39m
+          [33mstroke-width[39m=[32m"2"[39m
+          [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [33mwidth[39m=[32m"24"[39m
+          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33md[39m=[32m"M5 12h14"[39m
+          [36m/>[39m
+          [36m<path[39m
+            [33md[39m=[32m"M12 5v14"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+        [0mNew review grid[0m
+      [36m</button>[39m
+      [36m<dialog[39m
+        [33maria-describedby[39m=[32m"_r_9_"[39m
+        [33maria-labelledby[39m=[32m"_r_8_"[39m
+        [33mclass[39m=[32m"m-auto w-[calc(100%-2rem)] max-w-lg rounded-lg border bg-card p-0 text-card-foreground shadow-lg"[39m
+        [33mopen[39m=[32m""[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto overscroll-contain p-6"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"flex items-start justify-between gap-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex min-w-0 flex-col gap-1 [overflow-wrap:anywhere]"[39m
+            [36m>[39m
+              [36m<h2[39m
+                [33mclass[39m=[32m"text-base leading-snug font-semibold"[39m
+                [33mid[39m=[32m"_r_8_"[39m
+              [36m>[39m
+                [0mNew review grid[0m
+              [36m</h2>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+                [33mid[39m=[32m"_r_9_"[39m
+              [36m>[39m
+                [0mA grid compares chosen document versions against your questions. You add the versions and questions next.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Close"[39m
+              [33mclass[39m=[32m"control-target inline-flex max-w-full items-center justify-center gap-2 rounded-md text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground min-h-8 min-w-8 p-1.5 -mt-2 -mr-2 size-8"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-x"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M18 6 6 18"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m6 6 12 12"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+          [36m<form[39m
+            [33mclass[39m=[32m"flex flex-col gap-4"[39m
+            [33mnovalidate[39m=[32m""[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+                [33mfor[39m=[32m"_r_a_"[39m
+              [36m>[39m
+                [0mName[0m
+                [36m<span[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"ml-0.5 text-destructive"[39m
+                [36m>[39m
+                  [0m*[0m
+                [36m</span>[39m
+              [36m</label>[39m
+              [36m<input[39m
+                [33maria-describedby[39m=[32m"_r_a_-hint"[39m
+                [33mautocomplete[39m=[32m"off"[39m
+                [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive min-h-10 py-2"[39m
+                [33mid[39m=[32m"_r_a_"[39m
+                [33mmaxlength[39m=[32m"200"[39m
+                [33mname[39m=[32m"name"[39m
+                [33mtype[39m=[32m"text"[39m
+              [36m/>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+                [33mid[39m=[32m"_r_a_-hint"[39m
+              [36m>[39m
+                [0mFor example: Change-of-control review.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex gap-3 rounded-md border p-3 text-sm [&_svg]:mt-0.5 [&_svg]:size-4 border-destructive/40 bg-destructive/10 text-destructive"[39m
+              [33mrole[39m=[32m"alert"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-circle-alert lucide-alert-circle shrink-0"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<circle[39m
+                  [33mcx[39m=[32m"12"[39m
+                  [33mcy[39m=[32m"12"[39m
+                  [33mr[39m=[32m"10"[39m
+                [36m/>[39m
+                [36m<line[39m
+                  [33mx1[39m=[32m"12"[39m
+                  [33mx2[39m=[32m"12"[39m
+                  [33my1[39m=[32m"8"[39m
+                  [33my2[39m=[32m"12"[39m
+                [36m/>[39m
+                [36m<line[39m
+                  [33mx1[39m=[32m"12"[39m
+                  [33mx2[39m=[32m"12.01"[39m
+                  [33my1[39m=[32m"16"[39m
+                  [33my2[39m=[32m"16"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-col gap-1"[39m
+              [36m>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"font-medium"[39m
+                [36m>[39m
+                  [0mOutcome not confirmed[0m
+                [36m</p>[39m
+                [36m<div>[39m
+                  [0munknown[0m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"flex flex-wrap gap-2"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"control-target inline-flex max-w-full min-w-0 items-center justify-center gap-2 rounded-md text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 min-h-9 px-3 py-1.5"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-refresh-cw"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M21 3v5h-5"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M8 16H3v5"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [0mRetry the same request (safe to send again)[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"control-target inline-flex max-w-full min-w-0 items-center justify-center gap-2 rounded-md text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground min-h-9 px-3 py-1.5"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-rotate-ccw"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M3 3v5h5"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [0mDiscard and start a different request[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</form>[39m
+        [36m</div>[39m
+      [36m</dialog>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/review/components/review-list.test.tsx:100:52
+     98|     actions.createGrid.mockResolvedValueOnce({ ok: true, id: 'g1', rep…
+     99|     fireEvent.click(within(dialog).getByRole('button', { name: /Retry …
+    100|     await waitFor(() => expect(actions.createGrid).toHaveBeenCalledTim…
+       |                                                    ^
+    101|     expect(actions.createGrid.mock.calls[1]![0].idempotencyKey).toBe(f…
+    102|   }, 15_000)
+ ❯ runWithExpensiveErrorDiagnosticsDisabled ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  1 failed | 42 passed (43)
+   Start at  19:34:57
+   Duration  7.85s (tests 38%, environment 37%, import 11%, setup 10%, transform 4%)
+

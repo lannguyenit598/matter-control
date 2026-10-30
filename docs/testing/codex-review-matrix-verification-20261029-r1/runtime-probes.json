@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-29T12:40:12.411511+00:00",
+  "read_only": true,
+  "url": "http://127.0.0.1:8081",
+  "probes": [
+    {
+      "path": "/healthz",
+      "status": 200,
+      "body": "{\"status\":\"ok\"}\n"
+    },
+    {
+      "path": "/readyz",
+      "status": 200,
+      "body": "{\"status\":\"ready\"}\n"
+    }
+  ]
+}

@@ -31,5 +31,5 @@ export type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['varia
 export type BadgeProps = ComponentProps<'span'> & VariantProps<typeof badgeVariants>
 
 export function Badge({ className, variant, ...props }: BadgeProps) {
-  return <span className={cn(badgeVariants({ variant }), className)} {...props} />
+  return <span data-slot="badge" className={cn(badgeVariants({ variant }), className)} {...props} />
 }

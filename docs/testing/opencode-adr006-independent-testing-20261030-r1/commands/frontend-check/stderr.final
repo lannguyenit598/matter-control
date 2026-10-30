@@ -1,0 +1,6 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+$ eslint .
+$ prettier --check .
+$ vitest run
+$ node scripts/sync-agent-config.mjs --check

@@ -1,0 +1,49 @@
+{
+  "task": "MC-BE-02-PREP PF01..04 correction supplement",
+  "author": "Local Codex",
+  "status": "PROPOSED_DOCUMENT_ASSERTIONS / PRODUCT_NOT_RUN",
+  "existing_case_ids_changed": false,
+  "original_case_count": 24,
+  "planned_addendum_count": 3,
+  "planned_total": 27,
+  "assertions": [
+    {
+      "case": "BE02-T13",
+      "expect": "Same retained codec + immutable snapshot produce same public resource bytes/status/stableheaders across create/replay; private RequestHash absent; no live-row/clock substitution."
+    },
+    {
+      "case": "BE02-T14",
+      "expect": "Retain old codec and explicit legacy mapping; v1 original outcome still encoded by v1 after new deployment; unknown codec refuses, no migrate/rewrite/re-execution."
+    },
+    {
+      "case": "BE02-T21",
+      "expect": "Two reads with same resource revision/codec yield same body bytes despite different truthful provenance headers; codec/body-changing representation cannot retain an incompatible strong ETag. Operations wrapper uses its own validator policy."
+    },
+    {
+      "case": "BE02-T07",
+      "expect": "Media/syntax/duplicate admission400/415 separate from authorized non-replay schema/body422; unknown/forbidden properties not dropped before fingerprint; scalar root/body types follow explicit product matrix."
+    },
+    {
+      "case": "BE02-T25",
+      "expect": "Explicit proposed single-decode canonical path equivalence/rejection verified against actual router; no double decoding, caller template or scope bypass."
+    },
+    {
+      "case": "BE02-T26",
+      "expect": "Missing/unsupported media415; malformed media/duplicate charset400; UTF8JSON selected; unsupported charset/parameter415; media failure precedes body parse; admitted body auth precedes schema422."
+    },
+    {
+      "case": "BE02-T27",
+      "expect": "Due temporal boundary fails closed under original planned503 mapping, no mutation/receipt; no numeric retry default or fake provenance."
+    },
+    {
+      "case": "BE02-T02",
+      "expect": "Unverified identity cannot enter trusted actor lookup; unknown identity rejected without auto membership/user creation. Real IdP proof remains a separate gate."
+    },
+    {
+      "case": "BE02-T24",
+      "expect": "Missing real verifier/policy fails product startup; synthetic principal is test-construction-only and unreachable via runtime config."
+    }
+  ],
+  "runtime_results": "NOT_RUN",
+  "scope_limit": "No new independent verdict or extension of original bounded source assignment; no CT/INTA renumbering."
+}

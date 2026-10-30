@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { NextRequest } from 'next/server'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { cfg, FakeIdp } from '@/test/fake-idp'
 
@@ -29,6 +29,7 @@ import { POST as logout } from './logout/route'
 import { GET as sessionRoute } from './session/route'
 
 let idp: FakeIdp
+afterEach(() => vi.unstubAllEnvs())
 
 beforeEach(() => {
   resetOidcState()
@@ -219,6 +220,30 @@ describe('logout', () => {
 })
 
 describe('resolveSession + session route', () => {
+  it('reports invalid durable storage as unavailable, never as anonymous or successful logout', async () => {
+    cookieJar.value = createSession({
+      sub: 'synthetic',
+      name: 'A',
+      accessToken: 'A',
+      accessExpiresAt: Date.now() + 600_000,
+    })
+    vi.stubEnv('BFF_STATE_BACKEND', 'postgres')
+    vi.stubEnv('BFF_DATABASE_URL', '')
+    const session = await sessionRoute()
+    expect(session.status).toBe(503)
+    expect(await session.json()).toEqual({ error: 'session storage unavailable' })
+    const signedOut = await logout(
+      req('/api/auth/logout', {
+        method: 'POST',
+        headers: { origin: cfg.appOrigin, cookie: `${cfg.sessionCookie}=${cookieJar.value}` },
+      }),
+    )
+    expect(signedOut.status).toBe(503)
+    expect(signedOut.cookies.get(cfg.sessionCookie)).toBeUndefined()
+    const loginResponse = await login(req('/api/auth/login'))
+    expect(loginResponse.headers.get('location')).toBe(`${cfg.appOrigin}/login?error=unavailable`)
+    expect(loginResponse.cookies.get(cfg.loginCookie)).toBeUndefined()
+  })
   it('is null without a cookie, with a forged handle, and after logout', async () => {
     expect(await resolveSession()).toBeNull()
     cookieJar.value = 'forged-handle'

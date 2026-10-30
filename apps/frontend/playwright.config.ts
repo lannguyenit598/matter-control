@@ -20,7 +20,8 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: process.env.CI ? 'pnpm start' : 'pnpm dev',
+    // Demo mode is refused by a production server (TB-12): these template e2e use the dev server.
+    command: 'pnpm dev',
     url: `http://localhost:${PORT}/dashboard`,
     reuseExistingServer: !process.env.CI,
     env: { PORT: String(PORT), API_MODE: 'demo' },

@@ -1,0 +1,40 @@
+{
+ "task": "MC-P0-CLAUDE-EVIDENCE-BASIS-REVIEW-FIX-20261029",
+ "head": "20feedbf06c859a9806055d609f5b132fe8bb086",
+ "note": "before = Codex intake reviewed-source-manifest.json (bytes reviewed); after = final bytes at return. No other file was written by this task. No backend, UI-shell, Agenda, route, tab or page file was touched.",
+ "files": {
+  "apps/frontend/src/features/proof/evidence-basis.ts": {
+   "before": {
+    "sha256": "894eeb3d82c317f8b294887b33e095e36968295410cf9d2176957663a4562bea",
+    "bytes": 5498
+   },
+   "after": {
+    "sha256": "b3ef433412e70d3c73e9e8628439d435585c8dff00e108f6b3c4069add7f24cf",
+    "bytes": 5863
+   },
+   "changed": true
+  },
+  "apps/frontend/src/features/proof/components/evidence-basis.tsx": {
+   "before": {
+    "sha256": "fffd74397afe60ce4f2ce8b4723074f8d43f1f47c26f025efe065eb4deaa113a",
+    "bytes": 10972
+   },
+   "after": {
+    "sha256": "2f1f76a7713e146015b995d270f4e1974568c22b67c03f01b6576d5b160beba0",
+    "bytes": 11852
+   },
+   "changed": true
+  },
+  "apps/frontend/src/features/proof/evidence-basis.test.tsx": {
+   "before": {
+    "sha256": "d8f4a11ce331dceff20d8bd8c6f73d25409d9b88356428e310f16c23ffd89b64",
+    "bytes": 6223
+   },
+   "after": {
+    "sha256": "54926a6ce53d04ca79d4cccad4caccc2aa69a26e8b89e70afd8139e96edf918d",
+    "bytes": 10731
+   },
+   "changed": true
+  }
+ }
+}

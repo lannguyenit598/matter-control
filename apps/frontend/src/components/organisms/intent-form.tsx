@@ -1,10 +1,21 @@
 'use client'
 
+import { ArrowRight, LogIn, RefreshCw, RotateCcw } from 'lucide-react'
+
 import { LocalizedText } from '@/components/molecules/localized-text'
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState, useTransition, type FormEvent, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+  type FormEvent,
+  type ReactNode,
+} from 'react'
 
 import { Button } from '@/components/atoms/button'
 import { Alert } from '@/components/molecules/alert'
@@ -22,6 +33,21 @@ import { newIdempotencyKey } from '@/lib/mc/idempotency'
 import { usePendingAttempt } from '@/lib/mc/use-attempt'
 
 import { useDraftNamespace } from './draft-scope'
+
+/**
+ * Set by a surface that opened this form as a task (`FormDialog`): called once, after a confirmed
+ * success only, so the task can close and say what happened. Never called on a failure, an
+ * unknown outcome or a refusal, so those stay on screen where they can be acted on. A form may
+ * pass its own notice (for example "already stored"); otherwise the dialog's `successNotice` shows.
+ */
+export const TaskSuccess = createContext<((notice?: ReactNode) => void) | null>(null)
+
+/**
+ * Lets a surface that can hide a form (a kind switch inside one dialog) learn that this form has
+ * a request in flight, an unconfirmed outcome or a required re-read, so it can say so while the
+ * form is out of sight. Purely informational: it changes nothing about the command.
+ */
+export const UnresolvedReporter = createContext<((unresolved: boolean) => void) | null>(null)
 
 export type IntentFormProps = {
   submitLabel: ReactNode
@@ -47,6 +73,15 @@ export type IntentFormProps = {
   renderRejection?: (rejection: McRejection) => ReactNode
   /** Called after a successful save, e.g. to navigate to the created record. */
   onSuccess?: (result: Extract<McActionResult, { ok: true }>) => void
+  /**
+   * Called once when a command comes back unauthenticated/forbidden/not-found: the right to see
+   * the surface this form belongs to has definitively ended, so the owning surface can clear its
+   * protected content and drafts. Never called for transient or unknown outcomes.
+   */
+  onAccessLoss?: (loss: {
+    kind: 'unauthenticated' | 'forbidden' | 'not-found'
+    error: string
+  }) => void
   className?: string
 }
 
@@ -71,6 +106,7 @@ export function IntentForm({
   children,
   renderRejection,
   onSuccess,
+  onAccessLoss,
   className,
 }: IntentFormProps) {
   const router = useRouter()
@@ -112,6 +148,14 @@ export function IntentForm({
   const retrying = failure?.retrySameKey === true
   // A CAS-only command with an unknown outcome is blocked until the state is re-read.
   const blocked = failure?.requiresReread === true
+  const report = useContext(UnresolvedReporter)
+  const taskDone = useContext(TaskSuccess)
+  const unresolved = pending || retrying || blocked
+  useEffect(() => {
+    report?.(unresolved)
+    // `report` is a state setter owned by the surface; only the flag is a change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unresolved])
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -128,6 +172,8 @@ export function IntentForm({
       ) {
         // The right to see this ended: do not keep (or later revive) what was typed for it.
         dropDraft()
+        formRef.current?.reset()
+        onAccessLoss?.({ kind: r.kind, error: r.error })
       }
       if (r.ok) {
         dropDraft()
@@ -136,6 +182,7 @@ export function IntentForm({
         formRef.current?.reset()
         router.refresh()
         onSuccess?.(r)
+        taskDone?.()
       } else if (r.kind === 'outcome-unknown' && r.retrySameKey) {
         frozen.current = values
         if (draftsOn) saveAttempt(namespace, draftKey, { key, values })
@@ -180,7 +227,8 @@ export function IntentForm({
           {failure.kind === 'unauthenticated' && (
             <>
               {' '}
-              <Link className="underline" href="/login">
+              <Link className="inline-flex items-center gap-1 underline" href="/login">
+                <LogIn aria-hidden className="size-4" />
                 <LocalizedText en="Sign in" vi="Đăng nhập" />
               </Link>
             </>
@@ -188,7 +236,12 @@ export function IntentForm({
           {failure.kind === 'stale' && (
             <>
               {' '}
-              <button type="button" className="underline" onClick={() => router.refresh()}>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 underline"
+                onClick={() => router.refresh()}
+              >
+                <RefreshCw aria-hidden className="size-4" />
                 <LocalizedText en="Reload" vi="Tải lại" />
               </button>
             </>
@@ -210,10 +263,12 @@ export function IntentForm({
       <div className="flex flex-wrap gap-2">
         {blocked ? (
           <Button type="button" variant="outline" loading={pending} onClick={reread}>
+            {!pending && <RefreshCw aria-hidden />}
             <LocalizedText en="Reload current state" vi="Đọc lại trạng thái hiện tại" />
           </Button>
         ) : (
           <Button type="submit" loading={pending}>
+            {!pending && (retrying ? <RefreshCw aria-hidden /> : <ArrowRight aria-hidden />)}
             {retrying ? (
               <LocalizedText
                 en="Retry the same request (safe to send again)"
@@ -226,6 +281,7 @@ export function IntentForm({
         )}
         {retrying && (
           <Button type="button" variant="ghost" disabled={pending} onClick={discard}>
+            <RotateCcw aria-hidden />
             <LocalizedText
               en="Discard and start a different request"
               vi="Bỏ yêu cầu này và bắt đầu yêu cầu khác"

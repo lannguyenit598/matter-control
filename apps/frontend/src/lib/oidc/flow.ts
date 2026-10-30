@@ -3,6 +3,7 @@ import 'server-only'
 import { createHash, createPublicKey, randomBytes, verify } from 'node:crypto'
 
 import type { OidcConfig } from './config'
+import { durableState, stateKey } from './durable-state'
 
 /**
  * Authorization Code + PKCE (S256) with state and nonce against one pinned issuer. The ID token
@@ -106,6 +107,10 @@ export function safeReturnTo(
     return DEFAULT_RETURN
   }
   if (url.origin !== new URL(appOrigin).origin) return DEFAULT_RETURN
+  // Canonicalization resolves dot segments: "/..//host" becomes "//host" although the raw value did
+  // not start with "//". Callers resolve the result against an origin (resolveReturnTo), where a
+  // leading "//" would be scheme-relative, so the canonical result must be single-origin too.
+  if (url.pathname.startsWith('//')) return DEFAULT_RETURN
   const path = url.pathname + url.search
   // Never bounce back into the auth routes or the sign-in page (login loops).
   if (url.pathname.startsWith('/api/auth/') || url.pathname === '/login') return DEFAULT_RETURN
@@ -127,12 +132,17 @@ export async function beginLogin(
   const state = b64url(randomBytes(32))
   const nonce = b64url(randomBytes(32))
   const verifier = b64url(randomBytes(48))
-  pendingLogins.set(state, {
+  const pending = {
     verifier,
     nonce,
     returnTo: safeReturnTo(returnTo, cfg.appOrigin),
     expiresAt: now + LOGIN_TTL_MS,
-  })
+  }
+  const store = durableState()
+  if (store) {
+    const key = stateKey(cfg, 'login', state)
+    await store.transaction(key, (tx) => tx.write(key, pending, pending.expiresAt))
+  } else pendingLogins.set(state, pending)
   const url = new URL(d.authorization_endpoint)
   url.search = new URLSearchParams({
     client_id: cfg.clientId,
@@ -161,8 +171,22 @@ export async function completeLogin(
   params: { code: string; state: string; cookieState: string | undefined },
   now = Date.now(),
 ): Promise<{ tokens: Tokens; returnTo: string }> {
-  const pending = pendingLogins.get(params.state)
-  pendingLogins.delete(params.state) // single use, whatever happens next
+  const store = durableState()
+  let pending: PendingLogin | undefined
+  // Check the browser binding before consuming a state, preventing unauthenticated state burning.
+  if (!params.cookieState || params.cookieState !== params.state)
+    throw new OidcError('invalid', 'unknown, expired or unbound login state')
+  if (store) {
+    const key = stateKey(cfg, 'login', params.state)
+    pending = await store.transaction(key, async (tx) => {
+      const value = await tx.read<PendingLogin>(key)
+      await tx.removeFamily(key)
+      return value
+    })
+  } else {
+    pending = pendingLogins.get(params.state)
+    pendingLogins.delete(params.state)
+  }
   if (
     !pending ||
     pending.expiresAt < now ||
@@ -306,7 +330,7 @@ export async function verifyIdToken(
   const name = [claims.name, claims.preferred_username, claims.email].find(
     (v) => typeof v === 'string' && v,
   ) as string | undefined
-  return { sub: claims.sub, name: name ?? claims.sub }
+  return { sub: claims.sub, name: name ?? 'My account' }
 }
 
 /** Test seam. */

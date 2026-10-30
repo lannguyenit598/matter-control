@@ -1,0 +1,400 @@
+{
+  "task": "MC-002-INTA-GO-STOP-INTAKE",
+  "actor": "Local Codex",
+  "utc": "2026-10-26T00:42:45.190409+00:00",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "checks": [
+    {
+      "name": "ten raw/export file paths match",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 00-identity-before.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 03-go-stderr-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 02-go-stdout-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 12-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 04-ledger-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 01-ledger-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 10-stop-record.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 05-go-stdout-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 06-go-stderr-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact raw/export 30-hashes.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "nine payloads excluding manifest",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 00-identity-before.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 01-ledger-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 02-go-stdout-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 03-go-stderr-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 04-ledger-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 05-go-stdout-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 06-go-stderr-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 10-stop-record.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 12-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "56 before/after equal accepted stage6",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger exact same file set",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash assertions/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-01.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-02.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-03.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-04.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T10.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T11a.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T11b.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T11c.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T4.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T5.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T6-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T7-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T8.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W11.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage1.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage2.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage3.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage4.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage5.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage6.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-01.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-02.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-03.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-04.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T10.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T11a.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T11b.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T11c.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T4.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T5.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T6-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T7-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T8.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W11.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage6 counter26 assertions22 Xunknown no stage7/T12",
+      "result": "PASS"
+    },
+    {
+      "name": "stdout before equals stage6 after",
+      "result": "PASS"
+    },
+    {
+      "name": "append only 4438 to4636 two lines",
+      "result": "PASS"
+    },
+    {
+      "name": "two ordered graceful shutdown messages",
+      "result": "PASS"
+    },
+    {
+      "name": "timestamps in recorded signal window",
+      "result": "PASS"
+    },
+    {
+      "name": "stderr before/after empty",
+      "result": "PASS"
+    },
+    {
+      "name": "stop record discloses missing wait exit status",
+      "result": "PASS"
+    },
+    {
+      "name": "all fixture markers absent from Go snapshots",
+      "result": "PASS"
+    },
+    {
+      "name": "limited secret literals absent excluding scan declarations",
+      "result": "PASS"
+    },
+    {
+      "name": "pinned clean source /tmp/mc002-inta-be",
+      "result": "PASS"
+    },
+    {
+      "name": "pinned clean source /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "pinned clean source /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "binary hash unchanged",
+      "result": "PASS"
+    }
+  ],
+  "sources": {
+    "/tmp/mc002-inta-be": {
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "clean": true
+    },
+    "/tmp/mc002-inta-fe": {
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "clean": true
+    },
+    "/tmp/mc002-inta-harness": {
+      "head": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+      "clean": true
+    }
+  },
+  "python": "3.14.4 (v3.14.4:23116f998f6, Apr  7 2026, 09:45:22) [Clang 17.0.0 (clang-1700.6.4.2)]",
+  "rtk": "rtk 1.0.1",
+  "command": "rtk proxy python3 /tmp/mc-inta-go-stop-intake.py",
+  "script_sha256": "58bc1b4616a4b47507cb5cf55f5ac7bc514d0bf6ad4d647ac5d257752a3ef242",
+  "limits": [
+    "Signal/process observation record is owner-authored, not raw shell transcript",
+    "No directly captured Go wait exit status",
+    "No runtime request, SQL, lifecycle, provider dispatch or commit by Codex",
+    "Pattern scan is not a complete secret audit"
+  ]
+}

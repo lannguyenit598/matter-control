@@ -1,0 +1,152 @@
+{
+  "task": "MC-BE02-N1-DELTA-REVIEW-R2",
+  "deliverable": "review-inputs (pin verification record)",
+  "priority": "P0",
+  "status": "READ_HASH_STATIC_ONLY",
+  "generated_at_utc": "2026-10-26T14:49:46Z",
+  "reviewer": {
+    "identity": "OpenCode (agent harness)",
+    "model": "DeepSeek V4.1 Flash Free",
+    "provider": "opencode",
+    "role": "independent nonauthor reviewer",
+    "independence_note": "Reviewed delta response authored by Local Codex; reviewed N1 package authored by Local Codex. This reviewer authored none of the reviewed content. No provider/model/account change, login, paid route or external messaging was initiated by this task."
+  },
+  "mode": {
+    "name": "READ_HASH_STATIC_ONLY",
+    "constraints": [
+      "no execution/import of reviewed code, reference model, scanner or suite",
+      "no tests/build/server/DB/HTTP/SQL/credentials/process/container/probes",
+      "no source import or source read-set expansion",
+      "no Git mutation, no index/security-state change, no canonical contract edit",
+      "no provider call, login or external messaging",
+      "read/hash/JSON/codepoint utilities only"
+    ]
+  },
+  "repository": {
+    "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head_at_review": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "prepared_base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "head_matches_prepared": true,
+    "working_tree_note": "pre-existing dirty/untracked tree was not modified by this task; only the three declared outputs were created"
+  },
+  "environment": {
+    "os": "darwin (macOS 27.0.1)",
+    "shell_proxy": "rtk 1.0.1",
+    "python": "3.14.4",
+    "semble": "/Users/nguyenvanlan/.local/bin/semble (binary and CLI checked; no semantic content search run to preserve the fixed read set)"
+  },
+  "intake_manifest": {
+    "path": "docs/testing/parallel-review-intake-20261026/be02-delta-inputs.json",
+    "bytes": 3047,
+    "sha256": "8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd",
+    "prepared_by": "Local Codex",
+    "status": "READY_NOT_DISPATCHED",
+    "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "runtime_or_credential_access": false,
+    "external_invocation": false,
+    "transitive_manifests": []
+  },
+  "verification_passes": [
+    {
+      "pass": 1,
+      "phase": "pre-review",
+      "at_utc": "2026-10-26T14:41Z (approx.; first verification invocation, not separately timestamped)",
+      "result": {
+        "intake_manifest": { "bytes_match": true, "sha256_match": true },
+        "direct_inputs": { "count": 14, "all_match": true },
+        "overall_all_match": true
+      }
+    },
+    {
+      "pass": 2,
+      "phase": "pre-write",
+      "at_utc": "2026-10-26T14:45:20Z",
+      "result": {
+        "intake_manifest": { "bytes": 3047, "sha256": "8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd", "match": true },
+        "direct_inputs": { "count": 14, "all_match": true },
+        "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+        "branch": "codex/unified-project-flow",
+        "output_paths_absent": true,
+        "overall_all_match": true
+      }
+    },
+    {
+      "pass": 3,
+      "phase": "post-write",
+      "at_utc": "(recorded in docs/testing/be02-n1-contract-review-r2/checks-log.json; run after this file and the review were written, before the checks-log was written)",
+      "result": { "recorded_in": "docs/testing/be02-n1-contract-review-r2/checks-log.json" }
+    }
+  ],
+  "pins": {
+    "direct_inputs": {
+      "count": 14,
+      "all_match": true,
+      "entries": [
+        { "path": "AGENTS.md", "bytes": 8886, "sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb", "match": true },
+        { "path": "docs/reviews/be02-n1-opencode-contract-review-r1.md", "bytes": 29144, "sha256": "3f0f8cb79cdd815822c0e4c1636696989bb4af3a6cfdc1a08abffa15112553da", "match": true },
+        { "path": "docs/testing/be02-n1-contract-review-r1/review-inputs.json", "bytes": 15171, "sha256": "f3783d96d235dba13c0bce48526bc295e6e7c818e146f6c0846bfb03fc124ad0", "match": true },
+        { "path": "docs/testing/be02-n1-contract-review-r1/checks-log.json", "bytes": 8371, "sha256": "b4558557cfcc8775abbda9cdda8108b14399147e308350921d4214a77ee42801", "match": true },
+        { "path": "docs/reviews/be02-n1-targeted-author-response-r1.md", "bytes": 6748, "sha256": "b146b0bb5b876fb2cbff7e3225d77a1d152656a2f82655cc97bf6de8d60db089", "match": true },
+        { "path": "docs/testing/parallel-review-intake-20261026/unicode-c14-clarification.json", "bytes": 1556, "sha256": "2f197468c8eca77a4545fa109ae1e25d78d53d255b69af89e0b5bf11142541ab", "match": true },
+        { "path": "docs/design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/vectors.json", "bytes": 8673, "sha256": "1277c5e02f6d5d6e5ddb1f8531c3128bda36b8238092940b7cef27d61d0e614b", "match": true },
+        { "path": "docs/design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/recommendation.md", "bytes": 14401, "sha256": "ead64d2e73f029640f65c1794972a761b93f524fdf1335f8c1d1eb1ced398e20", "match": true },
+        { "path": "docs/design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/reference_check.py", "bytes": 7656, "sha256": "60600a3b72001e6bf8649865922276f1b782d8a35a1358db7098793b747fb238", "match": true },
+        { "path": "docs/reviews/be02-codex-correction-return.md", "bytes": 14522, "sha256": "0184448afc818479e199fb2c9c727bf6e810361b19091b92ebf53e87be106afb", "match": true },
+        { "path": "docs/architecture/backend-http-preparation.md", "bytes": 14177, "sha256": "542d3e6fa900051b489847adbe9d75e4278db89352b580c7209948f75d221531", "match": true },
+        { "path": "docs/architecture/api-contracts.md", "bytes": 25038, "sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75", "match": true },
+        { "path": "docs/architecture/filing-model.md", "bytes": 7652, "sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd", "match": true },
+        { "path": "docs/implementation/handoffs/MC-BE02-N1-DELTA-REVIEW-R2-OPENCODE-PROMPT.md", "bytes": 3131, "sha256": "b590e2f5e536ae0779858c2e36f51ba6c4f378a150cc3b61fe7fc5dc804a7a1f", "match": true }
+      ]
+    }
+  },
+  "preserved_artifacts": [
+    { "path": "docs/reviews/be02-n1-opencode-contract-review-r1.md", "bytes": 29144, "sha256": "3f0f8cb79cdd815822c0e4c1636696989bb4af3a6cfdc1a08abffa15112553da", "note": "original R1 report preserved byte-identical; C-A erratum published in the R2 review, not rewritten here" },
+    { "path": "docs/testing/be02-n1-contract-review-r1/review-inputs.json", "bytes": 15171, "sha256": "f3783d96d235dba13c0bce48526bc295e6e7c818e146f6c0846bfb03fc124ad0", "note": "R1 input record preserved" },
+    { "path": "docs/testing/be02-n1-contract-review-r1/checks-log.json", "bytes": 8371, "sha256": "b4558557cfcc8775abbda9cdda8108b14399147e308350921d4214a77ee42801", "note": "R1 checks log preserved" },
+    { "path": "docs/reviews/be02-n1-targeted-author-response-r1.md", "bytes": 6748, "sha256": "b146b0bb5b876fb2cbff7e3225d77a1d152656a2f82655cc97bf6de8d60db089", "note": "author delta response preserved; not repaired or edited" }
+  ],
+  "read_set": {
+    "declared_count": 14,
+    "declared_only": true,
+    "manifest_read_as_gate": true,
+    "reference_code_executed": false,
+    "reviewed_reference_checks_rerun": false,
+    "overshoot_note": "One grep scoped to docs/architecture returned four matching lines from two files outside the declared input set: docs/architecture/api-auth-decision-analysis.md:254 and docs/architecture/integration-scope-proposal.md:75/121/140. Those lines were not used as evidence, not cited, and no further reads of those files were made. The hash-verified 14-input set is unchanged.",
+    "semble_note": "Semble binary present and CLI-responsive; no semantic content search was run because it would read beyond the fixed 14-input set. This is a deliberate read-set restriction, not a tool failure."
+  },
+  "c14_evidence_summary": {
+    "source": "docs/design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/vectors.json",
+    "source_sha256": "1277c5e02f6d5d6e5ddb1f8531c3128bda36b8238092940b7cef27d61d0e614b",
+    "input_keys_codepoints": ["U+1F600", "U+E000"],
+    "input_keys_utf8_hex": ["f09f9880", "ee8080"],
+    "input_keys_utf16be_hex": ["d83dde00", "e000"],
+    "expected_utf8_hex": "7b22ee8080223a322c22f09f9880223a317d",
+    "expected_sha256": "cddbdeacace14eb6923e88dfafb2a3e7df21ec908682f50a886b7b9567692d02",
+    "scalar_order_matches_expected": true,
+    "utf16_order_matches_expected": false,
+    "utf8_byte_order_matches_expected": true,
+    "utf8_byte_order_equivalent_to_scalar_for_valid_utf8": true,
+    "clarification_assertions_verified": 4,
+    "clarification_assertions_total": 4,
+    "reviewed_reference_code_executed": false
+  },
+  "outputs": [
+    {
+      "path": "docs/reviews/be02-n1-opencode-delta-review-r2.md",
+      "bytes": 36909,
+      "sha256": "68d43d9221ebb80f2d5fc25ed54c68f120e3d403c2aa2d0da6d813fea2db047f"
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r2/review-inputs.json",
+      "bytes": null,
+      "sha256": "(self-hash excluded from this file; recorded in checks-log.json)"
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r2/checks-log.json",
+      "bytes": null,
+      "sha256": "(self-hash excluded from its own content; reported in the completion report)"
+    }
+  ],
+  "input_refresh_conclusion": "All 14 declared inputs and the intake manifest matched expected bytes and sha256 at the pre-review and pre-write passes; the post-write pass is recorded in checks-log.json. No pin mismatch occurred; NEEDS_INPUT_REFRESH was never triggered."
+}

@@ -1,0 +1,69 @@
+{
+  "reviewer": "Actual OpenCode (independent nonauthor; opencode CLI 2.1.4, model opencode/glm-5.3-flash-free)",
+  "task": "MC-002-INTA-FE-VALIDATION-R2-SOURCE-REVIEW (prompt: docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R2-SOURCE-REVIEW-PROMPT.md)",
+  "utc": "2026-10-26T07:37:34Z session start of pin capture",
+  "workspace": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "branch": "codex/unified-project-flow",
+  "head_verified": "a62d838791ba188838c4ff00b7b6e265ac775056 (unchanged during review)",
+  "observation_mode": "READ/HASH/STATIC ONLY; no wrapper/evaluator/selfcheck/launcher/Next/observer/build/driver execution; no network/socket/probe/signal/SQL/Docker/private access; reviewer runtime NOT_RUN",
+  "inputs_hash_verified_by_reviewer": [
+    {"path": "AGENTS.md", "sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb"},
+    {"path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R2-SOURCE-REVIEW-PROMPT.md", "sha256": "0b364a17693d89aac452a4506ca6543e347585aa2a71aeaf21e0588299c3c5f5"},
+    {"path": "docs/testing/inta-fe-validation-r2-intake/review-inputs.json", "sha256": "a35d7cc1402b1cf3c64336d603327e7e39746832c097eeabff12df2abaddb965"},
+    {"path": "docs/testing/inta-fe-validation-r2-intake/checks.json", "sha256": "55d4680cecacdc128ed9e0e89ee96b1799f920e41575e7ab24516e6acb18f80c", "pin_match": true},
+    {"path": "docs/testing/inta-fe-validation-r2-intake/owner-test-scope.json", "sha256": "e95cf70295dfa9b27818bd612da3a56283c81769f99b34aafe05fc4efe8d612f", "note": "defines Codex owner-test scope; its internal selfcheck-r2-results.json pin (19235B/11b546d8…) describes the pre-final 26-case generation"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r2-20261026/runner-scripts/selfcheck-r2-results.json", "bytes": 21628, "sha256": "67214fb94ebc5b03183ea2874a3414419a013379fc87dcfab97b206e084b835d", "contents_spot_check": "29 caseId records, 0 'pass': false"},
+    {"path": "docs/testing/inta-fe-validation-r2-intake/pure-evaluator-probes.json", "sha256": "b39d6408b2c33f0c4c144ee4125fde7e1407bbdd39d9eaa5b37b22bebf71cea3", "pin_match": true},
+    {"path": "docs/testing/inta-fe-validation-r2-intake/actual-coordinator-mocked-probes.json", "sha256": "b9719aea5417efc48bfa45ed05faec5fe78c21d43bda5bd6c6ec702c1171a9b6", "pin_match": true},
+    {"path": "docs/reviews/inta-fe-validation-r2-intake.md", "sha256": "50341469fef36553c2a3d2a40ddfc519b64e2f86ac8d48429bbd921293933489", "pin_match": true},
+    {"path": "docs/reviews/inta-fe-validation-r2-antigravity-return.md", "sha256": "9d37f01c327a5b1855e1be433cc5cc9bc6340dd404cac2cebf281ea99f0d71c6", "pin_match": false, "pin_note": "review-inputs.json pinned 8ecd4723b6c4936d596393091cf61aa694b8ab071c96a6e48d7b8c8e5c1b6143 / 15925B at Codex intake time 07:24:17Z; doc now 16917B, mtime 2026-10-26T07:29:34Z — later final owner revision; supersedes earlier partial revision linearly, no contradiction found in content"},
+    {"path": "docs/reviews/inta-opencode-closeout-review-r1.md (defines R1-C01..C04)", "sha256": "11d7994b1625f2fca262bc9e725c4ec56f9847d14be37d890f5fb902e9cb6ee5", "pin_match": true},
+    {"path": "docs/implementation/handoffs/MC-002-INTA-FE-VALIDATION-R2-ANTIGRAVITY-PROMPT.md", "sha256": "925445a1952cbc476caf0c1376ea41fbc4a0b80c00e3525b338cae75bdf5bd8d", "pin_match": true},
+    {"path": "docs/implementation/inta-launch-contract-addendum.md", "sha256": "627f2b696ff946afc6bfec3e3f54dca3d1b1088c64aa0ecbe38cba95f3aa6c40", "pin_match": true},
+    {"path": "docs/testing/inta-launch-approval-20261026/approval.json", "sha256": "4c13d46dc4952bc6b4068788f178f65288106063a0aae810cc2b8a80e4860d77", "pin_match": true}
+  ],
+  "r2_payloads_verified": {
+    "manifest_path": "docs/testing/inta-returns/frontend/validation-r2-20261026/manifest.json",
+    "manifest_live_sha256": "55516b48fa9fafac111353eba26a867d15d4431ff83ef3d9964f4d7083746b54",
+    "manifest_live_bytes": 2922,
+    "manifest_pin_note": "review-inputs.json pinned manifest.json 2841B/be4ae8d2d9b4b0c16f16ebd7e3555aeb08617192949847dd9cbd8dbecd6a8db0 (Codex intake 07:24:17Z); live file mtime 2026-10-26T07:28:26Z. Iterative packet-generation erratum; current manifest is internally consistent and is the review basis.",
+    "payload_count": 15,
+    "payload_bytes_total": 131584,
+    "payload_bytes_note": "Sum independently recomputed: manifest declares 131584 ('131,584 excluding manifest itself' in owner doc) and on-disk 15 payload byte counts sum to 131584 exactly. The task/Intake statements '15payloads/123515bytes' and owner-test-scope reported_pass=26 / results 19235B pin describe the earlier pre-final packet generation; they do not describe the current exported set.",
+    "all_payload_hashes_match_manifest": true,
+    "raw_export_byte_equality": true,
+    "raw_dir": "/tmp/mc002-inta-evidence/frontend/validation-r2-20261026 (all 16 files hash-identical to repo export)",
+    "payloads": [
+      {"path": "credential-pattern-scan-r2.json", "bytes": 260, "sha256": "125b4ecbdec0c8565aa19379e6c95f8ee6b614909881090c863a428d87e695c6"},
+      {"path": "diffs/guard-validator.diff", "bytes": 13290, "sha256": "37db7a9f9313a95849d72215fdfdc9f3597f835bdc769cc6023e594ac8a0d519"},
+      {"path": "diffs/guard_evaluator.diff", "bytes": 13464, "sha256": "60b65f6d3c16f13140e3b335d7184cf73f9575976da30131aae4afc4b58c55be"},
+      {"path": "launcher/harness-dev.mjs", "bytes": 3874, "sha256": "55c7e0ee6745a6946bac6f95862c2527294406cc99b2dda514f083ea5a0ae086"},
+      {"path": "launcher/test-launcher-mock.mjs", "bytes": 8085, "sha256": "44a4a3c2c2b253bf148abb9e6658b326c1b20d1679f53ebe5d70cace982fc927"},
+      {"path": "proposals/dependency-isolation-plan-r2.md", "bytes": 4477, "sha256": "1f3e5f7e3e291cacbf8f3a075d35d0a6bfcfc85d7de89bead138af03fdeba4c8"},
+      {"path": "proposals/pre-listen-launcher-proposal-r2.md", "bytes": 6934, "sha256": "f7292697369df7253744aaf192367f3f7e0c40c09d57ae843923a1f9c8f9fa6c"},
+      {"path": "r2-test-summary.json", "bytes": 2104, "sha256": "f7dbb3d81f3eea0d9fbb80f3062a6c0172044e2e60da38b71b6fd9c54ae2f856"},
+      {"path": "runner-scripts/coordinator.py", "bytes": 12296, "sha256": "c997e411460ecef6fbbaf8930922e475ba8f597583a5a1ff0f20596fa3fa5dd9"},
+      {"path": "runner-scripts/guard-validator-r2.sh", "bytes": 1907, "sha256": "a8cc64649cb05a43ba818fdf676ea0160b0ae7d0d627ebbcf77494d29742a53b"},
+      {"path": "runner-scripts/guard_evaluator.py", "bytes": 6626, "sha256": "46a9da54909da612d1016f7c8e8ad038718ee0701d9f4969588a9b35e350e3fa"},
+      {"path": "runner-scripts/observer.py", "bytes": 5749, "sha256": "018ea7789991726cad61a668bb5d9bc0517c17986129ea315f9599cd58e0f706"},
+      {"path": "runner-scripts/selfcheck-r2-results.json", "bytes": 21628, "sha256": "67214fb94ebc5b03183ea2874a3414419a013379fc87dcfab97b206e084b835d"},
+      {"path": "runner-scripts/selfcheck-r2.py", "bytes": 27709, "sha256": "3c70aec2b42cdfb66a115f93852ec387a7ef3e113a3bece76da6464fcc32f340"},
+      {"path": "selfcheck-r2.stdout.txt", "bytes": 3181, "sha256": "c432f47da16951e1a8f7d7ec571778a8a6a1c1e0f555ee92108896d0bd9fc254"}
+    ]
+  },
+  "frozen_source_pins_read_only": [
+    {"path": "/tmp/mc002-inta-harness", "head": "48cc03e949d66fc47a7d304413621eb79804e6c1", "status": "clean (0 dirty files)", "guards_ts_sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928"},
+    {"path": "tools/inta-harness/src/guards.ts (imported copy)", "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928", "equals_frozen": true},
+    {"path": "/tmp/mc002-inta-fe", "head": "3e5a642479acb789eb210e73fba956f3e85082e3", "status": "clean (0 dirty files)"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/guard-validator-r1.sh (diff base)", "sha256": "104abf3fd2317095d69205ec63501f9e02f5040cf32d23a55bca60a491b9e55e", "matches_r1_closeout_pin": true},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/guard_evaluator.py (diff base)", "sha256": "d018f68f969ee08468c224c695fa37a5b9d646d24add114c7dd5636643a5737b", "matches_r1_closeout_pin": true},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/selfcheck-r1.py", "sha256": "f9432142802927fa3fd9f8a9b7268e6a047980b28ad38c879343dc2c52244827", "matches_r1_closeout_pin": true}
+  ],
+  "semble_usage": "Semble search executed first for code exploration: 'guards.ts validateHarnessStartup startup guard refusal' --content code at repo root; returned tools/inta-harness/src/guards.ts:92-114, tools/inta-harness/next.config.ts:1-10 (guard executes at config load), docs/...closeout-readiness/source-pins/harness-guards.ts. Semble availability confirmed at /Users/nguyenvanlan/.local/bin/semble.",
+  "frozen_harness_state_context": "tools/inta-harness imported snapshot present; MC_INTA_STATE_DIR consumers located: tools/inta-harness/src/driver.ts:208, tools/inta-harness/src/request-id.ts:33 (fallback cwd/.run-state).",
+  "manifest_self_hash_excluded": true,
+  "outputs": {
+    "review": "docs/reviews/inta-opencode-fe-r2-source-review.md",
+    "evidence_dir": "docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/"
+  }
+}

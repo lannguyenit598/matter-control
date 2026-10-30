@@ -1,0 +1,40 @@
+{
+  "actor": "Actual OpenCode (independent nonauthor reviewer)",
+  "identity": {
+    "cli": "opencode v2.1.4 (verified via `opencode --version`, exit 0)",
+    "model": "opencode/glm-5.3-flash-free",
+    "independence": "This session authored none of the reviewed R2 source, intake or evidence files; R2 packet executor is Actual Antigravity (Gemini 3.8 Flash High) per manifest.json; Codex produced intake verification only."
+  },
+  "utc_window": "2026-10-26T07:36Z..T07:50Z (Asia/Ho_Chi_Minh workstation)",
+  "runtime_boundary": {
+    "reviewer_runtime_executed": false,
+    "executed_artifacts": "none",
+    "note": "No wrapper/evaluator/selfcheck/launcher/Next/observer/build/driver/help/status execution; no network/socket/lsof-listen probe/signal/SQL/Docker; no commit/push; no provider/model/account/global-permission change."
+  },
+  "actions": [
+    {"utc": "2026-10-26T07:36:5xZ", "cmd": "git rev-parse --abbrev-ref HEAD; git rev-parse HEAD; git status --porcelain (read-only snapshot)", "exit": 0, "result": "branch codex/unified-project-flow, HEAD a62d838791ba188838c4ff00b7b6e265ac775056 exactly as prepared; pre-existing modified/untracked governance+import files observed, none touched"},
+    {"utc": "2026-10-26T07:36-37Z", "cmd": "glob for both output paths", "result": "docs/reviews/inta-opencode-fe-r2-source-review.md and docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/ verified ABSENT before creation"},
+    {"utc": "2026-10-26T07:37:0xZ", "cmd": "rtk proxy shasum -a 256 (15 R2 payloads + manifest.json) in docs/testing/inta-returns/frontend/validation-r2-20261026/", "exit": 0, "result": "15/15 payload SHA256 match manifest entries; manifest live hash 55516b48fa9fafac111353eba26a867d15d4431ff83ef3d9964f4d7083746b54"},
+    {"utc": "2026-10-26T07:37:1xZ", "cmd": "rtk proxy shasum -a 256 of the same 16 file set at /tmp/mc002-inta-evidence/frontend/validation-r2-20261026/", "exit": 0, "result": "raw/export byte equality confirmed independently (16/16 identical hashes)"},
+    {"utc": "2026-10-26T07:37:2xZ", "cmd": "rtk proxy wc -c of 16 files", "exit": 0, "result": "sum 134506 incl. manifest 2922 → 15 payloads = 131,584 bytes exactly as manifest declares; '123515' claim in task/intake documents is stale intake-time data"},
+    {"utc": "2026-10-26T07:37:3xZ", "cmd": "rtk proxy sh -c 'cd /tmp/mc002-inta-harness && git rev-parse HEAD; git status --porcelain | wc -l; shasum -a 256 src/guards.ts; cd /tmp/mc002-inta-fe && git rev-parse HEAD; git status --porcelain | wc -l'", "exit": 0, "result": "harness 48cc03e949d66fc47a7d304413621eb79804e6c1 clean; guards.ts 0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928; fe 3e5a642479acb789eb210e73fba956f3e85082e3 clean"},
+    {"utc": "2026-10-26T07:38:0xZ", "cmd": "rtk proxy shasum -a 256 tools/inta-harness/src/guards.ts", "exit": 0, "result": "imported copy equals frozen hash 0f5f2453…"},
+    {"utc": "2026-10-26T07:38:2xZ", "cmd": "rtk proxy semble search \"guards.ts validateHarnessStartup startup guard refusal\" --content code (repo root)", "exit": 0, "result": "frozen guard located tools/inta-harness/src/guards.ts:92-114; next.config.ts:1-10 loads guard; Semble-first exploration satisfied"},
+    {"utc": "2026-10-26T07:39:1xZ", "cmd": "rtk proxy ls docs/testing/inta-returns/frontend/validation-r1-20261026/ (+runner-scripts)", "exit": 0, "result": "R1 diff-base sources located"},
+    {"utc": "2026-10-26T07:39:5xZ", "cmd": "rtk proxy shasum -a 256 of guard-validator-r1.sh / guard_evaluator.py / selfcheck-r1.py", "exit": 0, "result": "104abf3f…, d018f68f…, f9432142… — byte-match the R1 closeout review pins; diffs in R2 packet are computed against the true frozen R1 sources"},
+    {"utc": "2026-10-26T07:40:3xZ", "cmd": "rtk proxy grep -rn MC_INTA_STATE_DIR tools/inta-harness/{src,scripts} package.json", "exit": 0, "result": "src/driver.ts:208 and src/request-id.ts:33 fall back to cwd/.run-state"},
+    {"utc": "2026-10-26T07:41-44Z", "cmd": "read/hash/static review of all 15 payloads plus intake/attribution documents (see review-inputs.json pins)", "exit": 0, "result": "R2-I01..06 determinations formed from exact source lines"},
+    {"utc": "2026-10-26T07:43:0xZ", "cmd": "rtk proxy grep -c '\"caseId\"' and '\"pass\": false' on selfcheck-r2-results.json", "exit": 0, "result": "29 cases recorded, 0 fail records"},
+    {"utc": "2026-10-26T07:43:3xZ", "cmd": "rtk proxy grep -n isFinal on coordinator.py and guard_evaluator.py", "exit": 1, "exit_note": "grep exit 1 = no matches", "result": "isFinal absent from coordinator transport and evaluator — finished-lifecycle evidence never required"},
+    {"utc": "2026-10-26T07:44:0xZ", "cmd": "rtk proxy sh -c 'ls /tmp/mc002-inta-state-intamvnmoems3pd/; cd /tmp/mc002-inta-fe; shasum -a 256 -c 05-ledger-after.sha256; date -u'", "exit": 0, "exit_note": "one benign note-no-file line recorded for this command", "result": "state tree present (assertions/checkpoints/counters.json/envelopes/stages/substeps); ledger re-verify not repeated at wrong cwd — ledger verification retained as Codex-intake evidence, not re-audited inside this changed-source scope"},
+    {"utc": "2026-10-26T07:44:3xZ", "cmd": "rtk proxy opencode --version", "exit": 0, "result": "opencode v2.1.4 recorded"},
+    {"utc": "2026-10-26T07:44:5xZ", "cmd": "rtk proxy stat -f mtime of docs/reviews/inta-fe-validation-r2-antigravity-return.md and manifest.json", "exit": 0, "result": "07:29:34Z / 07:28:26Z — establishes packet-generation chronology reconciling intake pins"},
+    {"utc": "2026-10-26T07:45:0xZ", "cmd": "write docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/{review-inputs.json,checks-log.json} and docs/reviews/inta-opencode-fe-r2-source-review.md", "exit": 0, "result": "the only files this session created; manifests exclude themselves"},
+    {"utc": "2026-10-26T07:46:3..07:49:5Z", "cmd": "python3 json.loads parse validation of both output JSON files (read-only); one JSON syntax fix applied here to this log's 07:44:0xZ entry: malformed token '\"exit\": 0 with one benign note-no-file' rewritten as '\"exit\": 0, \"exit_note\": \"one benign note-no-file line recorded for this command\"'", "exit": 0, "result": "review-inputs.json parsed OK at first validation and was never inconsistent; checks-log.json parse failure reproduced (Expecting ',' delimiter line 29 col 190) and fixed; re-validation of both files recorded in the final report"}
+  ],
+  "prohibited_by_prompt_and_not_done": [
+    "execution of guard-validator-r2.sh in any form (including bash -n/help/status) — because its EXIT trap would run; nothing was executed",
+    "execution of selfcheck-r2.py, coordinator.py, launcher .mjs, Node/Next/observer; driver runs; app HTTP; lsof probes; signals; SQL; Docker; private credential access; commit/push",
+    "any mutation of author/governance files, packets, /tmp sources, ledger or state"
+  ]
+}

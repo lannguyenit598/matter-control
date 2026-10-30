@@ -1,6 +1,11 @@
 import 'server-only'
 
-import { createHash } from 'node:crypto'
+import { createHash, randomBytes } from 'node:crypto'
+
+import { oidcConfig } from '@/lib/oidc/config'
+import { durableState } from '@/lib/oidc/durable-state'
+import { withPersistentSession } from '@/lib/oidc/session-persistence'
+import { McError } from '@/lib/mc/errors'
 
 import { reconcileOutcomes, type RowOutcome } from './intent'
 import type { BulkCommitInput, ImportPlan } from './schemas'
@@ -19,6 +24,8 @@ type Slot = {
   running?: boolean
   settled?: boolean
   results?: RowOutcome[]
+  executionId?: string
+  runningUntil?: number
 }
 const g = globalThis as typeof globalThis & {
   __mcPendingTransfers?: WeakMap<object, Map<string, Slot>>
@@ -104,4 +111,99 @@ export function acknowledgeAttempt(
     return false
   slots.delete(kind)
   return true
+}
+
+type DurableIdentity = object & { sessionHandle?: string }
+const executions = new WeakMap<PendingAttempt, string>()
+
+/** Every durable update also checks the parent session under its logout lock. */
+async function withSlots<R>(session: DurableIdentity, write: boolean, body: (local: object) => R) {
+  const store = durableState()
+  if (!store) return body(session)
+  const cfg = oidcConfig()
+  if (!cfg || !session.sessionHandle) throw new McError('unauthenticated', 401)
+  const result = await withPersistentSession(
+    cfg,
+    session.sessionHandle,
+    store,
+    async (tx, key, rec) => {
+      const local = {}
+      const slots = new Map<string, Slot>()
+      for (const kind of ['bulk', 'import']) {
+        const slot = await tx.read<Slot>(`${key}:attempt:${kind}`)
+        if (slot) slots.set(kind, slot)
+      }
+      sessions.set(local, slots)
+      const value = body(local)
+      if (write) {
+        for (const kind of ['bulk', 'import']) {
+          const slot = slots.get(kind)
+          const slotKey = `${key}:attempt:${kind}`
+          if (slot) await tx.write(slotKey, slot, rec.createdAt + cfg.absoluteMs)
+          else await tx.removeFamily(slotKey)
+        }
+      }
+      return { value }
+    },
+  )
+  if (!result) throw new McError('unauthenticated', 401)
+  return result.value
+}
+
+export async function beginAttemptAsync(session: DurableIdentity, proposed: PendingAttempt) {
+  if (!durableState()) return beginAttempt(session, proposed)
+  return withSlots(session, true, (local) => {
+    const slots = attemptSlots(local)
+    const slot = slots.get(proposed.kind)
+    // Only an explicit retry enters here. A crashed dispatcher retains the SAME payload/keys.
+    if (slot?.running && slot.runningUntil && slot.runningUntil <= Date.now()) slot.running = false
+    const attempt = beginAttempt(local, proposed)
+    if (attempt) {
+      const id = randomBytes(16).toString('hex')
+      const current = slots.get(proposed.kind)!
+      current.executionId = id
+      current.runningUntil = Date.now() + 90_000
+      executions.set(attempt, id)
+    }
+    return attempt
+  })
+}
+
+export async function endAttemptAsync(
+  session: DurableIdentity,
+  attempt: PendingAttempt,
+  results?: RowOutcome[],
+) {
+  if (!durableState()) return endAttempt(session, attempt, results)
+  return withSlots(session, true, (local) => {
+    const slot = attemptSlots(local).get(attempt.kind)
+    if (
+      !slot?.attempt ||
+      slot.executionId !== executions.get(attempt) ||
+      identity(slot.attempt) !== identity(attempt)
+    )
+      return
+    // The durable copy has a different object identity after deserialization.
+    slot.attempt = attempt
+    endAttempt(local, attempt, results)
+    delete slot.executionId
+    delete slot.runningUntil
+  })
+}
+
+export async function attemptSlotsAsync(session: DurableIdentity) {
+  return withSlots(session, false, (local) => attemptSlots(local))
+}
+
+export async function revokeAttemptsAsync(session: DurableIdentity, matterId: string) {
+  return withSlots(session, true, (local) => revokeAttempts(local, matterId))
+}
+
+export async function acknowledgeAttemptAsync(
+  session: DurableIdentity,
+  kind: 'bulk' | 'import',
+  matterId: string,
+  key: string,
+) {
+  return withSlots(session, true, (local) => acknowledgeAttempt(local, kind, matterId, key))
 }

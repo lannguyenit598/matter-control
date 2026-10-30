@@ -1,0 +1,656 @@
+{
+  "task": "MC-002-INTA-STAGE7-INTAKE",
+  "actor": "Local Codex",
+  "utc": "2026-10-26T00:52:14.512808+00:00",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "checks": [
+    {
+      "name": "19 raw/export paths identical",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 06-state-delta.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 10-driver.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 04-next-stdout-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 12-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 01-ledger-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 05-ledger-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 03-go-stderr-stopped-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 10-driver.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 00-driver-meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 30-hashes.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export 02-go-stdout-stopped-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/substeps/T12.status",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/stages/stage7.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "exact byte export state-copy/envelopes/T12.json",
+      "result": "PASS"
+    },
+    {
+      "name": "18 payload entries manifest excluded",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 00-driver-meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 01-ledger-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 02-go-stdout-stopped-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 03-go-stderr-stopped-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 04-next-stdout-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 05-ledger-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 06-state-delta.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 10-driver.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 10-driver.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 12-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/T12.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/stages/stage7.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/T12.status",
+      "result": "PASS"
+    },
+    {
+      "name": "56 before equal stage6 and stop manifests",
+      "result": "PASS"
+    },
+    {
+      "name": "56to59 three new three modified none removed",
+      "result": "PASS"
+    },
+    {
+      "name": "59 live paths match manifest",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash assertions/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash checkpoints/intamvnmoems3pd/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-01.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-02.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-03.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/INT-PERS-04.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T10.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T11a.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T11b.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T11c.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T12.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T4.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T5.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T6-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T7-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T8.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/T9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W11.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash envelopes/intamvnmoems3pd/W9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage1.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage2.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage3.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage4.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage5.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage6.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash stages/intamvnmoems3pd/stage7.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-01.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-02.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-03.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/INT-PERS-04.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T10.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T11a.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T11b.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T11c.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T12.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T4.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T5.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T6-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T7-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T8.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/T9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W11.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger hash substeps/intamvnmoems3pd/W9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy substeps/T12.status",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy stages/stage7.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "state copy envelopes/T12.json",
+      "result": "PASS"
+    },
+    {
+      "name": "single T12 envelope",
+      "result": "PASS"
+    },
+    {
+      "name": "native T12 network error complete status0",
+      "result": "PASS"
+    },
+    {
+      "name": "23 true assertions previous22 byte semantics preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "counter27",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 Xunknown B preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "checkpoint preserved checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "checkpoint preserved checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stopped Go stdout snapshot equals accepted stop and observed live",
+      "result": "PASS"
+    },
+    {
+      "name": "stopped Go stderr zero unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Next before equals stage6 after",
+      "result": "PASS"
+    },
+    {
+      "name": "observed Next appends exactly one dispatch line",
+      "result": "PASS"
+    },
+    {
+      "name": "recorded single stage7 command exit0 empty stderr",
+      "result": "PASS"
+    },
+    {
+      "name": "23 logical envelope files 27 unique request attempts",
+      "result": "PASS"
+    },
+    {
+      "name": "unique request sequence1through27",
+      "result": "PASS"
+    },
+    {
+      "name": "26 Go request rows unique and T12 absent",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T1-1",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T2-2",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-W1-3",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-W2-4",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T3-5",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T4-6",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T4-7",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T5-8",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T5-9",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T8-10",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T8-11",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-W3-12",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T6-W-13",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T7-W-14",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-INT-PERS-01-15",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-INT-PERS-02-16",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T9-17",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-W9-18",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T10-19",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T10-20",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T11a-21",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T11b-22",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-T11c-23",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-W11-24",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-INT-PERS-03-25",
+      "result": "PASS"
+    },
+    {
+      "name": "one Go row mc-int-intamvnmoems3pd-INT-PERS-04-26",
+      "result": "PASS"
+    },
+    {
+      "name": "fixture markers absent in retained application logs",
+      "result": "PASS"
+    },
+    {
+      "name": "limited credential pattern scan excluding own pattern declarations",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned source /tmp/mc002-inta-be",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned source /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned source /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "same binary hash",
+      "result": "PASS"
+    }
+  ],
+  "sources": {
+    "/tmp/mc002-inta-be": {
+      "head": "52b60a4617081c41b949f2242e1784238c170f75",
+      "clean": true
+    },
+    "/tmp/mc002-inta-fe": {
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "clean": true
+    },
+    "/tmp/mc002-inta-harness": {
+      "head": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+      "clean": true
+    }
+  },
+  "python": "3.14.4 (v3.14.4:23116f998f6, Apr  7 2026, 09:45:22) [Clang 17.0.0 (clang-1700.6.4.2)]",
+  "rtk": "rtk 1.0.1",
+  "command": "rtk proxy python3 /tmp/mc-inta-stage7-intake.py",
+  "script_sha256": "f08835b80b1840b6608045f0a79568077c2cc655084400a0ecd576f2545055b4",
+  "limits": [
+    "No stage or request replay, SQL, private config, lifecycle or provider invocation",
+    "Next post-run observation is captured at Codex intake, not an owner stage7-window immutable snapshot",
+    "26 Go matches and one network attempt are not independent QA or full transport retry telemetry",
+    "Limited literal scan is not a full secret-value/egress audit"
+  ]
+}

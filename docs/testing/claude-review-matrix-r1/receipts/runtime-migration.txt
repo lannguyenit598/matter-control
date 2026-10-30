@@ -1,0 +1,3 @@
+UTC 2026-10-29T10:03:39Z: pg_dump -Fc of mc_p0_run (private, mode 0600) then mcapi migrate -> version 8 0008_review_matrix.sql applied (35.7 ms) on the retained DB, with the human go-ahead.
+Before: version 7, 2 matters, 0 document versions, no review tables. Rollback: goose down 0008 drops only the 5 review_* tables; the dump restores the earlier state.
+API: old process (mcapi-new) stopped with SIGTERM (my own PID); new binary mcapi-review (sha256 prefix 594e2c8a756066b7) started: healthz 200, readyz 200, missing bearer 401.

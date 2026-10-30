@@ -1,7 +1,7 @@
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
-import { ListChecks } from 'lucide-react'
+import { ListChecks, ChevronRight, ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { buttonVariants } from '@/components/atoms/button'
@@ -155,9 +155,10 @@ export function WorkGrid({
                     />
                     <Link
                       href={withFrom(`/matters/${matterId}/work/${e.item.id}`, here)}
-                      className="w-fit text-xs underline"
+                      className="inline-flex w-fit items-center gap-1 text-xs underline"
                       aria-label={`Open details of ${e.item.title}`}
                     >
+                      <ArrowUpRight aria-hidden className="size-4 shrink-0" />
                       <LocalizedText en="Open details" vi="Mở chi tiết" />
                     </Link>
                   </div>
@@ -198,6 +199,7 @@ export function WorkGrid({
         <div>
           <Link href={nextHref} className={buttonVariants({ variant: 'outline' })}>
             <LocalizedText en="Next page" vi="Trang tiếp" />
+            <ChevronRight aria-hidden />
           </Link>
         </div>
       )}

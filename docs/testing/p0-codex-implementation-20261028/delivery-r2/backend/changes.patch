@@ -1,0 +1,658 @@
+--- a/apps/backend/api.http
++++ b/apps/backend/api.http
+@@ -117,3 +117,22 @@
+ ### Export the matter (xlsx|csv; rights rechecked at retrieval)
+ GET {{mc}}/api/v1/matters/REPLACE_WITH_MATTER_ID/export?format=csv
+ Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
++
++
++### Invalid whole import: missing rowkey column => 400 urn:mc:bad-request, no writes.
++### Detail: spreadsheet cannot be read; check the format, required columns and upload limits
++POST {{mc}}/api/v1/matters/REPLACE_WITH_MATTER_ID/import/preview
++Authorization: Bearer REPLACE_WITH_ACCESS_TOKEN
++Content-Type: multipart/form-data; boundary=mc-invalid-import
++
++--mc-invalid-import
++Content-Disposition: form-data; name="format"
++
++csv
++--mc-invalid-import
++Content-Disposition: form-data; name="file"; filename="invalid.csv"
++Content-Type: text/csv
++
++kind,title
++ACTION,Synthetic task
++--mc-invalid-import--
+--- a/apps/backend/docs/api.md
++++ b/apps/backend/docs/api.md
+@@ -222,3 +222,27 @@
+ Common headers: `Authorization: Bearer` (verified principal), `Idempotency-Key` (UUIDv7, receipted
+ commands), `If-Match` (strong ETag → revision CAS on the catalogue's CAS-scoped writes),
+ `MC-As-Of` / `MC-Source-Revision` response provenance.
++
++
++W6 receipt replay checks current read access to the receipt's saved workspace and every
++represented Matter before comparing or exposing its outcome. A reused row key must retain
++its operation, Matter and complete row intent; import intent also retains its source name
++and source row key. Incompatible reuse is a per-row `key-reuse` failure. Revoked saved scope
++produces `hidden` (bulk) or `not-found` (import), without the saved item, revision or hash.
++
++Bulk row and import content fingerprints now encode field boundaries and absent versus
++supplied values without delimiter ambiguity; bulk fingerprints also include the row key.
++Existing receipts using earlier fingerprints fail closed with `key-reuse`. Existing import
++registry entries retain their saved hashes and fail closed with `content-conflict` when
++called with a fresh per-row idempotency key; replay across this change is not backwards compatible.
++Rows, receipts and registry hashes are preserved without automatic migration.
++Recover through authorized item readback or the own-operation receipt query with the original
++key. Do not resend an uncertain write with a new key: `UNKNOWN` still requires reconciliation.
++
++Import preview and commit reject an unreadable whole sheet with HTTP 400,
++`application/problem+json`, type `urn:mc:bad-request`, and detail
++`spreadsheet cannot be read; check the format, required columns and upload limits`.
++This includes unsupported format, malformed CSV/XLSX, an empty sheet, missing `rowkey`,
++`kind` or `title`, and a sheet over 5,000 data rows or the 8 MiB service limit. No import
++rows, edges, receipts or events are written. Row/group validation errors remain in the
++preview or per-row commit response; storage failures retain their own error classification.
+--- a/apps/backend/internal/adapter/inbound/productapi/data_server_test.go
++++ b/apps/backend/internal/adapter/inbound/productapi/data_server_test.go
+@@ -11,10 +11,17 @@
+ 	"time"
+ 
+ 	"github.com/google/uuid"
++
++	"github.com/example/userapi/internal/core/domain/matter"
+ )
+ 
+ // multipartDo posts a sheet upload (file + fields + optional plan JSON part).
+ func (e *env) multipartDo(path, token, csv string, plan string) resp {
++	e.t.Helper()
++	return e.multipartSheetDo(path, token, "csv", csv, plan)
++}
++
++func (e *env) multipartSheetDo(path, token, format, content, plan string) resp {
+ 	e.t.Helper()
+ 	var buf bytes.Buffer
+ 	mw := multipart.NewWriter(&buf)
+@@ -22,9 +29,9 @@
+ 	if err != nil {
+ 		e.t.Fatal(err)
+ 	}
+-	_, _ = fw.Write([]byte(csv))
++	_, _ = fw.Write([]byte(content))
+ 	_ = mw.WriteField("sourceName", "counsel.csv")
+-	_ = mw.WriteField("format", "csv")
++	_ = mw.WriteField("format", format)
+ 	if plan != "" {
+ 		_ = mw.WriteField("plan", plan)
+ 	}
+@@ -203,3 +210,68 @@
+ 	e.expect(e.do("GET", base+"/brief?t1="+t1, "t-carol", nil, ""), 400, "urn:mc:bad-request")
+ 	e.expect(e.do("GET", base+"/brief?t1="+t1+"&t2="+t2, "t-ghost", nil, ""), 403, "urn:mc:forbidden")
+ }
++
++func TestImport_WholeSheetFailureIsBadRequest(t *testing.T) {
++	for _, tc := range []struct{ name, format, content string }{
++		{"empty", "csv", ""}, {"missing rowkey", "csv", "kind,title\nACTION,T\n"}, {"missing kind", "csv", "rowkey,title\nR1,T\n"}, {"missing title", "csv", "rowkey,kind\nR1,ACTION\n"},
++		{"malformed csv", "csv", "rowkey,kind,title\n\"unterminated"}, {"malformed xlsx", "xlsx", "private-invalid-workbook-content"},
++		{"unsupported format", "txt", "rowkey,kind,title\n"}, {"rows", "csv", "rowkey,kind,title\n" + strings.Repeat("R,ACTION,T\n", 5001)},
++	} {
++		t.Run(tc.name, func(t *testing.T) {
++			e := newEnvSized(t, 1<<20)
++			m, _ := proofFixture(t, e)
++			base := "/api/v1/matters/" + m
++			before := e.do("GET", base+"/export?format=csv", "t-alice", nil, "").Body.String()
++			plan := `{"runKey":"` + uuid.Must(uuid.NewV7()).String() + `","rowKeys":{}}`
++			for _, path := range []string{"preview", "commit"} {
++				r := e.multipartSheetDo(base+"/import/"+path, "t-alice", tc.format, tc.content, plan)
++				e.expect(r, 400, "urn:mc:bad-request")
++				if strings.Contains(r.Body.String(), "private-invalid-workbook-content") {
++					t.Fatal("response leaked uploaded content")
++				}
++				if r.Header().Get("Content-Type") != "application/problem+json" {
++					t.Fatalf("problem media type: %s", r.Header())
++				}
++			}
++			if after := e.do("GET", base+"/export?format=csv", "t-alice", nil, "").Body.String(); after != before {
++				t.Fatal("invalid import mutated export")
++			}
++		})
++	}
++}
++
++func TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP(t *testing.T) {
++	for _, mode := range []string{"bulk", "import"} {
++		t.Run(mode, func(t *testing.T) {
++			e := newEnvSized(t, 1<<20)
++			first, item := proofFixture(t, e)
++			second, _ := proofFixture(t, e)
++			key := uuid.Must(uuid.NewV7()).String()
++			commit := func(m, title string) resp {
++				if mode == "bulk" {
++					return e.do("POST", "/api/v1/matters/"+m+"/bulk/commit", "t-bob", nil, `{"attemptKey":"attempt","rows":[{"rowKey":"R1","idempotencyKey":"`+key+`","itemId":"`+item+`","expectedRevision":1,"title":"`+title+`"}]}`)
++				}
++				plan := `{"runKey":"` + uuid.Must(uuid.NewV7()).String() + `","rowKeys":{"R1":"` + key + `"}}`
++				return e.multipartDo("/api/v1/matters/"+m+"/import/commit", "t-bob", "rowkey,kind,title\nR1,ACTION,"+title+"\n", plan)
++			}
++			r := commit(first, "Changed")
++			e.expect(r, 200, "")
++			if r.list()[0]["status"] != "SUCCESS" {
++				t.Fatalf("first: %s", r.Body)
++			}
++			e.world.SetMatterMembership(matter.MatterID(first), matter.ActorID(e.bob), matter.MatterRoleEditor, matter.StatusRevoked)
++			before := e.do("GET", "/api/v1/matters/"+second+"/export?format=csv", "t-alice", nil, "").Body.String()
++			for _, title := range []string{"Changed", "Different"} {
++				r = commit(second, title)
++				e.expect(r, 200, "")
++				row := r.list()[0]
++				if row["status"] != "FAILURE" || row["itemId"] != nil || row["revision"] != nil || row["contentHash"] != nil || (row["code"] != "hidden" && row["code"] != "not-found") {
++					t.Fatalf("foreign outcome leaked: %s", r.Body)
++				}
++			}
++			if after := e.do("GET", "/api/v1/matters/"+second+"/export?format=csv", "t-alice", nil, "").Body.String(); after != before {
++				t.Fatal("denied replay mutated destination")
++			}
++		})
++	}
++}
+--- a/apps/backend/internal/adapter/inbound/productapi/problems.go
++++ b/apps/backend/internal/adapter/inbound/productapi/problems.go
+@@ -57,6 +57,8 @@
+ 		return problem{Type: "urn:mc:client-closed-request", Title: "Client Closed Request", Status: StatusClientClosedRequest}
+ 	case errors.Is(err, errMalformed):
+ 		return mk(http.StatusBadRequest, "malformed-body", "Bad Request", "the request body is malformed", false)
++	case errors.Is(err, port.ErrSheetInvalid):
++		return mk(http.StatusBadRequest, "bad-request", "Bad Request", "spreadsheet cannot be read; check the format, required columns and upload limits", false)
+ 	case errors.Is(err, errBadRequest):
+ 		return mk(http.StatusBadRequest, "bad-request", "Bad Request", err.Error(), false)
+ 	case errors.Is(err, errUnsupportedMedia):
+--- a/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go
++++ b/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go
+@@ -6,6 +6,8 @@
+ 
+ import (
+ 	"context"
++	"crypto/sha256"
++	"encoding/hex"
+ 	"errors"
+ 	"strings"
+ 	"sync"
+@@ -32,6 +34,29 @@
+ 		r.before()
+ 	}
+ 	return r.WorkspaceStore.Execute(ctx, m, fn)
++}
++
++// importLookupFailure preserves the graph snapshot while failing an owner lookup during parsing.
++type importLookupFailure struct {
++	port.WorkspaceStore
++	owner matter.ActorID
++}
++type importLookupSnapshot struct {
++	port.MatterSnapshot
++	port.WorkGraphSnapshot
++	owner matter.ActorID
++}
++
++func (s importLookupFailure) View(ctx context.Context, fn func(port.MatterSnapshot) error) error {
++	return s.WorkspaceStore.View(ctx, func(snap port.MatterSnapshot) error {
++		return fn(importLookupSnapshot{snap, snap.(port.WorkGraphSnapshot), s.owner})
++	})
++}
++func (s importLookupSnapshot) MatterMembership(ctx context.Context, m matter.MatterID, a matter.ActorID) (matter.MatterMembership, error) {
++	if a == s.owner {
++		return matter.MatterMembership{}, port.ErrUnavailable
++	}
++	return s.MatterSnapshot.MatterMembership(ctx, m, a)
+ }
+ 
+ type w6Env struct {
+@@ -97,9 +122,241 @@
+ 	"A1,ACTION,Prepare package,Package ready,R1\n" +
+ 	"A2,ACTION,Sign and file,Filed,R1;A1\n"
+ 
++func ptrText(s string) *string { return &s }
++
+ // SuiteW6 runs the W6 import contract against any Bundle whose Store supports the work graph.
+ func SuiteW6(t *testing.T, newBundle Factory, codec port.SheetCodec) {
+ 	t.Helper()
++
++	t.Run("receipt intent binds bulk rows and import scope source and row", func(t *testing.T) {
++		for _, mode := range []string{"bulk", "import"} {
++			t.Run(mode, func(t *testing.T) {
++				e := newW6Env(t, newBundle, codec)
++				w1 := w1Env{t: t, ws: e.ws, ctx: e.ctx}
++				other := w1.mustMatter(e.owner, e.wsID, "Other").MatterID
++				if err := w1.grantMatter(e.owner, other, e.editor, "EDITOR", w1.matterRevision(e.owner, e.wsID, other)); err != nil {
++					t.Fatal(err)
++				}
++				key := newKey()
++				row := port.BulkRowChange{RowKey: "R1", IdempotencyKey: key}
++				if mode == "bulk" {
++					it := e.action(e.editor, "Original")
++					row.ItemID, row.ExpectedRevision = it.ID.String(), it.Revision
++				}
++				call := func(m matter.MatterID, source, rowKey, title string) (string, string, string) {
++					t.Helper()
++					if mode == "bulk" {
++						r := row
++						r.RowKey = rowKey
++						r.Title = &title
++						r.IdempotencyKey = key
++						res, err := e.data.BulkCommit(e.ctx, port.BulkCommitCmd{ActorID: e.editor.String(), MatterID: m.String(), AttemptKey: newKey(), Rows: []port.BulkRowChange{r}})
++						if err != nil || len(res) != 1 {
++							t.Fatalf("bulk: %v %+v", err, res)
++						}
++						return string(res[0].Status), res[0].Code, res[0].ItemID
++					}
++					res, err := e.data.ImportCommit(e.ctx, port.ImportCommitCmd{ActorID: e.editor.String(), MatterID: m.String(), RunKey: newKey(), SourceName: source, Format: "csv", Content: []byte("rowkey,kind,title\n" + rowKey + ",ACTION," + title + "\n"), RowKeys: map[string]string{rowKey: key}})
++					if err != nil || len(res) != 1 {
++						t.Fatalf("import: %v %+v", err, res)
++					}
++					return string(res[0].Status), res[0].Code, res[0].ItemID
++				}
++				status, _, _ := call(e.m, "first.csv", "R1", "Changed")
++				if status != "SUCCESS" {
++					t.Fatalf("first status=%s", status)
++				}
++				otherKey := newKey()
++				if _, err := e.work.CreateAction(e.ctx, port.CreateActionCmd{ActorID: e.editor.String(), MatterID: e.m.String(), IdempotencyKey: otherKey, RequestHash: anyHash, Title: "Other operation", Outcome: "Done"}); err != nil {
++					t.Fatal(err)
++				}
++				originalKey := key
++				key = otherKey
++				status, code, _ := call(e.m, "first.csv", "R1", "Changed")
++				if status != "FAILURE" || code != "key-reuse" {
++					t.Errorf("another operation: %s/%s", status, code)
++				}
++				key = originalKey
++				events, count := len(e.events()), e.itemCount()
++				for _, tc := range []struct {
++					m                  matter.MatterID
++					source, row, title string
++				}{
++					{other, "first.csv", "R1", "Changed"}, {e.m, "first.csv", "R2", "Changed"}, {e.m, "first.csv", "R1", "Different"},
++				} {
++					status, code, _ := call(tc.m, tc.source, tc.row, tc.title)
++					if status != "FAILURE" || code != "key-reuse" {
++						t.Errorf("incompatible intent: %s/%s", status, code)
++					}
++				}
++				if mode == "import" {
++					status, code, id := call(e.m, "second.csv", "R1", "Changed")
++					if status != "FAILURE" || code != "key-reuse" || id != "" {
++						t.Errorf("changed source: %s/%s/%s", status, code, id)
++					}
++				}
++				status, _, _ = call(e.m, "first.csv", "R1", "Changed")
++				if status != "SUCCESS_REPLAYED" {
++					t.Errorf("saved replay: %s", status)
++				}
++				if err := w1.revokeMatter(e.owner, e.m, e.editor, w1.matterRevision(e.owner, e.wsID, e.m)); err != nil {
++					t.Fatal(err)
++				}
++				for _, title := range []string{"Changed", "Different"} {
++					status, code, id := call(other, "first.csv", "R1", title)
++					if status != "FAILURE" || (code != "hidden" && code != "not-found") || (mode == "import" && id != "") {
++						t.Errorf("saved scope denial must hide outcome: %s/%s/%s", status, code, id)
++					}
++				}
++				key = otherKey
++				status, code, id := call(other, "first.csv", "R1", "Changed")
++				if status != "FAILURE" || (code != "hidden" && code != "not-found") || id != "" {
++					t.Errorf("other-operation saved scope denial: %s/%s/%s", status, code, id)
++				}
++				if e.itemCount() != count {
++					t.Fatal("replay/reuse mutated work items")
++				}
++				// Membership changes append their own events, so only work-event types are compared.
++				for _, ev := range e.events()[events:] {
++					if strings.HasPrefix(ev.Type, "import.") || ev.Type == "bulk.updated" {
++						t.Fatalf("unexpected work event: %s", ev.Type)
++					}
++				}
++			})
++		}
++	})
++
++	t.Run("import content distinguishes delimiter boundaries and legacy hashes fail closed", func(t *testing.T) {
++		for _, legacy := range []bool{false, true} {
++			t.Run(map[bool]string{false: "new import", true: "legacy stored fingerprint"}[legacy], func(t *testing.T) {
++				e := newW6Env(t, newBundle, codec)
++				key := newKey()
++				firstCSV := "rowkey,kind,title,description\nR1,ACTION,A|B,C\n"
++				changedCSV := "rowkey,kind,title,description\nR1,ACTION,A,B|C\n"
++				if legacy {
++					item, err := e.work.CreateAction(e.ctx, port.CreateActionCmd{ActorID: e.editor.String(), MatterID: e.m.String(), IdempotencyKey: newKey(), RequestHash: anyHash, Title: "A|B", Outcome: "C"})
++					if err != nil {
++						t.Fatal(err)
++					}
++					inner := sha256.Sum256([]byte("ACTION|A|B|C|<absent>|<absent>"))
++					outer := sha256.Sum256(inner[:])
++					hash := hex.EncodeToString(outer[:])
++					if err := e.b.Store.Execute(e.ctx, e.m, func(tx port.MatterTx) error {
++						if err := tx.(port.ImportRegistry).RegisterImportSource(e.ctx, matter.ImportSource{MatterID: e.m, SourceName: "source.csv", RowKey: "R1", ItemID: item.Item.ID.String(), ContentHash: hash, FirstImportedAt: tx.TCmd()}); err != nil {
++							return err
++						}
++						return tx.StoreReceipt(e.ctx, matter.Receipt{ActorID: e.editor, IdempotencyKey: matter.IdempotencyKey(key), RequestHash: matter.RequestHash(hash), ScopeKind: matter.ScopeMatter, WorkspaceID: e.wsID, MatterID: &e.m, Matters: []matter.MatterID{e.m}, StatusCode: 201, CommittedAt: tx.TCmd(), Kind: matter.SnapshotImportRowApplied, ImportSnapshot: &matter.ImportRowApplied{ItemID: item.Item.ID.String(), Kind: "ACTION", RowKey: "R1", SourceName: "source.csv", ContentHash: hash, Revision: 1, RecordedAt: tx.TCmd()}})
++					}); err != nil {
++						t.Fatal(err)
++					}
++				} else {
++					res, err := e.importOf(e.editor, "source.csv", firstCSV, map[string]string{"R1": key})
++					if err != nil || len(res) != 1 || res[0].Status != matter.ImportRowSuccess {
++						t.Fatalf("first import: %v %+v", err, res)
++					}
++				}
++				before := e.b.World.Counts()
++				for _, body := range []string{changedCSV, firstCSV} {
++					if !legacy && body == firstCSV {
++						continue
++					}
++					for _, k := range []string{key, newKey()} {
++						res, err := e.importOf(e.editor, "source.csv", body, map[string]string{"R1": k})
++						want := "key-reuse"
++						if k != key {
++							want = "content-conflict"
++						}
++						if err != nil || len(res) != 1 || res[0].Status != matter.ImportRowFailure || res[0].Code != want || res[0].ItemID != "" {
++							t.Errorf("changed/legacy content must refuse replay: %v %+v, want %s", err, res, want)
++						}
++					}
++				}
++				if e.b.World.Counts() != before {
++					t.Fatal("refused content changed rows, receipts, events or audits")
++				}
++			})
++		}
++	})
++
++	t.Run("bulk intent distinguishes absent fields and delimiter collisions", func(t *testing.T) {
++		empty, absentLabel := "", "<absent>"
++		for _, tc := range []struct {
++			name, firstTitle, nextTitle       string
++			firstDescription, nextDescription *string
++		}{
++			{"nil versus empty", "T", "T", nil, &empty},
++			{"nil versus sentinel text", "T", "T", nil, &absentLabel},
++			{"delimiter boundaries", "A|B", "A", ptrText("C"), ptrText("B|C")},
++		} {
++			t.Run(tc.name, func(t *testing.T) {
++				e := newW6Env(t, newBundle, codec)
++				it := e.action(e.editor, "Original")
++				r := port.BulkRowChange{RowKey: "R1", ItemID: it.ID.String(), ExpectedRevision: it.Revision, IdempotencyKey: newKey(), Title: &tc.firstTitle, Description: tc.firstDescription}
++				call := func() []matter.BulkRowResult {
++					t.Helper()
++					res, err := e.data.BulkCommit(e.ctx, port.BulkCommitCmd{ActorID: e.editor.String(), MatterID: e.m.String(), AttemptKey: newKey(), Rows: []port.BulkRowChange{r}})
++					if err != nil {
++						t.Fatal(err)
++					}
++					return res
++				}
++				if first := call(); len(first) != 1 || first[0].Status != matter.BulkRowSuccess {
++					t.Fatalf("first: %+v", first)
++				}
++				before := len(e.events())
++				r.Title, r.Description = &tc.nextTitle, tc.nextDescription
++				if next := call(); len(next) != 1 || next[0].Status != matter.BulkRowFailure || next[0].Code != "key-reuse" {
++					t.Fatalf("distinct intent must fail before CAS/validation: %+v", next)
++				}
++				if len(e.events()) != before || e.detail(it.ID).View.Item.Title != tc.firstTitle {
++					t.Fatal("conflicting intent mutated work")
++				}
++			})
++		}
++	})
++
++	t.Run("import parser storage errors propagate without becoming empty success or validation", func(t *testing.T) {
++		e := newW6Env(t, newBundle, codec)
++		e.data = service.NewDataOpsService(importLookupFailure{e.b.Store.(port.WorkspaceStore), e.viewer}, kitIDs{}, codec, discardLogger())
++		content := []byte("rowkey,kind,title,internalowner\nR1,ACTION,T," + e.viewer.String() + "\n")
++		before := e.b.World.Counts()
++		_, err := e.data.ImportPreview(e.ctx, port.ImportPreviewCmd{ActorID: e.editor.String(), MatterID: e.m.String(), SourceName: "bad", Format: "csv", Content: content})
++		if !errors.Is(err, port.ErrUnavailable) || errors.Is(err, port.ErrSheetInvalid) {
++			t.Errorf("preview storage error: %v", err)
++		}
++		_, err = e.data.ImportCommit(e.ctx, port.ImportCommitCmd{ActorID: e.editor.String(), MatterID: e.m.String(), RunKey: newKey(), SourceName: "bad", Format: "csv", Content: content})
++		if !errors.Is(err, port.ErrUnavailable) || errors.Is(err, port.ErrSheetInvalid) {
++			t.Errorf("commit storage error: %v", err)
++		}
++		if e.b.World.Counts() != before || e.itemCount() != 0 {
++			t.Fatal("storage failure mutated work")
++		}
++	})
++
++	t.Run("whole sheet failures refuse preview and commit without writes", func(t *testing.T) {
++		for _, tc := range []struct{ name, format, content string }{
++			{"format", "txt", "rowkey,kind,title\n"}, {"csv", "csv", "rowkey,kind,title\n\"unterminated"}, {"xlsx", "xlsx", "not a workbook"},
++			{"empty", "csv", ""}, {"rowkey", "csv", "kind,title\nACTION,T\n"}, {"kind", "csv", "rowkey,title\nR1,T\n"}, {"title", "csv", "rowkey,kind\nR1,ACTION\n"},
++			{"rows", "csv", "rowkey,kind,title\n" + strings.Repeat("R,ACTION,T\n", 5001)},
++			{"bytes", "csv", strings.Repeat("X", (8<<20)+1)},
++		} {
++			t.Run(tc.name, func(t *testing.T) {
++				e := newW6Env(t, newBundle, codec)
++				before := e.b.World.Counts()
++				_, err := e.data.ImportPreview(e.ctx, port.ImportPreviewCmd{ActorID: e.editor.String(), MatterID: e.m.String(), SourceName: "bad", Format: tc.format, Content: []byte(tc.content)})
++				if !errors.Is(err, port.ErrSheetInvalid) {
++					t.Errorf("preview must return sheet validation: %v", err)
++				}
++				_, err = e.data.ImportCommit(e.ctx, port.ImportCommitCmd{ActorID: e.editor.String(), MatterID: e.m.String(), RunKey: newKey(), SourceName: "bad", Format: tc.format, Content: []byte(tc.content)})
++				if !errors.Is(err, port.ErrSheetInvalid) {
++					t.Errorf("commit must return sheet validation: %v", err)
++				}
++				if e.itemCount() != 0 || e.b.World.Counts() != before {
++					t.Fatal("invalid sheet mutated work")
++				}
++			})
++		}
++	})
+ 
+ 	t.Run("a new-row dependency graph becomes the exact persisted edges", func(t *testing.T) {
+ 		e := newW6Env(t, newBundle, codec)
+--- a/apps/backend/internal/core/service/dataops_service.go
++++ b/apps/backend/internal/core/service/dataops_service.go
+@@ -36,16 +36,9 @@
+ // ---------- helpers ----------
+ 
+ func rowSetHash(r port.BulkRowChange) string {
+-	h := sha256.New()
+-	fmt.Fprintf(h, "%s|%d|%v|%v|%v|%v", r.ItemID, r.ExpectedRevision, deref(r.Title), deref(r.Description), deref(r.InternalOwner), deref(r.Due))
+-	return hex.EncodeToString(h.Sum(nil))
+-}
+-
+-func deref(s *string) string {
+-	if s == nil {
+-		return "<absent>"
+-	}
+-	return *s
++	r.IdempotencyKey = ""
++	b, _ := json.Marshal(r)
++	return sha256Hex(b)
+ }
+ 
+ func applyRowToItem(it matter.WorkItem, r port.BulkRowChange, memberExists func(matter.ActorID) (bool, error)) (matter.WorkItem, error) {
+@@ -225,24 +218,18 @@
+ 				return rcptErr
+ 			}
+ 			if rcptErr == nil {
+-				if rcpt.Kind != matter.SnapshotBulkRowApplied || rcpt.BulkSnapshot == nil {
+-					return matter.ErrSnapshotKind
+-				}
+-				if rcpt.RequestHash.String() != sethash {
++				if err := authorizeReceiptScope(ctx, tx, actor, rcpt); err != nil {
++					if !errors.Is(err, port.ErrNotFound) {
++						return err
++					}
++					row.Status, row.Code, row.ItemID = matter.BulkRowFailure, "hidden", ""
++					return nil
++				}
++				if rcpt.ScopeKind != matter.ScopeMatter || rcpt.MatterID == nil || *rcpt.MatterID != matterID || rcpt.WorkspaceID != header.WorkspaceID ||
++					len(rcpt.Matters) != 1 || rcpt.Matters[0] != matterID || rcpt.Kind != matter.SnapshotBulkRowApplied || rcpt.BulkSnapshot == nil || rcpt.RequestHash.String() != sethash {
+ 					row.Status = matter.BulkRowFailure
+ 					row.Code = "key-reuse"
+-					row.Detail = "same row key used for a different change"
+-					return nil
+-				}
+-				ws, wsErr := tx.WorkspaceMembership(ctx, header.WorkspaceID, actor)
+-				mm, mmErr := tx.MatterMembership(ctx, matterID, actor)
+-				access, aerr := accessFrom(ws, wsErr, mm, mmErr)
+-				if aerr != nil {
+-					return aerr
+-				}
+-				if d := policy.DecideCreateRequirement(access); !d.Allowed {
+-					row.Status = matter.BulkRowFailure
+-					row.Code = "hidden"
++					row.Detail = "the row idempotency key was used for a different change"
+ 					return nil
+ 				}
+ 				row.Status = matter.BulkRowReplayed
+@@ -394,7 +381,7 @@
+ 		out.AsOf = snap.AsOf()
+ 		out.Rows = rows
+ 		if perr != nil {
+-			return nil // row-level errors already captured
++			return perr
+ 		}
+ 		out.Groups = importGroups(rows)
+ 		return nil
+@@ -408,17 +395,17 @@
+ // parseSheet decodes and validates the uploaded sheet against the current graph.
+ func (s *DataOpsService) parseSheet(cmd port.ImportPreviewCmd, matterID matter.MatterID, snap port.MatterSnapshot, g matter.WorkGraph) ([]matter.ImportRowPlan, error) {
+ 	if cmd.Format != "csv" && cmd.Format != "xlsx" {
+-		return nil, fmt.Errorf("format must be csv or xlsx")
++		return nil, fmt.Errorf("%w: format must be csv or xlsx", port.ErrSheetInvalid)
+ 	}
+ 	if int64(len(cmd.Content)) > s.maxBytes {
+-		return nil, fmt.Errorf("file exceeds the %d-byte local limit", s.maxBytes)
++		return nil, fmt.Errorf("%w: file exceeds the %d-byte local limit", port.ErrSheetInvalid, s.maxBytes)
+ 	}
+ 	table, err := s.codec.Decode(cmd.Format, strings.NewReader(string(cmd.Content)), s.maxBytes)
+ 	if err != nil {
+ 		return nil, fmt.Errorf("%w: %w", port.ErrSheetInvalid, err)
+ 	}
+ 	if len(table.Rows) < 1 {
+-		return nil, fmt.Errorf("empty sheet")
++		return nil, fmt.Errorf("%w: empty sheet", port.ErrSheetInvalid)
+ 	}
+ 	header := table.Rows[0]
+ 	idx := map[string]int{}
+@@ -427,11 +414,11 @@
+ 	}
+ 	for _, req := range []string{"rowkey", "kind", "title"} {
+ 		if _, ok := idx[req]; !ok {
+-			return nil, fmt.Errorf("missing required column %q", req)
++			return nil, fmt.Errorf("%w: missing required column %q", port.ErrSheetInvalid, req)
+ 		}
+ 	}
+ 	if len(table.Rows)-1 > s.maxRows {
+-		return nil, fmt.Errorf("sheet exceeds the %d-row local limit", s.maxRows)
++		return nil, fmt.Errorf("%w: sheet exceeds the %d-row local limit", port.ErrSheetInvalid, s.maxRows)
+ 	}
+ 	fileKeys := map[string]bool{}
+ 	for _, raw := range table.Rows[1:] {
+@@ -507,12 +494,13 @@
+ 				plan.Dependencies = append(plan.Dependencies, d)
+ 			}
+ 		}
+-		h := sha256.New()
+-		fmt.Fprintf(h, "%s|%s|%s|%v|%v", plan.Kind, plan.Title, plan.Outcome, deref(plan.Owner), derefTime(plan.Due))
+-		for _, d := range plan.Dependencies {
+-			fmt.Fprintf(h, "|%s", d)
+-		}
+-		plan.ContentHash = sha256Hex(h.Sum(nil))
++		b, _ := json.Marshal(struct {
++			Kind, Title, Outcome string
++			Owner                *string
++			Due                  *time.Time
++			Dependencies         []string
++		}{plan.Kind, plan.Title, plan.Outcome, plan.Owner, plan.Due, plan.Dependencies})
++		plan.ContentHash = sha256Hex(b)
+ 		rows = append(rows, plan)
+ 	}
+ 	markImportCycles(rows)
+@@ -565,13 +553,6 @@
+ 	}
+ }
+ 
+-func derefTime(t *time.Time) string {
+-	if t == nil {
+-		return "<absent>"
+-	}
+-	return t.Format(time.RFC3339)
+-}
+-
+ // importGroups computes connected components over dependency references between rows
+ // of the file (references to existing items are not group-forming).
+ func importGroups(rows []matter.ImportRowPlan) []matter.ImportGroup {
+@@ -787,32 +768,36 @@
+ 				return abort
+ 			}
+ 			keys[plan.RowKey] = key
++			rcpt, rerr := tx.Receipt(ctx, actor, key)
++			if rerr != nil && !errors.Is(rerr, port.ErrNotFound) {
++				return rerr
++			}
++			if rerr == nil {
++				if err := authorizeReceiptScope(ctx, tx, actor, rcpt); err != nil {
++					if errors.Is(err, port.ErrNotFound) {
++						return &importAbort{plan.RowKey, "not-found", "resource not found"}
++					}
++					return err
++				}
++				if rcpt.ScopeKind != matter.ScopeMatter || rcpt.MatterID == nil || *rcpt.MatterID != matterID || rcpt.WorkspaceID != header.WorkspaceID ||
++					len(rcpt.Matters) != 1 || rcpt.Matters[0] != matterID || rcpt.Kind != matter.SnapshotImportRowApplied || rcpt.ImportSnapshot == nil ||
++					rcpt.ImportSnapshot.SourceName != cmd.SourceName || rcpt.ImportSnapshot.RowKey != plan.RowKey || rcpt.ImportSnapshot.ContentHash != plan.ContentHash {
++					return &importAbort{plan.RowKey, "key-reuse", "the row idempotency key was used for a different import"}
++				}
++				itemOf[plan.RowKey], replayed[plan.RowKey] = matter.NodeID(rcpt.ImportSnapshot.ItemID), true
++				results[i].ItemID, results[i].ContentHash = rcpt.ImportSnapshot.ItemID, rcpt.ImportSnapshot.ContentHash
++				continue
++			}
+ 			existing, gerr := s.lookupImportSource(ctx, tx, matterID, cmd.SourceName, plan.RowKey)
+ 			if gerr != nil {
+ 				return gerr
+ 			}
+ 			if existing != nil {
+ 				if existing.ContentHash != plan.ContentHash {
+-					results[i].ItemID = existing.ItemID
+ 					return &importAbort{plan.RowKey, "content-conflict", "source identity and row key already imported with different content"}
+ 				}
+ 				itemOf[plan.RowKey], replayed[plan.RowKey] = matter.NodeID(existing.ItemID), true
+ 				results[i].ItemID, results[i].ContentHash = existing.ItemID, existing.ContentHash
+-				continue
+-			}
+-			rcpt, rerr := tx.Receipt(ctx, actor, key)
+-			if rerr != nil && !errors.Is(rerr, port.ErrNotFound) {
+-				return rerr
+-			}
+-			if rerr == nil {
+-				if rcpt.Kind != matter.SnapshotImportRowApplied || rcpt.ImportSnapshot == nil {
+-					return matter.ErrSnapshotKind
+-				}
+-				if rcpt.ImportSnapshot.ContentHash != plan.ContentHash {
+-					return &importAbort{plan.RowKey, "key-reuse", "the row idempotency key was used for different content"}
+-				}
+-				itemOf[plan.RowKey], replayed[plan.RowKey] = matter.NodeID(rcpt.ImportSnapshot.ItemID), true
+-				results[i].ItemID, results[i].ContentHash = rcpt.ImportSnapshot.ItemID, rcpt.ImportSnapshot.ContentHash
+ 			}
+ 		}
+ 
+--- a/apps/backend/internal/core/service/matter_service.go
++++ b/apps/backend/internal/core/service/matter_service.go
+@@ -108,7 +108,7 @@
+ 			// each other and take no matter-row locks, so the documented lock order
+ 			// (matter row, memberships, typed rows, history, receipt, matters update)
+ 			// is preserved; saved-scope matters are visited in sorted order.
+-			if err := s.authorizeReceiptScope(ctx, tx, actor, rcpt); err != nil {
++			if err := authorizeReceiptScope(ctx, tx, actor, rcpt); err != nil {
+ 				if errors.Is(err, port.ErrNotFound) {
+ 					outcome = s.deny(ctx, tx, tCmd, actor, matterID, "DENIED_HIDDEN", port.ErrNotFound)
+ 					return nil
+@@ -296,7 +296,7 @@
+ // locked transaction; losing any authority returns ErrNotFound so the receipt stays
+ // invisible (uniform denial, audit-committed, no stored body). Only ErrNotFound is
+ // absence; every other lookup failure is a storage failure and propagates (BE01-F03).
+-func (s *MatterService) authorizeReceiptScope(ctx context.Context, tx port.MatterTx, actor matter.ActorID, rcpt matter.Receipt) error {
++func authorizeReceiptScope(ctx context.Context, tx port.MatterTx, actor matter.ActorID, rcpt matter.Receipt) error {
+ 	ws, wsErr := tx.WorkspaceMembership(ctx, rcpt.WorkspaceID, actor)
+ 	if wsErr != nil && !errors.Is(wsErr, port.ErrNotFound) {
+ 		return fmt.Errorf("receipt workspace membership: %w", wsErr)

@@ -1,0 +1,54 @@
+[
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{ index .Config.Labels \"mc.owner\" }}",
+      "mc-codex-be-local-20261029-r1"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:11:01.256121+00:00",
+    "utc_end": "2026-10-29T08:11:01.280991+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "openssl",
+      "genpkey",
+      "-algorithm",
+      "RSA",
+      "-pkeyopt",
+      "rsa_keygen_bits:2048",
+      "-out",
+      "/private/tmp/mc-codex-backend-local-20261029-r1/oidc.pem"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:11:01.281246+00:00",
+    "utc_end": "2026-10-29T08:11:01.339646+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "go",
+      "build",
+      "-o",
+      "/private/tmp/mc-codex-backend-local-20261029-r1/mcapi",
+      "./cmd/mcapi"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:11:01.340249+00:00",
+    "utc_end": "2026-10-29T08:11:03.608431+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/mc-codex-backend-local-20261029-r1/mcapi",
+      "migrate"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:11:03.608661+00:00",
+    "utc_end": "2026-10-29T08:11:04.368731+00:00",
+    "exit": 1
+  }
+]

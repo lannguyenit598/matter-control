@@ -2,7 +2,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 import { oidcConfig } from '@/lib/oidc/config'
 import { revokeToken } from '@/lib/oidc/flow'
-import { destroySession } from '@/lib/oidc/session-store'
+import { destroyPersistentSession } from '@/lib/oidc/session-persistence'
+import { McError } from '@/lib/mc/errors'
 
 /**
  * Logout distinguishes three things (contract §1): the session here is destroyed immediately
@@ -16,7 +17,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'cross-origin request refused' }, { status: 403 })
   }
   const handle = request.cookies.get(cfg.sessionCookie)?.value
-  const record = handle ? destroySession(handle) : undefined
+  let record
+  try {
+    record = handle ? await destroyPersistentSession(cfg, handle) : undefined
+  } catch (error) {
+    if (!(error instanceof McError)) throw error
+    return NextResponse.json(
+      { error: 'session storage unavailable' },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    )
+  }
   if (record?.refreshToken) await revokeToken(cfg, record.refreshToken)
   const res = NextResponse.redirect(new URL('/login?signedOut=1', cfg.appOrigin), 303)
   res.cookies.delete(cfg.sessionCookie)

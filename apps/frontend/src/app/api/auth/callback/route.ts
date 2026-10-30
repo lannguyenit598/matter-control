@@ -2,7 +2,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 import { oidcConfig } from '@/lib/oidc/config'
 import { completeLogin, OidcError, resolveReturnTo } from '@/lib/oidc/flow'
-import { createSession } from '@/lib/oidc/session-store'
+import { createPersistentSession } from '@/lib/oidc/session-persistence'
+import { McError } from '@/lib/mc/errors'
 
 export async function GET(request: NextRequest) {
   const cfg = oidcConfig()
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
       state,
       cookieState: request.cookies.get(cfg.loginCookie)?.value,
     })
-    const handle = createSession(tokens)
+    const handle = await createPersistentSession(cfg, tokens)
     const res = NextResponse.redirect(resolveReturnTo(returnTo, cfg.appOrigin))
     res.cookies.delete(cfg.loginCookie)
     // The cookie carries ONLY the opaque handle: no token, no claim.
@@ -36,6 +37,7 @@ export async function GET(request: NextRequest) {
     res.headers.set('Cache-Control', 'no-store')
     return res
   } catch (error) {
+    if (error instanceof McError) return fail('unavailable')
     if (error instanceof OidcError)
       return fail(error.code === 'unavailable' ? 'unavailable' : 'invalid')
     throw error

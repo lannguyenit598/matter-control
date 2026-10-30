@@ -12,20 +12,20 @@
   color-scheme: light;
 
   /* Selected R9 light roles; derived state axes remain independent. */
-  --background: #f6f8fa;
-  --foreground: #17212b;
-  --muted: #edf1f5;
-  --muted-foreground: #52606d;
+  --background: #f7f8fa;
+  --foreground: #18181b;
+  --muted: #f1f2f4;
+  --muted-foreground: #60646c;
   --card: #ffffff;
   --card-foreground: var(--foreground);
-  --border: #c6ced6;
-  --input: #c6ced6;
+  --border: #e4e7eb;
+  --input: #cdd1d6;
   --ring: #174ea6;
-  --primary: #174ea6;
+  --primary: #202124;
   --primary-foreground: #ffffff;
-  --secondary: #edf1f5;
+  --secondary: #f1f2f4;
   --secondary-foreground: var(--foreground);
-  --accent: #e8effa;
+  --accent: #eceef1;
   --accent-foreground: var(--foreground);
   --selected: #e8effa;
   --destructive: #a12622;
@@ -37,16 +37,32 @@
   --dependency-blocked: #8a2925;
   --timing: #775317;
   --attention: #783e14;
-  --header: #101820;
-  --header-foreground: #ffffff;
+  --header: var(--background);
+  --header-foreground: var(--foreground);
   --success: var(--verification);
   --success-foreground: #ffffff;
   --warning: var(--timing);
   --warning-foreground: #ffffff;
   --overlay: oklch(0 0 0 / 0.5);
 
+  /*
+   * Solid Glass material — adapted from deeplethe/solid-glass @6e8903e4 (MIT) into this token
+   * system. The finish is at the edge (rim + hairline + shadow, never a face gradient); depth is
+   * thickness: panel < card < popover. Light faces stay near-opaque so dense legal text keeps its
+   * contrast — only overlay panes take the backdrop blur; dark is the material as designed.
+   */
+  --panel: oklch(0.974 0.005 265 / 0.8);
+  --popover: oklch(0.995 0.003 265 / 0.97);
+  --glass-rim: oklch(1 0 0 / 0.9);
+  --glass-edge: oklch(0.38 0.03 265 / 0.12);
+  --glass-shade: oklch(0.3 0.06 265 / 0.2);
+  --glass-popover-edge: oklch(0.38 0.03 265 / 0.18);
+  --glass-state-rim: oklch(1 0 0 / 0.85);
+  --glass-field-rim: oklch(1 0 0 / 0.9);
+  --glass-blur: blur(26px) saturate(150%);
+
   /* Radius / shadows (border width = Tailwind `border` = 1px) */
-  --radius: 0.25rem;
+  --radius: 0.375rem;
   --shadow-color: 240 6% 10%;
 }
 
@@ -61,8 +77,8 @@
   --border: oklch(0.3 0.008 286);
   --input: oklch(0.36 0.01 286);
   --ring: oklch(0.72 0.15 262);
-  /* Lighter accent + dark text: readable both as text on dark surfaces and as a button fill. */
-  --primary: oklch(0.72 0.15 262);
+  /* Neutral actions stay distinct from the independent state-axis colors. */
+  --primary: oklch(0.94 0.002 286);
   --primary-foreground: oklch(0.16 0.005 285.8);
   --secondary: oklch(0.27 0.006 286);
   --accent: oklch(0.27 0.006 286);
@@ -76,11 +92,22 @@
   --disabled: oklch(0.74 0.01 286);
   --execution: oklch(0.82 0.01 286);
   --verification: var(--success);
-  --dependency-ready: var(--primary);
   --dependency-blocked: var(--destructive);
   --timing: var(--warning);
   --attention: oklch(0.8 0.12 60);
+  --dependency-ready: oklch(0.72 0.15 262);
   --shadow-color: 0 0% 0%;
+
+  /* Dark is the material as designed: darker translucent panes, a faint lit rim, no saturate boost. */
+  --panel: oklch(0.24 0.006 286 / 0.62);
+  --popover: oklch(0.23 0.006 286 / 0.97);
+  --glass-rim: oklch(1 0 0 / 0.12);
+  --glass-edge: oklch(0 0 0 / 0.35);
+  --glass-shade: oklch(0 0 0 / 0.45);
+  --glass-popover-edge: oklch(0 0 0 / 0.45);
+  --glass-state-rim: oklch(1 0 0 / 0.14);
+  --glass-field-rim: oklch(1 0 0 / 0.08);
+  --glass-blur: blur(26px);
 }
 
 /* Expose tokens as Tailwind utilities. `inline` keeps the var() reference so themes switch at runtime. */
@@ -117,22 +144,31 @@
   --color-attention: var(--attention);
   --color-header: var(--header);
   --color-header-foreground: var(--header-foreground);
+  --color-panel: var(--panel);
+  --color-popover: var(--popover);
 
-  --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: var(--font-ui), Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-sm: var(--radius);
   --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 0.25rem);
+  --radius-lg: calc(var(--radius) + 0.125rem);
   --radius-xl: calc(var(--radius) + 0.5rem);
 
-  --shadow-xs: 0 1px 2px 0 hsl(var(--shadow-color) / 0.05);
+  /*
+   * Pane finishes, composed into the existing shadow utilities so every consumer picks up the
+   * material without class changes: an inset top rim (the line of light), then the house shade.
+   */
+  --shadow-xs: inset 0 1px 0 var(--glass-rim), 0 1px 2px 0 hsl(var(--shadow-color) / 0.05);
   --shadow-sm:
-    0 1px 3px 0 hsl(var(--shadow-color) / 0.1), 0 1px 2px -1px hsl(var(--shadow-color) / 0.1);
+    inset 0 1px 0 var(--glass-rim), 0 1px 3px 0 hsl(var(--shadow-color) / 0.1),
+    0 1px 2px -1px hsl(var(--shadow-color) / 0.1), 0 4px 10px -3px var(--glass-shade);
   --shadow-md:
-    0 4px 6px -1px hsl(var(--shadow-color) / 0.1), 0 2px 4px -2px hsl(var(--shadow-color) / 0.1);
+    inset 0 1px 0 var(--glass-rim), 0 4px 6px -1px hsl(var(--shadow-color) / 0.1),
+    0 2px 4px -2px hsl(var(--shadow-color) / 0.1), 0 10px 24px -6px var(--glass-shade);
   --shadow-lg:
-    0 10px 15px -3px hsl(var(--shadow-color) / 0.1), 0 4px 6px -4px hsl(var(--shadow-color) / 0.1);
+    inset 0 1px 0 var(--glass-rim), 0 10px 15px -3px hsl(var(--shadow-color) / 0.1),
+    0 4px 6px -4px hsl(var(--shadow-color) / 0.1), 0 20px 44px -12px var(--glass-shade);
 }
 
 @layer base {
@@ -145,6 +181,7 @@
 
   body {
     @apply bg-background font-sans text-sm leading-[1.5] text-foreground antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
   ::selection {
@@ -158,6 +195,53 @@
 
   dialog::backdrop {
     background: var(--overlay);
+  }
+}
+
+/*
+ * Solid Glass surfaces. Unlayered rules map surfaces onto the material by hook (data-slot) or
+ * DOM owner — the depth ladder is panel < card < popover, and only overlay panes take the blur.
+ * Faces stay near-opaque wherever dense text or legal state colors sit on them.
+ */
+[data-slot='card'] {
+  box-shadow: var(--shadow-xs);
+}
+
+[data-slot='dialog-panel'] {
+  background: var(--popover);
+  border-color: var(--glass-popover-edge);
+  box-shadow: var(--shadow-md);
+}
+
+[data-slot='dialog-panel'][open]:not(.glass-host) {
+  backdrop-filter: var(--glass-blur);
+}
+
+[data-slot='input'],
+[data-slot='textarea'],
+[data-slot='select-trigger'] {
+  box-shadow: inset 0 1px 0 var(--glass-field-rim);
+}
+
+/* An unsupported backdrop engine degrades the thick popover to its near-opaque face. */
+@supports not (backdrop-filter: blur(1px)) {
+  [data-slot='dialog-panel'][open] {
+    background: var(--card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  [data-slot='dialog-panel'] {
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  [data-slot='input'],
+  [data-slot='textarea'],
+  [data-slot='select-trigger'] {
+    box-shadow: none;
   }
 }
 
@@ -204,4 +288,549 @@
 
 .app-header :focus-visible {
   outline-color: var(--header-foreground);
+}
+
+/* Selected focused-workbench composition. Business state colors keep their independent roles. */
+.app-shell {
+  --background: #fafbfc;
+  --muted: #f5f7f9;
+  --muted-foreground: #606b7f;
+  --border: #dfe3e9;
+  --selected: #e8f0ff;
+  --navigation: #0754e8;
+  font-size: 14px;
+}
+
+[data-theme='dark'] .app-shell {
+  --background: oklch(0.16 0.005 285.8);
+  --muted: oklch(0.24 0.006 286);
+  --muted-foreground: oklch(0.76 0.013 286);
+  --border: oklch(0.3 0.008 286);
+  --selected: oklch(0.3 0.06 262);
+  --navigation: oklch(0.78 0.12 262);
+}
+
+.app-sidebar-slot {
+  position: sticky;
+  top: 0;
+  width: 232px;
+  height: 100dvh;
+  flex-shrink: 0;
+}
+
+.app-sidebar {
+  padding: 20px 14px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+}
+
+.app-brand {
+  padding-inline: 16px;
+  font-size: 21px;
+  letter-spacing: -0.04em;
+}
+
+.app-navigation {
+  margin-top: 28px;
+}
+
+.app-navigation ul {
+  gap: 7px;
+}
+
+.app-navigation .app-nav-link {
+  gap: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+
+.app-navigation .app-nav-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.app-navigation .app-nav-link[aria-current='page'] {
+  background: var(--selected);
+  color: var(--navigation);
+  box-shadow: inset 0 1px 0 var(--glass-state-rim);
+}
+
+.app-mobile-header {
+  display: none;
+}
+
+.app-main {
+  padding: 24px 28px;
+}
+
+.app-main :where(h1, h2, h3, p, dd, summary, a) {
+  overflow-wrap: anywhere;
+}
+
+.app-main :where(section, fieldset, form, details),
+.work-up-next {
+  min-width: 0;
+}
+
+.app-main .control-target {
+  max-width: 100%;
+}
+
+.app-main .page-heading h1 {
+  font-size: 26px;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.app-main .page-heading p {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.my-work-page {
+  min-height: calc(100dvh - 50px);
+}
+
+.my-work-page .page-heading {
+  margin-bottom: 20px;
+}
+
+.work-queues {
+  column-gap: 18px;
+  min-height: 44px;
+}
+
+.work-queues > a {
+  white-space: nowrap;
+}
+
+.work-queues > a {
+  gap: 8px;
+  padding: 0 10px 12px;
+  font-size: 14px;
+}
+
+.work-queues > a[aria-current='page'] {
+  color: var(--navigation);
+  border-bottom-color: var(--navigation);
+}
+
+.work-queues > a > span {
+  font-size: 14px;
+}
+
+.work-columns {
+  grid-template-columns: minmax(0, 1fr) 224px;
+}
+
+.work-current {
+  padding: 20px 20px 0 0;
+}
+
+.work-sequence {
+  padding: 10px 14px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.work-sequence .control-target {
+  padding: 3px 0;
+  gap: 10px;
+}
+
+.work-identity {
+  padding: 20px 4px 0;
+}
+
+.work-title {
+  margin-top: 12px;
+  font-size: 28px;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.work-meta {
+  font-size: 14px;
+}
+
+.work-why {
+  padding: 24px 4px 0;
+}
+
+.work-section-title {
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.work-why > p {
+  max-width: 65ch;
+  font-size: 14px;
+}
+
+.work-actions {
+  gap: 14px;
+  margin: 18px 4px 24px;
+}
+
+.work-actions .work-primary {
+  min-width: min(160px, 100%);
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.work-needs {
+  padding: 24px 4px;
+}
+
+.work-needs dl {
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.work-disclosure > summary {
+  padding: 18px 4px;
+  font-size: 14px;
+}
+
+.work-disclosure > div {
+  padding: 0 8px 24px;
+}
+
+.work-up-next {
+  border-left: 1px solid var(--border);
+  padding: 24px 0 0 20px;
+}
+
+.work-up-next-link {
+  padding-block: 16px;
+}
+
+.work-read-at {
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+  padding-top: 12px;
+}
+
+@media (min-width: 801px) and (max-width: 1100px) {
+  .app-sidebar-slot {
+    width: 210px;
+  }
+  .app-sidebar {
+    padding-inline: 12px;
+  }
+  .app-brand {
+    font-size: 20px;
+    padding-inline: 8px;
+  }
+  .app-main {
+    padding: 26px 23px;
+  }
+  .work-columns {
+    grid-template-columns: minmax(0, 1fr) 190px;
+  }
+  .work-up-next {
+    padding-left: 20px;
+  }
+  .work-title {
+    font-size: 26px;
+  }
+  .work-queues {
+    column-gap: 14px;
+  }
+  .work-queues > a {
+    padding-inline: 7px;
+    gap: 7px;
+  }
+  .work-needs dl {
+    grid-template-columns: 145px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .app-shell {
+    display: block;
+  }
+  .app-sidebar-slot {
+    display: none;
+  }
+  .app-mobile-header {
+    display: block;
+  }
+  .app-main {
+    padding: 24px 18px;
+  }
+  .app-main .page-heading h1 {
+    font-size: 24px;
+  }
+  .app-main .page-heading p {
+    font-size: 14px;
+  }
+  .my-work-page {
+    min-height: calc(100dvh - 110px);
+  }
+  .my-work-page .page-heading {
+    margin-bottom: 20px;
+  }
+  .work-queues {
+    column-gap: 0;
+    justify-content: space-between;
+  }
+  .work-queues > a {
+    padding: 0 6px 14px;
+    gap: 7px;
+    font-size: 14px;
+  }
+  .work-queues > a > span {
+    font-size: 12px;
+  }
+  .work-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .work-current {
+    padding-right: 0;
+  }
+  .work-title {
+    font-size: 24px;
+    letter-spacing: -0.02em;
+  }
+  .work-meta {
+    font-size: 16px;
+  }
+  .work-identity,
+  .work-why {
+    padding-inline: 0;
+  }
+  .work-why {
+    padding-top: 26px;
+  }
+  .work-why > p {
+    font-size: 16px;
+  }
+  .work-actions {
+    margin-inline: 0;
+    gap: 20px;
+  }
+  .work-sequence {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .work-sequence .control-target {
+    gap: 2px;
+    font-size: 12px;
+  }
+  .work-needs {
+    padding: 25px 0;
+  }
+  .work-needs dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+  }
+  .work-up-next {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    margin-top: 22px;
+    padding: 22px 0 0;
+  }
+  .work-up-next-link {
+    padding-block: 15px;
+  }
+  .work-disclosure > summary {
+    font-size: 14px;
+    padding: 16px 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .work-queues > a {
+    font-size: 13px;
+    padding-inline: 5px;
+    gap: 6px;
+  }
+  .work-queues > a > svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.ui-select:not(:disabled) {
+  cursor: pointer;
+}
+
+.ui-select:not(:disabled):hover {
+  background-color: var(--muted);
+}
+
+.ui-select:has(option:checked[value='']) {
+  color: var(--muted-foreground);
+}
+
+/* shortcut: unsupported browsers retain their native picker; review this fallback with the browser support matrix. */
+@supports (appearance: base-select) {
+  .ui-select:not([multiple]):not([size]),
+  .ui-select:not([multiple]):not([size])::picker(select) {
+    appearance: base-select;
+  }
+
+  .ui-select::picker-icon {
+    display: none;
+  }
+
+  .ui-select:not([multiple]):not([size])::picker(select) {
+    min-inline-size: anchor-size(width);
+    max-inline-size: calc(100vw - 1rem);
+    max-block-size: min(20rem, 50dvh);
+    margin-block: 0.375rem;
+    padding: 0.25rem;
+    overflow-y: auto;
+    border: 1px solid var(--glass-popover-edge);
+    border-radius: calc(var(--radius) + 0.125rem);
+    background: var(--popover);
+    backdrop-filter: var(--glass-blur);
+    color: var(--foreground);
+    box-shadow: var(--shadow-md);
+    font: inherit;
+    scrollbar-width: thin;
+    scrollbar-color: var(--input) transparent;
+  }
+
+  .ui-select option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-block-size: 2.25rem;
+    padding: 0.5rem 0.625rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--foreground);
+    font: inherit;
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+  }
+
+  .ui-select option[value=''] {
+    color: var(--muted-foreground);
+  }
+
+  .ui-select option:checked {
+    background: var(--muted);
+    font-weight: 500;
+  }
+
+  .ui-select option:not(:disabled):hover,
+  .ui-select option:focus-visible {
+    background: var(--accent);
+    outline-offset: -2px;
+  }
+
+  .ui-select option:disabled {
+    color: var(--disabled);
+    cursor: not-allowed;
+  }
+
+  .ui-select option::checkmark {
+    order: 1;
+    margin-inline-start: auto;
+    color: var(--foreground);
+  }
+
+  @media (max-width: 639px), (pointer: coarse) {
+    .ui-select option {
+      min-block-size: 2.75rem;
+    }
+  }
+}
+
+/*
+ * Liquid Glass (tier `liquid`, Chromium): the five-layer anatomy rendered by GlassSurface —
+ * backdrop blur+saturate (layer A), feDisplacementMap refraction through a canvas-generated
+ * rounded-rect map (layer B), frost tint, rim-light specular, content. Frost tint and specular
+ * intensity arrive as CSS vars from the component; themes modulate the rim. The displacement
+ * itself needs no CSS here — it lives in the registered SVG filter.
+ */
+.glass-surface {
+  border-radius: inherit;
+}
+
+.glass-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.glass-content {
+  position: relative;
+}
+
+.glass-backdrop-a {
+  background: color-mix(
+    in oklab,
+    var(--popover) calc(var(--glass-frost, 0.35) * 100%),
+    transparent
+  );
+}
+
+.glass-specular {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.85)),
+    inset 0 0 0 1px rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.28));
+}
+
+.glass-specular::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    9rem circle at var(--spec-x, 50%) var(--spec-y, -12%),
+    rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.28)),
+    transparent 70%
+  );
+}
+
+[data-theme='dark'] .glass-specular {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.3)),
+    inset 0 0 0 1px rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.1));
+}
+
+[data-theme='dark'] .glass-specular::after {
+  background: radial-gradient(
+    9rem circle at var(--spec-x, 50%) var(--spec-y, -12%),
+    rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.12)),
+    transparent 70%
+  );
+}
+
+/* The dialog host yields its own material to the GlassSurface layers. The [open] blur rule
+ * above out-specifies a plain class override, so the host override carries [open] too. */
+[data-slot='dialog-panel'].glass-host,
+[data-slot='dialog-panel'][open].glass-host {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Belt-and-braces: the JS tier already resolves opaque for these media states. */
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .glass-layer {
+    display: none;
+  }
+
+  [data-slot='dialog-panel'].glass-host {
+    background: var(--popover);
+    border-color: var(--border);
+  }
 }

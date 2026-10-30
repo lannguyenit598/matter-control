@@ -1,3 +1,4 @@
+import { Flag, Users, Network } from 'lucide-react'
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
@@ -5,6 +6,7 @@ import Link from 'next/link'
 
 import { Badge } from '@/components/atoms/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/card'
+import { TaskDialog } from '@/components/organisms/form-dialog'
 import { withFrom } from '@/lib/mc/paths'
 
 import { MILESTONE_REASON, MILESTONE_STATE_LABEL } from '../labels'
@@ -35,14 +37,37 @@ export function MilestoneList({
 }) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <LocalizedText en="Milestones" vi="Cột mốc" />
-        </CardTitle>
-        <CardDescription>
-          A milestone is ready only when every required Requirement is completed, verified (or
-          explicitly not required) and not blocked.
-        </CardDescription>
+      <CardHeader className="flex-row flex-wrap items-start justify-between gap-3">
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <CardTitle>
+            <LocalizedText en="Milestones" vi="Cột mốc" />
+          </CardTitle>
+          <CardDescription>
+            A milestone is ready only when every required Requirement is completed, verified (or
+            explicitly not required) and not blocked.
+          </CardDescription>
+        </div>
+        {isOwner && (
+          <TaskDialog
+            trigger={
+              <>
+                {' '}
+                <Flag aria-hidden />
+                <LocalizedText en="Add milestone" vi="Thêm cột mốc" />
+              </>
+            }
+            title={<LocalizedText en="Add milestone" vi="Thêm cột mốc" />}
+            description={
+              <LocalizedText
+                en="A point in the matter that is ready only when its required Requirements are met. Required Requirements are chosen afterwards."
+                vi="Một mốc của hồ sơ, chỉ sẵn sàng khi các yêu cầu bắt buộc được đáp ứng. Các yêu cầu bắt buộc được chọn sau."
+              />
+            }
+            successNotice={<LocalizedText en="Milestone added." vi="Đã thêm cột mốc." />}
+          >
+            <CreateMilestoneForm matterId={matterId} />
+          </TaskDialog>
+        )}
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
         {milestones.length === 0 ? (
@@ -122,9 +147,7 @@ export function MilestoneList({
             ))}
           </ul>
         )}
-        {isOwner ? (
-          <CreateMilestoneForm matterId={matterId} />
-        ) : (
+        {!isOwner && (
           <p className="text-sm text-muted-foreground">
             <LocalizedText
               en="Milestone settings are limited to matter owners."
@@ -148,16 +171,39 @@ export function PartyList({
 }) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <LocalizedText en="External parties" vi="Các bên ngoài" />
-        </CardTitle>
-        <CardDescription>
-          <LocalizedText
-            en="Context for who work waits on. A party is not a user: it has no account, role or access."
-            vi="Bối cảnh về bên mà công việc đang chờ. Bên ngoài không có tài khoản, vai trò hay quyền truy cập."
-          />
-        </CardDescription>
+      <CardHeader className="flex-row flex-wrap items-start justify-between gap-3">
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <CardTitle>
+            <LocalizedText en="External parties" vi="Các bên ngoài" />
+          </CardTitle>
+          <CardDescription>
+            <LocalizedText
+              en="Context for who work waits on. A party is not a user: it has no account, role or access."
+              vi="Bối cảnh về bên mà công việc đang chờ. Bên ngoài không có tài khoản, vai trò hay quyền truy cập."
+            />
+          </CardDescription>
+        </div>
+        {canEdit && (
+          <TaskDialog
+            trigger={
+              <>
+                {' '}
+                <Users aria-hidden />
+                <LocalizedText en="Add external party" vi="Thêm bên ngoài" />
+              </>
+            }
+            title={<LocalizedText en="Add external party" vi="Thêm bên ngoài" />}
+            description={
+              <LocalizedText
+                en="Someone outside the matter that work can wait on, such as an authority. It gets no account or access."
+                vi="Một bên ngoài hồ sơ mà công việc có thể phải chờ, ví dụ cơ quan nhà nước. Bên này không có tài khoản hay quyền truy cập."
+              />
+            }
+            successNotice={<LocalizedText en="Party added." vi="Đã thêm bên ngoài." />}
+          >
+            <CreatePartyForm matterId={matterId} />
+          </TaskDialog>
+        )}
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
         {parties.length === 0 ? (
@@ -189,7 +235,6 @@ export function PartyList({
             ))}
           </ul>
         )}
-        {canEdit && <CreatePartyForm matterId={matterId} />}
       </CardContent>
     </Card>
   )
@@ -206,16 +251,39 @@ export function WorkstreamList({
 }) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <LocalizedText en="Workstreams" vi="Nhóm công việc" />
-        </CardTitle>
-        <CardDescription>
-          <LocalizedText
-            en="Organise records. A workstream is not an access boundary."
-            vi="Tổ chức các bản ghi. Nhóm công việc không phải ranh giới phân quyền."
-          />
-        </CardDescription>
+      <CardHeader className="flex-row flex-wrap items-start justify-between gap-3">
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <CardTitle>
+            <LocalizedText en="Workstreams" vi="Nhóm công việc" />
+          </CardTitle>
+          <CardDescription>
+            <LocalizedText
+              en="Organise records. A workstream is not an access boundary."
+              vi="Tổ chức các bản ghi. Nhóm công việc không phải ranh giới phân quyền."
+            />
+          </CardDescription>
+        </div>
+        {canEdit && (
+          <TaskDialog
+            trigger={
+              <>
+                {' '}
+                <Network aria-hidden />
+                <LocalizedText en="Add workstream" vi="Thêm nhóm công việc" />
+              </>
+            }
+            title={<LocalizedText en="Add workstream" vi="Thêm nhóm công việc" />}
+            description={
+              <LocalizedText
+                en="A label for organising records. It does not limit who can see them."
+                vi="Một nhãn để sắp xếp các bản ghi. Nhóm này không giới hạn người xem."
+              />
+            }
+            successNotice={<LocalizedText en="Workstream added." vi="Đã thêm nhóm công việc." />}
+          >
+            <CreateWorkstreamForm matterId={matterId} />
+          </TaskDialog>
+        )}
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         {workstreams.length === 0 ? (
@@ -231,7 +299,6 @@ export function WorkstreamList({
             ))}
           </ul>
         )}
-        {canEdit && <CreateWorkstreamForm matterId={matterId} />}
       </CardContent>
     </Card>
   )

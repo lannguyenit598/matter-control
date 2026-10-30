@@ -2,8 +2,9 @@
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 
+import { Plus, FileSignature, Upload } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useRef, useState, useTransition, type FormEvent } from 'react'
+import { useContext, useRef, useState, useTransition, type FormEvent } from 'react'
 
 import { Button } from '@/components/atoms/button'
 import { Input } from '@/components/atoms/input'
@@ -11,7 +12,8 @@ import { Textarea } from '@/components/atoms/textarea'
 import { Alert } from '@/components/molecules/alert'
 import { FormField } from '@/components/molecules/form-field'
 import { useDraftNamespace } from '@/components/organisms/draft-scope'
-import { IntentForm } from '@/components/organisms/intent-form'
+import { FormDialog, TaskDialog } from '@/components/organisms/form-dialog'
+import { IntentForm, TaskSuccess } from '@/components/organisms/intent-form'
 import { MESSAGES, type McActionResult } from '@/lib/mc/action-result'
 import { clearAttempt, saveAttempt } from '@/lib/mc/drafts'
 import { newIdempotencyKey } from '@/lib/mc/idempotency'
@@ -20,24 +22,67 @@ import { usePendingAttempt } from '@/lib/mc/use-attempt'
 import { createDocumentAction, promoteVersionAction, recordSignatureAction } from '../actions'
 import type { DocumentDetail } from '../schemas'
 
-export function CreateDocumentForm({ matterId }: { matterId: string }) {
+/**
+ * One header action opens a title-only dialog. The form stays mounted, so the draft, the
+ * idempotency key and an unconfirmed create survive close and reopen.
+ */
+export function CreateDocumentForm({
+  matterId,
+  matterTitle,
+}: {
+  matterId: string
+  matterTitle: string
+}) {
+  const router = useRouter()
   return (
-    <IntentForm
-      receipted
-      draftKey={`matter:${matterId}:new-document`}
-      submitLabel={<LocalizedText en="Create document" vi="Tạo tài liệu" />}
-      run={(v, key) => createDocumentAction({ matterId, idempotencyKey: key, name: v.name ?? '' })}
+    <FormDialog
+      trigger={
+        <>
+          <Plus aria-hidden />
+          <LocalizedText en="New document" vi="Tài liệu mới" />
+        </>
+      }
+      title={<LocalizedText en="New document" vi="Tài liệu mới" />}
+      description={
+        <LocalizedText
+          en="Start with a name. Files are uploaded afterwards as versions."
+          vi="Bắt đầu bằng tên tài liệu. Tệp được tải lên sau, dưới dạng các phiên bản."
+        />
+      }
     >
-      {({ errors }) => (
-        <FormField
-          label={<LocalizedText en="Document name" vi="Tên tài liệu" />}
-          required
-          error={errors.name?.[0]}
+      {({ close }) => (
+        <IntentForm
+          receipted
+          draftKey={`matter:${matterId}:new-document`}
+          submitLabel={<LocalizedText en="Create document" vi="Tạo tài liệu" />}
+          run={(v, key) =>
+            createDocumentAction({ matterId, idempotencyKey: key, name: v.name ?? '' })
+          }
+          onSuccess={(r) => {
+            close()
+            if (r.id) router.push(`/matters/${matterId}/documents/${r.id}`)
+          }}
         >
-          {(c) => <Input name="name" maxLength={200} autoComplete="off" {...c} />}
-        </FormField>
+          {({ errors }) => (
+            <>
+              <p className="text-sm">
+                <LocalizedText en="Matter:" vi="Hồ sơ:" />{' '}
+                <strong className="break-words">{matterTitle}</strong>
+              </p>
+              <FormField
+                label={<LocalizedText en="Document name" vi="Tên tài liệu" />}
+                required
+                error={errors.name?.[0]}
+              >
+                {(c) => (
+                  <Input name="name" maxLength={200} autoComplete="off" data-autofocus {...c} />
+                )}
+              </FormField>
+            </>
+          )}
+        </IntentForm>
       )}
-    </IntentForm>
+    </FormDialog>
   )
 }
 
@@ -82,6 +127,7 @@ export function UploadVersionForm({
   documentId: string
 }) {
   const router = useRouter()
+  const taskDone = useContext(TaskSuccess)
   const [file, setFile] = useState<File | null>(null)
   const [key, setKey] = useState(() => newIdempotencyKey())
   const [state, setState] = useState<UploadState>({ kind: 'idle' })
@@ -143,6 +189,16 @@ export function UploadVersionForm({
           setFile(null)
           setKey(newIdempotencyKey())
           router.refresh()
+          taskDone?.(
+            json.replayed === true ? (
+              <LocalizedText
+                en="This file had already been stored."
+                vi="Tệp này đã được lưu trước đó."
+              />
+            ) : (
+              <LocalizedText en="Version stored." vi="Đã lưu phiên bản." />
+            ),
+          )
           return
         }
         if (json && !json.ok) return fail(json)
@@ -358,5 +414,82 @@ export function SignatureForm({ matterId, versionId }: { matterId: string; versi
         </div>
       )}
     </IntentForm>
+  )
+}
+
+/**
+ * Header action on a document: opens the upload task. The dialog stays mounted, so a chosen File
+ * (kept in memory only) and an unconfirmed upload survive close and reopen. A reload cannot keep
+ * the File: the form then asks for the same file again before it reuses the earlier key.
+ */
+export function UploadVersionDialog({
+  matterId,
+  documentId,
+  documentName,
+}: {
+  matterId: string
+  documentId: string
+  documentName: string
+}) {
+  return (
+    <TaskDialog
+      trigger={
+        <>
+          <Upload aria-hidden />
+          <LocalizedText en="Upload new version" vi="Tải lên phiên bản mới" />
+        </>
+      }
+      title={<LocalizedText en="Upload new version" vi="Tải lên phiên bản mới" />}
+      description={
+        <>
+          <strong className="break-words">{documentName}</strong>
+          {' · '}
+          <LocalizedText
+            en="Every upload is a new immutable version."
+            vi="Mỗi lần tải lên tạo một phiên bản bất biến."
+          />
+        </>
+      }
+    >
+      <UploadVersionForm matterId={matterId} documentId={documentId} />
+    </TaskDialog>
+  )
+}
+
+/** Per-version action: records an observed signature for exactly this version. */
+export function SignatureDialog({
+  matterId,
+  versionId,
+  versionLabel,
+}: {
+  matterId: string
+  versionId: string
+  /** Human label such as "Version 3 · contract.pdf". */
+  versionLabel: string
+}) {
+  return (
+    <TaskDialog
+      trigger={
+        <>
+          <FileSignature aria-hidden />
+          <LocalizedText en="Record signature" vi="Ghi nhận chữ ký" />
+        </>
+      }
+      triggerVariant="outline"
+      title={<LocalizedText en="Record an observed signature" vi="Ghi nhận chữ ký đã quan sát" />}
+      description={
+        <>
+          <strong className="break-words">{versionLabel}</strong>
+          {' · '}
+          <LocalizedText
+            en="Records that a signature was observed on this version. It does not sign anything."
+            vi="Ghi nhận rằng đã quan sát chữ ký trên phiên bản này. Hệ thống không ký thay."
+          />
+        </>
+      }
+      successNotice={<LocalizedText en="Signature recorded." vi="Đã ghi nhận chữ ký." />}
+    >
+      <SignatureForm matterId={matterId} versionId={versionId} />
+    </TaskDialog>
   )
 }

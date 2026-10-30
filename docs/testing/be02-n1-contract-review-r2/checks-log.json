@@ -1,0 +1,269 @@
+{
+  "task": "MC-BE02-N1-DELTA-REVIEW-R2",
+  "deliverable": "checks-log",
+  "status": "READ_HASH_STATIC_ONLY_COMPLETE_WITH_OPEN_INPUT_DRIFT",
+  "generated_at_utc": "2026-10-26T14:51:48Z",
+  "reviewer": {
+    "identity": "OpenCode (agent harness)",
+    "model": "DeepSeek V4.1 Flash Free",
+    "provider": "opencode",
+    "role": "independent nonauthor reviewer",
+    "independence_note": "The reviewed delta response was authored by Local Codex. This reviewer authored none of the reviewed content. No provider/model/account change, login, paid route or external messaging was initiated by this task."
+  },
+  "mode": {
+    "name": "READ_HASH_STATIC_ONLY",
+    "constraints": [
+      "no execution or import of reviewed code, reference model, scanner or suite",
+      "no tests/build/server/DB/HTTP/SQL/credentials/process/container/probes",
+      "no source import and no read-set expansion beyond the declared inputs",
+      "no Git mutation, no index/security-state change, no canonical contract edit",
+      "no provider call, login or external messaging",
+      "read/hash/JSON/codepoint utilities only"
+    ]
+  },
+  "environment": {
+    "repository_root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "head_unchanged_through_all_passes": true,
+    "os": "darwin (macOS 27.0.1)",
+    "shell_proxy": "rtk 1.0.1",
+    "python": "3.14.4 (stdlib only: hashlib, json, os, datetime)",
+    "utilities": ["sha256 (hashlib)", "wc -c", "ls -l", "stat", "grep", "git rev-parse", "git status --porcelain"],
+    "timezone_note": "local workstation time is UTC+07:00; all timestamps in this file are UTC (Z) unless marked local"
+  },
+  "intake_manifest": {
+    "path": "docs/testing/parallel-review-intake-20261026/be02-delta-inputs.json",
+    "bytes": 3047,
+    "sha256": "8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd",
+    "verified_pre_review": true,
+    "verified_pre_write": true,
+    "verified_post_write": true,
+    "verified_final_pass": true,
+    "changed_during_review": false
+  },
+  "verification_passes": [
+    {
+      "pass": 1,
+      "phase": "pre-review",
+      "at_utc": "2026-10-26T14:41Z (approx.; first gate invocation, not separately timestamped)",
+      "results": {
+        "intake_bytes_sha256_match": true,
+        "direct_inputs_checked": 14,
+        "direct_inputs_match": 14,
+        "overall": "PASS"
+      }
+    },
+    {
+      "pass": 2,
+      "phase": "pre-write",
+      "at_utc": "2026-10-26T14:45:20Z",
+      "results": {
+        "intake_bytes": 3047,
+        "intake_sha256": "8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd",
+        "intake_match": true,
+        "direct_inputs_checked": 14,
+        "direct_inputs_match": 14,
+        "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+        "branch": "codex/unified-project-flow",
+        "output_paths_absent": true,
+        "collision_gate": "PASS",
+        "overall": "PASS"
+      }
+    },
+    {
+      "pass": 3,
+      "phase": "post-write (review and review-inputs present; checks-log not yet written)",
+      "at_utc": "2026-10-26T14:50:18Z",
+      "results": {
+        "intake_bytes": 3047,
+        "intake_sha256": "8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd",
+        "intake_match": true,
+        "direct_inputs_checked": 14,
+        "direct_inputs_match": 14,
+        "review_report_present": true,
+        "review_report_bytes": 36909,
+        "review_report_sha256": "68d43d9221ebb80f2d5fc25ed54c68f120e3d403c2aa2d0da6d813fea2db047f",
+        "review_inputs_present": true,
+        "review_inputs_bytes": 9766,
+        "review_inputs_sha256": "d750290e6012fd6180e97ce0d63448a71a49f9fb4977f19ee6c6379ffc9dd08f",
+        "checks_log_present": false,
+        "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+        "branch": "codex/unified-project-flow",
+        "new_paths_vs_pre_write_snapshot": [
+          "docs/reviews/be02-n1-opencode-delta-review-r2.md",
+          "docs/testing/be02-n1-contract-review-r2/review-inputs.json"
+        ],
+        "pre_existing_dirty_untracked_entries_touched": false,
+        "overall": "PASS"
+      }
+    },
+    {
+      "pass": 4,
+      "phase": "final pre-report re-verification (after pass 3, before checks-log write)",
+      "at_utc": "2026-10-26T14:51:08Z",
+      "results": {
+        "intake_bytes": 3047,
+        "intake_sha256": "8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd",
+        "intake_match": true,
+        "direct_inputs_checked": 14,
+        "direct_inputs_match": 13,
+        "mismatched_inputs": ["AGENTS.md"],
+        "review_report_bytes": 36909,
+        "review_report_sha256": "68d43d9221ebb80f2d5fc25ed54c68f120e3d403c2aa2d0da6d813fea2db047f",
+        "review_inputs_bytes": 9766,
+        "review_inputs_sha256": "d750290e6012fd6180e97ce0d63448a71a49f9fb4977f19ee6c6379ffc9dd08f",
+        "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+        "branch": "codex/unified-project-flow",
+        "overall": "INPUT_DRIFT_DETECTED"
+      }
+    }
+  ],
+  "input_drift": {
+    "path": "AGENTS.md",
+    "pinned_bytes": 8886,
+    "pinned_sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb",
+    "observed_bytes_at_pass_4": 9093,
+    "observed_sha256_at_pass_4": "861e874c00cbaba4b2fbe6db6f08e9217b7564fd7a6d3eff6eaf27de05a5d03d",
+    "observed_mtime_local": "2026-10-26T21:50:24+07:00",
+    "observed_mtime_utc": "2026-10-26T14:50:24Z",
+    "drift_window": "after pass 3 (14:50:18Z) and before pass 4 (14:51:08Z)",
+    "causation": "not caused by this task: the only files written by this review are the three declared outputs; this task did not read-modify, truncate, stage, commit or revert AGENTS.md, and it ran no editor or formatter on it",
+    "handling": "not reverted, not staged, body not re-read, review not rebased; all review findings remain pinned to the 8886-byte/9f9ad043 snapshot that matched at passes 1-3",
+    "materiality": "unknown to this reviewer without reading the changed body; the change is an external concurrent edit in a pre-existing dirty worktree. If the new AGENTS.md changes BE02/N1 scope, ownership routing or review gates, Codex must re-pin the manifest and request a bounded re-confirmation.",
+    "needs_input_refresh": true,
+    "scope": "AGENTS.md only; intake manifest and the other 13 inputs unchanged"
+  },
+  "checks": [
+    {
+      "id": "GATE-01",
+      "at_utc": "2026-10-26T14:40Z (approx.; before first write)",
+      "method": "path existence check on the three declared outputs before any write",
+      "target": "docs/reviews/be02-n1-opencode-delta-review-r2.md; docs/testing/be02-n1-contract-review-r2/review-inputs.json; docs/testing/be02-n1-contract-review-r2/checks-log.json",
+      "result": "all three absent; collision gate PASS; no existing work overwritten",
+      "evidence": "recorded in review-inputs.json verification_passes[1]"
+    },
+    {
+      "id": "PIN-01",
+      "at_utc": "2026-10-26T14:41Z-14:50:18Z",
+      "method": "byte count plus sha256 of the intake manifest and each of its 14 declared inputs, no file body used beyond the declared set",
+      "target": "docs/testing/parallel-review-intake-20261026/be02-delta-inputs.json and its 14 inputs",
+      "result": "14/14 match at passes 1, 2 and 3; manifest match at all passes",
+      "evidence": "review-inputs.json pins.direct_inputs.entries"
+    },
+    {
+      "id": "C14-01",
+      "at_utc": "2026-10-26T14:43Z-14:47Z (approx.; pre-write window)",
+      "method": "parse vectors.json as JSON with stdlib json; read N1-C14 request body keys; encode keys and body with UTF-8 and UTF-16-BE; compare expectedHex and expectedSha256; no import or execution of reference_check.py",
+      "target": "docs/design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/vectors.json lines 70-72",
+      "result": "keys U+1F600 and U+E000; UTF-8 f09f9880 / ee8080; UTF-16-BE d83dde00 / e000; re-encoded body hex 7b22ee8080223a322c22f09f9880223a317d; sha256 cddbdeacace14eb6923e88dfafb2a3e7df21ec908682f50a886b7b9567692d02 matches expected",
+      "evidence": "confirms R1 lines 73/110 rendered the second key as ASCII empty string; actual key is U+E000 (visually blank), so the vector already discriminates scalar ordering from UTF-16 ordering"
+    },
+    {
+      "id": "C14-02",
+      "at_utc": "2026-10-26T14:43Z-14:47Z (approx.)",
+      "method": "compare three orderings against expectedHex: Unicode scalar (codepoint) order, UTF-8 byte order, UTF-16 code-unit order",
+      "target": "N1-C14 vector",
+      "result": "scalar order matches expected: true; UTF-8 byte order matches expected: true; UTF-16 order matches expected: false",
+      "evidence": "all four assertions in unicode-c14-clarification.json verified true; no vector addition is required for C-A"
+    },
+    {
+      "id": "C14-03",
+      "at_utc": "2026-10-26T14:47Z (approx.)",
+      "method": "static reasoning on UTF-8 byte order versus scalar order, plus literal codepoint check of the clarification file",
+      "target": "docs/testing/parallel-review-intake-20261026/unicode-c14-clarification.json",
+      "result": "UTF-8 byte order is equivalent to scalar order for valid UTF-8; the clarification file's 4 assertions all hold",
+      "evidence": "1556 bytes, sha256 2f197468c8eca77a4545fa109ae1e25d78d53d255b69af89e0b5bf11142541ab"
+    },
+    {
+      "id": "R1-01",
+      "at_utc": "2026-10-26T14:46Z (approx.)",
+      "method": "byte count, sha256, and literal line inspection of the preserved R1 report",
+      "target": "docs/reviews/be02-n1-opencode-contract-review-r1.md",
+      "result": "29144 bytes, sha256 3f0f8cb79cdd815822c0e4c1636696989bb4af3a6cfdc1a08abffa15112553da; lines 73 and 110 literally contain ASCII double-quote double-quote for the U+E000 key; original preserved, not rewritten",
+      "evidence": "erratum is published only in the R2 review"
+    },
+    {
+      "id": "JSON-01",
+      "at_utc": "2026-10-26T14:49:46Z",
+      "method": "stdlib json parse of the written review-inputs.json; field and count assertions",
+      "target": "docs/testing/be02-n1-contract-review-r2/review-inputs.json",
+      "result": "valid JSON; 14 pins; 3 preserved artifacts; read-set overshoot recorded; C14 evidence recorded; output hash for the review report recorded; no self-hash",
+      "evidence": "9766 bytes, sha256 d750290e6012fd6180e97ce0d63448a71a49f9fb4977f19ee6c6379ffc9dd08f"
+    },
+    {
+      "id": "OUT-01",
+      "at_utc": "2026-10-26T14:50:18Z",
+      "method": "byte count and sha256 after write",
+      "target": "docs/reviews/be02-n1-opencode-delta-review-r2.md",
+      "result": "36909 bytes, sha256 68d43d9221ebb80f2d5fc25ed54c68f120e3d403c2aa2d0da6d813fea2db047f; stable at passes 3 and 4",
+      "evidence": "review report"
+    },
+    {
+      "id": "OUT-02",
+      "at_utc": "2026-10-26T14:50:18Z",
+      "method": "byte count and sha256 after write",
+      "target": "docs/testing/be02-n1-contract-review-r2/review-inputs.json",
+      "result": "9766 bytes, sha256 d750290e6012fd6180e97ce0d63448a71a49f9fb4977f19ee6c6379ffc9dd08f; stable at passes 3 and 4",
+      "evidence": "pin verification record"
+    },
+    {
+      "id": "OUT-03",
+      "at_utc": "2026-10-26T14:51:48Z",
+      "method": "design check before writing this file",
+      "target": "docs/testing/be02-n1-contract-review-r2/checks-log.json",
+      "result": "this file records the other two output hashes and deliberately excludes its own byte count and sha256; its size and hash are reported only in the completion report, so no manifest hashes itself",
+      "evidence": "self_hash field below"
+    },
+    {
+      "id": "PIN-04",
+      "at_utc": "2026-10-26T14:51:08Z",
+      "method": "repeat of the full 14-input byte/sha256 gate plus HEAD/branch check",
+      "target": "intake manifest and 14 declared inputs",
+      "result": "13/14 match; AGENTS.md drifted externally at 14:50:24Z; intake, HEAD a62d838791ba188838c4ff00b7b6e265ac775056 and branch codex/unified-project-flow unchanged; outputs unchanged",
+      "evidence": "input_drift object above"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/reviews/be02-n1-opencode-delta-review-r2.md",
+      "bytes": 36909,
+      "sha256": "68d43d9221ebb80f2d5fc25ed54c68f120e3d403c2aa2d0da6d813fea2db047f"
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r2/review-inputs.json",
+      "bytes": 9766,
+      "sha256": "d750290e6012fd6180e97ce0d63448a71a49f9fb4977f19ee6c6379ffc9dd08f"
+    }
+  ],
+  "limits": {
+    "tests_run": 0,
+    "be02_tests_status": "27 NOT_RUN (unchanged)",
+    "author_checks": "79 cited as evidence only; not re-executed",
+    "reference_program_executed": false,
+    "scanner_suite_executed": false,
+    "runtime_or_http_or_db_or_sql_probes": false,
+    "source_import_or_build": false,
+    "full_32_operation_review": "not repeated",
+    "be01_source_review": "not repeated",
+    "read_set": "14 declared inputs plus the intake manifest; one grep overshoot recorded in review-inputs.json (4 lines from 2 files, not used or cited)",
+    "semble": "binary/CLI checked; no semantic content search run, to preserve the fixed read set",
+    "git_mutation": false,
+    "provider_or_account_change": false,
+    "external_messaging": false,
+    "step_03b_activated": false,
+    "policy_or_contract_adoption": false
+  },
+  "verdict": {
+    "c_a": "ACCEPTED_FACTUAL_ERRATUM",
+    "c_b": "ACCEPTED (existing N1 three-state marker; R1 suggestion withdrawn; create CAS-none unchanged)",
+    "c_c": "ACCEPTED WITH REQUIRED SHAPE CLARIFICATION (field presence fixed per representation version; ownership/public naming remain decisions)",
+    "c_d": "ACCEPTED AS CANDIDATE DELTA, INCOMPLETE CATALOGUE EDIT SCOPE (422 boundary, knock-on 422 references, 415 missing-Content-Type naming, catalogue-wide vs slice scope)",
+    "c_e": "ACCEPTED AS SCOPED REQUIREMENT-CREATE MAPPING WITH PINNED DEPENDENCIES (T25 canonical path, create header policy, body/version precision)",
+    "e_1_e_3": "ACCEPTED WITH PRECISION ITEMS (trailing metadata definition, wrapper validator scope, N1 normative home, example/anchor fixes; eventSeqs/derivedChanges envelope gap identified)",
+    "document": "DELTA_RESPONSE_PASS_DOCUMENT_ONLY_WITH_LIMITATIONS",
+    "adoption": "none; no canonical contract, policy or implementation change",
+    "open_gate": "AGENTS.md input drift after pass 3 requires Codex re-pin and, if BE02/N1 scope changed, bounded re-confirmation"
+  },
+  "self_hash": "excluded by design; checks-log byte count and sha256 are reported only in the completion report"
+}

@@ -1,0 +1,40 @@
+{
+ "label": "opening",
+ "utc": "2026-10-28T15:34:41Z",
+ "manifest_sha256": "de8424ead1e9cd911c7a6fe124b48e5d67b6dcc9e519bb10a8b87453b05d4489",
+ "manifest_entries": 719,
+ "manifest_mismatch_or_missing": [],
+ "listeners": [
+  {
+   "cmd": "com.docke",
+   "pid": "17462",
+   "addr": "127.0.0.1:55442",
+   "ps": "Tue Oct 27 22:24:09 2026     17441 /Applications/Docker.app/Contents/MacOS/com.docker.backend services",
+   "cwd": "/Users/nguyenvanlan/Library/Containers/com.docker.docker/Data"
+  },
+  {
+   "cmd": "mcapi",
+   "pid": "49105",
+   "addr": "127.0.0.1:8081",
+   "ps": "Wed Oct 28 22:26:50 2026     49103 /private/tmp/mc-local-login-cij0dm22/mcapi",
+   "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend"
+  },
+  {
+   "cmd": "node",
+   "pid": "49106",
+   "addr": "127.0.0.1:3000",
+   "ps": "Wed Oct 28 22:26:50 2026     49104 next-server (v16.4.2)",
+   "cwd": "/private/tmp/mc-local-login-cij0dm22/frontend"
+  }
+ ],
+ "mc_p0_containers": [
+  "mc-p0-zcode-pg-restore-target|3c207de99a03|Exited (0) 6 hours ago",
+  "mc-p0-zcode-pg-product-test|4d09d047440d|Up 8 minutes",
+  "mc-p0-zcode-pg-native-test|11d44cca9b33|Exited (0) 6 hours ago",
+  "mc-p0-claude-pg|caa3ff187f0c|Exited (0) 6 hours ago",
+  "mc-p0-idp-proxy-1|bc6a0077bc3a|Exited (0) 6 hours ago",
+  "mc-p0-idp-zitadel-login-1|eb7be27adacf|Exited (143) 6 hours ago",
+  "mc-p0-idp-zitadel-api-1|47084fefe717|Exited (0) 6 hours ago",
+  "mc-p0-idp-postgres-1|2b2b069b9fb9|Exited (0) 6 hours ago"
+ ]
+}

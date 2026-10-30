@@ -7,9 +7,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 var _ port.ContextTx = (*pgMatterTx)(nil)

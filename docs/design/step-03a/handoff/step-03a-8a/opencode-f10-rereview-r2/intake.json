@@ -1,0 +1,90 @@
+{
+  "task": "MC-003A.8A F10 independent rereview intake",
+  "date": "2026-10-26",
+  "received_utc": "2026-10-26T00:40:58.057718+00:00",
+  "owner": "Local Codex",
+  "governance_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "reviewer": {
+    "actual_tool_reported": "OpenCode CLI v2.1.4",
+    "provider": "opencode",
+    "model_id": "deepseek-v4.1-flash-free",
+    "identity_basis": "human-returned reviewer declaration; no new Codex CLI/provider invocation",
+    "independence": "reviewer declares nonauthor; consistent with ZCode author provenance"
+  },
+  "verdict": "PASS_WITH_LIMITATIONS_DOCUMENT_ONLY",
+  "reviewed_manifest_sha256": "f74a5a8edc66e0b54986cd371b5f733fb0f87b9cf5e23cfbef28d80e933ea169",
+  "snapshots_verified": [
+    {
+      "snapshot": "01-corrected-owner-return.txt",
+      "bytes": 23048,
+      "sha256": "5c8f93dff8e75af589edfb30e04f06c9d5c11fd470598d410bb97e7628a0a984",
+      "verified": true
+    },
+    {
+      "snapshot": "02-corrected-delta.json",
+      "bytes": 7509,
+      "sha256": "c82c7e28d813387182042164ee7de9ac254108b56a8f529f4d6419a0c53687a1",
+      "verified": true
+    },
+    {
+      "snapshot": "03-prior-opencode-review.txt",
+      "bytes": 24675,
+      "sha256": "6aed6f42f331797a4216eff6997534e6462d297ce11364c05aa7cde3fd85729c",
+      "verified": true
+    },
+    {
+      "snapshot": "04-previous-final-delta.json",
+      "bytes": 6709,
+      "sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "verified": true
+    },
+    {
+      "snapshot": "05-reviewed-context.json",
+      "bytes": 3691,
+      "sha256": "4f7249521a522574837ae32521eea6f96a4fcaa94ac0d9ad5f01a7705a79cfdb",
+      "verified": true
+    },
+    {
+      "snapshot": "06-prior-C1-C2-R2.json",
+      "bytes": 6949,
+      "sha256": "d2b03fe52def0168ae6dbd552ecd3f7ceee7204229e93d21c1d4823a77b39ed2",
+      "verified": true
+    },
+    {
+      "snapshot": "07-finding-ledger-process.json",
+      "bytes": 4839,
+      "sha256": "7f45a013fd65e738ab23c11563737ab1479c6a6a414809733e5fd8f4eea6952d",
+      "verified": true
+    }
+  ],
+  "snapshot_bytes": 77420,
+  "raw_return": {
+    "bytes": 12711,
+    "sha256": "3cea6dcff861c93660676896d7318d5bccff11600fac2678f43ac405c801bc11",
+    "lossless_gzip": "reviewer-return.txt.gz",
+    "gzip_sha256": "de1ff1ef4a02279266438f642e4ce357af43cf4e6538042e342e8a7983f819f7"
+  },
+  "limitations": {
+    "L1": "T14b expected-case supplement supplied by Codex; runtime NOT_RUN",
+    "L2": "Candidate replay source pinned; no independent source compatibility claimed",
+    "L3": "Twelve exact old/new JSON/prose supersession records supplied and pointers verified",
+    "L4": "Full-source/architecture compatibility NOT_VERIFIED",
+    "L5": "Missing versus null cycle binding NEEDS_TECHNICAL_CLARIFICATION"
+  },
+  "F10": "OPEN",
+  "fields_bounds_routes_filters": "NOT_ADOPTED",
+  "catalogue_operations": 32,
+  "runtime": "NOT_RUN",
+  "gates": {
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G5_B": "FINDINGS_OPEN, scoped F10 OC document findings closed only",
+    "G6": "REWORK_REQUIRED",
+    "STEP03B": "NOT_AUTHORIZED",
+    "PO_architecture_gate": "NOT_PASSED"
+  },
+  "new_external_agent_calls": 0,
+  "source_product_edits": false,
+  "runtime_or_lifecycle_actions": false,
+  "commit_attempted": false
+}

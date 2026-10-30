@@ -5,6 +5,7 @@ import { cache } from 'react'
 import { serverEnv } from '@/lib/env'
 
 import { resolveSession } from './auth-provider'
+import { awaitRequest } from './request-time'
 
 /** What the app knows about the caller. Fill it in src/lib/auth-provider.ts. */
 export type Session = {
@@ -42,6 +43,8 @@ const ANONYMOUS_SESSION: Session = { userId: 'anonymous', permissions: ['*'] }
 export const getSession = cache(async (): Promise<Session | null> => {
   if (serverEnv.API_MODE === 'demo') return DEMO_SESSION
   if (serverEnv.AUTH_ALLOW_ANONYMOUS) return ANONYMOUS_SESSION
+  // Session expiry reads the clock, so it must never run while a route is prerendered (R-NX-5).
+  await awaitRequest()
   return resolveSession()
 })
 

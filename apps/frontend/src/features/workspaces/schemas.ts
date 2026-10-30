@@ -48,7 +48,7 @@ export const createWorkspaceInputSchema = z.object({ idempotencyKey: keySchema, 
 
 export const grantWorkspaceMemberInputSchema = z.object({
   workspaceId: idSchema,
-  userId: z.string().trim().min(1, 'Enter the user id of an existing product user').max(100),
+  userId: z.string().trim().min(1, 'Select a person').max(100),
   role: z.enum(WORKSPACE_ROLES),
   ifMatch: z.string().min(1),
 })
@@ -57,4 +57,14 @@ export const revokeWorkspaceMemberInputSchema = z.object({
   workspaceId: idSchema,
   userId: idSchema,
   ifMatch: z.string().min(1),
+})
+
+export const searchWorkspacePeopleInputSchema = z.object({
+  workspaceId: idSchema,
+  // The API bounds the query to 100 BYTES (Go len), not UTF-16 units; the repository sends it as a
+  // query string, never a path.
+  query: z
+    .string()
+    .trim()
+    .refine((q) => new TextEncoder().encode(q).length <= 100),
 })

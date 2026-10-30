@@ -6,7 +6,6 @@ import { PageHeader } from '@/components/molecules/page-header'
 import { Skeleton } from '@/components/atoms/skeleton'
 import { ReadFailure } from '@/components/organisms/read-failure'
 import { MatterHistory } from '@/features/matters/components/matter-history'
-import { MatterTabs } from '@/features/matters/components/matter-tabs'
 import { matterRepository } from '@/features/matters/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
@@ -31,6 +30,11 @@ async function History({ params, searchParams }: PageProps<'/matters/[matterId]/
   const read = await attempt(() => matterRepository.history(matterId, cursor))
   if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="history" />
   const history = read.value
+  // Names only decorate the recorded ids: if the member read fails the ids are shown as recorded.
+  const members = await attempt(() => matterRepository.members(matterId))
+  const actorNames = members.ok
+    ? Object.fromEntries(members.value.items.map((m) => [m.userId, m.displayName]))
+    : undefined
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
@@ -42,9 +46,9 @@ async function History({ params, searchParams }: PageProps<'/matters/[matterId]/
           />
         }
       />
-      <MatterTabs matterId={matterId} active="history" />
       <MatterHistory
         events={history.items}
+        actorNames={actorNames}
         asOf={history.asOf}
         firstHref={cursor ? here : undefined}
         nextHref={

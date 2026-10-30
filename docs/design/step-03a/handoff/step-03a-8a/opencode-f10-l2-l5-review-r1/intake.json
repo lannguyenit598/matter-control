@@ -1,0 +1,76 @@
+{
+  "task": "MC-003A.8A F10 L2/L5 review intake",
+  "actor": "Local Codex",
+  "utc": "2026-10-26T02:23:09.323903+00:00",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "verdict": "PASS_WITH_LIMITATIONS_DOCUMENT_ONLY",
+  "reviewer": {
+    "product": "OpenCode CLI",
+    "reported_version": "2.1.4",
+    "reported_provider": "opencode",
+    "reported_model": "glm-5.3-flash-free",
+    "intended_model": "deepseek-v4.1-flash-free",
+    "model_deviation": true,
+    "approval_quote": "Proceed on current route, deviation logged.",
+    "approval_provenance": "Reviewer reports human approval in external session; original human authorization/session transcript NOT_PRESENT in this intake. Not independently verified; not future provider permission.",
+    "independence": "Reviewer-declared, not candidate author",
+    "review_execution": "Reviewer reports earlier completed same-session analysis of identical packet, freshly rehashed on duplicate delivery; no fresh reread/analysis claimed",
+    "live_attestation": false
+  },
+  "return": {
+    "bytes": 11234,
+    "sha256": "a0bf7cbe0d1737973a46e5f797d77ae9e12ec3e2634cf937603fcbebf9dcf155",
+    "stored": "reviewer-return.txt.gz"
+  },
+  "checks": [
+    {
+      "name": "reviewed manifest exact SHA",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewed payload docs/design/step-03a/handoff/step-03a-8a/zcode-f10-cycle-clarification-r1/review-packet/01-owner-return.txt.gz",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewed payload docs/design/step-03a/handoff/step-03a-8a/zcode-f10-cycle-clarification-r1/review-packet/02-candidate-delta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewed payload docs/design/step-03a/handoff/step-03a-8a/zcode-f10-cycle-clarification-r1/review-packet/03-source-excerpts.json",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewed payload docs/design/step-03a/handoff/step-03a-8a/zcode-f10-cycle-clarification-r1/review-packet/04-prior-independent-return.txt.gz",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewed payload docs/design/step-03a/handoff/step-03a-8a/zcode-f10-cycle-clarification-r1/review-packet/05-review-boundaries.json",
+      "result": "PASS"
+    },
+    {
+      "name": "five snapshots 29322 bytes",
+      "result": "PASS"
+    },
+    {
+      "name": "raw review lossless gzip",
+      "result": "PASS"
+    },
+    {
+      "name": "API source exact original pin",
+      "result": "PASS"
+    },
+    {
+      "name": "API headings7and49",
+      "result": "PASS"
+    },
+    {
+      "name": "review source commit intact",
+      "result": "PASS"
+    }
+  ],
+  "N1": "NEEDS_CONTRACT_PIN",
+  "N2": "CANDIDATE_DOC_PIN_SUPPLIED",
+  "N3": "SOURCE_ANCHORS_SUPPLIED",
+  "external_dispatch_by_codex": false,
+  "runtime": "NOT_RUN"
+}

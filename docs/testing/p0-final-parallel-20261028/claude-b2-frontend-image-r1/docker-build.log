@@ -1,0 +1,266 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.69kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 2.6s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:24.22.1-slim
+#4 DONE 6.0s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 279B done
+#5 DONE 0.0s
+
+#6 [deps 1/5] FROM docker.io/library/node:24.22.1-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#6 resolve docker.io/library/node:24.22.1-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c done
+#6 ...
+
+#7 [internal] load build context
+#7 transferring context: 5.47MB 0.1s done
+#7 DONE 0.1s
+
+#6 [deps 1/5] FROM docker.io/library/node:24.22.1-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#6 sha256:baff30000c3659c6bb58cd94e81f7a015a84ab86af9fbc74f61c83f194339d49 0B / 448B 0.2s
+#6 sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 0B / 1.71MB 0.2s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 0B / 51.05MB 0.2s
+#6 sha256:1df5cdf85ecfbe1f91d38e11d14a8a71e573a7ad62d321a3366f18f628620032 0B / 3.31kB 0.2s
+#6 sha256:baff30000c3659c6bb58cd94e81f7a015a84ab86af9fbc74f61c83f194339d49 448B / 448B 0.6s done
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 0B / 28.14MB 0.2s
+#6 sha256:1df5cdf85ecfbe1f91d38e11d14a8a71e573a7ad62d321a3366f18f628620032 3.31kB / 3.31kB 1.7s done
+#6 sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 1.05MB / 1.71MB 3.5s
+#6 sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 1.71MB / 1.71MB 5.2s done
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 2.10MB / 51.05MB 5.3s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 2.10MB / 28.14MB 5.1s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 5.24MB / 51.05MB 6.5s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 8.39MB / 51.05MB 9.0s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 4.19MB / 28.14MB 8.6s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 6.29MB / 28.14MB 9.5s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 11.53MB / 51.05MB 10.8s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 8.39MB / 28.14MB 11.9s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 14.68MB / 51.05MB 13.1s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 10.49MB / 28.14MB 14.4s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 17.83MB / 51.05MB 15.3s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 20.97MB / 51.05MB 17.6s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 12.58MB / 28.14MB 17.0s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 24.12MB / 51.05MB 20.0s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 14.68MB / 28.14MB 19.5s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 27.26MB / 51.05MB 21.9s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 16.78MB / 28.14MB 21.9s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 30.41MB / 51.05MB 24.9s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 18.87MB / 28.14MB 24.6s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 33.55MB / 51.05MB 26.9s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 20.97MB / 28.14MB 27.0s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 36.70MB / 51.05MB 29.3s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 23.07MB / 28.14MB 29.7s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 39.85MB / 51.05MB 31.7s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 25.17MB / 28.14MB 31.5s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 42.99MB / 51.05MB 33.5s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 27.26MB / 28.14MB 34.4s
+#6 sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 28.14MB / 28.14MB 34.7s done
+#6 extracting sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 46.14MB / 51.05MB 35.6s
+#6 extracting sha256:f791e47cf52abf7b364878f2141547e3781072e437f599f6632849d88fca8ca4 0.4s done
+#6 extracting sha256:1df5cdf85ecfbe1f91d38e11d14a8a71e573a7ad62d321a3366f18f628620032 done
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 49.28MB / 51.05MB 37.4s
+#6 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 51.05MB / 51.05MB 38.1s done
+#6 extracting sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8
+#6 extracting sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 0.5s done
+#6 DONE 38.8s
+
+#6 [deps 1/5] FROM docker.io/library/node:24.22.1-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#6 extracting sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 0.0s done
+#6 extracting sha256:baff30000c3659c6bb58cd94e81f7a015a84ab86af9fbc74f61c83f194339d49 done
+#6 DONE 38.8s
+
+#8 [deps 2/5] WORKDIR /app
+#8 DONE 0.3s
+
+#9 [deps 3/5] RUN corepack enable
+#9 DONE 0.2s
+
+#10 [deps 4/5] COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+#10 DONE 0.0s
+
+#11 [deps 5/5] RUN --mount=type=cache,target=/root/.local/share/pnpm/store     pnpm install --frozen-lockfile --ignore-scripts
+#11 0.123 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-12.11.2.tgz
+#11 1.960 Downloading the pnpm 12.11.2 binary for linux-arm64...
+#11 3.861 ? Verifying lockfile against supply-chain policies (715 entries)...
+#11 4.282 Packages are copied from the content-addressable store to the virtual store.
+#11 4.282   Content-addressable store is at: /root/.local/share/pnpm/store/v11
+#11 4.282   Virtual store is at:             node_modules/.pnpm
+#11 4.368 Downloading @img/sharp-libvips-linux-arm64@1.3.4: 0.00 B/8.48 MB
+#11 4.396 Update available! 12.11.2 → 12.16.1.
+#11 4.396 Changelog: https://pnpm.io/v/12.16.1
+#11 4.396 To update, run: curl -fsSL https://get.pnpm.io/install.sh | sh -
+#11 4.441 Downloading @rolldown/binding-linux-arm64-gnu@1.2.14: 0.00 B/7.81 MB
+#11 5.447 Progress: resolved 544, reused 0, downloaded 197, added 192
+#11 5.732 Downloading storybook@10.6.2: 0.00 B/6.13 MB
+#11 5.778 Downloading next@16.4.2: 0.00 B/43.67 MB
+#11 6.782 Progress: resolved 544, reused 0, downloaded 339, added 320
+#11 7.001 Downloading @next/swc-linux-arm64-gnu@16.4.2: 0.00 B/32.76 MB
+#11 8.003 Progress: resolved 544, reused 0, downloaded 437, added 416
+#11 9.005 Progress: resolved 544, reused 0, downloaded 491, added 480
+#11 10.11 Downloading @rolldown/binding-linux-arm64-gnu@1.2.14: 6.78 MB/7.81 MB
+#11 11.43 Downloading @next/swc-linux-arm64-gnu@16.4.2: 2.14 MB/32.76 MB
+#11 12.46 Downloading @next/swc-linux-arm64-gnu@16.4.2: 3.71 MB/32.76 MB
+#11 12.58 ✓ Lockfile passes supply-chain policies (715 entries in 8.7s)
+#11 12.58 Lockfile is up to date, resolution step is skipped
+#11 13.97 Downloading @next/swc-linux-arm64-gnu@16.4.2: 9.32 MB/32.76 MB
+#11 14.99 Downloading @next/swc-linux-arm64-gnu@16.4.2: 16.15 MB/32.76 MB
+#11 15.99 Downloading @next/swc-linux-arm64-gnu@16.4.2: 22.53 MB/32.76 MB
+#11 17.04 Downloading @next/swc-linux-arm64-gnu@16.4.2: 30.08 MB/32.76 MB
+#11 18.07 Downloading next@16.4.2: 40.81 MB/43.67 MB
+#11 18.98 Packages: +544
+#11 18.98 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#11 19.11 Progress: resolved 544, reused 0, downloaded 544, added 544, done
+#11 20.74 
+#11 20.74 dependencies:
+#11 20.74 + class-variance-authority 0.7.1
+#11 20.74 + clsx 2.1.1
+#11 20.74 + lucide-react 1.59.0
+#11 20.74 + next 16.4.2
+#11 20.74 + react 19.3.1
+#11 20.74 + react-dom 19.3.1
+#11 20.74 + tailwind-merge 3.7.0
+#11 20.74 + zod 4.6.7
+#11 20.74 
+#11 20.74 devDependencies:
+#11 20.74 + @playwright/test 1.64.1
+#11 20.74 + @storybook/addon-a11y 10.6.2
+#11 20.74 + @storybook/addon-docs 10.6.2
+#11 20.74 + @storybook/nextjs-vite 10.6.2
+#11 20.74 + @tailwindcss/postcss 4.3.3
+#11 20.74 + @tailwindcss/turbopack 4.3.3
+#11 20.74 + @tailwindcss/vite 4.3.3
+#11 20.74 + @testing-library/dom 10.4.2
+#11 20.74 + @testing-library/jest-dom 7.0.1
+#11 20.74 + @testing-library/react 16.3.3
+#11 20.74 + @testing-library/user-event 14.6.8
+#11 20.74 + @types/node 24.19.2
+#11 20.74 + @types/react 19.3.0
+#11 20.74 + @types/react-dom 19.3.0
+#11 20.74 + @vitejs/plugin-react 6.1.2
+#11 20.74 + eslint 9.39.5
+#11 20.74 + eslint-config-next 16.4.2
+#11 20.74 + eslint-config-prettier 10.1.8
+#11 20.74 + eslint-plugin-storybook 10.6.2
+#11 20.74 + husky 9.1.7
+#11 20.74 + jsdom 30.1.3
+#11 20.74 + lint-staged 17.6.0
+#11 20.74 + prettier 3.9.10
+#11 20.74 + prettier-plugin-tailwindcss 0.8.1
+#11 20.74 + storybook 10.6.2
+#11 20.74 + tailwindcss 4.3.3
+#11 20.74 + typescript 5.9.3
+#11 20.74 + vite 8.3.4
+#11 20.74 + vitest 5.0.5
+#11 20.74 
+#11 20.77 Done in 16.9s using pnpm v12.11.2
+#11 DONE 21.5s
+
+#12 [build 4/6] COPY --from=deps /app/node_modules ./node_modules
+#12 DONE 3.1s
+
+#13 [build 5/6] COPY . .
+#13 DONE 0.2s
+
+#14 [build 6/6] RUN pnpm build && mkdir -p public
+#14 0.150 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-12.11.2.tgz
+#14 1.348 Downloading the pnpm 12.11.2 binary for linux-arm64...
+#14 3.065 $ next build && node scripts/check-built-css.mjs
+#14 3.265 ▲ Next.js 16.4.2 (Turbopack)
+#14 3.284 ✓ Running next.config.ts took 19ms
+#14 3.293 - Cache Components enabled
+#14 3.293 - Partial Prefetching enabled
+#14 3.293 
+#14 3.319   Creating an optimized production build ...
+#14 9.099 ✓ Compiled successfully in 5.8s
+#14 9.108   Running TypeScript ...
+#14 14.67   Finished TypeScript in 5.6s ...
+#14 14.67   Collecting page data using 9 workers ...
+#14 15.26   Generating static pages using 9 workers (0/25) ...
+#14 15.46   Generating static pages using 9 workers (6/25) 
+#14 15.59   Generating static pages using 9 workers (12/25) 
+#14 15.61   Generating static pages using 9 workers (18/25) 
+#14 15.66 ✓ Generating static pages using 9 workers (25/25) in 397ms
+#14 15.66   Finalizing page optimization ...
+#14 15.87 
+#14 15.87 Route (app)
+#14 15.87 ┌ ○ /
+#14 15.87 ├ ○ /_not-found
+#14 15.87 ├ ƒ /api/auth/callback
+#14 15.87 ├ ƒ /api/auth/login
+#14 15.87 ├ ƒ /api/auth/logout
+#14 15.87 ├ ƒ /api/auth/session
+#14 15.87 ├ ƒ /api/matters/[matterId]/documents/[documentId]/versions
+#14 15.87 ├ ƒ /api/matters/[matterId]/documents/[documentId]/versions/[versionId]/content
+#14 15.87 ├ ƒ /api/matters/[matterId]/export
+#14 15.87 ├ ◐ /login
+#14 15.87 ├   /matters/[matterId]
+#14 15.87 │ └ ◐ /matters/[matterId]
+#14 15.87 ├   /matters/[matterId]/control-room
+#14 15.87 │ └ ◐ /matters/[matterId]/control-room
+#14 15.87 ├   /matters/[matterId]/data
+#14 15.87 │ └ ◐ /matters/[matterId]/data
+#14 15.87 ├   /matters/[matterId]/documents
+#14 15.87 │ └ ◐ /matters/[matterId]/documents
+#14 15.87 ├   /matters/[matterId]/documents/[documentId]
+#14 15.87 │ └ ◐ /matters/[matterId]/documents/[documentId]
+#14 15.87 ├   /matters/[matterId]/filings
+#14 15.87 │ └ ◐ /matters/[matterId]/filings
+#14 15.87 ├   /matters/[matterId]/filings/[filingId]
+#14 15.87 │ └ ◐ /matters/[matterId]/filings/[filingId]
+#14 15.87 ├   /matters/[matterId]/filings/new
+#14 15.87 │ └ ◐ /matters/[matterId]/filings/new
+#14 15.87 ├   /matters/[matterId]/history
+#14 15.87 │ └ ◐ /matters/[matterId]/history
+#14 15.87 ├   /matters/[matterId]/planning
+#14 15.87 │ └ ◐ /matters/[matterId]/planning
+#14 15.87 ├   /matters/[matterId]/work
+#14 15.87 │ └ ◐ /matters/[matterId]/work
+#14 15.87 ├   /matters/[matterId]/work/[itemId]
+#14 15.87 │ └ ◐ /matters/[matterId]/work/[itemId]
+#14 15.87 ├ ◐ /my-actions
+#14 15.87 ├   /requirements/[requirementId]
+#14 15.87 │ └ ◐ /requirements/[requirementId]
+#14 15.87 ├ ◐ /workspaces
+#14 15.87 └   /workspaces/[workspaceId]
+#14 15.87   └ ◐ /workspaces/[workspaceId]
+#14 15.87 
+#14 15.87 
+#14 15.87 ○  (Static)             prerendered as static content
+#14 15.87 ◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content
+#14 15.87 ƒ  (Dynamic)            server-rendered on demand
+#14 15.87 
+#14 15.90 Compiled CSS verified: 1 assets, layout/accessibility/theme utilities present
+#14 DONE 16.2s
+
+#15 [runtime 3/5] COPY --from=build --chown=node:node /app/.next/standalone ./
+#15 DONE 0.3s
+
+#16 [runtime 4/5] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#16 DONE 0.1s
+
+#17 [runtime 5/5] COPY --from=build --chown=node:node /app/public ./public
+#17 DONE 0.0s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 0.8s done
+#18 exporting manifest sha256:c4da29a533fe8b0c8b129233fef82bf3c065146969a8d16e3b73e2c318dfc5b8 done
+#18 exporting config sha256:31d220e4356e20481594666e040c159ef44250f07df9aaf3cc724fd1b237947e done
+#18 exporting attestation manifest sha256:3200058dcd63ceb9a7d6daddf5a9ba101653719b0b2c1597bfd6a9f4b393cc3f done
+#18 exporting manifest list sha256:0bbe63fc8b13207c70e088f8efef02541a051214f8efd7bfa79ba53013f70cf7 done
+#18 naming to docker.io/library/mc-web:b2-check done
+#18 unpacking to docker.io/library/mc-web:b2-check
+#18 unpacking to docker.io/library/mc-web:b2-check 1.8s done
+#18 DONE 2.7s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/4j6rsmik5251nu35a5dys8ixd

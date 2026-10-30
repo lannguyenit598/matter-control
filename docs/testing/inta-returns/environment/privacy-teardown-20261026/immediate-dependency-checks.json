@@ -1,0 +1,93 @@
+[
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "lsof",
+      "-nP",
+      "-iTCP:15457",
+      "-sTCP:ESTABLISHED"
+    ],
+    "start_utc": "2026-10-26T08:51:19.460480+00:00",
+    "end_utc": "2026-10-26T08:51:19.500461+00:00",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "lsof",
+      "-nP",
+      "-iTCP:18085",
+      "-sTCP:ESTABLISHED"
+    ],
+    "start_utc": "2026-10-26T08:51:19.500487+00:00",
+    "end_utc": "2026-10-26T08:51:19.533859+00:00",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "lsof",
+      "-nP",
+      "-iTCP:18085",
+      "-sTCP:LISTEN"
+    ],
+    "start_utc": "2026-10-26T08:51:19.533887+00:00",
+    "end_utc": "2026-10-26T08:51:19.567219+00:00",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "lsof",
+      "-nP",
+      "-iTCP:18086",
+      "-sTCP:ESTABLISHED"
+    ],
+    "start_utc": "2026-10-26T08:51:19.567243+00:00",
+    "end_utc": "2026-10-26T08:51:19.600901+00:00",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "lsof",
+      "-nP",
+      "-iTCP:18086",
+      "-sTCP:LISTEN"
+    ],
+    "start_utc": "2026-10-26T08:51:19.600927+00:00",
+    "end_utc": "2026-10-26T08:51:19.634199+00:00",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "rtk",
+      "proxy",
+      "ps",
+      "-p",
+      "98134,88444,88453",
+      "-o",
+      "pid=,ppid=,lstart=,comm="
+    ],
+    "start_utc": "2026-10-26T08:51:19.634226+00:00",
+    "end_utc": "2026-10-26T08:51:19.653900+00:00",
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,45 @@
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+ ❯ src/lib/oidc/durable-state.test.ts (9 tests | 1 failed) 419ms
+   ❯ durable PostgreSQL profile on a fresh local fixture (7)
+     × refuses an expired access token when the issuer provided no refresh token 17ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  09:51:17
+   Duration  641ms (tests 72%, setup 19%, transform 5%, import 4%)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > refuses an expired access token when the issuer provided no refresh token
+AssertionError: expected { Object (record, accessToken) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "accessToken": "OLD",
+  "record": {
+    "accessExpiresAt": 1793328678102,
+    "accessToken": "OLD",
+    "createdAt": 1793328678103,
+    "lastSeenAt": 1793328678103,
+    "name": "Synthetic A",
+    "sessionHandle": "SFZFHbFG_TJaKw3jYQkNLdjDxsZKoZ7g6BOSvc30GP8",
+    "sub": "synthetic-a",
+  },
+}
+
+ ❯ src/lib/oidc/durable-state.test.ts:104:74
+    102|     )
+    103|     const refresh = vi.fn()
+    104|     expect(await livePersistentSession(config, h, second, now, refresh…
+       |                                                                          ^
+    105|     expect(refresh).not.toHaveBeenCalled()
+    106|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

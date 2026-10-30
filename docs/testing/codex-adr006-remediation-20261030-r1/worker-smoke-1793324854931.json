@@ -1,0 +1,11 @@
+{
+  "identity": "Actual Local Codex",
+  "fixture": "Synthetic local OIDC + real Go + owned PostgreSQL + filesystem object adapter; no cloud provider",
+  "checks": [
+    {
+      "name": "runtime failure",
+      "pass": false,
+      "error": "API fixture create /workspaces/01a18a7d-ae80-781e-84a3-a664464bf26a/matters: 428 {\"type\":\"urn:mc:precondition-required\",\"title\":\"Precondition Required\",\"status\":428,\"detail\":\"a required precondition is missing (If-Match, or the expected-state field this command names)\",\"instance\":\"/api/v1/workspaces/01a18a7d-ae80-781e-84a3-a664464bf26a/matters\",\"retryable\":false}"
+    }
+  ]
+}

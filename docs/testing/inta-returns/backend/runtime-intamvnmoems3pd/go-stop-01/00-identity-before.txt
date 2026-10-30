@@ -1,0 +1,29 @@
+MC-002-INTA-GO-STOP identity snapshot BEFORE signal — captured 2026-10-26T00:38:27Z by actual ZCode (backend runtime role)
+Governance checkout /Users/nguyenvanlan/Documents/code/pet-projects/matter-control, branch codex/unified-project-flow
+(preparation base a62d838791ba188838c4ff00b7b6e265ac775056; current HEAD verified, not reset).
+
+Target process (all identifiers verified together, not PID alone):
+  PID 98134, PPID 1
+  lstart: Mon Oct 26 00:54:29 2026 (+07)
+  ps command: /tmp/mc002-inta-be/bin/userapi
+  executable hash: /tmp/mc002-inta-be/bin/userapi SHA256 f3bcdc2f7ce893cdfa248274777f1d3401f538d3ff290d93abf3bd7f370a54c1
+  sole listener: 127.0.0.1:18086 (LISTEN), lsof IPv4 0xb8063352ca47be75
+  fd1 -> /private/tmp/mc002-inta-evidence/backend/runtime-intamvnmoems3pd/go-restart-01/20-restart.stdout.log (4438 B)
+  fd2 -> /private/tmp/mc002-inta-evidence/backend/runtime-intamvnmoems3pd/go-restart-01/21-restart.stderr.log (0 B)
+  backend worktree: clean at 52b60a4617081c41b949f2242e1784238c170f75, no rebuild/migration
+
+Documented graceful shutdown path (source read, no edits):
+  cmd/userapi/main.go:40 signal.NotifyContext(os.Interrupt, syscall.SIGTERM); first signal cancels run context
+  internal/app/app.go OnStop: log "shutting down, draining" (delay = SHUTDOWN_DELAY = 0s per INTA-1 config),
+  srv.Shutdown drain (bounded by ShutdownTimeout), then log "userapi stopped gracefully", Run returns nil,
+  main exits 0. Error path logs "userapi stopped with error" and exits 1.
+
+Preserved neighbors (unchanged, to re-verify after stop):
+  Next root PID 88444 (Mon Oct 26 00:35:21 2026 +07) / listener PID 88453 on 127.0.0.1:18085; harness clean 48cc03e; template clean 3e5a642.
+  PG container 04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01 running healthy, volume
+  mc002-inta-data-intamvnmoems3pd, image sha256:77f58511..., loopback 15457, 512MiB/1CPU/128pids, task labels unchanged.
+  Ledger /tmp/mc002-inta-state-intamvnmoems3pd: 56 files, 56/56 hashes identical to accepted stage6 after-manifest
+  (01-ledger-before.sha256), counter 26, 22 true assertions, markers stage1..6 only, STAGE_6_COMPLETED,
+  A baseline v1 / current v2 preserved, B unchanged, X OUTCOME_UNKNOWN + T11c intent unknown, zero T12/stage7 artifacts.
+
+Output paths verified absent before creation: this go-stop-01 evidence dir, its governance export, and the return report.

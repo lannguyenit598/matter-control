@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 var t0 = time.Date(2026, 6, 15, 9, 0, 0, 0, time.FixedZone("ICT", 7*3600))

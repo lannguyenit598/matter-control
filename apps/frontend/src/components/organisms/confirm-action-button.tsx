@@ -1,5 +1,7 @@
 'use client'
 
+import { RefreshCw, ShieldAlert, X } from 'lucide-react'
+
 import { LocalizedText } from '@/components/molecules/localized-text'
 
 import { useRouter } from 'next/navigation'
@@ -59,10 +61,12 @@ export function ConfirmActionButton({
     <div className="flex flex-col items-start gap-2">
       {blocked ? (
         <Button size="sm" variant="outline" loading={pending} onClick={reread}>
+          {!pending && <RefreshCw aria-hidden />}
           <LocalizedText en="Reload current state" vi="Đọc lại trạng thái hiện tại" />
         </Button>
       ) : !confirming ? (
         <Button size="sm" variant="outline" onClick={() => setConfirming(true)}>
+          <ShieldAlert aria-hidden />
           {label}
         </Button>
       ) : (
@@ -70,6 +74,7 @@ export function ConfirmActionButton({
           <p className="text-sm">{warning}</p>
           <div className="flex gap-2">
             <Button size="sm" variant={variant} loading={pending} onClick={confirm}>
+              {!pending && <ShieldAlert aria-hidden />}
               {confirmLabel}
             </Button>
             <Button
@@ -78,6 +83,7 @@ export function ConfirmActionButton({
               disabled={pending}
               onClick={() => setConfirming(false)}
             >
+              <X aria-hidden />
               <LocalizedText en="Cancel" vi="Hủy" />
             </Button>
           </div>

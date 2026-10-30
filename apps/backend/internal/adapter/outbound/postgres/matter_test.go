@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"net/netip"
 	"sync"
 	"testing"
 	"time"
@@ -17,11 +18,11 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/example/userapi/internal/adapter/outbound/postgres/pgtest"
-	"github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol"
-	"github.com/example/userapi/internal/adapter/outbound/sheet"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/postgres/pgtest"
+	"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol"
+	"leonx.me/matter-control/internal/adapter/outbound/sheet"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // pgWorld implements mattercontrol.World over the product schema with handwritten test
@@ -233,7 +234,7 @@ func (w *pgWorld) Receipts() []matter.Receipt {
 func (w *pgWorld) Audits() []matter.SecurityAuditEntry {
 	ctx := context.Background()
 	rows, err := w.pool.Query(ctx,
-		`SELECT id, occurred_at, actor_id, operation, outcome, requested_resource_kind, requested_id_hash
+		`SELECT id, occurred_at, actor_id, operation, outcome, requested_resource_kind, requested_id_hash, client_ip, request_id
 		 FROM security_audit_events ORDER BY occurred_at, id`)
 	w.check("audits", err)
 	defer rows.Close()
@@ -241,9 +242,20 @@ func (w *pgWorld) Audits() []matter.SecurityAuditEntry {
 	for rows.Next() {
 		var e matter.SecurityAuditEntry
 		var actor string
+		var kind, requestID *string
+		var clientIP *netip.Addr
 		if err := rows.Scan(&e.EventID, &e.OccurredAt, &actor, &e.Operation, &e.Outcome,
-			&e.RequestedResourceKind, &e.RequestedIDHash); err != nil {
+			&kind, &e.RequestedIDHash, &clientIP, &requestID); err != nil {
 			w.tb.Fatalf("scan audit: %v", err)
+		}
+		if kind != nil {
+			e.RequestedResourceKind = *kind
+		}
+		if clientIP != nil {
+			e.ClientIP = clientIP.String()
+		}
+		if requestID != nil {
+			e.RequestID = *requestID
 		}
 		e.Actor = matter.ActorID(actor)
 		out = append(out, e)
@@ -656,6 +668,14 @@ func TestMatterSuiteW6_Postgres(t *testing.T) {
 // TestMatterSuiteGW_Postgres runs the original Golden Workflow ledgers against the real adapter.
 func TestMatterSuiteGW_Postgres(t *testing.T) {
 	mattercontrol.SuiteGW(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}
+
+// TestMatterSuiteReview_Postgres runs the shared review-matrix contract against the real adapter.
+func TestMatterSuiteReview_Postgres(t *testing.T) {
+	mattercontrol.SuiteReview(t, func(t *testing.T) mattercontrol.Bundle {
 		b, _ := newProductStore(t)
 		return b
 	})

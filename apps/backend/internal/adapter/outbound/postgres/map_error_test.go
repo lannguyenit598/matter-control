@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // combinedChain carries several errors at once through multi-error unwrap (Go 1.20), so tests can

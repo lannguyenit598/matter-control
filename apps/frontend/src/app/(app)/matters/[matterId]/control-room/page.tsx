@@ -1,3 +1,4 @@
+import { FilePlus } from 'lucide-react'
 import { LocalizedText } from '@/components/molecules/localized-text'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
@@ -5,13 +6,13 @@ import { Suspense } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/card'
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
+import { TaskDialog } from '@/components/organisms/form-dialog'
 import { ReadFailure } from '@/components/organisms/read-failure'
 import { CloseContextForm, CreateContextForm } from '@/features/control/components/context-forms'
 import { ControlRoomView } from '@/features/control/components/control-room-view'
 import { KIND_LABEL } from '@/features/control/labels'
 import { roomTitles } from '@/features/control/room-labels'
 import { controlRepository } from '@/features/control/repository'
-import { MatterTabs } from '@/features/matters/components/matter-tabs'
 import { matterRepository } from '@/features/matters/repository'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
@@ -63,7 +64,6 @@ async function ControlRoom({
         title={matter.title}
         description={<LocalizedText en="Control Room" vi="Phòng điều hành" />}
       />
-      <MatterTabs matterId={matterId} active="control-room" />
       <ControlRoomView
         matterId={matterId}
         room={room}
@@ -74,17 +74,51 @@ async function ControlRoom({
         }}
       />
       <Card id="records">
-        <CardHeader>
-          <CardTitle>
-            <LocalizedText
-              en="Decisions, findings, risks and entities"
-              vi="Quyết định, phát hiện, rủi ro và thực thể"
-            />
-          </CardTitle>
-          <CardDescription>
-            Notes that explain the work. They never change a record’s status, proof or dependencies,
-            and an entity never grants access.
-          </CardDescription>
+        <CardHeader className="flex-row flex-wrap items-start justify-between gap-3">
+          <div className="flex min-w-0 flex-col gap-1.5">
+            <CardTitle>
+              <LocalizedText
+                en="Decisions, findings, risks and entities"
+                vi="Quyết định, phát hiện, rủi ro và thực thể"
+              />
+            </CardTitle>
+            <CardDescription>
+              Notes that explain the work. They never change a record’s status, proof or
+              dependencies, and an entity never grants access.
+            </CardDescription>
+          </div>
+          {canEdit && (
+            <TaskDialog
+              trigger={
+                <>
+                  {' '}
+                  <FilePlus aria-hidden />
+                  <LocalizedText en="Add context record" vi="Thêm bản ghi bối cảnh" />
+                </>
+              }
+              title={<LocalizedText en="Add context record" vi="Thêm bản ghi bối cảnh" />}
+              description={
+                <LocalizedText
+                  en="A factual note that explains the work. It is not authoritative and never changes status, proof or dependencies."
+                  vi="Ghi chú thực tế giải thích công việc. Ghi chú không có giá trị quyết định và không thay đổi trạng thái, bằng chứng hay phụ thuộc."
+                />
+              }
+              successNotice={<LocalizedText en="Record added." vi="Đã thêm bản ghi." />}
+            >
+              <p className="mb-3 text-sm text-muted-foreground">
+                The records you can link here were read separately
+                {allAsOf ? ` at ${allAsOf}` : ''}; the room above is as of {room.asOf}. A link to a
+                record that no longer exists is refused.
+              </p>
+              <CreateContextForm
+                matterId={matterId}
+                items={all.map((e) => ({
+                  id: e.item.id,
+                  label: `${e.item.kind === 'REQUIREMENT' ? 'Requirement' : 'Action'}: ${e.item.title}`,
+                }))}
+              />
+            </TaskDialog>
+          )}
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {records.length === 0 ? (
@@ -113,22 +147,6 @@ async function ControlRoom({
                 </li>
               ))}
             </ul>
-          )}
-          {canEdit && (
-            <p className="text-sm text-muted-foreground">
-              The records you can link below were read separately
-              {allAsOf ? ` at ${allAsOf}` : ''}; the room above is as of {room.asOf}. A link to a
-              record that no longer exists is refused.
-            </p>
-          )}
-          {canEdit && (
-            <CreateContextForm
-              matterId={matterId}
-              items={all.map((e) => ({
-                id: e.item.id,
-                label: `${e.item.kind === 'REQUIREMENT' ? 'Requirement' : 'Action'}: ${e.item.title}`,
-              }))}
-            />
           )}
         </CardContent>
       </Card>

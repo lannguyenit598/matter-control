@@ -3,7 +3,7 @@ package service
 import (
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 // replayBriefProof rebuilds decision inputs, never promotes a cached verification label.

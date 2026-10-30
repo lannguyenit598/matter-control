@@ -113,6 +113,8 @@ describe('form drafts', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Save' }))
       await screen.findByRole('alert')
       expect(loadDraft('sess-a', 'matter:1:new-action')).toBeNull()
+      // The typed value (and any chosen person) goes with it, not only the stored copy.
+      expect(screen.getByLabelText('Title')).toHaveValue('')
     },
   )
 
@@ -202,6 +204,22 @@ describe('form drafts', () => {
       seed()
       render(<ReadFailure kind={kind} />)
       expect(loadDraft('sess-a', 'item:9:meta')).toEqual({ title: 'secret' })
+    })
+
+    it.each(['forbidden', 'not-found'] as const)(
+      'keeps drafts when a %s section sits inside a page the user can still read',
+      (kind) => {
+        seed()
+        render(<ReadFailure kind={kind} partial />)
+        expect(loadDraft('sess-a', 'item:9:meta')).toEqual({ title: 'secret' })
+      },
+    )
+
+    it('purges even for a partial section when the session itself has ended', () => {
+      seed()
+      render(<ReadFailure kind="sign-in" partial />)
+      expect(loadDraft('sess-a', 'item:9:meta')).toBeNull()
+      expect(window.sessionStorage.getItem('unrelated')).toBe('keep')
     })
 
     it('does not revive a purged draft after access returns', () => {

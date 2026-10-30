@@ -1,0 +1,49 @@
+{
+  "actor": "Local Codex intake",
+  "reviewer": {
+    "cli": "opencode v2.1.4 (verified via `opencode --version`, exit 0)",
+    "model": "opencode/glm-5.3-flash-free",
+    "independence": "This session authored none of the reviewed R2 source, intake or evidence files; R2 packet executor is Actual Antigravity (Gemini 3.8 Flash High) per manifest.json; Codex produced intake verification only."
+  },
+  "outputs": [
+    {
+      "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/reviews/inta-opencode-fe-r2-source-review.md",
+      "bytes": 26979,
+      "sha256": "1a1abebe0c6872c54a309d3b655a4e43848d974006ccd6529b517c030faec6b3"
+    },
+    {
+      "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/review-inputs.json",
+      "bytes": 9195,
+      "sha256": "cd6ed1f5525e1914a32fc7ea685df64f910d2e7efd3595bb87bddeada32786f4"
+    },
+    {
+      "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/checks-log.json",
+      "bytes": 6920,
+      "sha256": "b7e8002c1084911b0c518cd74cf8b522c3e75de921b3c89628999d4418be514d"
+    }
+  ],
+  "verdict": "CHANGES_REQUIRED_SOURCE_ONLY",
+  "findings": {
+    "R2-I01": "CONFIRMED",
+    "R2-I02": "CONFIRMED",
+    "R2-I03": "CONFIRMED",
+    "R2-I04": "CONFIRMED",
+    "R2-I05": "CONFIRMED",
+    "R2-I06": "CONFIRMED"
+  },
+  "groups": {
+    "C01": "PARTIAL",
+    "C02": "SUBSTANTIALLY_FIXED_WITH_FINAL_EVIDENCE_RESIDUAL",
+    "C03": "PARTIAL",
+    "C04": "PARTIAL"
+  },
+  "scope": "Read/hash/staticR2only; notfinal36QA/runtime",
+  "provenance": [
+    "CurrentreviewCLI/modelrecorded; do notretrofitolderidentities.",
+    "ReviewerJSONsyntaxcorrectiondisclosed, finalhashesverified. Earlierinvalidbytes notindependentlyretained.",
+    "Approximate xZ/actiontimes remainapproximate, notexactclockproof.",
+    "Same131584Bfrozenrevisionmatched; older123515B/26countgenerationremainslineage.",
+    "Firstintakepathparserused annotatedpathliterally and stopped beforewrites; parsedexactknown annotation correctly, no reviewedinputhashmismatch."
+  ],
+  "personal_tests_runtime_private_lifecycle_provider_commit": "NONE"
+}

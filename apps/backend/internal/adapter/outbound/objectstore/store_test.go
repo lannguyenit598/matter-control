@@ -10,9 +10,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/example/userapi/internal/adapter/outbound/objectstore"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/objectstore"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 func mid(t *testing.T) matter.MatterID {

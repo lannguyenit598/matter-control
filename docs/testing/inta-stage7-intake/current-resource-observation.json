@@ -1,0 +1,66 @@
+{
+  "utc": "2026-10-26T00:52:36.466300+00:00",
+  "actor": "Local Codex",
+  "route": "official exec_command require_escalated for selected read-only process/socket metadata",
+  "scope": "No Config.Env/private config, SQL/HTTP or lifecycle",
+  "results": [
+    {
+      "argv": [
+        "ps",
+        "-p",
+        "98134",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "lsof",
+        "-nP",
+        "-iTCP:18086",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ps",
+        "-p",
+        "88444,88453",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "exit": 0,
+      "stdout": "88444 Mon Oct 26 00:35:21 2026     node /private/tmp/mc002-inta-fe/node_modules/.bin/../.pnpm/next@16.4.2_@babel+core@7.29.7_supports-color@7.2.0__@playwright+test@1.64.1_@types+nod_a0a892e05fdbcbd9f6d2ff0a183f1dd0/node_modules/next/dist/bin/next dev -H 127.0.0.1 -p 18085 --webpack\n88453 Mon Oct 26 00:35:21 2026     next-server (v16.4.2) \n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "lsof",
+        "-nP",
+        "-iTCP:18085",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 0,
+      "stdout": "COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    88453 nguyenvanlan   13u  IPv4 0xdc2ef12f3f9303fc      0t0  TCP 127.0.0.1:18085 (LISTEN)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .State.Status}} {{json .State.Health.Status}} {{json .State.StartedAt}} {{json .Image}} {{json .Mounts}} {{json .HostConfig.PortBindings}} {{json .HostConfig.Memory}} {{json .HostConfig.NanoCpus}} {{json .HostConfig.PidsLimit}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "exit": 0,
+      "stdout": "\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\" \"running\" \"healthy\" \"2026-10-26T00:26:58.345144717Z\" \"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\" [{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}] {\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]} 536870912 1000000000 128\n",
+      "stderr": ""
+    }
+  ]
+}

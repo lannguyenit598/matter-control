@@ -1,0 +1,56 @@
+{
+  "closed_utc": "2026-10-29T04:08:20.586559+00:00",
+  "input_manifest": "docs/testing/p0-final-parallel-20261028/claude-people-membership-matter-ux-r1/source-manifest.json",
+  "input_manifest_sha256": "0c7e399c59497ee732efced712e11ecd81616164caa3813cd7b9c0beda5ce35b",
+  "input_aggregate": "def5068f85cb73341e29b56d9d55eb959974b6f15d32668cea4507e6b732c9a6",
+  "pins": {
+    "matched": 278,
+    "drift": []
+  },
+  "commands": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "check"
+      ],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend",
+      "exit": 0,
+      "tests": 572,
+      "test_files": 61
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "build:webpack"
+      ],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend",
+      "exit": 0,
+      "css_guard": "pass"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "src/test/reviewer-picker.test.tsx"
+      ],
+      "cwd": "/private/tmp/mc-claude-ux-review-20261029",
+      "exit": 1,
+      "failed_expected_regressions": 2
+    }
+  ],
+  "runtime": "No listener found by lsof on port3000 during this review. No runtime started/stopped.",
+  "browser": "NOT_RUN; official inventory returned no IAB tabs; no running candidate on 3000.",
+  "limits": [
+    "Unit probe uses jsdom, not browser permission/security enforcement.",
+    "No backend/IdP/PG actions",
+    "Turbopack/Storybook author results cited only",
+    "No primary source edits; temp copy contains only reviewer probe addition"
+  ]
+}

@@ -1,0 +1,22 @@
+MC-002-INTA-FE stage7 marker/secret scan — 2026-10-26T00:47:30Z by actual ZCode. Counts only, no values.
+
+Scope A — synthetic fixture markers in APPLICATION logs (expect 0):
+  stopped-Go snapshots: 02-go-stdout-stopped-before.log + live go-restart-01 log (byte-equal, no new lines) + 03 stderr; Next: 04-next-stdout-before.log + live log; Driver: 10-driver.std{out,err}.log
+marker [inta-a-intamvnmoems3pd@example.test]: go=0 next=0 driver=0
+marker [inta-b-intamvnmoems3pd@example.test]: go=0 next=0 driver=0
+marker [inta-x-intamvnmoems3pd@example.test]: go=0 next=0 driver=0
+marker [INTA_A_INITIAL]: go=0 next=0 driver=0
+marker [INTA_A_UPDATED]: go=0 next=0 driver=0
+marker [INTA_A_OUTAGE]: go=0 next=0 driver=0
+
+Scope B — credential/DSN/token patterns across stage7 evidence + live state dir:
+pattern [postgres://]: evidence=0 state=0
+pattern [postgresql://]: evidence=0 state=0
+pattern [password=]: evidence=0 state=0
+pattern [PGPASSWORD]: evidence=0 state=0
+pattern [Bearer ]: evidence=0 state=0
+pattern [backend.env]: evidence=0 state=0
+pattern [DATABASE_URL]: evidence=0 state=0
+
+Scope C — envelope cap: T12 envelope truncated=false count:
+T12 truncated=false: 1 (complete envelope; status0 is a client network observation, not an upstream HTTP status)

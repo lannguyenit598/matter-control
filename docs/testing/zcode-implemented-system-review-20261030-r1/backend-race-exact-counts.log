@@ -1,0 +1,1476 @@
+?   	leonx.me/matter-control/cmd/mcapi	[no test files]
+?   	leonx.me/matter-control/internal/adapter/inbound/httpapi	[no test files]
+=== RUN   TestToProblem_ContentIntegrityErrorsKeepTheUnavailableAnswer
+--- PASS: TestToProblem_ContentIntegrityErrorsKeepTheUnavailableAnswer (0.00s)
+=== RUN   TestControlRoomAndContext_HTTP
+--- PASS: TestControlRoomAndContext_HTTP (0.01s)
+=== RUN   TestBulk_HTTPFlow
+--- PASS: TestBulk_HTTPFlow (0.00s)
+=== RUN   TestImport_HTTPFlow
+--- PASS: TestImport_HTTPFlow (0.01s)
+=== RUN   TestExportAndBrief_HTTP
+--- PASS: TestExportAndBrief_HTTP (0.01s)
+=== RUN   TestImport_WholeSheetFailureIsBadRequest
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/empty
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_rowkey
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_kind
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_title
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/malformed_csv
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/malformed_xlsx
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/unsupported_format
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/rows
+--- PASS: TestImport_WholeSheetFailureIsBadRequest (0.03s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/empty (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_rowkey (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_kind (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_title (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/malformed_csv (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/malformed_xlsx (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/unsupported_format (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/rows (0.01s)
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/bulk
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/import
+--- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP (0.01s)
+    --- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/bulk (0.00s)
+    --- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/import (0.00s)
+=== RUN   TestDataReceipts_OwnLookupSettlesAnAttempt
+--- PASS: TestDataReceipts_OwnLookupSettlesAnAttempt (0.00s)
+=== RUN   TestProof_HTTPFlow
+--- PASS: TestProof_HTTPFlow (0.01s)
+=== RUN   TestDocuments_HTTPUploadPromotionAndContent
+--- PASS: TestDocuments_HTTPUploadPromotionAndContent (0.00s)
+=== RUN   TestFilings_HTTPFlow
+--- PASS: TestFilings_HTTPFlow (0.01s)
+=== RUN   TestMaxInFlight_RefusesBeyondTheCapAndFreesTheSlot
+--- PASS: TestMaxInFlight_RefusesBeyondTheCapAndFreesTheSlot (0.00s)
+=== RUN   TestMaxInFlight_ZeroMeansUnlimited
+--- PASS: TestMaxInFlight_ZeroMeansUnlimited (0.00s)
+=== RUN   TestWorkspaceDirectoryOptInAndOwnerOnly
+--- PASS: TestWorkspaceDirectoryOptInAndOwnerOnly (0.00s)
+=== RUN   TestMatterMemberCandidatesRequireOwnerAndActiveWorkspace
+--- PASS: TestMatterMemberCandidatesRequireOwnerAndActiveWorkspace (0.00s)
+=== RUN   TestSecurityAuditCarriesRequestMeta
+--- PASS: TestSecurityAuditCarriesRequestMeta (0.00s)
+=== RUN   TestSecurityAuditHonorsInboundRequestID
+--- PASS: TestSecurityAuditHonorsInboundRequestID (0.00s)
+=== RUN   TestReviewGrid_HTTPAnswerExpectationPresence
+--- PASS: TestReviewGrid_HTTPAnswerExpectationPresence (0.00s)
+=== RUN   TestReviewGrid_HTTPHistoryPagination
+--- PASS: TestReviewGrid_HTTPHistoryPagination (0.06s)
+=== RUN   TestReviewGrid_HTTPFlow
+--- PASS: TestReviewGrid_HTTPFlow (0.01s)
+=== RUN   TestReviewGrid_HTTPCrossMatterVersionLooksMissing
+--- PASS: TestReviewGrid_HTTPCrossMatterVersionLooksMissing (0.00s)
+=== RUN   TestAuthentication
+--- PASS: TestAuthentication (0.00s)
+=== RUN   TestCreateWorkspace_BoundaryAndReplay
+--- PASS: TestCreateWorkspace_BoundaryAndReplay (0.00s)
+=== RUN   TestWorkspaceMatterAndRequirementFlow
+--- PASS: TestWorkspaceMatterAndRequirementFlow (0.00s)
+=== RUN   TestMembershipAdministration
+--- PASS: TestMembershipAdministration (0.00s)
+=== RUN   TestOutcomeUnknownIsNeverASuccessOrARollbackClaim
+--- PASS: TestOutcomeUnknownIsNeverASuccessOrARollbackClaim (0.00s)
+=== RUN   TestListMyWorkspaces
+--- PASS: TestListMyWorkspaces (0.00s)
+=== RUN   TestAuthenticationPrecedesDecode
+--- PASS: TestAuthenticationPrecedesDecode (0.00s)
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/workspaces
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/documents/d/versions
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/documents/d/versions/v/content
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/import/preview
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/import/commit
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/bulk/commit
+=== RUN   TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/export
+--- PASS: TestTimeout_TransferRoutesHaveSeparateBudget (0.00s)
+    --- PASS: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/workspaces (0.00s)
+    --- PASS: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/documents/d/versions (0.00s)
+    --- PASS: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/documents/d/versions/v/content (0.00s)
+    --- PASS: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/import/preview (0.00s)
+    --- PASS: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/import/commit (0.00s)
+    --- PASS: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/bulk/commit (0.00s)
+    --- PASS: TestTimeout_TransferRoutesHaveSeparateBudget//api/v1/matters/m/export (0.00s)
+=== RUN   TestTimeout_ConfiguredTransferHonorsEarlierCallerDeadline
+--- PASS: TestTimeout_ConfiguredTransferHonorsEarlierCallerDeadline (0.00s)
+=== RUN   TestDecodeStrict
+--- PASS: TestDecodeStrict (0.00s)
+=== RUN   TestFingerprint_FrameIsUnambiguousAndStable
+--- PASS: TestFingerprint_FrameIsUnambiguousAndStable (0.00s)
+=== RUN   TestEtagIsStrongAndRepresentationDetermined
+--- PASS: TestEtagIsStrongAndRepresentationDetermined (0.00s)
+=== RUN   TestWorkItems_CreateReadPatchAndExecution
+--- PASS: TestWorkItems_CreateReadPatchAndExecution (0.01s)
+=== RUN   TestWorkItems_DependenciesGridAndMyActions
+--- PASS: TestWorkItems_DependenciesGridAndMyActions (0.01s)
+=== RUN   TestMilestonesPartiesAndWorkstreams
+--- PASS: TestMilestonesPartiesAndWorkstreams (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/inbound/productapi	1.340s
+=== RUN   TestVerify_ActiveTokenIsNormalized
+--- PASS: TestVerify_ActiveTokenIsNormalized (0.10s)
+=== RUN   TestVerify_StringAudienceAccepted
+--- PASS: TestVerify_StringAudienceAccepted (0.08s)
+=== RUN   TestVerify_RejectsAsUnauthenticated
+=== RUN   TestVerify_RejectsAsUnauthenticated/inactive
+=== RUN   TestVerify_RejectsAsUnauthenticated/wrong_issuer
+=== RUN   TestVerify_RejectsAsUnauthenticated/wrong_audience
+=== RUN   TestVerify_RejectsAsUnauthenticated/missing_aud
+=== RUN   TestVerify_RejectsAsUnauthenticated/expired
+=== RUN   TestVerify_RejectsAsUnauthenticated/empty_subject
+=== RUN   TestVerify_RejectsAsUnauthenticated/no_expiry
+--- PASS: TestVerify_RejectsAsUnauthenticated (0.53s)
+    --- PASS: TestVerify_RejectsAsUnauthenticated/inactive (0.08s)
+    --- PASS: TestVerify_RejectsAsUnauthenticated/wrong_issuer (0.11s)
+    --- PASS: TestVerify_RejectsAsUnauthenticated/wrong_audience (0.05s)
+    --- PASS: TestVerify_RejectsAsUnauthenticated/missing_aud (0.09s)
+    --- PASS: TestVerify_RejectsAsUnauthenticated/expired (0.05s)
+    --- PASS: TestVerify_RejectsAsUnauthenticated/empty_subject (0.12s)
+    --- PASS: TestVerify_RejectsAsUnauthenticated/no_expiry (0.03s)
+=== RUN   TestVerify_ExpiryLeewayIsBounded
+--- PASS: TestVerify_ExpiryLeewayIsBounded (0.08s)
+=== RUN   TestVerify_EmptyBearerNeverCallsTheIdP
+--- PASS: TestVerify_EmptyBearerNeverCallsTheIdP (0.06s)
+=== RUN   TestVerify_OutagesFailClosedAsUnavailable
+=== RUN   TestVerify_OutagesFailClosedAsUnavailable/garbage
+=== RUN   TestVerify_OutagesFailClosedAsUnavailable/5xx
+=== RUN   TestVerify_OutagesFailClosedAsUnavailable/assertion_refused
+=== RUN   TestVerify_OutagesFailClosedAsUnavailable/unreachable
+--- PASS: TestVerify_OutagesFailClosedAsUnavailable (0.27s)
+    --- PASS: TestVerify_OutagesFailClosedAsUnavailable/garbage (0.09s)
+    --- PASS: TestVerify_OutagesFailClosedAsUnavailable/5xx (0.11s)
+    --- PASS: TestVerify_OutagesFailClosedAsUnavailable/assertion_refused (0.04s)
+    --- PASS: TestVerify_OutagesFailClosedAsUnavailable/unreachable (0.03s)
+=== RUN   TestVerify_CacheIsBoundedAndNotAForeverGuarantee
+--- PASS: TestVerify_CacheIsBoundedAndNotAForeverGuarantee (0.03s)
+=== RUN   TestNew_RejectsBadConfiguration
+=== RUN   TestNew_RejectsBadConfiguration/no_audience
+=== RUN   TestNew_RejectsBadConfiguration/no_client
+=== RUN   TestNew_RejectsBadConfiguration/no_key_id
+=== RUN   TestNew_RejectsBadConfiguration/bad_pem
+=== RUN   TestNew_RejectsBadConfiguration/no_url
+=== RUN   TestNew_RejectsBadConfiguration/no_issuer
+--- PASS: TestNew_RejectsBadConfiguration (0.06s)
+    --- PASS: TestNew_RejectsBadConfiguration/no_audience (0.00s)
+    --- PASS: TestNew_RejectsBadConfiguration/no_client (0.00s)
+    --- PASS: TestNew_RejectsBadConfiguration/no_key_id (0.00s)
+    --- PASS: TestNew_RejectsBadConfiguration/bad_pem (0.00s)
+    --- PASS: TestNew_RejectsBadConfiguration/no_url (0.00s)
+    --- PASS: TestNew_RejectsBadConfiguration/no_issuer (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/identity/zitadel	2.341s
+=== RUN   TestContract_Filesystem
+=== RUN   TestContract_Filesystem/round_trip_and_a_repeated_put_return_the_same_reference
+=== RUN   TestContract_Filesystem/empty_and_larger_content_round_trip
+=== RUN   TestContract_Filesystem/size_limit:_exactly_the_limit_is_stored,_one_byte_more_stores_nothing
+=== RUN   TestContract_Filesystem/a_failing_source_is_reported_as_unavailable_and_stores_nothing
+=== RUN   TestContract_Filesystem/malformed_and_unknown_digests_are_unavailable
+=== RUN   TestContract_Filesystem/never-stored_and_lost_objects_are_missing,_not_merely_unavailable
+=== RUN   TestContract_Filesystem/content_is_addressed_within_a_matter
+=== RUN   TestContract_Filesystem/concurrent_puts_of_the_same_bytes_agree
+=== RUN   TestContract_Filesystem/damaged_bytes_are_never_read_to_completion
+--- PASS: TestContract_Filesystem (0.09s)
+    --- PASS: TestContract_Filesystem/round_trip_and_a_repeated_put_return_the_same_reference (0.01s)
+    --- PASS: TestContract_Filesystem/empty_and_larger_content_round_trip (0.02s)
+    --- PASS: TestContract_Filesystem/size_limit:_exactly_the_limit_is_stored,_one_byte_more_stores_nothing (0.01s)
+    --- PASS: TestContract_Filesystem/a_failing_source_is_reported_as_unavailable_and_stores_nothing (0.00s)
+    --- PASS: TestContract_Filesystem/malformed_and_unknown_digests_are_unavailable (0.00s)
+    --- PASS: TestContract_Filesystem/never-stored_and_lost_objects_are_missing,_not_merely_unavailable (0.00s)
+    --- PASS: TestContract_Filesystem/content_is_addressed_within_a_matter (0.01s)
+    --- PASS: TestContract_Filesystem/concurrent_puts_of_the_same_bytes_agree (0.03s)
+    --- PASS: TestContract_Filesystem/damaged_bytes_are_never_read_to_completion (0.01s)
+=== RUN   TestContract_R2_FakeS3
+=== RUN   TestContract_R2_FakeS3/round_trip_and_a_repeated_put_return_the_same_reference
+=== RUN   TestContract_R2_FakeS3/empty_and_larger_content_round_trip
+=== RUN   TestContract_R2_FakeS3/size_limit:_exactly_the_limit_is_stored,_one_byte_more_stores_nothing
+=== RUN   TestContract_R2_FakeS3/a_failing_source_is_reported_as_unavailable_and_stores_nothing
+=== RUN   TestContract_R2_FakeS3/malformed_and_unknown_digests_are_unavailable
+=== RUN   TestContract_R2_FakeS3/never-stored_and_lost_objects_are_missing,_not_merely_unavailable
+=== RUN   TestContract_R2_FakeS3/content_is_addressed_within_a_matter
+=== RUN   TestContract_R2_FakeS3/concurrent_puts_of_the_same_bytes_agree
+=== RUN   TestContract_R2_FakeS3/damaged_bytes_are_never_read_to_completion
+--- PASS: TestContract_R2_FakeS3 (0.06s)
+    --- PASS: TestContract_R2_FakeS3/round_trip_and_a_repeated_put_return_the_same_reference (0.01s)
+    --- PASS: TestContract_R2_FakeS3/empty_and_larger_content_round_trip (0.02s)
+    --- PASS: TestContract_R2_FakeS3/size_limit:_exactly_the_limit_is_stored,_one_byte_more_stores_nothing (0.00s)
+    --- PASS: TestContract_R2_FakeS3/a_failing_source_is_reported_as_unavailable_and_stores_nothing (0.00s)
+    --- PASS: TestContract_R2_FakeS3/malformed_and_unknown_digests_are_unavailable (0.00s)
+    --- PASS: TestContract_R2_FakeS3/never-stored_and_lost_objects_are_missing,_not_merely_unavailable (0.00s)
+    --- PASS: TestContract_R2_FakeS3/content_is_addressed_within_a_matter (0.01s)
+    --- PASS: TestContract_R2_FakeS3/concurrent_puts_of_the_same_bytes_agree (0.01s)
+    --- PASS: TestContract_R2_FakeS3/damaged_bytes_are_never_read_to_completion (0.00s)
+=== RUN   TestContract_R2_RealBucket
+    contract_test.go:81: set MC_TEST_R2_ENDPOINT, _BUCKET, _ACCESS_KEY_ID and _SECRET_ACCESS_KEY to run against a real bucket
+--- SKIP: TestContract_R2_RealBucket (0.00s)
+=== RUN   TestR2_StoresUnderTheLocalLayoutWithItsDigestAndNeverTwice
+--- PASS: TestR2_StoresUnderTheLocalLayoutWithItsDigestAndNeverTwice (0.00s)
+=== RUN   TestR2_ReplacesAnObjectOfTheWrongSizeUnderTheKey
+--- PASS: TestR2_ReplacesAnObjectOfTheWrongSizeUnderTheKey (0.00s)
+=== RUN   TestR2_TooLargeStoresNothingAndDoesNotCallOut
+--- PASS: TestR2_TooLargeStoresNothingAndDoesNotCallOut (0.00s)
+=== RUN   TestR2_OpenVerifiesTheDigestAndTreatsMissingAsUnavailable
+--- PASS: TestR2_OpenVerifiesTheDigestAndTreatsMissingAsUnavailable (0.00s)
+=== RUN   TestR2_ContentIsAddressedWithinAMatter
+--- PASS: TestR2_ContentIsAddressedWithinAMatter (0.00s)
+=== RUN   TestR2_ProviderFailuresAreUnavailableNeverSuccess
+--- PASS: TestR2_ProviderFailuresAreUnavailableNeverSuccess (7.30s)
+=== RUN   TestNewR2_RequiresEverySetting
+--- PASS: TestNewR2_RequiresEverySetting (0.00s)
+=== RUN   TestPutOpen_RoundTripIdempotentAndLimited
+--- PASS: TestPutOpen_RoundTripIdempotentAndLimited (0.03s)
+=== RUN   TestOpen_CorruptionIsUnavailableNotServed
+--- PASS: TestOpen_CorruptionIsUnavailableNotServed (0.01s)
+=== RUN   TestOpen_OtherMatterCannotReadByDigest
+--- PASS: TestOpen_OtherMatterCannotReadByDigest (0.01s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/objectstore	8.646s
+=== RUN   TestSecurityAuditRequestMetaRoundTrip
+=== RUN   TestSecurityAuditRequestMetaRoundTrip/meta_travels_into_the_INET_and_request_id_columns
+=== RUN   TestSecurityAuditRequestMetaRoundTrip/a_context_without_meta_records_empty_fields
+--- PASS: TestSecurityAuditRequestMetaRoundTrip (0.33s)
+    --- PASS: TestSecurityAuditRequestMetaRoundTrip/meta_travels_into_the_INET_and_request_id_columns (0.00s)
+    --- PASS: TestSecurityAuditRequestMetaRoundTrip/a_context_without_meta_records_empty_fields (0.00s)
+=== RUN   TestB1LeastPrivilegeProfile
+=== RUN   TestB1LeastPrivilegeProfile/runtime_denials
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/create_writes_one_atomic_outcome
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/denial_matrix_through_the_service
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/replay_sequential_and_after_restart
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/key_reuse_and_same_key_under_another_actor
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/concurrent_same_key_one_effect
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/concurrent_same_key_across_matters_commits_once_without_leaking
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/revocation_defeats_create_and_replay
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/demotion_keeps_replay_blocks_create
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/elapsed_pending_boundary_fails_closed
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/not-due_pending_boundary_is_preserved_by_a_successful_create
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/replay_keeps_a_later_pending_boundary_intact
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/uniform_read_outcomes
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/snapshot_stays_consistent_across_a_concurrent_create
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/insert_node
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/insert_requirement
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/append_event
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/store_receipt
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/complete_matter
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/commit_outcomes
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/commit_outcomes/unknown_outcome_is_not_proof_of_rollback
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/commit_outcomes/known_abort_is_unavailable_with_no_effect
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/a_zero-row_filing_save_is_a_version_conflict_like_every_other_CAS_save
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163)
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09)
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10)
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/correction:_appended,_never_edited;_owner_only_(AC-163)
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/a_version_of_another_matter_and_a_missing_id_are_rejected_identically
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/removing_a_version_hides_its_row_but_keeps_its_answers_attributable
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/history_pages_stay_truthful_when_an_answer_is_recorded_between_pages
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/history_order_is_recorded_chronology,_not_the_id_byte_order
+=== RUN   TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing
+--- PASS: TestB1LeastPrivilegeProfile (16.62s)
+    --- PASS: TestB1LeastPrivilegeProfile/runtime_denials (0.01s)
+    --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts (16.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/create_writes_one_atomic_outcome (0.28s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/denial_matrix_through_the_service (0.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/replay_sequential_and_after_restart (0.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/key_reuse_and_same_key_under_another_actor (0.32s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/concurrent_same_key_one_effect (0.33s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/concurrent_same_key_across_matters_commits_once_without_leaking (0.31s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/revocation_defeats_create_and_replay (0.31s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/demotion_keeps_replay_blocks_create (0.31s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter (1.24s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters (0.30s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly (0.32s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt (0.31s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay (0.31s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/elapsed_pending_boundary_fails_closed (0.29s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/not-due_pending_boundary_is_preserved_by_a_successful_create (0.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/replay_keeps_a_later_pending_boundary_intact (0.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/uniform_read_outcomes (0.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/snapshot_stays_consistent_across_a_concurrent_create (0.32s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything (1.47s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/insert_node (0.29s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/insert_requirement (0.27s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/append_event (0.29s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/store_receipt (0.33s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/injected_step_failures_roll_back_everything/complete_matter (0.28s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/commit_outcomes (0.62s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/commit_outcomes/unknown_outcome_is_not_proof_of_rollback (0.32s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/commit_outcomes/known_abort_is_unavailable_with_no_effect (0.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct (1.80s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable (0.89s)
+                --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect (0.28s)
+                --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt (0.30s)
+                --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty (0.31s)
+            --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected (0.91s)
+                --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect (0.30s)
+                --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt (0.30s)
+                --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty (0.30s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/a_zero-row_filing_save_is_a_version_conflict_like_every_other_CAS_save (0.31s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage (0.36s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163) (0.80s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09) (0.63s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10) (0.68s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/correction:_appended,_never_edited;_owner_only_(AC-163) (0.50s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels (0.34s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/a_version_of_another_matter_and_a_missing_id_are_rejected_identically (0.34s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing (0.32s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another (0.34s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable (0.35s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing (0.35s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/removing_a_version_hides_its_row_but_keeps_its_answers_attributable (0.35s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/history_pages_stay_truthful_when_an_answer_is_recorded_between_pages (0.35s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/history_order_is_recorded_chronology,_not_the_id_byte_order (0.34s)
+        --- PASS: TestB1LeastPrivilegeProfile/runtime_passes_representative_contracts/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing (0.34s)
+=== RUN   TestWritesNextBoundary_Detector
+--- PASS: TestWritesNextBoundary_Detector (0.00s)
+=== RUN   TestNothingWritesNextBoundary
+--- PASS: TestNothingWritesNextBoundary (0.01s)
+=== RUN   TestDurableSessionRotationSemantics
+=== RUN   TestDurableSessionRotationSemantics/rotation_is_atomic_under_concurrent_refresh
+=== RUN   TestDurableSessionRotationSemantics/stale_rotation_(reused_old_generation)_matches_nothing
+=== RUN   TestDurableSessionRotationSemantics/destroyed_session_cannot_be_refreshed_or_read
+=== RUN   TestDurableSessionRotationSemantics/expired_absolute_lifetime_refuses_rotation
+--- PASS: TestDurableSessionRotationSemantics (0.06s)
+    --- PASS: TestDurableSessionRotationSemantics/rotation_is_atomic_under_concurrent_refresh (0.03s)
+    --- PASS: TestDurableSessionRotationSemantics/stale_rotation_(reused_old_generation)_matches_nothing (0.00s)
+    --- PASS: TestDurableSessionRotationSemantics/destroyed_session_cannot_be_refreshed_or_read (0.00s)
+    --- PASS: TestDurableSessionRotationSemantics/expired_absolute_lifetime_refuses_rotation (0.00s)
+=== RUN   TestAccessPathExplainVerification
+    explain_access_paths_test.go:77: MC_EXPLAIN_VERIFY not set; the F-02 access-path verification is inert
+--- SKIP: TestAccessPathExplainVerification (0.00s)
+=== RUN   TestMapError_UnavailableClassification
+=== RUN   TestMapError_UnavailableClassification/08000
+=== RUN   TestMapError_UnavailableClassification/08003
+=== RUN   TestMapError_UnavailableClassification/08006
+=== RUN   TestMapError_UnavailableClassification/57P01
+=== RUN   TestMapError_UnavailableClassification/57P02
+=== RUN   TestMapError_UnavailableClassification/57P03
+=== RUN   TestMapError_UnavailableClassification/53300
+=== RUN   TestMapError_UnavailableClassification/40P01
+=== RUN   TestMapError_UnavailableClassification/40001
+=== RUN   TestMapError_UnavailableClassification/55P03
+=== RUN   TestMapError_UnavailableClassification/57014
+=== RUN   TestMapError_UnavailableClassification/28000
+=== RUN   TestMapError_UnavailableClassification/28P01
+=== RUN   TestMapError_UnavailableClassification/3D000
+=== RUN   TestMapError_UnavailableClassification/42501
+=== RUN   TestMapError_UnavailableClassification/42P01
+=== RUN   TestMapError_UnavailableClassification/42P07
+=== RUN   TestMapError_UnavailableClassification/22001
+=== RUN   TestMapError_UnavailableClassification/23503
+=== RUN   TestMapError_UnavailableClassification/23502
+=== RUN   TestMapError_UnavailableClassification/existing_mappings_preserved
+=== RUN   TestMapError_UnavailableClassification/wrapped_depth
+=== RUN   TestMapError_UnavailableClassification/bare_typed_connect_fault
+=== RUN   TestMapError_UnavailableClassification/cancelled_connect_keeps_the_cause_for_inbound_499
+=== RUN   TestMapError_UnavailableClassification/connecterror_pgerror_28P01
+=== RUN   TestMapError_UnavailableClassification/connecterror_pgerror_3D000
+=== RUN   TestMapError_UnavailableClassification/connecterror_pgerror_42501
+=== RUN   TestMapError_UnavailableClassification/connecterror_pgerror_53300
+=== RUN   TestMapError_UnavailableClassification/connecterror_pgerror_57P03
+=== RUN   TestMapError_UnavailableClassification/lookalike
+=== RUN   TestMapError_UnavailableClassification/lookalike#01
+=== RUN   TestMapError_UnavailableClassification/lookalike#02
+=== RUN   TestMapError_UnavailableClassification/lookalike#03
+=== RUN   TestMapError_UnavailableClassification/lookalike#04
+--- PASS: TestMapError_UnavailableClassification (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/08000 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/08003 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/08006 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/57P01 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/57P02 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/57P03 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/53300 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/40P01 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/40001 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/55P03 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/57014 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/28000 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/28P01 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/3D000 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/42501 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/42P01 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/42P07 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/22001 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/23503 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/23502 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/existing_mappings_preserved (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/wrapped_depth (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/bare_typed_connect_fault (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/cancelled_connect_keeps_the_cause_for_inbound_499 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/connecterror_pgerror_28P01 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/connecterror_pgerror_3D000 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/connecterror_pgerror_42501 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/connecterror_pgerror_53300 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/connecterror_pgerror_57P03 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/lookalike (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/lookalike#01 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/lookalike#02 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/lookalike#03 (0.00s)
+    --- PASS: TestMapError_UnavailableClassification/lookalike#04 (0.00s)
+=== RUN   TestMatterRework_ElapsedBoundaryRollsBack_Postgres
+--- PASS: TestMatterRework_ElapsedBoundaryRollsBack_Postgres (0.25s)
+=== RUN   TestMatterRework_FutureBoundaryPreserved_Postgres
+--- PASS: TestMatterRework_FutureBoundaryPreserved_Postgres (0.26s)
+=== RUN   TestMatterRework_ReplayKeepsBoundary_Postgres
+--- PASS: TestMatterRework_ReplayKeepsBoundary_Postgres (0.28s)
+=== RUN   TestIdentityResolver_LookupOnly
+--- PASS: TestIdentityResolver_LookupOnly (0.27s)
+=== RUN   TestMatterSuite_Postgres
+=== RUN   TestMatterSuite_Postgres/create_writes_one_atomic_outcome
+=== RUN   TestMatterSuite_Postgres/denial_matrix_through_the_service
+=== RUN   TestMatterSuite_Postgres/replay_sequential_and_after_restart
+=== RUN   TestMatterSuite_Postgres/key_reuse_and_same_key_under_another_actor
+=== RUN   TestMatterSuite_Postgres/concurrent_same_key_one_effect
+=== RUN   TestMatterSuite_Postgres/concurrent_same_key_across_matters_commits_once_without_leaking
+=== RUN   TestMatterSuite_Postgres/revocation_defeats_create_and_replay
+=== RUN   TestMatterSuite_Postgres/demotion_keeps_replay_blocks_create
+=== RUN   TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter
+=== RUN   TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters
+=== RUN   TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly
+=== RUN   TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt
+=== RUN   TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay
+=== RUN   TestMatterSuite_Postgres/elapsed_pending_boundary_fails_closed
+=== RUN   TestMatterSuite_Postgres/not-due_pending_boundary_is_preserved_by_a_successful_create
+=== RUN   TestMatterSuite_Postgres/replay_keeps_a_later_pending_boundary_intact
+=== RUN   TestMatterSuite_Postgres/uniform_read_outcomes
+=== RUN   TestMatterSuite_Postgres/snapshot_stays_consistent_across_a_concurrent_create
+=== RUN   TestMatterSuite_Postgres/injected_step_failures_roll_back_everything
+=== RUN   TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/insert_node
+=== RUN   TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/insert_requirement
+=== RUN   TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/append_event
+=== RUN   TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/store_receipt
+=== RUN   TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/complete_matter
+=== RUN   TestMatterSuite_Postgres/commit_outcomes
+=== RUN   TestMatterSuite_Postgres/commit_outcomes/unknown_outcome_is_not_proof_of_rollback
+=== RUN   TestMatterSuite_Postgres/commit_outcomes/known_abort_is_unavailable_with_no_effect
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt
+=== RUN   TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty
+--- PASS: TestMatterSuite_Postgres (8.99s)
+    --- PASS: TestMatterSuite_Postgres/create_writes_one_atomic_outcome (0.28s)
+    --- PASS: TestMatterSuite_Postgres/denial_matrix_through_the_service (0.28s)
+    --- PASS: TestMatterSuite_Postgres/replay_sequential_and_after_restart (0.30s)
+    --- PASS: TestMatterSuite_Postgres/key_reuse_and_same_key_under_another_actor (0.28s)
+    --- PASS: TestMatterSuite_Postgres/concurrent_same_key_one_effect (0.33s)
+    --- PASS: TestMatterSuite_Postgres/concurrent_same_key_across_matters_commits_once_without_leaking (0.28s)
+    --- PASS: TestMatterSuite_Postgres/revocation_defeats_create_and_replay (0.27s)
+    --- PASS: TestMatterSuite_Postgres/demotion_keeps_replay_blocks_create (0.29s)
+    --- PASS: TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter (1.14s)
+        --- PASS: TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters (0.29s)
+        --- PASS: TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly (0.29s)
+        --- PASS: TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt (0.29s)
+        --- PASS: TestMatterSuite_Postgres/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay (0.26s)
+    --- PASS: TestMatterSuite_Postgres/elapsed_pending_boundary_fails_closed (0.26s)
+    --- PASS: TestMatterSuite_Postgres/not-due_pending_boundary_is_preserved_by_a_successful_create (0.27s)
+    --- PASS: TestMatterSuite_Postgres/replay_keeps_a_later_pending_boundary_intact (0.28s)
+    --- PASS: TestMatterSuite_Postgres/uniform_read_outcomes (0.29s)
+    --- PASS: TestMatterSuite_Postgres/snapshot_stays_consistent_across_a_concurrent_create (0.35s)
+    --- PASS: TestMatterSuite_Postgres/injected_step_failures_roll_back_everything (1.37s)
+        --- PASS: TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/insert_node (0.26s)
+        --- PASS: TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/insert_requirement (0.27s)
+        --- PASS: TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/append_event (0.30s)
+        --- PASS: TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/store_receipt (0.27s)
+        --- PASS: TestMatterSuite_Postgres/injected_step_failures_roll_back_everything/complete_matter (0.27s)
+    --- PASS: TestMatterSuite_Postgres/commit_outcomes (0.55s)
+        --- PASS: TestMatterSuite_Postgres/commit_outcomes/unknown_outcome_is_not_proof_of_rollback (0.27s)
+        --- PASS: TestMatterSuite_Postgres/commit_outcomes/known_abort_is_unavailable_with_no_effect (0.28s)
+    --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct (1.61s)
+        --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable (0.80s)
+            --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect (0.26s)
+            --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt (0.27s)
+            --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty (0.27s)
+        --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected (0.81s)
+            --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect (0.27s)
+            --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt (0.27s)
+            --- PASS: TestMatterSuite_Postgres/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty (0.27s)
+=== RUN   TestMatterSuiteW1_Postgres
+=== RUN   TestMatterSuiteW1_Postgres/create_workspace:_owner,_replay,_restart_replay,_key_reuse
+=== RUN   TestMatterSuiteW1_Postgres/create_matter:_CAS,_title,_list,_history,_replay_without_CAS
+=== RUN   TestMatterSuiteW1_Postgres/workspace_membership:_CAS,_authorization,_last_owner,_role_mismatch,_revocation
+=== RUN   TestMatterSuiteW1_Postgres/matter_membership:_workspace_prerequisite,_events,_CAS,_last_owner
+=== RUN   TestMatterSuiteW1_Postgres/get_matter_and_member_lists_respect_their_boundaries
+=== RUN   TestMatterSuiteW1_Postgres/my_workspaces_lists_only_the_caller's_active_memberships
+=== RUN   TestMatterSuiteW1_Postgres/accessible_matters_page_without_gaps_or_duplicates
+=== RUN   TestMatterSuiteW1_Postgres/history_pages_without_gaps_or_duplicates
+=== RUN   TestMatterSuiteW1_Postgres/history_includes_requirement_creation_in_contiguous_sequence
+=== RUN   TestMatterSuiteW1_Postgres/own_receipt:_owner_only,_revocation_hides_it
+=== RUN   TestMatterSuiteW1_Postgres/concurrency:_same-key_creation_has_one_effect;_same-revision_grants_have_one_winner
+=== RUN   TestMatterSuiteW1_Postgres/commit_outcome_unknown_is_not_a_rollback
+--- PASS: TestMatterSuiteW1_Postgres (3.41s)
+    --- PASS: TestMatterSuiteW1_Postgres/create_workspace:_owner,_replay,_restart_replay,_key_reuse (0.28s)
+    --- PASS: TestMatterSuiteW1_Postgres/create_matter:_CAS,_title,_list,_history,_replay_without_CAS (0.30s)
+    --- PASS: TestMatterSuiteW1_Postgres/workspace_membership:_CAS,_authorization,_last_owner,_role_mismatch,_revocation (0.31s)
+    --- PASS: TestMatterSuiteW1_Postgres/matter_membership:_workspace_prerequisite,_events,_CAS,_last_owner (0.28s)
+    --- PASS: TestMatterSuiteW1_Postgres/get_matter_and_member_lists_respect_their_boundaries (0.28s)
+    --- PASS: TestMatterSuiteW1_Postgres/my_workspaces_lists_only_the_caller's_active_memberships (0.27s)
+    --- PASS: TestMatterSuiteW1_Postgres/accessible_matters_page_without_gaps_or_duplicates (0.28s)
+    --- PASS: TestMatterSuiteW1_Postgres/history_pages_without_gaps_or_duplicates (0.28s)
+    --- PASS: TestMatterSuiteW1_Postgres/history_includes_requirement_creation_in_contiguous_sequence (0.29s)
+    --- PASS: TestMatterSuiteW1_Postgres/own_receipt:_owner_only,_revocation_hides_it (0.28s)
+    --- PASS: TestMatterSuiteW1_Postgres/concurrency:_same-key_creation_has_one_effect;_same-revision_grants_have_one_winner (0.30s)
+    --- PASS: TestMatterSuiteW1_Postgres/commit_outcome_unknown_is_not_a_rollback (0.26s)
+=== RUN   TestMatterSuiteW2_Postgres
+=== RUN   TestMatterSuiteW2_Postgres/actions:_receipted_creation,_Requirement_is_not_Action,_role_matrix
+=== RUN   TestMatterSuiteW2_Postgres/metadata:_CAS,_member-only_owner,_explicit-offset_due,_same-value_no-op,_history
+=== RUN   TestMatterSuiteW2_Postgres/execution:_guards,_waiting_is_not_blocked,_completed_is_not_verified,_no-op,_stale
+=== RUN   TestMatterSuiteW2_Postgres/dependencies:_AND_gate,_blocked_completion,_cycles,_reblock,_cancellation
+=== RUN   TestMatterSuiteW2_Postgres/dependencies:_cycle,_self,_duplicate,_cross-matter,_reason_and_revision_guards
+=== RUN   TestMatterSuiteW2_Postgres/milestones:_readiness,_critical_chain_attention,_OWNER-only_settings
+=== RUN   TestMatterSuiteW2_Postgres/escalation:_OWNER_only,_CRITICAL_with_reason,_cleared_with_a_reason-less_call
+=== RUN   TestMatterSuiteW2_Postgres/parties:_context_only,_CAS,_history;_waiting_references_a_party
+=== RUN   TestMatterSuiteW2_Postgres/grid:_filters,_derived_timing/attention,_sorting,_paging_without_gaps,_scoping
+=== RUN   TestMatterSuiteW2_Postgres/my_actions:_only_the_caller's_own_work_in_readable_matters,_sections,_deterministic_order
+=== RUN   TestMatterSuiteW2_Postgres/concurrency:_one_winner_per_revision;_racing_edges_cannot_both_close_a_cycle
+=== RUN   TestMatterSuiteW2_Postgres/failure_modes:_injected_step_failures_roll_back;_an_unknown_commit_outcome_is_not_a_rollback
+--- PASS: TestMatterSuiteW2_Postgres (4.95s)
+    --- PASS: TestMatterSuiteW2_Postgres/actions:_receipted_creation,_Requirement_is_not_Action,_role_matrix (0.35s)
+    --- PASS: TestMatterSuiteW2_Postgres/metadata:_CAS,_member-only_owner,_explicit-offset_due,_same-value_no-op,_history (0.34s)
+    --- PASS: TestMatterSuiteW2_Postgres/execution:_guards,_waiting_is_not_blocked,_completed_is_not_verified,_no-op,_stale (0.44s)
+    --- PASS: TestMatterSuiteW2_Postgres/dependencies:_AND_gate,_blocked_completion,_cycles,_reblock,_cancellation (0.52s)
+    --- PASS: TestMatterSuiteW2_Postgres/dependencies:_cycle,_self,_duplicate,_cross-matter,_reason_and_revision_guards (0.41s)
+    --- PASS: TestMatterSuiteW2_Postgres/milestones:_readiness,_critical_chain_attention,_OWNER-only_settings (0.50s)
+    --- PASS: TestMatterSuiteW2_Postgres/escalation:_OWNER_only,_CRITICAL_with_reason,_cleared_with_a_reason-less_call (0.30s)
+    --- PASS: TestMatterSuiteW2_Postgres/parties:_context_only,_CAS,_history;_waiting_references_a_party (0.32s)
+    --- PASS: TestMatterSuiteW2_Postgres/grid:_filters,_derived_timing/attention,_sorting,_paging_without_gaps,_scoping (0.54s)
+    --- PASS: TestMatterSuiteW2_Postgres/my_actions:_only_the_caller's_own_work_in_readable_matters,_sections,_deterministic_order (0.49s)
+    --- PASS: TestMatterSuiteW2_Postgres/concurrency:_one_winner_per_revision;_racing_edges_cannot_both_close_a_cycle (0.43s)
+    --- PASS: TestMatterSuiteW2_Postgres/failure_modes:_injected_step_failures_roll_back;_an_unknown_commit_outcome_is_not_a_rollback (0.31s)
+=== RUN   TestMatterSuiteW3_Postgres
+=== RUN   TestMatterSuiteW3_Postgres/documents:_immutable_versions,_nothing_current_by_upload,_guarded_promotion_(AC-115)
+=== RUN   TestMatterSuiteW3_Postgres/verification:_criteria_are_not_proof;_independent_designated_review;_partial/reject/dispute/revoke_(AC-106,107,126,127,140)
+=== RUN   TestMatterSuiteW3_Postgres/documents_as_proof:_promotion_invalidates_the_current-version_criterion,_a_fixed_one_is_unaffected_(AC-107,157)
+=== RUN   TestMatterSuiteW3_Postgres/evidence:_receipted_submit,_withdrawal,_applicability,_read_authorization
+=== RUN   TestMatterSuiteW3_Postgres/content:_authorize_before_storing,_bounded,_content-bound_replay,_exact_bytes_back
+--- PASS: TestMatterSuiteW3_Postgres (2.28s)
+    --- PASS: TestMatterSuiteW3_Postgres/documents:_immutable_versions,_nothing_current_by_upload,_guarded_promotion_(AC-115) (0.37s)
+    --- PASS: TestMatterSuiteW3_Postgres/verification:_criteria_are_not_proof;_independent_designated_review;_partial/reject/dispute/revoke_(AC-106,107,126,127,140) (0.64s)
+    --- PASS: TestMatterSuiteW3_Postgres/documents_as_proof:_promotion_invalidates_the_current-version_criterion,_a_fixed_one_is_unaffected_(AC-107,157) (0.47s)
+    --- PASS: TestMatterSuiteW3_Postgres/evidence:_receipted_submit,_withdrawal,_applicability,_read_authorization (0.45s)
+    --- PASS: TestMatterSuiteW3_Postgres/content:_authorize_before_storing,_bounded,_content-bound_replay,_exact_bytes_back (0.34s)
+=== RUN   TestMatterSuiteW4_Postgres
+=== RUN   TestMatterSuiteW4_Postgres/a_zero-row_filing_save_is_a_version_conflict_like_every_other_CAS_save
+=== RUN   TestMatterSuiteW4_Postgres/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage
+=== RUN   TestMatterSuiteW4_Postgres/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163)
+=== RUN   TestMatterSuiteW4_Postgres/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09)
+=== RUN   TestMatterSuiteW4_Postgres/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10)
+=== RUN   TestMatterSuiteW4_Postgres/correction:_appended,_never_edited;_owner_only_(AC-163)
+--- PASS: TestMatterSuiteW4_Postgres (3.12s)
+    --- PASS: TestMatterSuiteW4_Postgres/a_zero-row_filing_save_is_a_version_conflict_like_every_other_CAS_save (0.27s)
+    --- PASS: TestMatterSuiteW4_Postgres/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage (0.35s)
+    --- PASS: TestMatterSuiteW4_Postgres/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163) (0.79s)
+    --- PASS: TestMatterSuiteW4_Postgres/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09) (0.61s)
+    --- PASS: TestMatterSuiteW4_Postgres/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10) (0.64s)
+    --- PASS: TestMatterSuiteW4_Postgres/correction:_appended,_never_edited;_owner_only_(AC-163) (0.47s)
+=== RUN   TestMatterSuiteW5_Postgres
+=== RUN   TestMatterSuiteW5_Postgres/context_records:_receipted,_linked,_CAS,_closing_keeps_the_record_(FR-009)
+=== RUN   TestMatterSuiteW5_Postgres/control_room:_every_section_matches_the_records_at_one_boundary_(AC-109)
+--- PASS: TestMatterSuiteW5_Postgres (0.79s)
+    --- PASS: TestMatterSuiteW5_Postgres/context_records:_receipted,_linked,_CAS,_closing_keeps_the_record_(FR-009) (0.36s)
+    --- PASS: TestMatterSuiteW5_Postgres/control_room:_every_section_matches_the_records_at_one_boundary_(AC-109) (0.43s)
+=== RUN   TestMatterMigrations_Idempotent
+--- PASS: TestMatterMigrations_Idempotent (0.26s)
+=== RUN   TestGraphNode_TypedTotalityEnforced
+--- PASS: TestGraphNode_TypedTotalityEnforced (0.27s)
+=== RUN   TestMapMatterError_Classification
+--- PASS: TestMapMatterError_Classification (0.00s)
+=== RUN   TestMatterSuiteW7QA_Postgres
+=== RUN   TestMatterSuiteW7QA_Postgres/F01_dispute_survives_withdrawn
+=== RUN   TestMatterSuiteW7QA_Postgres/F01_dispute_survives_revoked
+=== RUN   TestMatterSuiteW7QA_Postgres/F02_stale_assessment_refused
+=== RUN   TestMatterSuiteW7QA_Postgres/F03_no-proof_filing:_package_and_signature_guards
+=== RUN   TestMatterSuiteW7QA_Postgres/F03_observed_signature_satisfies_the_signature_guard
+=== RUN   TestMatterSuiteW7QA_Postgres/F04_room_is_self-contained
+--- PASS: TestMatterSuiteW7QA_Postgres (2.55s)
+    --- PASS: TestMatterSuiteW7QA_Postgres/F01_dispute_survives_withdrawn (0.44s)
+    --- PASS: TestMatterSuiteW7QA_Postgres/F01_dispute_survives_revoked (0.47s)
+    --- PASS: TestMatterSuiteW7QA_Postgres/F02_stale_assessment_refused (0.40s)
+    --- PASS: TestMatterSuiteW7QA_Postgres/F03_no-proof_filing:_package_and_signature_guards (0.49s)
+    --- PASS: TestMatterSuiteW7QA_Postgres/F03_observed_signature_satisfies_the_signature_guard (0.42s)
+    --- PASS: TestMatterSuiteW7QA_Postgres/F04_room_is_self-contained (0.32s)
+=== RUN   TestMatterSuiteW6_Postgres
+=== RUN   TestMatterSuiteW6_Postgres/import_retains_verification_claim_and_fingerprints_its_content
+=== RUN   TestMatterSuiteW6_Postgres/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row
+=== RUN   TestMatterSuiteW6_Postgres/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk
+=== RUN   TestMatterSuiteW6_Postgres/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import
+=== RUN   TestMatterSuiteW6_Postgres/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed
+=== RUN   TestMatterSuiteW6_Postgres/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import
+=== RUN   TestMatterSuiteW6_Postgres/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint
+=== RUN   TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions
+=== RUN   TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty
+=== RUN   TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text
+=== RUN   TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries
+=== RUN   TestMatterSuiteW6_Postgres/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/format
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/title
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows
+=== RUN   TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes
+=== RUN   TestMatterSuiteW6_Postgres/a_new-row_dependency_graph_becomes_the_exact_persisted_edges
+=== RUN   TestMatterSuiteW6_Postgres/a_reference_to_an_existing_item_links_to_it
+=== RUN   TestMatterSuiteW6_Postgres/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds
+=== RUN   TestMatterSuiteW6_Postgres/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation
+=== RUN   TestMatterSuiteW6_Postgres/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records
+=== RUN   TestMatterSuiteW6_Postgres/a_new_row_can_extend_an_already_imported_group
+=== RUN   TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds
+    contract_w6.go:554: step-level failure injection is a memory-double seam; the PostgreSQL adapter rolls back through its single transaction
+=== RUN   TestMatterSuiteW6_Postgres/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it
+=== RUN   TestMatterSuiteW6_Postgres/concurrent_identical_imports_create_the_records_exactly_once
+=== RUN   TestMatterSuiteW6_Postgres/access_withdrawn_between_preview_and_commit_mutates_nothing
+=== RUN   TestMatterSuiteW6_Postgres/a_row_without_a_description_is_a_preview_error_on_every_store,_never_a_storage_failure
+=== RUN   TestMatterSuiteW6_Postgres/brief:_filing_owner_survives_creation_before_later_transitions
+=== RUN   TestMatterSuiteW6_Postgres/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2
+=== RUN   TestMatterSuiteW6_Postgres/brief:_proof_assessment_and_dispute_change_readiness_at_t2
+=== RUN   TestMatterSuiteW6_Postgres/brief:_imported_work_and_its_dependency_facts_appear_at_t2
+--- PASS: TestMatterSuiteW6_Postgres (10.76s)
+    --- PASS: TestMatterSuiteW6_Postgres/import_retains_verification_claim_and_fingerprints_its_content (0.34s)
+    --- PASS: TestMatterSuiteW6_Postgres/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row (0.76s)
+        --- PASS: TestMatterSuiteW6_Postgres/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk (0.35s)
+        --- PASS: TestMatterSuiteW6_Postgres/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import (0.41s)
+    --- PASS: TestMatterSuiteW6_Postgres/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed (0.68s)
+        --- PASS: TestMatterSuiteW6_Postgres/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import (0.34s)
+        --- PASS: TestMatterSuiteW6_Postgres/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint (0.34s)
+    --- PASS: TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions (0.92s)
+        --- PASS: TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty (0.31s)
+        --- PASS: TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text (0.31s)
+        --- PASS: TestMatterSuiteW6_Postgres/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries (0.31s)
+    --- PASS: TestMatterSuiteW6_Postgres/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation (0.30s)
+    --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes (2.73s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/format (0.30s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv (0.30s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx (0.33s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty (0.29s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey (0.30s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind (0.30s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/title (0.30s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows (0.31s)
+        --- PASS: TestMatterSuiteW6_Postgres/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes (0.30s)
+    --- PASS: TestMatterSuiteW6_Postgres/a_new-row_dependency_graph_becomes_the_exact_persisted_edges (0.34s)
+    --- PASS: TestMatterSuiteW6_Postgres/a_reference_to_an_existing_item_links_to_it (0.31s)
+    --- PASS: TestMatterSuiteW6_Postgres/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds (0.32s)
+    --- PASS: TestMatterSuiteW6_Postgres/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation (0.30s)
+    --- PASS: TestMatterSuiteW6_Postgres/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records (0.35s)
+    --- PASS: TestMatterSuiteW6_Postgres/a_new_row_can_extend_an_already_imported_group (0.33s)
+    --- SKIP: TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds (0.27s)
+    --- PASS: TestMatterSuiteW6_Postgres/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it (0.36s)
+    --- PASS: TestMatterSuiteW6_Postgres/concurrent_identical_imports_create_the_records_exactly_once (0.35s)
+    --- PASS: TestMatterSuiteW6_Postgres/access_withdrawn_between_preview_and_commit_mutates_nothing (0.30s)
+    --- PASS: TestMatterSuiteW6_Postgres/a_row_without_a_description_is_a_preview_error_on_every_store,_never_a_storage_failure (0.30s)
+    --- PASS: TestMatterSuiteW6_Postgres/brief:_filing_owner_survives_creation_before_later_transitions (0.41s)
+    --- PASS: TestMatterSuiteW6_Postgres/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2 (0.38s)
+    --- PASS: TestMatterSuiteW6_Postgres/brief:_proof_assessment_and_dispute_change_readiness_at_t2 (0.40s)
+    --- PASS: TestMatterSuiteW6_Postgres/brief:_imported_work_and_its_dependency_facts_appear_at_t2 (0.32s)
+=== RUN   TestMatterSuiteGW_Postgres
+=== RUN   TestMatterSuiteGW_Postgres/GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen
+=== RUN   TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage
+=== RUN   TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/no-supplement_alternate
+=== RUN   TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/rejection_and_closure
+=== RUN   TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/stale_stage_update_and_revoked_membership
+=== RUN   TestMatterSuiteGW_Postgres/GW-01_Transaction_(AC-161):_approval_to_post-closing
+=== RUN   TestMatterSuiteGW_Postgres/GW-02_Due_Diligence_(AC-162):_request_to_resolution
+--- PASS: TestMatterSuiteGW_Postgres (4.45s)
+    --- PASS: TestMatterSuiteGW_Postgres/GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen (1.30s)
+    --- PASS: TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage (1.44s)
+        --- PASS: TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/no-supplement_alternate (0.46s)
+        --- PASS: TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/rejection_and_closure (0.57s)
+        --- PASS: TestMatterSuiteGW_Postgres/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/stale_stage_update_and_revoked_membership (0.40s)
+    --- PASS: TestMatterSuiteGW_Postgres/GW-01_Transaction_(AC-161):_approval_to_post-closing (1.06s)
+    --- PASS: TestMatterSuiteGW_Postgres/GW-02_Due_Diligence_(AC-162):_request_to_resolution (0.65s)
+=== RUN   TestMatterSuiteReview_Postgres
+=== RUN   TestMatterSuiteReview_Postgres/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels
+=== RUN   TestMatterSuiteReview_Postgres/a_version_of_another_matter_and_a_missing_id_are_rejected_identically
+=== RUN   TestMatterSuiteReview_Postgres/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing
+=== RUN   TestMatterSuiteReview_Postgres/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another
+=== RUN   TestMatterSuiteReview_Postgres/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable
+=== RUN   TestMatterSuiteReview_Postgres/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing
+=== RUN   TestMatterSuiteReview_Postgres/removing_a_version_hides_its_row_but_keeps_its_answers_attributable
+=== RUN   TestMatterSuiteReview_Postgres/history_pages_stay_truthful_when_an_answer_is_recorded_between_pages
+=== RUN   TestMatterSuiteReview_Postgres/history_order_is_recorded_chronology,_not_the_id_byte_order
+=== RUN   TestMatterSuiteReview_Postgres/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing
+--- PASS: TestMatterSuiteReview_Postgres (3.35s)
+    --- PASS: TestMatterSuiteReview_Postgres/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels (0.32s)
+    --- PASS: TestMatterSuiteReview_Postgres/a_version_of_another_matter_and_a_missing_id_are_rejected_identically (0.32s)
+    --- PASS: TestMatterSuiteReview_Postgres/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing (0.31s)
+    --- PASS: TestMatterSuiteReview_Postgres/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another (0.33s)
+    --- PASS: TestMatterSuiteReview_Postgres/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable (0.33s)
+    --- PASS: TestMatterSuiteReview_Postgres/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing (0.36s)
+    --- PASS: TestMatterSuiteReview_Postgres/removing_a_version_hides_its_row_but_keeps_its_answers_attributable (0.36s)
+    --- PASS: TestMatterSuiteReview_Postgres/history_pages_stay_truthful_when_an_answer_is_recorded_between_pages (0.34s)
+    --- PASS: TestMatterSuiteReview_Postgres/history_order_is_recorded_chronology,_not_the_id_byte_order (0.36s)
+    --- PASS: TestMatterSuiteReview_Postgres/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing (0.32s)
+=== RUN   TestLocalPeopleDirectoryIssuerOwnerAndLimit
+--- PASS: TestLocalPeopleDirectoryIssuerOwnerAndLimit (0.27s)
+=== RUN   TestPerf_LocalWorkloads
+    perf_test.go:23: MC_PERF_OUT not set; performance measurement is inert
+--- SKIP: TestPerf_LocalWorkloads (0.00s)
+=== RUN   TestRestoreRehearsal
+    restore_rehearsal_test.go:47: MC_RESTORE_MODE not set; restore rehearsal tooling is inert
+--- SKIP: TestRestoreRehearsal (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	64.753s
+?   	leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc	[no test files]
+=== RUN   TestSchemaDSN
+=== RUN   TestSchemaDSN/plain_dsn
+=== RUN   TestSchemaDSN/existing_search_path_replaced
+--- PASS: TestSchemaDSN (0.00s)
+    --- PASS: TestSchemaDSN/plain_dsn (0.00s)
+    --- PASS: TestSchemaDSN/existing_search_path_replaced (0.00s)
+=== RUN   TestFreshSchemaDSNFrom_SkipsWithoutEnv
+=== RUN   TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip
+    dsn_test.go:44: MC_TEST_DATABASE_URL_DEFINITELY_UNSET not set; skipping PostgreSQL integration test
+--- PASS: TestFreshSchemaDSNFrom_SkipsWithoutEnv (0.00s)
+    --- SKIP: TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres/pgtest	1.150s
+=== RUN   TestSuite_MemoryStore
+=== RUN   TestSuite_MemoryStore/create_writes_one_atomic_outcome
+=== RUN   TestSuite_MemoryStore/denial_matrix_through_the_service
+=== RUN   TestSuite_MemoryStore/replay_sequential_and_after_restart
+=== RUN   TestSuite_MemoryStore/key_reuse_and_same_key_under_another_actor
+=== RUN   TestSuite_MemoryStore/concurrent_same_key_one_effect
+=== RUN   TestSuite_MemoryStore/concurrent_same_key_across_matters_commits_once_without_leaking
+=== RUN   TestSuite_MemoryStore/revocation_defeats_create_and_replay
+=== RUN   TestSuite_MemoryStore/demotion_keeps_replay_blocks_create
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay
+=== RUN   TestSuite_MemoryStore/elapsed_pending_boundary_fails_closed
+=== RUN   TestSuite_MemoryStore/not-due_pending_boundary_is_preserved_by_a_successful_create
+=== RUN   TestSuite_MemoryStore/replay_keeps_a_later_pending_boundary_intact
+=== RUN   TestSuite_MemoryStore/uniform_read_outcomes
+=== RUN   TestSuite_MemoryStore/snapshot_stays_consistent_across_a_concurrent_create
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_node
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_requirement
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/append_event
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/store_receipt
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/complete_matter
+=== RUN   TestSuite_MemoryStore/commit_outcomes
+=== RUN   TestSuite_MemoryStore/commit_outcomes/unknown_outcome_is_not_proof_of_rollback
+=== RUN   TestSuite_MemoryStore/commit_outcomes/known_abort_is_unavailable_with_no_effect
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty
+--- PASS: TestSuite_MemoryStore (0.01s)
+    --- PASS: TestSuite_MemoryStore/create_writes_one_atomic_outcome (0.00s)
+    --- PASS: TestSuite_MemoryStore/denial_matrix_through_the_service (0.00s)
+    --- PASS: TestSuite_MemoryStore/replay_sequential_and_after_restart (0.00s)
+    --- PASS: TestSuite_MemoryStore/key_reuse_and_same_key_under_another_actor (0.00s)
+    --- PASS: TestSuite_MemoryStore/concurrent_same_key_one_effect (0.00s)
+    --- PASS: TestSuite_MemoryStore/concurrent_same_key_across_matters_commits_once_without_leaking (0.00s)
+    --- PASS: TestSuite_MemoryStore/revocation_defeats_create_and_replay (0.00s)
+    --- PASS: TestSuite_MemoryStore/demotion_keeps_replay_blocks_create (0.00s)
+    --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay (0.00s)
+    --- PASS: TestSuite_MemoryStore/elapsed_pending_boundary_fails_closed (0.00s)
+    --- PASS: TestSuite_MemoryStore/not-due_pending_boundary_is_preserved_by_a_successful_create (0.00s)
+    --- PASS: TestSuite_MemoryStore/replay_keeps_a_later_pending_boundary_intact (0.00s)
+    --- PASS: TestSuite_MemoryStore/uniform_read_outcomes (0.00s)
+    --- PASS: TestSuite_MemoryStore/snapshot_stays_consistent_across_a_concurrent_create (0.00s)
+    --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_node (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_requirement (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/append_event (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/store_receipt (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/complete_matter (0.00s)
+    --- PASS: TestSuite_MemoryStore/commit_outcomes (0.00s)
+        --- PASS: TestSuite_MemoryStore/commit_outcomes/unknown_outcome_is_not_proof_of_rollback (0.00s)
+        --- PASS: TestSuite_MemoryStore/commit_outcomes/known_abort_is_unavailable_with_no_effect (0.00s)
+    --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct (0.00s)
+        --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty (0.00s)
+        --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty (0.00s)
+=== RUN   TestSuiteW1_MemoryStore
+=== RUN   TestSuiteW1_MemoryStore/create_workspace:_owner,_replay,_restart_replay,_key_reuse
+=== RUN   TestSuiteW1_MemoryStore/create_matter:_CAS,_title,_list,_history,_replay_without_CAS
+=== RUN   TestSuiteW1_MemoryStore/workspace_membership:_CAS,_authorization,_last_owner,_role_mismatch,_revocation
+=== RUN   TestSuiteW1_MemoryStore/matter_membership:_workspace_prerequisite,_events,_CAS,_last_owner
+=== RUN   TestSuiteW1_MemoryStore/get_matter_and_member_lists_respect_their_boundaries
+=== RUN   TestSuiteW1_MemoryStore/my_workspaces_lists_only_the_caller's_active_memberships
+=== RUN   TestSuiteW1_MemoryStore/accessible_matters_page_without_gaps_or_duplicates
+=== RUN   TestSuiteW1_MemoryStore/history_pages_without_gaps_or_duplicates
+=== RUN   TestSuiteW1_MemoryStore/history_includes_requirement_creation_in_contiguous_sequence
+=== RUN   TestSuiteW1_MemoryStore/own_receipt:_owner_only,_revocation_hides_it
+=== RUN   TestSuiteW1_MemoryStore/concurrency:_same-key_creation_has_one_effect;_same-revision_grants_have_one_winner
+=== RUN   TestSuiteW1_MemoryStore/commit_outcome_unknown_is_not_a_rollback
+--- PASS: TestSuiteW1_MemoryStore (0.01s)
+    --- PASS: TestSuiteW1_MemoryStore/create_workspace:_owner,_replay,_restart_replay,_key_reuse (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/create_matter:_CAS,_title,_list,_history,_replay_without_CAS (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/workspace_membership:_CAS,_authorization,_last_owner,_role_mismatch,_revocation (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/matter_membership:_workspace_prerequisite,_events,_CAS,_last_owner (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/get_matter_and_member_lists_respect_their_boundaries (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/my_workspaces_lists_only_the_caller's_active_memberships (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/accessible_matters_page_without_gaps_or_duplicates (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/history_pages_without_gaps_or_duplicates (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/history_includes_requirement_creation_in_contiguous_sequence (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/own_receipt:_owner_only,_revocation_hides_it (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/concurrency:_same-key_creation_has_one_effect;_same-revision_grants_have_one_winner (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/commit_outcome_unknown_is_not_a_rollback (0.00s)
+=== RUN   TestSuiteW2_MemoryStore
+=== RUN   TestSuiteW2_MemoryStore/actions:_receipted_creation,_Requirement_is_not_Action,_role_matrix
+=== RUN   TestSuiteW2_MemoryStore/metadata:_CAS,_member-only_owner,_explicit-offset_due,_same-value_no-op,_history
+=== RUN   TestSuiteW2_MemoryStore/execution:_guards,_waiting_is_not_blocked,_completed_is_not_verified,_no-op,_stale
+=== RUN   TestSuiteW2_MemoryStore/dependencies:_AND_gate,_blocked_completion,_cycles,_reblock,_cancellation
+=== RUN   TestSuiteW2_MemoryStore/dependencies:_cycle,_self,_duplicate,_cross-matter,_reason_and_revision_guards
+=== RUN   TestSuiteW2_MemoryStore/milestones:_readiness,_critical_chain_attention,_OWNER-only_settings
+=== RUN   TestSuiteW2_MemoryStore/escalation:_OWNER_only,_CRITICAL_with_reason,_cleared_with_a_reason-less_call
+=== RUN   TestSuiteW2_MemoryStore/parties:_context_only,_CAS,_history;_waiting_references_a_party
+=== RUN   TestSuiteW2_MemoryStore/grid:_filters,_derived_timing/attention,_sorting,_paging_without_gaps,_scoping
+=== RUN   TestSuiteW2_MemoryStore/my_actions:_only_the_caller's_own_work_in_readable_matters,_sections,_deterministic_order
+=== RUN   TestSuiteW2_MemoryStore/concurrency:_one_winner_per_revision;_racing_edges_cannot_both_close_a_cycle
+=== RUN   TestSuiteW2_MemoryStore/failure_modes:_injected_step_failures_roll_back;_an_unknown_commit_outcome_is_not_a_rollback
+--- PASS: TestSuiteW2_MemoryStore (0.06s)
+    --- PASS: TestSuiteW2_MemoryStore/actions:_receipted_creation,_Requirement_is_not_Action,_role_matrix (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/metadata:_CAS,_member-only_owner,_explicit-offset_due,_same-value_no-op,_history (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/execution:_guards,_waiting_is_not_blocked,_completed_is_not_verified,_no-op,_stale (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/dependencies:_AND_gate,_blocked_completion,_cycles,_reblock,_cancellation (0.01s)
+    --- PASS: TestSuiteW2_MemoryStore/dependencies:_cycle,_self,_duplicate,_cross-matter,_reason_and_revision_guards (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/milestones:_readiness,_critical_chain_attention,_OWNER-only_settings (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/escalation:_OWNER_only,_CRITICAL_with_reason,_cleared_with_a_reason-less_call (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/parties:_context_only,_CAS,_history;_waiting_references_a_party (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/grid:_filters,_derived_timing/attention,_sorting,_paging_without_gaps,_scoping (0.01s)
+    --- PASS: TestSuiteW2_MemoryStore/my_actions:_only_the_caller's_own_work_in_readable_matters,_sections,_deterministic_order (0.02s)
+    --- PASS: TestSuiteW2_MemoryStore/concurrency:_one_winner_per_revision;_racing_edges_cannot_both_close_a_cycle (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/failure_modes:_injected_step_failures_roll_back;_an_unknown_commit_outcome_is_not_a_rollback (0.00s)
+=== RUN   TestSuiteW3_MemoryStore
+=== RUN   TestSuiteW3_MemoryStore/documents:_immutable_versions,_nothing_current_by_upload,_guarded_promotion_(AC-115)
+=== RUN   TestSuiteW3_MemoryStore/verification:_criteria_are_not_proof;_independent_designated_review;_partial/reject/dispute/revoke_(AC-106,107,126,127,140)
+=== RUN   TestSuiteW3_MemoryStore/documents_as_proof:_promotion_invalidates_the_current-version_criterion,_a_fixed_one_is_unaffected_(AC-107,157)
+=== RUN   TestSuiteW3_MemoryStore/evidence:_receipted_submit,_withdrawal,_applicability,_read_authorization
+=== RUN   TestSuiteW3_MemoryStore/content:_authorize_before_storing,_bounded,_content-bound_replay,_exact_bytes_back
+--- PASS: TestSuiteW3_MemoryStore (0.01s)
+    --- PASS: TestSuiteW3_MemoryStore/documents:_immutable_versions,_nothing_current_by_upload,_guarded_promotion_(AC-115) (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/verification:_criteria_are_not_proof;_independent_designated_review;_partial/reject/dispute/revoke_(AC-106,107,126,127,140) (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/documents_as_proof:_promotion_invalidates_the_current-version_criterion,_a_fixed_one_is_unaffected_(AC-107,157) (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/evidence:_receipted_submit,_withdrawal,_applicability,_read_authorization (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/content:_authorize_before_storing,_bounded,_content-bound_replay,_exact_bytes_back (0.00s)
+=== RUN   TestSuiteW4_MemoryStore
+=== RUN   TestSuiteW4_MemoryStore/a_zero-row_filing_save_is_a_version_conflict_like_every_other_CAS_save
+=== RUN   TestSuiteW4_MemoryStore/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage
+=== RUN   TestSuiteW4_MemoryStore/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163)
+=== RUN   TestSuiteW4_MemoryStore/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09)
+=== RUN   TestSuiteW4_MemoryStore/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10)
+=== RUN   TestSuiteW4_MemoryStore/correction:_appended,_never_edited;_owner_only_(AC-163)
+--- PASS: TestSuiteW4_MemoryStore (0.04s)
+    --- PASS: TestSuiteW4_MemoryStore/a_zero-row_filing_save_is_a_version_conflict_like_every_other_CAS_save (0.00s)
+    --- PASS: TestSuiteW4_MemoryStore/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage (0.00s)
+    --- PASS: TestSuiteW4_MemoryStore/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163) (0.01s)
+    --- PASS: TestSuiteW4_MemoryStore/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09) (0.01s)
+    --- PASS: TestSuiteW4_MemoryStore/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10) (0.01s)
+    --- PASS: TestSuiteW4_MemoryStore/correction:_appended,_never_edited;_owner_only_(AC-163) (0.00s)
+=== RUN   TestSuiteW5_MemoryStore
+=== RUN   TestSuiteW5_MemoryStore/context_records:_receipted,_linked,_CAS,_closing_keeps_the_record_(FR-009)
+=== RUN   TestSuiteW5_MemoryStore/control_room:_every_section_matches_the_records_at_one_boundary_(AC-109)
+--- PASS: TestSuiteW5_MemoryStore (0.00s)
+    --- PASS: TestSuiteW5_MemoryStore/context_records:_receipted,_linked,_CAS,_closing_keeps_the_record_(FR-009) (0.00s)
+    --- PASS: TestSuiteW5_MemoryStore/control_room:_every_section_matches_the_records_at_one_boundary_(AC-109) (0.00s)
+=== RUN   TestSuiteW7QA_MemoryStore
+=== RUN   TestSuiteW7QA_MemoryStore/F01_dispute_survives_withdrawn
+=== RUN   TestSuiteW7QA_MemoryStore/F01_dispute_survives_revoked
+=== RUN   TestSuiteW7QA_MemoryStore/F02_stale_assessment_refused
+=== RUN   TestSuiteW7QA_MemoryStore/F03_no-proof_filing:_package_and_signature_guards
+=== RUN   TestSuiteW7QA_MemoryStore/F03_observed_signature_satisfies_the_signature_guard
+=== RUN   TestSuiteW7QA_MemoryStore/F04_room_is_self-contained
+--- PASS: TestSuiteW7QA_MemoryStore (0.01s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F01_dispute_survives_withdrawn (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F01_dispute_survives_revoked (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F02_stale_assessment_refused (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F03_no-proof_filing:_package_and_signature_guards (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F03_observed_signature_satisfies_the_signature_guard (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F04_room_is_self-contained (0.00s)
+=== RUN   TestSuiteW6_MemoryStore
+=== RUN   TestSuiteW6_MemoryStore/import_retains_verification_claim_and_fingerprints_its_content
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import
+=== RUN   TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed
+=== RUN   TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import
+=== RUN   TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries
+=== RUN   TestSuiteW6_MemoryStore/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes
+=== RUN   TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges
+=== RUN   TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it
+=== RUN   TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation
+=== RUN   TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records
+=== RUN   TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group
+=== RUN   TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it
+=== RUN   TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once
+=== RUN   TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing
+=== RUN   TestSuiteW6_MemoryStore/a_row_without_a_description_is_a_preview_error_on_every_store,_never_a_storage_failure
+=== RUN   TestSuiteW6_MemoryStore/brief:_filing_owner_survives_creation_before_later_transitions
+=== RUN   TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2
+--- PASS: TestSuiteW6_MemoryStore (0.04s)
+    --- PASS: TestSuiteW6_MemoryStore/import_retains_verification_claim_and_fingerprints_its_content (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes (0.02s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows (0.01s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_row_without_a_description_is_a_preview_error_on_every_store,_never_a_storage_failure (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_filing_owner_survives_creation_before_later_transitions (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2 (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2 (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2 (0.00s)
+=== RUN   TestSuiteGW_MemoryStore
+=== RUN   TestSuiteGW_MemoryStore/GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen
+=== RUN   TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage
+=== RUN   TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/no-supplement_alternate
+=== RUN   TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/rejection_and_closure
+=== RUN   TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/stale_stage_update_and_revoked_membership
+=== RUN   TestSuiteGW_MemoryStore/GW-01_Transaction_(AC-161):_approval_to_post-closing
+=== RUN   TestSuiteGW_MemoryStore/GW-02_Due_Diligence_(AC-162):_request_to_resolution
+--- PASS: TestSuiteGW_MemoryStore (0.07s)
+    --- PASS: TestSuiteGW_MemoryStore/GW-03_Regulatory_Filing_(AC-163):_two_supplement_cycles,_approval,_reopen (0.03s)
+    --- PASS: TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage (0.01s)
+        --- PASS: TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/no-supplement_alternate (0.00s)
+        --- PASS: TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/rejection_and_closure (0.01s)
+        --- PASS: TestSuiteGW_MemoryStore/GW-03_alternates:_no_supplement,_rejection_and_closure,_revoked_rights,_stale_stage/stale_stage_update_and_revoked_membership (0.00s)
+    --- PASS: TestSuiteGW_MemoryStore/GW-01_Transaction_(AC-161):_approval_to_post-closing (0.02s)
+    --- PASS: TestSuiteGW_MemoryStore/GW-02_Due_Diligence_(AC-162):_request_to_resolution (0.01s)
+=== RUN   TestSuiteReview_MemoryStore
+=== RUN   TestSuiteReview_MemoryStore/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels
+=== RUN   TestSuiteReview_MemoryStore/a_version_of_another_matter_and_a_missing_id_are_rejected_identically
+=== RUN   TestSuiteReview_MemoryStore/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing
+=== RUN   TestSuiteReview_MemoryStore/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another
+=== RUN   TestSuiteReview_MemoryStore/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable
+=== RUN   TestSuiteReview_MemoryStore/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing
+=== RUN   TestSuiteReview_MemoryStore/removing_a_version_hides_its_row_but_keeps_its_answers_attributable
+=== RUN   TestSuiteReview_MemoryStore/history_pages_stay_truthful_when_an_answer_is_recorded_between_pages
+=== RUN   TestSuiteReview_MemoryStore/history_order_is_recorded_chronology,_not_the_id_byte_order
+=== RUN   TestSuiteReview_MemoryStore/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing
+--- PASS: TestSuiteReview_MemoryStore (0.01s)
+    --- PASS: TestSuiteReview_MemoryStore/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/a_version_of_another_matter_and_a_missing_id_are_rejected_identically (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/removing_a_version_hides_its_row_but_keeps_its_answers_attributable (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/history_pages_stay_truthful_when_an_answer_is_recorded_between_pages (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/history_order_is_recorded_chronology,_not_the_id_byte_order (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing (0.00s)
+=== RUN   TestContract_MemoryObjects
+=== RUN   TestContract_MemoryObjects/round_trip_and_a_repeated_put_return_the_same_reference
+=== RUN   TestContract_MemoryObjects/empty_and_larger_content_round_trip
+=== RUN   TestContract_MemoryObjects/size_limit:_exactly_the_limit_is_stored,_one_byte_more_stores_nothing
+=== RUN   TestContract_MemoryObjects/a_failing_source_is_reported_as_unavailable_and_stores_nothing
+=== RUN   TestContract_MemoryObjects/malformed_and_unknown_digests_are_unavailable
+=== RUN   TestContract_MemoryObjects/never-stored_and_lost_objects_are_missing,_not_merely_unavailable
+=== RUN   TestContract_MemoryObjects/content_is_addressed_within_a_matter
+=== RUN   TestContract_MemoryObjects/concurrent_puts_of_the_same_bytes_agree
+=== RUN   TestContract_MemoryObjects/damaged_bytes_are_never_read_to_completion
+--- PASS: TestContract_MemoryObjects (0.01s)
+    --- PASS: TestContract_MemoryObjects/round_trip_and_a_repeated_put_return_the_same_reference (0.00s)
+    --- PASS: TestContract_MemoryObjects/empty_and_larger_content_round_trip (0.01s)
+    --- PASS: TestContract_MemoryObjects/size_limit:_exactly_the_limit_is_stored,_one_byte_more_stores_nothing (0.00s)
+    --- PASS: TestContract_MemoryObjects/a_failing_source_is_reported_as_unavailable_and_stores_nothing (0.00s)
+    --- PASS: TestContract_MemoryObjects/malformed_and_unknown_digests_are_unavailable (0.00s)
+    --- PASS: TestContract_MemoryObjects/never-stored_and_lost_objects_are_missing,_not_merely_unavailable (0.00s)
+    --- PASS: TestContract_MemoryObjects/content_is_addressed_within_a_matter (0.00s)
+    --- PASS: TestContract_MemoryObjects/concurrent_puts_of_the_same_bytes_agree (0.00s)
+    --- PASS: TestContract_MemoryObjects/damaged_bytes_are_never_read_to_completion (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol	1.390s
+?   	leonx.me/matter-control/internal/adapter/outbound/repotest/objectcontract	[no test files]
+=== RUN   TestXLSX_RoundTripKeepsFormulaLookingTextLiteral
+--- PASS: TestXLSX_RoundTripKeepsFormulaLookingTextLiteral (0.00s)
+=== RUN   TestCSV_ExportNeutralisesFormulaStarts
+--- PASS: TestCSV_ExportNeutralisesFormulaStarts (0.00s)
+=== RUN   TestDecode_RefusesWhatItCannotReadSafely
+--- PASS: TestDecode_RefusesWhatItCannotReadSafely (0.00s)
+=== RUN   TestDecode_CSVKeepsFormulaTextAndEmbeddedURLsLiteral
+--- PASS: TestDecode_CSVKeepsFormulaTextAndEmbeddedURLsLiteral (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/sheet	1.115s
+=== RUN   TestRecordIDv7_CanonicalUUIDv7Strings
+--- PASS: TestRecordIDv7_CanonicalUUIDv7Strings (0.00s)
+=== RUN   TestClock_IsUTCWithMicrosecondPrecision
+--- PASS: TestClock_IsUTCWithMicrosecondPrecision (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/system	1.111s
+=== RUN   TestProductGraph_ResolvesEveryDependency
+--- PASS: TestProductGraph_ResolvesEveryDependency (0.00s)
+=== RUN   TestProductReadiness_ClosedPoolIsUnavailable
+--- PASS: TestProductReadiness_ClosedPoolIsUnavailable (0.01s)
+=== RUN   TestReadiness_BoundsAndCancellation
+--- PASS: TestReadiness_BoundsAndCancellation (0.00s)
+=== RUN   TestProductShutdown_DrainsOrCancelsRequests
+=== RUN   TestProductShutdown_DrainsOrCancelsRequests/drain
+    writer.go:40: [Fx] HOOK OnStart		leonx.me/matter-control/internal/app.newProductHTTPServer.func2() executing (caller: leonx.me/matter-control/internal/app.newProductHTTPServer)
+    writer.go:40: [Fx] HOOK OnStart		leonx.me/matter-control/internal/app.newProductHTTPServer.func2() called by leonx.me/matter-control/internal/app.newProductHTTPServer ran successfully in 14.917µs
+    writer.go:40: [Fx] HOOK OnStop		leonx.me/matter-control/internal/app.newProductHTTPServer.func3() executing (caller: leonx.me/matter-control/internal/app.newProductHTTPServer)
+    writer.go:40: [Fx] HOOK OnStop		leonx.me/matter-control/internal/app.newProductHTTPServer.func3() called by leonx.me/matter-control/internal/app.newProductHTTPServer ran successfully in 1.42925ms
+=== RUN   TestProductShutdown_DrainsOrCancelsRequests/cancel
+    writer.go:40: [Fx] HOOK OnStart		leonx.me/matter-control/internal/app.newProductHTTPServer.func2() executing (caller: leonx.me/matter-control/internal/app.newProductHTTPServer)
+    writer.go:40: [Fx] HOOK OnStart		leonx.me/matter-control/internal/app.newProductHTTPServer.func2() called by leonx.me/matter-control/internal/app.newProductHTTPServer ran successfully in 4.583µs
+    writer.go:40: [Fx] HOOK OnStop		leonx.me/matter-control/internal/app.newProductHTTPServer.func3() executing (caller: leonx.me/matter-control/internal/app.newProductHTTPServer)
+    writer.go:40: [Fx] HOOK OnStop		leonx.me/matter-control/internal/app.newProductHTTPServer.func3() called by leonx.me/matter-control/internal/app.newProductHTTPServer failed in 100.27975ms: graceful shutdown: context deadline exceeded
+--- PASS: TestProductShutdown_DrainsOrCancelsRequests (0.10s)
+    --- PASS: TestProductShutdown_DrainsOrCancelsRequests/drain (0.00s)
+    --- PASS: TestProductShutdown_DrainsOrCancelsRequests/cancel (0.10s)
+=== RUN   TestNewTokenVerifier_RefusesAKeyForAnotherApplication
+--- PASS: TestNewTokenVerifier_RefusesAKeyForAnotherApplication (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/app	1.427s
+=== RUN   TestLoadProduct_Defaults
+--- PASS: TestLoadProduct_Defaults (0.00s)
+=== RUN   TestLoadProduct_NegativeCacheTTLRefused
+--- PASS: TestLoadProduct_NegativeCacheTTLRefused (0.00s)
+=== RUN   TestLoadProduct_Errors
+--- PASS: TestLoadProduct_Errors (0.00s)
+=== RUN   TestLoadProduct_APIClientIDIsOptionalAndPublic
+--- PASS: TestLoadProduct_APIClientIDIsOptionalAndPublic (0.00s)
+=== RUN   TestLoadProduct_IdentityURLsNeedTLSExceptLoopback
+--- PASS: TestLoadProduct_IdentityURLsNeedTLSExceptLoopback (0.00s)
+=== RUN   TestLoadProduct_MigrationURLDefaultsToRuntimeURL
+--- PASS: TestLoadProduct_MigrationURLDefaultsToRuntimeURL (0.00s)
+=== RUN   TestLoadProduct_MaxInFlight
+--- PASS: TestLoadProduct_MaxInFlight (0.00s)
+=== RUN   TestLoadProduct_TransferTimeoutCanBeConfigured
+--- PASS: TestLoadProduct_TransferTimeoutCanBeConfigured (0.00s)
+=== RUN   TestLoadProduct_ObjectBackendDefaultsToTheLocalDirectory
+--- PASS: TestLoadProduct_ObjectBackendDefaultsToTheLocalDirectory (0.00s)
+=== RUN   TestLoadProduct_CloudFilesystemFailsClosed
+=== RUN   TestLoadProduct_CloudFilesystemFailsClosed/#00
+=== RUN   TestLoadProduct_CloudFilesystemFailsClosed/fs
+=== RUN   TestLoadProduct_CloudFilesystemFailsClosed/r2
+--- PASS: TestLoadProduct_CloudFilesystemFailsClosed (0.00s)
+    --- PASS: TestLoadProduct_CloudFilesystemFailsClosed/#00 (0.00s)
+    --- PASS: TestLoadProduct_CloudFilesystemFailsClosed/fs (0.00s)
+    --- PASS: TestLoadProduct_CloudFilesystemFailsClosed/r2 (0.00s)
+=== RUN   TestLoadProduct_R2NeedsNoDirectoryButEverySetting
+--- PASS: TestLoadProduct_R2NeedsNoDirectoryButEverySetting (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/config	1.100s
+?   	leonx.me/matter-control/internal/core/domain	[no test files]
+=== RUN   TestNewReviewGridValidates
+--- PASS: TestNewReviewGridValidates (0.00s)
+=== RUN   TestNewReviewQuestionBounds
+--- PASS: TestNewReviewQuestionBounds (0.00s)
+=== RUN   TestNewReviewAnswerRules
+--- PASS: TestNewReviewAnswerRules (0.00s)
+=== RUN   TestBuildReviewCellsPendingWhenNoAnswer
+--- PASS: TestBuildReviewCellsPendingWhenNoAnswer (0.00s)
+=== RUN   TestBuildReviewCellsPicksCurrentAnswer
+--- PASS: TestBuildReviewCellsPicksCurrentAnswer (0.00s)
+=== RUN   TestBuildReviewCellsStaleOnlyForRevisedQuestion
+--- PASS: TestBuildReviewCellsStaleOnlyForRevisedQuestion (0.00s)
+=== RUN   TestBuildReviewCellsIgnoresAnswersOfRemovedVersion
+--- PASS: TestBuildReviewCellsIgnoresAnswersOfRemovedVersion (0.00s)
+=== RUN   TestReviewLimitsCountCharactersNotBytes
+--- PASS: TestReviewLimitsCountCharactersNotBytes (0.00s)
+=== RUN   TestCriterionIsAGapUntilProofIsAssessed
+--- PASS: TestCriterionIsAGapUntilProofIsAssessed (0.00s)
+=== RUN   TestClaimedButUnassessedProofIsPending
+--- PASS: TestClaimedButUnassessedProofIsPending (0.00s)
+=== RUN   TestAcceptedProofVerifiesOnlyItsCriterion
+--- PASS: TestAcceptedProofVerifiesOnlyItsCriterion (0.00s)
+=== RUN   TestExpiryRejectionAndRevocationEndSatisfaction
+--- PASS: TestExpiryRejectionAndRevocationEndSatisfaction (0.00s)
+=== RUN   TestPromotionInvalidatesCurrentVersionCriteriaOnly
+--- PASS: TestPromotionInvalidatesCurrentVersionCriteriaOnly (0.00s)
+=== RUN   TestDisputeMakesSubjectDisputedUntilResolved
+--- PASS: TestDisputeMakesSubjectDisputedUntilResolved (0.00s)
+=== RUN   TestPrecedenceAndApplicability
+--- PASS: TestPrecedenceAndApplicability (0.00s)
+=== RUN   TestStaleRevisionAndOldEpochNeverSatisfy
+--- PASS: TestStaleRevisionAndOldEpochNeverSatisfy (0.00s)
+=== RUN   TestReviewIndependence
+--- PASS: TestReviewIndependence (0.00s)
+=== RUN   TestIdentityParsing
+--- PASS: TestIdentityParsing (0.00s)
+=== RUN   TestIdempotencyKeyAndRequestHash
+--- PASS: TestIdempotencyKeyAndRequestHash (0.00s)
+=== RUN   TestStateEnums
+--- PASS: TestStateEnums (0.00s)
+=== RUN   TestNewRequirementInitialShape
+--- PASS: TestNewRequirementInitialShape (0.00s)
+=== RUN   TestNewRequirementValidation
+=== RUN   TestNewRequirementValidation/blank_title
+=== RUN   TestNewRequirementValidation/title_with_NUL
+=== RUN   TestNewRequirementValidation/blank_outcome
+=== RUN   TestNewRequirementValidation/outcome_with_NUL
+=== RUN   TestNewRequirementValidation/invalid_requirement_id
+=== RUN   TestNewRequirementValidation/invalid_matter_id
+--- PASS: TestNewRequirementValidation (0.00s)
+    --- PASS: TestNewRequirementValidation/blank_title (0.00s)
+    --- PASS: TestNewRequirementValidation/title_with_NUL (0.00s)
+    --- PASS: TestNewRequirementValidation/blank_outcome (0.00s)
+    --- PASS: TestNewRequirementValidation/outcome_with_NUL (0.00s)
+    --- PASS: TestNewRequirementValidation/invalid_requirement_id (0.00s)
+    --- PASS: TestNewRequirementValidation/invalid_matter_id (0.00s)
+=== RUN   TestAccessFactSets
+--- PASS: TestAccessFactSets (0.00s)
+=== RUN   TestKeyAgePolicy
+--- PASS: TestKeyAgePolicy (0.00s)
+=== RUN   TestANDGate_ProofGateKeepsTargetBlocked
+--- PASS: TestANDGate_ProofGateKeepsTargetBlocked (0.00s)
+=== RUN   TestUpstreamVerificationUnlocksTarget
+--- PASS: TestUpstreamVerificationUnlocksTarget (0.00s)
+=== RUN   TestReopenReblocksTransitively
+--- PASS: TestReopenReblocksTransitively (0.00s)
+=== RUN   TestCancellationDoesNotSatisfy
+--- PASS: TestCancellationDoesNotSatisfy (0.00s)
+=== RUN   TestValidateNewEdge
+--- PASS: TestValidateNewEdge (0.00s)
+=== RUN   TestBlockedItemCannotComplete
+--- PASS: TestBlockedItemCannotComplete (0.00s)
+=== RUN   TestTimingBoundaries
+--- PASS: TestTimingBoundaries (0.00s)
+=== RUN   TestAttentionPrecedence
+--- PASS: TestAttentionPrecedence (0.00s)
+=== RUN   TestCriticalChainIsUnsatisfiedPrerequisitesOfCriticalMilestones
+--- PASS: TestCriticalChainIsUnsatisfiedPrerequisitesOfCriticalMilestones (0.00s)
+=== RUN   TestMilestoneReadiness
+--- PASS: TestMilestoneReadiness (0.00s)
+=== RUN   TestNextActionOrderAndClassification
+--- PASS: TestNextActionOrderAndClassification (0.00s)
+=== RUN   TestTransitionTableConformance
+--- PASS: TestTransitionTableConformance (0.00s)
+=== RUN   TestTransitionGuards
+--- PASS: TestTransitionGuards (0.00s)
+=== RUN   TestWaitingFieldsFollowTheState
+--- PASS: TestWaitingFieldsFollowTheState (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/core/domain/matter	1.101s
+=== RUN   TestDecideCreateRequirement
+=== RUN   TestDecideCreateRequirement/matter_OWNER_with_active_workspace_membership
+=== RUN   TestDecideCreateRequirement/matter_EDITOR_with_active_workspace_membership
+=== RUN   TestDecideCreateRequirement/matter_VIEWER_is_denied_without_hiding_the_matter
+=== RUN   TestDecideCreateRequirement/workspace_OWNER_without_matter_membership_is_hidden-denied
+=== RUN   TestDecideCreateRequirement/revoked_matter_membership_is_hidden-denied
+=== RUN   TestDecideCreateRequirement/active_matter_membership_with_revoked_workspace_membership_is_hidden-denied
+=== RUN   TestDecideCreateRequirement/no_membership_at_all_is_hidden-denied_(default_deny)
+--- PASS: TestDecideCreateRequirement (0.00s)
+    --- PASS: TestDecideCreateRequirement/matter_OWNER_with_active_workspace_membership (0.00s)
+    --- PASS: TestDecideCreateRequirement/matter_EDITOR_with_active_workspace_membership (0.00s)
+    --- PASS: TestDecideCreateRequirement/matter_VIEWER_is_denied_without_hiding_the_matter (0.00s)
+    --- PASS: TestDecideCreateRequirement/workspace_OWNER_without_matter_membership_is_hidden-denied (0.00s)
+    --- PASS: TestDecideCreateRequirement/revoked_matter_membership_is_hidden-denied (0.00s)
+    --- PASS: TestDecideCreateRequirement/active_matter_membership_with_revoked_workspace_membership_is_hidden-denied (0.00s)
+    --- PASS: TestDecideCreateRequirement/no_membership_at_all_is_hidden-denied_(default_deny) (0.00s)
+=== RUN   TestDecideReadRequirement
+--- PASS: TestDecideReadRequirement (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/core/policy	1.089s
+?   	leonx.me/matter-control/internal/core/port	[no test files]
+=== RUN   TestReplayBrief_ProofExpiryAtT2
+=== RUN   TestReplayBrief_ProofExpiryAtT2/before
+=== RUN   TestReplayBrief_ProofExpiryAtT2/boundary
+=== RUN   TestReplayBrief_ProofExpiryAtT2/after
+=== RUN   TestReplayBrief_ProofExpiryAtT2/revoked
+=== RUN   TestReplayBrief_ProofExpiryAtT2/withdrawn
+=== RUN   TestReplayBrief_ProofExpiryAtT2/open_dispute_survives_expiry
+=== RUN   TestReplayBrief_ProofExpiryAtT2/new_epoch
+=== RUN   TestReplayBrief_ProofExpiryAtT2/criterion_revision
+--- PASS: TestReplayBrief_ProofExpiryAtT2 (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/before (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/boundary (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/after (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/revoked (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/withdrawn (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/open_dispute_survives_expiry (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/new_epoch (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/criterion_revision (0.00s)
+=== RUN   TestReplayBrief_AlternativeAndOptionalProof
+--- PASS: TestReplayBrief_AlternativeAndOptionalProof (0.00s)
+=== RUN   TestReplayBrief_CancelledDropsOutAndReopenReturns
+--- PASS: TestReplayBrief_CancelledDropsOutAndReopenReturns (0.00s)
+=== RUN   TestReplayBrief_LegacyUnattributableAssessmentFailsClosed
+--- PASS: TestReplayBrief_LegacyUnattributableAssessmentFailsClosed (0.00s)
+=== RUN   TestReplayBrief_IgnoresEventsAfterT2
+--- PASS: TestReplayBrief_IgnoresEventsAfterT2 (0.00s)
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_change_to_an_item_that_was_never_created
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_derived_change_to_an_item_that_was_never_created
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_unreadable_snapshot
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_snapshot_that_is_not_an_object
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_expiry_fact_without_its_subject
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_creation_event_with_no_payload
+--- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_change_to_an_item_that_was_never_created (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_derived_change_to_an_item_that_was_never_created (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_unreadable_snapshot (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_snapshot_that_is_not_an_object (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_expiry_fact_without_its_subject (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_creation_event_with_no_payload (0.00s)
+=== RUN   TestReplayBrief_FullSnapshotReplacesOwner
+--- PASS: TestReplayBrief_FullSnapshotReplacesOwner (0.00s)
+=== RUN   TestReplayBrief_FilingCommandsReplayExecution
+--- PASS: TestReplayBrief_FilingCommandsReplayExecution (0.00s)
+=== RUN   TestReplayBrief_LegacyImportedBlockedWithoutEdgesFailsClosed
+--- PASS: TestReplayBrief_LegacyImportedBlockedWithoutEdgesFailsClosed (0.00s)
+=== RUN   TestReplayBrief_LegacyFilingOwnerIsUnknownUntilFullSnapshot
+--- PASS: TestReplayBrief_LegacyFilingOwnerIsUnknownUntilFullSnapshot (0.00s)
+=== RUN   TestReplayBrief_LegacyFilingRevisionUnavailable
+--- PASS: TestReplayBrief_LegacyFilingRevisionUnavailable (0.00s)
+=== RUN   TestBulkCommit_PartialSuccessWithDistinctFailures
+--- PASS: TestBulkCommit_PartialSuccessWithDistinctFailures (0.00s)
+=== RUN   TestBulkCommit_RetryReplaysSuccessAndSkips
+--- PASS: TestBulkCommit_RetryReplaysSuccessAndSkips (0.00s)
+=== RUN   TestBulkCommit_UnknownThenReplay
+--- PASS: TestBulkCommit_UnknownThenReplay (0.00s)
+=== RUN   TestImportCommit_IdenticalReplayThenContentConflict
+--- PASS: TestImportCommit_IdenticalReplayThenContentConflict (0.00s)
+=== RUN   TestImportCommit_VerifiedClaimStaysUnverified
+--- PASS: TestImportCommit_VerifiedClaimStaysUnverified (0.00s)
+=== RUN   TestBrief_WindowEndpointsAndOutstandingAtT2
+--- PASS: TestBrief_WindowEndpointsAndOutstandingAtT2 (0.00s)
+=== RUN   TestBrief_EmptyWindowStillOutstanding
+--- PASS: TestBrief_EmptyWindowStillOutstanding (0.00s)
+=== RUN   TestBrief_ReversedWindow_Refused
+--- PASS: TestBrief_ReversedWindow_Refused (0.00s)
+=== RUN   TestCreateRequirement_ReplayAuthorizesRepresentedMatters
+--- PASS: TestCreateRequirement_ReplayAuthorizesRepresentedMatters (0.00s)
+=== RUN   TestCreateRequirement_ReplayAuthorizesSavedWorkspace
+--- PASS: TestCreateRequirement_ReplayAuthorizesSavedWorkspace (0.00s)
+=== RUN   TestCreateRequirement_DemotionKeepsRepresentedMatterReplay
+--- PASS: TestCreateRequirement_DemotionKeepsRepresentedMatterReplay (0.00s)
+=== RUN   TestGetRequirement_MembershipReadUnavailablePreserved
+--- PASS: TestGetRequirement_MembershipReadUnavailablePreserved (0.00s)
+=== RUN   TestGetRequirement_MembershipReadUnexpectedPropagates
+--- PASS: TestGetRequirement_MembershipReadUnexpectedPropagates (0.00s)
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/create
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/replay
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/create
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/replay
+--- PASS: TestCreateRequirement_MembershipFailuresPropagate (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/create (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/replay (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/create (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/replay (0.00s)
+=== RUN   TestCreateRequirement_ElapsedBoundaryFailsClosed
+--- PASS: TestCreateRequirement_ElapsedBoundaryFailsClosed (0.00s)
+=== RUN   TestCreateRequirement_FutureBoundaryPreserved
+--- PASS: TestCreateRequirement_FutureBoundaryPreserved (0.00s)
+=== RUN   TestCreateRequirement_ReplayIgnoresPendingBoundary
+--- PASS: TestCreateRequirement_ReplayIgnoresPendingBoundary (0.00s)
+=== RUN   TestCreateRequirement_ValidationBeforeStore
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_actor
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_matter
+=== RUN   TestCreateRequirement_ValidationBeforeStore/non-v7_key
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_hash
+=== RUN   TestCreateRequirement_ValidationBeforeStore/blank_title
+=== RUN   TestCreateRequirement_ValidationBeforeStore/blank_outcome
+--- PASS: TestCreateRequirement_ValidationBeforeStore (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_actor (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_matter (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/non-v7_key (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_hash (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/blank_title (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/blank_outcome (0.00s)
+=== RUN   TestCreateRequirement_OneAtomicOutcome
+--- PASS: TestCreateRequirement_OneAtomicOutcome (0.00s)
+=== RUN   TestCreateRequirement_DenialMatrix
+=== RUN   TestCreateRequirement_DenialMatrix/viewer_member_is_forbidden
+=== RUN   TestCreateRequirement_DenialMatrix/workspace_owner_without_matter_membership_is_uniform_not-found
+=== RUN   TestCreateRequirement_DenialMatrix/complete_outsider_is_uniform_not-found
+=== RUN   TestCreateRequirement_DenialMatrix/nonexistent_matter_is_uniform_not-found
+--- PASS: TestCreateRequirement_DenialMatrix (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/viewer_member_is_forbidden (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/workspace_owner_without_matter_membership_is_uniform_not-found (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/complete_outsider_is_uniform_not-found (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/nonexistent_matter_is_uniform_not-found (0.00s)
+=== RUN   TestCreateRequirement_SequentialReplay
+--- PASS: TestCreateRequirement_SequentialReplay (0.00s)
+=== RUN   TestCreateRequirement_ReplayAfterRestart
+--- PASS: TestCreateRequirement_ReplayAfterRestart (0.00s)
+=== RUN   TestCreateRequirement_KeyReuse
+--- PASS: TestCreateRequirement_KeyReuse (0.00s)
+=== RUN   TestCreateRequirement_SameKeyDifferentActor
+--- PASS: TestCreateRequirement_SameKeyDifferentActor (0.00s)
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/insert_node
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/insert_requirement
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/append_event
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/store_receipt
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/complete_matter
+--- PASS: TestCreateRequirement_InjectedFailureRollsBack (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/insert_node (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/insert_requirement (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/append_event (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/store_receipt (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/complete_matter (0.00s)
+=== RUN   TestCreateRequirement_CommitOutcomes
+=== RUN   TestCreateRequirement_CommitOutcomes/unknown_outcome_commits_but_loses_the_acknowledgement
+=== RUN   TestCreateRequirement_CommitOutcomes/known_rollback_is_unavailable_with_no_effect
+--- PASS: TestCreateRequirement_CommitOutcomes (0.00s)
+    --- PASS: TestCreateRequirement_CommitOutcomes/unknown_outcome_commits_but_loses_the_acknowledgement (0.00s)
+    --- PASS: TestCreateRequirement_CommitOutcomes/known_rollback_is_unavailable_with_no_effect (0.00s)
+=== RUN   TestCreateRequirement_KeyAgePolicy
+=== RUN   TestCreateRequirement_KeyAgePolicy/fresh_key_creates_and_replays
+=== RUN   TestCreateRequirement_KeyAgePolicy/expired_key_is_rejected_without_effect
+=== RUN   TestCreateRequirement_KeyAgePolicy/key_beyond_future_skew_is_rejected_without_effect
+--- PASS: TestCreateRequirement_KeyAgePolicy (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/fresh_key_creates_and_replays (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/expired_key_is_rejected_without_effect (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/key_beyond_future_skew_is_rejected_without_effect (0.00s)
+=== RUN   TestCreateRequirement_RevocationBeatsCreateAndReplay
+--- PASS: TestCreateRequirement_RevocationBeatsCreateAndReplay (0.00s)
+=== RUN   TestCreateRequirement_DemotionKeepsReplayBlocksCreate
+--- PASS: TestCreateRequirement_DemotionKeepsReplayBlocksCreate (0.00s)
+=== RUN   TestCreateRequirement_ConcurrentSameKeyOneEffect
+--- PASS: TestCreateRequirement_ConcurrentSameKeyOneEffect (0.00s)
+=== RUN   TestGetRequirement_UniformNotFound
+=== RUN   TestGetRequirement_UniformNotFound/malformed_id_is_a_validation_error
+=== RUN   TestGetRequirement_UniformNotFound/nonexistent_id
+=== RUN   TestGetRequirement_UniformNotFound/kind_mismatch_(action_node)
+=== RUN   TestGetRequirement_UniformNotFound/outsider_on_existing_id
+=== RUN   TestGetRequirement_UniformNotFound/revoked_member
+--- PASS: TestGetRequirement_UniformNotFound (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/malformed_id_is_a_validation_error (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/nonexistent_id (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/kind_mismatch_(action_node) (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/outsider_on_existing_id (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/revoked_member (0.00s)
+=== RUN   TestGetRequirement_Authorized
+--- PASS: TestGetRequirement_Authorized (0.00s)
+=== RUN   TestGetRequirement_UnavailableIsDistinct
+--- PASS: TestGetRequirement_UnavailableIsDistinct (0.00s)
+=== RUN   TestBriefStillReconstructsAfterReviewEvents
+--- PASS: TestBriefStillReconstructsAfterReviewEvents (0.00s)
+=== RUN   TestReviewEventsCarryNoAnswerText
+--- PASS: TestReviewEventsCarryNoAnswerText (0.00s)
+=== RUN   TestCreateGridOwnerAndEditorOnly
+--- PASS: TestCreateGridOwnerAndEditorOnly (0.00s)
+=== RUN   TestAddVersionRejectsUnknownAndCrossMatterIdentically
+--- PASS: TestAddVersionRejectsUnknownAndCrossMatterIdentically (0.00s)
+=== RUN   TestAddVersionTwiceAndBounds
+--- PASS: TestAddVersionTwiceAndBounds (0.00s)
+=== RUN   TestStructureCommandsNeedCurrentRevision
+--- PASS: TestStructureCommandsNeedCurrentRevision (0.00s)
+=== RUN   TestReviseQuestionStalesOnlyItsColumn
+--- PASS: TestReviseQuestionStalesOnlyItsColumn (0.00s)
+=== RUN   TestRecordAnswerCASOnExpectedAnswerID
+--- PASS: TestRecordAnswerCASOnExpectedAnswerID (0.00s)
+=== RUN   TestRecordAnswerReplayReturnsOriginal
+--- PASS: TestRecordAnswerReplayReturnsOriginal (0.00s)
+=== RUN   TestRecordAnswerRequiresVersionInGrid
+--- PASS: TestRecordAnswerRequiresVersionInGrid (0.00s)
+=== RUN   TestAnswerHistoryIsBoundedOrderedAndComplete
+--- PASS: TestAnswerHistoryIsBoundedOrderedAndComplete (0.00s)
+=== RUN   TestReviewDoesNotChangeVerification
+--- PASS: TestReviewDoesNotChangeVerification (0.00s)
+=== RUN   TestRecordAnswerRefusesAReWordedQuestion
+--- PASS: TestRecordAnswerRefusesAReWordedQuestion (0.00s)
+=== RUN   TestGrantWorkspaceMembership_RevokedOwnerToMember_RefusedRoleMismatch
+--- PASS: TestGrantWorkspaceMembership_RevokedOwnerToMember_RefusedRoleMismatch (0.00s)
+=== RUN   TestGrantMatterMembership_RevokedOwnerToViewer_RefusedRoleMismatch
+--- PASS: TestGrantMatterMembership_RevokedOwnerToViewer_RefusedRoleMismatch (0.00s)
+=== RUN   TestGrantMatterMembership_RevokedEditorToOwner_RefusedRoleMismatch
+--- PASS: TestGrantMatterMembership_RevokedEditorToOwner_RefusedRoleMismatch (0.00s)
+=== RUN   TestGrantWorkspaceMembership_SameRoleReactivation_Succeeds
+--- PASS: TestGrantWorkspaceMembership_SameRoleReactivation_Succeeds (0.00s)
+=== RUN   TestCreateMatter_MissingPrecondition_Refused428
+--- PASS: TestCreateMatter_MissingPrecondition_Refused428 (0.00s)
+=== RUN   TestCreateMatter_StalePrecondition_Refused412
+--- PASS: TestCreateMatter_StalePrecondition_Refused412 (0.00s)
+=== RUN   TestCreateMatter_MatchingPrecondition_SucceedsAndReplays
+--- PASS: TestCreateMatter_MatchingPrecondition_SucceedsAndReplays (0.00s)
+=== RUN   TestCreateMatter_SecondFreshCreateWithSameRevision_Refused412
+--- PASS: TestCreateMatter_SecondFreshCreateWithSameRevision_Refused412 (0.00s)
+=== RUN   TestCreateMatter_PersistsTrimmedTitle
+--- PASS: TestCreateMatter_PersistsTrimmedTitle (0.00s)
+=== RUN   TestCreateWorkspaceAndMatter_BlankNameRejected
+--- PASS: TestCreateWorkspaceAndMatter_BlankNameRejected (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/core/service	1.130s
+=== RUN   TestContextHandler_AddsContextAttrsAndTraceIDs
+--- PASS: TestContextHandler_AddsContextAttrsAndTraceIDs (0.00s)
+=== RUN   TestContextHandler_NoContextNoExtraAttrs
+--- PASS: TestContextHandler_NoContextNoExtraAttrs (0.00s)
+=== RUN   TestEnabled
+--- PASS: TestEnabled (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/observability	1.165s

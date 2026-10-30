@@ -1,0 +1,545 @@
+{
+  "task": "MC-002-INTA-STAGE6-INTAKE",
+  "actor": "Local Codex",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "utc": "2026-10-26T00:34:04.863682+00:00",
+  "checks": [
+    {
+      "name": "21 matching raw/export paths",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 06-state-delta.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 10-driver.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 12-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 05-state-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 02-go-log-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 10-driver.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 00-driver-meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 04-next-stdout-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 30-hashes.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 03-go-log-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy 01-state-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/substeps/INT-PERS-04.status",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/substeps/INT-PERS-03.status",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/stages/stage6.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/envelopes/INT-PERS-03.json",
+      "result": "PASS"
+    },
+    {
+      "name": "byte copy state-copy/envelopes/INT-PERS-04.json",
+      "result": "PASS"
+    },
+    {
+      "name": "20 payload entries plus excluded manifest",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 00-driver-meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 01-state-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 02-go-log-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 03-go-log-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 04-next-stdout-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 05-state-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 06-state-delta.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 10-driver.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 10-driver.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash 12-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/INT-PERS-03.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/envelopes/INT-PERS-04.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/stages/stage6.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/INT-PERS-03.status",
+      "result": "PASS"
+    },
+    {
+      "name": "owner hash state-copy/substeps/INT-PERS-04.status",
+      "result": "PASS"
+    },
+    {
+      "name": "51 before match stage5 accepted after",
+      "result": "PASS"
+    },
+    {
+      "name": "56 after with five new and three changed, no deletions",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger exact 56 file set",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash assertions/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash checkpoints/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash checkpoints/intamvnmoems3pd/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash checkpoints/intamvnmoems3pd/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash checkpoints/intamvnmoems3pd/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/INT-PERS-01.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/INT-PERS-02.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/INT-PERS-03.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/INT-PERS-04.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T10.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T11a.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T11b.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T11c.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T4.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T5.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T6-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T7-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T8.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/T9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/W1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/W11.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/W2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/W3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash envelopes/intamvnmoems3pd/W9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash stages/intamvnmoems3pd/stage1.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash stages/intamvnmoems3pd/stage2.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash stages/intamvnmoems3pd/stage3.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash stages/intamvnmoems3pd/stage4.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash stages/intamvnmoems3pd/stage5.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash stages/intamvnmoems3pd/stage6.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/INT-PERS-01.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/INT-PERS-02.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/INT-PERS-03.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/INT-PERS-04.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T10.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T11a.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T11b.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T11c.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T4.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T5.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T6-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T7-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T8.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/T9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/W1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/W11.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/W2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/W3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live hash substeps/intamvnmoems3pd/W9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy substeps/INT-PERS-04.status",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy substeps/INT-PERS-03.status",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy stages/stage6.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy envelopes/INT-PERS-03.json",
+      "result": "PASS"
+    },
+    {
+      "name": "retained state copy envelopes/INT-PERS-04.json",
+      "result": "PASS"
+    },
+    {
+      "name": "A checkpoint unchanged checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "A checkpoint unchanged checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage6 X unknown B preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "counter 26",
+      "result": "PASS"
+    },
+    {
+      "name": "22 true assertions preserving previous 20",
+      "result": "FAIL"
+    },
+    {
+      "name": "Go prior snapshot byte continuity",
+      "result": "PASS"
+    },
+    {
+      "name": "Go append only exact two lines",
+      "result": "PASS"
+    },
+    {
+      "name": "INT-PERS-03 exactly one envelope",
+      "result": "PASS"
+    },
+    {
+      "name": "INT-PERS-03 complete successful current v2",
+      "result": "PASS"
+    },
+    {
+      "name": "INT-PERS-03 unique correlated GET200",
+      "result": "PASS"
+    },
+    {
+      "name": "INT-PERS-04 exactly one envelope",
+      "result": "PASS"
+    },
+    {
+      "name": "INT-PERS-04 complete successful current v2",
+      "result": "PASS"
+    },
+    {
+      "name": "INT-PERS-04 unique correlated GET200",
+      "result": "PASS"
+    },
+    {
+      "name": "Next append two dispatches",
+      "result": "PASS"
+    },
+    {
+      "name": "recorded allowed one stage6 command exit0 and empty stderr",
+      "result": "PASS"
+    },
+    {
+      "name": "limited credential literal patterns absent",
+      "result": "FAIL"
+    },
+    {
+      "name": "synthetic markers absent in retained application logs",
+      "result": "PASS"
+    }
+  ],
+  "records": [
+    {
+      "case": "INT-PERS-03",
+      "request_id": "mc-int-intamvnmoems3pd-INT-PERS-03-25",
+      "go_latency_ns": 24986584,
+      "value_equal_preoutage_v2": true
+    },
+    {
+      "case": "INT-PERS-04",
+      "request_id": "mc-int-intamvnmoems3pd-INT-PERS-04-26",
+      "go_latency_ns": 1112333,
+      "value_equal_preoutage_v2": true
+    }
+  ],
+  "limits": [
+    "No driver/HTTP/SQL/lifecycle/provider invocation",
+    "Process/container continuity is owner report plus linked historical lifecycle, not fresh runtime attestation",
+    "Hook route compliance not independently determined without original hook transcript",
+    "Latency does not identify pool reconnection cause",
+    "No product or independent QA acceptance"
+  ]
+}

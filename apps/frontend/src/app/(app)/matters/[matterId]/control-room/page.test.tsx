@@ -16,7 +16,6 @@ vi.mock('@/features/work/repository', () => ({
   workRepository: { parties: repos.parties, list: repos.list },
 }))
 vi.mock('@/features/control/repository', () => ({ controlRepository: { room: repos.room } }))
-vi.mock('@/features/matters/components/matter-tabs', () => ({ MatterTabs: () => null }))
 vi.mock('@/features/control/components/context-forms', () => ({
   CreateContextForm: ({ items }: { items: { label: string }[] }) => (
     <ul aria-label="link choices">

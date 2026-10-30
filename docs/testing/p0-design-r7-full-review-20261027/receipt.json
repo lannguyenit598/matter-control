@@ -1,0 +1,549 @@
+{
+  "task": "MC-P0-DESIGN-R7-FULL-REVIEW",
+  "reviewer": "Actual Codex / Local Codex",
+  "started_utc": "2026-10-27T04:33:34.557165+00:00",
+  "completed_utc": "2026-10-27T04:33:34.905816+00:00",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "mode": "READ_HASH_SOURCE_AND_BOUNDED_MOCK_ONLY",
+  "package_pins": [
+    {
+      "path": "docs/design/p0-handoff-r7/checks/check_canonical_dataset_and_proof.py",
+      "bytes": 4033,
+      "sha256": "0b320c812ceb961dd87954ac0e13718d590b84932779bc14b04c59ad7bc4ae10"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/checks/check_css_byte_identity.py",
+      "bytes": 1156,
+      "sha256": "d1a15cdcf395c5136bad825d9a7d7452f927d7de645b646fe66d5c467eb444fe"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/checks/check_manifest_pins.py",
+      "bytes": 1591,
+      "sha256": "442f5a272e1431c3f5eef454eab7d8c9a27552326c8c54efbefbfdde933954c0"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/checks/check_mock_dom_bootstrap.js",
+      "bytes": 5445,
+      "sha256": "eaa3fbb319a40901781bacbd551dc496737aff732faeec5516fc5dea2d47083b"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/checks/check_screen_state_matrix.py",
+      "bytes": 2773,
+      "sha256": "2290bc220291d2c62072edaeab1f196273943134e0b85e699204459f88454e47"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/checks/check_syntax.sh",
+      "bytes": 738,
+      "sha256": "f3a8f4f8b77701fa401d9e8647244943e65f5cb7d6f4d4d66f9ecedb3b78b8f1"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/checks/run_all_checks.sh",
+      "bytes": 1929,
+      "sha256": "558ec91afcfd8548c4cf0042236193846cdaeed9ac9fc9469b8e00f044a02b76"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/current-ux-spec.md",
+      "bytes": 29124,
+      "sha256": "5bedb0b052769f400c026d82e0aa81b4939dafb52e691922923bd88be77ed758"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/design-delta.md",
+      "bytes": 20135,
+      "sha256": "628d1d5749ba8d7b4e2d973cf25c1293d82e632b0316c9ce4e056e8632f151fc"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/evidence/all-checks.log",
+      "bytes": 3763,
+      "sha256": "48f09810cce841489586704ba5748ba033a84b1b47e258c715447affaf47d86c"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/evidence/canonical-facts.log",
+      "bytes": 909,
+      "sha256": "14755d7436b82a410f36591ec1e1f48abcdbaa73c7935ac9f52702b4f6eec468"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/evidence/css-identity.log",
+      "bytes": 342,
+      "sha256": "3ad0f375e5005c04c3bdbc5de788190329443181e1082d76e02d2674fba522bd"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/evidence/manifest-check.log",
+      "bytes": 293,
+      "sha256": "1b79173c17c6ab7312c51e8b840e98eb336224767d846ba1bd7f164e39c420a6"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/evidence/matrix-traceability.log",
+      "bytes": 650,
+      "sha256": "32a3844ba56dfe7042a2f5153c87a45590b734567f5d2609a02393670447d7c8"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/evidence/mock-dom-bootstrap.log",
+      "bytes": 750,
+      "sha256": "420269866fd8e0d9dd7c9460bc5c27a9c3b4719fc8c5825edb2dd0b2ac8a0a11"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/evidence/syntax-check.log",
+      "bytes": 299,
+      "sha256": "bc2b1654b95313e5a5f777e502a54615ac369396914923cc5be9cc211072bdec"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/findings-disposition.json",
+      "bytes": 78967,
+      "sha256": "72470e86a1d1cfc13de34a157be2768f0195a9df3369a325cf74764578760076"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/polish.css",
+      "bytes": 12239,
+      "sha256": "e9ffd863eaad92e294c6a2711a5a1b1fca0fdf7e368226cb0092318436a03df1"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/prototype.html",
+      "bytes": 86093,
+      "sha256": "ca6c0f8bdc97c77c67758c96e38e4a492d9d34920c1f7d2c6e392fc60e247867"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/return.md",
+      "bytes": 13699,
+      "sha256": "508af367374d4a48966967a4f8b38126f59ba089d5b90c5d53b24076f34586d9"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/screen-state-matrix.json",
+      "bytes": 50246,
+      "sha256": "39ba9baafc24ebb7cdeeb32ed95912f1e41dcc7767030fcb57777b020a8d03f3"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/validation-plan.md",
+      "bytes": 28426,
+      "sha256": "359fb87b3d94251fac7113253bb009d25d71a469d9915c642147f162899c47dd"
+    },
+    {
+      "path": "docs/design/p0-handoff-r7/zcode-handoff.md",
+      "bytes": 14332,
+      "sha256": "193cb76f0a1bfd1cd13886f47e2ab4e4f3d8d001808dc7351c54e1b0394a8e51"
+    }
+  ],
+  "declared_output_pins": [
+    {
+      "path": "current-ux-spec.md",
+      "match": true
+    },
+    {
+      "path": "design-delta.md",
+      "match": true
+    },
+    {
+      "path": "findings-disposition.json",
+      "match": true
+    },
+    {
+      "path": "polish.css",
+      "match": true
+    },
+    {
+      "path": "prototype.html",
+      "match": true
+    },
+    {
+      "path": "screen-state-matrix.json",
+      "match": true
+    },
+    {
+      "path": "validation-plan.md",
+      "match": true
+    },
+    {
+      "path": "zcode-handoff.md",
+      "match": true
+    },
+    {
+      "path": "checks/check_manifest_pins.py",
+      "match": true
+    },
+    {
+      "path": "checks/check_syntax.sh",
+      "match": true
+    },
+    {
+      "path": "checks/check_mock_dom_bootstrap.js",
+      "match": true
+    },
+    {
+      "path": "checks/check_canonical_dataset_and_proof.py",
+      "match": true
+    },
+    {
+      "path": "checks/check_css_byte_identity.py",
+      "match": true
+    },
+    {
+      "path": "checks/check_screen_state_matrix.py",
+      "match": true
+    },
+    {
+      "path": "checks/run_all_checks.sh",
+      "match": true
+    },
+    {
+      "path": "evidence/manifest-check.log",
+      "match": true
+    },
+    {
+      "path": "evidence/syntax-check.log",
+      "match": true
+    },
+    {
+      "path": "evidence/mock-dom-bootstrap.log",
+      "match": true
+    },
+    {
+      "path": "evidence/canonical-facts.log",
+      "match": true
+    },
+    {
+      "path": "evidence/css-identity.log",
+      "match": true
+    },
+    {
+      "path": "evidence/matrix-traceability.log",
+      "match": true
+    },
+    {
+      "path": "evidence/all-checks.log",
+      "match": true
+    }
+  ],
+  "baseline_inputs": [
+    {
+      "path": "AGENTS.md",
+      "match": true
+    },
+    {
+      "path": "docs/ai-sdlc/current-workflow.md",
+      "match": true
+    },
+    {
+      "path": "docs/ai-sdlc/project-status.md",
+      "match": true
+    },
+    {
+      "path": "docs/ai-sdlc/orchestration-protocol.md",
+      "match": true
+    },
+    {
+      "path": "docs/requirements/srs.md",
+      "match": true
+    },
+    {
+      "path": "docs/requirements/business-rules.md",
+      "match": true
+    },
+    {
+      "path": "docs/requirements/state-semantics.md",
+      "match": true
+    },
+    {
+      "path": "docs/requirements/permission-matrix.md",
+      "match": true
+    },
+    {
+      "path": "docs/requirements/acceptance-criteria.md",
+      "match": true
+    },
+    {
+      "path": "docs/requirements/golden-workflow-acceptance.md",
+      "match": true
+    },
+    {
+      "path": "docs/product/project-atlas-dataset.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/design-decision-register.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/design-decisions.json",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/selected-design-system.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/design-tokens.json",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/selected-tokens.css",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-concept-review.html",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-handoff-report.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/interaction-guidance.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "match": true
+    },
+    {
+      "path": "docs/reviews/p0-design-uiux-source-review-20261027.md",
+      "match": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-delivery-plan.md",
+      "match": true
+    },
+    {
+      "path": "docs/testing/p0-zcode-plan-20261026/coverage.json",
+      "match": true
+    },
+    {
+      "path": "apps/frontend/AGENTS.md",
+      "match": true
+    },
+    {
+      "path": "apps/frontend/docs/ai/rules/dependencies.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/current-ux-spec.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/design-delta.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/return.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/screen-state-matrix.json",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/validation-plan.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/zcode-handoff.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/prototype.html",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/polish.css",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/README.md",
+      "match": true
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/source-checks.json",
+      "match": true
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-P0-DESIGN-CONSOLIDATED-PROMPT.md",
+      "match": true
+    }
+  ],
+  "package_unchanged_after_checks": true,
+  "coverage": {
+    "FR": 20,
+    "AC": 63,
+    "NFR": 14
+  },
+  "screens": [
+    {
+      "id": "SCR-01",
+      "status": "SPECIFIED_ONLY"
+    },
+    {
+      "id": "SCR-02",
+      "status": "EXPLORATORY_LOCAL_ONLY"
+    },
+    {
+      "id": "SCR-03",
+      "status": "EXPLORATORY_LOCAL_ONLY"
+    },
+    {
+      "id": "SCR-04",
+      "status": "EXPLORATORY_LOCAL_ONLY"
+    },
+    {
+      "id": "SCR-05",
+      "status": "EXPLORATORY_LOCAL_ONLY"
+    },
+    {
+      "id": "SCR-06",
+      "status": "EXPLORATORY_LOCAL_ONLY"
+    },
+    {
+      "id": "SCR-07",
+      "status": "EXPLORATORY_LOCAL_ONLY"
+    },
+    {
+      "id": "SCR-08",
+      "status": "SPECIFIED_ONLY"
+    },
+    {
+      "id": "SCR-09",
+      "status": "SPECIFIED_ONLY"
+    },
+    {
+      "id": "SCR-10",
+      "status": "SPECIFIED_ONLY"
+    },
+    {
+      "id": "SCR-11",
+      "status": "SPECIFIED_ONLY"
+    },
+    {
+      "id": "SCR-12",
+      "status": "EXPLORATORY_LOCAL_ONLY"
+    },
+    {
+      "id": "SCR-13",
+      "status": "SPECIFIED_ONLY"
+    }
+  ],
+  "commands": [
+    {
+      "label": "node version",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "v24.22.1\n",
+      "stderr": ""
+    },
+    {
+      "label": "python version",
+      "argv": [
+        "rtk",
+        "proxy",
+        "python3",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "Python 3.14.4\n",
+      "stderr": ""
+    },
+    {
+      "label": "check_manifest_pins.py",
+      "argv": [
+        "rtk",
+        "proxy",
+        "python3",
+        "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r7/checks/check_manifest_pins.py"
+      ],
+      "exit": 0,
+      "stdout": "Loaded 38 input pins from manifest.\nPASS: All 38 manifest input pins verified matching exact bytes and SHA-256.\n",
+      "stderr": ""
+    },
+    {
+      "label": "check_canonical_dataset_and_proof.py",
+      "argv": [
+        "rtk",
+        "proxy",
+        "python3",
+        "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r7/checks/check_canonical_dataset_and_proof.py"
+      ],
+      "exit": 0,
+      "stdout": "Total canonical records in atlas-data: 24\n1. Canonical 24 records: exactly 12 requirements and 12 actions verified.\nAction execution census: {'COMPLETED': 4, 'WAITING': 3, 'NOT_STARTED': 5}\n2. Action execution census 4/3/5/0 verified strictly matching canonical Atlas T0.\nTotal dependency edges: 7\n3. Exactly 7 dependency edges verified.\n4. AC-06 canonical facts (COMPLETED, READY, owner U-03) verified.\n5. AC-05 explicit NOT_REQUIRED applicability verified.\n6. RQ-03 and RQ-05 historical baseline VERIFIED with current policy validProof=false verified.\n7. AC-DEMO-PROOF fixture verified strictly separated from canonical 24 records.\nPASS: All canonical dataset facts, census, edges, and proof relations verified.\n",
+      "stderr": ""
+    },
+    {
+      "label": "check_css_byte_identity.py",
+      "argv": [
+        "rtk",
+        "proxy",
+        "python3",
+        "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r7/checks/check_css_byte_identity.py"
+      ],
+      "exit": 0,
+      "stdout": "External polish.css size: 12239 bytes\nEmbedded <style> size:    12239 bytes\nPASS: Exact binary byte identity confirmed (12239 bytes matching byte-for-byte).\n",
+      "stderr": ""
+    },
+    {
+      "label": "check_screen_state_matrix.py",
+      "argv": [
+        "rtk",
+        "proxy",
+        "python3",
+        "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r7/checks/check_screen_state_matrix.py"
+      ],
+      "exit": 0,
+      "stdout": "Total requirements: 20\n1. All 20 FRs present (FR-001..FR-020).\nTotal screens: 13\n2. All 13 screens declared with all 9 required system states.\nTotal Golden Workflows: 3\n3. All 3 Golden Workflows present (GW-01, GW-02, GW-03).\nTotal AC IDs: 63; Total NFR IDs: 14\n4. All 63 AC IDs and 14 NFR IDs verified.\n5. R7 refinements (R6-E01, R6-E02, R6-E03) verified in matrix metadata.\nPASS: Screen state matrix traceability and schema verification completed successfully.\n",
+      "stderr": ""
+    },
+    {
+      "label": "syntax via stdin (no owner tmp file overwritten)",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "owner mock bootstrap",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r7/checks/check_mock_dom_bootstrap.js"
+      ],
+      "exit": 0,
+      "stdout": "1. Standalone bootstrap executed cleanly without uncaught exceptions.\n2. Canonical 24 records initialized correctly in data store.\n3. RQ-03 proof presentation verified consistent: historical baseline VERIFIED with explicit caveat.\n4. RQ-05 proof presentation verified: historically reported gate separated from current policy caveat.\n5. AC-DEMO-PROOF fixture verified: operational action with explicit proof requirements under state-semantics.md §10.\n6. Modal back navigation trail and close cleanup verified.\nPASS: Mock DOM bootstrap suite completed with 0 errors.\n",
+      "stderr": ""
+    },
+    {
+      "label": "reviewer negative/proof probes",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-design-r7-full-review-20261027/reviewer-probes.cjs"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"proof\": {\n    \"rq11_has_outgoing_proof_edge\": true,\n    \"rq11_panel_denies_downstream_proof_gates\": true,\n    \"rq07_record_dependency\": \"READY\",\n    \"rq07_panel_says_blocked\": true\n  },\n  \"mutation_missing_query_id_owner_suite_still_passes\": true,\n  \"limits\": \"All assertions use the owner mock; no real DOM, rendering, focus or accessibility proof.\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "browser_blocker": "Local browser use is disabled in Work settings; native inventory also reports Mac locked.",
+  "not_run": [
+    "browser render",
+    "keyboard/IME/touch/focus",
+    "screen reader",
+    "human AC-137",
+    "product runtime/build/auth/DB",
+    "external agent/provider",
+    "master runner (overwrites owner evidence)"
+  ]
+}

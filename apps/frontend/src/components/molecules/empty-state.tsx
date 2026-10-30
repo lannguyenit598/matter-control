@@ -24,18 +24,20 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed px-6 py-12 text-center',
+        'flex flex-col items-center justify-center gap-4 rounded-lg border bg-card px-6 py-16 text-center',
         className,
       )}
     >
       {icon && (
-        <div aria-hidden className="text-muted-foreground [&_svg]:size-10">
+        <div aria-hidden className="text-muted-foreground [&_svg]:size-7 [&_svg]:stroke-[1.4]">
           {icon}
         </div>
       )}
-      <div className="flex flex-col gap-1">
-        <Title className="font-semibold">{title}</Title>
-        {description && <p className="max-w-sm text-sm text-muted-foreground">{description}</p>}
+      <div className="flex flex-col gap-2">
+        <Title className="text-base font-medium">{title}</Title>
+        {description && (
+          <p className="max-w-sm text-sm leading-6 text-muted-foreground">{description}</p>
+        )}
       </div>
       {action}
     </div>

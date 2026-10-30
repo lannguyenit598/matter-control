@@ -1,0 +1,59 @@
+{
+  "task": "MC-P0-DESIGN-R9-PROGRESS-INTAKE",
+  "reviewer": "actual Local Codex",
+  "mode": "SOURCE_MOCK_AND_HASH_ONLY",
+  "checks": [
+    {
+      "check": 0,
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "bb3343",
+          "wall_time_seconds": 0.226448292,
+          "exit_code": 0,
+          "original_token_count": 382,
+          "output": "PASS  R8-N01 regression — record draft does NOT survive revoke -> owner re-grant (reproduces reviewer marker, now red->green)\nPASS  R8-N01 regression — selected bulk rows and bulk result do not resurrect after revoke -> re-grant\nPASS  R8-N01 regression — downgrade to VIEWER (still has scoped read) does NOT purge the record draft\nPASS  R8-N02 regression — Create Matter title survives view switch (reproduces reviewer finding, now red->green)\nPASS  R8-N02 regression — promotion reason survives view switch and locale switch (reproduces reviewer finding, now red->green)\nPASS  R8-N02 regression — promotion reason/target do not bleed across documents\nPASS  R8-N02 / R8-N01 regression — explicit discard (Sign out) clears the form drafts\nPASS  R8-N03 regression — target and expected-current are two independent controls\nPASS  R8-N03 regression — no target selected never produces a ready/success intent\nPASS  R8-N03 regression — re-selecting the current version as target yields a no-change message, not success\nPASS  R8-N03 regression — changing the target resets a stale impact acknowledgment\nPASS  R8-N03 regression — a stale expected-current guard never becomes a force-save\nPASS  R8-N03 regression — EDITOR can add a version but has no promotion control; VIEWER keeps scoped read\n\nMOCK_EXECUTED: 13 R8-N01..N03 regression checks passed against docs/design/p0-handoff-r9/prototype.html.\nLimits: mock DOM execution only; not rendered/browser evidence; not a product authorization/security PASS.\n"
+        }
+      }
+    },
+    {
+      "check": 1,
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "bbd0ad",
+          "wall_time_seconds": 0.000007375,
+          "exit_code": 0,
+          "original_token_count": 244,
+          "output": "PASS  a <textarea> with no value attribute hydrates .value from its own child text\nPASS  a <textarea> with an explicit value attribute is NOT overwritten by its child text\nPASS  an <option> with no value attribute falls back to its own (trimmed) text\nPASS  an <option> with an explicit value attribute keeps it, independent of its text\nPASS  a <select> takes its value from the LAST selected option, not from an unrelated empty-value placeholder\nPASS  a <select> with no selected option defaults to its first option\nPASS  input.type mirrors the type attribute, defaulting to \"text\" for a plain <input>\nPASS  checked reflects the checked attribute at parse time and stays a plain settable property\nPASS  strict missing-ID lookups still throw — the adapter fix did not weaken this negative guarantee\n\nSOURCE_CHECKED: 9 strict_dom.js adapter self-checks passed.\nLimits: isolated adapter unit checks only; not evidence about prototype.html or logic.js behaviour by themselves.\n"
+        }
+      }
+    },
+    {
+      "check": 2,
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "323aff",
+          "wall_time_seconds": 0.105972167,
+          "exit_code": 0,
+          "original_token_count": 110,
+          "output": "{\"label\":\"R8-baseline (read-only, unmodified)\",\"purgedPanelShown\":true,\"draftResurrected\":true,\"newMatterDraftLost\":true,\"promotionDraftLost\":true}\n{\"label\":\"R9-candidate (corrected)\",\"purgedPanelShown\":true,\"draftResurrected\":false,\"newMatterDraftLost\":false,\"promotionDraftLost\":false}\n\nRED->GREEN CONFIRMED: R8-N01/R8-N02 reproduce red on read-only R8 baseline and green on the R9 candidate, using the identical (adapter-fixed) mock.\n"
+        }
+      }
+    },
+    {
+      "check": 3,
+      "result": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "f5b48a",
+          "wall_time_seconds": 0.01472225,
+          "exit_code": 0,
+          "original_token_count": 59,
+          "output": "{\n  \"checked_utc\": \"2026-10-27T08:34:25.204541+00:00\",\n  \"manifest_entries\": 62,\n  \"manifest_count\": 62,\n  \"bad_pins\": [],\n  \"undeclared\": [],\n  \"missing\": [],\n  \"return_first_line\": \"# MC-P0-DESIGN-R8 \\u2014 actual execution return\"\n}\n"
+        }
+      }
+    }
+  ]
+}

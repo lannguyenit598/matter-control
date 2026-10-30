@@ -4,11 +4,16 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 const router = vi.hoisted(() => ({ refresh: vi.fn(), push: vi.fn() }))
 vi.mock('next/navigation', () => ({ useRouter: () => router }))
 
-const actions = vi.hoisted(() => ({ advance: vi.fn(), owner: vi.fn(), signatures: vi.fn() }))
+const actions = vi.hoisted(() => ({
+  advance: vi.fn(),
+  owner: vi.fn(),
+  signatures: vi.fn(),
+  create: vi.fn(),
+}))
 vi.mock('../actions', () => ({
   advanceFilingAction: actions.advance,
   filingOwnerStepAction: actions.owner,
-  createFilingAction: vi.fn(),
+  createFilingAction: actions.create,
   recordNegativeAction: vi.fn(),
   correctObservationAction: vi.fn(),
   setSignatureApplicabilityAction: actions.signatures,
@@ -16,7 +21,12 @@ vi.mock('../actions', () => ({
 
 import type { FilingDetail } from '../schemas'
 
-import { AdvanceForm, OwnerStepForm, SignatureApplicabilityForm } from './filing-forms'
+import {
+  AdvanceForm,
+  CreateFilingForm,
+  OwnerStepForm,
+  SignatureApplicabilityForm,
+} from './filing-forms'
 import { FilingView } from './filing-view'
 
 const detail = (over: Partial<FilingDetail> = {}): FilingDetail => ({
@@ -72,6 +82,52 @@ beforeEach(() => {
   actions.owner.mockReset()
   actions.signatures.mockReset()
   window.sessionStorage.clear()
+})
+
+describe('Filing creation path', () => {
+  it.each([
+    [false, false],
+    [false, true],
+    [true, false],
+  ])(
+    'explains missing prerequisites instead of presenting unusable selectors (%s/%s)',
+    (hasRequirement, hasAuthority) => {
+      render(
+        <CreateFilingForm
+          matterId="m1"
+          requirements={hasRequirement ? [{ id: 'r1', label: 'Board approval obtained' }] : []}
+          parties={hasAuthority ? [{ id: 'p1', label: 'Registry' }] : []}
+          members={[]}
+        />,
+      )
+      expect(screen.queryByRole('button', { name: 'Create filing' })).not.toBeInTheDocument()
+      if (!hasRequirement)
+        expect(
+          screen.getByRole('link', { name: /choose Add work and Requirement/ }),
+        ).toHaveAttribute('href', '/matters/m1/work')
+      if (!hasAuthority)
+        expect(
+          screen.getByRole('link', { name: 'Add an authority under Planning' }),
+        ).toHaveAttribute('href', '/matters/m1/planning')
+    },
+  )
+  it('continues confirmed creation on the filing detail', async () => {
+    actions.create.mockResolvedValue({ ok: true, id: 'f-new' })
+    render(
+      <CreateFilingForm
+        matterId="m1"
+        requirements={[{ id: 'r1', label: 'Board approval obtained' }]}
+        parties={[{ id: 'p1', label: 'Registry' }]}
+        members={[]}
+      />,
+    )
+    fireEvent.change(screen.getByLabelText(/^Title/), { target: { value: 'Register transaction' } })
+    fireEvent.change(screen.getByLabelText(/^Outcome sought/), {
+      target: { value: 'Registration received' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Create filing' }))
+    await waitFor(() => expect(router.push).toHaveBeenCalledWith('/matters/m1/filings/f-new'))
+  })
 })
 
 describe('FilingView', () => {

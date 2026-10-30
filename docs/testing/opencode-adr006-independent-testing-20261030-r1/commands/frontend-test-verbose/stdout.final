@@ -1,0 +1,755 @@
+
+ RUN  v5.0.5 /private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/snapshot/apps/frontend
+
+ ✓ src/app/api/auth/auth-routes.test.ts > login + callback > redirects to the issuer and sets a short-lived HttpOnly state cookie 139ms
+ ✓ src/app/api/auth/auth-routes.test.ts > login + callback > never puts a token or claim into any cookie; only an opaque handle (token-exposure scan) 60ms
+ ✓ src/lib/oidc/flow.test.ts > beginLogin > builds a PKCE S256 request with state, nonce and the project audience scope 254ms
+ ✓ src/app/api/auth/auth-routes.test.ts > login + callback > refuses a forged state and creates no session 121ms
+ ✓ src/lib/oidc/flow.test.ts > beginLogin > refuses a discovery document for a different issuer (mix-up) 150ms
+ ✓ src/lib/oidc/flow.test.ts > beginLogin > reports an unreachable issuer as unavailable, not as a denial 35ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > never uses the technical subject as the display name when profile claims are absent 50ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > exchanges the code with the matching PKCE verifier and returns verified identity 88ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects no state cookie (not bound to this browser) 28ms
+ ✓ src/app/api/auth/auth-routes.test.ts > login + callback > refuses a missing state cookie and creates no session 119ms
+ ✓ src/app/api/auth/auth-routes.test.ts > login + callback > refuses an issuer error and creates no session 176ms
+ ✓ src/app/api/auth/auth-routes.test.ts > login + callback > an unreachable issuer during login is "unavailable", never a denial or a session 116ms
+ ✓ src/app/api/auth/auth-routes.test.ts > returnTo hardening (CW1-F03) > a hostile returnTo "/\t/attacker.invalid" never redirects off the application origin after login 40ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects a different state cookie 60ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects an unknown state 83ms
+ ✓ src/app/api/auth/auth-routes.test.ts > returnTo hardening (CW1-F03) > a hostile returnTo "/\n/attacker.invalid" never redirects off the application origin after login 69ms
+ ✓ src/app/api/auth/auth-routes.test.ts > returnTo hardening (CW1-F03) > a hostile returnTo "//attacker.invalid" never redirects off the application origin after login 64ms
+ ✓ src/app/api/auth/auth-routes.test.ts > returnTo hardening (CW1-F03) > a hostile returnTo "/\\attacker.invalid" never redirects off the application origin after login 72ms
+ ✓ src/app/api/auth/auth-routes.test.ts > returnTo hardening (CW1-F03) > a hostile returnTo "http://attacker.invalid/x" never redirects off the application origin after login 18ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > accepts a state exactly once (replay is refused) 218ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects a login state older than ten minutes 53ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > continues confirmed document creation on its upload/detail screen 325ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > lists first-page results and submits only the chosen id, never typed text 321ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > sends the trimmed query to the source 55ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > treats Enter in the query box as search, not form submission 21ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > NOT_STARTED as EDITOR 3ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > NOT_STARTED as OWNER 0ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > IN_PROGRESS as EDITOR 0ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > WAITING as EDITOR 0ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > COMPLETED as EDITOR 0ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > COMPLETED as OWNER 0ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > CANCELLED as OWNER 0ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > IN_PROGRESS as VIEWER 0ms
+ ✓ src/features/work/components/work-ui.test.tsx > offeredTransitions mirrors the approved table > never offers terminal -> NOT_STARTED or COMPLETED -> CANCELLED 1ms
+ ✓ src/app/api/auth/auth-routes.test.ts > returnTo hardening (CW1-F03) > a legitimate in-app target and its query survive the round trip 110ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > defaults every field to Unchanged and offers Clear only where clearing is allowed 294ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > moves from the query box into the list with ArrowDown 45ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects a wrong nonce 147ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects a wrong issuer 70ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > ProofPanel > shows the derived state as read-only and the pending review as such 91ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > ProofPanel > offers the review form to an independent verifier and sends the epoch it read 53ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > cannot commit before a preview, nor after the rows changed since it 189ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > shows each independent axis in its own column, with text not only colour 317ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > only the title is editable inline; derived axes have no editor 22ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > viewers see no edit affordance 38ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > ignores a late response for an older query 147ms
+ ✓ src/test/action-entry.test.tsx > Add work > shows no editor until the button is used, and opening sends nothing 334ms
+ ✓ src/app/api/auth/auth-routes.test.ts > logout > refuses cross-origin and missing-origin posts without touching the session 120ms
+ ✓ src/app/api/auth/auth-routes.test.ts > logout > destroys the session at once, revokes the refresh token and clears the cookie 38ms
+ ✓ src/app/api/auth/auth-routes.test.ts > logout > still logs out when the issuer is down (revocation is best effort) 30ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > ProofPanel > binds a re-review to the assessment it read, and starts a clean draft when that changes 106ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > ProofPanel > never offers a review to the person who supplied or offered the evidence 42ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > ProofPanel > never offers a review to someone who is not a designated verifier 25ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > ProofPanel > a viewer sees the proof but no writing controls 8ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > ProofPanel > says plainly when nothing could be verified yet 18ms
+ ✓ src/test/membership-recovery.test.tsx > workspace grant form > never offers or performs a second mutation after an ambiguous result 407ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects an audience without this client 120ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects an expired token 34ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects an empty subject 35ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > inline save sends the row id and its etag; failure keeps the draft; success refreshes 151ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > an unknown inline outcome is never resent: only a re-read re-enables editing 50ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > empty grid and empty filter result are different, honest states 2ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > keeps the chosen person pinned while the query changes, until Clear 59ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > forgets the choice and the query when the form is reset 37ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > does not search while inactive 32ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > shows an empty result as "no match", with feature wording when supplied 11ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > PromoteForm > does not send until the impact is acknowledged, then sends the exact guards 48ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > UploadVersionForm > retries an interrupted upload with the SAME idempotency key, and a new file gets a new one 27ms
+ ✓ src/features/proof/components/proof-ui.test.tsx > UploadVersionForm > shows the server refusal without asserting a rollback it cannot know 9ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > invalidates approval permanently on edit, add or remove, even if the payload is restored 445ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > sends only what was set (unchanged omitted, clear as empty) with UUIDv7 keys it minted 86ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > keeps a lost answer UNKNOWN, locks the rows and retries with the SAME keys 92ms
+ ✓ src/test/action-entry.test.tsx > Add work > keeps each kind separate: a typed draft survives switching and close/reopen 137ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects a token signed with another key (signature is really verified) 168ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > shows unavailable with a real retry, never as an empty result 23ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > shows error with a real retry, never as an empty result 31ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > drops the pinned choice and offers no retry when permission was lost 25ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > says so when equal names cannot be told apart 9ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > shows a refused query as its own message with no retry 9ms
+ ✓ src/test/membership-recovery.test.tsx > workspace grant form > keeps the unresolved state when the dialog is closed and reopened 150ms
+ ✓ src/test/membership-recovery.test.tsx > workspace grant form > searching, typing and changing the role never submit 46ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > open-details links carry the current grid URL as their origin 8ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkGrid > compact density tightens cell padding and a next page link appears when there is one 10ms
+ ✓ src/app/api/auth/auth-routes.test.ts > resolveSession + session route > reports invalid durable storage as unavailable, never as anonymous or successful logout 136ms
+ ✓ src/app/api/auth/auth-routes.test.ts > resolveSession + session route > is null without a cookie, with a forged handle, and after logout 72ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > locks pending edits and duplicate submission, then reconciles identical payload and keys 172ms
+ ✓ src/test/action-entry.test.tsx > Add work > does not hide an unconfirmed request when the other kind is chosen, and never resends 163ms
+ ✓ src/test/action-entry.test.tsx > Add work > sends a double click once and routes to the new action 63ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > groups per-row results as applied, failed and unknown, and the counts add up 148ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > searches again after a reset even when the query was already empty 30ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkFilters (URL state) > keeps advanced criteria out of the initial view and reveals them on request 123ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkFilters (URL state) > removes one applied criterion without losing the others or display settings 25ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkFilters (URL state) > retains a selected member or workstream missing from current options without displaying raw IDs 31ms
+ ✓ src/app/api/auth/auth-routes.test.ts > resolveSession + session route > returns an authenticated-only session: no IdP roles mapped, the user token forwarded 121ms
+ ✓ src/app/api/auth/auth-routes.test.ts > resolveSession + session route > refreshes a nearly expired access token once, and drops the session when refresh is rejected 52ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects alg=none and HS256 downgrade attempts 35ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > rejects an unknown key id after exactly one JWKS refetch 51ms
+ ✓ src/lib/oidc/flow.test.ts > completeLogin > treats a refused code as invalid 29ms
+ ✓ src/test/membership-recovery.test.tsx > workspace grant form > submits exactly the chosen id and role once, even on a double click 71ms
+ ✓ src/test/membership-recovery.test.tsx > workspace grant form > offers a re-read after a stale (412) answer and keeps the form usable 59ms
+ ✓ src/app/api/auth/auth-routes.test.ts > resolveSession + session route > session endpoint exposes only a display name and an end time, never tokens 70ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[]} 52ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"row-1","status":"SUCCESS"}]} 60ms
+ ✓ src/test/action-entry.test.tsx > Planning: each section owns its button > shows lists first and opens only the chosen section editor 59ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > retains the attempt when the Server Action transport rejects and a later retry is refused 85ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > keeps the draft and says why when the commit is refused for another reason 43ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > shows a failed preview instead of silently doing nothing 25ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > ImportSection > explains a rejected connected group while an independent group stays valid 16ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > ImportSection > offers no commit when no group is valid 13ms
+ ✓ src/features/work/components/work-ui.test.tsx > WorkFilters (URL state) > reflects the current query and offers clear 48ms
+ ✓ src/features/work/components/work-ui.test.tsx > RejectionDetails > names the failed gates, distinguishing completion from proof 2ms
+ ✓ src/features/work/components/work-ui.test.tsx > RejectionDetails > explains a refused loop by its path and lists allowed alternatives 1ms
+ ✓ src/features/work/components/work-ui.test.tsx > RejectionDetails > an unknown record id is shown as a short id, never as invented text 1ms
+ ✓ src/features/work/components/work-ui.test.tsx > ExecutionPanel > offers only what the role may do and says why when nothing is offered 14ms
+ ✓ src/features/work/components/work-ui.test.tsx > ExecutionPanel > WAITING asks for a party and a condition; the reason is required to cancel 41ms
+ ✓ src/features/work/components/work-ui.test.tsx > ExecutionPanel > completing untouched work asks when it was actually done 11ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > results are bound to the current query (UXR-02) > does not leave rows of the previous query selectable while the new query is pending 139ms
+ ✓ src/test/membership-recovery.test.tsx > workspace grant form > purges the chosen person when access to the scope is lost 95ms
+ ✓ src/lib/oidc/flow.test.ts > refreshTokens > rotates tokens and keeps the old refresh token when none is returned 84ms
+ ✓ src/lib/oidc/flow.test.ts > refreshTokens > maps a rejected refresh token to invalid and an outage to unavailable 45ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"unexpected","status":"SUCCESS"}]} 78ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"unexpected","status":"SUCCESS"}]} 84ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > ImportSection > freezes one key per previewed row and resends them unchanged after a lost answer 36ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > ImportSection > retains the file and keys when the Server Action transport rejects 34ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > ImportSection > discards the preview and the attempt when another file is chosen 18ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > ImportSection > reports an unreadable file in the page, not in a browser alert 12ms
+ ✓ src/test/action-entry.test.tsx > Planning: each section owns its button > keeps a typed draft across close and reopen, then closes on a confirmed save 116ms
+ ✓ src/test/action-entry.test.tsx > Planning: each section owns its button > offers no add button to people who may not use it 12ms
+ ✓ src/test/action-entry.test.tsx > a task dialog after the outcome > names the exact version, stays open on an unknown outcome and never resends 58ms
+ ✓ src/features/work/components/work-ui.test.tsx > ExecutionPanel > sends the record id, its etag and the chosen change; a rejection shows the failed gate and nothing else changes 38ms
+ ✓ src/features/work/components/work-ui.test.tsx > DependencyPanel > shows each gate with its kind and whether it is satisfied now, completion apart from proof 12ms
+ ✓ src/features/work/components/work-ui.test.tsx > DependencyPanel > related records open with this page as their origin (causal navigation) 17ms
+ ✓ src/features/work/components/work-ui.test.tsx > DependencyPanel > viewers get no add or remove controls; editors cannot pick the record itself as a prerequisite 51ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: /matters/1?x=1 78ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > results are bound to the current query (UXR-02) > keeps only the already chosen person, checked, while the new query is pending 131ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > results are bound to the current query (UXR-02) > hides the old rows after a failed request, and shows the new rows after Retry 31ms
+ ✓ src/features/work/components/work-ui.test.tsx > DependencyPanel > a refused cycle explains its path and sends the target etag 30ms
+ ✓ src/features/work/components/work-ui.test.tsx > MilestoneList > shows counts and the reason, never a percentage 2ms
+ ✓ src/features/work/components/work-ui.test.tsx > MilestoneList > a milestone with no prerequisites is unassessed, not ready 1ms
+ ✓ src/features/work/components/work-ui.test.tsx > MilestoneList > a cancelled prerequisite shows as cancelled, never as satisfied 1ms
+ ✓ src/features/work/components/work-ui.test.tsx > MilestoneList > milestone settings are owner-only in the UI (the API enforces it regardless) 31ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BriefSection > states explicitly that nothing changed, and still lists what is outstanding 21ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BriefSection > says so when nothing is outstanding and marks late-recorded changes and expired proof 14ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BriefSection > produces no report for an invalid window and clears the previous one 17ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > BriefSection > tells the user when history is too incomplete to build a correct brief 11ms
+ ✓ src/test/membership-recovery.test.tsx > matter grant form > never offers or performs a second mutation after an ambiguous result 87ms
+ ✓ src/test/action-entry.test.tsx > a task dialog after the outcome > closes and says what was recorded only after a confirmed success 47ms
+ ✓ src/test/action-entry.test.tsx > Upload new version > names the document and keeps the chosen File in memory across close and reopen 31ms
+ ✓ src/test/action-entry.test.tsx > Upload new version > keeps an unconfirmed upload open for the same-key retry and never uploads twice by itself 55ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: /workspaces/a-b/c 104ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > import panel → actions → repository attempt > locks file replacement while pending, preserves run/file/row keys on UNKNOWN and consumes settled preview 157ms
+ ✓ src/test/action-entry.test.tsx > Upload new version > closes and says it was stored only after the server confirmed it 416ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > results are bound to the current query (UXR-02) > hides the rows of the old query when the query is cleared, until the empty query settles 360ms
+ ✓ src/test/membership-recovery.test.tsx > matter grant form > keeps the unresolved state when the dialog is closed and reopened 387ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > access ends while the page is open (R8-N01) > purges bulk rows, preview, frozen attempt and results — nothing comes back after a re-grant 113ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: /matters/1#frag 284ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > import panel → actions → repository attempt > keeps a mixed expected and unexpected receipt response unresolved 403ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > import panel → actions → repository attempt > accounts for all submitted rows when an import receipt is missing 72ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > reload recovery through authenticated server actions > loads retained identity without POST, then explicitly replays the original frozen request 4ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > reload recovery through authenticated server actions > rechecks access before recovery; re-grant never revives a purged payload 1ms
+ ✓ src/features/data-transfer/components/data-transfer-attempt.test.tsx > terminal response lost before browser acknowledgement > returns retained receipts on reload and explicit recovery with zero mutation resends 18ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > authoritative eligible set (UXR-01) > drops a chosen person who left the eligible set, and keeps one who stays 236ms
+ ✓ src/test/membership-recovery.test.tsx > matter grant form > searching, typing and changing the role never submit 263ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > authoritative eligible set (UXR-01) > does not bring a removed person back when they become eligible again 47ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > authoritative eligible set (UXR-01) > searches again for a changed set and shows nobody from the old set meanwhile 34ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > access ends while the page is open (R8-N01) > purges when a retry of an UNKNOWN attempt finds the matter gone, and says the attempt is unresolved 537ms
+ ✓ src/components/molecules/search-picker.test.tsx > SearchPicker > authoritative eligible set (UXR-01) > does not treat a name search that omits the chosen person as ineligibility 152ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: /a%2F%2Fb 238ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: /a/b/../c?x=1 14ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > access ends while the page is open (R8-N01) > treats a row refused for lost access as access ending, not as an ordinary failure 139ms
+ ✓ src/features/data-transfer/components/data-transfer-ui.test.tsx > access ends while the page is open (R8-N01) > purges an import preview and its attempt, and a brief with its window 186ms
+ ✓ src/test/membership-recovery.test.tsx > matter grant form > submits exactly the chosen id and role once, even on a double click 253ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: /a/./b 304ms
+ ✓ src/test/membership-recovery.test.tsx > matter grant form > offers a re-read after a stale (412) answer and keeps the form usable 225ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: null 167ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target: undefined 27ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > keeps a legitimate in-app target:  56ms
+ ✓ src/test/membership-recovery.test.tsx > matter grant form > purges the chosen person when access to the scope is lost 82ms
+ ✓ src/test/membership-recovery.test.tsx > workspace revoke button > keeps UNKNOWN, offers only a re-read, and sends exactly one mutation 41ms
+ ✓ src/test/membership-recovery.test.tsx > matter revoke button > keeps UNKNOWN, offers only a re-read, and sends exactly one mutation 60ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for slash TAB slash (reviewer repro) 100ms
+ ✓ src/features/tasks/services/demo-task-repository.test.ts > demo task repository > paginates 40ms
+ ✓ src/features/tasks/services/demo-task-repository.test.ts > demo task repository > filters by status and case-insensitive search 4ms
+ ✓ src/features/tasks/services/demo-task-repository.test.ts > demo task repository > creates, updates and deletes a task 10ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for slash LF slash 150ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for slash CR slash 104ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for TAB inside the path 46ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for NUL 121ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for C1 control 29ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for DEL 9ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for protocol-relative 29ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for triple slash 32ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for backslash after slash 16ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for leading backslash 42ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for backslash inside 149ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for absolute http 9ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for absolute https 71ms
+ ✓ src/features/tasks/services/demo-task-repository.test.ts > demo task repository > caps the shared demo store 724ms
+ ✓ src/features/tasks/services/demo-task-repository.test.ts > demo task repository > reports missing tasks as NOT_FOUND 3ms
+ ✓ src/features/tasks/services/demo-task-repository.test.ts > demo task repository > counts tasks per status 2ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > Filing creation path > explains missing prerequisites instead of presenting unusable selectors (false/false) 115ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > Filing creation path > explains missing prerequisites instead of presenting unusable selectors (false/true) 5ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > Filing creation path > explains missing prerequisites instead of presenting unusable selectors (true/false) 4ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > Filing creation path > continues confirmed creation on the filing detail 42ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > FilingView > announces the current stage and shows each cycle with its own exact versions 21ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > FilingView > says that a rejection stands and blocks approval 5ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > FilingView > shows a correction beside the original, not instead of it 7ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for javascript scheme 27ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > AdvanceForm > asks for exactly the facts of the chosen stage and sends the filing ETag 25ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > AdvanceForm > offers supplement details only for a supplement 12ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > AdvanceForm > shows the domain’s own reason when the guard refuses, and nothing is assumed saved 24ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > OwnerStepForm > needs a reason before reopening and sends the ETag 14ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > signature applicability (F03) > says the guard applies until an owner decides otherwise 3ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > signature applicability (F03) > shows the retained decision with its reason, decider and time 2ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > signature applicability (F03) > sends the decision with the filing ETag it read, and requires a reason 38ms
+ ✓ src/features/filings/components/filing-ui.test.tsx > signature applicability (F03) > offers to withdraw an existing decision 17ms
+ ✓ src/test/people-picker-flow.test.tsx > sends the typed query to the bounded server search without navigating or mutating 136ms
+ ✓ src/features/review/components/review-matrix.test.tsx > ReviewMatrix > renders exact versions as rows and questions as columns, states in words, links that keep the filters 115ms
+ ✓ src/features/review/components/review-matrix.test.tsx > ReviewMatrix > a filter hides rows without a match and dims the other cells; no match is stated 12ms
+ ✓ src/features/review/components/review-matrix.test.tsx > ReviewMatrix > marks the selected cell and says what to do for an empty grid 13ms
+ ✓ src/features/review/components/review-matrix.test.tsx > ReviewFilters > state chips keep the text and the text form keeps the state 28ms
+ ✓ src/features/review/components/review-matrix.test.tsx > CellDetail > a stale answer shows the wording it actually answered and who recorded it 32ms
+ ✓ src/features/review/components/review-matrix.test.tsx > CellDetail > typed references are always labelled as not validated and are rendered as text, never markup 3ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for data scheme 115ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for leading space then slashes 54ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for relative path 21ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > a receipted create whose answer was lost survives a reload > retries with the original key and the original values, not the edited field 114ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > a receipted create whose answer was lost survives a reload > a successful retry clears it: the next intent is a normal form with a new key 65ms
+ ✓ src/features/review/components/review-matrix.test.tsx > CellDetail > a viewer sees no answer form; a writer's form carries the answer they saw 79ms
+ ✓ src/features/review/components/review-matrix.test.tsx > CellDetail > an empty cell is answered against 'none'; a conflict keeps the person's text and does not retry 28ms
+ ✓ src/features/review/components/review-matrix.test.tsx > CellDetail > a cell that left the grid is explained, not rendered 22ms
+ ✓ src/features/review/components/review-matrix.test.tsx > CellDetail history > older answers stay readable with their text, references, author and the wording they answered 10ms
+ ✓ src/test/people-picker-flow.test.tsx > shows a failed directory read with a retry, not an empty result 110ms
+ ✓ src/test/people-picker-flow.test.tsx > refuses to submit when only text was typed and no person was chosen 66ms
+ ✓ src/test/matter-grant-eligibility.test.tsx > matter grant: eligibility after a reread (UXR-01) > drops a person who is no longer eligible, keeps the role, and never sends the old id 227ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > a receipted create whose answer was lost survives a reload > discarding clears it and starts the next intent under a new key 55ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > a receipted create whose answer was lost survives a reload > a definitive refusal on the retry clears it 25ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > what is not kept > a CAS-only command is never resent, so nothing is stored for it 21ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > what is not kept > another session or another form never sees it 18ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > what is not kept > a denied screen purges it, so a re-grant cannot revive the attempt 12ms
+ ✓ src/features/review/components/cell-detail.test.tsx > a not-found refusal clears every protected word of the cell detail 343ms
+ ✓ src/features/review/components/cell-detail.test.tsx > a forbidden refusal clears every protected word of the cell detail 51ms
+ ✓ src/features/review/components/cell-detail.test.tsx > a unauthenticated refusal clears every protected word of the cell detail 33ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for auth route (loop) 150ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for sign-in page (loop) 22ms
+ ✓ src/components/organisms/intent-attempt.test.tsx > what is not kept > a denial of the form itself clears it 37ms
+ ✓ src/test/matter-grant-eligibility.test.tsx > matter grant: eligibility after a reread (UXR-01) > applies a refresh that happened while the dialog was closed 112ms
+ ✓ src/features/review/components/cell-detail.test.tsx > a stale conflict (412) keeps the loaded content and the typed text 39ms
+ ✓ src/features/review/components/cell-detail.test.tsx > an UNKNOWN outcome keeps the loaded content for safe recovery 38ms
+ ✓ src/components/organisms/recovery.test.tsx > IntentForm: receipted creation > retries with the SAME key and the ORIGINAL payload, even if the field was edited meanwhile 191ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for sign-in page with query 109ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for dot segments into the sign-in page 9ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for dot segments into the auth routes 33ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for dot segments normalize to protocol-relative 42ms
+ ✓ src/test/matter-grant-eligibility.test.tsx > matter grant: eligibility after a reread (UXR-01) > does not resend, remount or clear a pending command when candidates change 102ms
+ ✓ src/test/matter-grant-eligibility.test.tsx > matter grant: eligibility after a reread (UXR-01) > keeps an unresolved UNKNOWN re-read-only state across a candidate change and reopen 114ms
+ ✓ src/features/review/components/cell-detail.test.tsx > an older-answers control appends the next page and announces the end honestly 84ms
+ ✓ src/features/review/components/cell-detail.test.tsx > a transient page failure keeps the already-read history and offers a retry 51ms
+ ✓ src/features/review/components/cell-detail.test.tsx > a definitive denial while loading older answers clears the protected detail 56ms
+ ✓ src/test/people-picker-flow.test.tsx > matter flow filters only the eligible people it was given, by name 305ms
+ ✓ src/test/people-picker-flow.test.tsx > keeps the chosen person and role when the interface language changes 76ms
+ ✓ src/test/people-picker-flow.test.tsx > shows no add action and no candidate names to someone who cannot administer members 2ms
+ ✓ src/components/organisms/recovery.test.tsx > IntentForm: receipted creation > a NEW key is minted only after success or an explicit discard 90ms
+ ✓ src/components/organisms/recovery.test.tsx > IntentForm: receipted creation > discarding an unconfirmed request starts a different intent with a new key 34ms
+ ✓ src/components/organisms/recovery.test.tsx > IntentForm: CAS-only command (CW1-F01) > after UNKNOWN there is no resend affordance and a forced submit still sends nothing 52ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for dot segments below a path 70ms
+ ✓ src/components/organisms/recovery.test.tsx > IntentForm: CAS-only command (CW1-F01) > only an actual re-read re-enables a NEW intent, and it then needs an explicit user action 45ms
+ ✓ src/components/organisms/recovery.test.tsx > IntentForm: CAS-only command (CW1-F01) > a rejected server-action call (network drop) is treated the same way 35ms
+ ✓ src/components/organisms/recovery.test.tsx > IntentForm: CAS-only command (CW1-F01) > the same dropped call for a receipted command offers the same-key retry 26ms
+ ✓ src/components/organisms/recovery.test.tsx > ConfirmActionButton (revocation): CAS-only > after UNKNOWN the confirm control is gone and nothing else can resend 67ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for dot segments, deeper 111ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for dot segments, triple slash 27ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for encoded dot segments 153ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for single dot then slash 34ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > falls back for too long 94ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > never yields something that leaves the configured origin once resolved 134ms
+ ✓ src/lib/oidc/flow.test.ts > safeReturnTo > canonicalizes with the configured origin, not a guessed one 84ms
+ ✓ src/lib/oidc/flow.test.ts > pins the issuer used in tests 12ms
+ ✓ src/features/tasks/components/task-form.test.tsx > TaskForm > validates on the client before calling the server 225ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > selectMyWork > opens the first non-empty queue and the first item, in the server order 2ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > selectMyWork > honours an explicitly chosen queue even when it is empty 0ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > selectMyWork > selects by item id and offers at most three Up next entries 1ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > selectMyWork > an item that moved to another queue is followed and says so 0ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > selectMyWork > an item that is in no queue any more clears the selection and says so 0ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > selectMyWork > counts are the returned list lengths, not a total 0ms
+ ✓ src/features/tasks/components/task-form.test.tsx > TaskForm > re-announces the same error on a repeated failed submit 47ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > nothing assigned: no invented recommendation, honest empty state 96ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > only waiting or blocked work: says so, with the other queues one click away 29ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > shows one current item with its reason and a primary action that remembers queue and item 51ms
+ ✓ src/features/tasks/components/task-form.test.tsx > TaskForm > submits typed values and reports success 118ms
+ ✓ src/features/tasks/components/task-form.test.tsx > TaskForm > shows an inline error when the action call itself fails 74ms
+ ✓ src/features/tasks/components/task-form.test.tsx > TaskForm > shows server-side field and form errors 37ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > the first item has a disabled Previous, not a dead link 47ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > never shows an id in place of an unknown Matter name 8ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > marks the open queue and shows exact list lengths 22ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > a blocked item names what it waits on, with links, not an unexplained badge 66ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > a detail that could not be read is stated, never guessed 10ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > a waiting item says who it waits on 7ms
+ ✓ src/features/work/components/my-actions-view.test.tsx > MyActionsView > a vanished selection is explained and the rest of the list stays usable 14ms
+ ✓ src/features/review/components/answer-form.test.tsx > an UNKNOWN retry keeps the exact command after the view refreshes its props 252ms
+ ✓ src/features/review/components/answer-form.test.tsx > after a reload the stored attempt replays the original key and CAS, not the refreshed props 104ms
+ ✓ src/features/review/components/answer-form.test.tsx > editing the text after an UNKNOWN does not mutate the retried command 113ms
+ ✓ src/features/review/components/answer-form.test.tsx > a resolved outcome starts a different intent: a new key and the freshly edited values 55ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > keeps what was typed across a remount (navigation) for the same session and scope 58ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > never shows a draft to another session, another scope, or when signed out 14ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > stores nothing when there is no namespace (signed out) 13ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > CBHI-F01: a never-promoted v1 accepted by a FIXED rule is valid, only annotated as not current 3ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > CBHI-F01: a satisfied FIXED claim stays valid although v2 is the current version 1ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > CBHI-F01: a genuine CURRENT_AUTHORITATIVE mismatch is flagged because the server says so 1ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > CBHI-F02: expiry at the exact boundary is flagged when the server reports EXPIRED 0ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > CBHI-F02: evidence validUntil expiry is flagged while the assessment endpoint is later 0ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > CBHI-F02: a timestamp in the past never overrides a satisfying claim 0ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > stored facts that are not rule judgements still show: withdrawn evidence 0ms
+ ✓ src/features/proof/evidence-basis.test.tsx > criterionBasis: flags come from the server result, not from guesses > an unknown criterion is null 0ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > clears the draft after a successful save so it cannot come back 213ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > drops the draft when the result says the right to see it ended (forbidden) 22ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > drops the draft when the result says the right to see it ended (not-found) 33ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > lists proofs with their state and opens one by a stable deep link 154ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > shows version, submitter, verifier decision and exact validity endpoints, never a page or quote 33ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > CBHI-F01 (rendered): a valid FIXED claim on a non-current version carries no stale warning and no "superseded" 21ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > CBHI-F01 (rendered): a real mismatch shows the server-derived warning 12ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > CBHI-F03: missing DOCUMENT_VERSION metadata is "unavailable", never an outside reference 27ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > CBHI-F03: a real outside reference keeps its disclaimer; an exact version shows the version 23ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > an id that is not in this record is explained, not rendered 3ms
+ ✓ src/features/proof/evidence-basis.test.tsx > EvidenceBasis > a proof with no offered evidence says so 6ms
+ ✓ src/test/creation-reload.test.tsx > retains the workspace create identity and submitted values across a reload 389ms
+ ✓ src/features/data-transfer/components/data-transfer-panel.test.tsx > DataTransferPanel > opens as a chooser: no editor, preview or brief is on screen yet 221ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > drops the draft when the result says the right to see it ended (unauthenticated) 40ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > keeps the draft through an ordinary failure so the user can fix and retry 55ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > discarding an unconfirmed request drops the draft with it 27ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > logout wipes every draft of every namespace 7ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > still works when storage is blocked 1ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > namespaces keys so scopes cannot collide 0ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > purges kept drafts when the screen is forbidden 1ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > purges kept drafts when the screen is not-found 1ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > purges kept drafts when the screen is sign-in 1ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > keeps drafts when the screen is unavailable 1ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > keeps drafts when the screen is error 1ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > keeps drafts when a forbidden section sits inside a page the user can still read 5ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > keeps drafts when a not-found section sits inside a page the user can still read 3ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > purges even for a partial section when the session itself has ended 1ms
+ ✓ src/components/organisms/drafts.test.tsx > form drafts > access loss shown by a read failure > does not revive a purged draft after access returns 2ms
+ ✓ src/test/creation-reload.test.tsx > retains the matter create identity and submitted values across a reload 126ms
+ ✓ src/test/creation-reload.test.tsx > does not create a second workspace when the dialog is closed and reopened while pending 69ms
+ ✓ src/features/data-transfer/components/data-transfer-panel.test.tsx > DataTransferPanel > shows only the chosen task and keeps the other task, and what was typed in it, mounted 110ms
+ ✓ src/features/data-transfer/components/data-transfer-panel.test.tsx > DataTransferPanel > says a task still needs attention while another one is showing 51ms
+ ✓ src/features/data-transfer/components/data-transfer-panel.test.tsx > DataTransferPanel > labels the brief as a draft 39ms
+ ✓ src/test/creation-reload.test.tsx > does not create a second matter when the dialog is closed and reopened while pending 99ms
+ ✓ src/test/creation-reload.test.tsx > confirmed workspace success closes the dialog and opens the created record 44ms
+ ✓ src/test/creation-reload.test.tsx > confirmed matter success closes the dialog and opens the created record 28ms
+ ✓ src/test/creation-reload.test.tsx > names the workspace and says what can be added afterwards in the create-matter dialog 17ms
+ ✓ src/test/creation-reload.test.tsx > keeps a typed create-matter draft when the dialog is cancelled and reopened 40ms
+ ✓ src/features/proof/components/upload-attempt.test.tsx > an upload whose answer was lost survives a reload > retries with the original key when the same file is chosen again 341ms
+ ✓ src/features/proof/components/upload-attempt.test.tsx > an upload whose answer was lost survives a reload > a different file is a different intent and gets a new key 115ms
+ ✓ src/features/proof/components/upload-attempt.test.tsx > an upload whose answer was lost survives a reload > a stored version clears it 67ms
+ ✓ src/features/proof/components/upload-attempt.test.tsx > an upload whose answer was lost survives a reload > another session never sees it, and a denied screen purges it 50ms
+ ✓ src/features/control/components/control-ui.test.tsx > ControlRoomView > states its boundary and the figures it shows 102ms
+ ✓ src/features/control/components/control-ui.test.tsx > ControlRoomView > connects a blocker to what holds it and a next action to what it releases and its decision 100ms
+ ✓ src/features/control/components/control-ui.test.tsx > ControlRoomView > distinguishes waiting from blocked and names the party and condition 20ms
+ ✓ src/features/control/components/control-ui.test.tsx > ControlRoomView > says plainly when a section is empty instead of hiding it or showing zero as unknown 14ms
+ ✓ src/features/control/components/control-ui.test.tsx > ControlRoomView > lists a gap with its meaning, not a code 23ms
+ ✓ src/features/data-transfer/components/recovery-gate.test.tsx > reload recovery gate > never POSTs on mount; withholds new forms until explicit recovery and acknowledgement 144ms
+ ✓ src/features/data-transfer/components/recovery-gate.test.tsx > reload recovery gate > shows already recovered receipts as acknowledgement, not another unknown mutation 18ms
+ ✓ src/features/data-transfer/components/recovery-gate.test.tsx > reload recovery gate > fails closed if the recovery read is unavailable or access was lost 43ms
+ ✓ src/features/control/components/control-ui.test.tsx > context forms > creates a record with a stable key and the chosen links 87ms
+ ✓ src/features/control/components/control-ui.test.tsx > context forms > closing needs a reason and sends the record ETag 37ms
+ ✓ src/features/control/components/control-ui.test.tsx > causal explanation of a blocker (F05) > says why a COMPLETED prerequisite still holds the record: it is itself blocked 49ms
+ ✓ src/features/control/components/control-ui.test.tsx > causal explanation of a blocker (F05) > keeps the proof gate apart from the completion gate 26ms
+ ✓ src/features/control/components/control-ui.test.tsx > one snapshot (F04) > labels come from the room itself, never from a later read of the same records 1ms
+ ✓ src/features/control/components/control-ui.test.tsx > one snapshot (F04) > shows a closed context record from the same snapshot as the open ones 0ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts > restTaskRepository > lists with the documented query keys and validates the page 74ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts > restTaskRepository > rejects a list response that does not match the contract 12ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts > restTaskRepository > creates, updates and deletes with the documented methods and paths 3ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts > restTaskRepository > reads stats from /tasks/stats 4ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts > restTaskRepository > accepts an empty 204 response on delete 5ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts > restTaskRepository > list requires tasks:read before calling the backend 5ms
+ ✓ src/features/tasks/services/rest-task-repository.test.ts > restTaskRepository > stats requires tasks:read before calling the backend 3ms
+ ✓ src/features/review/components/review-list.test.tsx > ReviewGridList > lists grids with their counts and a link that selects the grid 198ms
+ ✓ src/features/review/components/review-list.test.tsx > ReviewGridList > an empty list is an honest empty state, and the create button is only what the page passes 29ms
+ ✓ src/features/review/components/review-list.test.tsx > CreateGridDialog > creates with one idempotency key and opens the new grid 59ms
+ ✓ src/features/review/components/review-list.test.tsx > CreateGridDialog > after a lost answer, the retry reuses the SAME key and never makes a new request on its own 80ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > marks the section for /matters/m1 as current 126ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > marks the section for /matters/m1/work as current 27ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > marks the section for /matters/m1/work/item-9 as current 18ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > marks the section for /matters/m1/history as current 17ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > marks the section for /matters/m1/documents/d1 as current 27ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > marks the section for /matters/m1/agenda as current 13ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > marks the section for /matters/m1/reviews as current 5ms
+ ✓ src/features/matters/components/matter-tabs.test.tsx > links every section with a real internal href 30ms
+ ✓ src/app/(app)/matters/[matterId]/control-room/page.test.tsx > Control Room page orchestration (F04) > describes records with the room snapshot even when a later read disagrees 183ms
+ ✓ src/app/(app)/matters/[matterId]/control-room/page.test.tsx > Control Room page orchestration (F04) > shows an explicit failure instead of a mixed page when the room cannot be read 9ms
+ ✓ src/features/tasks/components/task-form-dialog.test.tsx > TaskFormDialog > cannot be dismissed while the form is submitting 369ms
+ ✓ src/components/organisms/form-dialog.test.tsx > FormDialog > opens from its one trigger and tells the form it is open 182ms
+ ✓ src/components/organisms/form-dialog.test.tsx > FormDialog > keeps typed values when closed and reopened (close is not a reset) 59ms
+ ✓ src/components/organisms/form-dialog.test.tsx > FormDialog > closes on Escape through the dialog cancel event 7ms
+ ✓ src/components/organisms/form-dialog.test.tsx > TaskDialog > keeps plain children mounted but out of sight until the button is used 26ms
+ ✓ src/components/organisms/form-dialog.test.tsx > TaskDialog > closes and says what happened only when the form reports a confirmed success 18ms
+ ✓ src/components/molecules/confirmation-dialog.test.tsx > ConfirmationDialog > is an accessible, labelled dialog 104ms
+ ✓ src/components/molecules/confirmation-dialog.test.tsx > ConfirmationDialog > confirms and cancels 89ms
+ ✓ src/components/molecules/confirmation-dialog.test.tsx > ConfirmationDialog > blocks closing and shows errors while pending 16ms
+ ✓ src/components/molecules/confirmation-dialog.test.tsx > ConfirmationDialog > closes on Escape, but not while pending 5ms
+ ✓ src/components/molecules/confirmation-dialog.test.tsx > ConfirmationDialog > keeps the dialog open when Escape is pressed while pending 4ms
+ ✓ src/components/molecules/confirmation-dialog.test.tsx > ConfirmationDialog > renders no content while closed 1ms
+ ✓ src/features/work/components/matter-attention.test.tsx > MatterAttention > names each blocked Action with its cause and links into it, remembering the Matter as origin 146ms
+ ✓ src/features/work/components/matter-attention.test.tsx > MatterAttention > exact total when the API gives one, an honest "may be more" when it does not 14ms
+ ✓ src/features/work/components/matter-attention.test.tsx > MatterAttention > nothing blocked is stated; an unreadable list is not reported as "nothing blocked" 2ms
+ ✓ src/features/work/components/matter-attention.test.tsx > MatterAttention > shows the caller’s own next step and per-queue counts for this Matter 12ms
+ ✓ src/features/work/components/matter-attention.test.tsx > MatterAttention > nothing assigned vs unreadable assignments are different messages 9ms
+ ✓ src/components/molecules/localized-instant.test.tsx > localized display without mutation of legal intent > switches labels and display zone without resetting mounted drafts or changing the original instant 158ms
+ ✓ src/components/molecules/localized-instant.test.tsx > localized display without mutation of legal intent > does not translate user content merely because it matches an interface label 3ms
+ ✓ src/components/molecules/localized-instant.test.tsx > localized display without mutation of legal intent > changes option labels without changing their submitted state IDs or selection 11ms
+ ✓ src/features/work/components/agenda-view.test.tsx > AgendaView > groups by the calendar day of the display zone and keeps the source link with its origin 220ms
+ ✓ src/features/work/components/agenda-view.test.tsx > AgendaView > says what the page is not: overdue shown, no computed deadline, milestones unlabelled by timing 7ms
+ ✓ src/features/work/components/agenda-view.test.tsx > AgendaView > an empty result is an honest empty state, not "no deadlines" 3ms
+ ✓ src/features/work/components/agenda-view.test.tsx > AgendaFilters > keeps the other filter when one changes and marks the current ones 24ms
+ ✓ src/features/matters/components/matter-list.test.tsx > puts the one create action in the section header when the page grants it 160ms
+ ✓ src/features/matters/components/matter-list.test.tsx > does not offer creation when the page has not granted the affordance 3ms
+ ✓ src/features/matters/components/matter-list.test.tsx > lists titles as real links with the caller role and the real total 17ms
+ ✓ src/features/matters/components/matter-history.test.tsx > MatterHistory > shows the member name for a known actor id and the recorded id otherwise 96ms
+ ✓ src/features/matters/components/matter-history.test.tsx > MatterHistory > retains and presents the attributed event payload instead of stripping provenance 145ms
+ ✓ src/features/matters/components/matter-history.test.tsx > MatterHistory > does not infer an actor, reason, cause or payload when the API records null 8ms
+ ✓ src/hooks/use-time-zone.test.tsx > client display time zone > defaults to the detected IANA zone, not the server clock or a fixed +07 offset 156ms
+ ✓ src/hooks/use-time-zone.test.tsx > client display time zone > ignores a legacy manual UTC preference and uses the device zone 6ms
+ ✓ src/hooks/use-time-zone.test.tsx > client display time zone > uses the detected zone rules for each instant, including daylight saving 4ms
+ ✓ src/hooks/use-time-zone.test.tsx > client display time zone > re-detects a changed device zone on focus without changing the stored instant 9ms
+ ✓ src/hooks/use-time-zone.test.tsx > client display time zone > ignores invalid stored zones and falls back to UTC if detection is invalid too 4ms
+ ✓ src/hooks/use-time-zone.test.tsx > client display time zone > detects the device zone without reading or writing preference storage 8ms
+ ✓ src/features/tasks/components/task-filters.test.tsx > TaskFilters > debounces search into the URL and resets to page 1 168ms
+ ✓ src/features/tasks/components/task-filters.test.tsx > TaskFilters > applies status immediately 16ms
+ ✓ src/features/tasks/components/task-filters.test.tsx > TaskFilters > resyncs inputs when the URL changes elsewhere (Back button, nav link) 9ms
+ ✓ src/features/tasks/components/task-filters.test.tsx > TaskFilters > keeps text typed after its own debounced update was sent 31ms
+ ✓ src/app/(app)/matters/[matterId]/filings/new/page.test.tsx > New filing page > shows the matter, a way back and the creation form with names, never raw ids 166ms
+ ✓ src/app/(app)/matters/[matterId]/filings/new/page.test.tsx > New filing page > lists what is missing and where to add it instead of a fake default 36ms
+ ✓ src/app/(app)/matters/[matterId]/filings/new/page.test.tsx > New filing page > offers no form to a viewer 37ms
+ ✓ src/app/(app)/matters/[matterId]/filings/new/page.test.tsx > New filing page > asks to sign in without reading anything 9ms
+ ✓ src/components/atoms/select.test.tsx > submits the internal value while showing a recognizable name and restores the default on reset 218ms
+ ✓ src/components/atoms/select.test.tsx > preserves controlled change events and empty values used to clear a field or filter 10ms
+ ✓ src/components/atoms/select.test.tsx > preserves disabled and validation semantics without a second hidden control 34ms
+ ✓ src/components/atoms/button.test.tsx > Button > defaults to type="button" so it never submits forms by accident 197ms
+ ✓ src/components/atoms/button.test.tsx > Button > handles clicks 22ms
+ ✓ src/components/atoms/button.test.tsx > Button > is disabled and busy while loading 19ms
+ ✓ src/components/atoms/button.test.tsx > Button > merges custom classes over variant classes 6ms
+ ✓ src/components/molecules/glass-surface.test.tsx > GlassSurface fallback tiers > renders children bare when the tier is not liquid 122ms
+ ✓ src/components/molecules/glass-surface.test.tsx > GlassSurface fallback tiers > stays interactive without wrapper interference 9ms
+ ✓ src/test/search-navigation.test.tsx > Search navigation > applies work filters with internal navigation and starts at the first page 154ms
+ ✓ src/features/matters/components/matter-scope.test.tsx > authorized scope header > uses actual workspace, matter, role and read instant for every child screen 164ms
+ ✓ src/features/matters/components/matter-scope.test.tsx > authorized scope header > does not present a stale scope or child content after read access ends 3ms
+ ✓ src/features/matters/components/matter-scope.test.tsx > authorized scope header > requires a session before reading scope 3ms
+ ✓ src/features/data-transfer/components/outcome-list.test.tsx > keeps unknown outcomes distinct and row identities intact when changing language 136ms
+ ✓ src/components/molecules/dialog.test.tsx > Dialog > closes on a backdrop click 99ms
+ ✓ src/components/molecules/dialog.test.tsx > Dialog > stays open when a press starts inside and ends on the backdrop 14ms
+ ✓ src/components/molecules/dialog.test.tsx > Dialog > reopens after a browser-forced close when the caller keeps it open 14ms
+ ✓ src/components/molecules/dialog.test.tsx > Dialog > keeps children mounted while closed only with keepMounted 6ms
+ ✓ src/features/requirements/components/create-requirement-form.test.tsx > opens the operational work detail after creating a requirement 150ms
+ ✓ src/components/organisms/data-table.test.tsx > DataTable > renders a captioned table with one row per item 121ms
+ ✓ src/components/organisms/data-table.test.tsx > DataTable > renders the empty slot instead of an empty table 2ms
+ ✓ src/test/data-transfer-seam.test.ts > bulk edit at the action → repository → client seam > posts the frozen intent to the slash route, receipted by the keys in its body 33ms
+ ✓ src/test/data-transfer-seam.test.ts > bulk edit at the action → repository → client seam > treats a lost answer as unknown and safe to retry with the same keys 13ms
+ ✓ src/test/data-transfer-seam.test.ts > bulk edit at the action → repository → client seam > refuses keys that are not UUIDv7 before anything is sent 3ms
+ ✓ src/test/data-transfer-seam.test.ts > bulk edit at the action → repository → client seam > accepts the exact wire shape the backend produces for a preview 10ms
+ ✓ src/test/data-transfer-seam.test.ts > bulk edit at the action → repository → client seam > does not take a refusal for an unknown outcome 1ms
+ ✓ src/test/data-transfer-seam.test.ts > import at the same seam > uploads the file with its frozen plan and recovers a lost answer by the same keys 1ms
+ ✓ src/test/data-transfer-seam.test.ts > import at the same seam > refuses a plan with a key that is not UUIDv7, and a preview parses the backend shape 1ms
+ ✓ src/test/data-transfer-seam.test.ts > an unreadable spreadsheet at the import seam > is a fixable problem with the file, not a generic fault 1ms
+ ✓ src/test/data-transfer-seam.test.ts > brief at the same seam > asks for the window and parses the backend shape 1ms
+ ✓ src/test/data-transfer-seam.test.ts > brief at the same seam > rejects a malformed or reversed window without calling the API 0ms
+ ✓ src/test/data-transfer-seam.test.ts > brief at the same seam > explains a window the server refuses and an incomplete history, as different things 0ms
+ ✓ src/components/molecules/pagination.test.tsx > getPageItems > shows everything for few pages 1ms
+ ✓ src/components/molecules/pagination.test.tsx > getPageItems > collapses gaps with ellipsis 0ms
+ ✓ src/components/molecules/pagination.test.tsx > Pagination > renders nothing for a single page 12ms
+ ✓ src/components/molecules/pagination.test.tsx > Pagination > marks the current page and disables Previous on the first page 130ms
+ ✓ src/components/templates/dashboard-template.test.tsx > DashboardTemplate > keeps navigation, account controls and a skip target available in the flat shell 103ms
+ ✓ src/components/molecules/form-field.test.tsx > FormField > links label, hint and error to the control 140ms
+ ✓ src/components/molecules/form-field.test.tsx > FormField > is valid when there is no error 3ms
+ ✓ src/test/operation-recovery.test.ts > createWorkspace (receipted) > keeps UNKNOWN and the right recovery when the connection drops 34ms
+ ✓ src/test/operation-recovery.test.ts > createWorkspace (receipted) > keeps UNKNOWN and the right recovery when a success arrives with a lost body 3ms
+ ✓ src/test/operation-recovery.test.ts > createWorkspace (receipted) > keeps UNKNOWN and the right recovery when the API itself reports an unknown outcome 1ms
+ ✓ src/test/operation-recovery.test.ts > createWorkspace (receipted) > sends an Idempotency-Key if and only if the command is receipted 0ms
+ ✓ src/test/operation-recovery.test.ts > createMatter (receipted) > keeps UNKNOWN and the right recovery when the connection drops 1ms
+ ✓ src/test/operation-recovery.test.ts > createMatter (receipted) > keeps UNKNOWN and the right recovery when a success arrives with a lost body 0ms
+ ✓ src/test/operation-recovery.test.ts > createMatter (receipted) > keeps UNKNOWN and the right recovery when the API itself reports an unknown outcome 0ms
+ ✓ src/test/operation-recovery.test.ts > createMatter (receipted) > sends an Idempotency-Key if and only if the command is receipted 0ms
+ ✓ src/test/operation-recovery.test.ts > createRequirement (receipted) > keeps UNKNOWN and the right recovery when the connection drops 0ms
+ ✓ src/test/operation-recovery.test.ts > createRequirement (receipted) > keeps UNKNOWN and the right recovery when a success arrives with a lost body 0ms
+ ✓ src/test/operation-recovery.test.ts > createRequirement (receipted) > keeps UNKNOWN and the right recovery when the API itself reports an unknown outcome 0ms
+ ✓ src/test/operation-recovery.test.ts > createRequirement (receipted) > sends an Idempotency-Key if and only if the command is receipted 0ms
+ ✓ src/test/operation-recovery.test.ts > grantWorkspaceMember (cas-only) > keeps UNKNOWN and the right recovery when the connection drops 0ms
+ ✓ src/test/operation-recovery.test.ts > grantWorkspaceMember (cas-only) > keeps UNKNOWN and the right recovery when a success arrives with a lost body 0ms
+ ✓ src/test/operation-recovery.test.ts > grantWorkspaceMember (cas-only) > keeps UNKNOWN and the right recovery when the API itself reports an unknown outcome 0ms
+ ✓ src/test/operation-recovery.test.ts > grantWorkspaceMember (cas-only) > sends an Idempotency-Key if and only if the command is receipted 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeWorkspaceMember (cas-only) > keeps UNKNOWN and the right recovery when the connection drops 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeWorkspaceMember (cas-only) > keeps UNKNOWN and the right recovery when a success arrives with a lost body 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeWorkspaceMember (cas-only) > keeps UNKNOWN and the right recovery when the API itself reports an unknown outcome 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeWorkspaceMember (cas-only) > sends an Idempotency-Key if and only if the command is receipted 0ms
+ ✓ src/test/operation-recovery.test.ts > grantMatterMember (cas-only) > keeps UNKNOWN and the right recovery when the connection drops 0ms
+ ✓ src/test/operation-recovery.test.ts > grantMatterMember (cas-only) > keeps UNKNOWN and the right recovery when a success arrives with a lost body 0ms
+ ✓ src/test/operation-recovery.test.ts > grantMatterMember (cas-only) > keeps UNKNOWN and the right recovery when the API itself reports an unknown outcome 0ms
+ ✓ src/test/operation-recovery.test.ts > grantMatterMember (cas-only) > sends an Idempotency-Key if and only if the command is receipted 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeMatterMember (cas-only) > keeps UNKNOWN and the right recovery when the connection drops 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeMatterMember (cas-only) > keeps UNKNOWN and the right recovery when a success arrives with a lost body 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeMatterMember (cas-only) > keeps UNKNOWN and the right recovery when the API itself reports an unknown outcome 0ms
+ ✓ src/test/operation-recovery.test.ts > revokeMatterMember (cas-only) > sends an Idempotency-Key if and only if the command is receipted 0ms
+ ✓ src/test/operation-recovery.test.ts > a definite refusal is not an unknown outcome > 412 on a CAS-only command is "stale", never a resend prompt 0ms
+ ✓ src/lib/mc/glass.test.ts > resolveGlassTier > liquid on Chromium with full backdrop-filter support 2ms
+ ✓ src/lib/mc/glass.test.ts > resolveGlassTier > frost on non-Chromium engines (Safari/Firefox drop url() backdrop filters) 0ms
+ ✓ src/lib/mc/glass.test.ts > resolveGlassTier > opaque when the user reduces transparency or forces colors 0ms
+ ✓ src/lib/mc/glass.test.ts > resolveGlassTier > opaque without backdrop-filter support at all 0ms
+ ✓ src/lib/mc/glass.test.ts > computeDisplacementMap > is deterministic with RGBA layout and neutral blue channel 123ms
+ ✓ src/lib/mc/glass.test.ts > computeDisplacementMap > keeps the interior neutral (no displacement in the center) 1ms
+ ✓ src/lib/mc/glass.test.ts > computeDisplacementMap > bends outward at the edges: R falls on the left, rises on the right 0ms
+ ✓ src/lib/mc/glass.test.ts > computeDisplacementMap > bends vertically at the top and bottom edges 0ms
+ ✓ src/lib/mc/glass.test.ts > computeDisplacementMap > bends diagonally in the rounded corners 1ms
+ ✓ src/lib/mc/glass.test.ts > computeDisplacementMap > eases to no displacement at the inner bezel boundary 0ms
+ ✓ src/lib/mc/glass.test.ts > computeDisplacementMap > tolerates optics larger than the surface without NaN 1ms
+ ✓ src/components/molecules/nav-menu.test.tsx > NavMenu > marks a destination current for its own path and for the paths that belong to it 182ms
+ ✓ src/components/molecules/nav-menu.test.tsx > NavMenu > does not treat a longer sibling name as a match 14ms
+ ✓ src/features/review/review-contract.test.ts > review wire contract > accepts a full grid view and rejects a state the API never sends 4ms
+ ✓ src/features/review/review-contract.test.ts > review wire contract > creating a grid is receipted: one key, no If-Match 33ms
+ ✓ src/features/review/review-contract.test.ts > review wire contract > structure commands carry the grid ETag and no idempotency key 11ms
+ ✓ src/features/review/review-contract.test.ts > review wire contract > an answer sends the expected answer id and one key; "" means none 3ms
+ ✓ src/features/review/review-contract.test.ts > review wire contract > a stale answer maps to the stale outcome; a lost answer is UNKNOWN and must reuse the key 2ms
+ ✓ src/features/review/review-contract.test.ts > review wire contract > refuses bad input before any request 1ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > sends the USER token, If-Match and Idempotency-Key and returns ETag/replay metadata 6ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > never calls the API without a session (fail closed) 3ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > refuses to send when the session carries no user token (no shared-token fallback) 0ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > maps problem responses to a code 0ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > maps problem responses to a code 0ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > maps problem responses to a code 0ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > maps problem responses to a code 0ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > maps problem responses to a code 0ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > maps problem responses to a code 1ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > maps problem responses to a code 1ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > a lost answer to a COMMAND is outcome-unknown, but to a READ it is plain unavailable 1ms
+ ✓ src/lib/mc/client.test.ts > mcRequest > rejects a response that does not match the schema instead of trusting it 1ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > a 201 whose body stream is lost is UNKNOWN for a receipted command, and carries the key flag 1ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > the same loss for a CAS-only command (no key) is UNKNOWN and NOT receipted 0ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > a lost body on a READ is plain unavailability, never unknown 0ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > a successful command with malformed or schema-violating payload is UNKNOWN, not "internal" 1ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > a malformed payload on a READ is a contract error, not an outage 0ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > a definite refusal keeps its meaning even when its body is lost 1ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > a 5xx on a command says nothing about commit: unknown, with or without a body 1ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > an API-declared outcome-unknown inherits the key flag from the request 1ms
+ ✓ src/lib/mc/client.test.ts > lost or unusable command answers (CW1-F02) > programmer errors are not swallowed into an outcome 1ms
+ ✓ src/lib/mc/client.test.ts > helpers > pathId allows only the id alphabet (no traversal) 1ms
+ ✓ src/lib/mc/client.test.ts > helpers > problemFrom carries field errors 2ms
+ ✓ src/test/review-filing-seam.test.ts > assessing a claim (F02) at the action → repository → client seam > sends the assessment the reviewer saw, and "" for a first review 16ms
+ ✓ src/test/review-filing-seam.test.ts > assessing a claim (F02) at the action → repository → client seam > refuses to send a review that lost its binding 1ms
+ ✓ src/test/review-filing-seam.test.ts > assessing a claim (F02) at the action → repository → client seam > maps a stale review (412) and a missing binding (428) apart from an unknown outcome 6ms
+ ✓ src/test/review-filing-seam.test.ts > assessing a claim (F02) at the action → repository → client seam > never resends after a lost answer: the reviewer must re-read the checklist 2ms
+ ✓ src/test/review-filing-seam.test.ts > the OWNER signature decision (F03) at the same seam > posts the decision with the filing ETag as If-Match and no idempotency key 1ms
+ ✓ src/test/review-filing-seam.test.ts > the OWNER signature decision (F03) at the same seam > sends false to withdraw, keeps 403 distinct from 409, and is never resent when lost 0ms
+ ✓ src/lib/env.test.ts > serverEnv > defaults to demo mode 44ms
+ ✓ src/lib/env.test.ts > serverEnv > production server (TB-12) > refuses API_MODE=undefined before any data is rendered 5ms
+ ✓ src/lib/env.test.ts > serverEnv > production server (TB-12) > refuses API_MODE="demo" before any data is rendered 2ms
+ ✓ src/lib/env.test.ts > serverEnv > production server (TB-12) > refuses demo when no phase is set (standalone server.js sets none) 2ms
+ ✓ src/lib/env.test.ts > serverEnv > production server (TB-12) > allows the build to load the module without a real API 1ms
+ ✓ src/lib/env.test.ts > serverEnv > production server (TB-12) > starts in rest mode 5ms
+ ✓ src/lib/env.test.ts > serverEnv > AUTH_ALLOW_ANONYMOUS=undefined -> false 1ms
+ ✓ src/lib/env.test.ts > serverEnv > AUTH_ALLOW_ANONYMOUS="" -> false 7ms
+ ✓ src/lib/env.test.ts > serverEnv > AUTH_ALLOW_ANONYMOUS="false" -> false 1ms
+ ✓ src/lib/env.test.ts > serverEnv > AUTH_ALLOW_ANONYMOUS="0" -> false 0ms
+ ✓ src/lib/env.test.ts > serverEnv > AUTH_ALLOW_ANONYMOUS="true" -> true 0ms
+ ✓ src/lib/env.test.ts > serverEnv > rejects ambiguous values instead of guessing 1ms
+ ✓ src/lib/env.test.ts > serverEnv > requires API_BASE_URL in rest mode 1ms
+ ✓ src/lib/auth.test.ts > auth policy > demo mode has a local session with all permissions 5ms
+ ✓ src/lib/auth.test.ts > auth policy > REST mode fails closed when no provider session exists 6ms
+ ✓ src/lib/auth.test.ts > auth policy > REST mode uses the provider session and enforces permissions 5ms
+ ✓ src/lib/auth.test.ts > auth policy > hasPermission: exact match or wildcard; write does not imply read 5ms
+ ✓ src/lib/auth.test.ts > auth policy > anonymous access only when explicitly allowed 3ms
+ ✓ src/lib/mc/deploy-profiles.test.ts > deployment profiles > keeps the App Hosting profile durable, fail-closed and secrets runtime-only 2ms
+ ✓ src/lib/mc/deploy-profiles.test.ts > deployment profiles > rejects unsafe App Hosting variants 1ms
+ ✓ src/lib/mc/deploy-profiles.test.ts > deployment profiles > keeps local secret files out of git, the App Hosting source (ADR-007) 1ms
+ ✓ src/lib/mc/deploy-profiles.test.ts > deployment profiles > keeps the Worker profile durable and free of secret vars 0ms
+ ✓ src/lib/api/http-client.test.ts > buildUrl > keeps the base path and skips empty query values 2ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > sends JSON and returns schema-validated data 19ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > returns undefined for empty (204) responses 1ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > throws ApiError with the server message and a status-based code 1ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > maps 422 to VALIDATION_ERROR and keeps the body as details 2ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > rejects responses that do not match the schema 2ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > maps fetch failures to NETWORK_ERROR 1ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > times out slow requests 15ms
+ ✓ src/lib/api/http-client.test.ts > httpRequest > rethrows caller cancellation untouched 1ms
+ ✓ src/app/global-error.test.tsx > renders title text as a primitive and follows the interface locale 134ms
+ ✓ src/components/organisms/read-failure-callers.test.ts > ReadFailure partial placement > finds the primary and section call sites 23ms
+ ✓ src/components/organisms/read-failure-callers.test.ts > ReadFailure partial placement > is used only by the proof section of the work-item page 8ms
+ ✓ src/lib/api/backend.test.ts > backendRequest (fail-closed) > never calls the backend without a session, so the service token cannot be borrowed 17ms
+ ✓ src/lib/api/backend.test.ts > backendRequest (fail-closed) > forwards the signed-in user's own token instead of the service token 7ms
+ ✓ src/lib/api/backend.test.ts > backendRequest (fail-closed) > uses the service token only for an allowed caller 7ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > refuses a cross-origin request before anything reaches the API 8ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > refuses a request without Origin (a non-browser caller cannot ride a session cookie) 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > refuses no key 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > refuses a key that is not a UUIDv7 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > refuses no file name 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > streams the body to the API with the same key and the decoded file name 1ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > maps an unknown outcome of a receipted upload to a same-key retry, never a plain failure 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > upload route > maps a too-large refusal to a clean validation failure (nothing was stored) 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > content route > streams the bytes as opaque attachment bytes and passes only the download headers 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > content route > reports forbidden as 403, never as an empty file 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > content route > reports not-found as 404, never as an empty file 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > content route > reports unauthenticated as 401, never as an empty file 0ms
+ ✓ src/app/api/matters/documents-routes.test.ts > content route > reports unavailable as 503, never as an empty file 0ms
+ ✓ src/components/molecules/search-input.test.tsx > SearchInput > shows a clear button only when there is a value 119ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > maps the API people to value/label only and sends the query as a query string 4ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > flags a full page as possibly truncated 2ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > is denied without reaching the API when signed out 1ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > refuses malformed or over-limit input {"workspaceId":"../etc","query":""} before any request, without a retry 0ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > refuses malformed or over-limit input {"workspaceId":"0192b1c4-0000-7000-8000-000000000001","query":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"} before any request, without a retry 0ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > refuses malformed or over-limit input {"workspaceId":"0192b1c4-0000-7000-8000-000000000001","query":"ễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễễ"} before any request, without a retry 1ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > refuses malformed or over-limit input {} before any request, without a retry 0ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > accepts a multibyte query that fits the 100-byte bound 0ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > reports API 401 as urn:mc:unauthenticated, never as an empty result 0ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > reports API 403 as urn:mc:forbidden, never as an empty result 4ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > reports API 404 as urn:mc:not-found, never as an empty result 1ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > reports API 503 as urn:mc:unavailable, never as an empty result 1ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > reports API 500 as urn:mc:internal, never as an empty result 7ms
+ ✓ src/features/workspaces/actions.test.ts > searchWorkspacePeopleAction > does not leak the token or backend body on failure 2ms
+ ✓ src/features/work/agenda.test.ts > parseAgendaQuery > falls back to no filter for anything unknown 2ms
+ ✓ src/features/work/agenda.test.ts > buildAgenda > lists only recorded due dates, merged by instant, never inventing one 1ms
+ ✓ src/features/work/agenda.test.ts > buildAgenda > a source filter keeps one kind 0ms
+ ✓ src/features/work/agenda.test.ts > buildAgenda > a timing filter applies to work items and hides milestones 0ms
+ ✓ src/features/work/agenda.test.ts > buildAgenda > equal instants keep a stable order 11ms
+ ✓ src/features/work/agenda.test.ts > dayKey > the same instant is on different days in different zones 5ms
+ ✓ src/lib/oidc/durable-state.test.ts > seals tokens and binary data, authenticates scope and supports retained key versions 4ms
+ ✓ src/lib/oidc/durable-state.test.ts > requires verified TLS for a remote database and refuses a missing encryption key 1ms
+ ↓ src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > shares encrypted state across independent clients and expires rows
+ ↓ src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > makes exactly one real refresh call across concurrent store instances
+ ↓ src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > refuses an expired access token when the issuer provided no refresh token
+ ↓ src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > cannot resurrect a session or child attempt when logout races a refresh
+ ↓ src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > does not reuse a rotating token after an unknown refresh or abandoned claim
+ ↓ src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > refuses idle expiry even though the stored row has not reached absolute expiry
+ ↓ src/lib/oidc/durable-state.test.ts > durable PostgreSQL profile on a fresh local fixture > retains PKCE across module state reset, rejects an unbound callback and consumes once
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > retains frozen keys and payload across reload, isolated from another login 2ms
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > refuses concurrent, changed-content and cross-Matter attempts without replacing the saved request 0ms
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > keeps ambiguous response unresolved: {"results":[]} 0ms
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > keeps ambiguous response unresolved: {"results":[{"rowKey":"unexpected","status":"SUCCESS"}]} 0ms
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > keeps ambiguous response unresolved: {"results":[{"rowKey":"r1","status":"UNKNOWN"}]} 0ms
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > releases only terminal receipts; late completion cannot release a newer slot 1ms
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > purges access-lost payloads and refuses revival on re-grant 0ms
+ ✓ src/features/data-transfer/pending-attempts.test.ts > session-owned transfer recovery > binds exact import bytes, source, run, and row keys 1ms
+ ✓ src/lib/mc/errors.test.ts > product problems > reads the code from the urn type and never trusts anything else 2ms
+ ✓ src/lib/mc/errors.test.ts > product problems > read failure unauthenticated is presented as sign-in 0ms
+ ✓ src/lib/mc/errors.test.ts > product problems > read failure forbidden is presented as forbidden 0ms
+ ✓ src/lib/mc/errors.test.ts > product problems > read failure not-found is presented as not-found 0ms
+ ✓ src/lib/mc/errors.test.ts > product problems > read failure unavailable is presented as unavailable 0ms
+ ✓ src/lib/mc/errors.test.ts > product problems > read failure boundary-due is presented as unavailable 0ms
+ ✓ src/lib/mc/errors.test.ts > product problems > read failure internal is presented as error 0ms
+ ✓ src/lib/mc/errors.test.ts > product problems > treats an AuthError like a missing session 1ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > a RECEIPTED unknown outcome keeps the key and says nothing was rolled back 0ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > a CAS-only unknown outcome is never a safe resend: it demands a re-read (CW1-F01) 0ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > stale (412) asks for a reload, not a blind retry 0ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > unavailable keeps the session and is not a sign-in prompt 0ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > an expired session is distinct from forbidden 0ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > validation carries per-field messages 0ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > last owner and key conflicts have their own messages 0ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > a missing precondition is a frontend bug: generic message, never shown as a user error 3ms
+ ✓ src/lib/mc/errors.test.ts > toMcFailure: one distinct recovery per outcome > unknown errors are generic and leak nothing 1ms
+ ✓ src/features/tasks/schemas.test.ts > taskFormSchema > accepts valid input and trims text 2ms
+ ✓ src/features/tasks/schemas.test.ts > taskFormSchema > rejects short titles, bad enums and bad dates 1ms
+ ✓ src/features/tasks/schemas.test.ts > taskListQuerySchema > falls back to safe defaults for invalid URL params 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskListQuerySchema > parses valid params 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskListQuerySchema > truncates an over-long search instead of dropping it 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > accepts generated ids 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > rejects "" (would change the backend URL path) 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > rejects "." (would change the backend URL path) 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > rejects ".." (would change the backend URL path) 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > rejects "a/b" (would change the backend URL path) 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > rejects "../admin" (would change the backend URL path) 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > rejects "a?x=1" (would change the backend URL path) 0ms
+ ✓ src/features/tasks/schemas.test.ts > taskIdSchema > rejects "a b" (would change the backend URL path) 0ms
+ ✓ src/features/data-transfer/intent.test.ts > frozen bulk intent > mints UUIDv7 keys, one per row plus the attempt, all distinct 2ms
+ ✓ src/features/data-transfer/intent.test.ts > frozen bulk intent > resends the same keys while the rows are unchanged, and new keys once they change 1ms
+ ✓ src/features/data-transfer/intent.test.ts > frozen bulk intent > tells "unchanged" from "cleared" in the content identity 0ms
+ ✓ src/features/data-transfer/intent.test.ts > frozen import intent > keys every previewed row once and ties the intent to that file 0ms
+ ✓ src/features/data-transfer/intent.test.ts > grouped outcomes > accounts for every submitted row, counting replays as applied 0ms
+ ✓ src/features/data-transfer/intent.test.ts > grouped outcomes > flags a response that does not match the submission 0ms
+ ✓ src/lib/oidc/session-store.test.ts > session store > issues unguessable, distinct handles that carry no token 3ms
+ ✓ src/lib/oidc/session-store.test.ts > session store > refuses an unknown or forged handle (fail closed) 0ms
+ ✓ src/lib/oidc/session-store.test.ts > session store > expires on idle and on absolute lifetime 1ms
+ ✓ src/lib/oidc/session-store.test.ts > session store > destroys immediately and returns the record for revocation 0ms
+ ✓ src/lib/oidc/session-store.test.ts > session store > updates in place 0ms
+ ✓ src/lib/oidc/session-store.test.ts > session store > is one store per process even when the module is evaluated again (HMR) 1ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > re-validates input on the server and returns field errors 5ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > creates a task with parsed data 1ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > rejects unknown statuses 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > surfaces 4xx API messages 1ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > rejects path-traversal ids before calling the backend 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > maps a backend 401 to the sign-in message without leaking its text 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > hides 5xx and unknown error details 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > create is blocked for signed-out callers 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > update is blocked for signed-out callers 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > status is blocked for signed-out callers 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > delete is blocked for signed-out callers 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > create requires the tasks:write permission 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > update requires the tasks:write permission 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > status requires the tasks:write permission 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > delete requires the tasks:write permission 0ms
+ ✓ src/features/tasks/actions.test.ts > task Server Actions > authorization > checks the caller before validating input 0ms
+ ✓ src/lib/mc/entry-route.test.ts > redirects the public root to the implemented workspace entry route 1ms
+ ✓ src/lib/mc/entry-route.test.ts > keeps Node cache features and selects the tested dynamic SSR profile only for Workers 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > keeps /matters/1/work?execution=WAITING&q=spa 2ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > keeps /my-actions 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > keeps /matters/1/work/2?from=%2Fmatters%2F1%2Fwork 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > keeps /a/b/../c?x=1 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > keeps /a/./b 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > keeps /a%2F%2Fb 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for null 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "//evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "http://evil.test/" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/\t/evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/\n/evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "\\evil" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/a\\b" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "javascript:alert(1)" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/api/auth/logout" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/login" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/x/../login" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/matters/../api/auth/logout" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/..//evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/x/..//evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/a/../..//evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/..///evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/%2e%2e//evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/.//evil.test" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "relative" 0ms
+ ✓ src/lib/mc/paths.test.ts > safeInternalPath > falls back for "/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" 0ms
+ ✓ src/lib/mc/paths.test.ts > withFrom > adds or replaces the origin and keeps other params 0ms
+ ✓ src/lib/mc/worker-build.test.ts > keeps runtime secrets out of Worker builds and reports names without values 2ms
+ ↓ src/features/data-transfer/durable-attempts.test.ts > durable transfer intent > recovers the frozen request across new session objects and only releases on matching ACK
+ ↓ src/features/data-transfer/durable-attempts.test.ts > durable transfer intent > keeps crashes read-only, allows explicit same-key retry after lease, rejects late completion
+ ↓ src/features/data-transfer/durable-attempts.test.ts > durable transfer intent > purges lost access and logout cannot be undone by a late completion
+ ↓ src/features/data-transfer/durable-attempts.test.ts > durable transfer intent > retains exact synthetic import bytes (1048576) in encrypted state
+ ↓ src/features/data-transfer/durable-attempts.test.ts > durable transfer intent > retains exact synthetic import bytes (26213376) in encrypted state
+ ✓ src/features/review/matrix.test.ts > cellLabel > stale wins for display, otherwise the recorded state, otherwise pending 1ms
+ ✓ src/features/review/matrix.test.ts > filters > by state, with STALE as its own state 1ms
+ ✓ src/features/review/matrix.test.ts > filters > by text across the answer, its refs, the question and the document 0ms
+ ✓ src/features/review/matrix.test.ts > filters > rows are shown when any of their cells matches; no filter shows every row 0ms
+ ✓ src/features/review/matrix.test.ts > untrusted URL state > unknown filter values fall back to no filter and long text is cut 0ms
+ ✓ src/features/review/matrix.test.ts > untrusted URL state > a cell reference must be two ids 0ms
+ ✓ src/lib/mc/idempotency.test.ts > newIdempotencyKey > is a well-formed UUIDv7 2ms
+ ✓ src/lib/mc/idempotency.test.ts > newIdempotencyKey > encodes the millisecond timestamp in the first 48 bits and is time-ordered 0ms
+ ✓ src/lib/mc/idempotency.test.ts > newIdempotencyKey > differs between calls at the same instant (random tail) 0ms
+
+ Test Files  84 passed | 1 skipped (85)
+      Tests  730 passed | 12 skipped (742)
+   Start at  10:46:11
+   Duration  12.42s (environment 42%, tests 34%, setup 11%, import 10%, transform 3%)
+
+Environment  jsdom was created 85 times · 41.35s total, 42% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

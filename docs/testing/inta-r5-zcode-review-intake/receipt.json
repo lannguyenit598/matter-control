@@ -1,0 +1,50 @@
+{
+  "task": "MC-002-INTA-R5-ZCODE-REVIEW-INTAKE",
+  "actor": "Local Codex",
+  "recorded_at_utc": "2026-10-26T16:59:56.375236+00:00",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "reviewer_identity": {
+    "tool": "ZCode (ZCode Desktop app 3.16.3, darwin 27.0.0 arm64)",
+    "model_self_reported": "account:zai-start-plan/GLM-5.3-Flash via Z.AI",
+    "session": "interactive; no provider/model/account change, no login, no OpenCode retry",
+    "quota_block": false
+  },
+  "independence": {
+    "role": "independent nonauthor of reviewed R4/R5 corrections",
+    "recorded_executor": "Actual Antigravity (Gemini 3.8 Flash High) — both R4 and R5 manifests",
+    "zcode_authorship_of_reviewed_changes": false,
+    "disclosed_overlap": [
+      "prior-round ZCode independent source review of this harness lineage (historical PASS_WITH_LIMITATIONS)",
+      "prior-round ZCode FE driver-stage runtime execution (runtime owner, not authorship)"
+    ],
+    "needs_other_reviewer_scope": []
+  },
+  "received_outputs": [
+    {
+      "path": "docs/reviews/inta-zcode-fe-r5-source-review.md",
+      "bytes": 25823,
+      "sha256": "6f977d66b35c0887aa51548435ad6bd7a97db9ece040fb8468a4ad42a133fda1"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/review-inputs.json",
+      "bytes": 8535,
+      "sha256": "79b6aa619b161457fad85c5da32c5d44fb95e854a3817c3816824a6781770550"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/checks-log.json",
+      "bytes": 8370,
+      "sha256": "abc2b55e46248060ce52752e5d68b1c3b1ecfbd02a3ae19eab5393a00601484b"
+    }
+  ],
+  "output_hash_basis": "Current bytes captured by Codex. Human return provided no final output hashes; no pre-delivery output-hash comparison claimed.",
+  "verdict": "CHANGES_REQUIRED_SOURCE_ONLY / PROOF_BASIS_BLOCKED / BLOCKED_CONTRACT_NOT_BINDING / RUNTIME_NOT_RELEASED",
+  "findings": "R5-I01..06 CONFIRMED; retain R5-Z01..04 and targeted source closures",
+  "pin_count_note": "Handoff declares17directpins; reviewer counts17plus parent manifest as18. Distinguish declared count from expanded verification.",
+  "diff_method_limit": "Reviewer sorted added/removed line-set equality is narrower than exact ordered hunk replay. Prior Codex R5intake performed exact reconstruction; do not label reviewer method byte-reconstruction proof.",
+  "after_gate_limit": "Human says closing recheck HEAD/inputs manifest/two payload manifests; retained checks-log lacks a per-input final full rehash receipt. Codex now rehashes all declared inputs/payloads; this does not retroactively strengthen reviewer logs.",
+  "next": "Update P0by separate pinned supplement; complete W0without replaying R5review, propose proof decision and bounded next correction contract. No code/runtime assignment activated.",
+  "old_packets_immutable": true,
+  "no_external_dispatch": true,
+  "no_runtime": true,
+  "no_commit": true
+}

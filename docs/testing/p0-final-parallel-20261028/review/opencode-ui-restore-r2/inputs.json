@@ -1,0 +1,88 @@
+{
+  "task": "MC-P0-OPENCODE-UI-RESTORE-DELTA-R2 — independent review of the 20-path CSS/UI source delta (local-ui-css-fix-20261028 4-path + local-admin-medusa-r1 16-path) and retained claude-runtime-r2 restore evidence",
+  "prompt": {
+    "path": "docs/testing/p0-final-parallel-20261028/returns-reconciled-r1/OPENCODE-DELTA-AND-RESTORE-PROMPT.md",
+    "intake_path": "docs/testing/p0-final-parallel-20261028/returns-reconciled-r1/intake.md",
+    "intake_sha256": "b2eb0b5a040d23f33016208072db67ce35b020cb5a3759e82f740d5a3599ae26"
+  },
+  "reviewer_identity": {
+    "tool": "OpenCode CLI",
+    "cli_version": "v2.1.4",
+    "provider": "opencode",
+    "model": "glm-5.3-flash-free",
+    "identity_evidence": "rtk proxy opencode --version → 'opencode v2.1.4', exit 0 at 2026-10-28T16:20:53Z; node v24.22.1; model as configured for this session (self-reported, not independently re-verifiable)",
+    "role": "independent non-author reviewer; no source writes, no provider/model switch, no commit/push/deploy"
+  },
+  "round2_permission_mode": {
+    "allowed": "read/hash/static analysis; if needed, focused pure tests invoked directly from installed node_modules entries",
+    "forbidden_and_not_done": "pnpm exec / pnpm install / corepack bootstrap / package download / dependency relink; source edits; commits; Docker/PostgreSQL/IdP/browser/lifecycle/credential/private-env access"
+  },
+  "authorship": {
+    "source_delta_author": "actual Local Codex (claimed in the two candidate packets; not independently verifiable beyond the packets)",
+    "restore_evidence_author": "actual Claude Code (Anthropic), model claude-sonnet-5-5, per claude-runtime-r2/return.md",
+    "reviewer_conflict": "none — reviewed tree untouched by reviewer; Codex server on :3000/:8081 not signalled"
+  },
+  "repo": {
+    "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head_at_16:04:17Z": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+    "head_at_16:22:28Z": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+    "dirty_uncommitted": true,
+    "external_writer_observed": true
+  },
+  "verification_targets": {
+    "authoritative_manifest_C": {
+      "path": "docs/testing/p0-final-parallel-20261028/local-admin-medusa-r1/source-manifest.json",
+      "sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028",
+      "entries": 721,
+      "captured": "2026-10-28T15:54:09.908900+00:00",
+      "manifest_head": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc"
+    },
+    "css_fix_packet_B": {
+      "source-manifest.json sha256": "91e3904a39e6afb51d0d088b63cb28341186cc3eaa0e2a9a2a81793c6340abe6",
+      "source-delta.json sha256": "1595bdde21d06c3583e9c438925d40a166d917f285a498af2317e84680d2cdab",
+      "return.md sha256": "1af284652af4e470f0879497202939548d5e2c0410faa52ab042a30034008ce4"
+    },
+    "presentation_packet_C": {
+      "source-delta.json sha256": "41c80cbbd3c5131e5594b4b5ebe627a6e099830d17c0afdb0b83e9ac583d4d4a"
+    },
+    "baseline_anchor_A": {
+      "path": "docs/testing/p0-final-parallel-20261028/claude-rv001-fix/source-manifest.json",
+      "sha256": "de8424ead1e9cd911c7a6fe124b48e5d67b6dcc9e519bb10a8b87453b05d4489",
+      "entries": 719
+    },
+    "claude_restore_evidence": {
+      "namespace": "docs/testing/p0-final-parallel-20261028/claude-runtime-r2/",
+      "outputs-manifest.json sha256": "d77db579700027ebecf1610cd2aa9c8d750ee65dd7db9c5916dbc5d8478ad26f",
+      "payloads": 46,
+      "member_recheck": "46/46 matched at 2026-10-28T16:18:38Z"
+    },
+    "own_r1_outputs": {
+      "outputs-manifest.json sha256": "a734e3f21a9a039dd9e020dbb4977476af42f6b9320243de06b5284d8abbba27",
+      "payloads re-verified": ["return.md 4e6ecc0a…1a5d", "inputs.json 80a03d4d…916e", "checks.json dbf80eca…987", "findings.json f3d91454…edf7"]
+    }
+  },
+  "verdicts": {
+    "A_source_delta_20_paths": "PASS_WITH_LIMITATIONS (pinned bytes; 4 CSS pins still byte-identical on disk at 16:22:28Z; 16 presentation pins matched at all full-member receipts)",
+    "B_retained_restore_evidence": "PASS_WITH_LIMITATIONS (author-run, internally consistent; not new independent runtime proof)",
+    "C_manifest_authority_over_current_tree": "NEEDS_INPUT_REFRESH (31 pinned entries drifted 16:04–16:13Z; untracked extras 3→6)"
+  },
+  "cr002": "DECISION_REQUIRED (unchanged; not observed this round)",
+  "rv001_disposition": "CLOSED_SOURCE_ONLY, scoped to round-1 reviewed bytes; new unconsolidated edits to flow.ts/flow.test.ts are a new review item, not a reopening",
+  "prior_round_reconciliation": "old 'member check … re-checked at close' claim limited: only full-member receipt of r1 is old C4 (~15:18Z); close-time r1 check was packet hashes + HEAD + porcelain digest dc0f69bee6b002bf (old C12); old artifacts preserved untouched",
+  "governance_read": {
+    "root AGENTS.md": "loaded via session context",
+    "RTK rule": "all shell commands rtk / rtk proxy prefixed",
+    "Semble": "unavailable in this session; exact pinned paths used (known-path reads permitted)",
+    "Context7": "not needed; Next 16.4.2 CLI flag verified from bundled node_modules/next/dist/docs (read-only)"
+  },
+  "not_opened_this_round": [
+    "credentials/.env/private configs (only claude-runtime-r2 public artifacts)",
+    "Docker/PostgreSQL/ZITADEL runtimes",
+    "Browser/Playwright",
+    "Codex-owned servers on :3000/:8081",
+    "backend source beyond static reads of the delta-adjacent files",
+    "any build re-run"
+  ],
+  "reviewer_deviations": []
+}

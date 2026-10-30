@@ -1,0 +1,181 @@
+--- docs/testing/inta-returns/frontend/validation-r3-20261026/launcher/harness-dev.mjs	2026-10-26 15:17:01
++++ /tmp/mc002-inta-fe-validation-r4-20261026/launcher/harness-dev.mjs	2026-10-26 16:26:04
+@@ -1,24 +1,30 @@
+ /**
+- * MC-002-INTA-FE-VALIDATION-R3: Pre-Listen Harness Launcher Prototype
+- * Addresses R1-C04, R2-I02, R2-I05:
+- * - Executes startup guard before opening ANY socket or spawning Next.js
++ * MC-002-INTA-FE-VALIDATION-R4: Pre-Listen Harness Launcher Prototype
++ * Addresses R1-C04, R2-I02, R2-I05, R3-N02, NF-1, NF-3:
++ * - Executes runtime integrity check and startup guard before opening ANY socket or spawning Next.js
+  * - Imports directly from frozen src/guards.ts using Node 24 native type stripping
+- * - Constructs an explicit bounded environment allowlist including MC_INTA_STATE_DIR
+- * - Binds cwd, nextBin, nextArgs, and private state directory explicitly
+- * - Provides safe CLI entry detection supporting both relative and absolute invocations
+- * - Fully exposes lifecycle and signal-forwarding hooks for in-process testing
++ * - Constructs an explicit bounded environment allowlist including MC_INTA_STATE_DIR, SHELL, TMPDIR
++ * - Binds cwd, nextBin, nextArgs, and private state directory explicitly without PATH fallback
++ * - Exposes visible signal-forwarding error logging and lifecycle hooks for in-process testing
+  */
+ 
+ import { spawn as defaultSpawn } from 'node:child_process';
++import crypto from 'node:crypto';
++import fs from 'node:fs';
+ import os from 'node:os';
+ import { resolve } from 'node:path';
+ import process from 'node:process';
+ import { fileURLToPath } from 'node:url';
+ 
+ // Direct import of existing frozen TypeScript guard via Node 24 native type stripping
+-// Expected SHA-256: 0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928
+ import { validateHarnessStartup } from '/tmp/mc002-inta-harness/src/guards.ts';
+ 
++export const EXPECTED_GUARD_SHA256 = '0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928';
++export const DEFAULT_GUARD_PATH = '/tmp/mc002-inta-harness/src/guards.ts';
++export const DEFAULT_NEXT_BIN = '/tmp/mc002-inta-harness/node_modules/.bin/next';
++export const DEFAULT_HARNESS_CWD = '/tmp/mc002-inta-harness';
++
++// Reconciled bounded environment allowlist (NF-1)
+ export const ALLOWED_ENV_KEYS = [
+   'PATH',
+   'NODE_ENV',
+@@ -28,12 +34,30 @@
+   'PORT',
+   'HOSTNAME',
+   'HOME',
++  'TMPDIR',
+   'TERM',
+   'SHELL',
+-  'TMPDIR',
+ ];
+ 
+ /**
++ * Verifies the existence, readability, and cryptographic hash of the guard file (NF-3).
++ * Fails closed if the guard is missing, unreadable, or tampered with.
++ */
++export function verifyGuardIntegrity(guardPath = DEFAULT_GUARD_PATH, expectedSha = EXPECTED_GUARD_SHA256) {
++  if (!fs.existsSync(guardPath)) {
++    throw new Error(`Guard integrity failure: file not found at ${guardPath}`);
++  }
++  const content = fs.readFileSync(guardPath);
++  const actualSha = crypto.createHash('sha256').update(content).digest('hex');
++  if (actualSha !== expectedSha) {
++    throw new Error(
++      `Guard integrity mismatch at ${guardPath}: expected SHA-256 ${expectedSha}, got ${actualSha}`
++    );
++  }
++  return true;
++}
++
++/**
+  * Builds an explicit, bounded environment allowlist.
+  * Ensures no unvetted or sensitive environment variables leak to the child.
+  * Includes MC_INTA_STATE_DIR to prevent default fallback to cwd/.run-state.
+@@ -66,6 +90,7 @@
+ /**
+  * Attaches child lifecycle listeners and signal-forwarding handlers.
+  * Avoids self-signal re-raise loops by mapping signals to standard 128+n exit codes.
++ * Ensures signal delivery errors are visibly captured to stderr.
+  */
+ export function attachChildLifecycle(child, processObj = process) {
+   if (!child) return;
+@@ -92,13 +117,20 @@
+     child.on('close', onChildClose);
+   }
+ 
+-  // Forward termination signals to child
++  // Forward termination signals to child and surface errors visibly (R3-N05, R2-I05)
+   const forwardSignal = (sig) => {
+     try {
+       if (typeof child.kill === 'function') {
+-        child.kill(sig);
++        const ok = child.kill(sig);
++        if (!ok && processObj.stderr && processObj.stderr.write) {
++          processObj.stderr.write(`Signal delivery failed for ${sig} to child process\n`);
++        }
+       }
+-    } catch (_) {}
++    } catch (err) {
++      if (processObj.stderr && processObj.stderr.write) {
++        processObj.stderr.write(`Signal delivery exception for ${sig}: ${err?.message || err}\n`);
++      }
++    }
+   };
+ 
+   if (typeof processObj.on === 'function') {
+@@ -110,19 +142,37 @@
+ }
+ 
+ /**
+- * Executes harness startup validation and conditional child spawn.
++ * Executes runtime guard verification, startup validation, and conditional child spawn.
+  * Returns an execution result object.
+  */
+ export function launchHarness({
+   env = process.env,
+   spawnFn = defaultSpawn,
+-  nextBin = 'next',
++  guardPath = DEFAULT_GUARD_PATH,
++  nextBin = DEFAULT_NEXT_BIN,
+   nextArgs = ['dev', '-H', '127.0.0.1', '-p', '18085', '--webpack'],
+-  cwd = process.cwd(),
++  cwd = DEFAULT_HARNESS_CWD,
+   stateDir = null,
+ } = {}) {
+-  // Step 1: Execute guard BEFORE any process spawn or socket listener
++  // Step 1: Verify guard file cryptographic integrity before execution (NF-3)
+   try {
++    verifyGuardIntegrity(guardPath);
++  } catch (err) {
++    const integrityError = err?.message || String(err);
++    if (process.stderr && process.stderr.write) {
++      process.stderr.write(`${integrityError}\n`);
++    }
++    return {
++      success: false,
++      exitCode: 1,
++      refusalMessage: integrityError,
++      spawnCalled: false,
++      child: null,
++    };
++  }
++
++  // Step 2: Execute startup guard BEFORE any process spawn or socket listener
++  try {
+     validateHarnessStartup(env);
+   } catch (err) {
+     const refusalMessage = err?.message || String(err);
+@@ -138,14 +188,14 @@
+     };
+   }
+ 
+-  // Step 2: Build strictly bounded environment
++  // Step 3: Build strictly bounded environment
+   const effectiveEnv = { ...env };
+   if (stateDir && !effectiveEnv.MC_INTA_STATE_DIR) {
+     effectiveEnv.MC_INTA_STATE_DIR = stateDir;
+   }
+   const boundedEnv = buildBoundedEnvironment(effectiveEnv);
+ 
+-  // Step 3: Spawn child process only after successful guard validation
++  // Step 4: Spawn child process only after successful guard validation
+   let child;
+   try {
+     child = spawnFn(nextBin, nextArgs, {
+@@ -177,11 +227,15 @@
+   };
+ }
+ 
+-// Direct CLI invocation entrypoint
++// Direct CLI invocation entrypoint (R3-N02, R2-I05)
+ if (isCliEntry()) {
+   const result = launchHarness({
+     env: process.env,
+     spawnFn: defaultSpawn,
++    guardPath: DEFAULT_GUARD_PATH,
++    nextBin: DEFAULT_NEXT_BIN,
++    cwd: DEFAULT_HARNESS_CWD,
++    stateDir: process.env.MC_INTA_STATE_DIR || null,
+   });
+ 
+   if (!result.success) {

@@ -12,9 +12,9 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 var _ port.FilingTx = (*pgMatterTx)(nil)
@@ -187,8 +187,10 @@ func (t *pgMatterTx) SaveFiling(ctx context.Context, f matter.Filing) error {
 	if err != nil {
 		return mapMatterError(err)
 	}
+	// Uniform CAS zero-rows mapping: a save for an aggregate loaded in this transaction that
+	// updates nothing is a concurrent change (412), like every other Save* — never a 404.
 	if rows == 0 {
-		return fmt.Errorf("filing update: %w", port.ErrNotFound)
+		return fmt.Errorf("filing update: %w", port.ErrVersionConflict)
 	}
 	return nil
 }

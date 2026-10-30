@@ -144,3 +144,27 @@ export function clearAllDrafts(): void {
   }
   notifyAttempts()
 }
+
+/**
+ * Removes every draft and pending attempt of one namespace whose scope starts with the prefix
+ * (one surface lost access). Other namespaces and other scopes are untouched.
+ */
+export function clearScopeDrafts(namespace: string, scopePrefix: string): void {
+  const s = store()
+  if (!s) return
+  try {
+    const keys: string[] = []
+    for (let i = 0; i < s.length; i++) {
+      const k = s.key(i)
+      if (
+        k?.startsWith(`${PREFIX}${namespace}:${scopePrefix}`) ||
+        k?.startsWith(`${ATTEMPT_PREFIX}${namespace}:${scopePrefix}`)
+      )
+        keys.push(k)
+    }
+    for (const k of keys) s.removeItem(k)
+  } catch {
+    // skip: best effort
+  }
+  notifyAttempts()
+}

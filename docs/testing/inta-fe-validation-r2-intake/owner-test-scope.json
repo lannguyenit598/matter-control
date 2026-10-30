@@ -1,0 +1,18 @@
+{
+  "recorded_suite": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r2-20261026/runner-scripts/selfcheck-r2-results.json",
+    "bytes": 19235,
+    "sha256": "11b546d83cbc23dd57c7df1d8839212fd9a866f618d9709d4414e44f7a0b4d67"
+  },
+  "reported_pass": 26,
+  "Codex_reexecuted_full_suite": false,
+  "reason": "Original selfcheck writes fixedownerJSON and callsNode subprocesses; no rerunneeded tovalidatehash/source. Targetedpure/mockintakechecks are separate.",
+  "scope_gaps": [
+    "Tests18..20 call duplicate mock_probe_eval rather than actualcoordinator.probe_tcp_listener.",
+    "Test21calls evaluator rather than actual VariantRunner.run toprovepreflightabort.",
+    "No actual shellvariantdispatch test; wrapper only imports coordinator.",
+    "Tests23/24 do notexerciseatomicwritefailure/ownershipmismatch/earlyobservercleanup; test24useskill(pid,0), not fullownershipproof.",
+    "Groupsadvertised9+3+5+5+2+2sum26; actualstrictschema group is5rows13..17, humanlist ofnames incomplete.",
+    "Launcher6mocktests checkrefusals/envfiltering, not CLIentrydetection/signals/errors/outcomewait or privateMC_INTA_STATE_DIR propagation."
+  ]
+}

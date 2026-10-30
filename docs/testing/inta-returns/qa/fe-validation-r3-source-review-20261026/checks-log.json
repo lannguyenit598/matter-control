@@ -1,0 +1,100 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R3-SOURCE-REVIEW",
+  "actor": "Actual OpenCode (independent nonauthor; opencode CLI v2.1.4; model opencode/glm-5.3-flash-free)",
+  "mode": "READ_HASH_STATIC_ONLY",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "branch": "codex/unified-project-flow",
+  "tooling": "rtk-wrapped shell (workstation rule), python3 stdlib hashing/text processing, shasum, git rev-parse (read-only). No reviewed source imported or executed; no network probes; no signals; no provider/model/account/global-permission changes; no commits.",
+  "timing_labels_legend": "exact = clock read by this session for the individual action; approximate = timestamp read from session surroundings, uncertainty of minutes; actions themselves are session-recorded facts.",
+  "phase_1_analysis_session_actions": [
+    {
+      "timing": "approximate (compacted session record)",
+      "action": "Verified root/branch/HEAD twice (a62d838791ba188838c4ff00b7b6e265ac775056, codex/unified-project-flow); output targets confirmed absent.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate",
+      "action": "Read all pinned intake/review/scope artifacts: intake review-inputs.json, R2 independent review (inta-opencode-fe-r2-source-review.md), Codex source-observations.json + checks.json + diff-validation.json, R3 intake review, Antigravity handoff prompt, OpenCode R3 review prompt, owner return inta-fe-validation-r3-antigravity-return.md, launch addendum INTA-1-LAUNCH-01, approval.json, original contract INTA-1 pin, frozen ledger inta-runtime-status.json.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate",
+      "action": "Full source reads of all 20 R3 payloads (manifest, 7 diffs, coordinator, evaluator, observer, wrapper, selfcheck source/results/stdout, launcher, mock suite, 2 proposals, summary, scan) plus frozen /tmp/mc002-inta-harness/src/guards.ts and the frozen R2 review-snapshot manifest (15 payloads verified).",
+      "exit": 0
+    },
+    {
+      "timing": "approximate",
+      "action": "Two full 50-pin verification passes during analysis (15 direct + 20 R3 payload + 15 frozen R2): 0 mismatches both times; NEEDS_INPUT_REFRESH not triggered.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate",
+      "action": "Semble search executed once with exact repo path (coordinator run_plan VariantRunner cleanup observer): consistent chunks, no contradiction.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate",
+      "action": "Reviewer-owned diff-reconstruction utility (r3_diff_reconstruct.py) applied all seven R3 diffs to frozen R2 snapshot baselines. First draft 5/7 exact (2 utility-side artifacts on -a,0 pure-insert hunks); corrected insert-index handling; final 7/7 byte-equal (ALL_SEVEN_EXACT). The five intake textual comparator mismatches are thereby confirmed as comparator artifacts and are not re-reported.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate",
+      "action": "Line-level verification of all statically cited findings (coordinator L27 comment vs L28-53 24-entry list; bounded_terminate call sites L383/L395/L404-406/L418-420/L426-428 with omitted identity and L383/L395 discarded returns; child_env L315-326 lacking SHELL/TMPDIR; observer Popen without bounded env L268-283; meta identity L355-356; evaluator falsy-error L130 and defaults L24/L29; wrapper no trap/lsof/kill across 42 lines; harness forwardSignal swallow L96-102 and allowlist L22-34; mock T9 OR-fallback L284; selfcheck zero kill_func injections with cases 20/21/25 on real os.kill and case 25 numeric-PID 77777 reach; guards.ts L6-20/L43/L92-113 vs proposal claims; Node v24.10.0 vs v24.22.1 conflict; pre-bound note wording L238-251 + evaluator L70-73).",
+      "exit": 0
+    }
+  ],
+  "phase_2_final_closeout_actions": [
+    {
+      "timing": "exact 2026-10-26T08:56:51Z (surrounding anchor for the two calls in this entry)",
+      "action": "opencode --version -> v2.1.4 (exit 0); date -u read.",
+      "exit": 0
+    },
+    {
+      "timing": "exact 2026-10-26T08:57:50.061732+00:00 onwards (self-recorded by r3_final_verify.py)",
+      "action": "r3_final_verify.py final pass A (pre-write): HEAD/branch recheck; report+qa targets verified absent; 15/15 direct, 20/20 R3 payload, 15/15 frozen R2 pins MATCH (50 total, 0 mismatches); raw/export 21 payload files hash-equal, no undeclared/extra/diff files; manifest totals recomputed 225,606 = 225,606 (R3) and 131,584 (R2 snapshot). Exit 0.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate within 08:57-09:00Z window",
+      "action": "r3_diff_reconstruct.py re-run in final pass: 7/7 PASS byte-equal reconstruction; RESULT: ALL_SEVEN_EXACT; exit 0.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate within 08:57-09:00Z window (labeled surroundings-only)",
+      "action": "shasum -a 256 tools/inta-harness/src/guards.ts -> 0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928 (identical to frozen /tmp guard). Exit 0.",
+      "exit": 0
+    },
+    {
+      "timing": "exact 2026-10-26T09:00:33.913080+00:00 to 09:00:33.950903+00:00 (self-recorded)",
+      "action": "r3_final_verify.py final pass B (pre-write, per-pin arrays saved for review-inputs.json): 50/50 MATCH, 0 mismatches, raw/export clean, outputs still absent. Exit 0.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate 09:00-09:03Z write window",
+      "action": "Wrote docs/reviews/inta-opencode-fe-r3-source-review.md; then 3 targeted editor corrections to the report's own text (no input/output content changes to reviewed artifacts). Final report: sha256 7eb30ed9450482c95d695bb18601c8bddad9d4b27bbb65032414f3be0e1d92c1, 41,708 bytes.",
+      "exit": 0
+    },
+    {
+      "timing": "approximate 09:03-09:04Z",
+      "action": "Wrote docs/testing/inta-returns/qa/fe-validation-r3-source-review-20261026/review-inputs.json programmatically from final pass B per-pin data: sha256 e7d8bab81a1574ef1c6b096df75aed0fc2c29053f66239165425003cc963b2b5, 14,217 bytes. Contains input pins only; no self-hash.",
+      "exit": 0
+    },
+    {
+      "timing": "exact anchor 2026-10-26T09:04:16Z",
+      "action": "UTC anchor read immediately before writing this checks-log.json (last of the three delivered outputs; its own hash/bytes are not stored here and are reported in the human chat return).",
+      "exit": 0
+    },
+    {
+      "timing": "approximate immediately after 09:04:16Z",
+      "action": "Planned closing recheck: r3_final_verify.py --closing (50 input pins re-hashed after all writes; expected 50/50, 0 mismatches, exit 0; outputs-now-present state recorded via pre_write-vs-closing mode field) plus final sha256/bytes capture of all three outputs for the human return.",
+      "exit": "recorded in the human chat return of this review"
+    }
+  ],
+  "checks_not_needed": [
+    "(runtime) any rerun of selfcheck/launcher/wrapper/coordinator/evaluator/observer/Node/Next - prohibited by READ_HASH_STATIC_ONLY; owner results cited only",
+    "credential/private access, dependency operations, database/Docker/provider actions - out of scope",
+    "git staging/commit/merge/reset/stash/push and messaging to other agents - none performed",
+    "36-row conformance re-audit and ledger deep re-verification - preserved from prior coverage limits per prompt"
+  ],
+  "no_self_referencing_manifest_note": "This file does not hash itself or review-inputs.json; the three delivered outputs' full sha256/bytes are returned to the human in the chat return only."
+}

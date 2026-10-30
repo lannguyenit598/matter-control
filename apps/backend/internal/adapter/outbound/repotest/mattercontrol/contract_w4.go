@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 type filingFx struct {
@@ -118,6 +118,24 @@ func past() string { return time.Now().Add(-time.Minute).UTC().Format(time.RFC33
 // SuiteW4 runs the W4 contract against any Bundle whose Store supports filings.
 func SuiteW4(t *testing.T, newBundle Factory) {
 	t.Helper()
+
+	// F-07: every CAS Save maps a zero-row update to ErrVersionConflict (412, "re-read and
+	// retry") — SaveFiling included, uniformly with SaveWorkItem/SaveParty/SaveMilestone/
+	// SaveContextRecord/SaveDocument/SaveCriterion/SaveReviewGrid. The service loads the
+	// aggregate in the same transaction, so zero rows can only be a concurrent change.
+	t.Run("a zero-row filing save is a version conflict like every other CAS save", func(t *testing.T) {
+		e := newW2Env(t, newBundle)
+		err := e.b.Store.Execute(e.ctx, e.m, func(tx port.MatterTx) error {
+			ft, ok := tx.(port.FilingTx)
+			if !ok {
+				return errors.New("store does not implement port.FilingTx")
+			}
+			return ft.SaveFiling(e.ctx, matter.Filing{ItemID: matter.NodeID(newKey())})
+		})
+		if !errors.Is(err, port.ErrVersionConflict) {
+			t.Fatalf("zero-row SaveFiling must be ErrVersionConflict, got %v", err)
+		}
+	})
 
 	t.Run("create: receipted; linked Requirement and authority; status follows the stage", func(t *testing.T) {
 		e := newW2Env(t, newBundle)

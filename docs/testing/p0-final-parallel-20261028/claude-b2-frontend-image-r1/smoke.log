@@ -1,0 +1,21 @@
+== demo mode (no env)
+GET / -> 307 http://127.0.0.1:3391/dashboard
+GET /login -> 200
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+static css /_next/static/chunks/3e4mj6-_g0210.css -> 200
+uid in container: 1000
+== rest mode, no OIDC (must fail closed)
+GET /login -> 200
+GET /api/auth/session -> 200
+POST upload without origin -> 403
+GET /matters/m (signed out) -> 200
+- Local:         http://localhost:8080
+- Network:       http://0.0.0.0:8080
+✓ Ready in 0ms
+✓ Running next.config took 0.5ms
+[auth] OIDC sign-in is not configured (OIDC_*/APP_ORIGIN): all REST access is denied.
+session body: {"authenticated":false}
+matters page mentions sign-in: 2
+matters page leaks any matter data: 0

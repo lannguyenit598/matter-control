@@ -1,0 +1,789 @@
+{
+  "task": "MC-P0-DESIGN-UIUX-REVIEW-20261027",
+  "checked_at": "2026-10-26T17:15:23.049690+00:00",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "verdict": "CHANGES_REQUIRED_SOURCE_SPEC_ONLY",
+  "intake_status": "IN_REVIEW / R1 REWORK_REQUIRED",
+  "formal_design_acceptance": "NOT_AWARDED",
+  "parent_manifest_matches": 26,
+  "declared_output_checks": [
+    {
+      "path": "docs/design/p0-handoff-r1/current-ux-spec.md",
+      "bytes": 23587,
+      "sha256": "2eebd8b913f71ed863588347aaa533f4dc0c0e4a28e774dd0383323a9736c986",
+      "declared_hash_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/design-delta.md",
+      "bytes": 12507,
+      "sha256": "baeae748cdaf7776ec4035ed66fbdf8fbb1bd3bb9fd5375408580788a5e18397",
+      "declared_hash_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "bytes": 12279,
+      "sha256": "abd25352f9b4322e678378a4ba09521832de331b97a4d02b8120a1df28d07dad",
+      "declared_hash_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/screen-state-matrix.json",
+      "bytes": 29287,
+      "sha256": "560848fb66c172020c38b092f173ce530eb5b453239462e12d04dc4f23ffb5a0",
+      "declared_hash_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/validation-plan.md",
+      "bytes": 9153,
+      "sha256": "334005ef052aa9809cbee614d08a0bc34a3c081c87f8d40b874ce8d997712b20",
+      "declared_hash_match": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/zcode-handoff.md",
+      "bytes": 12622,
+      "sha256": "f63e76397bb5f0b88870533243f8bc08e4e02c928433200bfd4b5254012c1871",
+      "declared_hash_match": true
+    }
+  ],
+  "input_closing_checks": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 9171,
+      "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-delivery-plan.md",
+      "bytes": 15971,
+      "sha256": "772d1bc29fc81711190f8a5b7251274cc9a27160abfb18f9fe526bc7ad02b70a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/tasks/MC-P0-ZCODE-DELIVERY.md",
+      "bytes": 5186,
+      "sha256": "0c9ecd2d6479b43c92b4ac2dbc614d1d87160815896aaa02e0716ec65deb7d73",
+      "unchanged": true
+    },
+    {
+      "path": "docs/testing/p0-zcode-plan-20261026/coverage.json",
+      "bytes": 13177,
+      "sha256": "d3bd69271e8b83d460d282484866d898f9f8c611d9ff78b0df3532eb1c60f621",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/design-gate-decision.md",
+      "bytes": 7008,
+      "sha256": "14d09e584cdb9a7359a1b57513dd1874311b9f468bfceb7deebe264ddb5c3a7c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/design-decision-register.md",
+      "bytes": 1424,
+      "sha256": "3d18496f128dbc5850f4a6dc8104ae939c6e924b4eba211f5309ca82ad42bea9",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/design-decisions.json",
+      "bytes": 10102,
+      "sha256": "37a90c780c4d584233fedbaaddd5f6c7e787d7b1599c5d74ff8c4f229ebb3225",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/selected-design-system.md",
+      "bytes": 5365,
+      "sha256": "5d7de28872bbacd012d961ac50f9b3dd0adba591b24c4edd46f6774407357503",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/design-tokens.json",
+      "bytes": 860,
+      "sha256": "f74306507e7c0dd2bdcbc76927a61080ce7e29cefbba24eec33bc85cf23e128c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/selected-tokens.css",
+      "bytes": 4148,
+      "sha256": "791d1dd86ffa534a7bef98b95795839a3beda2ba617becc28a7cb6de2bf730ec",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-concept-review.html",
+      "bytes": 349284,
+      "sha256": "b6ce56b77670c22dded5ef4e03bdb060932c79ffcc60a33c42cf7a7a668aa12e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md",
+      "bytes": 65253,
+      "sha256": "245956dbf395aaf85052e1f52c57da0aca5cbdc508e1907b953209f627ba1c9a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-handoff-report.md",
+      "bytes": 32370,
+      "sha256": "2bbb98c12cf6a335e10e88e71e5ca194979e33ea54c9c24549beccd79ee1a830",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/interaction-guidance.md",
+      "bytes": 15595,
+      "sha256": "0ece5ef3c92b042e523e2f0c507e38ddde3ae4e1436829bd2411a95adab4f07a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "bytes": 12646,
+      "sha256": "6059da1ea3737cc87f38355f933689f117a3eb7f127028913359413d2106e278",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/risk-assessment.md",
+      "bytes": 4376,
+      "sha256": "c9aa106c3bfd1b5e10d7e09f25bfa427bac7b94aadb472346a1518fd17e6074d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/next-milestone-handoff.md",
+      "bytes": 5134,
+      "sha256": "6879d1b3768fbebfd591692d378def6146642a1ead01591da8fdc17beab98f7e",
+      "unchanged": true
+    },
+    {
+      "path": "docs/requirements/srs.md",
+      "bytes": 30678,
+      "sha256": "9b813badd88a196c938d9e0503d904ad767f3090ff7522dcc6fae3eb689869f8",
+      "unchanged": true
+    },
+    {
+      "path": "docs/requirements/business-rules.md",
+      "bytes": 11783,
+      "sha256": "96be507d3b0d70f0b9ad1c2b27b3152fd5e2700f13e8a647920c60c220f2aa81",
+      "unchanged": true
+    },
+    {
+      "path": "docs/requirements/state-semantics.md",
+      "bytes": 11469,
+      "sha256": "156ca1dd2f75a7374a59d2aa4af4a9815ce62a2f11c03f84977bad2860a2ad51",
+      "unchanged": true
+    },
+    {
+      "path": "docs/requirements/permission-matrix.md",
+      "bytes": 5238,
+      "sha256": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276",
+      "unchanged": true
+    },
+    {
+      "path": "docs/requirements/acceptance-criteria.md",
+      "bytes": 39092,
+      "sha256": "809c206e576e6d4cc0f3642caeec4ee6997b465ffe2f0b316368f7e106e97fa7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/requirements/golden-workflow-acceptance.md",
+      "bytes": 11748,
+      "sha256": "0a7d44521bdb89e2499de588242c3b9244827ef9a6366d6bcb5b5a576238a787",
+      "unchanged": true
+    },
+    {
+      "path": "docs/product/project-atlas-dataset.md",
+      "bytes": 18972,
+      "sha256": "3d1e722c484bfdd2eb3143b117b7a5aefe9ebae6257fc0484ae0b940a37f6ce0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-P0-DESIGN-R1-PROMPT.md",
+      "bytes": 9532,
+      "sha256": "a932b142b83a3a4de93f49da14ce9cd199bbcdb33f4e7efe8d36f71cec917e48",
+      "unchanged": true
+    },
+    {
+      "path": "docs/testing/p0-design-handoff-20261026/assignment.json",
+      "bytes": 857,
+      "sha256": "6f0e58eec6ad55286f8f01484b6cdc12281830322c4d129db8307fb0d6ebc0c5",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/current-ux-spec.md",
+      "bytes": 23587,
+      "sha256": "2eebd8b913f71ed863588347aaa533f4dc0c0e4a28e774dd0383323a9736c986",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/design-delta.md",
+      "bytes": 12507,
+      "sha256": "baeae748cdaf7776ec4035ed66fbdf8fbb1bd3bb9fd5375408580788a5e18397",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "bytes": 12279,
+      "sha256": "abd25352f9b4322e678378a4ba09521832de331b97a4d02b8120a1df28d07dad",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/return.md",
+      "bytes": 8050,
+      "sha256": "753b1f368fb58ba95adf979c81f86bf7c109940494b95bcaf9fb3af072da7b67",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/screen-state-matrix.json",
+      "bytes": 29287,
+      "sha256": "560848fb66c172020c38b092f173ce530eb5b453239462e12d04dc4f23ffb5a0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/validation-plan.md",
+      "bytes": 9153,
+      "sha256": "334005ef052aa9809cbee614d08a0bc34a3c081c87f8d40b874ce8d997712b20",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design/p0-handoff-r1/zcode-handoff.md",
+      "bytes": 12622,
+      "sha256": "f63e76397bb5f0b88870533243f8bc08e4e02c928433200bfd4b5254012c1871",
+      "unchanged": true
+    },
+    {
+      "path": "docs/testing/p0-design-handoff-20261026/inputs.json",
+      "bytes": 5096,
+      "sha256": "09978f8e0a1fc3d8b0dabfe384add954040514d3f23ab5dfa4b317b53c99ffca",
+      "unchanged": true
+    },
+    {
+      "path": "docs/ai-sdlc/current-workflow.md",
+      "bytes": 48056,
+      "sha256": "2e3db1e7afa636c0eaa083ef434da4a6397d8a767f9bc86ca40d72278f588297",
+      "unchanged": true
+    },
+    {
+      "path": "docs/ai-sdlc/project-status.md",
+      "bytes": 96091,
+      "sha256": "17a95c19a3d30d8d546eb7d08d43c151a95d121e3800d661698c61210fd72148",
+      "unchanged": true
+    },
+    {
+      "path": "apps/frontend/AGENTS.md",
+      "bytes": 4681,
+      "sha256": "d9f35173730630cdfbcd11727e6daf62e8e13b4e7581163d358adb8ef3871004",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/nguyenvanlan/Library/Application Support/Open Design/namespaces/release-stable/data/projects/mattercontrol-step-03a-atlas-ux-concepts-f857/mattercontrol-step-03a-ux-concept-review.html",
+      "bytes": 315229,
+      "sha256": "6000190940fe42128009ce06b220a1d858228f346c1022a190c8de4eafa4cd4a",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/nguyenvanlan/.codex/plugins/cache/openai-curated-remote/product-design/0.1.56/skills/audit/SKILL.md",
+      "bytes": 9863,
+      "sha256": "087f798c3fe02e91b4cca18cc0f42c358a4dc2c02ccf37a348b476fb19b64aa3",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/nguyenvanlan/.agents/skills/accessibility/SKILL.md",
+      "bytes": 12321,
+      "sha256": "65021e9ccab70165539db82070257d4e2e2c7d7b0f857825299da2e4a7a8704c",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/nguyenvanlan/.codex/skills/design-taste-frontend/SKILL.md",
+      "bytes": 39537,
+      "sha256": "3435ed963b15a1b6447746ec8844ab2cd38d8d2e8ead3451937f42df01e408c4",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/nguyenvanlan/.codex/skills/design-taste-frontend/references/app-screens.md",
+      "bytes": 85358,
+      "sha256": "55e937ec30de605b53a11310b446f328a3ce7403de24fff008920a00be1a5ed4",
+      "unchanged": true
+    }
+  ],
+  "fr_id_presence": {
+    "count": 20,
+    "expected": 20,
+    "unique": 20,
+    "semantic_coverage": "NOT_ESTABLISHED; six FR identities remapped"
+  },
+  "confirmed_fr_identity_mismatches": [
+    {
+      "id": "FR-009",
+      "approved_title": "Matter Control Room",
+      "r1_title": "Document Version Awareness & Authoritative State",
+      "approved_acceptance_ids": [
+        "AC-109",
+        "AC-137"
+      ],
+      "r1_acceptance_ids": [
+        "AC-109",
+        "AC-128",
+        "AC-152"
+      ]
+    },
+    {
+      "id": "FR-010",
+      "approved_title": "My Actions",
+      "r1_title": "Document Signature Status Tracking",
+      "approved_acceptance_ids": [
+        "AC-110",
+        "AC-144",
+        "AC-147"
+      ],
+      "r1_acceptance_ids": [
+        "AC-110",
+        "AC-128",
+        "AC-152"
+      ]
+    },
+    {
+      "id": "FR-012",
+      "approved_title": "Bulk Editing",
+      "r1_title": "High-Density Operational Grid",
+      "approved_acceptance_ids": [
+        "AC-112",
+        "AC-133",
+        "AC-139"
+      ],
+      "r1_acceptance_ids": [
+        "AC-112",
+        "AC-132",
+        "AC-148",
+        "AC-150"
+      ]
+    },
+    {
+      "id": "FR-013",
+      "approved_title": "Excel/CSV Import",
+      "r1_title": "Bulk Metadata Editing & Validation",
+      "approved_acceptance_ids": [
+        "AC-113",
+        "AC-131",
+        "AC-132",
+        "AC-148"
+      ],
+      "r1_acceptance_ids": [
+        "AC-113",
+        "AC-133",
+        "AC-151"
+      ]
+    },
+    {
+      "id": "FR-014",
+      "approved_title": "Excel Export",
+      "r1_title": "Structured Import Pipeline",
+      "approved_acceptance_ids": [
+        "AC-114",
+        "AC-148",
+        "AC-147"
+      ],
+      "r1_acceptance_ids": [
+        "AC-114",
+        "AC-122",
+        "AC-124",
+        "AC-139",
+        "AC-157"
+      ]
+    },
+    {
+      "id": "FR-015",
+      "approved_title": "Document Versions",
+      "r1_title": "Scoped Excel Export & Security Controls",
+      "approved_acceptance_ids": [
+        "AC-115",
+        "AC-128"
+      ],
+      "r1_acceptance_ids": [
+        "AC-115",
+        "AC-134",
+        "AC-135",
+        "AC-154",
+        "AC-158"
+      ]
+    }
+  ],
+  "golden_workflow_entries_r1": [
+    {
+      "id": "GW-01",
+      "title": "Corporate Restructuring Readiness Review",
+      "target_screen": "SCR-02",
+      "acceptance_id": "AC-161",
+      "final_wave": "P0-W7",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "GW-02",
+      "title": "Pre-Closing Signature & Evidence Reconciliation",
+      "target_screen": "SCR-08",
+      "acceptance_id": "AC-162",
+      "final_wave": "P0-W7",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "GW-03",
+      "title": "Regulatory Filing Submission & Follow-Up",
+      "target_screen": "SCR-09",
+      "acceptance_id": "AC-163",
+      "final_wave": "P0-W7",
+      "status": "NOT_RUN"
+    }
+  ],
+  "screen_count": 13,
+  "required_edge_state_keys_in_requirement_entries": [
+    "acceptance_ids",
+    "acceptance_status",
+    "allowed_roles",
+    "backend_status",
+    "capability",
+    "cross_cutting",
+    "data_contract_dependency",
+    "frontend_status",
+    "id",
+    "invariant_statement",
+    "nfr_ids",
+    "primary_screen",
+    "primary_wave",
+    "secondary_screens",
+    "state_axes_applied",
+    "test_ids",
+    "title"
+  ],
+  "all_r1_acceptance_results_not_run": true,
+  "atlas_actions": [
+    {
+      "id": "AC-01",
+      "owner": "U-01",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-02",
+      "owner": "U-01",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-03",
+      "owner": "U-02",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-04",
+      "owner": "U-01",
+      "execution": "WAITING",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-05",
+      "owner": "U-01",
+      "execution": "WAITING",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-06",
+      "owner": "U-03",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-07",
+      "owner": "U-03",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-08",
+      "owner": "U-03",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-09",
+      "owner": "U-03",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-10",
+      "owner": "U-03",
+      "execution": "WAITING",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-11",
+      "owner": "U-03",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED"
+    },
+    {
+      "id": "AC-12",
+      "owner": "U-01",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED"
+    }
+  ],
+  "atlas_execution_census": {
+    "COMPLETED": 4,
+    "WAITING": 3,
+    "NOT_STARTED": 5
+  },
+  "selected_palette_checks": [
+    {
+      "token": "surface",
+      "approved": "#ffffff",
+      "r1": "#ffffff",
+      "match": true
+    },
+    {
+      "token": "background",
+      "approved": "#f6f8fa",
+      "r1": "#f6f8fa",
+      "match": true
+    },
+    {
+      "token": "ink",
+      "approved": "#17212b",
+      "r1": "#17212b",
+      "match": true
+    },
+    {
+      "token": "muted",
+      "approved": "#52606d",
+      "r1": "#52606d",
+      "match": true
+    },
+    {
+      "token": "line",
+      "approved": "#c6ced6",
+      "r1": "#c6ced6",
+      "match": true
+    },
+    {
+      "token": "focus",
+      "approved": "#174ea6",
+      "r1": "#174ea6",
+      "match": true
+    },
+    {
+      "token": "selected",
+      "approved": "#e8effa",
+      "r1": "#e8effa",
+      "match": true
+    },
+    {
+      "token": "error",
+      "approved": "#a12622",
+      "r1": "#a12622",
+      "match": true
+    },
+    {
+      "token": "disabled",
+      "approved": "#626973",
+      "r1": "#626973",
+      "match": true
+    },
+    {
+      "token": "execution",
+      "approved": "#364152",
+      "r1": "#364152",
+      "match": true
+    },
+    {
+      "token": "verification",
+      "approved": "#236341",
+      "r1": "#236341",
+      "match": true
+    },
+    {
+      "token": "dependency_ready",
+      "approved": "#174ea6",
+      "r1": "#174ea6",
+      "match": true
+    },
+    {
+      "token": "dependency_blocked",
+      "approved": "#8a2925",
+      "r1": "#8a2925",
+      "match": true
+    },
+    {
+      "token": "timing",
+      "approved": "#775317",
+      "r1": "#775317",
+      "match": true
+    },
+    {
+      "token": "attention",
+      "approved": "#783e14",
+      "r1": "#783e14",
+      "match": true
+    },
+    {
+      "token": "header",
+      "approved": "#101820",
+      "r1": "#101820",
+      "match": true
+    },
+    {
+      "token": "header_text",
+      "approved": "#ffffff",
+      "r1": "#ffffff",
+      "match": true
+    }
+  ],
+  "contrast_calculations": [
+    {
+      "foreground": "ink",
+      "background": "surface",
+      "ratio": 16.293,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "muted",
+      "background": "surface",
+      "ratio": 6.456,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "execution",
+      "background": "surface",
+      "ratio": 10.32,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "verification",
+      "background": "surface",
+      "ratio": 7.161,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "dependency_ready",
+      "background": "surface",
+      "ratio": 7.845,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "dependency_blocked",
+      "background": "surface",
+      "ratio": 8.661,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "timing",
+      "background": "surface",
+      "ratio": 6.921,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "attention",
+      "background": "surface",
+      "ratio": 8.408,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "error",
+      "background": "surface",
+      "ratio": 7.458,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "header_text",
+      "background": "header",
+      "ratio": 17.895,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "ink",
+      "background": "selected",
+      "ratio": 14.089,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    },
+    {
+      "foreground": "muted",
+      "background": "background",
+      "ratio": 6.064,
+      "scope": "Mathematical opaque token pair only; actual usage/background/font/rendering not verified"
+    }
+  ],
+  "visual_audit": "BLOCKED_BROWSER_USE_DISABLED",
+  "screenshots": 0,
+  "runtime_accessibility_usability": "NOT_RUN",
+  "findings": [
+    {
+      "id": "UIUX-01",
+      "severity": "P1",
+      "title": "six approved FR identities and Golden Workflow coverage changed",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-02",
+      "severity": "P1",
+      "title": "bulk metadata contract regressed",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-03",
+      "severity": "P1",
+      "title": "conflict recovery permits lost updates; uncertain writes lack reconciliation",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-04",
+      "severity": "P1",
+      "title": "filing journey loses essential stages and auto-advances on upload",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-05",
+      "severity": "P1",
+      "title": "state applicability and readiness predicates conflict inside R1",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-06",
+      "severity": "P1",
+      "title": "canonical Atlas explanation is false",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-07",
+      "severity": "P1",
+      "title": "proposed APIs and storage choices presented as authoritative",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-08",
+      "severity": "P2",
+      "title": "interaction and accessibility contract is incomplete",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-09",
+      "severity": "P2",
+      "title": "validation oracles cannot establish the approved acceptance",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-10",
+      "severity": "P2",
+      "title": "provenance and “source corrected” claims need narrowing",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    },
+    {
+      "id": "UIUX-11",
+      "severity": "P2",
+      "title": "shared component placement violates the existing frontend boundary",
+      "status": "CONFIRMED_SOURCE_SPEC; NOT_RUNTIME_REPRODUCED"
+    }
+  ],
+  "independent_qa_gate": "PENDING; Codex intake is not a nonauthor gate receipt",
+  "changes": {
+    "new_paths": [
+      "docs/reviews/p0-design-uiux-source-review-20261027.md",
+      "docs/implementation/handoffs/MC-P0-DESIGN-R2-CORRECTION-PROMPT.md",
+      "docs/testing/p0-design-uiux-review-20261027/inputs.json",
+      "docs/testing/p0-design-uiux-review-20261027/checks.json"
+    ],
+    "existing_input_mutations": 0,
+    "stage_commit_push": false
+  }
+}

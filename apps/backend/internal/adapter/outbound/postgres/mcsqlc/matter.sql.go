@@ -7,6 +7,7 @@ package mcsqlc
 
 import (
 	"context"
+	"net/netip"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
@@ -898,8 +899,8 @@ func (q *Queries) InsertRequirementCreatedEvent(ctx context.Context, arg InsertR
 
 const insertSecurityAuditEvent = `-- name: InsertSecurityAuditEvent :exec
 INSERT INTO security_audit_events (id, occurred_at, actor_id, operation, outcome,
-                                   requested_resource_kind, requested_id_hash)
-VALUES ($1, $2, $3, $4, $5, $6, $7)
+                                   requested_resource_kind, requested_id_hash, client_ip, request_id)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8::inet, $9::text)
 `
 
 type InsertSecurityAuditEventParams struct {
@@ -910,6 +911,8 @@ type InsertSecurityAuditEventParams struct {
 	Outcome               string
 	RequestedResourceKind pgtype.Text
 	RequestedIDHash       []byte
+	ClientIp              *netip.Addr
+	RequestID             pgtype.Text
 }
 
 func (q *Queries) InsertSecurityAuditEvent(ctx context.Context, arg InsertSecurityAuditEventParams) error {
@@ -921,6 +924,8 @@ func (q *Queries) InsertSecurityAuditEvent(ctx context.Context, arg InsertSecuri
 		arg.Outcome,
 		arg.RequestedResourceKind,
 		arg.RequestedIDHash,
+		arg.ClientIp,
+		arg.RequestID,
 	)
 	return err
 }
@@ -2209,6 +2214,53 @@ func (q *Queries) RevokeAssessment(ctx context.Context, arg RevokeAssessmentPara
 	return result.RowsAffected(), nil
 }
 
+const searchLocalWorkspacePeople = `-- name: SearchLocalWorkspacePeople :many
+SELECT u.id, u.display_name
+FROM users u
+JOIN users actor ON actor.id = $1::uuid
+JOIN workspace_memberships owner ON owner.user_id = actor.id
+  AND owner.workspace_id = $2::uuid
+  AND owner.role = 'OWNER' AND owner.status = 'ACTIVE'
+WHERE u.idp_issuer = actor.idp_issuer
+  AND strpos(lower(u.display_name), lower($3::text)) > 0
+  AND NOT EXISTS (SELECT 1 FROM workspace_memberships current_member
+    WHERE current_member.workspace_id = owner.workspace_id AND current_member.user_id = u.id
+      AND current_member.status = 'ACTIVE')
+ORDER BY lower(u.display_name), u.id
+LIMIT 20
+`
+
+type SearchLocalWorkspacePeopleParams struct {
+	ActorID     string
+	WorkspaceID string
+	SearchName  string
+}
+
+type SearchLocalWorkspacePeopleRow struct {
+	ID          string
+	DisplayName string
+}
+
+func (q *Queries) SearchLocalWorkspacePeople(ctx context.Context, arg SearchLocalWorkspacePeopleParams) ([]SearchLocalWorkspacePeopleRow, error) {
+	rows, err := q.db.Query(ctx, searchLocalWorkspacePeople, arg.ActorID, arg.WorkspaceID, arg.SearchName)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []SearchLocalWorkspacePeopleRow
+	for rows.Next() {
+		var i SearchLocalWorkspacePeopleRow
+		if err := rows.Scan(&i.ID, &i.DisplayName); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const supersedeAssessment = `-- name: SupersedeAssessment :execrows
 UPDATE assessments SET superseded_by = $2 WHERE id = $1 AND superseded_by IS NULL
 `
@@ -2364,24 +2416,28 @@ func (q *Queries) UpdateDocument(ctx context.Context, arg UpdateDocumentParams) 
 }
 
 const updateMatterMembershipStatus = `-- name: UpdateMatterMembershipStatus :one
-UPDATE matter_memberships SET status = $3, revision = $4
-WHERE matter_id = $1 AND user_id = $2
+UPDATE matter_memberships SET status = $3, revision = $4 + 1
+WHERE matter_id = $1 AND user_id = $2 AND revision = $4
 RETURNING revision
 `
 
 type UpdateMatterMembershipStatusParams struct {
-	MatterID string
-	UserID   string
-	Status   string
-	Revision int64
+	MatterID         string
+	UserID           string
+	Status           string
+	ExpectedRevision interface{}
 }
 
+// A2: the membership-row revision predicate is defense-in-depth over the header FOR UPDATE
+// lock and the Go guard. The row carries its own change counter (it drifts from the header
+// revision as other commands run), so the CAS binds to the row's revision as loaded by the
+// caller in this same transaction.
 func (q *Queries) UpdateMatterMembershipStatus(ctx context.Context, arg UpdateMatterMembershipStatusParams) (int64, error) {
 	row := q.db.QueryRow(ctx, updateMatterMembershipStatus,
 		arg.MatterID,
 		arg.UserID,
 		arg.Status,
-		arg.Revision,
+		arg.ExpectedRevision,
 	)
 	var revision int64
 	err := row.Scan(&revision)
@@ -2518,24 +2574,25 @@ func (q *Queries) UpdateRequirementWork(ctx context.Context, arg UpdateRequireme
 }
 
 const updateWorkspaceMembershipStatus = `-- name: UpdateWorkspaceMembershipStatus :one
-UPDATE workspace_memberships SET status = $3, revision = $4
-WHERE workspace_id = $1 AND user_id = $2
+UPDATE workspace_memberships SET status = $3, revision = $4 + 1
+WHERE workspace_id = $1 AND user_id = $2 AND revision = $4
 RETURNING revision
 `
 
 type UpdateWorkspaceMembershipStatusParams struct {
-	WorkspaceID string
-	UserID      string
-	Status      string
-	Revision    int64
+	WorkspaceID      string
+	UserID           string
+	Status           string
+	ExpectedRevision interface{}
 }
 
+// A2: see UpdateMatterMembershipStatus — row-revision predicate added.
 func (q *Queries) UpdateWorkspaceMembershipStatus(ctx context.Context, arg UpdateWorkspaceMembershipStatusParams) (int64, error) {
 	row := q.db.QueryRow(ctx, updateWorkspaceMembershipStatus,
 		arg.WorkspaceID,
 		arg.UserID,
 		arg.Status,
-		arg.Revision,
+		arg.ExpectedRevision,
 	)
 	var revision int64
 	err := row.Scan(&revision)

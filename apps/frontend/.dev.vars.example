@@ -1,0 +1,16 @@
+# LOCAL PREVIEW ONLY. Copy to .dev.vars (gitignored), keep mode0600.
+API_MODE='rest'
+API_BASE_URL='http://127.0.0.1:8081/api/v1'
+AUTH_ALLOW_ANONYMOUS='false'
+APP_ORIGIN='http://localhost:8787'
+OIDC_ISSUER='https://REPLACE_WITH_ISSUER'
+OIDC_CLIENT_ID='REPLACE_WITH_WEB_CLIENT_ID'
+OIDC_PROJECT_ID='REPLACE_WITH_PROJECT_ID'
+# Plain HTTP local preview only. Deploy HTTPS must use true.
+SESSION_COOKIE_SECURE='false'
+BFF_STATE_BACKEND='postgres'
+BFF_DATABASE_URL='postgresql://REPLACE_WITH_BFF_ROLE:REPLACE_WITH_PASSWORD@REPLACE_WITH_SESSION_HOST:5432/postgres?sslmode=verify-full'
+BFF_STATE_KEY_ID='v1'
+# JSON in single quotes prevents dotenv from preserving escaped double quotes.
+BFF_STATE_KEYS='{"v1":"REPLACE_WITH_BASE64_32_BYTE_KEY"}'
+# BFF_DATABASE_CA='PEM_CA_CONTENT_IF_REQUIRED'

@@ -1,6 +1,6 @@
 package productapi
 
-import "github.com/example/userapi/internal/core/domain/matter"
+import "leonx.me/matter-control/internal/core/domain/matter"
 
 // W4 wire DTOs (contract revision 8). The filing's ETag is its work item's ETag: every stage
 // command bumps the item revision, so a stale screen can never act on a moved filing.

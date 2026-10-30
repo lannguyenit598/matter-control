@@ -1,0 +1,30 @@
+{
+  "review_manifest_sha256": "d2d3c4053dfab4e81972de44a4e17e6f9084d05f03032cbe54e7d4e6d481aece",
+  "payloads": [
+    {
+      "path": "return.md",
+      "match": true
+    },
+    {
+      "path": "inputs.json",
+      "match": true
+    },
+    {
+      "path": "checks.json",
+      "match": true
+    },
+    {
+      "path": "findings.json",
+      "match": true
+    }
+  ],
+  "historical_verdicts": {
+    "source_delta_20_paths": "PASS_WITH_LIMITATIONS",
+    "retained_restore_evidence_claude_runtime_r2": "PASS_WITH_LIMITATIONS",
+    "manifest_authority_current_tree": "NEEDS_INPUT_REFRESH",
+    "cr002": "DECISION_REQUIRED",
+    "rv001": "CLOSED_SOURCE_ONLY (unchanged round-1 scope)"
+  },
+  "current_head": "20feedbf06c859a9806055d609f5b132fe8bb086",
+  "scope": "Historical verdicts retained; current candidate needs refreshed review. CR002 now has author implementation fc09bec, not independent/browser acceptance."
+}

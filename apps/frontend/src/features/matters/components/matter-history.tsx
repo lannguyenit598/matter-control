@@ -59,11 +59,14 @@ export function MatterHistory({
   nextHref,
   firstHref,
   asOf,
+  actorNames,
 }: {
   events: MatterEvent[]
   nextHref: string | null
   firstHref?: string
   asOf?: string | null
+  /** Member names by user id, from the page's authorized member read. Unknown ids are shown as recorded. */
+  actorNames?: Record<string, string>
 }) {
   const locale = useLocale()
   const c = COPY[locale]
@@ -87,7 +90,9 @@ export function MatterHistory({
               </h2>
               <dl className="grid gap-3 sm:grid-cols-2">
                 <Field label={c.actor}>
-                  <span>{event.actorId ?? c.missing}</span>{' '}
+                  <span>
+                    {(event.actorId && actorNames?.[event.actorId]) || (event.actorId ?? c.missing)}
+                  </span>{' '}
                   <span className="text-muted-foreground">({event.actorKind})</span>
                 </Field>
                 <Field label={c.target}>

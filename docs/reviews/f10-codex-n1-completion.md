@@ -1,0 +1,27 @@
+# F10 N1 — Codex technical recommendation completed
+
+Task MC-003A.8A/N1; Local Codex technical owner following direct PO reassignment and instruction to finish; priority P0;2026-10-26. Branch codex/unified-project-flow, base/head a62d838791ba188838c4ff00b7b6e265ac775056. **TECHNICAL_RECOMMENDATION_COMPLETE / REFERENCE_CHECKED / IN_REVIEW / NOT_ADOPTED**. This records completion of the assigned technical deliverable, not independent closure of N1, F10, design or architecture gates.
+
+The former ZCode N1 handoff is superseded by the direct human instruction. No ZCode dispatch/return is now needed for that assignment. Its existing prompt, input manifest and four snapshots remain unchanged as history; the new [supersession record](../design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/supersession.json) and current workflow take precedence. No external provider or model switch was used.
+
+## Deliverable and decision
+
+[Complete recommendation](../design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/recommendation.md) specifies exact recursive JSON encoding, request tuple framing, header/presence representation, number validity versus fingerprint spelling, replay ordering and BE02/API clause locations for future adoption. Absent versus null and1/1.0/1e0 remain distinct representations for hashing. Object order/outer whitespace/equivalent string escapes normalize; Unicode content, array order and numeric tokens remain exact. A representation can bind the same business value while producing a different fingerprint; changing it on a committed same-key request is422, not immutable replay.
+
+This preserves BE02's proposed no-number-conversion/no-domain-trimming approach and supplies the previously missing exact encoding. It refines the earlier unapproved expectedRevisions:{} placeholder to an explicit presence marker; before any implementation/adoption, API§1 and BE02§4 must reference one definition. Neither original source document has been edited. It does not assume existing production receipt compatibility, import apps/*, choose resource/storage numeric bounds, change an endpoint or implement an HTTP adapter. Client retry-body retention and lossless header/parser access are explicit compatibility risks for the later source gate.
+
+## Actual checks and limits
+
+[Reference model](../design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/reference_check.py) and [synthetic vectors](../design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/vectors.json) ran locally: **79checks PASS /0FAIL**. Coverage includes omit/null, numeric lexemes/large values, recursive sorting, escaped names/duplicate keys, Unicode scalars and control escapes, arrays, BOM/invalid UTF-8, header absence/empty/OWS/order, method/template/path/precondition binding, authorized replay before live CAS and the N2 tie. Some tests compare actual SHA-256 outputs; no hashes are invented. These are author-side reference assertions, not product or independent acceptance tests.
+
+[Exact execution evidence](../design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/execution.json) records argv,cwd,UTCstart/end,exit0,Python/RTKversions and sourcebase. [Machine-readable results](../design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/reference-check.json) separate reference execution from the unchanged T*/22CT/51INTA statuses. An initial interactive run also passed; the recorded repeat solely captured exact timing/exit provenance. No DB,HTTP,product server,provider,dependency installation,source import or process/container action occurred.
+
+[Input provenance](../design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/input-provenance.json) verifies all4frozen inputs/22660bytes and protects the current API/filing/BE02 source hashes. Original reviewer and author reports/manifests are preserved. Source-import/BE01/BE02/INT-A/F08/UX concurrent edits were not overwritten or staged. No source/security gate bypass or commit was attempted.
+
+## Status and remaining acceptance
+
+N1 now has a concrete **TECHNICAL_PIN_SUPPLIED / REFERENCE_CHECKED** disposition. It is no longer waiting for an author recommendation or an undefined algorithm. Independent contract acceptance and adoption remain pending; Codex authored the new norm and cannot self-award those. The proposed N2 precondition tie and N3 heading evidence retain their separate provenance. No new full review or redundant author confirmation loop is created; this candidate can be assessed with the existing consolidated contract decision set.
+
+Reviewer: actual independent OpenCode/designated contract reviewer for this new Codex-authored definition; not dispatched here. Architecture authority retains compatibility/adoption and PO retains material trade-off approval. Remaining L4/role-PK proof, bounds/envelope limit, traversal/B35 and other F08/F10 items are not resolved by canonicalization. OC01..07 remain CLOSED_DOCUMENT_ONLY;F10OPEN;catalogue32/newfieldsroutesboundsfiltersNOT_ADOPTED;G3NOT_VERIFIED/G4PENDING/G5-Bremainingitemsopen/G6REWORK_REQUIRED/STEP03BNOT_AUTHORIZED. No broader implementation or design approval is inferred from the PO's instruction to complete this narrow technical deliverable.
+
+Skipped: product integration/runtime/build/security/DB/browser tests, external dispatch, canonical contract adoption and Git commit/push. Risk: reference-model correctness does not prove adapter/client interoperability or resource behavior; number/header representation retention requires later implementation proof.

@@ -1,0 +1,178 @@
+{
+  "frontend": [
+    {
+      "log": "frontend-check.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "pnpm check"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 1,
+      "log_completion_mtime_utc": "2026-10-29T12:35:09.064548+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "frontend-targeted.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "pnpm vitest run src/features/review src/features/matters"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 1,
+      "log_completion_mtime_utc": "2026-10-29T12:35:05.241817+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "create-grid-retry-isolated.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "pnpm vitest run src/features/review/components/review-list.test.tsx"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 0,
+      "log_completion_mtime_utc": "2026-10-29T12:36:15.682312+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "frontend-targeted-r2.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "src/features/review",
+        "src/features/matters"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 0,
+      "log_completion_mtime_utc": "2026-10-29T12:40:25.587603+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "adversarial-ui-r2.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "src/features/review/verifier-review-ui.test.tsx"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 1,
+      "log_completion_mtime_utc": "2026-10-29T12:38:03.533131+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "adversarial-ui-r3.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "src/features/review/verifier-review-ui.test.tsx"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 1,
+      "log_completion_mtime_utc": "2026-10-29T12:44:06.639844+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "adversarial-ui.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "pnpm vitest run src/features/review/verifier-review-ui.test.tsx"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 130,
+      "log_completion_mtime_utc": "2026-10-29T12:37:00.891283+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "frontend-build.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "pnpm build"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 1,
+      "log_completion_mtime_utc": "2026-10-29T12:35:49.757350+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "frontend-build-r2.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "pnpm build"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 130,
+      "log_completion_mtime_utc": "2026-10-29T12:37:08.375543+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "frontend-build-r3.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "node node_modules/next/dist/bin/next build && node scripts/check-built-css.mjs"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 0,
+      "log_completion_mtime_utc": "2026-10-29T12:38:08.731865+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "frontend-webpack.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "sh",
+        "-c",
+        "node node_modules/next/dist/bin/next build --webpack && node scripts/check-built-css.mjs"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 0,
+      "log_completion_mtime_utc": "2026-10-29T12:39:16.203662+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    },
+    {
+      "log": "frontend-agents.log",
+      "argv": [
+        "rtk",
+        "proxy",
+        "node",
+        "scripts/sync-agent-config.mjs",
+        "--check"
+      ],
+      "cwd": "/private/tmp/mc-review-verifier-20261029-r1/frontend",
+      "exit": 0,
+      "log_completion_mtime_utc": "2026-10-29T12:41:15.712538+00:00",
+      "timestamp_limit": "command start not separately recorded; test logs contain local start, UTC conversion is Asia/Ho_Chi_Minh minus 7 hours"
+    }
+  ],
+  "backend": "Exact argv/cwd/start/end UTC/exit are in each *-command.json and mutation JSON; all shell launches prefixed rtk proxy",
+  "timing_note": "Parent/subtest counts are event counts, not flat test-case counts"
+}

@@ -1,0 +1,124 @@
+[
+  {
+    "utc": "2026-10-29T08:16:17.727547+00:00",
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{ index .Config.Labels \"mc.owner\" }} {{.Id}} {{.State.Status}}",
+      "mc-codex-be-local-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "MC-P0-CODEX-BACKEND-LOCAL-20261029 cbe40cf128b53290b7b0f9bfa86d849edccb864f373a65c9ee3eaf5c86d51e1b exited\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:17.764329+00:00",
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{json .Mounts}}",
+      "mc-codex-be-local-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "[]\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:17.790951+00:00",
+    "argv": [
+      "docker",
+      "stop",
+      "--time",
+      "5",
+      "mc-codex-be-local-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "Flag --time has been deprecated, use --timeout instead\nmc-codex-be-local-20261029-r1\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:17.832376+00:00",
+    "argv": [
+      "docker",
+      "rm",
+      "-v",
+      "mc-codex-be-local-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "mc-codex-be-local-20261029-r1\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:17.863524+00:00",
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "name=^/mc-codex-be-local-20261029-r1$",
+      "--format",
+      "{{.Names}}"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "utc": "2026-10-29T08:16:17.888988+00:00",
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{ index .Config.Labels \"mc.owner\" }} {{.Id}} {{.State.Status}}",
+      "mc-codex-be-local-20261029-r2"
+    ],
+    "exit": 0,
+    "output": "MC-P0-CODEX-BACKEND-LOCAL-20261029 3f8277f47c72f68e2d36df52994968d33090ec137057002010b72c7214d2c988 running\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:17.911665+00:00",
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{json .Mounts}}",
+      "mc-codex-be-local-20261029-r2"
+    ],
+    "exit": 0,
+    "output": "[{\"Type\":\"volume\",\"Name\":\"1fe501abfc162708d78662f7b024e2328229f714e1514bf937fc039e6bf1dfe1\",\"Source\":\"/var/lib/docker/volumes/1fe501abfc162708d78662f7b024e2328229f714e1514bf937fc039e6bf1dfe1/_data\",\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"\",\"RW\":true,\"Propagation\":\"\"}]\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:18.105758+00:00",
+    "argv": [
+      "docker",
+      "stop",
+      "--time",
+      "5",
+      "mc-codex-be-local-20261029-r2"
+    ],
+    "exit": 0,
+    "output": "Flag --time has been deprecated, use --timeout instead\nmc-codex-be-local-20261029-r2\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:18.226496+00:00",
+    "argv": [
+      "docker",
+      "rm",
+      "-v",
+      "mc-codex-be-local-20261029-r2"
+    ],
+    "exit": 0,
+    "output": "mc-codex-be-local-20261029-r2\n"
+  },
+  {
+    "utc": "2026-10-29T08:16:18.259857+00:00",
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "name=^/mc-codex-be-local-20261029-r2$",
+      "--format",
+      "{{.Names}}"
+    ],
+    "exit": 0,
+    "output": ""
+  }
+]

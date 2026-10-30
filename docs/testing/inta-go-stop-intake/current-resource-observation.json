@@ -1,0 +1,60 @@
+{
+  "utc": "2026-10-26T00:42:53.650174+00:00",
+  "scope": "selected read-only process/listener/container metadata only; no env/config, probes or lifecycle",
+  "results": [
+    {
+      "argv": [
+        "ps",
+        "-p",
+        "98134",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "error": "[Errno 1] Operation not permitted: 'ps'"
+    },
+    {
+      "argv": [
+        "lsof",
+        "-nP",
+        "-iTCP:18086",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ps",
+        "-p",
+        "88444,88453",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "error": "[Errno 1] Operation not permitted: 'ps'"
+    },
+    {
+      "argv": [
+        "lsof",
+        "-nP",
+        "-iTCP:18085",
+        "-sTCP:LISTEN"
+      ],
+      "exit": 0,
+      "stdout": "COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    88453 nguyenvanlan   13u  IPv4 0xdc2ef12f3f9303fc      0t0  TCP 127.0.0.1:18085 (LISTEN)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .State.Status}} {{json .State.Health.Status}} {{json .State.StartedAt}} {{json .Mounts}} {{json .HostConfig.PortBindings}} {{json .HostConfig.Memory}} {{json .HostConfig.NanoCpus}} {{json .HostConfig.PidsLimit}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "exit": 1,
+      "stdout": "\n",
+      "stderr": "permission denied while trying to connect to the docker API at unix:///Users/nguyenvanlan/.docker/run/docker.sock\n"
+    }
+  ]
+}

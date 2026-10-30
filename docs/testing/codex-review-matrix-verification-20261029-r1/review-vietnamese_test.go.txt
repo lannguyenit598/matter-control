@@ -1,0 +1,12 @@
+package productapi
+import("testing";"encoding/json";"strings")
+func TestVerifierReviewHTTPVietnameseBounds(t *testing.T){
+ e:=newEnv(t);base,v,_,_:=reviewFixture(t,e)
+ body,_:=json.Marshal(map[string]string{"name":strings.Repeat("ế",200)});r:=e.do("POST",base+"/review-grids","t-bob",key(),string(body));e.expect(r,201,"");p:=base+"/review-grids/"+r.json()["id"].(string)
+ view:=e.do("GET",p,"t-bob",nil,"");e.expect(view,200,"");qbody,_:=json.Marshal(map[string]string{"text":strings.Repeat("ế",1000)});q:=e.do("POST",p+"/questions","t-bob",ifMatch(view.Header().Get("ETag")),string(qbody));e.expect(q,200,"")
+ qid:=q.json()["questions"].([]any)[0].(map[string]any)["id"].(string)
+ // malformed, absent and foreign ids all map to unknown-version; foreign equality is also covered by the author's contract.
+ malformed:=e.do("POST",p+"/versions","t-bob",ifMatch(q.Header().Get("ETag")),`{"versionId":"not-a-uuid"}`);e.expect(malformed,409,"urn:mc:rejected")
+ add:=e.do("POST",p+"/versions","t-bob",ifMatch(q.Header().Get("ETag")),`{"versionId":"`+v+`"}`);e.expect(add,200,"")
+ input:=map[string]any{"versionId":v,"questionId":qid,"expectedAnswerId":"","questionRevision":1,"state":"REVIEWED","text":strings.Repeat("ế",4000),"pageRef":strings.Repeat("ế",40),"quoteRef":strings.Repeat("ế",1000)};raw,_:=json.Marshal(input);e.expect(e.do("POST",p+"/answers","t-bob",key(),string(raw)),201,"")
+}

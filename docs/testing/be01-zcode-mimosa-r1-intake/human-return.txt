@@ -1,0 +1,72 @@
+Tôi sẽ đọc toàn bộ file prompt được giao trước, sau đó xác nhận phạm vi.
+
+Đã đọc xong toàn bộ prompt. Tôi xác nhận phạm vi trước khi làm:
+
+**Phạm vi đã xác nhận — MC-BE01-MIMOSA-ZCODE-INVESTIGATION-R1 (P0):**
+- **Mục tiêu:** (A) xác định read-only integration Mimosa/PreToolUse gốc đã chặn commit BE01 của ZCode — tên/phiên bản/tool/schema, phạm vi enforcement (session/project/repo), gate record nào nó đọc, và cơ chế adjudication/disposition chính thức cho scan/finding/occurrence gốc; (B) nếu có cơ chế disposition có tài liệu chính thức → áp dụng **chỉ cho finding `f4bd71af…`** (human đã pre-authorize đúng phạm vi này), có audit + receipt + đọc lại trạng thái. Nếu không có → `BLOCKED_NO_DISPOSITION_INTERFACE` kèm hành động maintainer cụ thể, **không** đề xuất scan lại.
+- **Cấm:** scan mới, thử commit, sửa hook/baseline/global settings, đổi agent/provider/context, stage/unstage/reset/commit/push, `--no-verify`, chạy provisioning script, thao tác DB/HTTP/Docker/runtime, liên hệ bên ngoài.
+- **Bảo toàn:** chín path staged + patch SHA256 `33297560…` nguyên vẹn (chỉ được git read-only: head/status/diff hash).
+- **Đầu ra:** chỉ `report.md` + `evidence.json` trong thư mục mới `docs/testing/be01-zcode-mimosa-investigation-r1/` (kiểm tra absent trước khi tạo); status đề xuất chỉ là `RESOLVED_FINDING_AWAITING_CODEX_INTAKE` hoặc `BLOCKED`; dừng sau khi trả report, không commit.
+
+Bắt đầu bước 1: xác minh danh tính/thiết bị và đọc các input đã pin. Trước tiên đọc RTK.md để tuân thủ quy tắc shell của workstation.
+
+Tôi đã đọc xong các input đã pin. Ghi nhận quan trọng: lượt trả về trước của Local Codex (operator route) kết thúc `BLOCKED_NO_SUPPORTED_DISPOSITION_MECHANISM` trên **công cụ Codex Security của Codex** — còn nhiệm vụ của tôi là điều tra **integration Mimosa/PreToolUse gốc phía ZCode**, thứ chưa ai làm. Giờ tôi xác minh trạng thái repo/backend/hash bằng lệnh read-only (qua `rtk proxy`), đồng thời đọc nốt `intake.json`, review blocked-intake và prompt operator gốc.
+
+Đối chứng toàn bộ khớp: governance HEAD `a62d838` đúng, backend HEAD `136eae6` + đúng chín path staged + patch SHA256 `33297560…` (53067 bytes) + unstaged 0, sáu pin đầu vào khớp hash, thư mục output ABSENT. Giờ tôi xác minh hai artifact .gz đã decode (so với `intake.json`), đọc nội dung log bị chặn + owner return, rồi bắt đầu Phase A: khám phá cây plugin Mimosa, Mimosa store, cấu hình hook và ZCode settings (parse có giới hạn, chỉ xuất trường phi bảo mật).
+
+Phát hiện then chốt Phase A: log từ chối ghi rõ **"Mimosa L3"**, và plugin Mimosa 1.0.4 trong ZCode có `payload/hooks/git-gate-hook.mjs` + `hooks.json` — rất có thể đây chính là PreToolUse git gate. State store nằm ở `~/.mimosa/` (scan store theo project-id) và trong repo có `.mimosa/` chưa track (finding-ledger, hook-state, hook-status). Giờ tôi đọc manifest plugin, đăng ký hook, và logic của git-gate-hook (chỉ file an toàn, không đụng `mimosa-embedded-key.cjs`), đồng thời liệt kê state store để xác định hook đọc record nào.
+
+Phase A đã chốt được cấu trúc: plugin **mimosa 1.0.4** đăng ký PreToolUse(Bash) → `git-gate-hook.mjs` (logic thật trong bundle mã hóa AES-256-GCM, chỉ đọc được tài liệu hành vi). README liệt kê các interface: `mimosa ledger list/show`, `mimosa status`, `mimosa validate`, `mimosa backlog triage` — cần kiểm chứng cái nào là disposition chính thức. Giờ tôi đọc scan-contract, hook-status ghi đúng thời điểm commit (07:44 local = 00:44Z), và chạy các lệnh CLI **chỉ-đọc** đã được tài liệu hóa (`status`, `ledger list`, `ledger show`) để đọc state gate thật.
+
+Tài liệu CLI tiết lộ các cơ chế ứng viên Phase B: `mimosa ledger record` (ghi trạng thái finding), `mimosa validate` (Oracle cấp finding), `mimosa policy init/check` (chính sách dự án), `mimosa-ignore` comments, và `git-gate install/status` (git hook gốc riêng). Giờ tôi kiểm tra ledger có chứa finding này không, đọc hồ sơ cài plugin, và đọc help chi tiết từng cơ chế — tất cả chỉ-đọc.
+
+Bảng tranh Phase B đang rõ dần: **ledger dự án có 0 finding/0 event** — finding `f4bd71af` không hề nằm trong finding store; `validate` chỉ có 2 validator không liên quan; `backlog triage` tài liệu hóa rõ "không bao giờ tự dismissed"; `ledger record` không có help schema. Còn 2 mắt xích cần đóng: trạng thái native git-gate (`--json`) và danh sách `.git/hooks` thực tế ở cả hai repo, cộng 2 lệnh đọc receipt trực tiếp cho finding.
+
+Tất cả bằng chứng Phase A/B đã đầy đủ. Kết luận chốt: **không có cơ chế disposition chính thức nào** — finding không tồn tại trong ledger (`✗ finding 不存在`), `validate` từ chối + không có validator cho lớp hardcoded-credential, `backlog triage` tài liệu hóa "không bao giờ tự dismissed", và **không có native git hook nào được cài** ở cả hai repo (installed:false cả pre-commit/pre-push) — tuyến thực thi duy nhất là PreToolUse hook của plugin. Giờ tôi tạo thư mục output (kiểm tra absent lần cuối), xác minh bảo toàn lần chót, rồi viết report.md + evidence.json.
+
+Bảo toàn xác nhận lần chót: governance `a62d838`, backend `136eae6` + 9 path + patch `33297560…` + unstaged 0. Thư mục output đã tạo. Viết hai file kết quả:
+
+Lệnh Write report.md bị gián đoạn. Tôi kiểm tra trạng thái thư mục output trước khi ghi lại (không retry mù quáng).
+
+Thư mục tồn tại, rỗng — Write chưa kịp thực thi. Ghi lại cả hai file.
+
+Cả hai file đã ghi thành công. Xác minh cuối cùng nội dung thư mục output và cập nhật bộ nhớ dự án.
+
+Cập nhật bộ nhớ dự án với kết quả điều tra.
+
+# Hoàn thành — MC-BE01-MIMOSA-ZCODE-INVESTIGATION-R1: `BLOCKED — BLOCKED_NO_DISPOSITION_INTERFACE`
+
+Đã điều tra xong toàn bộ phạm vi được giao. Kết quả: cơ chế disposition chính thức **không tồn tại** trong bộ công cụ Mimosa đang phơi bày — trả về blocker với bằng chứng và hành động maintainer cụ thể, không scan lại, không thử commit, chín file staged nguyên vẹn.
+
+## Phase A — đã xác định được tuyến thực thi gốc (read-only)
+
+- **Plugin:** `mimosa` v1.0.4 (`mimosa@zcode-plugins-official`, scope user, cài 2026-10-23 từ CDN chính thức, zip SHA256 `50d4da2c…`). Gồm hooks, CLI và MCP server (5 tool `security_scan*` đang phơi bày trong session này).
+- **Hook gây chặn:** PreToolUse matcher `Bash` → `git-gate-hook.mjs` — khớp chính xác chữ "Mimosa L3" trong log từ chối 00:44Z. Logic thật được đóng gói AES-256-GCM (build được ký Ed25519) — không giải mã, hành vi lấy từ tài liệu chính thức + artifact quan sát được.
+- **Phạm vi:** hook đăng ký cấp user, nhưng **đích audit là project root của session** (governance root), không phải cwd của lệnh — bằng chứng: từ chối trỏ file ở governance dù commit chạy ở backend worktree; backend không có `.mimosa/`; scan job pin `request.project` = governance root.
+- **Không có Git hook repo nào:** `git-gate status` → `installed: false` cho pre-commit/push ở cả hai repo; `.git/hooks` governance chỉ có file `.sample`. PreToolUse hook của plugin là tuyến thực thi duy nhất.
+- **Gate không đọc record lưu sẵn:** ledger dự án có 14 batch / **0 finding / 0 event**, zero tham chiếu tới `f4bd71af` hay `provision-command`; `ledger show finding:f4bd71af…` → "不存在". ⇒ Gate **phát hiện lại từ nguồn** lúc commit; không tồn tại trạng thái per-finding nào để "gỡ".
+
+## Phase B — tất cả cơ chế ứng viên đã kiểm chứng, không cái nào là disposition
+
+| Cơ chế | Biên nhận |
+|---|---|
+| `ledger list/show` (đã chạy) | 0 finding; show → không tồn tại |
+| `ledger record` | Status vocabulary **không có** state false_positive/dismissed; schema batch không tài liệu hóa |
+| `validate` (đã chạy) | Chỉ 2 validator không liên quan (path-traversal, command-exec), chỉ cho `fixed_static`; chạy với finding này bị từ chối |
+| `backlog triage` | Tài liệu ghi rõ "không bao giờ tự dismissed" |
+| `policy init/check` | Cấu hình coverage, không phải adjudication finding |
+| `mimosa-ignore` comments | Gate không tin comments này |
+| Env gate switches / `git-gate uninstall` | Là vô hiệu hóa hook — bị cấm theo nhiệm vụ |
+| MCP scan tools | Chỉ vòng đời scan, không có disposition |
+
+## Hành động maintainer tối thiểu (theo thứ tự ưu tiên)
+
+1. **Sửa rule/dataflow của scanner (khuyến nghị):** runtime `secrets.token_hex(32)` ghi vào file 0600 ngoài repo không phải hardcoded credential — publish rule pack mới, sau đó rescan được ủy quyền riêng sẽ clears hợp pháp.
+2. **Thêm state `false_positive` có audit** vào ledger/sealed-scan finding space **và** bắt L3 gate tôn trọng state đó (hiện gate re-detect từ nguồn nên ghi ledger đơn thuần không đủ mở khóa), keyed đúng scan/finding/occurrence đã pin.
+3. **Fallback cần PO ủy quyền riêng:** sửa file evidence bất biến `provision-command.py` rồi rescan — không được nhiệm vụ này cho phép.
+
+## Bảo toàn & đầu ra
+
+Backend HEAD `136eae6`, đúng 9 path staged, patch SHA256 `33297560…` (53067 bytes), unstaged 0 — xác minh lại **sau** khi điều tra xong; không source/index/hook/ledger/settings nào bị đổi. Toàn bộ pin đầu vào + 7 artifact .gz khớp hash. Đã ghi đúng 2 file được giao: [report.md](/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/be01-zcode-mimosa-investigation-r1/report.md) và [evidence.json](/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/be01-zcode-mimosa-investigation-r1/evidence.json).
+
+**Đã bỏ qua:** mọi ghi disposition, scan/commit mới, chạy CLI audit/status trên backend (tránh khởi tạo state Mimosa trong worktree được bảo toàn), giải mã hook internals, liên hệ bên ngoài. **Rủi ro còn lại:** logic gate bị mã hóa nên kết luận "re-detect từ nguồn" dựa trên tài liệu + quan sát ledger rỗng; commit-gate state là **NOT_ESTABLISHED** (không thử nghiệm bằng commit); BE01 vẫn IN_REVIEW/BLOCKED chờ maintainer action và lần intake Codex riêng. Dừng tại đây theo §8 — không commit.

@@ -1,0 +1,73 @@
+{
+  "task": "MC-P0 independent review of comprehensive-fix candidate",
+  "reviewer_mode": "AUTHOR_SELF_REVIEW_NOT_INDEPENDENT",
+  "findings": [
+    {
+      "id": "RV-001",
+      "severity": "P2",
+      "status": "OPEN_CHANGES_REQUIRED",
+      "kind": "security: open redirect",
+      "confirmed": true,
+      "title": "safeInternalPath returns a protocol-relative URL for \"..//host\" payloads",
+      "where": [
+        "apps/frontend/src/lib/mc/paths.ts:5-18 (the return at :17)",
+        "used at apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx:55 and rendered at :109 as <Link href={from}>"
+      ],
+      "evidence": "V4 (the real function): input \"/..//evil.test\" yields \"//evil.test\". The guard \"!raw.startsWith('//')\" runs on the raw input; the new URL() step resolves \"..\" and leaves a path that starts with \"//\", and no check is applied to the output. The page then renders href=\"//evil.test\", so the \"Back\" link leaves the site. Reachable with ?from=/..//evil.test on /matters/{m}/work/{item} for a signed-in user who clicks Back.",
+      "login_path": "safeReturnTo (flow.ts:96-113) has the same defect (V5) but is neutralised: beginLogin, the login route and resolveReturnTo (flow.ts:116-118, used by the callback) re-validate, and the second pass rejects \"//evil.test\". Defense in depth, not a fix.",
+      "relation_to_delta": "Pre-existing code, not introduced by the delta. The delta added dot-segment cases to paths.test.ts and flow.test.ts that pass but cover only \"/x/../login\" style inputs, so they give false assurance about the output; the author packet entry EX-03 (\"redirect safety: no finding\") is wrong and is superseded by this finding.",
+      "minimal_fix_not_applied": "After computing the path in both functions, reject any output that starts with \"//\" or \"/\\\\\" (return the fallback); add \"/..//evil.test\", \"/x/..//evil.test\", \"/%2e%2e//evil.test\" and \"/..///evil.test\" to both tests, red before the fix. Source edits are outside this review mode."
+    },
+    {
+      "id": "RV-002",
+      "severity": "P3",
+      "status": "ACCEPTED_WITH_NOTE",
+      "kind": "CR-001 review",
+      "title": "bad-request at preview: mostly a fixable sheet, but not only",
+      "evidence": "Sources of 400 bad-request on import/preview: (a) port.ErrSheetInvalid from parseSheet (dataops_service.go:443-466): format, byte limit, decode error, empty sheet, missing required column, row limit; user-fixable, except \"format\" which the UI cannot send wrongly. (b) readSheetUpload errBadRequest (data_handlers.go:141,147,151): malformed multipart, missing or duplicate \"file\" part; client/transport faults. The two share urn:mc:bad-request and McError drops the problem detail, so the frontend cannot tell them apart. The comment in actions.ts that a preview can draw \"only\" an unreadable spreadsheet overclaims; the message shown (\"The file could not be read. Nothing was stored.\") stays true because preview writes nothing.",
+      "commit_path": "importCommitAction is unchanged: a 400 there is shown as the generic error. The catch calls endAttempt(session, attempt) without results (actions.ts:166), so the attempt stays retained and unresolved (pending-attempts.ts:70-81); that behaviour is pre-existing and outside the delta.",
+      "recommendation": "Soften the code comment; optionally keep the problem detail in McError so (a) and (b) can be told apart later."
+    },
+    {
+      "id": "RV-003",
+      "severity": "P3",
+      "status": "OPEN_NOTE",
+      "kind": "test adequacy",
+      "title": "The seam test proves the action result, not the rendered state",
+      "evidence": "The new test drives fetch to McError to the action result through the real seam (not an implementation branch), which is what CR-001 changed. No component test renders a failed preview: import-section.tsx:186-198 shows previewError in an Alert, and fieldErrors.file is unused by the UI. data-transfer-ui.test.tsx has no failed-preview case."
+    },
+    {
+      "id": "RV-004",
+      "severity": "P3",
+      "status": "OPEN_NOTE",
+      "kind": "test adequacy",
+      "title": "read-failure-callers.test.ts can miss a misplaced partial",
+      "evidence": "V6: the scan regex /<ReadFailure\\b[^>]*?\\/>/ does not match a tag whose attributes contain \">\" (for example an arrow function or a comparison), and cannot see a partial passed through {...props} or an aliased import. Today all 31 tags in 15 files match and exactly one carries partial, so the guard is correct now; the failure mode is fail-open for the security direction.",
+      "recommendation": "Parse with the TypeScript compiler API or add a negative test that the scan found every \"<ReadFailure\" occurrence (count of \"<ReadFailure\" equals count of matched tags)."
+    },
+    {
+      "id": "RV-005",
+      "severity": "INFO",
+      "status": "VERIFIED",
+      "kind": "draft access-loss",
+      "title": "Primary versus partial handling, re-grant, limitation",
+      "evidence": "read-failure.tsx purges for sign-in always and for forbidden/not-found unless partial. 31 <ReadFailure call sites in 15 files; exactly one passes partial (work/[itemId]/page.tsx:275, the proof section, a nested read after the primary Promise.all at :59-92 succeeded). drafts.test.tsx covers purge per kind, keep for unavailable/error, partial keep, sign-in with partial purges, and no revival after re-grant (20+ cases pass in V3). Whole-tab purge is documented as CR-003 and not described as per-Matter.",
+      "residual": "F4-F6 of the earlier review (window between reads, purge after hydration, unobserved revoke and re-grant) remain accepted limitations."
+    },
+    {
+      "id": "RV-006",
+      "severity": "INFO",
+      "status": "DECISION_REQUIRED_CONFIRMED",
+      "kind": "CR-002",
+      "title": "CR-002 stays a product decision; the author did not waive it",
+      "evidence": "intent-form.tsx:62 keeps the key in useState and :69 the frozen payload in a ref; document-forms.tsx:61 does the same for the upload key. Contract rev 12 section 0 guarantees reload survival only for bulk/import; zcode-handoff.md:95 says a retry under a new key is disabled. A reload loses the attempt, so a re-submit can use a new key. That backend creation commands are deduplicated by key only was not verified beyond the contract table.",
+      "options": [
+        "A browser storage",
+        "B server-side session slot plus contract revision",
+        "C explicit local limitation"
+      ],
+      "not_implemented": true,
+      "needs": "Product Owner choice"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+[
+  {
+    "utc": "2026-10-29T12:43:29.489219+00:00",
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{ index .Config.Labels \"mc.owner\" }} {{.Id}} {{.State.Status}}",
+      "mc-review-verify-pg-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "MC-EIGENWELT-REVIEW-MATRIX-VERIFY 669680491c11c4fdb3f60041b30b3d70b881e6fa107bb1b189295c0abe677c34 running\n"
+  },
+  {
+    "utc": "2026-10-29T12:43:29.514296+00:00",
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{json .Mounts}}",
+      "mc-review-verify-pg-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "[{\"Type\":\"volume\",\"Name\":\"7a2af27bf5c6a28d4ab459f766bae5a4b9113b7dea9a16b3fdd64fdacf3ae90d\",\"Source\":\"/var/lib/docker/volumes/7a2af27bf5c6a28d4ab459f766bae5a4b9113b7dea9a16b3fdd64fdacf3ae90d/_data\",\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"\",\"RW\":true,\"Propagation\":\"\"}]\n"
+  },
+  {
+    "utc": "2026-10-29T12:43:29.780928+00:00",
+    "argv": [
+      "docker",
+      "stop",
+      "--time",
+      "5",
+      "mc-review-verify-pg-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "Flag --time has been deprecated, use --timeout instead\nmc-review-verify-pg-20261029-r1\n"
+  },
+  {
+    "utc": "2026-10-29T12:43:29.978663+00:00",
+    "argv": [
+      "docker",
+      "rm",
+      "-v",
+      "mc-review-verify-pg-20261029-r1"
+    ],
+    "exit": 0,
+    "output": "mc-review-verify-pg-20261029-r1\n"
+  },
+  {
+    "utc": "2026-10-29T12:43:30.004432+00:00",
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "name=^/mc-review-verify-pg-20261029-r1$",
+      "--format",
+      "{{.Names}}"
+    ],
+    "exit": 0,
+    "output": ""
+  }
+]

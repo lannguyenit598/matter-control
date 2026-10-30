@@ -5,7 +5,6 @@ import { Suspense } from 'react'
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
-import { MatterTabs } from '@/features/matters/components/matter-tabs'
 import { matterRepository } from '@/features/matters/repository'
 import {
   MilestoneList,
@@ -67,7 +66,6 @@ async function Planning({ params }: Pick<PageProps<'/matters/[matterId]/planning
           />
         }
       />
-      <MatterTabs matterId={matterId} active="planning" />
       <MilestoneList
         matterId={matterId}
         milestones={milestones}

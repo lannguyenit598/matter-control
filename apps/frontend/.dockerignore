@@ -1,0 +1,16 @@
+# Keep the build context small and free of local state and secrets.
+node_modules
+.next
+storybook-static
+coverage
+playwright-report
+test-results
+tsconfig.tsbuildinfo
+.git
+.husky
+.env*
+!.env.example
+**/*.log
+*.pem
+Dockerfile
+.dockerignore

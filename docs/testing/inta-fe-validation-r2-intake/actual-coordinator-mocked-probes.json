@@ -1,0 +1,101 @@
+{
+  "actor": "Local Codex",
+  "scope": "Run actual VariantRunner.run only with ALL Popen/probe/signal/termination interactions mocked; new tempfiles only; no observer/Next/lsof or os.kill executed",
+  "results": [
+    {
+      "case": "fast_exit_and_launch_path",
+      "spawn_calls": [
+        {
+          "argv": [
+            "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3",
+            "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r2-20261026/runner-scripts/observer.py",
+            "--port",
+            "18086",
+            "--state-file",
+            "/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/inta-r2-mocked-coordinator-dtudbwdc/API_TOKEN_nonempty/observer.json",
+            "--variant",
+            "API_TOKEN_nonempty"
+          ],
+          "env_keys": []
+        },
+        {
+          "argv": [
+            "npx",
+            "next",
+            "dev",
+            "-H",
+            "127.0.0.1",
+            "-p",
+            "18085"
+          ],
+          "env_keys": [
+            "API_TOKEN",
+            "INTA_UNLISTED_TEST_ONLY",
+            "MC_INTA_ENABLE",
+            "MC_INTA_GO_BASE_URL",
+            "PORT"
+          ]
+        }
+      ],
+      "result": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "PASS",
+        "verdictCode": "VALID_COMPLETE_INPUT",
+        "exitCode": 1,
+        "observerHTTPRequests": 0,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "probeError": null,
+        "notes": "Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown"
+      },
+      "raised_error": null,
+      "termination_mock_calls": 1,
+      "sample_probe_calls": 3,
+      "real_application_processes": 0
+    },
+    {
+      "case": "child_spawn_error_cleanup",
+      "spawn_calls": [
+        {
+          "argv": [
+            "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3",
+            "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r2-20261026/runner-scripts/observer.py",
+            "--port",
+            "18086",
+            "--state-file",
+            "/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/inta-r2-mocked-coordinator-hzvnzs1f/API_TOKEN_nonempty/observer.json",
+            "--variant",
+            "API_TOKEN_nonempty"
+          ],
+          "env_keys": []
+        },
+        {
+          "argv": [
+            "npx",
+            "next",
+            "dev",
+            "-H",
+            "127.0.0.1",
+            "-p",
+            "18085"
+          ],
+          "env_keys": [
+            "API_TOKEN",
+            "INTA_UNLISTED_TEST_ONLY",
+            "MC_INTA_ENABLE",
+            "MC_INTA_GO_BASE_URL",
+            "PORT"
+          ]
+        }
+      ],
+      "result": null,
+      "raised_error": "synthetic child launch failure",
+      "termination_mock_calls": 0,
+      "sample_probe_calls": 2,
+      "real_application_processes": 0
+    }
+  ]
+}

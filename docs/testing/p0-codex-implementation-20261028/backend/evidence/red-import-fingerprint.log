@@ -1,0 +1,17 @@
+=== RUN   TestSuiteW6_MemoryStore
+=== RUN   TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed
+=== RUN   TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import
+    contract_w6.go:256: changed/legacy content must refuse replay: <nil> [{RowKey:R1 ItemID:01a1808e-36a2-78a2-aa7d-1433577af5b6 Status:SUCCESS_REPLAYED Code: ContentHash:1276b3f0a9494e1408362e34b9400fbdd03e9438675c5fcc2f5ebeda873a8d34 Detail:}], want key-reuse
+    contract_w6.go:256: changed/legacy content must refuse replay: <nil> [{RowKey:R1 ItemID:01a1808e-36a2-78a2-aa7d-1433577af5b6 Status:SUCCESS_REPLAYED Code: ContentHash:1276b3f0a9494e1408362e34b9400fbdd03e9438675c5fcc2f5ebeda873a8d34 Detail:}], want content-conflict
+=== RUN   TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint
+    contract_w6.go:256: changed/legacy content must refuse replay: <nil> [{RowKey:R1 ItemID:01a1808e-36a3-738e-80fb-ad64e74ab079 Status:SUCCESS_REPLAYED Code: ContentHash:1276b3f0a9494e1408362e34b9400fbdd03e9438675c5fcc2f5ebeda873a8d34 Detail:}], want key-reuse
+    contract_w6.go:256: changed/legacy content must refuse replay: <nil> [{RowKey:R1 ItemID:01a1808e-36a3-738e-80fb-ad64e74ab079 Status:SUCCESS_REPLAYED Code: ContentHash:1276b3f0a9494e1408362e34b9400fbdd03e9438675c5fcc2f5ebeda873a8d34 Detail:}], want content-conflict
+    contract_w6.go:256: changed/legacy content must refuse replay: <nil> [{RowKey:R1 ItemID:01a1808e-36a3-738e-80fb-ad64e74ab079 Status:SUCCESS_REPLAYED Code: ContentHash:1276b3f0a9494e1408362e34b9400fbdd03e9438675c5fcc2f5ebeda873a8d34 Detail:}], want key-reuse
+    contract_w6.go:256: changed/legacy content must refuse replay: <nil> [{RowKey:R1 ItemID:01a1808e-36a3-738e-80fb-ad64e74ab079 Status:SUCCESS_REPLAYED Code: ContentHash:1276b3f0a9494e1408362e34b9400fbdd03e9438675c5fcc2f5ebeda873a8d34 Detail:}], want content-conflict
+--- FAIL: TestSuiteW6_MemoryStore (0.00s)
+    --- FAIL: TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/new_import (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/import_content_distinguishes_delimiter_boundaries_and_legacy_hashes_fail_closed/legacy_stored_fingerprint (0.00s)
+FAIL
+FAIL	github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol	0.486s
+FAIL

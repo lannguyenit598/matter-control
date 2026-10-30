@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-29T08:15:41.184572+00:00",
+  "api": "http://127.0.0.1:8081",
+  "pid_at_intake": 87393,
+  "binary_owner_evidence": "Claude scratchpad executable; source revision and config not inspected",
+  "read_only_probes": [
+    {
+      "path": "/healthz",
+      "status": 200,
+      "body": "{\"status\":\"ok\"}\n"
+    },
+    {
+      "path": "/readyz",
+      "status": 200,
+      "body": "{\"status\":\"ready\"}\n"
+    },
+    {
+      "path": "/api/v1/workspaces",
+      "status": 401,
+      "body": "{\"type\":\"urn:mc:unauthenticated\",\"title\":\"Unauthorized\",\"status\":401,\"detail\":\"authentication is required\",\"instance\":\"/api/v1/workspaces\",\"retryable\":false}"
+    }
+  ]
+}

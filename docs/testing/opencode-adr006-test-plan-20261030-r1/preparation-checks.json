@@ -1,0 +1,31 @@
+{
+  "checked_utc": "2026-10-30T03:24:31.803536+00:00",
+  "prepared_by": "Actual Local Codex",
+  "cases": 82,
+  "all_not_run": true,
+  "phase_counts": {
+    "BOTH": 45,
+    "FINAL": 24,
+    "BROWSER": 7,
+    "PROVIDER": 6
+  },
+  "codex_source_members": 40,
+  "matching_members": 39,
+  "drift": [
+    {
+      "path": "apps/frontend/src/lib/mc/entry-route.test.ts",
+      "baseline": {
+        "path": "apps/frontend/src/lib/mc/entry-route.test.ts",
+        "bytes": 805,
+        "sha256": "093bdb6c94724226813be9a18d55693a7dff750d078aeea5ee976eaa0c2ba8c0"
+      },
+      "observed": {
+        "exists": true,
+        "bytes": 1197,
+        "sha256": "fc0f777344f358e335461845e166d72cbb625898312072460755c65fe512e967"
+      },
+      "disposition": "NEW_UNREVIEWED_DELTA; current file adjusts Next config test imports for Firebase App Hosting. This is source inspection, not an execution result or authorship attribution."
+    }
+  ],
+  "instruction": "Do not restore baseline bytes. Snapshot stable current source; bind and test this delta and later Claude candidate separately. Preparation is not dispatch or execution."
+}

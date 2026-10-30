@@ -1,0 +1,13 @@
+{
+  "completed_utc": "2026-10-27T07:22:44.360112+00:00",
+  "argv": [
+    "rtk",
+    "proxy",
+    "node",
+    "docs/testing/p0-design-r8-intake-20261027/reviewer-probes.cjs"
+  ],
+  "exit": 0,
+  "stdout": "{\n  \"revocation_panel_claims_purge\": true,\n  \"record_draft_reappears_after_revocation_then_owner_restore\": true,\n  \"new_matter_draft_lost_on_view_switch\": true,\n  \"promotion_reason_lost_on_view_switch\": true,\n  \"promotion_form_ids\": [\n    \"promote-panel\",\n    \"promote-expected\",\n    \"promote-reason\",\n    \"promote-impact\"\n  ],\n  \"limits\": \"Observed in owner strict mock only; real browser and product enforcement NOT_RUN.\"\n}\n",
+  "stderr": "",
+  "correction": "Reviewer loader strips the owner script hashbang before Function evaluation; original receipt retains initial reviewer-only loader failure."
+}

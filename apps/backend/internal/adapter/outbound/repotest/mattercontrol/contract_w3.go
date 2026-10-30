@@ -5,13 +5,16 @@ package mattercontrol
 // the proof reads. It runs unchanged against the in-memory double and the PostgreSQL adapter.
 
 import (
+	"context"
 	"errors"
 	"io"
 	"strings"
 	"testing"
+	"testing/iotest"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
+	"leonx.me/matter-control/internal/core/service"
 )
 
 // ensureReviewer creates (once) a designated verifier who is a matter EDITOR.
@@ -148,6 +151,59 @@ func sum(n byte) string { return strings.Repeat(string("0123456789abcdef"[n%16])
 // SuiteW3 runs the W3 contract against any Bundle whose Store supports evidence.
 func SuiteW3(t *testing.T, newBundle Factory) {
 	t.Helper()
+
+	t.Run("a creation receipt whose saved access was revoked stays hidden and audits the refusal", func(t *testing.T) {
+		e := newW2Env(t, newBundle)
+		w1 := w1Env{t: t, ws: e.ws, ctx: e.ctx}
+		other := w1.mustMatter(e.owner, e.wsID, "Other matter").MatterID
+		if err := w1.grantMatter(e.owner, other, e.editor, "EDITOR", w1.matterRevision(e.owner, e.wsID, other)); err != nil {
+			t.Fatal(err)
+		}
+		cmd := port.CreateDocumentCmd{ActorID: e.editor.String(), MatterID: e.m.String(), IdempotencyKey: newKey(), RequestHash: anyHash, Name: "Synthetic document"}
+		if _, err := e.ev.CreateDocument(e.ctx, cmd); err != nil {
+			t.Fatal(err)
+		}
+		if err := w1.revokeMatter(e.owner, e.m, e.editor, w1.matterRevision(e.owner, e.wsID, e.m)); err != nil {
+			t.Fatal(err)
+		}
+		before := e.b.World.Counts()
+		cmd.MatterID = other.String()
+		if _, err := e.ev.CreateDocument(e.ctx, cmd); !errors.Is(err, port.ErrNotFound) {
+			t.Fatalf("saved receipt must remain hidden: %v", err)
+		}
+		after := e.b.World.Counts()
+		if after.Audits != before.Audits+1 || after.Events != before.Events || after.Receipts != before.Receipts {
+			t.Fatalf("saved-scope denial must audit without a domain effect: %+v -> %+v", before, after)
+		}
+	})
+
+	t.Run("creation receipts cannot replay in another matter with the same actor key and hash", func(t *testing.T) {
+		e := newW2Env(t, newBundle)
+		w1 := w1Env{t: t, ws: e.ws, ctx: e.ctx}
+		other := w1.mustMatter(e.owner, e.wsID, "Other matter").MatterID
+		for _, kind := range []string{"document", "action"} {
+			t.Run(kind, func(t *testing.T) {
+				key := newKey()
+				create := func(m matter.MatterID) error {
+					if kind == "document" {
+						_, err := e.ev.CreateDocument(e.ctx, port.CreateDocumentCmd{ActorID: e.owner.String(), MatterID: m.String(), IdempotencyKey: key, RequestHash: anyHash, Name: "Synthetic document"})
+						return err
+					}
+					_, err := e.work.CreateAction(e.ctx, port.CreateActionCmd{ActorID: e.owner.String(), MatterID: m.String(), IdempotencyKey: key, RequestHash: anyHash, Title: "Synthetic action", Outcome: "Synthetic outcome"})
+					return err
+				}
+				if err := create(e.m); err != nil {
+					t.Fatal(err)
+				}
+				if err := create(e.m); err != nil {
+					t.Fatalf("same-scope replay: %v", err)
+				}
+				if err := create(other); !errors.Is(err, port.ErrIdempotencyKeyReuse) {
+					t.Fatalf("foreign-scope receipt must refuse, got %v", err)
+				}
+			})
+		}
+	})
 
 	t.Run("documents: immutable versions, nothing current by upload, guarded promotion (AC-115)", func(t *testing.T) {
 		e := newW2Env(t, newBundle)
@@ -499,6 +555,59 @@ func SuiteW3(t *testing.T, newBundle Factory) {
 		}
 		_, _, err = e.ev.OpenVersion(e.ctx, port.VersionContentQuery{ActorID: e.out.String(), MatterID: e.m.String(), VersionID: first.ID})
 		mustIs(t, "outsider reads nothing", err, port.ErrNotFound)
+
+		// A record whose bytes are gone or damaged is an integrity incident: still the same retryable
+		// "unavailable" answer, but an operator sees an ERROR naming the matter and the digest, and
+		// nothing else (no file name, no actor).
+		query := port.VersionContentQuery{ActorID: e.viewer.String(), MatterID: e.m.String(), VersionID: first.ID}
+		assertIncident := func(problem string, want int) {
+			t.Helper()
+			got := e.logs.entries(t, "ERROR")
+			if len(got) != want {
+				t.Fatalf("%s: want %d error log(s), got %d: %s", problem, want, len(got), e.logs.raw())
+			}
+			rec := got[want-1]
+			if rec["matter"] != e.m.String() || rec["sha256"] != ver.SHA256 || rec["problem"] != problem {
+				t.Fatalf("%s: log fields: %v", problem, rec)
+			}
+			for _, secret := range []string{ver.Filename, e.viewer.String()} {
+				if strings.Contains(e.logs.raw(), secret) {
+					t.Fatalf("%s: the log must not carry %q: %s", problem, secret, e.logs.raw())
+				}
+			}
+		}
+		before := len(e.logs.entries(t, "ERROR"))
+		e.objs.Remove(e.m, ver.SHA256)
+		_, _, err = e.ev.OpenVersion(e.ctx, query)
+		if !errors.Is(err, port.ErrObjectMissing) || !errors.Is(err, port.ErrObjectUnavailable) {
+			t.Fatalf("lost bytes: %v", err)
+		}
+		assertIncident("missing", before+1)
+
+		broken := service.NewEvidenceService(e.work, contentStore{ObjectStore: e.objs, open: func(context.Context, matter.MatterID, string) (io.ReadCloser, error) {
+			return io.NopCloser(iotest.ErrReader(port.ErrObjectCorrupt)), nil
+		}})
+		_, rc, err = broken.OpenVersion(e.ctx, query)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for range 2 { // reading again must not log again
+			if _, err := io.ReadAll(rc); !errors.Is(err, port.ErrObjectCorrupt) {
+				t.Fatalf("damaged stream: %v", err)
+			}
+		}
+		_ = rc.Close()
+		assertIncident("corrupt", before+2)
+
+		down := service.NewEvidenceService(e.work, contentStore{ObjectStore: e.objs, open: func(context.Context, matter.MatterID, string) (io.ReadCloser, error) {
+			return nil, port.ErrObjectUnavailable
+		}})
+		if _, _, err = down.OpenVersion(e.ctx, query); !errors.Is(err, port.ErrObjectUnavailable) || errors.Is(err, port.ErrObjectMissing) {
+			t.Fatalf("a store that is down is unavailable, not missing: %v", err)
+		}
+		if n := len(e.logs.entries(t, "ERROR")); n != before+2 {
+			t.Fatalf("a store that is merely down is not an integrity incident; %d error logs", n)
+		}
 	})
 }
 

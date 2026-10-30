@@ -1,0 +1,349 @@
+{
+ "task": "MC-P0-CLAUDE-BROWSER-IDP-RESTORE-R2",
+ "candidate_manifest_sha256": "de8424ead1e9cd911c7a6fe124b48e5d67b6dcc9e519bb10a8b87453b05d4489",
+ "lineage": {
+  "prior_cases": "ui/cases.json",
+  "prior_cases_sha256": "bf2d082e9e5465a9bc2ae04375a4ed1540e7a45d1d33b9f06c0a9a26cd29771d"
+ },
+ "summary": {
+  "BLOCKED_BROWSER_TOOL_UNAVAILABLE": 24,
+  "AWAITING_HUMAN_TRIAL": 1,
+  "PASS": 1,
+  "FAIL": 1,
+  "NOT_OBSERVABLE": 1,
+  "BLOCKED": 3
+ },
+ "cases": [
+  {
+   "id": "CASE-UI-01",
+   "category": "DESIGN_TOKENS_TYPOGRAPHY",
+   "requirement": "R9 UIUX / Token Compliance",
+   "viewport": "1440x900",
+   "action": "Inspect font family, body size, line-height, heading size, and radius variables in globals.css and layout.tsx",
+   "expected": "Font-sans: Segoe UI, Helvetica Neue, Arial, sans-serif; Body: 14px (text-sm) leading 1.5; Heading: 22px (text-[1.375rem]) semibold normal tracking; Mono: monospace; Radius: 4px base, 8px panel",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-02",
+   "category": "INDEPENDENT_STATE_AXES_COLORS",
+   "requirement": "R9 UIUX / 5 Independent State Axes",
+   "viewport": "1440x900",
+   "action": "Verify distinct semantic color variables for the 5 independent state axes and ensure no conflation into binary success/failure",
+   "expected": "Execution: #364152; Verification: #236341; Dependency Ready: #174ea6; Dependency Blocked: #8a2925; Timing: #775317; Attention: #783e14; Error: #a12622; Header: #101820",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-03",
+   "category": "ROW_DENSITY_GEOMETRY",
+   "requirement": "R9 UIUX / Density 44px & 36px",
+   "viewport": "1440x900, 768x1024",
+   "action": "Inspect row height classes, cell padding, and multi-line title wrapping across comfortable vs compact density settings",
+   "expected": "Comfortable: min 44px row height, 8px vertical padding (h-11 or py-2.5), 14px body; Compact: min 36px row height, 4px vertical padding (h-9 or py-1), 14px body; Long titles wrap naturally without truncation",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-04",
+   "category": "DARK_THEME_CONTRAST",
+   "requirement": "R9 UIUX / Dark Theme Support",
+   "viewport": "1440x900",
+   "action": "Audit [data-theme='dark'] tokens, contrast ratios, and preservation of 5-axis semantics in dark mode",
+   "expected": "Accessible dark background (oklch), light text, distinct dark tokens for 5 axes, no raw white light tokens leaking into dark theme",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-05",
+   "category": "VIEWPORT_REFLOW_TOUCH_TARGETS",
+   "requirement": "R9 UIUX / Mobile & 320px Reflow",
+   "viewport": "320x568, 390x844, 768x1024, 1440x900",
+   "action": "Audit CSS media queries for touch targets (min 44px / 2.75rem), table horizontal scrolling, and responsive navigation",
+   "expected": "Mobile/coarse pointer controls: min-height 44px (2.75rem). Data tables retain min-width with scoped overflow-x-auto, no accidental full-page horizontal blowouts. Mobile menu drawer for narrow viewports.",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-06",
+   "category": "TEXT_SCALING_ZOOM_200",
+   "requirement": "R9 UIUX / Zoom 200% & WCAG 1.4.4",
+   "viewport": "1440x900 @ 200% Zoom",
+   "action": "Examine sizing units across typography, form fields, and layout wrappers for hardcoded fixed pixel height clipping",
+   "expected": "Text sizes in rem/em, fluid container heights (min-height instead of fixed height), text wraps without truncation or clipping",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-07",
+   "category": "KEYBOARD_FOCUS_DIALOGS",
+   "requirement": "R9 UIUX / Full Keyboard & Visible Focus",
+   "viewport": "1440x900",
+   "action": "Audit focus ring styles, tab navigation order, skip link, and dialog modal focus trapping and escape handling",
+   "expected": "Focus ring 2px outline with 2px offset; skip-to-content link present; native dialog uses showModal() with focus trap and Escape key restore",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-08",
+   "category": "ACCESSIBILITY_SCREEN_READER",
+   "requirement": "R9 UIUX / A11y & Screen Reader Verification",
+   "viewport": "1440x900",
+   "action": "Audit ARIA landmarks, table captions, role attributes, live regions, and screen-reader readiness",
+   "expected": "Semantic table, caption.sr-only, th scope=col/row, aria-live regions for record counts, aria-describedby for errors; physical assistive screen reader verification reported accurately",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PARTIAL_OR_DEVIATION",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-09",
+   "category": "CONTROL_ROOM_EXECUTIVE_TRIAGE",
+   "requirement": "R9 UIUX / Executive Control Room",
+   "viewport": "1440x900",
+   "action": "Audit triage section ordering, boundary timestamp declaration, sourceRevision, and deep links",
+   "expected": "Triage order: Blockers -> Next actions -> Waiting on -> Milestones -> Scope gaps -> Recent changes. As-of snapshot declared. Every row links to record with truthful from query parameter.",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-10",
+   "category": "MY_ACTIONS_AND_SCOPE",
+   "requirement": "R9 UIUX / My Actions & Scope Strip",
+   "viewport": "1440x900",
+   "action": "Verify 4 distinct sections of My Actions, unassigned handling, and MatterScope breadcrumb strip",
+   "expected": "My Actions separated into Next actions (ready), Waiting on others, Blocked, Completed/cancelled. MatterScope shows Workspace ID, Matter title, caller role badge, and read timestamp.",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-11",
+   "category": "AUDIT_HISTORY_PROVENANCE",
+   "requirement": "R9 UIUX / Audit Ledger & Provenance",
+   "viewport": "1440x900",
+   "action": "Audit audit history fields: cursor pagination, seq #, actorId/actorKind, target, recordedAt, effectiveAt, causeId, reason",
+   "expected": "Cursor pagination via nextCursor without invented total page count; exact server ordering; no invented actor or cause provenance",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-12",
+   "category": "PRODUCT_WORKFLOW_REQUIREMENT_ACTION_SEPARATION",
+   "requirement": "RULE-007 / Requirement vs Action Separation",
+   "viewport": "1440x900",
+   "action": "Audit work item detail routing, execution vs verification status independence, and completion != verification",
+   "expected": "Requirement records what must be true (lifecycle/verification); Action records work (execution/assignment). An Action can be COMPLETED while UNVERIFIED. Completed does not automatically grant verified.",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-13",
+   "category": "PRODUCT_WORKFLOW_PROOF_INDEPENDENT_VERIFIER",
+   "requirement": "RULE-014 / Independent Verifier Separation",
+   "viewport": "1440x900",
+   "action": "Audit evidence submission vs verifier assessment affordances, verifier candidate designation, and dispute handling",
+   "expected": "Evidence author cannot self-verify. Verifier must be designated. Non-verifiers receive 403 or disabled assessment. Disputes prevent satisfied derivation.",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-14",
+   "category": "PRODUCT_WORKFLOW_DOCUMENT_PROMOTION",
+   "requirement": "RULE-016 / Explicit Document Version Promotion",
+   "viewport": "1440x900",
+   "action": "Audit version list, promotion target select control, expected-current guard, and OWNER-only permission",
+   "expected": "'Current' is an explicit decision by OWNER, never latest upload. Distinct promote-target selection separate from expected-current guard. R9-N03 fix verified.",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-15",
+   "category": "PRODUCT_WORKFLOW_REGULATORY_FILINGS",
+   "requirement": "RULE-019 / Regulatory Filing Cycles & Negative Observations",
+   "viewport": "1440x900",
+   "action": "Audit filing stage stepper, negative outcome blocking message, signature requirement explanation, and cycles list",
+   "expected": "Stepper marks current step with aria-current=step. Negative outcome open blocks approval until closed/reopened. Observations append-only with correctsId.",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-16",
+   "category": "PRODUCT_WORKFLOW_IMPORT_VERIFICATION_CLAIM",
+   "requirement": "CL-03 / Import Verification Claim Non-Authoritative",
+   "viewport": "1440x900",
+   "action": "Verify import preview displays importedVerificationClaim as an unverified source claim and never grants VERIFIED status",
+   "expected": "Preview displays importedVerificationClaim explicitly marked as 'unverified until proved here'; atomic causal events created on backend commit",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-17",
+   "category": "PRODUCT_WORKFLOW_BULK_OUTCOMES_CONCURRENCY",
+   "requirement": "W6 / Bulk Edit Reconciliation & Slot Lock",
+   "viewport": "1440x900",
+   "action": "Audit bulk edit execution, per-row outcome list, and session attempt locking against concurrent submissions",
+   "expected": "Per-row status (SUCCESS, REJECTED, UNKNOWN); concurrent submission blocked while slot running; receipts cached until browser ACK",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-18",
+   "category": "PRODUCT_WORKFLOW_DELTA_BRIEF_EXPORT",
+   "requirement": "CL-01 & CL-02 / Delta Status Brief & Export CSV Sanitization",
+   "viewport": "1440x900",
+   "action": "Audit brief generation against declared window t1..t2, missing provenance fail-closed, and CSV formula escape",
+   "expected": "Brief applies domain evaluator at t2; missing historical provenance fails brief-unreconstructable; CSV escapes =, +, -, @ to prevent spreadsheet injection",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-19",
+   "category": "RECOVERY_REGRESSION_RELOAD_INSPECTION",
+   "requirement": "CL-04 / Reload Read-Only Inspection",
+   "viewport": "1440x900",
+   "action": "Verify page mount or browser reload of RecoveryGate does not POST a mutation, but reads retained attempt status",
+   "expected": "Mount runs recoverTransfersAction(matterId) read-only; withholds new forms until unresolved attempts are recovered or acknowledged",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-20",
+   "category": "RECOVERY_REGRESSION_TERMINAL_RESPONSE_LOST",
+   "requirement": "CL-04 / Terminal Response Lost & ACK Unlock",
+   "viewport": "1440x900",
+   "action": "Verify retained terminal receipts are read without re-mutation and unlocked only upon explicit matching browser ACK",
+   "expected": "Terminal receipts presented for user confirmation ('Confirm recovered results'); acknowledgeTransferAction unlocks the server slot",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-21",
+   "category": "RECOVERY_REGRESSION_UNKNOWN_IDEMPOTENCY",
+   "requirement": "CL-04 / UNKNOWN Outcome Idempotency & CAS Re-read",
+   "viewport": "1440x900",
+   "action": "Verify receipted command re-uses original idempotency key and frozen payload on retry, while CAS command requires re-read",
+   "expected": "IntentForm freezes payload on outcome-unknown with retrySameKey=true; ConfirmActionButton blocks re-click until state is re-read via router.refresh()",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-22",
+   "category": "RECOVERY_REGRESSION_ACCESS_LOSS_PURGE",
+   "requirement": "R8-N01 & CL-04 / Access-Loss Purge & Permanent Refusal Marker",
+   "viewport": "1440x900",
+   "action": "Verify access revocation purges protected payload from session slot and leaves refusal marker that re-grant cannot revive",
+   "expected": "revokeAttempts sets { blocked: matterId } clearing payload; beginAttempt refuses new or existing attempts if slot.blocked is set",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-23",
+   "category": "LOCALIZATION_INTENT_PRESERVATION",
+   "requirement": "NFR-010 & R8-N02 / EN-VI Locale Switch Form Intent",
+   "viewport": "1440x900",
+   "action": "Verify toggling locale EN/VI does not wipe out form draft in sessionStorage and preserves user input",
+   "expected": "Draft values persisted in sessionStorage under opaque namespace + draftKey; locale toggle preserves draft values and does not translate legal user inputs",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PASS",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-24",
+   "category": "LOCALIZATION_COMPREHENSIVE_AUDIT",
+   "requirement": "NFR-010 / Multi-Language Coverage Audit",
+   "viewport": "1440x900",
+   "action": "Perform full codebase inventory of Vietnamese translations vs hardcoded English strings",
+   "expected": "Audit identifies all localized components and lists every non-localized page, form, error message, and table header",
+   "prior_status_on_older_candidate": "SOURCE_CHECKED_PARTIAL_OR_DEVIATION",
+   "r2_status": "BLOCKED_BROWSER_TOOL_UNAVAILABLE",
+   "reason": "No rendered, keyboard, focus or reflow observation was possible in this run; the earlier status is source-level only and is not carried forward as rendered PASS."
+  },
+  {
+   "id": "CASE-UI-25",
+   "category": "HUMAN_TRIAL_AC137",
+   "requirement": "AC-137 / 5 Manager Comprehension Protocol",
+   "r2_status": "AWAITING_HUMAN_TRIAL",
+   "reason": "AC-137 needs five representative managers; no participant contacted; protocol files already prepared in ui/ (ac-137-*.md) and not re-pinned or altered here."
+  },
+  {
+   "id": "R2-CSS-01",
+   "category": "BUILD_OUTPUT",
+   "requirement": "Product UI is styled in a production build",
+   "action": "next build (Turbopack) of the pinned snapshot, inspect emitted CSS",
+   "expected": "Compiled utilities (.flex, .sr-only, .bg-background) and no raw @theme/@apply",
+   "observed": "41,045-byte CSS; all three utilities present; no raw directives",
+   "r2_status": "PASS",
+   "evidence": "browser/turbopack-css-check.json, resources/fe-snapshot-build-turbopack-2.log"
+  },
+  {
+   "id": "R2-CSS-02",
+   "category": "BUILD_OUTPUT",
+   "requirement": "Same, for a Webpack production build",
+   "action": "next build --webpack of the pinned snapshot, inspect emitted CSS",
+   "expected": "Same as R2-CSS-01",
+   "observed": "25,313-byte CSS containing raw @theme; .flex/.sr-only/.bg-background absent: Tailwind not compiled",
+   "r2_status": "FAIL",
+   "severity": "P2",
+   "evidence": "browser/webpack-css-reproduction.json, resources/fe-snapshot-build.log",
+   "note": "Pinned candidate has no postcss.config.mjs and no @tailwindcss/postcss; an unowned writer is adding them to the working tree right now (see return.md source drift). Any runtime built with Webpack, including the earlier retained Cloud runtime, serves an unstyled UI; \"webpack build exit 0\" gates only prove compilation."
+  },
+  {
+   "id": "R2-RV001-SRV",
+   "category": "RV-001",
+   "requirement": "RV-001 at the server",
+   "action": "Signed-out GET /matters/m1/work/i1?from=/..//evil.test and normal controls",
+   "expected": "sanitized from in the sign-in returnTo",
+   "observed": "not observable: the MatterScope layout replaces the page with its own sign-in screen",
+   "r2_status": "NOT_OBSERVABLE",
+   "evidence": "idp/http-negative-probes.json",
+   "note": "Unit-level proof exists in claude-rv001-fix (13 red to 90 green, real paths.ts executed)."
+  },
+  {
+   "id": "R2-RV001-BACK",
+   "category": "RV-001",
+   "requirement": "RV-001 rendered Back link",
+   "action": "Signed in as A: open /matters/{m}/work/{item}?from=/..//evil.test, read the Back href, click it; repeat with ?from=/matters/{m}/work?execution=WAITING and a dot-segment path like /matters/{m}/work/../planning",
+   "expected": "Hostile values fall back to /matters/{m}/work on the same origin; the click never leaves the app origin; the two normal values are kept (the dot-segment one canonicalized to /matters/{m}/planning)",
+   "r2_status": "BLOCKED",
+   "reason": "Needs a verified signed-in session (BLOCKED_EMAIL_VERIFICATION) and an operable browser tool."
+  },
+  {
+   "id": "R2-CR002-OBS",
+   "category": "CR-002",
+   "requirement": "CR-002 (decision required)",
+   "action": "Signed in: create an action with the API stopped mid-request to force OUTCOME_UNKNOWN, note the Idempotency-Key shown/kept, reload, resubmit",
+   "expected": "Observation only: record whether the original key survives the reload (the source says it does not); do not mint or resend by hand, keep the original receipt and read back per contract",
+   "r2_status": "BLOCKED",
+   "reason": "Needs a signed-in session; no persistence choice was made."
+  },
+  {
+   "id": "R2-GW-01..03",
+   "category": "GOLDEN_WORKFLOWS",
+   "requirement": "AC-161 golden workflows through REST",
+   "action": "Run GW-01, GW-02, GW-03 as A (and B where required) through the UI",
+   "expected": "Per docs/requirements/golden-workflow-acceptance.md",
+   "r2_status": "BLOCKED",
+   "reason": "Needs signed-in sessions and a browser. Service/PG-level ledgers exist from earlier author runs and are not browser evidence."
+  }
+ ]
+}

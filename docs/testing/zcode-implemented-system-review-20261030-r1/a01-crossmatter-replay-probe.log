@@ -1,0 +1,18 @@
+=== RUN   TestMCA01Probe_MemoryStore
+=== RUN   TestMCA01Probe_MemoryStore/A-01_cross-matter_same-key_same-hash_receipt_replay_is_refused_at_the_service_layer
+    mca01_probe.go:67: A-01 REPRODUCED: matterB command replayed matterA's record id 01a18a65-e436-7e34-9e6a-ae42a31f7952 (direct service invocation, same key+hash)
+--- FAIL: TestMCA01Probe_MemoryStore (0.00s)
+    --- FAIL: TestMCA01Probe_MemoryStore/A-01_cross-matter_same-key_same-hash_receipt_replay_is_refused_at_the_service_layer (0.00s)
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol	0.368s
+FAIL
+MEM_EXIT=1
+=== RUN   TestMCA01Probe_Postgres
+=== RUN   TestMCA01Probe_Postgres/A-01_cross-matter_same-key_same-hash_receipt_replay_is_refused_at_the_service_layer
+    mca01_probe.go:67: A-01 REPRODUCED: matterB command replayed matterA's record id 01a18a65-e9f2-7b8d-b2b1-0d5d92ea81a5 (direct service invocation, same key+hash)
+--- FAIL: TestMCA01Probe_Postgres (0.33s)
+    --- FAIL: TestMCA01Probe_Postgres/A-01_cross-matter_same-key_same-hash_receipt_replay_is_refused_at_the_service_layer (0.33s)
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/outbound/postgres	0.729s
+FAIL
+PG_EXIT=1

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 // gateVerifier parks every Verify call until release is closed, so a request holds its slot.

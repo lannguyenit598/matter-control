@@ -1,0 +1,277 @@
+{
+  "task": "MC-003A.8A F10 rereview intake followups",
+  "author": "Local Codex, mechanical/source-trace intake, not architecture authority",
+  "supplemental_expected_case": {
+    "id": "T14b",
+    "owner": "Codex intake supplement from reviewer L1",
+    "status": "DOCUMENT_EXPECTED",
+    "runtime": "NOT_RUN",
+    "known_main": {
+      "mainSeq": 41,
+      "observationId": "O7",
+      "evidenceLinkedCount": 2
+    },
+    "single_fetched_link_page": [
+      {
+        "seq": 42,
+        "type": "filing.observation.evidence_linked",
+        "causeSeq": 41,
+        "payload": {
+          "observationId": "O7"
+        },
+        "evidenceId": "E1"
+      },
+      {
+        "seq": 43,
+        "type": "filing.observation.evidence_linked",
+        "causeSeq": 41,
+        "payload": {
+          "observationId": "O7"
+        },
+        "evidenceId": "E2"
+      },
+      {
+        "seq": 44,
+        "type": "filing.observation.recorded",
+        "causeSeq": null,
+        "payload": {
+          "observationId": "O8",
+          "evidenceLinkedCount": 1
+        }
+      },
+      {
+        "seq": 45,
+        "type": "filing.observation.evidence_linked",
+        "causeSeq": 44,
+        "payload": {
+          "observationId": "O8"
+        },
+        "evidenceId": "E9"
+      }
+    ],
+    "expected": {
+      "exact_match_count": 2,
+      "anomaly": false,
+      "other_cause_link_counted": false,
+      "other_cause_link_anomaly": false,
+      "fetch_another_page": false,
+      "completion": "N matches with no anomaly in scanned window"
+    },
+    "scope": "Supplement only; original T1..T22 and22CT/51INTA IDs/results unchanged; no production event sequence or runtime result claimed"
+  },
+  "replay_source": {
+    "review_limitation": "L2",
+    "pins": [
+      {
+        "path": "docs/architecture/api-contracts.md",
+        "bytes": 25038,
+        "sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+        "last_content_commit": "8521c2a08d87f6b070900d8c2b6f490a89d34e09",
+        "matches_committed_content": true,
+        "authority": "candidate architecture, not PO-approved",
+        "excerpt_line_spans": [
+          [
+            1,
+            5
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            66,
+            66
+          ]
+        ]
+      },
+      {
+        "path": "docs/architecture/filing-model.md",
+        "bytes": 7652,
+        "sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+        "last_content_commit": "3a86ca829d15ea15c50743f67573163046393407",
+        "matches_committed_content": true,
+        "authority": "candidate architecture, not PO-approved",
+        "excerpt_line_spans": [
+          [
+            1,
+            5
+          ],
+          [
+            13,
+            17
+          ],
+          [
+            46,
+            48
+          ]
+        ]
+      }
+    ],
+    "source_alias": "No standalone api-conventions file found by exact filename lookup; existing candidate api-contracts \u00a71 provides the concrete replay text. Alias binding and compatibility remain technical review, not assumed approval.",
+    "candidate_replay_rules": [
+      "Current scope and all represented Matter read access before stored body",
+      "Same actor/key/hash replays stored committed outcome",
+      "Authorized changed hash yields422 idempotency-key-reuse",
+      "Loss of authority yields uniform404, including on operations lookup",
+      "Changed Idempotency-Key is another intent and is never a safe unknown-outcome retry"
+    ],
+    "disposition": "Exact candidate citation supplied by Codex; not independently rereviewed against source"
+  },
+  "exact_supersession": [
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/02-final-delta.json",
+      "old_file_sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "old_json_pointer": "/c1/patches/check_ordering",
+      "old_prose_locator": "01-final-owner-confirmation.txt \u00a7C1/P1.3",
+      "old_value_sha256": "90d1da6b37c6d25e8d7929cd9442cac6e24698702a1dd38ebe259d48a67f230b",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc04_scoped_pipeline",
+      "new_prose_section": "01-corrected-owner-return.txt \u00a75",
+      "replacement_scope": "Global-order interpretation replaced by filing-family-only pipeline/matrix",
+      "preserved": "Other commands and atomic effects unchanged"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/02-final-delta.json",
+      "old_file_sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "old_json_pointer": "/c2/patches/actions",
+      "old_prose_locator": "01-final-owner-confirmation.txt \u00a7C2/P2.1 terminal wording only",
+      "old_value_sha256": "c6014e4899d4190540d89da38f60d8b036dbed5734e739fe4cacbdc8d9136326",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc01_oc05_terminal_derivation",
+      "new_prose_section": "\u00a72",
+      "replacement_scope": "Terminal is per original; original-target-only and superseded replacement exclusion explicit",
+      "preserved": "OWNER/reason/discriminated payload/full rollback retained"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/02-final-delta.json",
+      "old_file_sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "old_json_pointer": "/c2/patches/effective_view",
+      "old_prose_locator": "01-final-owner-confirmation.txt \u00a7C2/P2.2 first effective-linkage sentence",
+      "old_value_sha256": "fdce98198ffd0af268dc6887683a18e417a427b0b36fa68896e64ef2415775ac",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc01_oc05_terminal_derivation/effective_links",
+      "new_prose_section": "\u00a72",
+      "replacement_scope": "Replace incomplete effective-link derivation",
+      "preserved": "Append-only/pure snapshot derivation; current totals and proof limitations remain"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/02-final-delta.json",
+      "old_file_sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "old_json_pointer": "/c3/patches/emission_rules",
+      "old_prose_locator": "01-final-owner-confirmation.txt \u00a7C3/P3.3 completeness inference only",
+      "old_value_sha256": "71cf8bb905df349a582fdde291e3366e54a41136f0985431314b8771d1e8021b",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc02_observed_window",
+      "new_prose_section": "\u00a73",
+      "replacement_scope": "Completion inference bounded to observed window, not arbitrary corruption outside it",
+      "preserved": "Main-before-link and emission rules are not removed"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/02-final-delta.json",
+      "old_file_sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "old_json_pointer": "/c3/patches/edge_semantics",
+      "old_prose_locator": "01-final-owner-confirmation.txt \u00a7C3/P3.4",
+      "old_value_sha256": "d12fb8f7ecb43ab4a68d215a81ed8767566241b48659a268081ec30236a4c803",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc03_anomaly_predicate",
+      "new_prose_section": "\u00a73 + \u00a74",
+      "replacement_scope": "Exact match and separate wrong-observation anomaly; surplus within fetched closing page only",
+      "preserved": "No false current-proof/zero inference; normative AND match remains"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/02-final-delta.json",
+      "old_file_sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "old_json_pointer": "/c3/patches/completion",
+      "old_prose_locator": "01-final-owner-confirmation.txt \u00a7C3/P3.5 stop/completeness portion",
+      "old_value_sha256": "ecd2cbf7b05251c7ec7934a725bc6822c15728ed92b49c3d3faef4e6bc13668e",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc02_observed_window",
+      "new_prose_section": "\u00a73",
+      "replacement_scope": "Closing-page stop and outside-window non-claim supersede broad completion wording",
+      "preserved": "Per-page provenance/no shared snapshot/no overview merge/current proof claims remain prohibited"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/03-C1-C2-R2-delta.json",
+      "old_file_sha256": "d2b03fe52def0168ae6dbd552ecd3f7ceee7204229e93d21c1d4823a77b39ed2",
+      "old_json_pointer": "/clause1_lifecycle/supplement_request",
+      "old_prose_locator": "R2 supplement_request guard-order portion",
+      "old_value_sha256": "f81ffcefe066899ac1a1ebb62e1bff0252d5398b2327c3e249e8a3ec72c8a580",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc04_scoped_pipeline/matrix/supplement",
+      "new_prose_section": "\u00a75",
+      "replacement_scope": "Filing-family preconditions precede scoped existence/guard checks",
+      "preserved": "Server-derived n+1, full atomic cycle/observation/link/history effects and rollback retained"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/03-C1-C2-R2-delta.json",
+      "old_file_sha256": "d2b03fe52def0168ae6dbd552ecd3f7ceee7204229e93d21c1d4823a77b39ed2",
+      "old_json_pointer": "/clause2_correction/terminal_rule",
+      "old_prose_locator": "R2 clause2 terminal_rule",
+      "old_value_sha256": "3284ae81999ee43e79b647e75b4afd723f6aa7a96c85d6f665470965a70c3d5b",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc01_oc05_terminal_derivation",
+      "new_prose_section": "\u00a72",
+      "replacement_scope": "Clarify terminal separately per original",
+      "preserved": "Immutable history and original-target-only retained"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/04-C3-R3-delta.json",
+      "old_file_sha256": "bcb89b22ab43957d81e09c996ec9b792e8bac38a1b84de96e6f9cd8b6a202eb2",
+      "old_json_pointer": "/path_A_recommended/discovery",
+      "old_prose_locator": "R3 pathA discovery OR expression; already superseded by finalP3.1 AND",
+      "old_value_sha256": "c3e1d7cbc78c6b7dab3055d3a01b5bd05c124611f8054064f56be94e783dfeae",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc03_anomaly_predicate/exact_match_kept",
+      "new_prose_section": "\u00a74",
+      "replacement_scope": "No OR match; exact AND plus separate anomaly predicate",
+      "preserved": "Unfiltered same-Matter seq traversal; no new route/filter"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/04-C3-R3-delta.json",
+      "old_file_sha256": "bcb89b22ab43957d81e09c996ec9b792e8bac38a1b84de96e6f9cd8b6a202eb2",
+      "old_json_pointer": "/path_A_recommended/stop_condition",
+      "old_prose_locator": "R3 pathA stop_condition",
+      "old_value_sha256": "82d42152b533c278e00bf9f66eb2c58ef4e890324e842a38a5562fc624d076ea",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc02_observed_window",
+      "new_prose_section": "\u00a73",
+      "replacement_scope": "Stop after inspecting entire fetched closing page",
+      "preserved": "No speculative lookahead or global-exhaustion requirement"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/04-C3-R3-delta.json",
+      "old_file_sha256": "bcb89b22ab43957d81e09c996ec9b792e8bac38a1b84de96e6f9cd8b6a202eb2",
+      "old_json_pointer": "/trace_O7_E3/completion",
+      "old_prose_locator": "R3 trace completion/incomplete-cursor wording",
+      "old_value_sha256": "ee35c463b882ae3b99b2eaf62799c35d9e6bdbc47d9f62e6dc00da885a130267",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc02_observed_window/completion_claim",
+      "new_prose_section": "\u00a73",
+      "replacement_scope": "Command-local observed completion; outside-window corruption not claimed detected",
+      "preserved": "Per-page asOf/sourceRevision labels retained"
+    },
+    {
+      "old_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/02-final-delta.json",
+      "old_file_sha256": "72e4d081696581c528f1cb45b5fd87497f2eddf042d071bb2083d4a859aa8f17",
+      "old_json_pointer": "/projection/numeric_bounds",
+      "old_prose_locator": "Final Projection numeric-bound units only",
+      "old_value_sha256": "b1ae2c2d420214d50af9ac5f1f307c87ad12a426f2d2f35092cde34c7a861ea7",
+      "new_file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "new_json_pointer": "/oc06_bounds",
+      "new_prose_section": "\u00a76",
+      "replacement_scope": "Proposed codepoint unit/inclusive boundary added",
+      "preserved": "Numbers remain proposed; envelope/source authority unresolved"
+    }
+  ],
+  "remaining_source_compatibility": {
+    "L4": "NOT_VERIFIED; no full-source architecture compatibility verdict from scoped rereview",
+    "L5": "ordinary observation missing cycleNo versus explicit null is not specified by inspected candidate API\u00a71.1/filing-model\u00a73; do not default to current cycle or rejection by inference",
+    "role_mapping_and_link_pk": "Candidate assumptions require explicit source/technical disposition; do not call source-proven"
+  },
+  "label_distinctions": [
+    "Reviewer limitations L1..L5 are not provenance L1/L2 alternatives",
+    "PathA seq traversal and optional causeSeq filterB are separate from A33/B35 nested-read alternatives",
+    "No option/field/bound/route adopted by this intake"
+  ],
+  "supersession_kind": "Trace-only locators and limited replacement scopes, not an executable JSON patch"
+}

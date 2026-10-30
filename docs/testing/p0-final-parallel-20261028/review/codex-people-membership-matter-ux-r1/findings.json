@@ -1,0 +1,28 @@
+{
+  "task": "MC-P0-CLAUDE-PEOPLE-MEMBERSHIP-MATTER-UX-REVIEW",
+  "reviewer": "Actual Local Codex; nonauthor of the Claude UX delta, author of earlier baseline",
+  "head": "20feedbf06c859a9806055d609f5b132fe8bb086",
+  "verdict": "CHANGES_REQUIRED",
+  "findings": [
+    {
+      "id": "UXR-01",
+      "priority": "P2",
+      "file": "apps/frontend/src/features/matters/components/grant-matter-member-form.tsx",
+      "line": 91,
+      "summary": "A changed eligible-candidate set does not refresh picker results or invalidate a removed selection.",
+      "reproduction": "Open Matter add dialog, select Alex from candidates=[Alex], rerender same Matter with new If-Match and candidates=[] (router.refresh shape). Alex remains checked in FormData.",
+      "cause": "latestSearch ref changes without rerunning effect; chosen is always prepended even if candidate set no longer contains it.",
+      "fix": "Reconcile the actual complete eligible-candidate set with selection and displayed options. Keep role/UNKNOWN/command state; do not blindly remount IntentForm or treat filtered search absence as ineligibility."
+    },
+    {
+      "id": "UXR-02",
+      "priority": "P2",
+      "file": "apps/frontend/src/components/molecules/search-picker.tsx",
+      "line": 128,
+      "summary": "Previous query results stay selectable while the new query is pending.",
+      "reproduction": "Initial response contains Alex. Type Bao and hold its response unresolved. Alex is still enabled/clickable although status says Searching.",
+      "cause": "found uses settled.result without settled.query===query.",
+      "fix": "Hide or disable unselected stale results until current query settles; retain a previously chosen item in a clearly distinct selected area."
+    }
+  ]
+}

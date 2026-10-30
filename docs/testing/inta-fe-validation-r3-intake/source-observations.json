@@ -1,0 +1,64 @@
+{
+  "actor": "Local Codex intake; not OpenCode verdict",
+  "observations": [
+    {
+      "id": "R3-N01",
+      "severity": "P1",
+      "area": "lifecycle / R2-I03",
+      "evidence": "runner/coordinator.py:90-165,383-428",
+      "observation": "Identity remains optional/name substring without start identity; real cleanup calls omit expected_name and expected_parent. Termination waits via kill(pid,0), not owned child wait; early abort calls ignore return. Do not execute."
+    },
+    {
+      "id": "R3-N02",
+      "severity": "P1",
+      "area": "binding / R2-I02,I05",
+      "evidence": "runner/coordinator.py:191,313-344; launcher/harness-dev.mjs:116-123,180-185",
+      "observation": "Node resolves from PATH; launcher defaults nextBin=next, cwd=process.cwd(); CLI supplies no explicit private executable/state binding. HOME/PATH inherited and observer Popen has no bounded env. Binding still unverified."
+    },
+    {
+      "id": "R3-N03",
+      "severity": "P1",
+      "area": "selfcheck safety / R2-I06",
+      "evidence": "runner/selfcheck-r3.py:426,432,505-518; runner/coordinator.py:95,142,182",
+      "observation": "Tests 20/21 do not inject kill_func; test25 VariantRunner also retains default os.kill and does not assert successful observer cleanup. Under some PID existence outcomes test25 can signal a numeric PID. Full suite is unsafe to rerun as mock-only. Static reach, not a claim that historical SIGTERM occurred."
+    },
+    {
+      "id": "R3-N04",
+      "severity": "P2",
+      "area": "evidence schema / R2-I04",
+      "evidence": "runner/guard_evaluator.py:24-32,77,130,154,182-190",
+      "observation": "Present falsey error field still accepted; default observer_exit_code=0 and during_sample_count=1 allow omitted evidence; identity optional; count/exit types not all strict. Zero-sample rejection improved but complete source claim remains unproven."
+    },
+    {
+      "id": "R3-N05",
+      "severity": "P2",
+      "area": "scope and provenance / R2-I01,I06",
+      "evidence": "runner/coordinator.py:27-53,503-509; proposals/pre-listen-launcher-proposal-r3.md:2.1,2.5; r3-test-summary.json",
+      "observation": "Named 22-variant list contains 24 entries (12 keys), includes API_TOKEN already run and still lacks NODE_ENV=production in actual plan. Proposal Node v24.10.0 conflicts with summary v24.22.1 and describes npx/default behavior inconsistent with strict binding. Empty existing attempt accepted. These need exact scope/binding disposition, not a new PO option-A vote."
+    },
+    {
+      "id": "R3-N06",
+      "severity": "P2",
+      "area": "test reach and durability / R2-I06",
+      "evidence": "runner/selfcheck-r3.py:435-447,549-572; launcher/test-launcher-mock.mjs:284; runner/observer.py:52-58",
+      "observation": "Writer test is permission based, not individual replace/fsync failure injection; run_plan tests do not execute thin wrapper; relative path assertion has an absolute-path OR fallback; positive-path, probe timeout/exception and cleanup failure coverage incomplete. Atomic file fsync exists but parent-directory durability not established."
+    }
+  ],
+  "variant_count": 24,
+  "variant_keys": [
+    "API_TOKEN",
+    "API_MODE",
+    "API_BASE_URL",
+    "AUTH_ALLOW_ANONYMOUS",
+    "API_TIMEOUT_MS",
+    "AUTH_SECRET",
+    "NEXTAUTH_SECRET",
+    "CLERK_SECRET_KEY",
+    "SESSION_SECRET",
+    "COOKIE_SECRET",
+    "DATABASE_URL",
+    "JWT_SECRET"
+  ],
+  "runtime_released": false,
+  "owner_suite_rerun": false
+}

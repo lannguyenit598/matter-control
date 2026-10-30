@@ -1,0 +1,32 @@
+{
+  "agent": "actual Local Codex",
+  "tool": "official cua_repl / in-app browser",
+  "mode": "author runtime verification; live synthetic data; not independent acceptance",
+  "observed_utc_window": "2026-10-29T02:25Z to 2026-10-29T02:29Z",
+  "account_evidence": "Workspace and Matter member UI displayed cloud-synthetic-b OWNER. No bearer token, cookie, password or subject was inspected. Not a Synthetic A result.",
+  "resources_created_and_retained": {
+    "workspace_id": "01a1857a-e7a9-77b0-b2a4-3e6fac9af52e",
+    "workspace_name": "UX Review Synthetic 2026-10-29",
+    "matter_id": "01a1857b-766a-779d-b155-23cae7bcc80b",
+    "matter_name": "Acme Acquisition Synthetic UX",
+    "requirement_id": "01a1857c-8ff3-7887-9d2d-21b8345d0d45",
+    "requirement_title": "Board approval obtained - synthetic"
+  },
+  "observed": [
+    "Click Sign in -> existing normal SSO -> authenticated Workspaces screen",
+    "Create workspace with a name -> named Workspace and Create first matter action",
+    "Create Matter with a name -> named breadcrumbs and shared Action/Requirement choice",
+    "Both creation disclosures initially collapsed; opening Requirement exposes only its form",
+    "Enter Requirement title/outcome -> open Action -> press Return on Requirement disclosure -> original Requirement values retained and Action form absent from accessibility tree",
+    "Create Requirement -> canonical /matters/{matterId}/work/{id} and heading with created title",
+    "Detail shows Not started / Unverified / Ready / No due date / Normal, plus owner/due controls and proof section; creation did not imply completion or verification"
+  ],
+  "screenshot": "matter-creation-choice.jpg",
+  "handoff": "After the user replied that they would log in themselves, browser interaction stopped and the tab was marked for handoff.",
+  "not_run": [
+    "Synthetic A after user takeover",
+    "Create Action, Document and Filing in browser",
+    "Browser reload with unknown result or forced network loss",
+    "A/B isolation, full keyboard traversal, mobile, contrast audit, screen reader, AC-137"
+  ]
+}

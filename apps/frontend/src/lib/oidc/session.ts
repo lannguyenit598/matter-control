@@ -1,6 +1,8 @@
 import 'server-only'
 
 import { type OidcConfig } from './config'
+import { durableState } from './durable-state'
+import { livePersistentSession } from './session-persistence'
 import { OidcError, refreshTokens } from './flow'
 import { destroySession, readSession, updateSession, type SessionRecord } from './session-store'
 
@@ -20,6 +22,9 @@ export async function liveSession(
   handle: string,
   now = Date.now(),
 ): Promise<{ record: SessionRecord; accessToken: string } | null> {
+  if (!/^[A-Za-z0-9_-]{43}$/.test(handle)) return null
+  const store = durableState()
+  if (store) return livePersistentSession(cfg, handle, store, now)
   const record = readSession(handle, cfg, now)
   if (!record) return null
   if (record.accessExpiresAt - now > REFRESH_WINDOW_MS || !record.refreshToken) {

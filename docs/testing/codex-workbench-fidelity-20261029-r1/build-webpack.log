@@ -1,0 +1,32 @@
+▲ Next.js 16.4.2 (webpack)
+✓ Running next.config.ts took 45ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.8s
+  Running TypeScript ...
+  Finished TypeScript in 7.8s ...
+  Collecting page data using 9 workers ...
+Error: Failed to collect configuration for /api/matters/[matterId]/documents/[documentId]/versions
+    at ignore-listed frames {
+  [cause]: Error: Invalid environment configuration:
+  ✖ API_BASE_URL must be an absolute URL when API_MODE=rest
+    → at API_BASE_URL
+      at <unknown> (.next/server/chunks/1180.js:1:8924)
+      at 81484 (.next/server/chunks/1180.js:2:34)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at 59497 (.next/server/chunks/4188.js:1:3681)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at 753 (.next/server/chunks/4188.js:1:122)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at 21194 (.next/server/app/api/matters/[matterId]/documents/[documentId]/versions/route.js:1:560)
+      at g (.next/server/webpack-runtime.js:1:135)
+      at userland (.next/server/app/api/matters/[matterId]/documents/[documentId]/versions/route.js:1:3336)
+}
+
+> Build error occurred
+Error: Failed to collect page data for /api/matters/[matterId]/documents/[documentId]/versions
+    at ignore-listed frames {
+  type: 'Error'
+}

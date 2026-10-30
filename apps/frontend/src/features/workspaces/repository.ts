@@ -1,4 +1,5 @@
 import 'server-only'
+import { z } from 'zod'
 
 import { mcRequest, pathId } from '@/lib/mc/client'
 
@@ -15,6 +16,15 @@ import {
  * the API per call, never inferred here.
  */
 export const workspaceRepository = {
+  candidates: async (id: string, q = '') =>
+    (
+      await mcRequest(`/workspaces/${pathId(id)}/member-candidates`, {
+        query: { q },
+        schema: z.object({
+          items: z.array(z.object({ userId: z.string(), displayName: z.string() })),
+        }),
+      })
+    ).data,
   listMine: async (cursor?: string) =>
     (await mcRequest('/workspaces', { query: { limit: 50, cursor }, schema: workspacePageSchema }))
       .data,

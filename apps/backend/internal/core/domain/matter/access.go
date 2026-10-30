@@ -130,7 +130,10 @@ type Node struct {
 }
 
 // SecurityAuditEntry is a restricted security-audit record. It never contains titles,
-// content or response bodies, only a hash of the requested identifier.
+// content or response bodies, only a hash of the requested identifier. ClientIP and RequestID
+// are the per-request tracing fields (A1): dotted client IP as seen by the API boundary
+// (proxy chain caveat documented in ops) and the server-generated request correlation id;
+// both are empty when the request carried no usable value.
 type SecurityAuditEntry struct {
 	EventID               string
 	OccurredAt            time.Time
@@ -139,6 +142,8 @@ type SecurityAuditEntry struct {
 	Outcome               string
 	RequestedResourceKind string
 	RequestedIDHash       []byte
+	ClientIP              string
+	RequestID             string
 }
 
 // HashID returns the SHA-256 digest of an identifier string for restricted audit rows.

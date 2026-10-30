@@ -1,0 +1,67 @@
+{
+  "task": "MC-002-INTA-QA-CLOSEOUT-R1",
+  "purpose": "New review input addendum: the corrected Antigravity R1 return was actually present at review time, contrary to the READY_NOT_DISPATCHED clue in docs/testing/inta-closeout-continuation/review-inputs.json. Per the review prompt this R1 packet is pinned here BEFORE any content read; the original input manifest is NOT mutated.",
+  "author": "Actual OpenCode, independent nonauthor reviewer",
+  "pinned_at_utc": null,
+  "pinned_at_utc_note": "Original recorded value 2026-10-26T07:45:00Z was corrected during final verification because it lay in the future relative to the session clock (date -u showed 2026-10-26T06:39:41Z/06:41:15Z while re-checking outputs). The absolute pin timestamp cannot be reconstructed, so it is explicitly null rather than an unverifiable value. The pin-order guarantee (shasum computed before any R1 packet content was read) still holds as described in pin_method.",
+  "timestamp_correction_utc": "2026-10-26T06:40:00Z",
+  "pin_method": "shasum -a 256 via rtk proxy, executed before any R1 content was read",
+  "base_repo": {
+    "branch": "codex/unified-project-flow",
+    "head": "a62d838791ba188838c4ff00b7b6e265ac775056"
+  },
+  "r1_return_doc": {
+    "path": "docs/reviews/inta-fe-validation-r1-antigravity-return.md",
+    "sha256_at_initial_pin_and_read": "63d12ea9a45ff62950c3d3bda3c44d3c15084627194f0e59c9970d42c8db514f",
+    "sha256_recheck_20261026": "27a2a7e3a2de9f332c0562c95a3301ab67452d09925782f3813923da0755a555",
+    "recheck_note": "At 2026-10-26T06:44:05Z the file hashed 27a2a7e3.../14075B, matching the freeze recorded in docs/testing/inta-closeout-continuation/r1-review-addendum.json (author: Local Codex, utc 2026-10-26T06:36:44Z). The reviewer's FEVAL-F01..05 verdicts are anchored on the R1 PACKET files (manifest 677cd24f... unchanged) and direct source reads, not on the return doc narrative; the changed narrative was re-read and re-assessed at 27a2a7e3... before finalizing verdicts."
+  },
+  "late_intake_pins": {
+    "observed": "docs/testing/inta-fe-validation-r1-intake/ (Codex R1 intake packet) and docs/reviews/inta-fe-validation-r1-intake.md appeared after the reviewer's initial packet read; hashes below were computed at 2026-10-26T06:43:52Z and 2026-10-26T06:44:20Z before dependency on their content for final verdicts:",
+    "files": [
+      {"path": "docs/reviews/inta-fe-validation-r1-intake.md", "sha256": "b3a677cda465a6631faff16b79f39d2f69f9217faaf93b70dac54d4060be238b"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/manifest.json", "sha256": "4d4382a3b2703687d80d410b9797bd7e2355cee1eab32fa428e82a5e33f0f860"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/checks.json", "sha256": "fed373b858ffbab6de4c384655731a957e284a253fedac87fca8a26f87be5545"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/execution.json", "sha256": "7e8ca27bc9e1ec1672fe2afc75e1d8446ca508d857923e8161b285c8cc8fcc89"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/additional-failclosed-probes.json", "sha256": "82a23090ff60720a34c8a998e0a7f4e81e899d20c3120c998f03642479f439f5"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/runner-language-probes.json", "sha256": "55989161185d7c736130b7d9217570f44356c1f67f6a30eaadde115e657e6d72"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/selfcheck-results.json", "sha256": "4e187cc28b5f7919e2e0aff6f18b3398dd297ff45bb454848b391eadff1e9893"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/delivery-checks.json", "sha256": "1e0ed60069da12c14ce7902a2bbd2230d41648f3e7d0de5c38edb8fc6277a968"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/selfcheck.stdout.txt", "sha256": "120f9f424c18b313b5d71a0792be599714edb694adf213d9f230e76854dc0042"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/standalone-probe-execution.json", "sha256": "e1a80040574c3611c5d30ec3274b07fd130ea6a0f66e2eefe91241366254f4be"},
+      {"path": "docs/testing/inta-fe-validation-r1-intake/reproduce_evaluator_probes.py", "sha256": "4f81f9664c91d0e6e7ec5a734006eaf077a6a7cd39fad251d9f8fd6e79b366ba"},
+      {"path": "docs/testing/inta-closeout-continuation/r1-current-context-supersession.json", "sha256": "e6fc9b1bcc95dffaf6f5fc75cbd3f93a0baae96370ba9d78914eaea64b5c608c"}
+    ]
+  },
+  "r1_packet": {
+    "path": "docs/testing/inta-returns/frontend/validation-r1-20261026/",
+    "manifest": "manifest.json",
+    "manifest_sha256_before_content_read": "677cd24f61bae83ace965aa24c7d4783ec53d38b67a8d0af8309b592f043a2bb",
+    "files": [
+      {"path": "guard-startup-subchecks-r1.json", "sha256": "97f1eefc807595e5442a74b3516535fb090443274b28656b5e6a835dd4714f3b"},
+      {"path": "report-errata-reconciliation.json", "sha256": "9cde7f93642c2cfb34557d959df3888b358c0314d55d4d9491d5f0b1db4cd922"},
+      {"path": "credential-pattern-scan-r1.json", "sha256": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df8f5e282c6d661b26b", "note": "hash as computed at pin time"},
+      {"path": "runner-scripts/dependency-isolation-plan.md", "sha256": "0c57caf669c109dcbbc14857a8804cd772bde5467984879dde64bb2b34a2983b"},
+      {"path": "runner-scripts/guard-validator-r1.sh", "sha256": "104abf3fd2317095d69205ec63501f9e02f5040cf32d23a55bca60a491b9e55e"},
+      {"path": "runner-scripts/guard_evaluator.py", "sha256": "d018f68f969ee08468c224c695fa37a5b9d646d24add114c7dd5636643a5737b"},
+      {"path": "runner-scripts/selfcheck-r1.py", "sha256": "f9432142802927fa3fd9f8a9b7268e6a047980b28ad38c879343dc2c52244827"},
+      {"path": "runner-scripts/selfcheck-r1-results.json", "sha256": "be070bfcfe516a837308a682837e940def0a743b2d3533a42ea8fd07cda64599"},
+      {"path": "runner-scripts/pre-listen-launcher-proposal.md", "sha256": "0a206d286aabe72851f353c9440893e37760745206254b0bc018b5f41c67f495"},
+      {"path": "retained-variant-evidence/<11keys>x<empty|nonempty>/{meta.json,stdout.log,stderr.log}", "note": "66 variant files hashed individually at pin time (see raw output in closeout-review-r1 pin-log); API_TOKEN_nonempty stderr 12853f7e8196f6f79dc2d7430e55c11e16064e786480d1f4c9832b28494e7b15 is byte-identical to the original intake retained copy, meaning these are retained copies of prior execution artifacts, not new runtime variants"}
+    ],
+    "observation": "R1 retained-variant-evidence file hashes equal the intake packet hashes byte-for-byte; R1 is therefore source/evidence/selfcheck work, not new Next runtime execution, consistent with the R1 prompt boundary"
+  },
+  "outputs_reserved": {
+    "review_doc": "docs/reviews/inta-opencode-closeout-review-r1.md (verified absent before creation)",
+    "evidence_dir": "docs/testing/inta-returns/qa/closeout-review-r1/ (verified absent before creation)"
+  },
+  "late_taskfile_update": {
+    "observed": "Re-hash verification of the 22-file pin found docs/implementation/tasks/MC-002-INTA-QA-CLOSEOUT-R1.md changed (pinned a58d400fc3b95bce6bacb0d7ab61cf493ad589f32ac1a9568ea60e163330490b/2761B -> current 20f0ae7e15ac0f7fc05512a80a985c3b79c94d7623374d6898fd68de8c83acd7/3284B). File is untracked in git at base a62d838, so the pinned content is not recoverable from git; the pinned manifest is NOT mutated.",
+    "upgrade": "This addendum additionally pins the two NEW artifacts referenced by the current task file, hashed BEFORE first content read at 2026-10-26T06:43:15Z:",
+    "new_pins": [
+      {"path": "docs/testing/inta-closeout-continuation/r1-review-addendum.json", "sha256": "e972eee9a3017b0dfd8ebc66c5d136702a861d382a0b5d5ae3018491a435c9b6"},
+      {"path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-R1-ADDENDUM-PROMPT.md", "sha256": "765ed66e1188e36fd174f697743a6fa9e435573972e82e770f2cfdc44722da5e"}
+    ]
+  },
+  "note": "This addendum is review-owned evidence; it does not authorize any runtime execution, does not change the frozen 22-file input manifest, and is not a final 36-case acceptance."
+}

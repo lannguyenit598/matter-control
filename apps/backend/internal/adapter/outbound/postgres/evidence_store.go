@@ -11,9 +11,9 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc"
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 var _ port.EvidenceTx = (*pgMatterTx)(nil)
@@ -258,9 +258,14 @@ func (t *pgMatterTx) InsertClaim(ctx context.Context, k matter.Claim) error {
 }
 
 func (t *pgMatterTx) InsertAssessment(ctx context.Context, a matter.Assessment) error {
+	// Same int32 discipline as every other epoch column: no silent truncation (F-08).
+	epoch, err := int32Checked(a.SubjectEpoch)
+	if err != nil {
+		return err
+	}
 	return mapMatterError(t.q.InsertAssessment(ctx, mcsqlc.InsertAssessmentParams{
 		ID: a.ID.String(), MatterID: a.MatterID.String(), ClaimID: a.ClaimID.String(), SubjectID: a.SubjectID.String(),
-		SubjectEpoch: int32(a.SubjectEpoch), Verdict: string(a.Verdict), ReviewerID: a.Reviewer.String(), Rationale: a.Rationale, //nolint:gosec // proof epochs are small counters
+		SubjectEpoch: epoch, Verdict: string(a.Verdict), ReviewerID: a.Reviewer.String(), Rationale: a.Rationale,
 		AssessedVersionID: optVersion(a.AssessedVersionID), EffectiveUntil: timestamptzVal(a.EffectiveUntil), RecordedAt: a.RecordedAt,
 		EvidenceSubmitter: a.EvidenceSubmitter.String(), Claimant: a.Claimant.String(),
 	}))

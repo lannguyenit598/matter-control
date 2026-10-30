@@ -1,0 +1,19 @@
+{
+ "yaml_checks_passed": 13,
+ "checks": [
+  "service.yaml: Knative Service, ingress all, timeout 75, concurrency 10",
+  "service.yaml: image digest, port 8080, probes on /readyz and /healthz",
+  "service.yaml: MC_HTTP_ADDR/backend/shutdown values",
+  "service.yaml: secrets only via secretKeyRef; no secret-named var has a literal value",
+  "service.yaml: key file volume read-only at the configured path",
+  "migrate-job.yaml: args [migrate], separate migrate role secret, no listener var",
+  "cloud-init: parses; units and files present with intended modes",
+  "cloud-init: non-secret env file holds no secret keys",
+  "cloud-init: runcmd never starts the migration unit",
+  "cloud-init: fetch script fail-closed (set -e, no echo $(get))",
+  "mcapi.service: Restart=always, TimeoutStopSec > stop budget",
+  "apphosting.yaml: real parse equals the test regex parse (name/value/secret/availability)",
+  "apphosting.yaml: every secret entry availability is exactly [RUNTIME]; no scripts override"
+ ],
+ "caddy_validate": "Valid configuration\n"
+}

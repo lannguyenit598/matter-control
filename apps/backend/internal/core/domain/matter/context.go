@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain"
+	"leonx.me/matter-control/internal/core/domain"
 )
 
 // Context records are the basic reasoning around the work: a Decision to be made or taken, a

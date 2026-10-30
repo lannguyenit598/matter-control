@@ -1,0 +1,70 @@
+{
+  "actor": "Local Codex intake",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "outputs": [
+    {
+      "path": "docs/reviews/be02-n1-opencode-contract-review-r1.md",
+      "bytes": 29144,
+      "sha256": "3f0f8cb79cdd815822c0e4c1636696989bb4af3a6cfdc1a08abffa15112553da"
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r1/review-inputs.json",
+      "bytes": 15171,
+      "sha256": "f3783d96d235dba13c0bce48526bc295e6e7c818e146f6c0846bfb03fc124ad0"
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r1/checks-log.json",
+      "bytes": 8371,
+      "sha256": "b4558557cfcc8775abbda9cdda8108b14399147e308350921d4214a77ee42801"
+    },
+    {
+      "path": "docs/reviews/inta-opencode-fe-r4-source-review.md",
+      "bytes": 40764,
+      "sha256": "423adc018f148c3667e20cae1f1ed1349a37f908e31a60e5a3589ed350744b96"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026/review-inputs.json",
+      "bytes": 15826,
+      "sha256": "b6272d7b7faae293df94c7d506b8bcc2e16aa104a787b7e4df90b1396dff00c2"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026/checks-log.json",
+      "bytes": 7091,
+      "sha256": "b23f53c50ac632b11d9e62c71a11609cb23dbe8f71d04c48c3cfcad83542d7d4"
+    },
+    {
+      "path": "docs/reviews/inta-opencode-privacy-teardown-review-r1.md",
+      "bytes": 22629,
+      "sha256": "40e54b26286ad1e2c62f9043e96bf5047253a5541b36b6e0366e01ce8b1e25d9"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/review-inputs.json",
+      "bytes": 9792,
+      "sha256": "3fa7e3b2ef49e9a6a03b6684c20540b889d9879de9615255b25459d61df41e63"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/checks-log.json",
+      "bytes": 15375,
+      "sha256": "076548385aae973221200284e94f6b584ff08ceb689db0940674479095f2d1e3"
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/coverage-disposition.json",
+      "bytes": 12043,
+      "sha256": "531e4130affb054bdd9b9ec1c54391adc6ded33f721eef7d4d804249838d2fe7"
+    }
+  ],
+  "actual_reviewer_routes": {
+    "BE02_N1": "OpenCode / opencode GLM-5.3-Flash Free; CLI version not explicitly captured in this return",
+    "FE_R4": "OpenCode CLI2.1.4 / opencode/deepseek-v4.1-flash-free",
+    "PRIVACY": "OpenCode CLI2.1.4 / opencode/glm-5.3-flash-free"
+  },
+  "route_note": "Identities are human-returned evidence; Codex did not select/switch a provider/model or invoke these sessions. Do not retrofit prior route metadata.",
+  "dispositions": {
+    "BE02_N1": "PASS_DOCUMENT_ONLY_WITH_LIMITATIONS; no adoption",
+    "FE_R4": "CHANGES_REQUIRED_SOURCE_ONLY; two P1 blockers; some source closures accepted",
+    "PRIVACY": "PASS_WITH_LIMITATIONS for measured corpus; overall INT-PRIV-01 PARTIAL/PENDING",
+    "PG_TEARDOWN": "PASS_SCOPED_WITH_LIMITATIONS from retained evidence"
+  },
+  "canonical_51_results_unchanged": true,
+  "MC002_done": false
+}

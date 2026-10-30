@@ -1,0 +1,11 @@
+package productapi
+import("testing";"encoding/json";"fmt")
+func TestVerifierReviewHistorySignalsTruncation(t *testing.T){
+ e:=newEnv(t);base,v,g,tag:=reviewFixture(t,e);p:=base+"/review-grids/"+g
+ q:=e.do("POST",p+"/questions","t-bob",ifMatch(tag),`{"text":"Q?"}`);e.expect(q,200,"");qid:=q.json()["questions"].([]any)[0].(map[string]any)["id"].(string)
+ e.expect(e.do("POST",p+"/versions","t-bob",ifMatch(q.Header().Get("ETag")),`{"versionId":"`+v+`"}`),200,"")
+ expected:="";for i:=0;i<101;i++ {body,_:=json.Marshal(map[string]any{"versionId":v,"questionId":qid,"expectedAnswerId":expected,"questionRevision":1,"state":"REVIEWED","text":fmt.Sprintf("Answer %d",i)});r:=e.do("POST",p+"/answers","t-bob",key(),string(body));e.expect(r,201,"");expected=r.json()["id"].(string)}
+ r:=e.do("GET",p+"/cells/"+v+"/"+qid+"/history","t-bob",nil,"");e.expect(r,200,"");j:=r.json();items:=j["items"].([]any);page:=j["page"].(map[string]any)
+ t.Logf("history rows=%d envelope=%v",len(items),page)
+ if len(items)==100 && page["total"]==float64(100) && (page["nextCursor"]==nil||page["nextCursor"]=="") {t.Fatal("101 recorded answers are silently presented as total=100 with no continuation or partial marker")}
+}

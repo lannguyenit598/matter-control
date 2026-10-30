@@ -1,0 +1,36 @@
+================================================================
+MC-002-INTA-FE-VALIDATION-R4: Pre-Listen Launcher Mock Tests
+================================================================
+Harness startup refused: product auth/secret env vars present (API_TOKEN)
+[PASS] forbidden_api_token_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_TOKEN)
+[PASS] forbidden_api_token_empty_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_MODE)
+[PASS] api_mode_nonempty_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_MODE)
+[PASS] api_mode_empty_refuses_without_spawn
+Harness startup refused: NODE_ENV cannot be production
+[PASS] forbidden_node_env_production_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_MODE)
+Harness startup refused: product auth/secret env vars present (API_TOKEN)
+Harness startup refused: product auth/secret env vars present (API_BASE_URL)
+Harness startup refused: product auth/secret env vars present (AUTH_ALLOW_ANONYMOUS)
+Harness startup refused: product auth/secret env vars present (API_TIMEOUT_MS)
+Harness startup refused: product auth/secret env vars present (AUTH_SECRET)
+Harness startup refused: product auth/secret env vars present (NEXTAUTH_SECRET)
+Harness startup refused: product auth/secret env vars present (CLERK_SECRET_KEY)
+Harness startup refused: product auth/secret env vars present (SESSION_SECRET)
+Harness startup refused: product auth/secret env vars present (COOKIE_SECRET)
+Harness startup refused: product auth/secret env vars present (DATABASE_URL)
+Harness startup refused: product auth/secret env vars present (JWT_SECRET)
+[PASS] all_audited_secret_keys_refuse_without_spawn
+[PASS] valid_environment_spawns_child_with_bounded_env_and_state_dir
+[PASS] bounded_environment_strict_allowlist_includes_state_dir
+[PASS] is_cli_entry_detection_relative_and_absolute
+[PASS] attach_child_lifecycle_events_and_signals
+[PASS] guard_integrity_verification
+[PASS] signal_forwarding_surfaces_failures
+[PASS] launch_harness_explicit_bindings
+================================================================
+SUMMARY: 13 PASS / 0 FAIL out of 13 cases
+================================================================

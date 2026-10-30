@@ -1,0 +1,102 @@
+{
+ "owner": "actual Claude Code (this session)",
+ "created_resources": [
+  {
+   "kind": "database",
+   "container": "mc-p0-zcode-pg-product-test",
+   "name": "mc_rr_src_20261028t153536z",
+   "purpose": "restore rehearsal source",
+   "disposition": "RETAINED for QA"
+  },
+  {
+   "kind": "database",
+   "container": "mc-p0-zcode-pg-restore-target",
+   "name": "mc_rr_dst_20261028t153536z",
+   "purpose": "restore rehearsal target",
+   "disposition": "RETAINED for QA"
+  },
+  {
+   "kind": "database",
+   "container": "mc-p0-zcode-pg-restore-target",
+   "name": "mc_rr_neg_20261028t153536z",
+   "purpose": "disposable negative target",
+   "disposition": "dropped by the pinned script (confirmed by its own run)"
+  },
+  {
+   "kind": "directory",
+   "path": "/private/tmp/mc-p0-r2-restore-20261028T153536Z",
+   "purpose": "restore work root (object roots, archives, logs)",
+   "disposition": "RETAINED, private"
+  },
+  {
+   "kind": "directory",
+   "path": "docs/testing/p0-final-parallel-20261028/claude-runtime-r2/restore/runs/20261028T153536Z",
+   "purpose": "restore public evidence",
+   "disposition": "RETAINED"
+  },
+  {
+   "kind": "database",
+   "container": "mc-p0-zcode-pg-product-test",
+   "name": "mc_r2_20261028t153728z",
+   "purpose": "owned API run database, migrations to v7 applied",
+   "disposition": "RETAINED"
+  },
+  {
+   "kind": "directory",
+   "path": "/private/tmp/mc-p0-r2-runtime",
+   "purpose": "API binary, object root, frontend snapshot with a CoW clone of node_modules",
+   "disposition": "RETAINED, private, safe to delete"
+  },
+  {
+   "kind": "directory",
+   "path": "/private/tmp/mc-p0-r2-private",
+   "purpose": "raw logs (0700), launchers",
+   "disposition": "RETAINED, private"
+  }
+ ],
+ "owned_processes": [
+  {
+   "role": "mcapi",
+   "pid": 62449,
+   "started_utc": "2026-10-28T15:37:30Z",
+   "port": "127.0.0.1:8084",
+   "stopped": "2026-10-28T15:42:3xZ after identity check"
+  },
+  {
+   "role": "next-server",
+   "pid": 65851,
+   "started_utc": "2026-10-28T15:41:31Z",
+   "port": "127.0.0.1:3104",
+   "stopped": "same"
+  }
+ ],
+ "containers": [
+  {
+   "name": "mc-p0-zcode-pg-restore-target",
+   "id": "3c207de99a03330e368b7abd151cdc349e3ba53fe1c97bbfa345e939977d25f6",
+   "action": "docker start at 2026-10-28T15:35:05Z, explicitly approved by the user this session",
+   "state_at_close": "running"
+  },
+  {
+   "name": "mc-p0-zcode-pg-product-test",
+   "id": "4d09d047440d4f5d872b91f9169da1b092a061f2a29208316b88e229617e11e0",
+   "action": "not started by me (started 15:25:50Z by another actor); used for new databases only",
+   "state_at_close": "running"
+  }
+ ],
+ "unowned_not_touched": [
+  {
+   "what": "mcapi pid 49105 :8081 and next-server :3000 from /private/tmp/mc-local-login-cij0dm22",
+   "note": "started 22:26:50 local by an unidentified owner; the :3000 server was restarted at 22:40:44 (pid 65281). Not handed over: no signal, no reuse. Only read-only inventory."
+  }
+ ],
+ "disclosures_before_this_task_in_the_same_session": [
+  "At the user's request I terminated the retained Codex Cloud runtime (next-server pid 40126 on :3000, plus its wrapper, and mcapi pid 40096 on :8081) and stopped all mc-p0-* containers. Exact UTC was not recorded. The Cloud runtime database mc_cloud_ui_20261028t075805z and its object root were not touched. The R1 ledger line \"runtime retained\" is therefore no longer true.",
+  "I created apps/frontend/.env.local (gitignored, public ids, local ZITADEL profile, APP_ORIGIN http://localhost:3000). It is outside the 719-entry manifest and was not copied into the snapshot."
+ ],
+ "deviations_in_this_task": [
+  "An unintended dependency-install side effect: running `pnpm exec next build` inside the snapshot made pnpm 11 run its pre-script install (verifyDepsBeforeRun) through the node_modules symlink at about 2026-10-28T15:37:43Z-15:37:49Z. It failed (\"workspace hoist directory is not a real directory\") but re-linked parts of the real apps/frontend/node_modules (.modules.yaml and .pnpm/lock.yaml mtime 15:37:49Z). Afterwards: next 16.4.2 resolves, .bin/next exists, 0 dangling top-level links, @tailwindcss/postcss present. No source file was written by it. The failed attempt is kept in resources/fe-snapshot-build.log.",
+  "A second build attempt had a shell word-splitting error that left API_MODE invalid (documented in the same log)."
+ ],
+ "credential_use": "dsns.env was sourced only inside the pinned run.sh and my api_up.py in memory; keys/396983916088540712.json was passed as a path to the owned mcapi process only. Nothing was printed, hashed or exported; see the secret scan in return.md."
+}

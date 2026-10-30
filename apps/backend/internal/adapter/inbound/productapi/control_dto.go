@@ -3,7 +3,7 @@ package productapi
 import (
 	"encoding/json"
 
-	"github.com/example/userapi/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/domain/matter"
 )
 
 // W5 wire DTOs (contract revision 9). The Control Room carries the boundary it describes (`asOf`,

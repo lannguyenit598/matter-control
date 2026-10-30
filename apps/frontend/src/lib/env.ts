@@ -53,6 +53,18 @@ type ServerEnv = z.infer<typeof serverEnvSchema>
 function readServerEnv(): ServerEnv {
   // Treat empty strings (`API_TOKEN=`) as unset.
   const raw = Object.fromEntries(Object.entries(process.env).filter(([, value]) => value !== ''))
+  // TB-12: a production server must never fall back to (or be set to) fake in-memory data with a
+  // fake session. `next build` sets NEXT_PHASE for the whole build, so only that phase may load
+  // this module without a real API; dev, tests and storybook keep the demo default.
+  if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.NEXT_PHASE !== 'phase-production-build' &&
+    (raw.API_MODE ?? 'demo') === 'demo'
+  ) {
+    throw new Error(
+      'API_MODE must be "rest" when the production server runs: demo mode serves fake data with a fake session.',
+    )
+  }
   const result = serverEnvSchema.safeParse({ ...raw, API_MODE: raw.API_MODE ?? 'demo' })
   if (!result.success) {
     throw new Error(`Invalid environment configuration:\n${z.prettifyError(result.error)}`)

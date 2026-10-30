@@ -7,6 +7,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => router }))
 const actions = vi.hoisted(() => ({
   assess: vi.fn(),
   promote: vi.fn(),
+  createDocument: vi.fn(),
 }))
 vi.mock('../actions', () => ({
   assessClaimAction: actions.assess,
@@ -20,13 +21,13 @@ vi.mock('../actions', () => ({
   setVerifierAction: vi.fn(),
   submitEvidenceAction: vi.fn(),
   withdrawEvidenceAction: vi.fn(),
-  createDocumentAction: vi.fn(),
+  createDocumentAction: actions.createDocument,
   recordSignatureAction: vi.fn(),
 }))
 
 import type { Checklist } from '../schemas'
 
-import { PromoteForm, UploadVersionForm } from './document-forms'
+import { CreateDocumentForm, PromoteForm, UploadVersionForm } from './document-forms'
 import { ProofPanel, type ProofContext } from './proof-panel'
 
 const ctx = (over: Partial<ProofContext> = {}): ProofContext => ({
@@ -111,6 +112,17 @@ beforeEach(() => {
   actions.assess.mockReset()
   actions.promote.mockReset()
   window.sessionStorage.clear()
+})
+
+it('continues confirmed document creation on its upload/detail screen', async () => {
+  actions.createDocument.mockResolvedValue({ ok: true, id: 'document-1' })
+  render(<CreateDocumentForm matterId="m1" matterTitle="Acme" />)
+  fireEvent.click(screen.getByRole('button', { name: 'New document' }))
+  fireEvent.change(screen.getByLabelText(/^Document name/), {
+    target: { value: 'Board resolutions' },
+  })
+  fireEvent.click(screen.getByRole('button', { name: 'Create document' }))
+  await waitFor(() => expect(router.push).toHaveBeenCalledWith('/matters/m1/documents/document-1'))
 })
 
 describe('ProofPanel', () => {

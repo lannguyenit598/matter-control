@@ -17,6 +17,34 @@ describe('serverEnv', () => {
     expect(await loadEnv({ API_MODE: undefined })).toEqual({ API_MODE: 'demo' })
   })
 
+  describe('production server (TB-12)', () => {
+    const prod = { NODE_ENV: 'production', NEXT_PHASE: 'phase-production-server' }
+
+    it.each([undefined, 'demo'])(
+      'refuses API_MODE=%j before any data is rendered',
+      async (mode) => {
+        await expect(loadEnv({ ...prod, API_MODE: mode })).rejects.toThrow(
+          /API_MODE must be "rest"/,
+        )
+      },
+    )
+
+    it('refuses demo when no phase is set (standalone server.js sets none)', async () => {
+      await expect(loadEnv({ NODE_ENV: 'production', NEXT_PHASE: undefined })).rejects.toThrow(
+        /API_MODE must be "rest"/,
+      )
+    })
+
+    it('allows the build to load the module without a real API', async () => {
+      const env = await loadEnv({ NODE_ENV: 'production', NEXT_PHASE: 'phase-production-build' })
+      expect(env).toEqual({ API_MODE: 'demo' })
+    })
+
+    it('starts in rest mode', async () => {
+      expect(await loadEnv({ ...prod, ...rest })).toMatchObject({ API_MODE: 'rest' })
+    })
+  })
+
   it.each([
     [undefined, false],
     ['', false],

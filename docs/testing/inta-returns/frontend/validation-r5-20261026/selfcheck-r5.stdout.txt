@@ -1,0 +1,75 @@
+================================================================
+MC-002-INTA-FE-VALIDATION-R5: Comprehensive Deterministic Self-Check
+Start UTC: 2026-10-26T14:56:33.626753+00:00
+Scratch Directory: /var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/mc002-inta-selfcheck-r5-7dqlib8s
+================================================================
+
+--- Group 1: Baseline Cases & Evaluator Schema ---
+[PASS] 1. missingcounter: Observer file does not exist
+[PASS] 2. malformedcounter: Observer JSON malformed
+[PASS] 3. positivecounter: Observer recorded >0 HTTP requests
+[PASS] 4. observererror: Observer startup or runtime error
+[PASS] 5. transientlistener: Port 18085 listener observed during run
+[PASS] 6. probeerror: Probe returned error or timed out
+[PASS] 7. timeout: Child process timed out
+[PASS] 8. wrongexitcode: Child exited with code 0 instead of 1
+[PASS] 9. wrongrefusal: Refusal phrase missing from stderr
+[PASS] 10. unverifiedexit: Observer exit code is None
+[PASS] 11. uncleanobserver: cleanShutdown is False
+[PASS] 12. incompleteobserver: isFinal is False
+[PASS] 13. valid_complete_input: All gates pass with complete evidence
+
+--- Group 2: Strict Evaluator Type Checks ---
+[PASS] 14. exit_code_bool_rejected: exit_code=True (bool) rejected as non-strict int
+[PASS] 15. exit_code_float_rejected: exit_code=1.0 (float) rejected as non-strict int
+[PASS] 16. observer_exit_code_bool_rejected: observer_exit_code=False (bool) rejected
+[PASS] 17. observer_exit_code_float_rejected: observer_exit_code=0.0 (float) rejected
+[PASS] 18. identity_gates_mandatory: Omitted expected_variant/pid fails closed
+[PASS] 19. prebound_listener_wording: Pre-flight occupied port wording
+
+--- Group 3: TCP Probe Unit Tests ---
+[PASS] 20. probe_clean_absence: rc=1 with empty stderr is confirmed absence
+[PASS] 21. probe_rc1_with_stderr_error: rc=1 with non-empty stderr is error/unknown
+[PASS] 22. probe_active_listener: rc=0 is confirmed active listener
+[PASS] 23. probe_timeout_error: Timeout raises and returns (None, error)
+
+--- Group 4: Process Identity & Bounded Terminate ---
+[PASS] 24. verify_pid_identity_match: Matching name, parent, and start time verifies
+[PASS] 25. verify_pid_identity_mismatch_start_time: Start time mismatch fails closed
+[PASS] 26. bounded_terminate_clean_handle_reap: Clean exit via handle.wait() reap
+[PASS] 27. bounded_terminate_timeout_no_sigkill: Timeout reports cleanup failure without SIGKILL
+
+--- Group 5: Durability & Filesystem Failures (R4-C04, R5 Item 4, S6) ---
+[PASS] 28. file_fsync_failure_propagates: File fsync error is not swallowed
+[PASS] 29. dir_open_failure_propagates: Directory open error is not swallowed
+[PASS] 30. dir_fsync_failure_propagates: Parent directory fsync error propagates
+[PASS] 31. dir_close_failure_propagates: Directory close error is not swallowed
+[PASS] 32. os_replace_failure_propagates: Atomic rename replace error propagates
+
+--- Group 6: Fast Refusal Lifecycle-Bound Proof (NF-4, R4-C01, P1.1) ---
+[PASS] 33. launcher_record_spawn_called_rejected: spawnCalled:true on startup refusal fails closed
+[PASS] 34. dead_child_probe_rejected: Dead mock child produces 0 during samples and fails closed
+[PASS] 35. live_then_exit_coordinator_passes: Verified live interval sample passes all gates
+[PASS] 36. spawn_immediate_exit_defect_fails_closed: Immediate exit child fails closed without during-samples
+
+--- Group 7: Caller Abort Sites & Popen Safety (S1, S4) ---
+[PASS] 37. preprobe_error_safety_popen: Pre-flight probe error halts with raising popen
+[PASS] 38. preprobe_bound_safety_popen: Port already bound halts with raising popen
+[PASS] 39. caller_site_3_timeout_termination: Site 3 timeout termination covers caller branch
+[PASS] 40. caller_site_4_finally_cleanup: Site 4 finally cleans up running child on error
+
+--- Group 8: Wrapper Dispatch & Nonzero Propagation (S3, R2-I01) ---
+[PASS] 41. wrapper_full_args_dispatch: Wrapper dispatches all 4 arguments explicitly
+[PASS] 42. wrapper_nonzero_stub_propagation: Wrapper propagates nonzero stub exit code
+[PASS] 43. wrapper_collision_refusal: Wrapper refuses existing attempt directory
+
+--- Group 9: Pre-flight Stage Binding & Node Import (R4-C02, R4-C03) ---
+[PASS] 44. missing_stage_receipt_fails_closed: Missing Codex stage receipt halts execution
+[PASS] 45. ts_guard_dynamic_import_strip_types: Node 24 native dynamic import loads guards.ts
+[PASS] 46. launcher_mock_test_suite: harness-dev.mjs mock test suite (17 cases)
+
+================================================================
+SUMMARY: 46 PASS / 0 FAIL out of 46 cases
+End UTC: 2026-10-26T14:56:38.695605+00:00
+================================================================
+Results saved to /tmp/mc002-inta-fe-validation-r5-20261026/runner/selfcheck-r5-results.json

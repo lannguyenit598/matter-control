@@ -1,0 +1,100 @@
+	                              workspace_id, matter_id, status_code, response, committed_at, purge_after)
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+	
+2026-10-29 08:10:48.133 UTC [811] ERROR:  duplicate key value violates unique constraint "command_receipts_pkey"
+2026-10-29 08:10:48.133 UTC [811] DETAIL:  Key (actor_id, idempotency_key)=(01a186b6-2ba4-793f-a572-5728ff51be11, 01a186b6-2bae-7ce0-bb49-e07cde99233c) already exists.
+2026-10-29 08:10:48.133 UTC [811] STATEMENT:  -- name: InsertCommandReceipt :exec
+	INSERT INTO command_receipts (actor_id, idempotency_key, request_hash, scope_kind,
+	                              workspace_id, matter_id, status_code, response, committed_at, purge_after)
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+	
+2026-10-29 08:10:48.133 UTC [813] ERROR:  duplicate key value violates unique constraint "command_receipts_pkey"
+2026-10-29 08:10:48.133 UTC [813] DETAIL:  Key (actor_id, idempotency_key)=(01a186b6-2ba4-793f-a572-5728ff51be11, 01a186b6-2bae-7ce0-bb49-e07cde99233c) already exists.
+2026-10-29 08:10:48.133 UTC [813] STATEMENT:  -- name: InsertCommandReceipt :exec
+	INSERT INTO command_receipts (actor_id, idempotency_key, request_hash, scope_kind,
+	                              workspace_id, matter_id, status_code, response, committed_at, purge_after)
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+	
+2026-10-29 08:10:51.294 UTC [842] PANIC:  could not write to file "pg_wal/xlogtemp.842": No space left on device
+2026-10-29 08:10:51.294 UTC [842] STATEMENT:  DROP SCHEMA IF EXISTS t_1793261450805343000 CASCADE
+2026-10-29 08:10:51.295 UTC [1] LOG:  client backend (PID 842) was terminated by signal 6: Aborted
+2026-10-29 08:10:51.295 UTC [1] DETAIL:  Failed process was running: DROP SCHEMA IF EXISTS t_1793261450805343000 CASCADE
+2026-10-29 08:10:51.295 UTC [1] LOG:  terminating any other active server processes
+2026-10-29 08:10:51.297 UTC [843] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.298 UTC [1] LOG:  all server processes terminated; reinitializing
+2026-10-29 08:10:51.323 UTC [848] LOG:  database system was interrupted; last known up at 2026-10-29 08:05:09 UTC
+2026-10-29 08:10:51.323 UTC [851] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.324 UTC [852] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.326 UTC [853] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.327 UTC [854] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.328 UTC [855] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.329 UTC [856] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.341 UTC [857] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.343 UTC [858] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.344 UTC [859] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.345 UTC [860] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.350 UTC [861] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.351 UTC [862] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.352 UTC [863] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.353 UTC [864] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.354 UTC [865] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.355 UTC [866] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.356 UTC [867] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.357 UTC [868] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.358 UTC [869] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.359 UTC [870] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.360 UTC [871] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.360 UTC [872] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.361 UTC [873] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.363 UTC [874] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.364 UTC [875] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.365 UTC [876] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.366 UTC [877] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.367 UTC [878] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.368 UTC [879] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.369 UTC [880] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.370 UTC [881] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.371 UTC [882] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.372 UTC [883] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.373 UTC [884] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.374 UTC [885] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.378 UTC [886] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.380 UTC [887] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.382 UTC [888] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.383 UTC [889] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.385 UTC [890] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.388 UTC [891] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.390 UTC [892] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.392 UTC [893] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.393 UTC [894] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.442 UTC [895] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.444 UTC [896] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.446 UTC [897] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.447 UTC [898] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.448 UTC [899] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.449 UTC [900] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.450 UTC [901] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.452 UTC [902] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.453 UTC [903] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.455 UTC [904] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.456 UTC [905] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.458 UTC [906] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.460 UTC [907] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.461 UTC [908] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.463 UTC [909] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.464 UTC [910] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.465 UTC [911] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.466 UTC [912] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.467 UTC [913] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.468 UTC [914] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.470 UTC [915] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.471 UTC [916] FATAL:  the database system is in recovery mode
+2026-10-29 08:10:51.492 UTC [848] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-10-29 08:10:51.546 UTC [848] LOG:  redo starts at 0/1BA8908
+2026-10-29 08:10:51.862 UTC [848] FATAL:  could not extend file "base/16384/62579": No space left on device
+2026-10-29 08:10:51.862 UTC [848] HINT:  Check free disk space.
+2026-10-29 08:10:51.862 UTC [848] CONTEXT:  WAL redo at 0/68A9E28 for XLOG/FPI: ; blkref #0: rel 1663/16384/62579, blk 0 FPW
+2026-10-29 08:10:51.864 UTC [1] LOG:  startup process (PID 848) exited with exit code 1
+2026-10-29 08:10:51.864 UTC [1] LOG:  terminating any other active server processes
+2026-10-29 08:10:51.864 UTC [1] LOG:  shutting down due to startup process failure
+2026-10-29 08:10:51.869 UTC [1] LOG:  database system is shut down

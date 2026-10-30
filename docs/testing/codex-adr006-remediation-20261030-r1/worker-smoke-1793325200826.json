@@ -1,0 +1,35 @@
+{
+  "identity": "Actual Local Codex",
+  "fixture": "Synthetic local OIDC + real Go + owned PostgreSQL + filesystem object adapter; no cloud provider",
+  "checks": [
+    {
+      "name": "root entry redirect",
+      "pass": true
+    },
+    {
+      "name": "anonymous session",
+      "pass": true
+    },
+    {
+      "name": "PKCE authorize redirect",
+      "pass": true
+    },
+    {
+      "name": "durable callback login",
+      "pass": true
+    },
+    {
+      "name": "authenticated display-only session",
+      "pass": true
+    },
+    {
+      "name": "Worker to real Go and PostgreSQL read",
+      "pass": false
+    },
+    {
+      "name": "runtime failure",
+      "pass": false,
+      "error": "Probe failed: Worker to real Go and PostgreSQL read"
+    }
+  ]
+}

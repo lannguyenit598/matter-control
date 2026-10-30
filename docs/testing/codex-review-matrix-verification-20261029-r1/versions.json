@@ -1,0 +1,56 @@
+{
+  "utc": "2026-10-29T12:43:09.400156+00:00",
+  "go": {
+    "argv": [
+      "go",
+      "version"
+    ],
+    "exit": 0,
+    "output": "go version go1.27.3 darwin/arm64"
+  },
+  "lint": {
+    "argv": [
+      "golangci-lint",
+      "version"
+    ],
+    "exit": 0,
+    "output": "golangci-lint has version 2.14.0 built with go1.27.1 from (unknown, modified: ?, mod sum: \"h1:ot8QffRa4LzAAEgtvNYrVs9esxQ7xoTwoAv6uhp4ngA=\") on (unknown)"
+  },
+  "node": {
+    "argv": [
+      "node",
+      "--version"
+    ],
+    "exit": 0,
+    "output": "v24.22.1"
+  },
+  "pnpm": {
+    "argv": [
+      "pnpm",
+      "--version"
+    ],
+    "exit": 0,
+    "output": "12.11.2"
+  },
+  "docker": {
+    "argv": [
+      "docker",
+      "version",
+      "--format",
+      "{{.Client.Version}} / {{.Server.Version}}"
+    ],
+    "exit": 0,
+    "output": "29.9.2 / 29.9.2"
+  },
+  "postgres": {
+    "argv": [
+      "docker",
+      "exec",
+      "mc-review-verify-pg-20261029-r1",
+      "postgres",
+      "--version"
+    ],
+    "exit": 0,
+    "output": "postgres (PostgreSQL) 18.6"
+  }
+}

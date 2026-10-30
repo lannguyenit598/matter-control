@@ -5,17 +5,21 @@ package mattercontrol
 // in-memory double and the PostgreSQL adapter.
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"log/slog"
 	"strings"
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
-	"github.com/example/userapi/internal/core/service"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
+	"leonx.me/matter-control/internal/core/service"
 )
 
 type w2Env struct {
@@ -27,6 +31,7 @@ type w2Env struct {
 	work *service.WorkService
 	ev   *service.EvidenceService
 	objs *MemoryObjects
+	logs *logSink // what the work service logged (JSON lines)
 	fil  *service.FilingService
 	ctl  *service.ControlService
 	// reviewer is a designated verifier (matter EDITOR), created on first use by verify.
@@ -50,11 +55,12 @@ func newW2Env(t *testing.T, newBundle Factory) *w2Env {
 	if !ok {
 		t.Fatal("store does not implement port.WorkspaceStore")
 	}
+	logs := &logSink{}
 	e := &w2Env{
-		t: t, b: b, ctx: context.Background(),
+		t: t, b: b, ctx: context.Background(), logs: logs,
 		ws:   service.NewWorkspaceService(ws, ids, discardLogger(), matter.KeyAgePolicy{}),
 		reqs: service.NewMatterService(b.Store, ids, discardLogger(), matter.KeyAgePolicy{}),
-		work: service.NewWorkService(b.Store, ids, discardLogger(), matter.KeyAgePolicy{}),
+		work: service.NewWorkService(b.Store, ids, slog.New(slog.NewJSONHandler(logs, nil)), matter.KeyAgePolicy{}),
 	}
 	e.objs = NewMemoryObjects()
 	var objects port.ObjectStore = e.objs
@@ -989,4 +995,53 @@ func SuiteW2(t *testing.T, newBundle Factory) {
 		_, err = e.work.TransitionExecution(e.ctx, port.TransitionExecutionCmd{ActorID: e.editor.String(), MatterID: e.m.String(), ItemID: a.ID.String(), ExpectedRevision: 1, To: "IN_PROGRESS"})
 		mustIs(t, "a blind resend cannot double-apply", err, port.ErrPreconditionFailed)
 	})
+}
+
+// logSink collects log output so a contract can assert what an operator would see.
+type logSink struct {
+	mu sync.Mutex
+	b  bytes.Buffer
+}
+
+func (l *logSink) Write(p []byte) (int, error) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	return l.b.Write(p)
+}
+
+// entries returns the logged JSON records at the given level, oldest first.
+func (l *logSink) entries(t *testing.T, level string) []map[string]any {
+	t.Helper()
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	var out []map[string]any
+	for _, line := range bytes.Split(l.b.Bytes(), []byte("\n")) {
+		if len(bytes.TrimSpace(line)) == 0 {
+			continue
+		}
+		var rec map[string]any
+		if err := json.Unmarshal(line, &rec); err != nil {
+			t.Fatalf("log line is not JSON: %q", line)
+		}
+		if rec["level"] == level {
+			out = append(out, rec)
+		}
+	}
+	return out
+}
+
+func (l *logSink) raw() string {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	return l.b.String()
+}
+
+// contentStore wraps an ObjectStore so a contract can make Open fail or its stream break.
+type contentStore struct {
+	port.ObjectStore
+	open func(ctx context.Context, m matter.MatterID, sha string) (io.ReadCloser, error)
+}
+
+func (c contentStore) Open(ctx context.Context, m matter.MatterID, sha string) (io.ReadCloser, error) {
+	return c.open(ctx, m, sha)
 }

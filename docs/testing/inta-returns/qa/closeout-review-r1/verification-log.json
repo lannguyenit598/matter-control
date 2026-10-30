@@ -1,0 +1,146 @@
+{
+  "task": "MC-002-INTA-QA-CLOSEOUT-R1",
+  "produced_by": "Actual OpenCode (OpenCode harness), model GLM-5.3-Flash Free (provider opencode) — independent nonauthor reviewer",
+  "generated_at_utc": "2026-10-26T06:52:00Z",
+  "worktree": {
+    "branch": "codex/unified-project-flow",
+    "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "head_verified": true,
+    "note": "HEAD and branch re-verified at every write stage; no commit, no source/status mutation, no ledger edit."
+  },
+  "environment": {
+    "host_os": "darwin (macOS)",
+    "shell": "zsh with rtk proxy per workstation rule",
+    "hash_tool": "shasum -a 256 and node:crypto (cross-checked)",
+    "clock": "date -u绝对的UTC记录于每个阶段的输出行"
+  },
+  "steps": [
+    {
+      "step": "S0-absence-check",
+      "utc": "2026-10-26T06:39:41Z (recheck; first absence check earlier in session before any output file was created)",
+      "command": "git rev-parse HEAD; git rev-parse --abbrev-ref HEAD; git status --porcelain -- docs/reviews/inta-opencode-closeout-review-r1.md docs/testing/inta-returns/qa/closeout-review-r1/",
+      "result": "HEAD=a62d838791ba188838c4ff00b7b6e265ac775056; branch=codex/unified-project-flow; review .md absent (no git entry); only untracked evidence dir with review-inputs-addendum.json",
+      "exit": 0
+    },
+    {
+      "step": "S1-pin-before-read",
+      "utc": "2026-10-26T06:40:00Z (addendum timestamp recheck/correction; original pin performed earlier in-session before first R1 content read)",
+      "command": "shasum -a 256 over all 75 R1 packet payload files + manifest (pinned into review-inputs-addendum.json BEFORE reading R1 packet content)",
+      "result": "75/75 payload hashes computed and recorded pre-read; manifest.json sha256 677cd24f61bae83ace965aa24c7d4783ec53d38b67a8d0af8309b592f043a2bb captured pre-read; 66 retained-variant files hash-verified byte-identical to the intake packet retained copies",
+      "exit": 0,
+      "correction_note": "addendum pinned_at was corrected today because the recorded 07:45:00Z lay in the future relative to session clock (observed 06:39:41Z–06:46:54Z range); precise original pin timestamp cannot be reconstructed and is now null with the correction note retained."
+    },
+    {
+      "step": "S2-review-inputs-rehash",
+      "utc": "2026-10-26T06:39:41Z",
+      "command": "node /private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/qa-r1-verify/verify-review-inputs.mjs",
+      "result": "22 pinned files: 21 verified OK byte-for-byte; 1 superseded: docs/implementation/tasks/MC-002-INTA-QA-CLOSEOUT-R1.md grew 2761B→3284B (a58d400f…→20f0ae7e…). This is NOT a manifest failure: the file is untracked at base and the append is explicitly pinned as context update by docs/testing/inta-closeout-continuation/r1-current-context-supersession.json (previous_sha256 matches the frozen pin, current_sha256 matches today's read). Original 22-input manifest NOT mutated.",
+      "exit": 1,
+      "exit_meaning": "exit 1 is the verification script reporting the superseded task-file delta; all other 21 pinned bytes matched exactly."
+    },
+    {
+      "step": "S3-late-addendum-pins",
+      "utc": "2026-10-26T06:43:15Z and 2026-10-26T06:43:52Z",
+      "command": "shasum -a 256 docs/testing/inta-closeout-continuation/r1-review-addendum.json docs/implementation/handoffs/MC-002-INTA-OPENCODE-R1-ADDENDUM-PROMPT.md docs/reviews/inta-fe-validation-r1-intake.md docs/testing/inta-fe-validation-r1-intake/** (11 payload files)",
+      "result": "r1-review-addendum e972eee9…; R1-addendum handoff prompt 765ed66e…; R1 intake doc b3a677cd…; intake packet manifest 4d4382a3…, checks fed373b8…, execution 7e8ca27b…, additional-failclosed-probes 82a23090…, runner-language-probes 55989161…, selfcheck-results 4e187cc2…, delivery-checks 1e0ed600…, selfcheck.stdout 120f9f42…, standalone-probe-execution e1a80040…, reproduce_evaluator_probes.py 4f81f966…; supersession note e6fc9b1b…",
+      "exit": 0,
+      "pin_order": "All of the above hashed BEFORE first content read of the corresponding file (R1 return doc re-read happened after its 27a2a7e3… re-pin)."
+    },
+    {
+      "step": "S4-r1-return-doc-change-observed",
+      "utc": "2026-10-26T06:44:05Z",
+      "command": "shasum -a 256 docs/reviews/inta-fe-validation-r1-antigravity-return.md",
+      "result": "27a2a7e3a2de9f332c0562c95a3301ab67452d09925782f3813923da0755a555 / 14075B — matches the freeze recorded inside docs/testing/inta-closeout-continuation/r1-review-addendum.json (Local Codex, utc 2026-10-26T06:36:44Z). Reviewer's initial-session pin recorded 63d12ea9… for the same path; both hashes retained in the addendum. FEVAL verdicts are anchored on the 75-payload PACKET (manifest hash unchanged at 677cd24f…) and direct source reads, not on the return-doc narrative.",
+      "exit": 0
+    },
+    {
+      "step": "S5-manifest-bulk-verify",
+      "utc": "2026-10-26T06:47:10Z (final run; earlier run verified the same 4 manifests)",
+      "command": "node /private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/qa-r1-verify/verify-manifests.mjs",
+      "result": "closeout-readiness 44/44 OK (bytes 615780); validation-20261026 18/18 OK (bytes 64321, declaredTotal/Bytes match); inta-fe-validation-intake 85/85 OK (bytes 529863); validation-r1-20261026 75/75 OK (bytes 98873, declaredTotal/Bytes match); R1-intake packet 10/10 OK (53456). No NEEDS_REPIN row; no symlink traversal; no missing files.",
+      "exit": 0
+    },
+    {
+      "step": "S6-FEVAL-F01-evidence",
+      "utc": "2026-10-26T06:44:xx–06:46:xx",
+      "command": "read + grep of guard-startup-subchecks.json / API_TOKEN_nonempty retained artifacts + original runner line reads",
+      "result": "subchecks: 22 rows total, 11 keys × nonempty/empty, all verdicts PASS, all exitCode 1; listenerTrue rows = exactly [API_TOKEN/nonempty] with listenerObservedOn18085:true while verdict PASS and note 'transientBootstrapListener=true' — PASS is therefore invalid under the never-listen contract. Retained API_TOKEN_nonempty: meta childPID 84965; stdout contains '✓ Ready in 178ms'; stderr contains 'Error: Harness startup refused: product auth/secret env vars present (API_TOKEN)' (also present for empty variant). Original runner lines verified: verdict chain L281-295 never tests listener during execution (only timed_out/child_exit/listener_after_exit/observer_requests/has_refusal); refusal L271-274 accepts a bare key name; observer L263-266 defaults absent log to 0; observer log is written only in the finally block L106-109; stop_observer L125-129 kills via SIGTERM without a handler in the observer python (no handler → SIGTERM terminates with no log). R1 corrected dispositions in guard-startup-subchecks-r1.json (1 FAIL_OBSERVED_LISTENER + 21 INSUFFICIENT_EVIDENCE…) were verified hash-anchored against the 75-payload packet.",
+      "exit": 0,
+      "feval": "FEVAL-F01 CONFIRMED; FEVAL-F03 (refusal-phrase/missing-evidence fail-open) CONFIRMED"
+    },
+    {
+      "step": "S7-FEVAL-F02-evidence",
+      "utc": "2026-10-26T06:45:xx",
+      "command": "find docs/testing/inta-fe-validation-intake/retained-variant-evidence -name 'observer.json'; count variant dirs; file listing",
+      "result": "22 variant directories (11 keys × nonempty/empty), each containing exactly meta.json/stdout.log/stderr.log; observer.json found 0 times → 'absence of observer.json' is preserved, no synthetic 0s backfilled (matches the owner's own no-backfill correction; also papered-over original_runner_fail-open L265 defaulting to 0).",
+      "exit": 0,
+      "feval": "FEVAL-F02 CONFIRMED (zero-upstream proof invalid for 21 variants; corrected to INSUFFICIENT…; never-listen NOT backfilled to 0)"
+    },
+    {
+      "step": "S8-FEVAL-F04-evidence",
+      "utc": "2026-10-26T06:45:xx",
+      "command": "node facts.mjs (reconciliation vs original manifest cross-check) + direct reads of report-errata-reconciliation.json",
+      "result": "hashTableReconciliation has 17 rows, all 17 report_sha256 != actual_manifest_sha256 (0 identical inside the table); original manifest has 18 payloads; the only manifest payload absent from the table is vitest-list.stderr.log (0-byte file — the narrative hash that trivially matched). Asset-count corrections verified from emitted-assets-inventory.json: 31 assets total (18 JS + 15 static/chunks JS + non-chunk remainder).",
+      "exit": 0,
+      "feval": "FEVAL-F04 CONFIRMED (17 narrative hashes differ, 1 same)"
+    },
+    {
+      "step": "S9-FEVAL-F05-evidence",
+      "utc": "2026-10-26T06:46:47Z",
+      "command": "node: lstat/readlink/realpath on /private/tmp/mc002-inta-harness/node_modules and .bin/next; ls tools/inta-harness/src; read dependency-isolation-plan.md",
+      "result": "node_modules IS a symlink: lstat isSymbolicLink=true; readlinkSync target '/tmp/mc002-inta-fe/node_modules'; realpathSync resolves to /private/tmp/mc002-inta-fe/node_modules (target dir exists). Therefore the harness snapshot's dependency tree is a direct symlink into the product frontend workspace — writes share bytes; no isolation. tools/inta-harness/src contains guards.ts (3128B) and NO guards.js — the launcher import '../src/guards.js' cannot resolve (R1-C04). dependency-isolation-plan.md proposes cp -cR + realpath preflight but preflight list ([ ! -L ...]; [ -d ...]; realpath-not-in-product) checks only the top-level node_modules, and does not prove nested symlink/realpath safety (owner's intake limitation stands).",
+      "exit": 0,
+      "feval": "FEVAL-F05 CONFIRMED (live-workspace evidence, re-verified this session; /tmp state is ephemeral so the recorded readlink/realpath values are the record, not a permanent artifact)"
+    },
+    {
+      "step": "S10-R1-C01..C04-verification",
+      "utc": "2026-10-26T06:44–06:47",
+      "command": "direct reads of the pinned R1 packet runner/evaluator/proposal sources + grep contract §2 + reviewer-executed 2-expression bash probe",
+      "results": {
+        "R1-C01": "CONFIRMED. guard-validator-r1.sh L214-218 metadata python imports only json but calls os.getpid() (NameError, verified by reading the code); L309/L313-315 interpolate bash literal true/false into Python expressions `($timed_out == 'true')`/`($listener_appeared == 'true')` → unquoted identifiers `true`/`false` → NameError before any evaluation; L167-173/244-248/281-285 capture $? INSIDE `if ! command` — reproduced by reviewer with rtk proxy bash AND /bin/bash: `if ! (exit 3); then echo $?` prints 0, and `if ! ls /definitely-not-here…; then echo $?` prints 0 — real lsof status is lost, so a normal no-match (exit 1) is misclassified as probe error (0 != 1 → probe_error=true); pre_probe_err (L165-173) is declared but never forwarded into evaluate_variant (only `probe_error` is passed at L315).",
+        "R1-C02": "CONFIRMED (3 unsafe PASS vectors). guard_evaluator.py L67/L74: `if listener_during is True` cannot catch listener_during=None — None bypasses both listener rules; L139-145+149: isinstance(False, int) is True in Python, so requestCount=false passes the integer check and False==0 passes the zero check (observerHTTPRequests becomes literal false); L147+155: bool('false')→True, so a nonempty-string cleanShutdown is accepted as True. All three vectors pass VALID_COMPLETE_INPUT with otherwise-valid fixtures — matches intake's additional-failclosed-probes.json and standalone-probe-execution.json.",
+        "R1-C03": "CONFIRMED with nuance. Observer flushes only at shutdown or on the error path (L79-104): no per-request durable writes, direct open('w') (no atomic replace/temp-rename), write errors only logged to stderr and swallowed (L87-88); startup failure after OBSERVER_PID capture returns without stopping the started observer (L183-186,45-47 flow); wait inside stop_observer (L127) is unbounded; start_observer port-release wait is bounded but the returned observer will already have been spawned. rm -rf of variant/state dirs (L153/L192) conflicts with retain-old-attempt evidence policy. The negative is not a defense of the original runner — it identifies the corrected runner's remaining lifecycle gaps.",
+        "R1-C04": "CONFIRMED. pre-listen-launcher-proposal.md §2.1 code imports '../src/guards.js' while tools/inta-harness/src contains guards.ts only (no transpiler/pipeline in the frozen harness snapshot; no guards.js anywhere) → import fails (MODULE_NOT_FOUND) BEFORE any guard executes — so 'import-time guard executes before Next spawn' is not achieved by pseudocode as written; §2.2 claims zero-duplicate logic, but no binding exists to verify; §3.2 quotes the direct-CLI literal as frozen contract material, but inta-approved-contract.md §2 (L25-29) contains no such literal — it commands recording exact argv from the installed CLI docs/help; the CI-contract literal came from a later execution handoff. env:process.env (L63) is not a bounded allowlist. Zero dependency operations were performed in R1; plan remains document-only."
+      },
+      "exit": 0,
+      "discretion": "The reviewer read and reasoned about the sources/reproduction probes; the reviewer did NOT execute the owner's runner/evaluator/selfcheck code. Codex's separate intake reproductions (execution.json 2026-10-26T06:34:05Z 9/9 PASS and standalone-probe-execution.json 2026-10-26T06:37:49Z 3 expected-failures all PASS) were gated on hash-pinned inputs and are CONSISTENT with my code reading."
+    },
+    {
+      "step": "S11-underlying-claim-limits",
+      "utc": "2026-10-26T06:46:54Z",
+      "command": "cross-doc consistency checks (facts.mjs + reads)",
+      "result": "correlation.json internally: 27 attempts, 27 unique request IDs, 23 logical case IDs, 26 rows with go_matches>0, T12 go_matches=0/null; canonical checkpoint 51 entries with 36 required / 14 product / 1 blocked and execution_counts {PASS:0,FAIL:0,NOT_RUN:51} root_matrix_unchanged=true; formal ledger rows: 51 ids in original matrix order all NOT_RUN (this file's sha256 b4dd23c3… is recorded and the file was NOT touched); closeout marker-scan over 61 logs with actual_secret_value_scan NOT_ESTABLISHED; product exclusion: emitted assets 31, NFT 8 files all harnessReferences[], routes manifest has no /harness/case, vitest 18 test paths, credential-pattern scan 17 files/0 violations.",
+      "exit": 0
+    },
+    {
+      "step": "S12-guards-source-pin",
+      "utc": "2026-10-26T06:47:30Z",
+      "command": "ls tools/inta-harness/src",
+      "result": "driver.ts/envelope.ts/executor.ts/fixtures.ts/guards.ts/request-id.ts/schemas.ts present as source snapshot; no guards.js; supports R1-C04 claim that the launcher import path cannot resolve to the frozen harness source.",
+      "exit": 0
+    }
+  ],
+  "scope_statements": {
+    "executed_by_reviewer": "read/hash/verify operations, isolated 2-expression bash semantics probes, node-based manifest verification scripts, lstat/readlink on an existing symlink; reading owner/author-returned evidence and intake conclusions as ASSERTIONS to verify.",
+    "not_executed_by_reviewer": "no runtime/HTTP/observer/child process/lifecycle action; no product/harness/evaluator/selfcheck code execution; no provider/model/account action; no source/status/ledger write; no external dispatch; no commit.",
+    "not_verified_by_reviewer": [
+      "next-start-server.js L430/427 behaviors quoted in pre-listen-launcher-proposal.md (installed node_modules source was not read; author inspection claim only)",
+      "the ahistorical full diff emptiness INT-ISO-01 baseline (owner pins relied on)",
+      "envelope byte-level no-leak assertions (T3/W3, T11a/T11b/T11c detail/RetryAfter content)",
+      "backend Config.Env/backend.env actual secret values (owner responsibility; pattern scans are narrower)",
+      "Claude conformance disposition (INT-CONF-01 absent)"
+    ],
+    "aggregate_counts_verified": {
+      "reviewed_required_rows": 36,
+      "logical_endpoint_cases": 23,
+      "unique_request_attempts": 27,
+      "go_log_rows": 26,
+      "unreachable_t12": 1,
+      "guard_variant_original_rows": 22,
+      "r1_corrected_dispositions": "1 FAIL_OBSERVED_LISTENER + 21 INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN",
+      "narrative_hash_errata": "17 differ / 1 same (vitest-list.stderr.log)",
+      "posSelfcheck": "9/9 PASS reproduced by Codex intake; not runtime proof (runner-level defects confirmed)"
+    }
+  },
+  "authority_benchmark": "This log is review evidence; it awards no gate, no PASS, no release. Gates for CHANGES_REQUIRED disposition, R1 source fix assignment, runtime cue, teardown, privacy completion, conformance and production remain with Codex/Claude Code/PO under the standing SPA/INTA workflow."
+}

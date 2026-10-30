@@ -16,6 +16,7 @@ export function CreateRequirementForm({ matterId }: { matterId: string }) {
   return (
     <IntentForm
       receipted={true}
+      draftKey={`matter:${matterId}:new-requirement`}
       submitLabel={<LocalizedText en="Create requirement" vi="Tạo yêu cầu" />}
       run={(v, key) =>
         createRequirementAction({
@@ -25,7 +26,7 @@ export function CreateRequirementForm({ matterId }: { matterId: string }) {
           outcome: v.outcome ?? '',
         })
       }
-      onSuccess={(r) => r.id && router.push(`/requirements/${r.id}`)}
+      onSuccess={(r) => r.id && router.push(`/matters/${matterId}/work/${r.id}`)}
     >
       {({ errors }) => (
         <>

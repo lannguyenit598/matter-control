@@ -14,7 +14,7 @@ export function AppHeader({ start, end, className }: AppHeaderProps) {
   return (
     <header
       className={cn(
-        'app-header sticky top-0 z-10 flex min-h-14 flex-wrap items-center justify-between gap-3 border-b bg-header px-4 py-2 text-header-foreground',
+        'app-header sticky top-0 z-10 flex min-h-14 flex-wrap items-center justify-between gap-3 bg-header px-4 py-2 text-header-foreground md:px-6',
         className,
       )}
     >

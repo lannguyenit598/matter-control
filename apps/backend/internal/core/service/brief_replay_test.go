@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 var replayT0 = time.Date(2026, 10, 1, 9, 0, 0, 0, time.UTC)

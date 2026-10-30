@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/port"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 var _ port.FilingTx = (*memTx)(nil)
@@ -46,7 +46,8 @@ func (t *memTx) InsertFilingAction(ctx context.Context, it matter.WorkItem, f ma
 
 func (t *memTx) SaveFiling(_ context.Context, f matter.Filing) error {
 	if _, ok := t.store.filings[f.ItemID]; !ok {
-		return fmt.Errorf("filing update: %w", port.ErrNotFound)
+		// Same uniform CAS mapping as the PostgreSQL adapter (F-07).
+		return fmt.Errorf("filing update: %w", port.ErrVersionConflict)
 	}
 	t.store.filings[f.ItemID] = f
 	return nil

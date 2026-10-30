@@ -1,0 +1,94 @@
+{
+  "task": "MC-ZCODE-UI-UX-CONSISTENCY-AUDIT-20261029",
+  "owner": "actual ZCode (separate review session, read-only auditor)",
+  "created_utc": "2026-10-29T15:41:52Z",
+  "window_local_plus0700": "2026-10-29 22:33 - 23:20",
+  "checkout": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head": "20feedbf06c859a9806055d609f5b132fe8bb086",
+    "note": "Reviewed bytes are the dirty working tree (frontend broadly modified by in-flight UI-fidelity and review-matrix work)."
+  },
+  "reviewed_source_pins_sha256": {
+    "apps/frontend/src/components/atoms/button.tsx": "71c20401c171e90d4b8674d0d069facb40df5d3dbe75dd77bc58383efbdc204b",
+    "apps/frontend/src/app/globals.css": "89ddff3ba0f40052f61837c9a6c42a27896b644102463f13bde1f0017fdd56f0",
+    "apps/frontend/src/features/work/components/my-actions-view.tsx": "bbb5ee3ff72c83eb17643a3cb78435c41553b99f34cff5a44b7dbff5f95f103c",
+    "apps/frontend/src/features/work/components/work-filters.tsx": "02784938231f4ada7774d1e0ac54e9bfc03a18fe1175b696ca07e6254d37a803",
+    "apps/frontend/src/features/work/components/work-grid.tsx": "81ebd61244f34c0d90d6c377b817a5286d1d27d3bedfd45b53b08b5ec4169788",
+    "apps/frontend/src/features/review/components/review-filters.tsx": "d774469c6d617225e07ef892e73497163fb35bef1ec432f59d5c0776b57d6aa7",
+    "apps/frontend/src/components/atoms/input.tsx": "8260ede32323f20f04d0a7db0efd542638910495cf46a7d8bc248646d41a1a6d",
+    "apps/frontend/src/components/atoms/select.tsx": "60fc9e6fd9212042f04a5ede7079e63b575a0bddf764accf46aaa2bc21fcc2d9",
+    "apps/frontend/src/components/molecules/dialog.tsx": "8f7d1db59380b75c63d0ef8c464f30060258e740d6fb18c32ef7fd79bd4d3938",
+    "apps/frontend/src/components/molecules/pagination.tsx": "68b07072d06ba8c18d52b255612eb97d5dcf4242c5ceea00086286754ed4b989",
+    "apps/frontend/src/components/molecules/search-input.tsx": "6386e692c43e4f07573960e8f5041b0220d0fb0764d4ad940b92bfdf934972d7",
+    "apps/frontend/src/components/organisms/intent-form.tsx": "d612683d1718bbf0aeb45298cdd24c610a1796fbb2c915609ce3ec5c265c99c7",
+    "apps/frontend/src/features/matters/components/matter-history.tsx": "a6381fa3d1ecdfe3bc0962e84808d1a256a648aa48c026a0bdcfda125786a7ac",
+    "apps/frontend/src/features/proof/components/document-forms.tsx": "c5a92df3fd10353ac3e14b5bd0dce1713b6bb5c6af177acad261918b4ea958b9",
+    "apps/frontend/src/app/global-error.tsx": "2e7f55d0901db51d30d25b6933643c907cc8938f034c3cfacf138b4a38149fef",
+    "design-prototypes/focused-workbench/src/styles.css": "4287b144fa14b38e2f7a3856ca75535b85f7f21130a07b9731dc8eaf4b5f72f9",
+    "docs/design/legal-team-experience-20261029/concepts/concept-3.png": "88c32cee8de5c9142ec4f30161c63d0d7cca9e279b8930f911a48c65865c60d8"
+  },
+  "drift_recheck_at_return": {
+    "apps/frontend/src/components/atoms/button.tsx": "unchanged during audit window (hash re-match)",
+    "apps/frontend/src/app/globals.css": "unchanged during audit window (hash re-match)",
+    "reviewed_files_mtimes": "all last modified 2026-10-29 16:50-16:57 +0700, before the audit session started"
+  },
+  "runtime_identity": {
+    "product_3000": {
+      "process": "next-server (v16.4.2), node v24.22.1, PID 87665, started 2026-10-29 15:03:17 +0700",
+      "cwd": "apps/frontend of this checkout (verified via lsof cwd, no environment printed)",
+      "mode": "next dev Turbopack (.next/dev/cache/turbopack present; Next.js Dev Tools button observed)",
+      "divergences": [
+        "GET / currently returns 307 -> /dashboard (curl-verified twice); reviewed source app/page.tsx redirects to /workspaces",
+        "one transient whole-tab redirect to the IdP login page after a client-side theme toggle + refresh; no equivalent server behavior exists in reviewed source (no middleware/proxy file)",
+        "session read intermittently failed then succeeded (ReadFailure rendered, later authed content); route renders stalled >80s on 3 routes"
+      ],
+      "label": "RUNTIME_REVISION_UNCONFIRMED — module graph may predate the 16:50 edits"
+    },
+    "prototype_4176": {
+      "status": "HTTP 200 at 22:35+0700 (curl), ERR_CONNECTION_REFUSED at ~23:05+0700; port no longer listening (lsof empty)",
+      "action": "NOT restarted — retained-runtime lifecycle change is out of audit authorization",
+      "reference_values_source": "committed design-prototypes/focused-workbench/src/styles.css + design-qa.md + concept-3.png (read directly)"
+    },
+    "api_8081": { "healthz": "200 in 0.0005s", "readyz": "200 in 0.0046s" }
+  },
+  "screenshots": {
+    "dir": "screenshots/",
+    "files": [
+      "product-login-light-1440.png (215f5b3c…)",
+      "product-workspaces-readfailure-light-1440.png",
+      "product-workspaces-authed-light-1440.png (may duplicate the readfailure frame; authed row metrics were captured via DOM evaluate — M-08..M-10)",
+      "product-dialog-new-workspace-light-1440.png (6c70df17…)",
+      "product-my-work-workbench-light-1440.png (97b5b5b2…)",
+      "product-my-work-390-light.png (66e7c8db…)",
+      "product-my-work-workbench-dark-1440.png (4f5e29e2…)",
+      "product-my-work-1440-vi.png (48be1062…; lang=vi set, server-rendered labels stayed English on the old runtime)",
+      "product-matter-overview-light-1440.png (0549fa28…)",
+      "product-work-grid-light-1440.png (c80969d5…)",
+      "product-review-grid-light-1440.png (d6542815…)",
+      "product-data-transfer-light-1440.png (06728765…)"
+    ],
+    "conditions": "1440x900 or 390x844 CSS px, dpr 1, synthetic data only; theme/locale toggled through the app's own client-side preferences and always restored (light/en at return)",
+    "safety": "no form submitted, no text entered into product forms, no download triggered, no data created/deleted, no IdP interaction, no credentials in any capture"
+  },
+  "command_receipts": [
+    { "cmd": "git rev-parse --abbrev-ref HEAD / rev-parse HEAD / status --porcelain", "purpose": "branch/HEAD/dirty verification", "result": "codex/unified-project-flow @ 20feedb; frontend broadly dirty" },
+    { "cmd": "stat -f %m button.tsx globals.css; shasum -a 256 (twice)", "purpose": "drift detection", "result": "mtime 16:50; hashes stable across audit window" },
+    { "cmd": "semble search \"Button variants and sizes shared component\" apps/frontend", "purpose": "pre-exploration semantic search per AGENTS", "result": "button.tsx top hit" },
+    { "cmd": "grep -rn -E '<Button|buttonVariants\\(|<button|type=\"submit\"|<summary|work-primary' src (excl. tests/stories)", "purpose": "exhaustive control inventory", "result": "button-inventory.csv" },
+    { "cmd": "curl -s -o /dev/null -D - localhost:3000/ ; curl 127.0.0.1:8081/healthz|/readyz", "purpose": "runtime identity/health", "result": "307 -> /dashboard; 200s" },
+    { "cmd": "lsof -nP -iTCP:3000 -sTCP:LISTEN; lsof -p 87665 (cwd/txt lines); ps -o lstart=,command=", "purpose": "identify server process without printing environments", "result": "next-server v16.4.2, this checkout, started 15:03" },
+    { "cmd": "IAB browser: goto/domsnapshot/evaluate(getBoundingClientRect+getComputedStyle)/screenshot", "purpose": "rendered measurements M-01..M-46", "result": "button-metrics.csv + screenshots/" },
+    { "cmd": "Read concept-3.png", "purpose": "approved visual truth", "result": "reference composition confirmed (see return.md)" }
+  ],
+  "noncircular_evidence_index": {
+    "return.md": "answers + limits",
+    "route-coverage.md": "route x coverage matrix",
+    "button-inventory.csv": "50 inventoried control forms (B-01..B-50)",
+    "button-metrics.csv": "46 measured rows (M-01..M-46) with identity labels",
+    "findings.md": "F-01..F-12 + do-not-normalize list",
+    "normalization-plan.md": "proposal only",
+    "comparison-sheet.md": "side-by-side labeled crops/screenshots + metric table (audit evidence, not a product screen)",
+    "screenshots/": "12 PNGs"
+  }
+}

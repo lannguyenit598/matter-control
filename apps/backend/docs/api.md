@@ -1,5 +1,18 @@
 # API reference
 
+## Product runtime probes and deadlines (2026-10-29)
+
+For `mcapi`, `GET /healthz` remains process liveness. `GET /readyz` checks the product database with a 500ms deadline and returns 503 `urn:mc:unavailable` when the database is unavailable or the process is draining. No database error or credential is included in the response. These probes bypass authentication and the in-flight limiter.
+
+Ordinary routes use `MC_REQUEST_TIMEOUT` (10s default). Document upload/content download, import preview/commit, export and bulk commit use `MC_TRANSFER_TIMEOUT` (60s local engineering default; positive duration required). Authentication, body/concurrency limits, request cancellation and receipt/CAS semantics still apply. A timeout after a possible write is OUTCOME_UNKNOWN; reconcile with the original key rather than blindly replaying it. These defaults are not approved production SLAs. See [operations](operations.md) for socket deadlines and shutdown. Historical template sections below do not override this product addendum; the broader S5 reference rewrite remains deferred.
+
+## Product member pickers (local UX addendum, 2026-10-28)
+
+- `GET /api/v1/matters/{id}/member-candidates`: Matter OWNER only, with active workspace membership. Returns the existing members page shape for active workspace members. The UI excludes existing Matter members. This read grants no permissions; membership commands retain authorization and CAS checks.
+- `GET /api/v1/workspaces/{id}/member-candidates?q=<name>`: local/dev opt-in `MC_LOCAL_PEOPLE_DIRECTORY=true` (default false). Workspace OWNER only. Returns `{items:[{userId,displayName}]}`, at most 20 provisioned product users in the caller's issuer, excluding active members. Case-insensitive literal substring search, q at most 100 bytes; no provider/admin calls, email or subject disclosure. SQL rechecks active OWNER membership. This PO-approved local visibility boundary is not a production organization directory.
+
+IDs remain stable wire/route keys; user-facing pickers and scope navigation use names. No schema migration is needed.
+
 Reference for API clients. Default local base URL: `http://localhost:8080`. Example requests: [`api.http`](../api.http). With `API_DOCS_ENABLED=true`, the server also publishes an OpenAPI 3.1 document at `/openapi.json` and SwaggerUI at `/docs` ([operations.md](operations.md#api-documentation)); this page remains the reference for behavior the schema cannot express, such as normalization and `If-Match` rules.
 
 ## General conventions
@@ -214,6 +227,32 @@ Summary of implemented route groups (details and exact request/response shapes i
 - **W4**: regulatory filings (nine-stage machine, repeated supplement cycles, negative outcomes,
   reopen with proof epochs, observations/corrections).
 - **W5**: Control Room snapshot read and context records (Decision/Finding/Risk/Entity).
+- **Review matrix (manual)**: Matter-scoped review grids of exact document versions (rows) and
+  versioned questions (columns) with append-only, cited human answers; it never verifies a
+  Requirement, completes an Action or changes a Filing. All routes are under
+  `/matters/{id}/review-grids`; reads need any active Matter role, writes need OWNER/EDITOR.
+  - `GET` list (`page`, no cells); `POST` create `{name}` (Idempotency-Key, no If-Match) → 201 with `Location`.
+  - `GET /{gridId}` → grid view: `versions[{versionId, documentId, documentName, filename, no, current}]`
+    (`current` is a neutral fact), `questions`, `questionHistory` (every revision, oldest first) and
+    `cells[{versionId, questionId, state: PENDING|REVIEWED|ABSENT|UNABLE, stale, answer}]`; strong
+    `ETag` = grid revision tag, plus `MC-As-Of` / `MC-Source-Revision`. `stale` means the question
+    changed after that answer; it is derived, never stored.
+  - Structure commands take the grid `ETag` in `If-Match` (428 without, 412 when stale) and return the
+    new view: `POST /{gridId}/versions {versionId}`, `POST /{gridId}/versions/{versionId}/removal`,
+    `POST /{gridId}/questions {text}`, `POST /{gridId}/questions/{questionId}/revision {text}`.
+    A version of another Matter and a missing id both answer 409 `urn:mc:rejected` (`unknown-version`)
+    with identical bodies.
+  - `POST /{gridId}/answers {versionId, questionId, expectedAnswerId, state, text, pageRef, quoteRef}`
+    (Idempotency-Key, no If-Match): `expectedAnswerId` is the id of the cell's current answer, `""`
+    an observed empty cell; an absent or null `expectedAnswerId` is a missing precondition (428) and
+    a mismatch is 412. `pageRef` (≤ 40) and `quoteRef` (≤ 1000) are typed by a person and never
+    validated. Replay with the same key returns the original answer (`Idempotent-Replayed: true`).
+  - `GET /{gridId}/cells/{versionId}/{questionId}/history?limit=&cursor=` (1–100, default 100),
+    newest first by the server-recorded facts (`answeredAt`, tie-broken by answer id); the page
+    envelope carries `total: null` (a keyset page does not count the trail) and `nextCursor` when
+    older answers exist; every page is re-authorized and a copied or malformed cursor is 400.
+    Answers recorded between pages appear on a fresh first page; anchored later pages never
+    duplicate or skip older rows. Answers of a removed version stay readable.
 - **W6**: `bulk/preview` / `bulk/commit` (EDITOR+ at the endpoint, per-row receipts, allowlist
   title/description/internalOwner/due), `import/preview` / `import/commit` (multipart; row keys in
   `dependencies` resolve to the imported items; one transaction per connected group; RULE-014

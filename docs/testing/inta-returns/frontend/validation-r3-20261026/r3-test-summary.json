@@ -1,0 +1,52 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R3",
+  "executor": "Actual Antigravity (Gemini 3.8 Flash High)",
+  "provider": "Google",
+  "workstation": "macOS (darwin arm64)",
+  "nodeVersion": "v24.22.1",
+  "pythonVersion": "3.14.4",
+  "branch": "codex/unified-project-flow",
+  "coordinationBase": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "targetFindingsAddressed": [
+    "R2-I01 (Actual coordinator dispatch, safe wrapper without port-based kills or cleanup traps)",
+    "R2-I02 (Approved guard-first launcher, strict bounded environment including MC_INTA_STATE_DIR)",
+    "R2-I03 (Owned process lifecycle, fail-closed identity verification, try/finally cleanup)",
+    "R2-I04 (Evidence completeness, fail-closed on 0 samples, strict isFinal and probe error classification)",
+    "R2-I05 (Actual launcher path, relative/absolute CLI detection, signal forwarding without re-raise loops)",
+    "R2-I06 (Comprehensive deterministic self-checks exercising actual coordinator, wrapper, evaluator, and launcher)"
+  ],
+  "launchScopeDecision": "INTA-LAUNCH-D01 Option A APPROVED by Human Product Owner on 2026-10-26 (Asia/Saigon)",
+  "normativeAddendum": "docs/implementation/inta-launch-contract-addendum.md (INTA-1-LAUNCH-01)",
+  "approvalRecord": "docs/testing/inta-launch-approval-20261026/approval.json",
+  "supportedLaunchBoundary": "node --experimental-strip-types launcher/harness-dev.mjs (raw direct Next CLI unsupported for never-listen)",
+  "suite": "runner/selfcheck-r3.py",
+  "startUTC": "2026-10-26T08:15:11.437716+00:00",
+  "endUTC": "2026-10-26T08:15:11.589005+00:00",
+  "totalCases": 30,
+  "passedCases": 30,
+  "failedCases": 0,
+  "allPassed": true,
+  "launcherMockSuite": "launcher/test-launcher-mock.mjs (10/10 PASS)",
+  "liveRuntimeExecuted": false,
+  "liveNextServerSpawned": false,
+  "liveObserverBound": false,
+  "productBuildExecuted": false,
+  "dependencyOperationsExecuted": false,
+  "gitMutationsExecuted": false,
+  "groups": {
+    "group1_baselineCasesAndEvaluatorSchema": "9/9 PASS",
+    "group2_regressionProbesR1C02": "3/3 PASS",
+    "group3_evidenceCompletenessR2I04": "3/3 PASS",
+    "group4_actualProbeClassificationR2I04_R2I06": "4/4 PASS",
+    "group5_ownershipAndLifecycleR2I03_R2I06": "3/3 PASS",
+    "group6_coordinatorMockExecutionR2I02_R2I03_R2I06": "4/4 PASS",
+    "group7_wrapperAndPlanDispatchR2I01_R2I06": "2/2 PASS",
+    "group8_optionALauncherAndNode24TypeStrippingR1C04_R2I05": "2/2 PASS (includes 10/10 mock launcher unit tests)"
+  },
+  "dispositionsPreserved": {
+    "FEVAL_F01": "FAIL_OBSERVED_LISTENER (1 row retained for raw direct Next CLI)",
+    "FEVAL_F02": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN (21 rows retained for historical runs)",
+    "historicalVariantLogsReferenced": "docs/testing/inta-returns/frontend/validation-r1-20261026/retained-variant-evidence/ (66 files)",
+    "reportErrataReferenced": "docs/testing/inta-returns/frontend/validation-r1-20261026/report-errata-reconciliation.json"
+  }
+}

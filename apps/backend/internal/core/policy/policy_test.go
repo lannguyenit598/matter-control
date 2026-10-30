@@ -3,8 +3,8 @@ package policy_test
 import (
 	"testing"
 
-	"github.com/example/userapi/internal/core/domain/matter"
-	"github.com/example/userapi/internal/core/policy"
+	"leonx.me/matter-control/internal/core/domain/matter"
+	"leonx.me/matter-control/internal/core/policy"
 )
 
 // BE01-T02: the approved operation matrix with default deny. Create needs an ACTIVE

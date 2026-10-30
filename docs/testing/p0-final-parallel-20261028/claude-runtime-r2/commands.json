@@ -1,0 +1,219 @@
+{
+ "recorded": [
+  {
+   "name": "pure-checker-9",
+   "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_verify"
+   ],
+   "cwd": "ops/p0-local/restore-rehearsal",
+   "extra_env_keys": [],
+   "start_utc": "2026-10-28T15:34:52.774456Z",
+   "end_utc": "2026-10-28T15:34:52.973970Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/restore/pure-checker-9.log"
+  },
+  {
+   "name": "bash-syntax",
+   "argv": [
+    "bash",
+    "-n",
+    "ops/p0-local/restore-rehearsal/run.sh"
+   ],
+   "cwd": ".",
+   "extra_env_keys": [],
+   "start_utc": "2026-10-28T15:34:53.003084Z",
+   "end_utc": "2026-10-28T15:34:53.007127Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/restore/bash-syntax.log"
+  },
+  {
+   "name": "docker-start-restore-target",
+   "argv": [
+    "docker",
+    "start",
+    "3c207de99a03330e368b7abd151cdc349e3ba53fe1c97bbfa345e939977d25f6"
+   ],
+   "cwd": ".",
+   "extra_env_keys": [],
+   "start_utc": "2026-10-28T15:35:05.500824Z",
+   "end_utc": "2026-10-28T15:35:05.817997Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/restore/docker-start-restore-target.log"
+  },
+  {
+   "name": "docker-identity-check",
+   "argv": [
+    "sh",
+    "-c",
+    "for c in mc-p0-zcode-pg-product-test mc-p0-zcode-pg-restore-target; do docker inspect $c --format \"{{.Name}} id={{.Id}} role={{index .Config.Labels \\\"mc.role\\\"}} task={{index .Config.Labels \\\"mc.task\\\"}} state={{.State.Status}} started={{.State.StartedAt}} port={{range $p,$b := .HostConfig.PortBindings}}{{(index $b 0).HostIp}}:{{(index $b 0).HostPort}}{{end}}\"; done; docker exec mc-p0-zcode-pg-restore-target pg_isready; docker exec mc-p0-zcode-pg-product-test pg_isready"
+   ],
+   "cwd": ".",
+   "extra_env_keys": [],
+   "start_utc": "2026-10-28T15:35:09.962202Z",
+   "end_utc": "2026-10-28T15:35:10.081060Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/restore/docker-identity-check.log"
+  },
+  {
+   "name": "restore-run-sh",
+   "argv": [
+    "rtk",
+    "proxy",
+    "bash",
+    "ops/p0-local/restore-rehearsal/run.sh"
+   ],
+   "cwd": ".",
+   "extra_env_keys": [
+    "MC_RR_OUT",
+    "MC_RR_WORK"
+   ],
+   "start_utc": "2026-10-28T15:35:36.389419Z",
+   "end_utc": "2026-10-28T15:36:07.875895Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/restore/restore-run-sh.log"
+  },
+  {
+   "name": "go-version",
+   "argv": [
+    "go",
+    "version"
+   ],
+   "cwd": ".",
+   "extra_env_keys": [],
+   "start_utc": "2026-10-28T15:37:03.313187Z",
+   "end_utc": "2026-10-28T15:37:03.365887Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/resources/go-version.log"
+  },
+  {
+   "name": "go-build-mcapi",
+   "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "build",
+    "-o",
+    "/private/tmp/mc-p0-r2-runtime/mcapi",
+    "./cmd/mcapi"
+   ],
+   "cwd": "apps/backend",
+   "extra_env_keys": [],
+   "start_utc": "2026-10-28T15:37:03.393576Z",
+   "end_utc": "2026-10-28T15:37:05.575622Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/resources/go-build-mcapi.log"
+  },
+  {
+   "name": "fe-snapshot-build",
+   "argv": [
+    "rtk",
+    "proxy",
+    "pnpm",
+    "exec",
+    "next",
+    "build",
+    "--webpack"
+   ],
+   "cwd": "/private/tmp/mc-p0-r2-runtime/frontend",
+   "extra_env_keys": [
+    "API_MODE"
+   ],
+   "start_utc": "2026-10-28T15:37:43.416852Z",
+   "end_utc": "2026-10-28T15:37:58.775524Z",
+   "exit": 1,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/resources/fe-snapshot-build.log"
+  },
+  {
+   "name": "fe-snapshot-build-turbopack",
+   "argv": [
+    "node",
+    "node_modules/next/dist/bin/next",
+    "build"
+   ],
+   "cwd": "/private/tmp/mc-p0-r2-runtime/frontend",
+   "extra_env_keys": [
+    "API_BASE_URL",
+    "API_MODE",
+    "APP_ORIGIN",
+    "OIDC_CLIENT_ID",
+    "OIDC_ISSUER",
+    "OIDC_PROJECT_ID",
+    "SESSION_COOKIE_SECURE"
+   ],
+   "start_utc": "2026-10-28T15:40:33.808588Z",
+   "end_utc": "2026-10-28T15:40:35.028580Z",
+   "exit": 1,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/resources/fe-snapshot-build-turbopack.log"
+  },
+  {
+   "name": "fe-snapshot-build-turbopack-2",
+   "argv": [
+    "node",
+    "node_modules/next/dist/bin/next",
+    "build"
+   ],
+   "cwd": "/private/tmp/mc-p0-r2-runtime/frontend",
+   "extra_env_keys": [
+    "API_BASE_URL",
+    "API_MODE",
+    "APP_ORIGIN",
+    "OIDC_CLIENT_ID",
+    "OIDC_ISSUER",
+    "OIDC_PROJECT_ID",
+    "SESSION_COOKIE_SECURE"
+   ],
+   "start_utc": "2026-10-28T15:40:53.309322Z",
+   "end_utc": "2026-10-28T15:41:03.472250Z",
+   "exit": 0,
+   "public_log": "testing/p0-final-parallel-20261028/claude-runtime-r2/resources/fe-snapshot-build-turbopack-2.log"
+  }
+ ],
+ "inline_or_scripted_not_individually_recorded": [
+  {
+   "what": "opening/closing inventory",
+   "script": "private inventory.py",
+   "utc": "15:34:41Z / 15:42:45Z",
+   "exit": 0
+  },
+  {
+   "what": "container identity JSON before restore",
+   "utc": "~15:35:10Z",
+   "exit": 0
+  },
+  {
+   "what": "owned API start: create database, mcapi migrate, start mcapi on 127.0.0.1:8084 (private api_up.py)",
+   "utc": "2026-10-28T15:37:28Z-15:37:30Z",
+   "exit": 0,
+   "note": "DSN derived through verify.py dsn; value never printed"
+  },
+  {
+   "what": "owned frontend start on 127.0.0.1:3104 (private fe_up.py)",
+   "utc": "2026-10-28T15:41:31Z",
+   "exit": 0
+  },
+  {
+   "what": "HTTP negative probes (private probe.py, urllib, no redirects followed)",
+   "utc": "~15:41:50Z-15:42:20Z",
+   "exit": 0,
+   "result": "21 PASS, 5 NOT_OBSERVABLE (probe design error), 0 FAIL",
+   "output": "idp/http-negative-probes.json"
+  },
+  {
+   "what": "stop owned processes after identity check",
+   "utc": "~15:42:3xZ",
+   "exit": 0
+  },
+  {
+   "what": "secret scan of the public namespace",
+   "utc": "2026-10-28T15:43:57Z",
+   "exit": 0,
+   "output": "resources/secret-scan.json"
+  }
+ ],
+ "note": "Raw stdout/stderr are private (0600); public logs are DSN-redacted. rec.py always returns 0, the exit field is the command exit."
+}

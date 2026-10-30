@@ -1,0 +1,38 @@
+MC-002-INTA-GO-STOP execution record — actual ZCode backend runtime role — 2026-10-26T00:39:27Z
+
+Command (exactly one signal, no escalation/retry/other target):
+  kill -TERM 98134
+  (equivalently /bin/kill -TERM 98134; single documented graceful path)
+
+Timeline (UTC):
+  2026-10-26T00:39:27Z  kill -TERM 98134 -> exit 0 (signal delivery accepted)
+  ~0.1s bounded wait loop (max 10s documented drain bound): process exited after 1 decisecond
+  2026-10-26T00:39:28Z  ps -p 98134 -> gone (exit 1); lsof -nP -iTCP:18086 -sTCP:LISTEN -> none (exit 1)
+
+Observed graceful-shutdown evidence (append-only fd1 log, 4438 -> 4636 bytes, +198 = exactly two lines):
+  {"time":"2026-10-26T07:39:27.856771+07:00","level":"INFO","msg":"shutting down, draining","delay":"0s"}
+    (= 2026-10-26T00:39:27.856771Z)
+  {"time":"2026-10-26T07:39:27.857439+07:00","level":"INFO","msg":"userapi stopped gracefully"}
+    (= 2026-10-26T00:39:27.857439Z)
+  stderr log: 0 bytes before and after (no error-path "userapi stopped with error" line; main's error
+  path exits 1 and logs at ERROR — absent).
+
+Evidence-quality distinction (per cue):
+  - Graceful-shutdown MESSAGES: observed in the application log (above).
+  - Process disappearance: independently observed via ps (PID gone) and lsof (no 18086 listener).
+  - Exit CODE: NOT independently observable — the process was orphaned (PPID 1, started by a prior
+    session's detached wrapper) and is reaped by launchd, so no waitable status exists. kill exit 0
+    proves only signal delivery. The combination of both graceful log lines, nil-return Run path in
+    source and clean disappearance supports graceful exit 0; it is not a direct waitpid observation.
+  - No replacement process: pgrep -fl '[u]serapi' -> no matches (self-match-safe pattern);
+    no listener on 18086 at 00:39:40Z.
+
+Postconditions verified (00:39:40Z):
+  - Next root PID 88444 / listener PID 88453 unchanged (start Mon Oct 26 00:35:21 2026 +07), 18085 listening.
+  - PG container 04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01 running healthy; no lifecycle action.
+  - Ledger 56 files: 04-ledger-after.sha256 byte-identical to 01-ledger-before.sha256 (diff exit 0) —
+    counter 26, 22 assertions, markers 1..6, A/B/X state untouched.
+  - No record HTTP, health/ready probe, SQL, harness request, or driver invocation performed at any point.
+
+Resource disposition: Go intentionally STOPPED (awaiting separate Codex stage7 cue); Next and PG
+retained running; nothing restarted/removed/cleaned; no source/config change; no migration.

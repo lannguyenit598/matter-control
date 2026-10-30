@@ -23,7 +23,7 @@ linters:
             - "!$test"
           allow:
             - $gostd
-            - github.com/example/userapi/internal/core/
+            - leonx.me/matter-control/internal/core/
           deny:
             - pkg: net/http
               desc: the core must not know about HTTP; map errors in the inbound adapter
@@ -37,7 +37,7 @@ linters:
             - "**/internal/adapter/inbound/**"
             - "!$test"
           deny:
-            - pkg: github.com/example/userapi/internal/adapter/outbound
+            - pkg: leonx.me/matter-control/internal/adapter/outbound
               desc: inbound adapters must only talk to the core through ports
             - pkg: github.com/jackc/pgx
               desc: inbound adapters must not know about the database
@@ -47,27 +47,41 @@ linters:
               desc: inbound adapters must not know about the database
             - pkg: github.com/exaring/otelpgx
               desc: inbound adapters must not know about the database
-            - pkg: github.com/example/userapi/internal/app
+            - pkg: leonx.me/matter-control/internal/app
               desc: only cmd may depend on the composition root
             - pkg: go.uber.org/fx
               desc: dependency injection belongs in the composition root (internal/app); take dependencies as constructor parameters
             - pkg: go.uber.org/dig
               desc: dependency injection belongs in the composition root (internal/app); take dependencies as constructor parameters
+        # Adapters sit on the edge of the core: they speak the ports and the domain types, never the
+        # application layer. Use cases (service) and the permission matrix (policy) are reached
+        # through the inbound ports; an adapter that imports them would carry business decisions.
+        # The shared contract kit (repotest) drives the services on purpose, so it is excluded.
+        adapters-not-application:
+          files:
+            - "**/internal/adapter/**"
+            - "!**/internal/adapter/outbound/repotest/**"
+            - "!$test"
+          deny:
+            - pkg: leonx.me/matter-control/internal/core/service
+              desc: adapters must depend on core/port and core/domain, not on the use-case implementations
+            - pkg: leonx.me/matter-control/internal/core/policy
+              desc: authorization decisions belong to the core services, not to an adapter
         # Outbound adapters are independent: no imports of other outbound adapters or shared test suites.
         outbound-adapters:
           files:
             - "**/internal/adapter/outbound/**"
             - "!$test"
           deny:
-            - pkg: github.com/example/userapi/internal/adapter/inbound
+            - pkg: leonx.me/matter-control/internal/adapter/inbound
               desc: outbound adapters must not depend on transports
             - pkg: github.com/labstack/echo
               desc: outbound adapters must not depend on the HTTP framework
-            - pkg: github.com/example/userapi/internal/adapter/outbound/system
+            - pkg: leonx.me/matter-control/internal/adapter/outbound/system
               desc: outbound adapters must not depend on each other
-            - pkg: github.com/example/userapi/internal/adapter/outbound/repotest
+            - pkg: leonx.me/matter-control/internal/adapter/outbound/repotest
               desc: the shared contract test kit is for tests only
-            - pkg: github.com/example/userapi/internal/app
+            - pkg: leonx.me/matter-control/internal/app
               desc: only cmd may depend on the composition root
             - pkg: go.uber.org/fx
               desc: dependency injection belongs in the composition root (internal/app); take dependencies as constructor parameters
@@ -80,11 +94,11 @@ linters:
             - "**/internal/config/**"
             - "!$test"
           deny:
-            - pkg: github.com/example/userapi/internal/adapter
+            - pkg: leonx.me/matter-control/internal/adapter
               desc: platform packages must not depend on adapters
-            - pkg: github.com/example/userapi/internal/core
+            - pkg: leonx.me/matter-control/internal/core
               desc: platform packages must not depend on the core
-            - pkg: github.com/example/userapi/internal/app
+            - pkg: leonx.me/matter-control/internal/app
               desc: only cmd may depend on the composition root
             - pkg: go.uber.org/fx
               desc: dependency injection belongs in the composition root (internal/app)
@@ -98,7 +112,7 @@ linters:
             - "!**/internal/adapter/outbound/postgres/**"
             - "!$test"
           deny:
-            - pkg: github.com/example/userapi/internal/adapter/outbound/postgres
+            - pkg: leonx.me/matter-control/internal/adapter/outbound/postgres
               desc: outbound adapters must not depend on each other; generated queries stay inside the postgres adapter
         # cmd reads config, creates a logger, handles signals, and calls internal/app, which wires adapters.
         cmd:
@@ -106,9 +120,9 @@ linters:
             - "**/cmd/**"
             - "!$test"
           deny:
-            - pkg: github.com/example/userapi/internal/adapter
+            - pkg: leonx.me/matter-control/internal/adapter
               desc: adapters are wired in internal/app, not in cmd
-            - pkg: github.com/example/userapi/internal/core
+            - pkg: leonx.me/matter-control/internal/core
               desc: the core is wired in internal/app, not in cmd
             - pkg: github.com/jackc/pgx
               desc: adapters are wired in internal/app, not in cmd
@@ -130,9 +144,9 @@ linters:
             - "!**/cmd/**"
             - "!$test"
           deny:
-            - pkg: github.com/example/userapi/internal/adapter
+            - pkg: leonx.me/matter-control/internal/adapter
               desc: only the composition root (internal/app) may depend on adapters
-            - pkg: github.com/example/userapi/internal/app
+            - pkg: leonx.me/matter-control/internal/app
               desc: only cmd may depend on the composition root
             - pkg: github.com/jackc/pgx
               desc: only the postgres adapter may use the database driver
@@ -172,4 +186,4 @@ formatters:
   settings:
     goimports:
       local-prefixes:
-        - github.com/example/userapi
+        - leonx.me/matter-control

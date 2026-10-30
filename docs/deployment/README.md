@@ -13,3 +13,5 @@ Before architecture/release approval:
 7. Before production: CI checks, secret handling, migration/backup/recovery, rollout/rollback, monitoring, cost guardrails and Human go/no-go.
 
 Current sources consulted: [Workers languages](https://developers.cloudflare.com/workers/languages/), [Workers limits](https://developers.cloudflare.com/workers/platform/limits/), [Next.js deployment](https://developers.cloudflare.com/workers/framework-guides/web-apps/nextjs/). Documentation was consulted on 2026-10-24; it does not establish template compatibility or live account quotas.
+
+Current portable profiles (2026-10-30): [ADR-007](../architecture/adr/ADR-007-portable-fe-be-deployment-profiles.md), [portability runbook](portability-runbook.md) and [cloud-validation approval packet](portability-cloud-validation-packet.md). Workers + Cloud Run stays the default (ADR-006).

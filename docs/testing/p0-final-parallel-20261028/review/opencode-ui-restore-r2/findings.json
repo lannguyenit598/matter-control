@@ -1,0 +1,106 @@
+{
+  "task": "MC-P0-OPENCODE-UI-RESTORE-DELTA-R2 findings (independent reviewer; non-author)",
+  "verdict_summary": {
+    "source_delta_20_paths": "PASS_WITH_LIMITATIONS",
+    "retained_restore_evidence": "PASS_WITH_LIMITATIONS",
+    "manifest_authority_current_tree": "NEEDS_INPUT_REFRESH",
+    "cr002": "DECISION_REQUIRED (unchanged)",
+    "rv001": "CLOSED_SOURCE_ONLY (unchanged; round-1 scope)"
+  },
+  "findings": [
+    {
+      "id": "RD2-001",
+      "severity": "none",
+      "status": "VERIFIED_NO_DEFECT",
+      "kind": "validity",
+      "title": "next build --webpack is a real flag for the pinned Next 16.4.2",
+      "where": ["apps/frontend/package.json (build:webpack)", "node_modules/next/dist/docs/01-app/03-api-reference/06-cli/next.md:101", "node_modules/next/dist/lib/bundler.js parseBundlerArgs"],
+      "disposition": "flag documented in bundled CLI docs and parsed into Bundler.Webpack; closes the reviewer's earlier open question from code, not memory"
+    },
+    {
+      "id": "RD2-002",
+      "severity": "P3",
+      "status": "OPEN_NOTE",
+      "kind": "build-gate adequacy",
+      "title": "check-built-css.mjs raw-directive regex misses @plugin/@config/@reference/@utility; Turbopack+postcss double application unevaluated",
+      "where": ["apps/frontend/scripts/check-built-css.mjs:18-22", "apps/frontend/postcss.config.mjs", "apps/frontend/next.config.ts (turbopack *.css rule)"],
+      "disposition": "the three must-have-utility assertions lower false-green risk, but 'no raw Tailwind directives' is overstated as a general proof; with postcss.config.mjs added while the turbopack css rule remains registered, whether Turbopack builds double-apply the Tailwind compiler was not evaluated (build re-runs out of round-2 permission) — cover at the build/visual transfer gate"
+    },
+    {
+      "id": "RD2-003",
+      "severity": "P3",
+      "status": "ACCEPTED_WITH_NOTE",
+      "kind": "presentation semantics",
+      "title": "ROLE badge OWNER emphasis removed in favor of uniform neutral badges (matter-list, workspace-list)",
+      "where": ["apps/frontend/src/features/matters/components/matter-list.tsx", "apps/frontend/src/features/workspaces/components/workspace-list.tsx"],
+      "disposition": "visual-only change within the approved Medusa-style direction; the truthful callerRole string is still rendered as text, no state/right data is removed or conflated; no action required unless design review asks to restore emphasis"
+    },
+    {
+      "id": "RD2-004",
+      "severity": "info",
+      "status": "NOTE",
+      "kind": "token hygiene",
+      "title": "state-axis color token used decoratively for the brand icon; dark --dependency-ready decoupled from --primary",
+      "where": ["apps/frontend/src/app/(app)/layout.tsx (Scale icon text-dependency-ready)", "apps/frontend/src/app/login/page.tsx", "apps/frontend/src/app/globals.css (:36, :82, :114)"],
+      "disposition": "decoration only (aria-hidden), so no state semantics are communicated wrongly; the decoupling of dependency-ready from primary in dark mode actually strengthens axis separation; light-mode --dependency-ready #174ea6 kept distinct from the new neutral light --primary #202124"
+    },
+    {
+      "id": "RD2-005",
+      "severity": "P4",
+      "status": "COSMETIC",
+      "kind": "layout polish",
+      "title": "sidebar footer grid-cols-2 renders a single LocaleToggle (one empty cell); native <details> preferences popover never closes on outside click/navigation",
+      "where": ["apps/frontend/src/app/(app)/layout.tsx"],
+      "disposition": "cosmetic/behavioral polish candidates; no data or control loss; toggles remain reachable on both form factors"
+    },
+    {
+      "id": "RD2-006",
+      "severity": "info",
+      "status": "NOTE",
+      "kind": "typography",
+      "title": "font-feature-settings cv02/cv03/cv04/cv11 in globals.css body is Inter-specific",
+      "where": ["apps/frontend/src/app/globals.css"],
+      "disposition": "inert for the -apple-system/'Segoe UI'/Arial chain; harmless; contextual alternates only take effect if an Inter-class font is present"
+    },
+    {
+      "id": "RD2-007",
+      "severity": "P3",
+      "status": "LIMITATION_RECORDED",
+      "kind": "restore evidence (author-run)",
+      "title": "claude-runtime-r2 numbers verified 1:1 against retained artifact pins; author-run, with disclosed weak receipts",
+      "where": ["docs/testing/p0-final-parallel-20261028/claude-runtime-r2/"],
+      "evidence": "46/46 pins at 16:18:38Z; census 34 tables / matters 54 / workspaces 51; 3 objects; marker 1→0; refusals and readback-diff receipts; 26 probes 21/0/5; RV-001 NOT_OBSERVABLE explanation statically corroborated (MatterScope sign-in swap); browser cases blockage consistent; secret scan clean",
+      "disposition": "PASS_WITH_LIMITATIONS: evidence is internally consistent and honestly disclosed (pnpm pre-script install attempt, API_MODE typo, .env.local, empty go-build log, docker template stderr blemishes, R1 'runtime retained' retracted); it remains author-run and cannot substitute the blocked A3–A7/browser/CR-002 gates; CR-002 stays DECISION_REQUIRED"
+    },
+    {
+      "id": "RD2-008",
+      "severity": "P0-flow",
+      "status": "ACTION_REQUIRED",
+      "kind": "source freeze / manifest authority",
+      "title": "31 pinned entries drifted during review; untracked extras grew 3→6; delta pins stayed clean",
+      "where": ["checks.json closing_member_receipt (16:17:20Z), stability_recheck_receipt (16:22:28Z)"],
+      "observed": "writer waves 16:04:43/16:05:58/16:10:52/16:13:53Z across matters/workspace member flows, backend identity/work ports, sqlc artifacts, lib/oidc/flow.ts + flow.test.ts (RV-001-scope-adjacent, new unconsolidated edits); HEAD/branch never moved",
+      "disposition": "NEEDS_INPUT_REFRESH for the affected scope: re-pin a new candidate manifest (including the 3 new untracked backend files), then submit a fresh waveform for review; everything outside the pinned 20-path delta is out of review authority. RV-001 audit is NOT reopened; the new flow.ts/flow.test.ts bytes need a follow-up scoped review after consolidation"
+    },
+    {
+      "id": "RD2-009",
+      "severity": "none",
+      "status": "LIMITATION_RECORDED",
+      "kind": "round-1 reconciliation",
+      "title": "old 'member check verified open+close' claim limited to what was actually executed",
+      "where": ["review/opencode-post-rv001-r1/{inputs.json,outputs-manifest.json,checks.json}"],
+      "disposition": "the only r1 full-member receipt is old C4 (~15:18Z, 719/719); r1 close-time coverage was 9 packet hashes + HEAD + porcelain digest dc0f69bee6b002bf (old C12) — not a second member-level run; this round's receipts are the first machine-readable second full-member verification; old artifacts preserved byte-identical (payload hashes re-verified incl. findings.json f3d91454…edf7); no audit restarted"
+    }
+  ],
+  "verified_no_finding_ranges": [
+    "16-path presentation diff: no auth/returnTo, label, form, route or data-integrity change found at source read level",
+    "4-path CSS-fix diff: minimal and self-consistent; baselines proven against the A-era manifest",
+    "claude-runtime-r2: no contradiction between written claims and any retained artifact pin"
+  ],
+  "not_examined": [
+    "rendered DOM/CSS outcomes, keyboard geometry, contrast, focus order (browser/human gates)",
+    "turbopack+postcss double application behavior (needs a build)",
+    "backend drift set content (31 paths outside delta; out of scope for this prompt)",
+    "anything under the Codex-owned :3000/:8081 runtime"
+  ]
+}

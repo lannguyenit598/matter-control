@@ -1,0 +1,23 @@
+go mod tidy -diff
+golangci-lint run ./...
+0 issues.
+go test -race -count=1 ./...
+?   	github.com/example/userapi/cmd/mcapi	[no test files]
+?   	github.com/example/userapi/internal/adapter/inbound/httpapi	[no test files]
+ok  	github.com/example/userapi/internal/adapter/inbound/productapi	1.817s
+ok  	github.com/example/userapi/internal/adapter/outbound/identity/zitadel	2.411s
+ok  	github.com/example/userapi/internal/adapter/outbound/objectstore	1.665s
+ok  	github.com/example/userapi/internal/adapter/outbound/postgres	1.711s
+?   	github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc	[no test files]
+ok  	github.com/example/userapi/internal/adapter/outbound/postgres/pgtest	1.654s
+ok  	github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol	1.893s
+ok  	github.com/example/userapi/internal/adapter/outbound/sheet	1.635s
+ok  	github.com/example/userapi/internal/adapter/outbound/system	1.614s
+ok  	github.com/example/userapi/internal/app	1.525s
+ok  	github.com/example/userapi/internal/config	1.361s
+?   	github.com/example/userapi/internal/core/domain	[no test files]
+ok  	github.com/example/userapi/internal/core/domain/matter	1.418s
+ok  	github.com/example/userapi/internal/core/policy	1.343s
+?   	github.com/example/userapi/internal/core/port	[no test files]
+ok  	github.com/example/userapi/internal/core/service	1.354s
+ok  	github.com/example/userapi/internal/observability	1.408s

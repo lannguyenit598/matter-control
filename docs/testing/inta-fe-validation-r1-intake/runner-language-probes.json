@@ -1,0 +1,28 @@
+{
+  "scope": "Isolated language expressions only; no owner runner/liveNext/observer/network/signal/lifecycle execution",
+  "metadata_import_probe": {
+    "type": "NameError",
+    "message": "name 'os' is not defined"
+  },
+  "boolean_interpolation_probe": {
+    "type": "NameError",
+    "message": "name 'false' is not defined"
+  },
+  "negated_shell_status": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "bash",
+      "-c",
+      "if ! (exit 1); then observed_status=$?; printf \"%s\\n\" \"$observed_status\"; fi"
+    ],
+    "exit": 0,
+    "stdout": "0\n",
+    "stderr": ""
+  },
+  "source_refs": {
+    "metadata": "guard-validator-r1.sh214-218",
+    "boolean": "guard-validator-r1.sh309/313-315",
+    "negated_status": "guard-validator-r1.sh167-173,244-248,281-285"
+  }
+}
