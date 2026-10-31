@@ -11,12 +11,14 @@ const actions = vi.hoisted(() => ({
   transition: vi.fn(),
   addDependency: vi.fn(),
   removeDependency: vi.fn(),
+  search: vi.fn(),
 }))
 vi.mock('../actions', () => ({
   updateWorkItemAction: actions.update,
   transitionExecutionAction: actions.transition,
   addDependencyAction: actions.addDependency,
   removeDependencyAction: actions.removeDependency,
+  searchWorkItemsAction: actions.search,
   createActionAction: vi.fn(),
   escalateAction: vi.fn(),
   createWorkstreamAction: vi.fn(),
@@ -91,7 +93,7 @@ describe('offeredTransitions mirrors the approved table', () => {
     ['COMPLETED', 'EDITOR', []],
     ['COMPLETED', 'OWNER', ['IN_PROGRESS']],
     ['CANCELLED', 'OWNER', ['IN_PROGRESS']],
-    ['IN_PROGRESS', 'VIEWER', ['WAITING', 'COMPLETED']], // the API still refuses a viewer; the page hides the panel
+    ['IN_PROGRESS', 'VIEWER', []], // BF-09: a viewer is shown the reason, never a control the API will refuse
   ])('%s as %s', (from, role, expected) => expect(offeredTransitions(from, role)).toEqual(expected))
 
   it('never offers terminal -> NOT_STARTED or COMPLETED -> CANCELLED', () => {
@@ -439,7 +441,10 @@ describe('ExecutionPanel', () => {
         titles={{}}
       />,
     )
-    // the first offered step from IN_PROGRESS is WAITING, so its fields are present immediately
+    // BF-09: the emphasised step from IN_PROGRESS is completing the work, not waiting
+    expect(screen.getByLabelText(/Change status to/)).toHaveValue('COMPLETED')
+    expect(screen.queryByLabelText(/Waiting on/)).toBeNull()
+    fireEvent.change(screen.getByLabelText(/Change status to/), { target: { value: 'WAITING' } })
     expect(screen.getByLabelText(/Waiting on \(external party\)/)).toBeInTheDocument()
     expect(screen.getByLabelText(/Condition to resume/)).toBeInTheDocument()
     fireEvent.change(screen.getByLabelText(/Change status to/), { target: { value: 'COMPLETED' } })
@@ -509,6 +514,7 @@ describe('ExecutionPanel', () => {
 describe('DependencyPanel', () => {
   const detail: Detail = {
     ...entry({ id: 't', title: 'Target', dependency: 'BLOCKED' }),
+    isFiling: false,
     upstream: [
       {
         id: 'e1',
@@ -557,10 +563,6 @@ describe('DependencyPanel', () => {
     matterId: 'm1',
     detail,
     here: '/matters/m1/work/t',
-    candidates: [
-      { id: 'u1', title: 'Action: Done first' },
-      { id: 't', title: 'Action: Target' },
-    ],
     titles: { u1: 'Done first', u2: 'Needs proof', t: 'Target' },
   }
 
@@ -588,11 +590,51 @@ describe('DependencyPanel', () => {
     const { rerender } = render(<DependencyPanel {...props} canEdit={false} />)
     expect(screen.queryByRole('button', { name: 'Add prerequisite' })).toBeNull()
     expect(screen.queryByText(/Remove this prerequisite/)).toBeNull()
+    actions.search.mockResolvedValue({ status: 'ok', options: [] })
     rerender(<DependencyPanel {...props} canEdit />)
-    const options = within(screen.getByLabelText(/Must be satisfied first/))
-      .getAllByRole('option')
-      .map((o) => o.textContent)
-    expect(options).toEqual(['Choose a record', 'Action: Done first'])
+    expect(screen.getByRole('button', { name: 'Add prerequisite' })).toBeInTheDocument()
+  })
+
+  // BF-04: the picker searches the whole matter, not the first page of 200 rows.
+  it('finds and links a prerequisite that lies beyond the first 200 records', async () => {
+    actions.search.mockImplementation(async ({ query }: { query: string }) => ({
+      status: 'ok',
+      options: query.includes('301')
+        ? [{ value: 'r301', label: 'Action: Record 301' }]
+        : [{ value: 'r1', label: 'Action: Record 1' }],
+      truncated: !query,
+    }))
+    actions.addDependency.mockResolvedValue({ ok: true })
+    render(<DependencyPanel {...props} canEdit />)
+    fireEvent.change(screen.getByLabelText(/Search this matter/), {
+      target: { value: 'Record 301' },
+    })
+    const radio = await screen.findByRole('radio', { name: 'Action: Record 301' })
+    expect(actions.search).toHaveBeenCalledWith(
+      expect.objectContaining({ matterId: 'm1', query: 'Record 301', excludeId: 't' }),
+    )
+    fireEvent.click(radio)
+    fireEvent.change(screen.getByLabelText(/Reason/), { target: { value: 'needs it' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Add prerequisite' }))
+    await waitFor(() => expect(actions.addDependency).toHaveBeenCalled())
+    expect(actions.addDependency.mock.calls[0]![0]).toMatchObject({
+      sourceId: 'r301',
+      targetId: 't',
+      matterId: 'm1',
+    })
+  })
+
+  it('searching never submits the surrounding form', async () => {
+    actions.search.mockResolvedValue({
+      status: 'ok',
+      options: [{ value: 'r1', label: 'Action: Record 1' }],
+    })
+    render(<DependencyPanel {...props} canEdit />)
+    const box = screen.getByLabelText(/Search this matter/)
+    fireEvent.change(box, { target: { value: 'Rec' } })
+    fireEvent.keyDown(box, { key: 'Enter' })
+    await screen.findByRole('radio', { name: 'Action: Record 1' })
+    expect(actions.addDependency).not.toHaveBeenCalled()
   })
 
   it('a refused cycle explains its path and sends the target etag', async () => {
@@ -602,8 +644,12 @@ describe('DependencyPanel', () => {
       error: 'That dependency would create a loop between records. Nothing was changed.',
       rejection: { code: 'cycle', message: '', alternatives: [], gates: [], path: ['u1', 't'] },
     })
+    actions.search.mockResolvedValue({
+      status: 'ok',
+      options: [{ value: 'u1', label: 'Action: Done first' }],
+    })
     render(<DependencyPanel {...props} canEdit />)
-    fireEvent.change(screen.getByLabelText(/Must be satisfied first/), { target: { value: 'u1' } })
+    fireEvent.click(await screen.findByRole('radio', { name: 'Action: Done first' }))
     fireEvent.change(screen.getByLabelText(/Reason/), { target: { value: 'order of work' } })
     fireEvent.click(screen.getByRole('button', { name: 'Add prerequisite' }))
     const alert = await screen.findByRole('alert')

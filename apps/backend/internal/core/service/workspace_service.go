@@ -990,3 +990,79 @@ func (s *WorkspaceService) ListMyWorkspaces(ctx context.Context, q port.ListMyWo
 	}
 	return page, nil
 }
+
+// maxDiscoveryQuery bounds the search text; titles are short and the match is a substring.
+const maxDiscoveryQuery = 100
+
+// DiscoverMatters is the cross-workspace Matter search (BF-08). Authorization comes before any
+// name, count or pagination metadata: only rows from MattersOf (an ACTIVE matter membership inside
+// an ACTIVE workspace membership) are ever loaded, so a workspace OWNER gets no implicit access to
+// a confidential Matter and a revoked membership removes the row on the next read.
+//
+// ponytail: loads one header per accessible Matter and filters in memory to keep Total exact;
+// push the title filter into SQL if a caller's accessible Matters grow beyond a few hundred.
+func (s *WorkspaceService) DiscoverMatters(ctx context.Context, q port.DiscoverMattersQuery) (matter.MatterDiscoveryPage, error) {
+	actor, err := matter.NewActorID(q.ActorID)
+	if err != nil {
+		return matter.MatterDiscoveryPage{}, err
+	}
+	if len([]rune(q.Query)) > maxDiscoveryQuery {
+		return matter.MatterDiscoveryPage{}, &matter.RejectedError{Code: "query-too-long", Message: "the search text is too long"}
+	}
+	limit := q.Limit
+	if limit <= 0 || limit > 100 {
+		limit = 20
+	}
+	var page matter.MatterDiscoveryPage
+	err = s.store.View(ctx, func(snap port.MatterSnapshot) error {
+		gs, ok := snap.(port.WorkGraphSnapshot)
+		if !ok {
+			return fmt.Errorf("snapshot does not support matter discovery")
+		}
+		ids, err := gs.MattersOf(ctx, actor)
+		if err != nil {
+			return err
+		}
+		rows := make([]matter.DiscoveredMatter, 0, len(ids))
+		workspaces := map[matter.WorkspaceID]string{}
+		for _, id := range ids {
+			h, err := snap.MatterHeader(ctx, id)
+			if err != nil {
+				if errors.Is(err, port.ErrNotFound) {
+					continue
+				}
+				return err
+			}
+			mm, err := snap.MatterMembership(ctx, id, actor)
+			if err != nil {
+				if errors.Is(err, port.ErrNotFound) {
+					continue
+				}
+				return err
+			}
+			if mm.Status != matter.StatusActive {
+				continue
+			}
+			name, seen := workspaces[h.WorkspaceID]
+			if !seen {
+				w, err := snap.WorkspaceByID(ctx, h.WorkspaceID)
+				if err != nil {
+					if errors.Is(err, port.ErrNotFound) {
+						continue
+					}
+					return err
+				}
+				name = w.Name
+				workspaces[h.WorkspaceID] = name
+			}
+			rows = append(rows, matter.DiscoveredMatter{Header: h, WorkspaceName: name, CallerRole: mm.Role})
+		}
+		page = matter.PageDiscovery(rows, q.Query, q.After, limit)
+		page.AsOf = snap.AsOf()
+		return nil
+	})
+	if err != nil {
+		return matter.MatterDiscoveryPage{}, fmt.Errorf("discover matters: %w", err)
+	}
+	return page, nil
+}

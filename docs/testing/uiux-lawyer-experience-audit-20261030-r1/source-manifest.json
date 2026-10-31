@@ -1,0 +1,36 @@
+{
+  "task": "MC-UIUX-LAWYER-EXPERIENCE-AUDIT-AND-PLAN-20261030",
+  "repository": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "branch": "codex/unified-project-flow",
+  "pins": {
+    "headAtStart": { "sha": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee", "committedAt": "2026-10-30T10:49:44+07:00", "pinnedAtUtc": "2026-10-30T16:26:26Z", "dirtyEntries": 175 },
+    "headAtEnd": { "sha": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee", "pinnedAtUtc": "2026-10-30T17:51:12Z", "dirtyEntries": 179, "deltaNote": "HEAD unchanged. Dirty delta +4 entries: 1 = this evidence namespace (untracked dir docs/testing/uiux-lawyer-experience-audit-20261030-r1/), remaining 3 assumed from parallel assignments; auditor did not inspect or touch them. Auditor wrote ONLY inside this namespace (plus task record fill + one project-status paragraph, authorized by prompt §8)." }
+  },
+  "keyFilesRead_sha256": {
+    "apps/frontend/src/app/globals.css": "c095ebb9f48a841bfbc1a78ce19b52840a499a36f401e78f7cf6bb4ed357ca37",
+    "apps/frontend/src/lib/mc/client.ts": "8cadb15c5c1be63b804e548a6f5581635ae198a36cbff8cb16ab21c4ae5b940d",
+    "apps/frontend/src/lib/auth.ts": "da27b183ab0ea4810e4c298dd0d45c6cd91b6e1b614c367f9f1f35d69c9045fa",
+    "apps/frontend/src/app/(app)/workspaces/page.tsx": "ef261adc84cff842dff65adbe84d5313e774ec0f5803e558d3a5875824f044d9",
+    "apps/frontend/src/app/(app)/my-reviews/page.tsx": "c4d6a5b6fc16baf4d97e596034c1026f52dcb86442ac546cd2b334ecc704954a",
+    "apps/frontend/src/app/login/page.tsx": "a4e95d75a42e35a0fca1a9225945de48fb20b79c38b2eff03e5f11aec42bc615",
+    "apps/frontend/src/features/work/components/my-actions-view.tsx": "9bdd70e4ea6a1a8b52feb7cf17e3a16aa998111460e33fc8c945a495dc05f0f7",
+    "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx": "0d2f55afbe7967e9787ce252913c14f4dc543e11a396a89f60908c1dfcc25e6c",
+    "apps/frontend/package.json": "42a0f7cb6ed6623f629731c6b4d43ffbfbad8b23f28a47e2f7583ed78d8c2b88",
+    "apps/frontend/e2e/fixtures.ts": "62e7c1ff1c0c1851a854dd18d4b2afc8d4af13054660241a6a4cc69278681c12",
+    "docs/design/legal-team-experience-20261029/design-direction.md": "c1be1cfaa7b3684b4407ff1fe9b25a64abda57fb727d4242f4041fe2c85646ba",
+    "docs/design/legal-team-experience-20261029/business-analysis.md": "814c1c5dd1e466aa97d442ed7f17e295d7fb3a40a52fc72b63141b40c4108d4a",
+    "docs/implementation/tasks/MC-UIUX-LAWYER-EXPERIENCE-AUDIT-AND-PLAN-20261030.md": "ec53e6942472cf2cfc0dadfd941bf0399df448e50def8630ace4366f943db938 (hash tại thời điểm pin đầu — file được cập nhật kết quả sau đó theo §8 prompt)"
+  },
+  "filesNotRead_byRule": ["apps/frontend/.env.local", "apps/frontend/.env*", "apps/frontend/.dev.vars*", "ops/** (directory names listed only)", "any credentials/keys"],
+  "evidenceArtifacts": {
+    "screens": "screens/*.png (22 routes + state matrix, dev runtime 127.0.0.1:3100, API_MODE=demo)",
+    "screensStorybook": "screens/storybook/*.png (13 stories; several contain the Storybook error card)",
+    "measured": ["tokens-computed.json", "contrast-results.json", "contrast-results.md"],
+    "tools": ["tools/contrast.js"],
+    "internal": "00-worklog.md (progress + decisions + failed attempts)"
+  },
+  "fanOutAgents": [
+    { "role": "frontend source inventory", "type": "Explore (read-only)", "report": "summarized in 00-worklog.md; no files written by agent" },
+    { "role": "docs digest (requirements/design/testing)", "type": "Explore (read-only)", "report": "summarized in 00-worklog.md; no files written by agent" }
+  ]
+}

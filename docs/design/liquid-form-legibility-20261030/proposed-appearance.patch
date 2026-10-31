@@ -1,0 +1,112 @@
+--- a/apps/frontend/src/app/globals.css
++++ b/apps/frontend/src/app/globals.css
+@@ -70,6 +70,9 @@
+   --liquid-sun: oklch(0.94 0.055 75 / 0.42);
+   --liquid-sheen: oklch(1 0 0 / 0.42);
+   --liquid-action-sheen: oklch(1 0 0 / 0.08);
++  --dialog-muted: #465468;
++  --field-face: oklch(0.99 0.006 255 / 0.72);
++  --field-hover: oklch(0.98 0.006 255 / 0.84);
+   --liquid-shadow: 0 8px 28px -16px var(--glass-shade);
+ 
+   /* Radius / shadows (border width = Tailwind `border` = 1px) */
+@@ -141,6 +144,9 @@
+   --liquid-sun: oklch(0.37 0.035 75 / 0.2);
+   --liquid-sheen: oklch(1 0 0 / 0.1);
+   --liquid-action-sheen: oklch(1 0 0 / 0.06);
++  --dialog-muted: oklch(0.78 0.013 286);
++  --field-face: oklch(0.26 0.014 255 / 0.82);
++  --field-hover: oklch(0.29 0.014 255 / 0.9);
+   --liquid-shadow: 0 4px 16px -12px var(--glass-shade);
+ }
+ 
+@@ -1078,3 +1084,58 @@
+     transition: none;
+   }
+ }
++
++/* Dense readable content inside the refracting rim; controls use a quiet inset material. */
++[data-slot='dialog-panel'] {
++  --muted-foreground: var(--dialog-muted);
++  color: var(--foreground);
++}
++
++[data-slot='dialog-panel']
++  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']) {
++  background: var(--field-face);
++  border-radius: 10px;
++  color: var(--foreground);
++  box-shadow:
++    inset 0 1px 0 var(--glass-field-rim),
++    inset 0 -1px 2px var(--glass-edge);
++}
++
++[data-slot='dialog-panel']
++  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']):not(
++    [aria-invalid='true']
++  ) {
++  border-color: var(--input);
++}
++
++[data-slot='dialog-panel']
++  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']):where(
++    :not(:disabled)
++  ):hover {
++  background: var(--field-hover);
++}
++
++[data-slot='dialog-panel'] :is([data-slot='input'], [data-slot='textarea'])::placeholder {
++  color: var(--muted-foreground);
++  opacity: 1;
++}
++
++[data-slot='dialog-panel']
++  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']):disabled {
++  color: var(--disabled);
++  background: var(--muted);
++  box-shadow: none;
++}
++
++@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
++  [data-slot='dialog-panel']
++    :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']) {
++    background: var(--card);
++    box-shadow: none;
++  }
++}
++
++/* Keep the edge light; broad moving highlights would wash over the form description. */
++[data-slot='dialog-panel'] > .glass-surface > .glass-specular::after {
++  content: none;
++}
+--- a/apps/frontend/src/components/molecules/dialog.tsx
++++ b/apps/frontend/src/components/molecules/dialog.tsx
+@@ -84,7 +84,7 @@
+         pressedOnBackdrop.current = false
+       }}
+       className={cn(
+-        'm-auto w-[calc(100%-2rem)] max-w-lg rounded-lg border bg-card p-0 text-card-foreground shadow-lg',
++        'm-auto w-[calc(100%-2rem)] max-w-lg rounded-2xl border bg-card p-0 text-card-foreground shadow-lg',
+         // Liquid tier: the GlassSurface layers supply the material (tint, rim, refraction), so
+         // the host pane must not paint its own.
+         tier === 'liquid' && 'glass-host',
+@@ -94,13 +94,12 @@
+     >
+       {(open || keepMounted) && (
+         <GlassSurface
+-          className="max-h-[calc(100dvh-2rem)] rounded-lg"
+-          frost={0.35}
+-          refraction={24}
+-          bezel={28}
+-          blur={10}
+-          radius={8}
+-          pointerLight
++          className="max-h-[calc(100dvh-2rem)] rounded-2xl"
++          frost={0.84}
++          refraction={12}
++          bezel={18}
++          blur={18}
++          radius={16}
+         >
+           <div className="flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto overscroll-contain p-6">
+             <div className="flex items-start justify-between gap-4">

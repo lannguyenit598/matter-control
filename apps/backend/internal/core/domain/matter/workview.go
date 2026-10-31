@@ -82,6 +82,11 @@ type WorkItemDetail struct {
 	Downstream []EdgeView
 	AsOf       time.Time
 	Revision   int64
+	// IsFiling marks an Action that is a regulatory filing: its package/signature checklist
+	// stays reachable whatever its outcome-verification flag says (BF-02).
+	IsFiling bool
+	// OutcomeVerification is set for a filing (see Outcome* constants), empty otherwise.
+	OutcomeVerification string
 }
 
 // AssignedView is one assigned item in My Actions, with its section and source matter.

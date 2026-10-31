@@ -13,10 +13,13 @@ import { Alert } from '@/components/molecules/alert'
 import { FormField } from '@/components/molecules/form-field'
 import { useDraftNamespace } from '@/components/organisms/draft-scope'
 import { FormDialog, TaskDialog } from '@/components/organisms/form-dialog'
+import { LocalDateTimeField } from '@/components/molecules/local-datetime-field'
 import { IntentForm, TaskSuccess } from '@/components/organisms/intent-form'
-import { MESSAGES, type McActionResult } from '@/lib/mc/action-result'
+import { useTimeZone } from '@/hooks/use-time-zone'
+import { fieldFailure, MESSAGES, type McActionResult } from '@/lib/mc/action-result'
 import { clearAttempt, saveAttempt } from '@/lib/mc/drafts'
 import { newIdempotencyKey } from '@/lib/mc/idempotency'
+import { readLocalField } from '@/lib/mc/local-time'
 import { usePendingAttempt } from '@/lib/mc/use-attempt'
 
 import { createDocumentAction, promoteVersionAction, recordSignatureAction } from '../actions'
@@ -381,19 +384,22 @@ export function PromoteForm({
 }
 
 export function SignatureForm({ matterId, versionId }: { matterId: string; versionId: string }) {
+  const zone = useTimeZone()
   return (
     <IntentForm
       receipted={false}
       draftKey={`version:${versionId}:signature`}
       submitLabel={<LocalizedText en="Record signature" vi="Ghi nhận chữ ký" />}
-      run={(v) =>
-        recordSignatureAction({
+      run={(v) => {
+        const signed = readLocalField(v, 'signed', zone, null)
+        if (!signed.ok) return Promise.resolve(fieldFailure('signedAt', signed.error))
+        return recordSignatureAction({
           matterId,
           versionId,
           signer: v.signer ?? '',
-          signedAt: v.signedAt ? new Date(v.signedAt).toISOString() : '',
+          signedAt: signed.iso,
         })
-      }
+      }}
     >
       {({ errors }) => (
         <div className="grid gap-3 sm:grid-cols-2">
@@ -404,13 +410,12 @@ export function SignatureForm({ matterId, versionId }: { matterId: string; versi
           >
             {(c) => <Input name="signer" maxLength={200} autoComplete="off" {...c} />}
           </FormField>
-          <FormField
-            label={<LocalizedText en="Observed signed at" vi="Thời điểm ký được ghi nhận" />}
+          <LocalDateTimeField
+            name="signed"
             required
+            label={<LocalizedText en="Observed signed at" vi="Thời điểm ký được ghi nhận" />}
             error={errors.signedAt?.[0]}
-          >
-            {(c) => <Input type="datetime-local" name="signedAt" {...c} />}
-          </FormField>
+          />
         </div>
       )}
     </IntentForm>

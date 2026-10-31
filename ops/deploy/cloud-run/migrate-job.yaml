@@ -11,10 +11,9 @@ metadata:
 spec:
   template:
     spec:
-      taskCount: 1
-      template:
-        spec:
-          serviceAccountName: {{SERVICE_ACCOUNT}}
+      # PI-02: a separate migration identity. Only this job's SA gets Secret Manager access to
+      # MIGRATE_DATABASE_URL_SECRET; the serving SA never does (runbook: IAM grant table).
+      serviceAccountName: {{MIGRATOR_SERVICE_ACCOUNT}}
           maxRetries: 0
           timeoutSeconds: 600
           containers:

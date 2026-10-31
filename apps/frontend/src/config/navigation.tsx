@@ -1,4 +1,4 @@
-import { FolderOpen, ListChecks } from 'lucide-react'
+import { Building2, ClipboardCheck, FolderOpen, ListChecks } from 'lucide-react'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 
@@ -12,9 +12,19 @@ export const mainNavigation: NavItem[] = [
     icon: <ListChecks />,
   },
   {
-    href: '/workspaces',
+    href: '/my-reviews',
+    label: <LocalizedText en="Reviews due" vi="Cần xác minh" />,
+    icon: <ClipboardCheck />,
+  },
+  {
+    href: '/matters',
     label: <LocalizedText en="Matters" vi="Hồ sơ" />,
     icon: <FolderOpen />,
-    alsoActiveFor: ['/matters', '/requirements'],
+    alsoActiveFor: ['/requirements'],
+  },
+  {
+    href: '/workspaces',
+    label: <LocalizedText en="Workspaces" vi="Không gian làm việc" />,
+    icon: <Building2 />,
   },
 ]

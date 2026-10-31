@@ -732,6 +732,32 @@ func SuiteW6(t *testing.T, newBundle Factory, codec port.SheetCodec) {
 	}
 	epoch := time.Unix(0, 0).UTC()
 
+	// BF-10: each change carries the label it recorded at the time, never today's name.
+	t.Run("brief: a change keeps the target label it recorded, even after the target is renamed", func(t *testing.T) {
+		e := newW6Env(t, newBundle, codec)
+		a := e.action(e.owner, "Draft the SPA")
+		if _, err := e.work.UpdateWorkItem(e.ctx, port.UpdateWorkItemCmd{ActorID: e.owner.String(), MatterID: e.m.String(), ItemID: a.ID.String(),
+			ExpectedRevision: e.detail(a.ID).View.Item.Revision, Title: strPtr("Renamed later")}); err != nil {
+			t.Fatal(err)
+		}
+		report, err := brief(e, e.viewer, epoch, lastAt(e))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var created, renamed string
+		for _, c := range report.Changes {
+			switch c.Type {
+			case "action.created":
+				created = c.TargetLabel
+			case "work.updated":
+				renamed = c.TargetLabel
+			}
+		}
+		if created != "Draft the SPA" || renamed != "Renamed later" {
+			t.Fatalf("labels as recorded then: created=%q updated=%q", created, renamed)
+		}
+	})
+
 	t.Run("brief: filing owner survives creation before later transitions", func(t *testing.T) {
 		e := newW6Env(t, newBundle, codec)
 		f := e.newFiling(false)

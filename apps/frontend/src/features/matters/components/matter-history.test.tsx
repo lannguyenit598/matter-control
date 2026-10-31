@@ -43,7 +43,7 @@ describe('MatterHistory', () => {
     const parsed = eventSchema.parse(event)
     expect(parsed).toEqual(event)
     render(<MatterHistory events={[parsed]} nextHref="/matters/m/history?cursor=opaque" />)
-    fireEvent.click(screen.getByText('Event details'))
+    fireEvent.click(screen.getByLabelText('Event details'))
     expect(screen.getByText('member-1')).toBeVisible()
     expect(screen.getByText('Correction after review')).toBeVisible()
     expect(screen.getByText('correlation-4')).toBeVisible()

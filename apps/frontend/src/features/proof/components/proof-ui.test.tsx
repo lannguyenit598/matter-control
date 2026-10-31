@@ -55,6 +55,8 @@ const checklist = (callerId: string, over: Partial<Checklist> = {}): Checklist =
     revision: 4,
   },
   verification: 'UNVERIFIED',
+  package: { declared: true, total: 1, mandatory: 1, satisfied: 0, ready: false },
+  outcome: { declared: false, total: 0, mandatory: 0, satisfied: 0, ready: false },
   criteria: [
     {
       id: 'c1',
@@ -62,6 +64,7 @@ const checklist = (callerId: string, over: Partial<Checklist> = {}): Checklist =
       title: 'Signed copy',
       description: '',
       mandatory: true,
+      purpose: 'PACKAGE',
       versionRule: 'NONE',
       documentId: null,
       fixedVersionId: null,
@@ -123,6 +126,63 @@ it('continues confirmed document creation on its upload/detail screen', async ()
   })
   fireEvent.click(screen.getByRole('button', { name: 'Create document' }))
   await waitFor(() => expect(router.push).toHaveBeenCalledWith('/matters/m1/documents/document-1'))
+})
+
+describe('ProofPanel for a filing (BF-01/BF-02)', () => {
+  const filing = (proofRequired: boolean, over: Partial<Checklist> = {}) =>
+    checklist('bob', {
+      ...over,
+      subject: { ...checklist('bob').subject, kind: 'ACTION', proofRequired, verification: null },
+      verification: '',
+    })
+
+  it('keeps the package checklist and its commands reachable for a no-outcome-proof filing', () => {
+    render(<ProofPanel checklist={filing(false)} ctx={ctx({ isFiling: true })} />)
+    expect(screen.getByText('No outcome verification state')).toBeInTheDocument()
+    expect(screen.getByText('Package and signature readiness')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Signed copy' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Add a criterion' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Offer evidence' })).toBeInTheDocument()
+    // No outcome criterion can be declared without outcome verification.
+    const purpose = screen.getByLabelText(/What does it prove/) as HTMLSelectElement
+    expect([...purpose.options].map((o) => o.value)).toEqual(['PACKAGE'])
+    expect(screen.queryByText('Authority outcome')).not.toBeInTheDocument()
+  })
+
+  it('shows a pending outcome apart from a ready package', () => {
+    const base = filing(true)
+    render(
+      <ProofPanel
+        checklist={{
+          ...base,
+          verification: 'PARTIALLY_VERIFIED',
+          package: { declared: true, total: 1, mandatory: 1, satisfied: 1, ready: true },
+          outcome: { declared: true, total: 1, mandatory: 1, satisfied: 0, ready: false },
+          criteria: [
+            { ...base.criteria[0], satisfied: true, reason: undefined },
+            { ...base.criteria[0], id: 'c2', title: 'Authority decision', purpose: 'OUTCOME' },
+          ],
+        }}
+        ctx={ctx({ isFiling: true })}
+      />,
+    )
+    expect(screen.getByText(/This permits submission; it does not accept/)).toBeInTheDocument()
+    expect(screen.getByText(/Pending: recording the authority’s decision/)).toBeInTheDocument()
+    const purpose = screen.getByLabelText(/What does it prove/) as HTMLSelectElement
+    expect([...purpose.options].map((o) => o.value)).toEqual(['PACKAGE', 'OUTCOME'])
+  })
+
+  it('says so when no outcome criterion is declared and never offers a purpose on other records', () => {
+    render(<ProofPanel checklist={filing(true)} ctx={ctx({ isFiling: true })} />)
+    expect(screen.getByText(/No outcome criterion is declared/)).toBeInTheDocument()
+    render(<ProofPanel checklist={checklist('bob')} ctx={ctx()} />)
+    expect(screen.getAllByLabelText(/What does it prove/)).toHaveLength(1)
+  })
+
+  it('hides every command from a viewer', () => {
+    render(<ProofPanel checklist={filing(false)} ctx={ctx({ isFiling: true, role: 'VIEWER' })} />)
+    expect(screen.queryByRole('heading', { name: 'Add a criterion' })).not.toBeInTheDocument()
+  })
 })
 
 describe('ProofPanel', () => {

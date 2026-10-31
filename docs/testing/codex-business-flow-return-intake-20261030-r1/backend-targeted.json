@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/core/domain/matter",
+    "./internal/adapter/outbound/repotest/mattercontrol",
+    "./internal/adapter/inbound/productapi",
+    "-run",
+    "^Test(Submission.*|UnspecifiedPurpose.*|Outcome.*|Suite(BF|GW)_MemoryStore|MyReviews_HTTP|DiscoverMatters_HTTP|CriterionPurposeAndFilingMarker_HTTP)$"
+  ],
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+  "start_utc": "2026-10-30T07:59:42.659589+00:00",
+  "end_utc": "2026-10-30T07:59:45.643907+00:00",
+  "exit": 0
+}

@@ -143,6 +143,11 @@ func SuiteW7QA(t *testing.T, newBundle Factory) {
 			t.Fatal(err)
 		}
 
+		// BF-01: a filing without outcome verification has no outcome criterion to declare.
+		_, err = e.ev.CreateCriterion(e.ctx, port.CreateCriterionCmd{ActorID: e.editor.String(), MatterID: e.m.String(), SubjectID: fx.filingID.String(),
+			Criterion: port.CriterionInput{Title: "Decision accepted", Mandatory: true, Rule: "NONE", Purpose: "OUTCOME"}})
+		mustCode(t, "no outcome criterion without outcome verification", err, "outcome-criterion-not-applicable")
+
 		// A declared but unmet package criterion blocks the submission with the reason.
 		crit, _ := e.criterion(fx.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
 		fx.must("PACKAGE_PREPARATION", nil)

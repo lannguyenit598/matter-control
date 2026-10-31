@@ -97,6 +97,8 @@ export const filingDetailSchema = z.object({
   derived: derivedSchema,
   etag: z.string(),
   filing: filingSchema,
+  /** NOT_TRACKED | NOT_DECLARED | PENDING | ACCEPTED: apart from the package-driven verification. */
+  outcomeVerification: z.string().optional(),
   cycles: z.array(cycleSchema),
   submissions: z.array(submissionSchema),
   observations: z.array(observationSchema),
@@ -109,6 +111,7 @@ export const filingSummarySchema = z.object({
   derived: derivedSchema,
   etag: z.string(),
   filing: filingSchema,
+  outcomeVerification: z.string().optional(),
 })
 export const filingPageSchema = pageOf(filingSummarySchema)
 

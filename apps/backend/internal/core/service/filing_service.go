@@ -98,6 +98,7 @@ func (s *FilingService) detail(g matter.WorkGraph, f matter.Filing, asOf time.Ti
 	cycles, subs, obs := g.Filing.For(f.ItemID)
 	d := matter.FilingDetail{
 		View: matter.ViewOf(it, asOf, matter.CriticalChain(g)), Filing: f, Cycles: cycles, Submissions: subs, Observations: obs, AsOf: asOf,
+		OutcomeVerification: matter.OutcomeVerification(it, g.Evidence, asOf),
 	}
 	if !it.Terminal() {
 		d.Next = matter.NextStages(f.Stage)
@@ -601,7 +602,7 @@ func (s *FilingService) ListFilings(ctx context.Context, q port.MatterListQuery)
 		chain := matter.CriticalChain(g)
 		for _, f := range g.Filing.Filings {
 			if it, ok := g.Item(f.ItemID); ok {
-				out = append(out, matter.FilingSummary{View: matter.ViewOf(it, asOf, chain), Filing: f})
+				out = append(out, matter.FilingSummary{View: matter.ViewOf(it, asOf, chain), Filing: f, OutcomeVerification: matter.OutcomeVerification(it, g.Evidence, asOf)})
 			}
 		}
 		sort.Slice(out, func(i, j int) bool { return out[i].View.Item.ID < out[j].View.Item.ID })

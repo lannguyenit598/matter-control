@@ -20,7 +20,7 @@ write_files:
       MC_OIDC_AUDIENCE={{OIDC_AUDIENCE}}
       MC_OIDC_API_CLIENT_ID={{OIDC_API_CLIENT_ID}}
       MC_OIDC_API_KEY_FILE=/run/secrets/oidc/api-key.json
-      MC_OIDC_CACHE_TTL=15s
+      MC_OIDC_CACHE_TTL=30s
       MC_REQUEST_TIMEOUT=10s
       MC_TRANSFER_TIMEOUT=60s
       MC_MAX_IN_FLIGHT=10
@@ -32,6 +32,8 @@ write_files:
     content: |
       #!/bin/bash
       # Reads Secret Manager with the VM service account (metadata credentials) through the gcloud image.
+      # Runtime secrets only: the migration secret is fetched by mc-migrate-secrets.service, so the
+      # serving stack never holds it (PI-02 identity separation at the file level).
       set -euo pipefail
       umask 077
       install -d -m 0700 /run/mattercontrol
@@ -39,18 +41,29 @@ write_files:
       get() { /usr/bin/docker run --rm {{GCLOUD_IMAGE}} gcloud secrets versions access latest --project={{PROJECT_ID}} --secret="$1"; }
       # Plain assignments so `set -e` stops on any failed fetch instead of writing an empty value.
       db=$(get {{DATABASE_URL_SECRET}}); r2id=$(get {{R2_ACCESS_KEY_ID_SECRET}}); r2key=$(get {{R2_SECRET_ACCESS_KEY_SECRET}})
-      migrate=$(get {{MIGRATE_DATABASE_URL_SECRET}}); key=$(get {{OIDC_KEY_SECRET}})
+      key=$(get {{OIDC_KEY_SECRET}})
       printf 'MC_DATABASE_URL=%s\nMC_R2_ACCESS_KEY_ID=%s\nMC_R2_SECRET_ACCESS_KEY=%s\n' "$db" "$r2id" "$r2key" > /run/mattercontrol/mcapi-secrets.env
-      printf 'MC_MIGRATE_DATABASE_URL=%s\n' "$migrate" > /run/mattercontrol/migrate-secrets.env
       printf '%s' "$key" > /run/mattercontrol/oidc/api-key.json
       chown 65532:65532 /run/mattercontrol/oidc/api-key.json
       chmod 0400 /run/mattercontrol/oidc/api-key.json
+
+  - path: /etc/mattercontrol/fetch-migrate-secrets.sh
+    permissions: '0700'
+    content: |
+      #!/bin/bash
+      # Migration identity's secret only (PI-02): runs solely with mcapi-migrate.service.
+      set -euo pipefail
+      umask 077
+      install -d -m 0700 /run/mattercontrol
+      get() { /usr/bin/docker run --rm {{GCLOUD_IMAGE}} gcloud secrets versions access latest --project={{PROJECT_ID}} --secret="$1"; }
+      migrate=$(get {{MIGRATE_DATABASE_URL_SECRET}})
+      printf 'MC_MIGRATE_DATABASE_URL=%s\n' "$migrate" > /run/mattercontrol/migrate-secrets.env
 
   - path: /etc/systemd/system/mc-secrets.service
     permissions: '0644'
     content: |
       [Unit]
-      Description=Fetch MatterControl secrets into tmpfs
+      Description=Fetch MatterControl runtime secrets into tmpfs
       Requires=docker.service network-online.target
       After=docker.service network-online.target
       [Service]
@@ -58,6 +71,18 @@ write_files:
       RemainAfterExit=true
       # bash explicitly: COS mounts some paths noexec.
       ExecStart=/bin/bash /etc/mattercontrol/fetch-secrets.sh
+
+  - path: /etc/systemd/system/mc-migrate-secrets.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Fetch the MatterControl migration secret into tmpfs (migrate runs only)
+      Requires=docker.service network-online.target
+      After=docker.service network-online.target
+      [Service]
+      Type=oneshot
+      RemainAfterExit=true
+      ExecStart=/bin/bash /etc/mattercontrol/fetch-migrate-secrets.sh
 
   - path: /etc/systemd/system/mcapi.service
     permissions: '0644'
@@ -85,8 +110,8 @@ write_files:
     content: |
       [Unit]
       Description=MatterControl schema migration (one-shot, operator-started)
-      Requires=docker.service mc-secrets.service
-      After=docker.service mc-secrets.service
+      Requires=docker.service mc-migrate-secrets.service
+      After=docker.service mc-migrate-secrets.service
       [Service]
       Type=oneshot
       Environment=HOME=/home/mcdeploy

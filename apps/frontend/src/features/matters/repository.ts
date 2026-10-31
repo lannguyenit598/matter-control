@@ -4,6 +4,7 @@ import { mcRequest, pathId } from '@/lib/mc/client'
 import { z } from 'zod'
 
 import {
+  discoveredMatterPageSchema,
   eventPageSchema,
   matterMemberPageSchema,
   matterPageSchema,
@@ -19,6 +20,15 @@ export const matterRepository = {
       await mcRequest(`/workspaces/${pathId(workspaceId)}/matters`, {
         query: { limit: 50, cursor },
         schema: matterPageSchema,
+      })
+    ).data,
+
+  /** Matters the caller can open across all their workspaces, found by title (bounded, paged). */
+  discover: async (q: string, cursor?: string) =>
+    (
+      await mcRequest('/matters', {
+        query: { q: q || undefined, limit: 25, cursor },
+        schema: discoveredMatterPageSchema,
       })
     ).data,
 

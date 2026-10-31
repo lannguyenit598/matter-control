@@ -70,6 +70,8 @@ export const MILESTONE_STATE_LABEL: Record<string, string> = {
  * affordance; the API is authoritative and refuses anything else, with the allowed alternatives.
  */
 export function offeredTransitions(from: string, role: string): string[] {
+  // A viewer is offered no step: showing an enabled control the API will refuse is misleading.
+  if (role !== 'OWNER' && role !== 'EDITOR') return []
   const owner = role === 'OWNER'
   switch (from) {
     case 'NOT_STARTED':
@@ -84,6 +86,45 @@ export function offeredTransitions(from: string, role: string): string[] {
     default:
       return []
   }
+}
+
+/**
+ * The one meaningful next operation for a record, derived from its state and the caller's role
+ * (BF-09). It only chooses what to emphasise: the API still decides every transition, and the
+ * other offered steps stay reachable in the same form.
+ */
+export function primaryTransition(from: string, role: string): string | null {
+  const offered = offeredTransitions(from, role)
+  const wanted = (
+    {
+      NOT_STARTED: 'IN_PROGRESS',
+      IN_PROGRESS: 'COMPLETED',
+      WAITING: 'IN_PROGRESS',
+      COMPLETED: 'IN_PROGRESS',
+      CANCELLED: 'IN_PROGRESS',
+    } as Record<string, string>
+  )[from]
+  return wanted && offered.includes(wanted) ? wanted : (offered[0] ?? null)
+}
+
+/** What the primary step does and, as importantly, does not do. */
+export const TRANSITION_CONSEQUENCE: Record<string, { en: string; vi: string }> = {
+  IN_PROGRESS: {
+    en: 'Marks the work as under way. It does not verify anything.',
+    vi: 'Đánh dấu công việc đang thực hiện. Việc này không xác minh điều gì.',
+  },
+  COMPLETED: {
+    en: 'Marks the work done. Completed is not verified: proof, where required, is decided separately by an independent verifier.',
+    vi: 'Đánh dấu công việc đã xong. Hoàn tất không có nghĩa đã xác minh: bằng chứng, nếu cần, do người xác minh độc lập quyết định riêng.',
+  },
+  WAITING: {
+    en: 'Records that an outside party must act first. Waiting is not blocked.',
+    vi: 'Ghi nhận bên ngoài phải hành động trước. Đang chờ không phải bị chặn.',
+  },
+  CANCELLED: {
+    en: 'Cancels the record. A cancelled prerequisite does not satisfy a gate.',
+    vi: 'Hủy bản ghi. Điều kiện tiên quyết đã hủy không làm thỏa mãn điều kiện.',
+  },
 }
 
 export const TRANSITION_VERB: Record<string, string> = {

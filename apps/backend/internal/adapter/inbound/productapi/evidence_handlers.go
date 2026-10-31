@@ -31,6 +31,7 @@ type criterionRequest struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Mandatory   bool   `json:"mandatory"`
+	Purpose     string `json:"purpose"`
 	Rule        string `json:"versionRule"`
 	DocumentID  string `json:"documentId"`
 	FixedID     string `json:"fixedVersionId"`
@@ -38,7 +39,7 @@ type criterionRequest struct {
 }
 
 func (r criterionRequest) port() port.CriterionInput {
-	return port.CriterionInput{Title: r.Title, Description: r.Description, Mandatory: r.Mandatory, Rule: r.Rule, DocumentID: r.DocumentID, FixedID: r.FixedID, ValidDays: r.ValidDays}
+	return port.CriterionInput{Title: r.Title, Description: r.Description, Mandatory: r.Mandatory, Purpose: r.Purpose, Rule: r.Rule, DocumentID: r.DocumentID, FixedID: r.FixedID, ValidDays: r.ValidDays}
 }
 
 type reviseCriterionRequest struct {

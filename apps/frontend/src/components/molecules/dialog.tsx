@@ -84,7 +84,7 @@ export function Dialog({
         pressedOnBackdrop.current = false
       }}
       className={cn(
-        'm-auto w-[calc(100%-2rem)] max-w-lg rounded-lg border bg-card p-0 text-card-foreground shadow-lg',
+        'm-auto w-[calc(100%-2rem)] max-w-lg rounded-2xl border bg-card p-0 text-card-foreground shadow-lg',
         // Liquid tier: the GlassSurface layers supply the material (tint, rim, refraction), so
         // the host pane must not paint its own.
         tier === 'liquid' && 'glass-host',
@@ -94,13 +94,12 @@ export function Dialog({
     >
       {(open || keepMounted) && (
         <GlassSurface
-          className="max-h-[calc(100dvh-2rem)] rounded-lg"
-          frost={0.35}
-          refraction={24}
-          bezel={28}
-          blur={10}
-          radius={8}
-          pointerLight
+          className="max-h-[calc(100dvh-2rem)] rounded-2xl"
+          frost={0.84}
+          refraction={12}
+          bezel={18}
+          blur={18}
+          radius={16}
         >
           <div className="flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto overscroll-contain p-6">
             <div className="flex items-start justify-between gap-4">

@@ -1,0 +1,36 @@
+{
+ "approved": {
+  "source": "docs/architecture/adr/ADR-004-production-hosting-topology-review.md (decision row 4)",
+  "value": "30s",
+  "line": 16
+ },
+ "candidate_head": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+ "go_default": {
+  "source": "HEAD:apps/backend/internal/config/product.go",
+  "value": "15s"
+ },
+ "go_test_assertion": {
+  "source": "HEAD:apps/backend/internal/config/product_test.go",
+  "value": "15",
+  "converted": "15s"
+ },
+ "template_service": {
+  "source": "HEAD:ops/deploy/cloud-run/service.yaml",
+  "value": "15s"
+ },
+ "template_cloud_init": {
+  "source": "HEAD:ops/deploy/compute-engine/cloud-init.yaml",
+  "value": "15s"
+ },
+ "rendered_service": {
+  "source": "portability-intake/renders/cloud-run-sa1/service.yaml (pinned output)",
+  "value": "15s"
+ },
+ "rendered_cloud_init": {
+  "source": "portability-intake/renders/compute-engine/cloud-init.yaml (pinned output)",
+  "value": "15s"
+ },
+ "semantics": "The introspection cache bounds how long a token revoked at the IdP can still be accepted. Matter-membership reauthorization is a separate PostgreSQL check, and JWKS rotation is separate again. The candidate's 15s is shorter than the approved 30s, so it is an approval/configuration mismatch rather than a weaker revocation window; the corrected profile must still be regression-tested at the approved value.",
+ "all_equal": false,
+ "mismatch_between_approved_and_candidate": true
+}

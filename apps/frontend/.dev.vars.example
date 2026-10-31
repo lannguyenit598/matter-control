@@ -14,3 +14,8 @@ BFF_STATE_KEY_ID='v1'
 # JSON in single quotes prevents dotenv from preserving escaped double quotes.
 BFF_STATE_KEYS='{"v1":"REPLACE_WITH_BASE64_32_BYTE_KEY"}'
 # BFF_DATABASE_CA='PEM_CA_CONTENT_IF_REQUIRED'
+# Optional (WP-7). Ceiling in bytes for one sealed pending-IMPORT payload (default 5242880 = 5 MiB;
+# hard cap 36288000). A pending import over the ceiling is refused 413 before any bytes are stored;
+# document uploads use the separate streamed path (MC_MAX_UPLOAD_BYTES at the API). The final
+# number is a PO decision (D7); raising it is deliberate, never silent.
+# BFF_MAX_PENDING_BYTES='5242880'

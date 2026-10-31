@@ -1,6 +1,8 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+vi.mock('@/hooks/use-time-zone', () => ({ useTimeZone: () => 'UTC' }))
+
 const actions = vi.hoisted(() => ({
   bulkPreview: vi.fn(),
   bulkCommit: vi.fn(),
@@ -362,9 +364,10 @@ const briefResult = (over: object = {}) => ({
   outstanding: [],
   ...over,
 })
-const generate = async (t1 = '2026-10-01T00:00:00Z', t2 = '2026-10-27T00:00:00Z') => {
-  fireEvent.change(screen.getByLabelText(/^t1 \(/), { target: { value: t1 } })
-  fireEvent.change(screen.getByLabelText(/^t2 \(/), { target: { value: t2 } })
+// The window is typed as wall-clock time in the device zone (mocked as UTC here).
+const generate = async (from = '2026-10-01T00:00', to = '2026-10-27T00:00') => {
+  fireEvent.change(screen.getByLabelText(/^Changes after/), { target: { value: from } })
+  fireEvent.change(screen.getByLabelText(/^Up to and including/), { target: { value: to } })
   fireEvent.click(screen.getByRole('button', { name: 'Generate brief' }))
 }
 
@@ -389,7 +392,8 @@ describe('BriefSection', () => {
     await generate()
     expect(await screen.findByText('No changes were recorded in this window.')).toBeInTheDocument()
     expect(screen.getByText(/File the form/)).toBeInTheDocument()
-    expect(screen.getByText(/dependency BLOCKED/)).toBeInTheDocument()
+    expect(screen.getByText(/In progress/)).toBeInTheDocument()
+    expect(screen.getByText(/Blocked/)).toBeInTheDocument()
   })
 
   it('says so when nothing is outstanding and marks late-recorded changes and expired proof', async () => {
@@ -422,7 +426,7 @@ describe('BriefSection', () => {
     render(<BriefSection matterId="m1" />)
     await generate()
     expect(await screen.findByText('Recorded late')).toBeInTheDocument()
-    expect(screen.getByText('Proof expired by t2')).toBeInTheDocument()
+    expect(screen.getByText('Proof expired by the end of the window')).toBeInTheDocument()
   })
 
   it('produces no report for an invalid window and clears the previous one', async () => {
@@ -436,7 +440,7 @@ describe('BriefSection', () => {
       error: 'Please fix the highlighted fields.',
       fieldErrors: { t2: ['The end of the window cannot be before its start.'] },
     })
-    await generate('2026-10-27T00:00:00Z', '2026-10-01T00:00:00Z')
+    await generate('2026-10-27T00:00', '2026-10-01T00:00')
     expect(await screen.findByText('No brief was produced')).toBeInTheDocument()
     expect(
       screen.getByText('The end of the window cannot be before its start.'),
@@ -454,6 +458,85 @@ describe('BriefSection', () => {
     render(<BriefSection matterId="m1" />)
     await generate()
     expect(await screen.findByText(/history behind this window is incomplete/)).toBeInTheDocument()
+  })
+})
+
+describe('BriefSection: readable window and changes (BF-10)', () => {
+  it('sends the typed local window as explicit instants, never asking for timestamps', async () => {
+    actions.brief.mockResolvedValue({ ok: true, brief: briefResult() })
+    render(<BriefSection matterId="m1" />)
+    expect(screen.queryByLabelText(/RFC 3339/)).not.toBeInTheDocument()
+    await generate('2026-10-01T09:30', '2026-10-27T17:00')
+    await screen.findByText('No changes were recorded in this window.')
+    expect(actions.brief).toHaveBeenCalledWith('m1', '2026-10-01T09:30:00Z', '2026-10-27T17:00:00Z')
+  })
+
+  it('offers one-click recent windows that end just before now', async () => {
+    actions.brief.mockResolvedValue({ ok: true, brief: briefResult() })
+    render(<BriefSection matterId="m1" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Last 7 days' }))
+    await waitFor(() => expect(actions.brief).toHaveBeenCalled())
+    const [, t1, t2] = actions.brief.mock.calls.at(-1)!
+    expect(Date.parse(t2) - Date.parse(t1)).toBeGreaterThan(6.9 * 86400000)
+    expect(Date.parse(t2)).toBeLessThan(Date.now())
+  })
+
+  it('refuses a missing start and sends nothing', async () => {
+    actions.brief.mockClear()
+    render(<BriefSection matterId="m1" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Generate brief' }))
+    expect(await screen.findByText('Choose where the window starts.')).toBeInTheDocument()
+    expect(actions.brief).not.toHaveBeenCalled()
+  })
+
+  it('describes each change in words with the name it recorded, a link and the raw ids in details', async () => {
+    actions.brief.mockResolvedValue({
+      ok: true,
+      brief: briefResult({
+        changes: [
+          {
+            seq: 1,
+            id: 'e1',
+            type: 'work.execution_changed',
+            targetKind: 'ACTION',
+            targetId: 'a-77',
+            targetLabel: 'Draft the SPA',
+            recordedAt: '2026-10-20T00:00:00Z',
+            effectiveAt: '2026-10-20T00:00:00Z',
+            lateRecorded: false,
+          },
+          {
+            seq: 2,
+            id: 'e2',
+            type: 'party.updated',
+            targetKind: 'PARTY',
+            targetId: 'p-1',
+            recordedAt: '2026-10-21T00:00:00Z',
+            effectiveAt: '2026-10-21T00:00:00Z',
+            lateRecorded: false,
+          },
+        ],
+      }),
+    })
+    render(<BriefSection matterId="m1" />)
+    await generate()
+    const items = await screen.findAllByRole('listitem')
+    expect(items[0]).toHaveTextContent('Action “Draft the SPA” changed status')
+    expect(within(items[0]!).getByRole('link', { name: 'Open' })).toHaveAttribute(
+      'href',
+      '/matters/m1/work/a-77',
+    )
+    // Raw ids and event kinds are available, but not the primary description.
+    expect(items[0]).toHaveTextContent('work.execution_changed · ACTION · a-77')
+    expect(
+      within(items[0]!).getByLabelText('Technical details').closest('details'),
+    ).not.toHaveAttribute('open')
+    // A change that recorded no name is honest about it and gets no link (the kind has no page).
+    expect(items[1]).toHaveTextContent('no name was recorded with this change')
+    expect(within(items[1]!).queryByRole('link')).not.toBeInTheDocument()
+    expect(
+      screen.getByText(/Names are as they were when each change was recorded/),
+    ).toBeInTheDocument()
   })
 })
 
@@ -534,6 +617,6 @@ describe('access ends while the page is open (R8-N01)', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Generate brief' }))
     expect(await screen.findByText(/Your access to this matter ended/)).toBeInTheDocument()
     expect(screen.queryByText(/Secret deal term/)).not.toBeInTheDocument()
-    expect(screen.getByLabelText(/^t1 \(/)).toHaveValue('')
+    expect(screen.getByLabelText(/^Changes after/)).toHaveValue('')
   })
 })

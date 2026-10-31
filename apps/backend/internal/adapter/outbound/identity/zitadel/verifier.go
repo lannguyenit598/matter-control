@@ -52,7 +52,8 @@ type Config struct {
 	Clock         func() time.Time
 	// CacheTTL bounds the per-token result cache. Zero disables caching. A cached result is
 	// NOT a revocation guarantee; it is only a load shield: a revoked token may keep passing
-	// for up to TTL after revocation (config default 15s — a deliberate, documented window).
+	// for up to TTL after revocation (config default 30s, ADR-004 decision 4 — a deliberate,
+	// documented window).
 	CacheTTL time.Duration
 }
 

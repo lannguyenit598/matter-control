@@ -112,6 +112,38 @@ beforeEach(() => {
 })
 
 describe('ControlRoomView', () => {
+  it('brief variant caps what to act on, drops gaps and decisions, and says how many more exist', () => {
+    const many = (n: number, f: (i: number) => ReturnType<typeof row>) =>
+      Array.from({ length: n }, (_, i) => f(i))
+    render(
+      <ControlRoomView
+        matterId="m1"
+        variant="brief"
+        labels={labels}
+        room={room({
+          waiting: many(5, (i) =>
+            row(`w${i}`, `Wait ${i}`, {
+              execution: 'WAITING',
+              waitingPartyId: 'p1',
+              waitingCondition: 'c',
+            }),
+          ),
+        })}
+      />,
+    )
+    expect(screen.getByRole('region', { name: 'Blocked' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Do next' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Waiting on' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'What changed' })).toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: 'Gaps' })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('region', { name: 'Open decisions, risks and findings' }),
+    ).not.toBeInTheDocument()
+    expect(screen.getByText('Wait 2')).toBeInTheDocument()
+    expect(screen.queryByText('Wait 3')).not.toBeInTheDocument()
+    expect(screen.getByText('2 more in the Control Room.')).toBeInTheDocument()
+  })
+
   it('states its boundary and the figures it shows', () => {
     render(<ControlRoomView matterId="m1" room={room()} labels={labels} />)
     expect(screen.getByText(/source revision 42/)).toBeInTheDocument()
@@ -191,7 +223,7 @@ describe('context forms', () => {
   it('closing needs a reason and sends the record ETag', async () => {
     actions.update.mockResolvedValue({ ok: true })
     render(<CloseContextForm matterId="m1" record={decision} />)
-    fireEvent.click(screen.getByText('Close…'))
+    fireEvent.click(screen.getByLabelText('Close this record…'))
     fireEvent.change(screen.getByLabelText(/Why is it closed/), { target: { value: 'decided' } })
     fireEvent.click(screen.getByRole('button', { name: 'Close record' }))
     await waitFor(() => expect(actions.update).toHaveBeenCalled())

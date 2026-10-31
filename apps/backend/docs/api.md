@@ -301,3 +301,17 @@ This includes unsupported format, malformed CSV/XLSX, an empty sheet, missing `r
 `kind` or `title`, and a sheet over 5,000 data rows or the 8 MiB service limit. No import
 rows, edges, receipts or events are written. Row/group validation errors remain in the
 preview or per-row commit response; storage failures retain their own error classification.
+
+
+## Business-flow remediation addendum (2026-10-30)
+
+Binding detail: `docs/implementation/p0-zcode-execution/local-contract.md` Revision 13.
+
+| Endpoint | Notes |
+|---|---|
+| `GET /api/v1/me/reviews?limit&cursor` | Pending assessments the caller may decide as a designated independent verifier. Envelope `{items, page:{limit,maxLimit,total,nextCursor}}`; `MC-As-Of` header. 400 `urn:mc:bad-request` for a bad `limit`/`cursor`; 401/403 as every `/me` read. Empty for a submitter, viewer, undesignated owner or revoked member. |
+| `GET /api/v1/matters?q&limit&cursor` | Matters the caller can open across their active workspaces, by title. Rows add `workspaceName`. `total` is exact. 409 `urn:mc:rejected` (`query-too-long`) for `q` over 100 characters. |
+| `POST …/work-items/{id}/criteria` | Body adds `purpose` (`PACKAGE` default, `OUTCOME`). 409 `urn:mc:rejected` codes `invalid-purpose`, `outcome-criterion-not-applicable`; revising with another purpose: `purpose-immutable`. |
+| `GET …/work-items/{id}` | Adds `isFiling` and, for a filing, `outcomeVerification` (`NOT_TRACKED`/`NOT_DECLARED`/`PENDING`/`ACCEPTED`). `GET …/filings` rows and `GET …/filings/{id}` add the same field. |
+| `GET …/work-items/{id}/proof` | Adds `package` and `outcome` summaries; each criterion adds `purpose`. |
+| `GET /matters/{id}/brief?t1&t2` response | `changes[].targetLabel` (label recorded by the change itself; may be empty). |

@@ -46,3 +46,27 @@ export const WithIcon: Story = {
 export const Loading: Story = { args: { loading: true, children: 'Saving' } }
 
 export const Disabled: Story = { args: { disabled: true } }
+
+/** The material needs a backdrop; this uses the same atmospheric field as the real app. */
+export const GlassOnBackdrop: Story = {
+  render: () => (
+    <div className="app-shell flex min-h-64 flex-wrap items-center justify-center gap-3 rounded-xl p-8">
+      <Button>
+        <Plus aria-hidden /> Add record
+      </Button>
+      <Button variant="outline">View history</Button>
+      <Button variant="secondary">Filter records</Button>
+      <Button variant="ghost">Cancel</Button>
+      <Button loading>Saving</Button>
+      <Button variant="outline" disabled>
+        Unavailable
+      </Button>
+      <Button variant="destructive">Remove</Button>
+    </div>
+  ),
+}
+
+export const GlassOnBackdropDark: Story = {
+  ...GlassOnBackdrop,
+  globals: { theme: 'dark' },
+}

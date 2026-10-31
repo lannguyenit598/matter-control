@@ -13,6 +13,7 @@ vi.mock('@/lib/auth', () => ({ getSession: repos.session }))
 vi.mock('@/features/matters/repository', () => ({
   matterRepository: { get: repos.matter, members: repos.members },
 }))
+vi.mock('@/features/work/actions', () => ({ searchWorkItemsAction: vi.fn() }))
 vi.mock('@/features/work/repository', () => ({
   workRepository: { parties: repos.parties, list: repos.list },
 }))
@@ -51,7 +52,9 @@ describe('New filing page', () => {
       '/matters/m1/filings',
     )
     expect(screen.getByRole('button', { name: 'Create filing' })).toBeVisible()
-    expect(screen.getByRole('option', { name: 'Board approval obtained' })).toBeInTheDocument()
+    // Requirements are found through the bounded search, not listed from the first page.
+    expect(screen.getByLabelText(/Search this matter’s Requirements/)).toBeInTheDocument()
+    expect(repos.list).toHaveBeenCalledWith('m1', { kind: 'REQUIREMENT' }, 1)
     expect(screen.getByRole('option', { name: 'Registry' })).toBeInTheDocument()
     expect(screen.queryByText('r1')).toBeNull()
   })

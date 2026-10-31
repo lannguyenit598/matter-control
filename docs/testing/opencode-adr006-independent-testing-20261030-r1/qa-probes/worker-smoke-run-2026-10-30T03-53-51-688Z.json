@@ -1,0 +1,115 @@
+{
+  "identity": "OpenCode independent QA (actual OpenCode)",
+  "fixture": "Synthetic local OIDC + real Go + owned PostgreSQL 18.6 + filesystem object adapter; no provider",
+  "checks": [
+    {
+      "name": "root entry redirect",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "anonymous session",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "PKCE authorize redirect S256",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "QA-NEW-002 wrong-state callback refused",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "durable callback login",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "QA-NEW-003 callback replay refused",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "authenticated display-only session",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "Worker to real Go and PostgreSQL read",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "compiled CSS linked",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "compiled CSS served",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "streamed upload 1048576",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "download hash 1048576",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "streamed upload 26213376",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "download hash 26213376",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "Server Action foreign origin refused",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "authenticated Server Action forwarded to Go",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "Server Action persisted readback",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "QA-NEW-004 second instance same origin shares session",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "QA-NEW-004 first instance restart session durable",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "durable logout",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "old cookie refused after logout",
+      "pass": true,
+      "extra": null
+    }
+  ],
+  "failures": [],
+  "ref_basis": "17 author smoke assertions re-asserted independently + QA-NEW-001..004 adversarial probes",
+  "adapted_from": "docs/testing/codex-adr006-remediation-20261030-r1/verification-programs/mc-worker-smoke-final.mjs",
+  "adaptation_note": "paths/fixture replaced with OpenCode-owned snapshot/preview/fixture; wrong-state and replay probes added; refresh counters added for AUTH-series derivatives"
+}

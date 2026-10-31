@@ -66,7 +66,7 @@ func loadEvidence(ctx context.Context, q *mcsqlc.Queries, m matter.MatterID) (ma
 		cr := matter.Criterion{
 			ID: matter.CriterionID(c.ID), MatterID: m, SubjectID: matter.NodeID(c.SubjectID), Title: c.Title, Description: c.Description,
 			Mandatory: c.Mandatory, Rule: matter.VersionRule(c.VersionRule), ValidFor: time.Duration(c.ValidForSeconds) * time.Second,
-			Retired: c.Retired, Revision: c.Revision,
+			Retired: c.Retired, Revision: c.Revision, Purpose: matter.CriterionPurpose(c.Purpose),
 		}
 		if s := uuidStr(c.DocumentID); s != nil {
 			d := matter.DocumentID(*s)
@@ -213,7 +213,7 @@ func (t *pgMatterTx) InsertCriterion(ctx context.Context, c matter.Criterion) er
 	return mapMatterError(t.q.InsertCriterion(ctx, mcsqlc.InsertCriterionParams{
 		ID: c.ID.String(), MatterID: c.MatterID.String(), SubjectID: c.SubjectID.String(), Title: c.Title, Description: c.Description,
 		Mandatory: c.Mandatory, VersionRule: string(c.Rule), DocumentID: doc, FixedVersionID: fixed,
-		ValidForSeconds: int64(c.ValidFor / time.Second), Retired: c.Retired, Revision: c.Revision,
+		ValidForSeconds: int64(c.ValidFor / time.Second), Retired: c.Retired, Revision: c.Revision, Purpose: string(c.EffectivePurpose()),
 	}))
 }
 

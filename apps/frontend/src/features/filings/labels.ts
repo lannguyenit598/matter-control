@@ -35,13 +35,6 @@ export const OBSERVATION_LABEL: Record<string, string> = {
   CORRECTION: 'Correction',
 }
 
-/** A browser datetime-local value as an RFC 3339 instant with an explicit offset. */
-export function toInstant(local: string | undefined): string {
-  if (!local) return ''
-  const d = new Date(local)
-  return Number.isNaN(d.getTime()) ? '' : d.toISOString()
-}
-
 export function userName(names: Record<string, string>, id: string | null | undefined) {
   if (!id) return 'nobody'
   return names[id] ?? 'a former member'

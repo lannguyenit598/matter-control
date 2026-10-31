@@ -4,6 +4,8 @@ import { LocalizedText } from '@/components/molecules/localized-text'
 import { OBSERVATION_LABEL, STAGE_HELP, STAGE_LABEL, userName } from '../labels'
 import { FILING_STAGES, type FilingDetail } from '../schemas'
 
+import { OutcomeVerificationBadge } from './outcome-verification'
+
 export type FilingLabels = {
   users: Record<string, string>
   versions: Record<string, string>
@@ -54,6 +56,9 @@ export function FilingView({ detail, labels }: { detail: FilingDetail; labels: F
           })}
         </ol>
         <p className="mt-2 text-sm text-muted-foreground">{STAGE_HELP[filing.stage]}</p>
+        <p className="mt-2">
+          <OutcomeVerificationBadge state={detail.outcomeVerification} />
+        </p>
         {filing.negativeOpen && (
           <p role="status" className="mt-2 rounded-md border border-destructive p-2 text-sm">
             A {filing.negativeOutcome?.toLowerCase()} is recorded. The filing cannot be approved

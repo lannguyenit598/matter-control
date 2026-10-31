@@ -88,6 +88,7 @@ export function WorkGrid({
         {total ?? items.length} {(total ?? items.length) === 1 ? 'record' : 'records'}
       </p>
       <div
+        data-slot="record-table"
         className="overflow-x-auto rounded-lg border"
         tabIndex={0}
         aria-label="Work items table, scrollable"
@@ -140,6 +141,7 @@ export function WorkGrid({
           <tbody className="divide-y">
             {items.map((e) => (
               <tr
+                data-slot="record-row"
                 key={e.item.id}
                 data-row-id={e.item.id}
                 className={cn('align-top', density === 'compact' ? 'h-9' : 'h-11')}

@@ -10,11 +10,11 @@ const nextConfig = (configModule as unknown as ConfigModule).default
 
 afterEach(() => vi.unstubAllEnvs())
 
-it('redirects the public root to the implemented workspace entry route', async () => {
+it('redirects the public root to My Work, the focused-workbench entry', async () => {
   const redirects = await nextConfig.redirects?.()
   expect(redirects).toContainEqual({
     source: '/',
-    destination: '/workspaces',
+    destination: '/my-actions',
     permanent: false,
   })
 })

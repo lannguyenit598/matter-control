@@ -54,7 +54,7 @@ const nextConfig: NextConfig = {
     return [{ source: '/(.*)', headers: securityHeaders }]
   },
   async redirects() {
-    return [{ source: '/', destination: '/workspaces', permanent: false }]
+    return [{ source: '/', destination: '/my-actions', permanent: false }]
   },
   turbopack: {
     rules: {

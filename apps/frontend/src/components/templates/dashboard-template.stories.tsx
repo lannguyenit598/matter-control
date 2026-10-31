@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { LayoutDashboard, Settings, Users } from 'lucide-react'
 
 import { Skeleton } from '@/components/atoms/skeleton'
+import { Button } from '@/components/atoms/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/atoms/card'
+import { DataTable } from '@/components/organisms/data-table'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ThemeToggle } from '@/components/molecules/theme-toggle'
 import { AppHeader } from '@/components/organisms/app-header'
@@ -42,3 +45,55 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const LiquidWorkbench: Story = {
+  args: {
+    children: (
+      <div className="flex flex-col gap-6">
+        <PageHeader
+          title="Atlas restructuring"
+          description="A clear view of the work, with evidence behind every decision."
+          actions={<Button>New record</Button>}
+        />
+        <div className="grid gap-4 sm:grid-cols-3">
+          {['Ready for review', 'Awaiting proof', 'Next milestone'].map((title) => (
+            <Card key={title}>
+              <CardHeader>
+                <CardTitle>{title}</CardTitle>
+              </CardHeader>
+              <CardContent>Operational truth, in context.</CardContent>
+            </Card>
+          ))}
+        </div>
+        <DataTable
+          caption="Synthetic matter records"
+          getRowKey={(row) => row.title}
+          rows={[
+            { title: 'Board approval', owner: 'Linh Nguyen', status: 'Awaiting proof' },
+            { title: 'Share transfer agreement', owner: 'Mai Tran', status: 'In progress' },
+            { title: 'Authority submission', owner: 'An Le', status: 'Ready' },
+          ]}
+          columns={[
+            { id: 'title', header: 'Record', cell: (row) => row.title },
+            { id: 'owner', header: 'Owner', cell: (row) => row.owner },
+            { id: 'status', header: 'Status', cell: (row) => row.status },
+            {
+              id: 'action',
+              header: 'Action',
+              cell: () => (
+                <Button variant="outline" size="sm">
+                  Open record
+                </Button>
+              ),
+            },
+          ]}
+        />
+      </div>
+    ),
+  },
+}
+
+export const LiquidWorkbenchDark: Story = {
+  ...LiquidWorkbench,
+  globals: { theme: 'dark' },
+}

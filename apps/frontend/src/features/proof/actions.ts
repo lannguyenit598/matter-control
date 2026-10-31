@@ -70,6 +70,7 @@ const criterionBody = (d: {
   title: string
   description: string
   mandatory: string
+  purpose: string
   versionRule: string
   documentId: string
   fixedVersionId: string
@@ -78,6 +79,7 @@ const criterionBody = (d: {
   title: d.title,
   description: d.description,
   mandatory: d.mandatory === 'yes',
+  purpose: d.purpose,
   versionRule: d.versionRule,
   documentId: d.versionRule === 'CURRENT_AUTHORITATIVE' ? d.documentId : '',
   fixedVersionId: d.versionRule === 'FIXED' ? d.fixedVersionId : '',

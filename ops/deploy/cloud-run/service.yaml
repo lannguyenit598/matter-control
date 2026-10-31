@@ -42,7 +42,7 @@ spec:
             - { name: MC_OIDC_AUDIENCE, value: '{{OIDC_AUDIENCE}}' }
             - { name: MC_OIDC_API_CLIENT_ID, value: '{{OIDC_API_CLIENT_ID}}' }
             - { name: MC_OIDC_API_KEY_FILE, value: /secrets/oidc/api-key.json }
-            - { name: MC_OIDC_CACHE_TTL, value: 15s }
+            - { name: MC_OIDC_CACHE_TTL, value: 30s }
             - { name: MC_REQUEST_TIMEOUT, value: 10s }
             - { name: MC_TRANSFER_TIMEOUT, value: 60s }
             - { name: MC_MAX_IN_FLIGHT, value: '10' }

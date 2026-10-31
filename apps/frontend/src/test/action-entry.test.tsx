@@ -222,7 +222,8 @@ describe('a task dialog after the outcome', () => {
     const dialog = open()
     fireEvent.click(within(dialog).getByRole('button', { name: 'Record signature' }))
     await screen.findByText('Signature recorded.')
-    expect(dialog).not.toHaveAttribute('open')
+    // The native close runs in the dialog's effect; under load it can land a tick after the notice.
+    await waitFor(() => expect(dialog).not.toHaveAttribute('open'))
     expect(router.refresh).toHaveBeenCalled()
   })
 })

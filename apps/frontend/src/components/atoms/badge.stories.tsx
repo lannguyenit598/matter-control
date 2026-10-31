@@ -14,13 +14,38 @@ type Story = StoryObj<typeof meta>
 export const Variants: Story = {
   render: (args) => (
     <div className="flex flex-wrap gap-2">
-      {(['neutral', 'primary', 'success', 'warning', 'destructive', 'outline'] as const).map(
-        (v) => (
-          <Badge key={v} {...args} variant={v}>
-            {v}
-          </Badge>
-        ),
-      )}
+      {(
+        [
+          'neutral',
+          'primary',
+          'success',
+          'warning',
+          'destructive',
+          'outline',
+          'execution',
+          'verification',
+          'ready',
+          'blocked',
+          'timing',
+          'attention',
+        ] as const
+      ).map((v) => (
+        <Badge key={v} {...args} variant={v}>
+          {v}
+        </Badge>
+      ))}
     </div>
   ),
+}
+
+export const DarkVariants: Story = {
+  ...Variants,
+  globals: { theme: 'dark' },
+  decorators: [
+    (Story) => (
+      <div className="rounded-lg bg-card p-6">
+        <Story />
+      </div>
+    ),
+  ],
 }

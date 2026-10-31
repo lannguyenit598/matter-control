@@ -186,6 +186,14 @@ func gw03(t *testing.T, newBundle Factory) {
 	l.refused("Package Preparation without criteria", f.filingID, func() error { return errOf(f.adv(e.editor, "PACKAGE_PREPARATION", nil)) }, "package-criteria-required")
 	sigC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE"})
 	pkgC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
+	// BF-01: the authority's decision is its own OUTCOME criterion; it never gates submission and
+	// only an independent verifier's acceptance of the outcome evidence satisfies it.
+	outC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Authority decision accepted", Mandatory: true, Rule: "NONE", Purpose: "OUTCOME"})
+	l.refused("Outcome criterion on a record that is not a filing", f.req.ID, func() error {
+		_, err := e.ev.CreateCriterion(e.ctx, port.CreateCriterionCmd{ActorID: e.editor.String(), MatterID: e.m.String(), SubjectID: f.req.ID.String(),
+			Criterion: port.CriterionInput{Title: "Nope", Mandatory: true, Rule: "NONE", Purpose: "OUTCOME"}})
+		return err
+	}, "outcome-criterion-not-applicable")
 	post = l.cp("Package Preparation", "main", e.editor, "EDITOR", f.filingID, func() { f.must("PACKAGE_PREPARATION", nil) })
 	needAxes(t, "Package Preparation", axesOf(post), gwAxes{Execution: "IN_PROGRESS", Verification: "UNVERIFIED"})
 
@@ -226,7 +234,11 @@ func gw03(t *testing.T, newBundle Factory) {
 	if _, err := e.assess(e.reviewer, f.filingID, e.claimOf(f.filingID, pkgC).Claim.ID, "ACCEPTED"); err != nil {
 		t.Fatal(err)
 	}
-	e.state("both accepted", f.filingID, matter.VerificationVerified)
+	// The package is ready, but the filing is not VERIFIED while its outcome criterion is open.
+	e.state("package accepted, outcome criterion still open", f.filingID, matter.VerificationPartiallyVerified)
+	if ck := e.checklist(f.filingID); !ck.Result.Package.Ready() || !ck.Result.Outcome.Declared() || ck.Result.Outcome.Ready() {
+		t.Fatalf("package ready, outcome declared but not accepted: %+v %+v", ck.Result.Package, ck.Result.Outcome)
+	}
 
 	// Submission: exact version set of cycle 1; denied wrong version, future time, missing reference.
 	l.refused("Submission with a wrong version", f.filingID, func() error {
@@ -253,7 +265,7 @@ func gw03(t *testing.T, newBundle Factory) {
 	if post.Item.OwnerActorID == nil || *post.Item.OwnerActorID != e.editor {
 		t.Fatalf("the accountable internal owner remains while waiting: %+v", post.Item)
 	}
-	needAxes(t, "Submission", axesOf(post), gwAxes{Execution: "WAITING", Verification: "VERIFIED", Dependency: "READY"})
+	needAxes(t, "Submission", axesOf(post), gwAxes{Execution: "WAITING", Verification: "PARTIALLY_VERIFIED", Dependency: "READY"})
 
 	// Receipt: acknowledgement evidence; distinct from submission and from approval.
 	l.refused("Receipt without evidence", f.filingID, func() error { return errOf(f.adv(e.editor, "RECEIPT", nil)) }, "evidence-required")
@@ -337,9 +349,28 @@ func gw03(t *testing.T, newBundle Factory) {
 			c.Reference, c.ObservedAt = "DEC-1", past()
 		})
 	})
-	needAxes(t, "Approval", axesOf(post), gwAxes{Execution: "COMPLETED", Verification: "VERIFIED"})
+	// BF-01: recording the authority's decision completes the filing but does not accept the outcome.
+	needAxes(t, "Approval", axesOf(post), gwAxes{Execution: "COMPLETED", Verification: "PARTIALLY_VERIFIED"})
 	if post.Item.CompletedAt == nil {
 		t.Fatal("completion time is recorded")
+	}
+	if ck := e.checklist(f.filingID); ck.Result.Outcome.Ready() || !ck.Result.Package.Ready() {
+		t.Fatalf("approval evidence alone leaves the outcome pending: %+v", ck.Result)
+	}
+	if got := f.get().OutcomeVerification; got != matter.OutcomePending {
+		t.Fatalf("the filing says its outcome is pending, not verified: %s", got)
+	}
+	if _, err := e.ev.AddClaim(e.ctx, port.AddClaimCmd{ActorID: e.editor.String(), MatterID: e.m.String(), EvidenceID: outcome1, CriterionID: outC.String()}); err != nil {
+		t.Fatal(err)
+	}
+	mustCode(t, "the submitter never accepts the outcome", errOf(e.assess(e.editor, f.filingID, e.claimOf(f.filingID, outC).Claim.ID, "ACCEPTED")), "not-verifier")
+	e.state("outcome claimed but not independently accepted", f.filingID, matter.VerificationPartiallyVerified)
+	if _, err := e.assess(e.reviewer, f.filingID, e.claimOf(f.filingID, outC).Claim.ID, "ACCEPTED"); err != nil {
+		t.Fatal(err)
+	}
+	e.state("independent outcome acceptance", f.filingID, matter.VerificationVerified)
+	if got := f.get().OutcomeVerification; got != matter.OutcomeAccepted {
+		t.Fatalf("an accepted outcome is reported as such: %s", got)
 	}
 	if r := e.detail(f.req.ID).View.Item; r.Execution != matter.ExecutionNotStarted || r.Verification == matter.VerificationVerified {
 		t.Fatalf("filing approval never completes or verifies the linked Requirement: %+v", r)

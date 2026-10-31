@@ -1,0 +1,31 @@
+{
+  "attempt": "r2",
+  "agent": "actual ZCode (BA role)",
+  "head_at_start": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+  "head_at_close": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+  "dirty_tracked_diff": {
+    "before_window": { "hash": "5b086afe86e032f5290fd6307d403955319f42ae22a3c2be32e48b11a2aedd8f", "files": 106, "insertions": 3086, "deletions": 1038, "utc": "2026-10-30T16:2xZ" },
+    "after_window": { "hash": "2c8ef445290e4b1f7cacab146319bd5ca629ed69ab12fe5e99852162dccaf0b9", "files": 118, "insertions": 3752, "deletions": 1148, "utc": "2026-10-31T16:4xZ" },
+    "drift_attribution": "concurrent sessions active during the review window (r1 BA session earlier in the window; a deploy-readiness session touching ops/deploy/*, .github/workflows/frontend.yml, b1_least_privilege_test.go — visible in git status but outside this review's business-flow scope). This attempt wrote ONLY inside docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/ and the task/status records named in the return."
+  },
+  "source_unchanged_by_this_attempt": true,
+  "runtime": {
+    "built_from": "working tree at build time (2026-10-30T16:2xZ window), HEAD 0de3e5d + dirty",
+    "binary": "/private/tmp/mc-ba-flow-evidence/mcapi (go build ./cmd/mcapi, go1.27.3 darwin/arm64)",
+    "postgres": "docker container mc-ba-flow-pg, postgres:18.6-alpine, label mc.owner=zcode-ba-flow-review, 127.0.0.1:15499, db mc_ba_flow_r1, migrations v9 (0009_criterion_purpose applied), created fresh by this attempt",
+    "identity": "synthetic introspection stub IdP 127.0.0.1:18099 (this runtime's own generated RSA key; loopback only; no real IdP touched)",
+    "cleanup_planned": "stop mcapi + stub, remove the container at close"
+  },
+  "files_read_or_verified": "r2/commands/read-file-hashes.txt (19 key source files, SHA-256 at close; anchors re-verified in the drifted tree before findings were written)",
+  "evidence_files": [
+    "r2/walkthrough-evidence/calls.jsonl (570 HTTP calls: utc/actor/method/path/status)",
+    "r2/walkthrough-evidence/gw01-narrative.md",
+    "r2/walkthrough-evidence/gw02-narrative.md",
+    "r2/walkthrough-evidence/gw03-narrative.md",
+    "r2/walkthrough-evidence/traps2-narrative.md",
+    "r2/commands/runtime-env.txt (redacted)",
+    "r2/commands/be-test-full.log (backend -race suite, isolated PG)",
+    "r2/commands/run-records.md"
+  ],
+  "redaction": "no secrets existed in the runtime (synthetic key pair generated for it); the fixture DB password stayed in mode-600 scratch files outside Git and is not reproduced anywhere in this namespace"
+}

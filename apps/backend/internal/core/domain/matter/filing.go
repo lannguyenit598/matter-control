@@ -239,9 +239,11 @@ func unsatisfied(it WorkItem, set EvidenceSet, asOf time.Time) []string {
 	// F03: mandatory package/signature criteria bind every filing; the outcome-
 	// verification flag no longer suppresses this check. An OWNER no-signature
 	// applicability decision is the only waiver, and it is recorded on the filing.
+	// BF-01: only PACKAGE criteria gate submission; an OUTCOME criterion is the authority's
+	// future decision and is verified after the fact.
 	var out []string
 	for _, c := range EvaluateVerification(it, set, asOf).Criteria {
-		if c.Criterion.Mandatory && !c.Criterion.Retired && !c.Satisfied {
+		if c.Criterion.EffectivePurpose() == PurposePackage && c.Criterion.Mandatory && !c.Criterion.Retired && !c.Satisfied {
 			out = append(out, fmt.Sprintf("%s (%s)", c.Criterion.Title, c.Reason))
 		}
 	}
@@ -508,6 +510,8 @@ func (f Filing) NegativeOpen(it WorkItem) bool {
 type FilingSummary struct {
 	View   WorkItemView
 	Filing Filing
+	// OutcomeVerification is one of the Outcome* constants.
+	OutcomeVerification string
 }
 
 // FilingDetail is one filing with its whole history: cycles, exact submissions and the
@@ -521,4 +525,6 @@ type FilingDetail struct {
 	// Next lists the stages the filing may move to from here (the guards decide at the time).
 	Next []FilingStage
 	AsOf time.Time
+	// OutcomeVerification is one of the Outcome* constants.
+	OutcomeVerification string
 }

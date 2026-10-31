@@ -2,11 +2,14 @@
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 
+import { CircleX } from 'lucide-react'
+
 import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
 import { Textarea } from '@/components/atoms/textarea'
 import { ConfirmActionButton } from '@/components/organisms/confirm-action-button'
 import { FormField } from '@/components/molecules/form-field'
+import { IconDisclosure } from '@/components/molecules/icon-disclosure'
 import { IntentForm } from '@/components/organisms/intent-form'
 
 import { createContextAction, updateContextAction } from '../actions'
@@ -107,10 +110,10 @@ export function CloseContextForm({
     )
   }
   return (
-    <details>
-      <summary className="cursor-pointer text-sm underline">
-        <LocalizedText en="Close…" vi="Đóng…" />
-      </summary>
+    <IconDisclosure
+      icon={<CircleX />}
+      label={{ en: 'Close this record…', vi: 'Đóng bản ghi này…' }}
+    >
       <IntentForm
         receipted={false}
         draftKey={`context:${record.id}:close`}
@@ -135,6 +138,6 @@ export function CloseContextForm({
           </FormField>
         )}
       </IntentForm>
-    </details>
+    </IconDisclosure>
   )
 }

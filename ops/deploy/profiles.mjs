@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 const here = (p) => fileURLToPath(new URL(p, import.meta.url))
 const common = ['IMAGE', 'OIDC_ISSUER', 'OIDC_INTROSPECTION_URL', 'OIDC_AUDIENCE', 'OIDC_API_CLIENT_ID', 'R2_ENDPOINT', 'R2_BUCKET', 'DATABASE_URL_SECRET', 'MIGRATE_DATABASE_URL_SECRET', 'R2_ACCESS_KEY_ID_SECRET', 'R2_SECRET_ACCESS_KEY_SECRET', 'OIDC_KEY_SECRET']
 export const PROFILES = {
-  'cloud-run': { keys: [...common, 'SERVICE_NAME', 'REGION', 'SERVICE_ACCOUNT', 'MAX_INSTANCES'], files: ['cloud-run/service.yaml', 'cloud-run/migrate-job.yaml'] },
+  'cloud-run': { keys: [...common, 'SERVICE_NAME', 'REGION', 'SERVICE_ACCOUNT', 'MIGRATOR_SERVICE_ACCOUNT', 'MAX_INSTANCES'], files: ['cloud-run/service.yaml', 'cloud-run/migrate-job.yaml'] },
   'compute-engine': { keys: [...common, 'PROJECT_ID', 'API_HOSTNAME', 'REGISTRY_HOST', 'GCLOUD_IMAGE', 'CADDY_IMAGE'], files: ['compute-engine/cloud-init.yaml'] },
 }
 const rules = [
@@ -34,6 +34,13 @@ export function problems(profile, values) {
     if (/REPLACE|CHANGEME|unconfigured|example\.(com|invalid)|\{\{|[\r\n'"]/i.test(v)) { out.push(`${key}: placeholder or unsafe characters`); continue }
     if (/PRIVATE KEY|:\/\/[^/@\s]*@/.test(v)) { out.push(`${key}: looks like a secret value; use a Secret Manager name`); continue }
     for (const [name, pattern, message] of rules) if (name.test(key) && !pattern.test(v)) out.push(`${key}: ${message}`)
+  }
+  // PI-02: the migration identity is separate from the serving identity. One shared service
+  // account would give the serving container the migration secret's IAM scope, so the renderer
+  // refuses equal values before anything is written.
+  if ('SERVICE_ACCOUNT' in values && 'MIGRATOR_SERVICE_ACCOUNT' in values &&
+      values.SERVICE_ACCOUNT === values.MIGRATOR_SERVICE_ACCOUNT && typeof values.SERVICE_ACCOUNT === 'string' && values.SERVICE_ACCOUNT.trim() !== '') {
+    out.push('MIGRATOR_SERVICE_ACCOUNT: must differ from SERVICE_ACCOUNT (separate migration identity)')
   }
   return out
 }

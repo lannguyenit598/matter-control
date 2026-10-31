@@ -1,4 +1,4 @@
-import { ArrowLeft, ListTodo } from 'lucide-react'
+import { ArrowLeft, ChevronDown, ListTodo } from 'lucide-react'
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
@@ -11,6 +11,7 @@ import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
 import { matterRepository } from '@/features/matters/repository'
+import { OutcomeVerificationBadge } from '@/features/filings/components/outcome-verification'
 import { EvidenceBasis } from '@/features/proof/components/evidence-basis'
 import { ProofPanel } from '@/features/proof/components/proof-panel'
 import { proofRepository } from '@/features/proof/repository'
@@ -18,6 +19,7 @@ import { DependencyPanel } from '@/features/work/components/dependency-panel'
 import { EscalationPanel } from '@/features/work/components/escalation-panel'
 import { ExecutionPanel } from '@/features/work/components/execution-panel'
 import { MetadataForm } from '@/features/work/components/metadata-form'
+import { WorkNow } from '@/features/work/components/work-now'
 import {
   AttentionBadge,
   DependencyBadge,
@@ -70,18 +72,20 @@ async function WorkItem({
       workRepository.list(matterId, {}, 200),
     ])
     // Proof is read separately: a failure here must not hide the record itself.
-    const proof = detail.item.proofRequired
-      ? await attempt(async () => {
-          const [{ checklist }, docs] = await Promise.all([
-            proofRepository.checklist(matterId, itemId),
-            proofRepository.documents(matterId),
-          ])
-          const details = await Promise.all(
-            docs.items.map((d) => proofRepository.document(matterId, d.id)),
-          )
-          return { checklist, docs: docs.items, details: details.map((x) => x.detail) }
-        })
-      : null
+    // A filing keeps its package/signature checklist reachable whatever its outcome flag says (BF-02).
+    const proof =
+      detail.item.proofRequired || detail.isFiling
+        ? await attempt(async () => {
+            const [{ checklist }, docs] = await Promise.all([
+              proofRepository.checklist(matterId, itemId),
+              proofRepository.documents(matterId),
+            ])
+            const details = await Promise.all(
+              docs.items.map((d) => proofRepository.document(matterId, d.id)),
+            )
+            return { checklist, docs: docs.items, details: details.map((x) => x.detail) }
+          })
+        : null
     return {
       proof,
       detail,
@@ -100,10 +104,6 @@ async function WorkItem({
   const role = matter.callerRole
   const canEdit = role === 'OWNER' || role === 'EDITOR'
   const titles = Object.fromEntries(all.map((e) => [e.item.id, e.item.title]))
-  const candidates = all.map((e) => ({
-    id: e.item.id,
-    title: `${e.item.kind === 'REQUIREMENT' ? 'Requirement' : 'Action'}: ${e.item.title}`,
-  }))
   const owner = members.find((m) => m.userId === it.ownerId)
   const party = parties.find((p) => p.id === it.waitingPartyId)
 
@@ -126,123 +126,122 @@ async function WorkItem({
       />
 
       <Card>
-        <CardHeader>
-          <CardTitle>
-            <LocalizedText en="State" vi="Các trục trạng thái" />
-          </CardTitle>
-          <CardDescription>
-            Five independent dimensions. None implies another: completed is not verified, waiting is
-            not blocked.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {it.importedVerificationClaim && (
-              <Axis
-                term={
-                  <LocalizedText
-                    en="Imported verification claim"
-                    vi="Nhãn xác minh từ nguồn nhập"
-                  />
-                }
-              >
-                <span>{it.importedVerificationClaim} — source label only; not verified proof.</span>
-              </Axis>
-            )}
-            <Axis term={<LocalizedText en="Execution" vi="Thực hiện" />}>
-              <ExecutionBadge state={it.execution} />
-            </Axis>
-            <Axis term={<LocalizedText en="Verification" vi="Xác minh" />}>
-              <VerificationBadge item={it} />
-            </Axis>
-            <Axis term={<LocalizedText en="Dependency" vi="Phụ thuộc" />}>
-              <DependencyBadge state={it.dependency} />
-            </Axis>
-            <Axis term={<LocalizedText en="Timing" vi="Thời hạn" />}>
-              <TimingBadge derived={detail.derived} />
-            </Axis>
-            <Axis term={<LocalizedText en="Attention" vi="Mức chú ý" />}>
-              <AttentionBadge derived={detail.derived} />
-            </Axis>
-            <Axis term={<LocalizedText en="Owner" vi="Người phụ trách" />}>
-              {owner ? (
-                owner.displayName
-              ) : (
-                <span className="text-muted-foreground">
-                  {it.ownerId ? 'Not an active member' : 'Unassigned'}
-                </span>
+        <CardContent className="flex flex-col gap-4 pt-6">
+          <p aria-label="State at a glance" className="flex flex-wrap items-center gap-2 text-sm">
+            <ExecutionBadge state={it.execution} />
+            <DependencyBadge state={it.dependency} />
+            <VerificationBadge item={it} />
+            <OutcomeVerificationBadge state={detail.outcomeVerification} />
+            <AttentionBadge derived={detail.derived} />
+          </p>
+          <WorkNow item={it} derived={detail.derived} role={role} partyName={party?.name}>
+            <ExecutionPanel
+              matterId={matterId}
+              entry={detail}
+              role={role}
+              parties={parties}
+              titles={titles}
+            />
+          </WorkNow>
+        </CardContent>
+      </Card>
+
+      <Disclosure
+        id="state-axes"
+        title={<LocalizedText en="All state axes" vi="Tất cả các trục trạng thái" />}
+      >
+        <Card>
+          <CardHeader>
+            <CardDescription>
+              Five independent dimensions. None implies another: completed is not verified, waiting
+              is not blocked.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {it.importedVerificationClaim && (
+                <Axis
+                  term={
+                    <LocalizedText
+                      en="Imported verification claim"
+                      vi="Nhãn xác minh từ nguồn nhập"
+                    />
+                  }
+                >
+                  <span>
+                    {it.importedVerificationClaim} — source label only; not verified proof.
+                  </span>
+                </Axis>
               )}
-            </Axis>
-            <Axis term={<LocalizedText en="Due" vi="Hạn" />}>
-              {it.dueAt ? (
-                <LocalizedInstant iso={it.dueAt} />
-              ) : (
-                <span className="text-muted-foreground">
-                  <LocalizedText en="No due date" vi="Chưa có hạn" />
-                </span>
+              <Axis term={<LocalizedText en="Execution" vi="Thực hiện" />}>
+                <ExecutionBadge state={it.execution} />
+              </Axis>
+              <Axis term={<LocalizedText en="Verification" vi="Xác minh" />}>
+                <VerificationBadge item={it} />
+              </Axis>
+              <Axis term={<LocalizedText en="Dependency" vi="Phụ thuộc" />}>
+                <DependencyBadge state={it.dependency} />
+              </Axis>
+              <Axis term={<LocalizedText en="Timing" vi="Thời hạn" />}>
+                <TimingBadge derived={detail.derived} />
+              </Axis>
+              <Axis term={<LocalizedText en="Attention" vi="Mức chú ý" />}>
+                <AttentionBadge derived={detail.derived} />
+              </Axis>
+              <Axis term={<LocalizedText en="Owner" vi="Người phụ trách" />}>
+                {owner ? (
+                  owner.displayName
+                ) : (
+                  <span className="text-muted-foreground">
+                    {it.ownerId ? 'Not an active member' : 'Unassigned'}
+                  </span>
+                )}
+              </Axis>
+              <Axis term={<LocalizedText en="Due" vi="Hạn" />}>
+                {it.dueAt ? (
+                  <LocalizedInstant iso={it.dueAt} />
+                ) : (
+                  <span className="text-muted-foreground">
+                    <LocalizedText en="No due date" vi="Chưa có hạn" />
+                  </span>
+                )}
+              </Axis>
+              {it.completedAt && (
+                <Axis term={<LocalizedText en="Completed" vi="Đã hoàn tất" />}>
+                  <LocalizedInstant iso={it.completedAt} />
+                </Axis>
               )}
-            </Axis>
-            {it.completedAt && (
-              <Axis term={<LocalizedText en="Completed" vi="Đã hoàn tất" />}>
-                <LocalizedInstant iso={it.completedAt} />
-              </Axis>
+              {it.execution === 'WAITING' && (
+                <Axis term={<LocalizedText en="Waiting on" vi="Đang chờ" />}>
+                  {party?.name ?? 'an external party'}: {it.waitingCondition}
+                </Axis>
+              )}
+              {it.escalation && (
+                <Axis term={<LocalizedText en="Escalation" vi="Nâng mức ưu tiên" />}>
+                  {it.escalation}
+                </Axis>
+              )}
+            </dl>
+            {it.dependencyReasons.length > 0 && (
+              <p className="mt-3 text-sm text-muted-foreground">
+                <LocalizedText
+                  en="Blocked: see the failed gates under Prerequisites."
+                  vi="Đang bị chặn: xem điều kiện chưa đạt trong phần Điều kiện tiên quyết."
+                />
+              </p>
             )}
-            {it.execution === 'WAITING' && (
-              <Axis term={<LocalizedText en="Waiting on" vi="Đang chờ" />}>
-                {party?.name ?? 'an external party'}: {it.waitingCondition}
-              </Axis>
-            )}
-            {it.escalation && (
-              <Axis term={<LocalizedText en="Escalation" vi="Nâng mức ưu tiên" />}>
-                {it.escalation}
-              </Axis>
-            )}
-          </dl>
-          {it.dependencyReasons.length > 0 && (
-            <p className="mt-3 text-sm text-muted-foreground">
+            <p className="mt-3 text-xs text-muted-foreground">
               <LocalizedText
-                en="Blocked: see the failed gates under Prerequisites."
-                vi="Đang bị chặn: xem điều kiện chưa đạt trong phần Điều kiện tiên quyết."
+                en="Verification changes only through evidence review; it cannot be edited here."
+                vi="Trạng thái xác minh chỉ đổi qua đánh giá bằng chứng; không thể sửa tại đây."
               />
             </p>
-          )}
-          <p className="mt-3 text-xs text-muted-foreground">
-            <LocalizedText
-              en="Verification changes only through evidence review; it cannot be edited here."
-              vi="Trạng thái xác minh chỉ đổi qua đánh giá bằng chứng; không thể sửa tại đây."
-            />
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <LocalizedText en="Outcome" vi="Kết quả cần đạt" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="break-words whitespace-pre-wrap">{it.outcome}</CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <LocalizedText en="Change status" vi="Đổi trạng thái" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ExecutionPanel
-            matterId={matterId}
-            entry={detail}
-            role={role}
-            parties={parties}
-            titles={titles}
-          />
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </Disclosure>
 
       {proof && (
-        <Card>
+        <Card id="proof">
           <CardHeader>
             <CardTitle>
               <LocalizedText en="Proof" vi="Bằng chứng" />
@@ -262,6 +261,7 @@ async function WorkItem({
                   matterId,
                   role,
                   itemEtag: detail.etag,
+                  isFiling: detail.isFiling,
                   names,
                   documents: proof.value.docs.map((d) => ({ id: d.id, name: d.name })),
                   versions: proof.value.details.flatMap((d) =>
@@ -299,67 +299,71 @@ async function WorkItem({
         </Card>
       )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <LocalizedText
-              en="Prerequisites and dependents"
-              vi="Điều kiện tiên quyết và công việc phụ thuộc"
-            />
-          </CardTitle>
-          <CardDescription>
-            <LocalizedText
-              en="What must be satisfied before this record can proceed, and what waits on it."
-              vi="Các điều kiện cần đạt trước khi tiếp tục và những công việc đang chờ bản ghi này."
-            />
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <DependencyPanel
-            matterId={matterId}
-            detail={detail}
-            here={here}
-            candidates={candidates}
-            canEdit={canEdit}
-            titles={titles}
+      <Disclosure
+        id="prerequisites"
+        open={it.dependencyReasons.length > 0}
+        title={
+          <LocalizedText
+            en="Prerequisites and dependents"
+            vi="Điều kiện tiên quyết và công việc phụ thuộc"
           />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <LocalizedText en="Details" vi="Chi tiết" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <MetadataForm
-            matterId={matterId}
-            entry={detail}
-            members={members}
-            workstreams={workstreams}
-            canEdit={canEdit}
-          />
-        </CardContent>
-      </Card>
-
-      {role === 'OWNER' && (
+        }
+      >
         <Card>
           <CardHeader>
-            <CardTitle>
-              <LocalizedText en="Escalation" vi="Nâng mức ưu tiên" />
-            </CardTitle>
             <CardDescription>
               <LocalizedText
-                en="Owners can mark a record critical with a reason."
-                vi="Chủ sở hữu có thể đánh dấu bản ghi là nghiêm trọng khi nêu rõ lý do."
+                en="What must be satisfied before this record can proceed, and what waits on it."
+                vi="Các điều kiện cần đạt trước khi tiếp tục và những công việc đang chờ bản ghi này."
               />
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <EscalationPanel matterId={matterId} entry={detail} />
+            <DependencyPanel
+              matterId={matterId}
+              detail={detail}
+              here={here}
+              canEdit={canEdit}
+              titles={titles}
+            />
           </CardContent>
         </Card>
+      </Disclosure>
+
+      <Disclosure id="details" title={<LocalizedText en="Edit details" vi="Sửa chi tiết" />}>
+        <Card>
+          <CardHeader></CardHeader>
+          <CardContent>
+            <MetadataForm
+              matterId={matterId}
+              entry={detail}
+              members={members}
+              workstreams={workstreams}
+              canEdit={canEdit}
+            />
+          </CardContent>
+        </Card>
+      </Disclosure>
+
+      {role === 'OWNER' && (
+        <Disclosure
+          id="escalation"
+          title={<LocalizedText en="Escalation (owner)" vi="Nâng mức ưu tiên (chủ sở hữu)" />}
+        >
+          <Card>
+            <CardHeader>
+              <CardDescription>
+                <LocalizedText
+                  en="Owners can mark a record critical with a reason."
+                  vi="Chủ sở hữu có thể đánh dấu bản ghi là nghiêm trọng khi nêu rõ lý do."
+                />
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <EscalationPanel matterId={matterId} entry={detail} />
+            </CardContent>
+          </Card>
+        </Disclosure>
       )}
     </div>
   )
@@ -371,5 +375,28 @@ function Axis({ term, children }: { term: React.ReactNode; children: React.React
       <dt className="text-sm text-muted-foreground">{term}</dt>
       <dd className="mt-1 flex flex-wrap items-center gap-1 break-words">{children}</dd>
     </div>
+  )
+}
+
+/** Secondary controls stay one deliberate step away; every control inside remains mounted. */
+function Disclosure({
+  id,
+  title,
+  open,
+  children,
+}: {
+  id: string
+  title: React.ReactNode
+  open?: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <details id={id} open={open || undefined} className="group flex flex-col gap-3 border-t pt-4">
+      <summary className="control-target flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
+        {title}
+        <ChevronDown aria-hidden className="size-4 transition-transform group-open:rotate-180" />
+      </summary>
+      {children}
+    </details>
   )
 }

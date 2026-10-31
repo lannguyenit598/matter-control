@@ -1146,7 +1146,7 @@ func (s *DataOpsService) Brief(ctx context.Context, q port.BriefQuery) (matter.B
 		}
 		for _, r := range recs {
 			out.Changes = append(out.Changes, matter.BriefChange{
-				Seq: r.Seq, ID: r.ID, Type: r.Type, TargetKind: r.TargetKind, TargetID: r.TargetID,
+				Seq: r.Seq, ID: r.ID, Type: r.Type, TargetKind: r.TargetKind, TargetID: r.TargetID, TargetLabel: recordedLabel(r.After, r.Before),
 				ActorID: r.ActorID, Reason: r.Reason, RecordedAt: r.RecordedAt,
 				EffectiveAt: r.EffectiveAt, LateRecorded: !r.EffectiveAt.After(q.T1),
 			})
@@ -1171,4 +1171,25 @@ func (s *DataOpsService) Brief(ctx context.Context, q port.BriefQuery) (matter.B
 // snapMatterMember reads one membership from a snapshot (import preview).
 func snapMatterMember(snap port.MatterSnapshot, matterID matter.MatterID, actor matter.ActorID) (matter.MatterMembership, error) {
 	return snap.MatterMembership(context.Background(), matterID, actor)
+}
+
+// recordedLabel reads the title or name an event recorded for its target, preferring the state
+// after the change. It never looks anything up: a renamed or deleted target keeps the label it had
+// when the change was made, and a change that recorded none yields "" (the caller says so).
+func recordedLabel(after, before []byte) string {
+	for _, raw := range [][]byte{after, before} {
+		if len(raw) == 0 {
+			continue
+		}
+		var m map[string]any
+		if json.Unmarshal(raw, &m) != nil {
+			continue
+		}
+		for _, k := range []string{"title", "name"} {
+			if v, ok := m[k].(string); ok && strings.TrimSpace(v) != "" {
+				return strings.TrimSpace(v)
+			}
+		}
+	}
+	return ""
 }

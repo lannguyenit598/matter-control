@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import type { ZodError } from 'zod'
 
 import { requireSession } from '@/lib/auth'
+import type { PickerResult } from '@/components/molecules/search-picker'
 import { toMcFailure, type McActionResult } from '@/lib/mc/action-result'
 
 import { workRepository } from './repository'
@@ -16,6 +17,7 @@ import {
   escalateInputSchema,
   milestonePrerequisitesInputSchema,
   removeDependencyInputSchema,
+  searchWorkItemsInputSchema,
   transitionInputSchema,
   updateItemInputSchema,
   updatePartyInputSchema,
@@ -206,5 +208,48 @@ export async function setMilestonePrerequisitesAction(input: unknown): Promise<M
     return { ok: true }
   } catch (error) {
     return toMcFailure(error)
+  }
+}
+
+/** One page of search results for the record pickers; reaching it means there may be more. */
+const PICK_LIMIT = 25
+
+/**
+ * Read for the record picker. It is a Server Action only to give the client one authenticated,
+ * bounded read path (session first, Zod, repository): the API returns only records the caller may
+ * read, and every command that uses the chosen id re-authorizes. A 404 is ambiguous by API design
+ * (the matter is gone or no longer visible), so it is `unavailable`, never an empty result.
+ */
+export async function searchWorkItemsAction(input: unknown): Promise<PickerResult> {
+  try {
+    await requireSession()
+    const p = searchWorkItemsInputSchema.safeParse(input)
+    if (!p.success) return { status: 'invalid' }
+    const { page } = await workRepository.list(
+      p.data.matterId,
+      { kind: p.data.kind, q: p.data.query || undefined, sort: 'title' },
+      PICK_LIMIT,
+    )
+    const rows = page.items.filter((e) => e.item.id !== p.data.excludeId)
+    return {
+      status: 'ok',
+      options: rows.map((e) => ({
+        value: e.item.id,
+        label: p.data.kind
+          ? e.item.title
+          : `${e.item.kind === 'REQUIREMENT' ? 'Requirement' : 'Action'}: ${e.item.title}`,
+      })),
+      truncated: page.page.nextCursor !== null,
+    }
+  } catch (error) {
+    const failure = toMcFailure(error)
+    if (failure.ok) return { status: 'error' }
+    if (failure.kind === 'validation') return { status: 'invalid' }
+    if (failure.kind === 'unauthenticated' || failure.kind === 'forbidden')
+      return { status: 'denied' }
+    return {
+      status:
+        failure.kind === 'not-found' || failure.kind === 'unavailable' ? 'unavailable' : 'error',
+    }
   }
 }

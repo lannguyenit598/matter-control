@@ -26,7 +26,7 @@ Both commands need the full configuration below, because it is validated before 
 | `MC_OIDC_AUDIENCE` | required | Audience every accepted token must contain (the API application's client id) |
 | `MC_OIDC_API_KEY_FILE` | required | JSON key of the API application, used to sign the introspection client assertion. Keep mode `0600`; it is never printed or logged |
 | `MC_OIDC_API_CLIENT_ID` | empty | When set, startup fails if the key file belongs to another application |
-| `MC_OIDC_CACHE_TTL` | `0s` | Caches positive introspection results per token digest. A load shield only, **not** a revocation guarantee; `0s` disables it |
+| `MC_OIDC_CACHE_TTL` | `30s` | Caches positive introspection results per token digest (default approved in ADR-004 decision 4). A load shield only, **not** a revocation guarantee; `0s` disables it |
 | `MC_HTTP_ADDR` | `127.0.0.1:8081` | Listen address. Containers must use `:8081` |
 | `MC_LOG_LEVEL` | `info` | `debug`, `info`, `warn`, `error` |
 | `MC_REQUEST_TIMEOUT` | `10s` | Per-request deadline |

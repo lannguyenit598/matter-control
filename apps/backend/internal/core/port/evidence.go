@@ -108,6 +108,7 @@ type CriterionInput struct {
 	Title       string
 	Description string
 	Mandatory   bool
+	Purpose     string // PACKAGE (default) | OUTCOME; fixed at creation, only OUTCOME on a filing with outcome verification
 	Rule        string // NONE | CURRENT_AUTHORITATIVE | FIXED
 	DocumentID  string // required for CURRENT_AUTHORITATIVE
 	FixedID     string // required for FIXED
@@ -239,8 +240,17 @@ type SubjectQuery struct {
 	SubjectID string
 }
 
+// ReviewQueueQuery lists the caller's pending assessments across their matters (BF-05).
+type ReviewQueueQuery struct {
+	ActorID string
+	Limit   int
+	After   *matter.ReviewCursor
+}
+
 // EvidenceService defines the W3 use cases.
 type EvidenceService interface {
+	// ReviewQueue lists claims the caller, as a designated independent verifier, could assess now.
+	ReviewQueue(ctx context.Context, q ReviewQueueQuery) (matter.ReviewQueue, error)
 	CreateDocument(ctx context.Context, cmd CreateDocumentCmd) (matter.CreatedResult, error)
 	AddVersion(ctx context.Context, cmd AddVersionCmd) (matter.CreatedResult, error)
 	UploadVersion(ctx context.Context, cmd UploadVersionCmd) (matter.CreatedResult, error)

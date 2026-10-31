@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
+import { GlassSurface } from '@/components/molecules/glass-surface'
 
 export type DashboardTemplateProps = {
   /** Desktop navigation (hidden below md). */
@@ -23,7 +24,11 @@ export function DashboardTemplate({ sidebar, header, children }: DashboardTempla
       >
         <LocalizedText en="Skip to content" vi="Đến nội dung" />
       </a>
-      <div className="app-sidebar-slot">{sidebar}</div>
+      <div className="app-sidebar-slot">
+        <GlassSurface className="h-full" radius={20} frost={0.48} refraction={14} bezel={18}>
+          {sidebar}
+        </GlassSurface>
+      </div>
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="app-mobile-header">{header}</div>
         <main id="main-content" className="app-main min-w-0 flex-1">

@@ -9,6 +9,7 @@ import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
 import { CreateFilingForm } from '@/features/filings/components/filing-forms'
 import { matterRepository } from '@/features/matters/repository'
+import { searchWorkItemsAction } from '@/features/work/actions'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
@@ -38,7 +39,7 @@ async function NewFiling({ params }: Pick<PageProps<'/matters/[matterId]/filings
       matterRepository.get(matterId),
       matterRepository.members(matterId),
       workRepository.parties(matterId),
-      workRepository.list(matterId, { kind: 'REQUIREMENT' }, 200),
+      workRepository.list(matterId, { kind: 'REQUIREMENT' }, 1),
     ])
     return {
       matter: matter.matter,
@@ -74,6 +75,7 @@ async function NewFiling({ params }: Pick<PageProps<'/matters/[matterId]/filings
           <CreateFilingForm
             matterId={matterId}
             requirements={reqs.map((r) => ({ id: r.item.id, label: r.item.title }))}
+            searchRecords={searchWorkItemsAction}
             parties={parties.map((p) => ({ id: p.id, label: p.name }))}
             members={members
               .filter((m) => m.status === 'ACTIVE')

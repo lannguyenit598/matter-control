@@ -8,13 +8,22 @@ import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
 import { Textarea } from '@/components/atoms/textarea'
 import { FormField } from '@/components/molecules/form-field'
+import { LocalDateTimeField } from '@/components/molecules/local-datetime-field'
 import { IntentForm } from '@/components/organisms/intent-form'
+import { useTimeZone } from '@/hooks/use-time-zone'
+import { fieldFailure } from '@/lib/mc/action-result'
+import { readLocalField } from '@/lib/mc/local-time'
 
 import { transitionExecutionAction } from '../actions'
-import { EXECUTION_LABEL, offeredTransitions, WORK_LABEL_VI, TRANSITION_VERB } from '../labels'
+import {
+  EXECUTION_LABEL,
+  offeredTransitions,
+  primaryTransition,
+  WORK_LABEL_VI,
+  TRANSITION_VERB,
+} from '../labels'
 import type { Envelope, Party } from '../schemas'
 
-import { composeDue } from './due-field'
 import { RejectionDetails } from './rejection-details'
 
 /**
@@ -36,6 +45,7 @@ export function ExecutionPanel({
   titles: Record<string, string>
 }) {
   const it = entry.item
+  const zone = useTimeZone()
   const options = offeredTransitions(it.execution, role)
   if (options.length === 0) {
     return (
@@ -52,8 +62,10 @@ export function ExecutionPanel({
       draftKey={`item:${it.id}:execution`}
       submitLabel={<LocalizedText en="Change status" vi="Đổi trạng thái" />}
       renderRejection={(r) => <RejectionDetails rejection={r} titles={titles} />}
-      run={(v) =>
-        transitionExecutionAction({
+      run={(v) => {
+        const done = readLocalField(v, 'completed', zone, null)
+        if (!done.ok) return Promise.resolve(fieldFailure('completedAt', done.error))
+        return transitionExecutionAction({
           matterId,
           itemId: it.id,
           ifMatch: entry.etag,
@@ -61,12 +73,18 @@ export function ExecutionPanel({
           reason: v.reason ?? '',
           waitingPartyId: v.waitingPartyId ?? '',
           waitingCondition: v.waitingCondition ?? '',
-          completedAt: composeDue(v.completedLocal ?? '', v.completedOffset ?? '+00:00'),
+          completedAt: done.iso,
         })
-      }
+      }}
     >
       {({ errors }) => (
-        <Fields current={it.execution} options={options} parties={parties} errors={errors} />
+        <Fields
+          current={it.execution}
+          options={options}
+          primary={primaryTransition(it.execution, role)}
+          parties={parties}
+          errors={errors}
+        />
       )}
     </IntentForm>
   )
@@ -75,15 +93,18 @@ export function ExecutionPanel({
 function Fields({
   current,
   options,
+  primary,
   parties,
   errors,
 }: {
   current: string
   options: string[]
+  /** The step emphasised by the page; the others stay selectable. */
+  primary: string | null
   parties: Party[]
   errors: Record<string, string[] | undefined>
 }) {
-  const [to, setTo] = useState(options[0] ?? '')
+  const [to, setTo] = useState(primary ?? options[0] ?? '')
   const needsReason =
     to === 'CANCELLED' ||
     (to === 'IN_PROGRESS' && (current === 'COMPLETED' || current === 'CANCELLED')) ||
@@ -145,35 +166,18 @@ function Fields({
         </>
       )}
       {to === 'COMPLETED' && current === 'NOT_STARTED' && (
-        <div className="grid gap-3 sm:grid-cols-2">
-          <FormField
-            label={<LocalizedText en="Completed at" vi="Hoàn tất lúc" />}
-            required
-            hint={
-              <LocalizedText
-                en="When the work was actually done."
-                vi="Thời điểm công việc thực sự hoàn tất."
-              />
-            }
-            error={errors.completedAt?.[0]}
-          >
-            {(c) => <Input type="datetime-local" name="completedLocal" {...c} />}
-          </FormField>
-          <FormField label={<LocalizedText en="Offset from UTC" vi="Độ lệch UTC" />}>
-            {(c) => (
-              <Select
-                name="completedOffset"
-                defaultValue="+00:00"
-                options={[
-                  { value: '+00:00', label: 'UTC (+00:00)' },
-                  { value: '+07:00', label: 'Asia/Ho_Chi_Minh (+07:00)' },
-                  { value: '+01:00', label: 'Central Europe (+01:00)' },
-                ]}
-                {...c}
-              />
-            )}
-          </FormField>
-        </div>
+        <LocalDateTimeField
+          name="completed"
+          required
+          label={<LocalizedText en="Completed at" vi="Hoàn tất lúc" />}
+          hint={
+            <LocalizedText
+              en="When the work was actually done."
+              vi="Thời điểm công việc thực sự hoàn tất."
+            />
+          }
+          error={errors.completedAt?.[0]}
+        />
       )}
       <FormField
         label={needsReason ? 'Reason (required)' : 'Reason (optional)'}

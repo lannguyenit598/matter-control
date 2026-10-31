@@ -48,6 +48,15 @@ type ListAccessibleMattersQuery struct {
 	Cursor      *matter.MatterCursor
 }
 
+// DiscoverMattersQuery finds the caller's accessible Matters by title across their active
+// workspaces (BF-08). Query is a case-insensitive title substring; empty lists all.
+type DiscoverMattersQuery struct {
+	ActorID string
+	Query   string
+	Limit   int
+	After   *matter.DiscoveryCursor
+}
+
 type GrantWorkspaceMembershipCmd struct {
 	ActorID          string // calling OWNER
 	WorkspaceID      string
@@ -120,6 +129,9 @@ type WorkspaceService interface {
 	CreateWorkspace(ctx context.Context, cmd CreateWorkspaceCmd) (matter.WorkspaceCreatedResult, error)
 	GetWorkspace(ctx context.Context, q GetWorkspaceQuery) (matter.Workspace, error)
 	ListAccessibleMatters(ctx context.Context, q ListAccessibleMattersQuery) (matter.AccessibleMatterPage, error)
+	// DiscoverMatters is the cross-workspace Matter search: only Matters the caller holds an ACTIVE
+	// membership in, inside workspaces where they are ACTIVE.
+	DiscoverMatters(ctx context.Context, q DiscoverMattersQuery) (matter.MatterDiscoveryPage, error)
 	GrantWorkspaceMembership(ctx context.Context, cmd GrantWorkspaceMembershipCmd) (matter.MembershipChangeResult, error)
 	RevokeWorkspaceMembership(ctx context.Context, cmd RevokeWorkspaceMembershipCmd) (matter.MembershipChangeResult, error)
 	CreateMatter(ctx context.Context, cmd CreateMatterCmd) (matter.WorkspaceCreatedResult, error)

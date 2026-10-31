@@ -36,7 +36,10 @@ export function DataTable<T>({
   if (rows.length === 0 && empty) return <>{empty}</>
 
   return (
-    <div className={cn('overflow-x-auto rounded-lg border bg-card', className)}>
+    <div
+      data-slot="record-table"
+      className={cn('overflow-x-auto rounded-lg border bg-card', className)}
+    >
       <table className="w-full text-sm">
         <caption className="sr-only">{caption}</caption>
         <thead className="border-b bg-muted/50 text-left text-muted-foreground">
@@ -54,7 +57,7 @@ export function DataTable<T>({
         </thead>
         <tbody className="divide-y">
           {rows.map((row) => (
-            <tr key={getRowKey(row)} className="hover:bg-muted/30">
+            <tr data-slot="record-row" key={getRowKey(row)} className="hover:bg-muted/30">
               {columns.map((column) => (
                 <td key={column.id} className={cn('px-4 py-3 align-middle', column.className)}>
                   {column.cell(row)}

@@ -83,6 +83,20 @@ func (r VersionRule) Valid() bool {
 	return r == VersionNone || r == VersionCurrent || r == VersionFixed
 }
 
+// CriterionPurpose says what a criterion proves. PACKAGE criteria (the default, and the only
+// reading of every legacy row) are the readiness gates that must hold before a filing is
+// submitted; OUTCOME criteria are the authority's decision, accepted independently after the
+// fact (BF-01). Nothing infers a purpose from a title: an unspecified purpose is PACKAGE, which
+// can only keep a gate closed, never open one.
+type CriterionPurpose string
+
+const (
+	PurposePackage CriterionPurpose = "PACKAGE"
+	PurposeOutcome CriterionPurpose = "OUTCOME"
+)
+
+func (p CriterionPurpose) Valid() bool { return p == PurposePackage || p == PurposeOutcome }
+
 // Criterion is one evidence requirement of a subject: what must be shown, distinct from any
 // proof. Revision changes whenever the criterion changes; claims pin the revision they were
 // made against, so a revision invalidates stale assessments (FR-006).
@@ -93,13 +107,48 @@ type Criterion struct {
 	Title       string
 	Description string
 	Mandatory   bool
-	Rule        VersionRule
-	DocumentID  *DocumentID
-	FixedID     *VersionID
+	// Purpose is fixed at creation; the empty value reads as PACKAGE.
+	Purpose    CriterionPurpose
+	Rule       VersionRule
+	DocumentID *DocumentID
+	FixedID    *VersionID
 	// ValidFor is the validity of an accepted proof after assessment; zero means unbounded.
 	ValidFor time.Duration
 	Retired  bool
 	Revision int64
+}
+
+// Outcome verification of a filing, as shown next to its (package-driven) verification state.
+const (
+	OutcomeNotTracked  = "NOT_TRACKED"  // the filing has no independent outcome verification (proofRequired=false)
+	OutcomeNotDeclared = "NOT_DECLARED" // outcome verification is required but no OUTCOME criterion is declared
+	OutcomePending     = "PENDING"      // declared, not yet accepted by an independent verifier
+	OutcomeAccepted    = "ACCEPTED"     // every mandatory OUTCOME criterion is accepted
+)
+
+// OutcomeVerification says whether the authority's outcome has been independently verified. A
+// filing whose package criteria are all accepted can read VERIFIED while no outcome criterion
+// exists; this is the separate, honest answer for the outcome (BF-01).
+func OutcomeVerification(item WorkItem, set EvidenceSet, asOf time.Time) string {
+	if !item.ProofRequired {
+		return OutcomeNotTracked
+	}
+	res := EvaluateVerification(item, set, asOf)
+	switch {
+	case !res.Outcome.Declared():
+		return OutcomeNotDeclared
+	case res.Outcome.Ready():
+		return OutcomeAccepted
+	}
+	return OutcomePending
+}
+
+// EffectivePurpose reads an unspecified (legacy) purpose as PACKAGE.
+func (c Criterion) EffectivePurpose() CriterionPurpose {
+	if c.Purpose == PurposeOutcome {
+		return PurposeOutcome
+	}
+	return PurposePackage
 }
 
 // EvidenceKind says what the proof points at.
@@ -260,10 +309,27 @@ type ClaimStatus struct {
 	Satisfying bool
 }
 
-// VerificationResult is the derived verification of one subject at an explicit instant.
+// ProofPart summarises the criteria of one purpose: how many are declared, how many of the
+// mandatory ones are satisfied right now.
+type ProofPart struct {
+	Total, Mandatory, Satisfied int
+}
+
+// Declared reports at least one active criterion of this purpose.
+func (p ProofPart) Declared() bool { return p.Total > 0 }
+
+// Ready reports every mandatory criterion satisfied; false when none is mandatory, so an
+// undeclared outcome is never an accepted outcome.
+func (p ProofPart) Ready() bool { return p.Mandatory > 0 && p.Satisfied == p.Mandatory }
+
+// VerificationResult is the derived verification of one subject at an explicit instant. State is
+// the aggregate over all mandatory criteria; Package and Outcome split it so that package
+// readiness is never shown as an accepted authority outcome.
 type VerificationResult struct {
 	State    VerificationState
 	Criteria []CriterionStatus
+	Package  ProofPart
+	Outcome  ProofPart
 }
 
 // EvaluateVerification derives the subject aggregate from its criteria and proof at asOf
@@ -281,6 +347,19 @@ func EvaluateVerification(item WorkItem, set EvidenceSet, asOf time.Time) Verifi
 	}
 	sort.Slice(criteria, func(i, j int) bool { return criteria[i].Criterion.ID < criteria[j].Criterion.ID })
 	res := VerificationResult{Criteria: criteria}
+	for _, c := range criteria {
+		part := &res.Package
+		if c.Criterion.EffectivePurpose() == PurposeOutcome {
+			part = &res.Outcome
+		}
+		part.Total++
+		if c.Criterion.Mandatory {
+			part.Mandatory++
+			if c.Satisfied {
+				part.Satisfied++
+			}
+		}
+	}
 	if !item.ProofRequired {
 		return res // no proof requirement: no verification state at all
 	}

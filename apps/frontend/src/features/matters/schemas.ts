@@ -15,6 +15,11 @@ export const matterSchema = z.object({
 })
 export const matterPageSchema = pageOf(matterSchema)
 
+/** A Matter found by name across the caller's workspaces, with the workspace it lives in (BF-08). */
+export const discoveredMatterSchema = matterSchema.extend({ workspaceName: z.string() })
+export const discoveredMatterPageSchema = pageOf(discoveredMatterSchema)
+export type DiscoveredMatter = z.infer<typeof discoveredMatterSchema>
+
 export const matterMemberSchema = z.object({
   userId: z.string(),
   displayName: z.string(),

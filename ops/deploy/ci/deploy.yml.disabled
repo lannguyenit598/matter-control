@@ -1,0 +1,76 @@
+# MATTERCONTROL PILOT DEPLOY — TEMPLATE ONLY (ADR-006, MC-ZCODE-DEPLOY-READINESS-FINISH-20261030 WP-5)
+#
+# This file is DISABLED (`.disabled` suffix): GitHub does not load it, nothing here has ever run,
+# and no cloud resource, project, service account or secret exists behind it. Renaming it to
+# deploy.yml is a deliberate deployment-adjacent action that requires:
+#   * the PO's scoped cloud authorization (docs/deployment/pilot-deploy-runbook.md + the
+#     cloud-activation packet's "READY_FOR_SCOPED_CLOUD_AUTHORIZATION" section), and
+#   * a protected GitHub environment named below, with the WIF provider configured by the operator.
+#
+# Shape (per docs/deployment/ci-cd-plan.md and ADR-007): short-lived credentials only — Workload
+# Identity Federation; no long-lived JSON key is ever stored. Migrate runs BEFORE the service
+# rollout, sequentially, from the same reviewed image digest. All identifiers are placeholders the
+# operator fills in a values file rendered by ops/deploy/profiles.mjs — none are secrets.
+#
+# NOT_RUN: this workflow has never been executed, validated by actionlint (unavailable at author
+# time), or reviewed against a live provider. It is a reviewed template, not a deployable artifact.
+
+name: Pilot deploy (template, disabled)
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_digest:
+        description: "mcapi image, pinned by digest (asia-southeast1-docker.pkg.dev/<project>/mattercontrol/mcapi@sha256:...)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write # Workload Identity Federation only; no key JSON anywhere in this flow.
+
+concurrency:
+  group: pilot-deploy # one deploy at a time; rollback is a separate authorized action.
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    name: Apply schema migration (before any new instance serves)
+    runs-on: ubuntu-latest
+    environment: pilot-deploy # protected environment: required reviewers configured by the operator
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Authenticate to Google Cloud via WIF
+        uses: google-github-actions/auth@REPLACE_WITH_PINNED_SHA # pin by SHA from the official repo before enabling
+        with:
+          workload_identity_provider: projects/REPLACE_PROJECT_NUMBER/locations/global/workloadIdentityPools/REPLACE_POOL/providers/REPLACE_PROVIDER
+          service_account: mcapi-migrate@REPLACE_PROJECT.iam.gserviceaccount.com # the separate migration identity (PI-02)
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@REPLACE_WITH_PINNED_SHA # pin by SHA before enabling
+      - name: Render the migrate job (values are non-secret; secrets are Secret Manager names)
+        run: node ops/deploy/profiles.mjs cloud-run values.json out-migrate/
+      - name: Apply migration (Cloud Run job, session-pooler DSN, advisory lock)
+        run: |
+          gcloud run jobs replace out-migrate/migrate-job.yaml --region asia-southeast1
+          gcloud run jobs execute mcapi-migrate --region asia-southeast1 --wait
+
+  deploy:
+    name: Deploy the API service (after migration succeeds)
+    needs: migrate
+    runs-on: ubuntu-latest
+    environment: pilot-deploy
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Authenticate to Google Cloud via WIF
+        uses: google-github-actions/auth@REPLACE_WITH_PINNED_SHA # pin by SHA before enabling
+        with:
+          workload_identity_provider: projects/REPLACE_PROJECT_NUMBER/locations/global/workloadIdentityPools/REPLACE_POOL/providers/REPLACE_PROVIDER
+          service_account: mcapi-run@REPLACE_PROJECT.iam.gserviceaccount.com # the serving identity (PI-02)
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@REPLACE_WITH_PINNED_SHA # pin by SHA before enabling
+      - name: Render and roll out the service
+        run: |
+          node ops/deploy/profiles.mjs cloud-run values.json out-serve/
+          gcloud run services replace out-serve/service.yaml --region asia-southeast1
+      # Rollback: keep the previous revision; `gcloud run services update-traffic --to-revisions PREVIOUS=100`
+      # is the documented pilot rollback (runbook §rollback). Schema stays forward-fixed.

@@ -25,6 +25,30 @@ export type DurableConfig = {
 
 const MAX_BYTES = 36 * 1024 * 1024
 
+/**
+ * Pilot ceiling for one pending-import payload (WP-7 of the deploy-readiness finish). A sealed
+ * pending import spends Worker CPU/memory and a large PostgreSQL value; the Worker Free fit for
+ * large pending imports is unproven (ops/adr006/README.md, "Bounds"). The streamed DOCUMENT
+ * upload path is separate and stays bounded by the API's MC_MAX_UPLOAD_BYTES. The default is the
+ * Solution Architect's proposal; the final number is the Product Owner's (decision D7) — raise
+ * BFF_MAX_PENDING_BYTES explicitly and deliberately, never silently.
+ */
+export const DEFAULT_MAX_PENDING_BYTES = 5 * 1024 * 1024
+
+/** Effective pending-import ceiling; a bad configuration fails closed (no silent fallback). */
+export function maxPendingBytes(): number {
+  const raw = process.env.BFF_MAX_PENDING_BYTES
+  if (raw === undefined || raw === '') return DEFAULT_MAX_PENDING_BYTES
+  const n = Number(raw)
+  if (!Number.isInteger(n) || n < 1 || n > MAX_BYTES)
+    throw new McError('unavailable', 503, {
+      cause: new Error(
+        `BFF_MAX_PENDING_BYTES must be an integer between 1 and ${MAX_BYTES} (36 MiB)`,
+      ),
+    })
+  return n
+}
+
 /** AES-GCM binds ciphertext to its database key; moving a row cannot change its scope. */
 export function sealState(
   value: unknown,

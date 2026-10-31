@@ -514,8 +514,8 @@ func (q *Queries) InsertCommandReceiptMatter(ctx context.Context, arg InsertComm
 
 const insertCriterion = `-- name: InsertCriterion :exec
 INSERT INTO criteria (id, matter_id, subject_id, title, description, mandatory, version_rule,
-                      document_id, fixed_version_id, valid_for_seconds, retired, revision)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                      document_id, fixed_version_id, valid_for_seconds, retired, revision, purpose)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
 `
 
 type InsertCriterionParams struct {
@@ -531,6 +531,7 @@ type InsertCriterionParams struct {
 	ValidForSeconds int64
 	Retired         bool
 	Revision        int64
+	Purpose         string
 }
 
 func (q *Queries) InsertCriterion(ctx context.Context, arg InsertCriterionParams) error {
@@ -547,6 +548,7 @@ func (q *Queries) InsertCriterion(ctx context.Context, arg InsertCriterionParams
 		arg.ValidForSeconds,
 		arg.Retired,
 		arg.Revision,
+		arg.Purpose,
 	)
 	return err
 }
@@ -1342,7 +1344,7 @@ func (q *Queries) ListClaimsOfMatter(ctx context.Context, matterID string) ([]Ev
 
 const listCriteriaOfMatter = `-- name: ListCriteriaOfMatter :many
 SELECT id, matter_id, subject_id, title, description, mandatory, version_rule, document_id,
-       fixed_version_id, valid_for_seconds, retired, revision
+       fixed_version_id, valid_for_seconds, retired, revision, purpose
 FROM criteria WHERE matter_id = $1 ORDER BY id
 `
 
@@ -1368,6 +1370,7 @@ func (q *Queries) ListCriteriaOfMatter(ctx context.Context, matterID string) ([]
 			&i.ValidForSeconds,
 			&i.Retired,
 			&i.Revision,
+			&i.Purpose,
 		); err != nil {
 			return nil, err
 		}

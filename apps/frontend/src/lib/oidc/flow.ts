@@ -82,7 +82,8 @@ export async function discover(cfg: OidcConfig): Promise<Discovery> {
 
 const b64url = (buf: Buffer) => buf.toString('base64url')
 
-const DEFAULT_RETURN = '/workspaces'
+// Default arrival is the person's own next work (BF-06); a valid deep link keeps its target.
+const DEFAULT_RETURN = '/my-actions'
 // Origin used only to canonicalize a candidate; the decision is "stays on the same origin".
 const PROBE_ORIGIN = 'http://return-to.invalid'
 // C0/C1 controls and DEL: the URL parser silently strips TAB/CR/LF, which turns "/<TAB>/host"

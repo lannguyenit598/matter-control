@@ -102,7 +102,7 @@ export function GlassSurface({
     }
   }, [tier, radius, bezel, refraction])
 
-  if (tier !== 'liquid') return <>{children}</>
+  const liquid = tier === 'liquid'
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (!pointerLight || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -118,26 +118,40 @@ export function GlassSurface({
     })
   }
 
+  // The element tree is the same in every tier (GL-FORM-02). The tier is only known in the browser
+  // and can change while a form is open (hydration, reduced-transparency or forced-colors flips);
+  // a different wrapper structure would unmount and recreate the children, dropping the focused
+  // field, typed text and an unresolved command. Outside the liquid tier the two wrappers are
+  // layout-neutral (`display: contents`) and the material layers are simply absent; the fixed
+  // slots keep the content's position, so React keeps its element identity.
   return (
     <div
       ref={surfaceRef}
-      data-glass-tier="liquid"
-      className={cn('glass-surface relative isolate', className)}
-      style={{ '--glass-frost': frost, '--glass-spec-int': specular } as CSSProperties}
-      onPointerMove={pointerLight ? onPointerMove : undefined}
+      data-glass-tier={liquid ? 'liquid' : undefined}
+      className={liquid ? cn('glass-surface relative isolate', className) : 'contents'}
+      style={
+        liquid
+          ? ({ '--glass-frost': frost, '--glass-spec-int': specular } as CSSProperties)
+          : undefined
+      }
+      onPointerMove={liquid && pointerLight ? onPointerMove : undefined}
     >
-      <div
-        aria-hidden
-        className="glass-layer glass-backdrop-a"
-        style={{ backdropFilter: `blur(${blur}px) saturate(150%)` }}
-      />
-      <div
-        aria-hidden
-        className="glass-layer glass-backdrop-b"
-        style={{ backdropFilter: filterId ? `url(#${filterId})` : undefined }}
-      />
-      <div aria-hidden className="glass-layer glass-specular" />
-      <div className="glass-content">{children}</div>
+      {liquid ? (
+        <div
+          aria-hidden
+          className="glass-layer glass-backdrop-a"
+          style={{ backdropFilter: `blur(${blur}px) saturate(150%)` }}
+        />
+      ) : null}
+      {liquid ? (
+        <div
+          aria-hidden
+          className="glass-layer glass-backdrop-b"
+          style={{ backdropFilter: filterId ? `url(#${filterId})` : undefined }}
+        />
+      ) : null}
+      {liquid ? <div aria-hidden className="glass-layer glass-specular" /> : null}
+      <div className={liquid ? 'glass-content' : 'contents'}>{children}</div>
     </div>
   )
 }

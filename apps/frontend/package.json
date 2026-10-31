@@ -22,7 +22,8 @@
     "agents:sync": "node scripts/sync-agent-config.mjs",
     "agents:check": "node scripts/sync-agent-config.mjs --check",
     "build:worker": "node scripts/build-worker.mjs",
-    "preview:worker": "wrangler dev --local"
+    "preview:worker": "wrangler dev --local",
+    "preflight": "node scripts/release-preflight.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

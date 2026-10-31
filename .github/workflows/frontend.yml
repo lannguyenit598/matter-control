@@ -28,11 +28,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      # TODO(supply chain): pin the next three actions by commit SHA like the backend workflow.
-      - uses: pnpm/action-setup@v6 # version comes from "packageManager" in package.json
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6 (version comes from "packageManager" in package.json)
         with:
           package_json_file: apps/frontend/package.json
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version-file: apps/frontend/.nvmrc
           cache: pnpm
@@ -47,7 +46,77 @@ jobs:
       - run: pnpm test
       # The build script also verifies that Tailwind CSS was compiled (see package.json).
       - run: pnpm build
+      # PI-03 release preflight on the real server bundle: the App Hosting adapter was observed
+      # copying local .env*/.dev.vars into .next/standalone, so the artifact itself is inspected.
+      - run: pnpm preflight .next/standalone --require-artifacts
       - run: pnpm build-storybook
+
+  worker:
+    name: Worker build + release preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+        with:
+          package_json_file: apps/frontend/package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: apps/frontend/.nvmrc
+          cache: pnpm
+          cache-dependency-path: apps/frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      # Build-time only: no cloud credentials exist in CI; deploy is a separate authorized step.
+      - run: pnpm build:worker
+      # The Worker artifact must not carry secret-shaped files either (PI-03).
+      - run: pnpm preflight .open-next --require-artifacts
+
+  durable-bff:
+    name: Durable BFF state (PostgreSQL)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: mattercontrol
+          POSTGRES_PASSWORD: mattercontrol
+          POSTGRES_DB: mattercontrol
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mattercontrol -d mattercontrol"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      # The durable suites only run against the guarded disposable mc_fixture database
+      # (src/test/bff-fixture.ts refuses anything else).
+      MC_BFF_TEST_DATABASE_URL: postgres://mattercontrol:mattercontrol@localhost:5432/mc_fixture?sslmode=disable
+      MC_ADMIN_DATABASE_URL: postgres://mattercontrol:mattercontrol@localhost:5432/mattercontrol?sslmode=disable
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+        with:
+          package_json_file: apps/frontend/package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: apps/frontend/.nvmrc
+          cache: pnpm
+          cache-dependency-path: apps/frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Create the disposable mc_fixture database
+        run: |
+          node --input-type=module -e "
+            import pg from 'pg';
+            const c = new pg.Client({ connectionString: process.env.MC_ADMIN_DATABASE_URL });
+            await c.connect();
+            await c.query('CREATE DATABASE mc_fixture');
+            await c.end();
+          "
+      # Only the two durable integration suites: a skipped database test would silently hide a
+      # regression, and the env var above is set, so skipIf never triggers here.
+      - run: pnpm vitest run src/lib/oidc/durable-state.test.ts src/features/data-transfer/durable-attempts.test.ts
 
   e2e:
     name: E2E (Playwright, demo mode)
@@ -55,10 +124,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: pnpm/action-setup@v6
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
         with:
           package_json_file: apps/frontend/package.json
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version-file: apps/frontend/.nvmrc
           cache: pnpm
@@ -67,7 +136,7 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm build
       - run: pnpm test:e2e
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: failure()
         with:
           name: playwright-report

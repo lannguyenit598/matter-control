@@ -202,9 +202,9 @@ describe('safeReturnTo', () => {
     ['/a%2F%2Fb', '/a%2F%2Fb'], // an encoded slash stays inside the path
     ['/a/b/../c?x=1', '/a/c?x=1'], // normal dot segments are canonicalized as before
     ['/a/./b', '/a/b'],
-    [null, '/workspaces'],
-    [undefined, '/workspaces'],
-    ['', '/workspaces'],
+    [null, '/my-actions'],
+    [undefined, '/my-actions'],
+    ['', '/my-actions'],
   ])('keeps a legitimate in-app target: %s', (input, expected) =>
     expect(safeReturnTo(input, ORIGIN)).toBe(expected),
   )
@@ -240,7 +240,7 @@ describe('safeReturnTo', () => {
     ['encoded dot segments', '/%2e%2e//attacker.invalid'],
     ['single dot then slash', '/.//attacker.invalid'],
     ['too long', '/' + 'a'.repeat(3000)],
-  ])('falls back for %s', (_name, input) => expect(safeReturnTo(input, ORIGIN)).toBe('/workspaces'))
+  ])('falls back for %s', (_name, input) => expect(safeReturnTo(input, ORIGIN)).toBe('/my-actions'))
 
   it('never yields something that leaves the configured origin once resolved', () => {
     const hostile = [
@@ -259,7 +259,7 @@ describe('safeReturnTo', () => {
       expect(resolveReturnTo(input, ORIGIN).origin).toBe(ORIGIN)
     }
     expect(resolveReturnTo('/matters/1?a=b', ORIGIN).href).toBe('http://app.test/matters/1?a=b')
-    expect(resolveReturnTo('/..//x.test', ORIGIN).href).toBe('http://app.test/workspaces')
+    expect(resolveReturnTo('/..//x.test', ORIGIN).href).toBe('http://app.test/my-actions')
   })
 
   it('canonicalizes with the configured origin, not a guessed one', () => {

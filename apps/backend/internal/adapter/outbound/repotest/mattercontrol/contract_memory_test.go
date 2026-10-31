@@ -142,3 +142,16 @@ func TestSuiteReview_MemoryStore(t *testing.T) {
 		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
 	})
 }
+
+// The BF-05/BF-08 read-model contracts run against the same in-memory double.
+func TestSuiteBF_MemoryStore(t *testing.T) {
+	mattercontrol.SuiteBF(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}

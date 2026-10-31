@@ -7,15 +7,18 @@ import { Spinner } from './spinner'
 
 /** Exported so links can look like buttons: <Link className={buttonVariants({ variant: 'outline' })}>. */
 export const buttonVariants = cva(
-  'control-target inline-flex max-w-full min-w-0 items-center justify-center gap-2 rounded-md text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0',
+  'glass-button control-target inline-flex max-w-full min-w-0 items-center justify-center gap-2 rounded-full text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        primary: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        outline: 'border border-input bg-card shadow-xs hover:bg-accent',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        destructive: 'bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90',
+        primary:
+          'glass-button-primary bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
+        secondary:
+          'glass-button-secondary bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        outline: 'glass-button-outline border border-input bg-card shadow-xs hover:bg-accent',
+        ghost: 'glass-button-ghost hover:bg-accent hover:text-accent-foreground',
+        destructive:
+          'glass-button-destructive bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90',
       },
       size: {
         sm: 'min-h-8 px-3 py-1',

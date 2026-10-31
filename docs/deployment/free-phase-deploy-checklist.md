@@ -1,5 +1,11 @@
 # Deploy Checklist — "Free phase" (Workers + Cloud Run + Supabase Free + R2 + ZITADEL)
 
+> **ADDENDUM — 2026-10-31: superseded by `docs/deployment/pilot-deploy-runbook.md`.** The current,
+> authoritative pilot deployment procedure (ADR-006 order, smoke tests, rollback, monitoring,
+> rotation, backup/retention, connection budget) lives there. This checklist is retained as
+> historical evidence; the Cloud Run-frontend instructions below must not be executed (see the
+> 2026-10-29 topology amendment). Nothing in the runbook has been executed against a provider.
+
 - Author: Claude Code (actual), 2026-10-29; topology amendment by Local Codex, 2026-10-29. Status: **PROPOSED — NOT APPROVED, NOT EXECUTED**. ADR-006 controls the current topology; ADR-004 is retained as historical review evidence.
 - Scope: a **pilot with synthetic data only**. No real legal data, no SLA, no production claim. Hosting outside Cloudflare is an ADR-001 H1 exception that the Product Owner must accept first.
 - Evidence classes: **[page]** read on the official page this session; **[repo]** read in the working tree; **[recall]** from memory, verify on the official page before relying on it.

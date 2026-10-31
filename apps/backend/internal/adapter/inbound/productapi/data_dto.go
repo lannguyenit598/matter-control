@@ -118,6 +118,7 @@ type briefChangeBody struct {
 	Type         string  `json:"type"`
 	TargetKind   string  `json:"targetKind"`
 	TargetID     string  `json:"targetId"`
+	TargetLabel  string  `json:"targetLabel"`
 	ActorID      *string `json:"actorId"`
 	Reason       *string `json:"reason"`
 	RecordedAt   string  `json:"recordedAt"`
@@ -155,7 +156,7 @@ func briefDTO(r matter.BriefResult) briefBody {
 	}
 	for i, c := range r.Changes {
 		out.Changes[i] = briefChangeBody{
-			Seq: c.Seq, ID: c.ID, Type: c.Type, TargetKind: c.TargetKind, TargetID: c.TargetID, ActorID: c.ActorID, Reason: c.Reason,
+			Seq: c.Seq, ID: c.ID, Type: c.Type, TargetKind: c.TargetKind, TargetID: c.TargetID, TargetLabel: c.TargetLabel, ActorID: c.ActorID, Reason: c.Reason,
 			RecordedAt: ts(c.RecordedAt), EffectiveAt: ts(c.EffectiveAt), LateRecorded: c.LateRecorded,
 		}
 	}

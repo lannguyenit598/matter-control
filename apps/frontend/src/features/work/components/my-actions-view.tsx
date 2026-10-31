@@ -91,8 +91,8 @@ export function MyActionsView({
         title={<LocalizedText en="Nothing is assigned to you" vi="Bạn chưa được giao việc" />}
         description={
           <LocalizedText
-            en="No work in the matters you can access is assigned to you. Nothing is recommended in its place: follow-up work must be created and assigned explicitly."
-            vi="Không có việc nào trong các hồ sơ bạn truy cập được giao cho bạn. Hệ thống không đề xuất gì thay thế: việc tiếp theo phải được tạo và giao một cách rõ ràng."
+            en="No work in the matters you can access is assigned to you. Nothing is recommended in its place: follow-up work must be created and assigned explicitly. New here? Open Matters to find a matter, or create a workspace and a matter first."
+            vi="Không có việc nào trong các hồ sơ bạn truy cập được giao cho bạn. Hệ thống không đề xuất gì thay thế: việc tiếp theo phải được tạo và giao một cách rõ ràng. Mới bắt đầu? Mở Hồ sơ để tìm hồ sơ, hoặc tạo không gian làm việc và hồ sơ trước."
           />
         }
         action={

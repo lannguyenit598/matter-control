@@ -1,0 +1,31 @@
+{
+  "task": "MC-UIUX-LAWYER-EXPERIENCE-AUDIT-AND-PLAN-20261030",
+  "namespace": "docs/testing/uiux-lawyer-experience-audit-20261030-r1",
+  "auditor": "actual ZCode (GLM session) acting as senior legal-tech UI/UX expert; NOT OpenDesign/Antigravity; not user-validated; not independent acceptance",
+  "base": { "head": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee", "committedAt": "2026-10-30T10:49:44+07:00", "dirtyFilesAtStart": 175 },
+  "runtime": { "url": "http://127.0.0.1:3100", "mode": "next dev --webpack, API_MODE=demo (process env override over .env.local)", "browser": "ZCode IAB Chromium", "productionDemoAttempt": "refused by TB-12 guard (recorded as positive security evidence)" },
+  "counts": { "blocker": 3, "major": 4, "minor": 3, "polish": 1, "strengths": 8, "contrastPairs": 52, "contrastFails": 2, "routesCovered": 22, "storybookStoriesCaptured": 13 },
+  "findings": [
+    { "id": "UX-L-01", "severity": "Blocker", "class": "OBSERVED_RENDERED+SOURCE_READ", "screen": "/workspaces", "title": "Workspaces page titled 'Matters/Hồ sơ'", "evidence": ["screens/workspaces__vi-light__1440x900__demo-anon.png", "apps/frontend/src/app/(app)/workspaces/page.tsx:15", "apps/frontend/src/app/(app)/workspaces/page.tsx:21"] },
+    { "id": "UX-L-02", "severity": "Blocker", "class": "OBSERVED_RENDERED (reproduced) + SOURCE_READ (mechanism hypothesis)", "screen": "all PageHeaders, login card", "title": "Page content stuck in server locale (EN) while chrome localizes; document.lang flips to vi; unresponsive to locale re-select", "evidence": ["timeline probes (0.3s/1.5s/3s, retoggle test)", "screens/my-reviews__vi-light__1440x900__demo-anon.png", "src/app/(app)/my-reviews/page.tsx:21 (vi pair exists)", "src/app/login/page.tsx:51,54,69 (vi pairs exist)", "WCAG 3.1.2 FAIL"] },
+    { "id": "UX-L-03", "severity": "Blocker (enablement)", "class": "OBSERVED_RENDERED+SOURCE_READ", "screen": "product-wide", "title": "No locally runnable populated-data path: demo has no product data layer (mc/client.ts:53); REST requires IdP token; local ZITADEL authorize rejects redirect_uri; callback pinned :3000; prod demo refused (TB-12)", "evidence": ["screens/login__zitadel-authorize-redirect__1440x900__anonymous.png", "src/lib/mc/client.ts:53,62", "prod start refusal log"] },
+    { "id": "UX-L-04", "severity": "Major", "class": "OBSERVED_RENDERED+SOURCE_READ", "screen": "ReadFailure, login, search-picker, ~21 literals", "title": "Mixed language inside single components/copy set", "evidence": ["screens/my-actions__vi-light__1440x900__demo-anon.png", "src/components/organisms/read-failure.tsx:79,93", "src/app/(app)/error.tsx:27", "screens/storybook/sb-molecules-searchpicker--unavailable.png"] },
+    { "id": "UX-L-05", "severity": "Major", "class": "OBSERVED_RENDERED", "screen": "all matter subpages + param details", "title": "Failure state loses all context: h1 null, MatterTabs gone, generic EN tab title", "evidence": ["DOM probes h1:null ×16 routes", "screens/matter-work__vi-light__1440x900__demo-anon.png"] },
+    { "id": "UX-L-06", "severity": "Major", "class": "OBSERVED_RENDERED", "screen": "Storybook", "title": "Stories crash nondeterministically (TypeError 'data' at useRouter/RedirectBoundary): DashboardTemplate×3, Badge variants, Feedback&alerts; SearchPicker set renders", "evidence": ["screens/storybook/sb-templates-dashboardtemplate--liquid-workbench.png", "DOM recheck bodyText", "matches prior baseline 'Storybook runtime broken'"] },
+    { "id": "UX-L-07", "severity": "Minor", "class": "SOURCE_READ", "screen": "metadata titles", "title": "Static EN-only generic tab titles on param pages", "evidence": ["workspaces/page.tsx:15 pattern across pages"] },
+    { "id": "UX-L-08", "severity": "Minor", "class": "SOURCE_READ + NOT_VERIFIED (live behavior)", "screen": "shell/queues/grid", "title": "Only 3 aria-live regions; no shell-level action-result announcer", "evidence": ["grep aria-live=3 (work-grid, planning-view, search-picker)"] },
+    { "id": "UX-L-09", "severity": "Minor", "class": "OBSERVED_RENDERED (measured)", "screen": "borders/fields", "title": "border-on-background 1.167 light / 1.422 dark (<3:1); contextual 1.4.11 risk on glass fields unverified", "evidence": ["contrast-results.md"] },
+    { "id": "UX-L-10", "severity": "Major (risk)", "class": "OBSERVED_RENDERED (dev only) + NOT_VERIFIED (prod)", "screen": "all dynamic routes", "title": "Dev streaming degradation: main renders empty with no feedback (curl HTML fine; server warns 'segment was dropped'); self-recovered", "evidence": ["innerHTML=74 probe", "dev server log", "tab-new + post-restart repro"] },
+    { "id": "UX-L-11", "severity": "Polish", "class": "OBSERVED_RENDERED", "screen": "dev chrome", "title": "Next.js dev-tools bubble bottom-right (dev-only, not product)", "evidence": ["screens/my-actions__vi-light__1440x900__demo-anon.png"] }
+  ],
+  "strengths": [
+    "My Work workbench = approved concept-3 faithfully implemented (my-actions-view.tsx full read)",
+    "Token discipline: zero color literals outside globals.css; 12-variant Badge incl. 5 state-axis colors; forced-colors/reduced-motion/reduced-transparency fallbacks; native dialog focus trap; localized skip link",
+    "Measured contrast 50/52 pairs PASS both themes (browser-resolved oklch→sRGB); only decorative borders fail",
+    "Truthful state copy per Required State Specification; no invented %, no id-for-name substitution",
+    "Fail-closed verified in practice (prod demo refusal, REST session requirement)",
+    "Responsive baseline: no 390px overflow, 44px touch targets, 85vw drawer",
+    "Be Vietnam Pro renders Vietnamese diacritics correctly (observed)",
+    "Mobile preferences reachable via settings popover"
+  ]
+}

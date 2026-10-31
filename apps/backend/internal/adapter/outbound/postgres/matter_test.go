@@ -680,3 +680,11 @@ func TestMatterSuiteReview_Postgres(t *testing.T) {
 		return b
 	})
 }
+
+// TestMatterSuiteBF_Postgres runs the BF-05/BF-08 read-model contracts against the real adapter.
+func TestMatterSuiteBF_Postgres(t *testing.T) {
+	mattercontrol.SuiteBF(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}

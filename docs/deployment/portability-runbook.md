@@ -36,7 +36,7 @@ App Hosting: grant the backend's service account access to each secret (`firebas
 |---|---|---|
 | `MC_HTTP_ADDR` | `0.0.0.0:8080` (container port 8080) | `0.0.0.0:8081`, published on `127.0.0.1:8081` only, Caddy on 443 |
 | `MC_OBJECT_BACKEND=r2`, `MC_R2_ENDPOINT`, `MC_R2_BUCKET` | env | `/etc/mattercontrol/mcapi.env` |
-| `MC_OIDC_ISSUER/INTROSPECTION_URL/AUDIENCE/API_CLIENT_ID`, `MC_OIDC_CACHE_TTL=15s` | env | env file |
+| `MC_OIDC_ISSUER/INTROSPECTION_URL/AUDIENCE/API_CLIENT_ID`, `MC_OIDC_CACHE_TTL=30s` | env | env file |
 | `MC_DATABASE_URL`, `MC_R2_ACCESS_KEY_ID`, `MC_R2_SECRET_ACCESS_KEY` | `secretKeyRef` | fetched at boot into `/run/mattercontrol/mcapi-secrets.env` (tmpfs, 0600 root) |
 | `MC_OIDC_API_KEY_FILE` | secret volume `/secrets/oidc/api-key.json` | `/run/mattercontrol/oidc/api-key.json` 0400 uid 65532, mounted read-only |
 | `MC_MIGRATE_DATABASE_URL` | migrate job only | migrate unit only |
@@ -52,7 +52,7 @@ Database budget: mcapi pool = 10 connections per instance (fixed in code) × ins
 3. Apply `ops/adr006/bff-state.sql` and run product migrations with migration identities (Cloud Run job or `sudo systemctl start mcapi-migrate`).
 4. Start the BE (Cloud Run `services replace` / VM with `user-data=cloud-init.yaml` on `cos-stable`, firewall tcp:80,443, DNS for the API hostname). Probe `https://<api>/api/v1/...` with a test identity; `/healthz`, `/readyz` are not public.
 5. Point the FE at the BE: set `API_BASE_URL`, deploy the FE (Worker version / App Hosting rollout).
-6. Verify with the local probe set adapted to the public origin (sign-in, SSR, Server Action origin, upload/download SHA, forbidden, revoked within 15 s TTL, logout).
+6. Verify with the local probe set adapted to the public origin (sign-in, SSR, Server Action origin, upload/download SHA, forbidden, revoked within 30 s TTL, logout).
 
 ## 4. Switching and compatibility
 

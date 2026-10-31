@@ -1140,6 +1140,9 @@ func buildDetail(g matter.WorkGraph, id matter.NodeID, asOf time.Time, rev int64
 	chain := matter.CriticalChain(g)
 	evals := matter.EvaluateDependencies(g.Items, g.Edges)
 	d := matter.WorkItemDetail{View: matter.ViewOf(it, asOf, chain), AsOf: asOf, Revision: rev}
+	if _, d.IsFiling = g.Filing.Of(id); d.IsFiling {
+		d.OutcomeVerification = matter.OutcomeVerification(it, g.Evidence, asOf)
+	}
 	for _, e := range g.Edges {
 		switch id {
 		case e.Target:

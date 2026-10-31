@@ -226,3 +226,8 @@ export function describeRejection(code: string): string {
       return 'The change was refused. Nothing was changed.'
   }
 }
+
+/** A refusal raised by the form itself (before any request), shown on one field. */
+export function fieldFailure(field: string, error: string): Extract<McActionResult, { ok: false }> {
+  return { ok: false, kind: 'validation', error, fieldErrors: { [field]: [error] } }
+}

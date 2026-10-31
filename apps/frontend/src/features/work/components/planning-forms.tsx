@@ -7,6 +7,9 @@ import { Input } from '@/components/atoms/input'
 import { Textarea } from '@/components/atoms/textarea'
 import { FormField } from '@/components/molecules/form-field'
 import { IntentForm } from '@/components/organisms/intent-form'
+import { useTimeZone } from '@/hooks/use-time-zone'
+import { fieldFailure } from '@/lib/mc/action-result'
+import { readLocalField } from '@/lib/mc/local-time'
 
 import {
   createMilestoneAction,
@@ -17,7 +20,7 @@ import {
 } from '../actions'
 import type { MilestoneView, Party } from '../schemas'
 
-import { composeDue, DueField } from './due-field'
+import { DueField } from './due-field'
 
 export function CreateWorkstreamForm({ matterId }: { matterId: string }) {
   return (
@@ -133,19 +136,22 @@ export function EditPartyForm({ matterId, party }: { matterId: string; party: Pa
 }
 
 export function CreateMilestoneForm({ matterId }: { matterId: string }) {
+  const zone = useTimeZone()
   return (
     <IntentForm
       receipted={false}
       draftKey={`matter:${matterId}:new-milestone`}
       submitLabel={<LocalizedText en="Add milestone" vi="Thêm cột mốc" />}
-      run={(v) =>
-        createMilestoneAction({
+      run={(v) => {
+        const due = readLocalField(v, 'due', zone, null)
+        if (!due.ok) return Promise.resolve(fieldFailure('dueAt', due.error))
+        return createMilestoneAction({
           matterId,
           name: v.name ?? '',
-          dueAt: composeDue(v.dueLocal ?? '', v.dueOffset ?? '+00:00'),
+          dueAt: due.iso,
           critical: v.critical === 'on',
         })
-      }
+      }}
     >
       {({ errors }) => (
         <>

@@ -4,8 +4,9 @@
 # Build:  docker build -t mc-web apps/frontend
 # Run:    needs the API_* / OIDC_* / APP_ORIGIN variables (see src/lib/env.ts); none is baked in.
 #
-# One instance only for now: sign-in sessions and unresolved Data attempts live in process
-# memory (docs/architecture/adr/ADR-004), so a restart signs everyone out. Do not scale out.
+# State is durable when BFF_STATE_BACKEND=postgres (mc_bff.state), so instances are stateless and
+# may scale out; the one-instance pilot bound is a workload/cost choice (ADR-007 §5), not a
+# correctness constraint. Set BFF_STATE_BACKEND=memory only for local preview (process memory).
 
 ARG NODE_VERSION=24.22.1
 

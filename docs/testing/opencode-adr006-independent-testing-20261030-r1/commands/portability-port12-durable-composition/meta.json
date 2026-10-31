@@ -1,0 +1,26 @@
+{
+  "run": "portability-port12-durable-composition",
+  "argv": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "src/lib/oidc",
+    "src/features/data-transfer/durable-attempts.test.ts",
+    "src/test",
+    "--reporter=json",
+    "--outputFile=/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-durable-composition/json.copy.json"
+  ],
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend",
+  "env_file": "/private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/private/dsn.env",
+  "env_keys": [
+    "MC_BFF_TEST_DATABASE_URL",
+    "MC_TEST_DATABASE_URL"
+  ],
+  "started_utc": "2026-10-30T04:11:11Z",
+  "ended_utc": "2026-10-30T04:11:19Z",
+  "duration_seconds": 8,
+  "exit": 0,
+  "identity": "OpenCode independent QA",
+  "sanitize": "postgres://user:<redacted>@ URLs scrubbed in public stdout/stderr copies; secrets never in argv",
+  "evidence_class": "INDEPENDENT_EXECUTION"
+}

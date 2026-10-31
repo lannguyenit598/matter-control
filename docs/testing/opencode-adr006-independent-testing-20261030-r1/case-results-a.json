@@ -35,6 +35,38 @@
       "observed": "make check exit 0 in 101s with owned fixture DSN: sqlc-check generated-query diff clean (no regeneration to force pass), gofmt clean, go mod tidy -diff clean, golangci-lint '0 issues', go test -race -count=1 all packages ok including postgres suite 88s (PG tests executed with DSN — unlike author's no-DSN make check).",
       "execution_ref": "commands/backend-check/{stdout.final,stderr.final,meta.json}",
       "source_pin": "snapshot apps/backend"
+    },
+    {
+      "case_id": "BE-03",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "Probe qa_receipt_scope_probe_test.go attempt 2, memory+PG (new pool) both pass, exit 0. Wrong-scope replay: same actor/key re-presented against Matter B with the B-target fingerprint (hash differs because the server fingerprint includes the target URL path) is refused as key reuse (ErrIdempotencyKeyReuse) with exactly one audit row and zero domain/receipt writes in both stores. Server-side fingerprint-static check: internal/adapter/inbound/productapi/wire.go fingerprint() hashes routeTemplate+URL.Path+body+preconditions, so identical-friendly hash across two matters never arises from HTTP (INDEPENDENT_STATIC_CHECK link, not double-counted as a run).",
+      "execution_ref": "commands/backend-qa-receipt-scope/{stdout.final,meta.json}; attempts: attempt1 kept (probe-defect run)",
+      "source_pin": "snapshot apps/backend internal/core/service/matter_service.go replay path + wire.go fingerprint"
+    },
+    {
+      "case_id": "BE-04",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "Same actor/key/hash replay in original Matter A returns the stored result verbatim with Replayed=true exactly once per re-issue (two executions observed: same handle and fresh handle; PG variant reopens a NEW pool = restart simulation). Counts (Requirements/Events/Receipts/ReceiptMatters/Audits) unchanged after every replay; no second domain effect in either store.",
+      "execution_ref": "commands/backend-qa-receipt-scope/{stdout.final,meta.json}",
+      "source_pin": "snapshot apps/backend (mattercontrol.MemoryWorld.Reopen; pgWorld.Reopen = new pgxpool)"
+    },
+    {
+      "case_id": "BE-05",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "Editor's Matter A membership revoked while command target Matter B remains authorized: key replay returns uniform ErrNotFound (DENIED_HIDDEN) in both memory and PG, exactly one new restricted audit row, zero Requirements/Events/Receipts/ReceiptMatters mutation; denial decided before any hash/age comparison so no key-reuse disclosure.",
+      "execution_ref": "commands/backend-qa-receipt-scope/{stdout.final,meta.json}",
+      "source_pin": "snapshot apps/backend internal/core/service/matter_service.go (authorizeReceiptScope → s.deny)"
+    },
+    {
+      "case_id": "BE-06",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "observed": "Same actor+idempotency key with a changed trusted hash refused with ErrIdempotencyKeyReuse (service confirms IDEMPOTENCY_KEY_REUSE denial reason), exactly one restricted audit row, zero overwrite or second command effect in memory and PG. Attempt-1 assertion ('zero audits') was a probe defect and is retained as a failed attempt, not a product verdict, and motivated the count re-check against matter_service.go:123.",
+      "execution_ref": "commands/backend-qa-receipt-scope/{stdout.final,stderr.final,meta.json} (attempt 2 valid; attempt 1 invalid-assertion)",
+      "source_pin": "snapshot apps/backend service/matter_service.go:118-124 idempotency chain"
     }
   ]
 }

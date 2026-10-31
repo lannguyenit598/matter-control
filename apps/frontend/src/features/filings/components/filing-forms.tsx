@@ -10,7 +10,12 @@ import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
 import { Textarea } from '@/components/atoms/textarea'
 import { FormField } from '@/components/molecules/form-field'
+import { SearchPicker, type PickerResult } from '@/components/molecules/search-picker'
+import { LocalDateTimeField } from '@/components/molecules/local-datetime-field'
 import { IntentForm } from '@/components/organisms/intent-form'
+import { useTimeZone } from '@/hooks/use-time-zone'
+import { fieldFailure } from '@/lib/mc/action-result'
+import { readLocalField } from '@/lib/mc/local-time'
 
 import {
   advanceFilingAction,
@@ -20,7 +25,7 @@ import {
   recordNegativeAction,
   setSignatureApplicabilityAction,
 } from '../actions'
-import { STAGE_LABEL, toInstant } from '../labels'
+import { STAGE_LABEL } from '../labels'
 import type { FilingDetail, FilingStage } from '../schemas'
 
 type Option = { id: string; label: string }
@@ -28,11 +33,19 @@ type Option = { id: string; label: string }
 export function CreateFilingForm({
   matterId,
   requirements,
+  searchRecords,
   parties,
   members,
 }: {
   matterId: string
+  /** Only tells whether any Requirement exists; choosing goes through the bounded search. */
   requirements: Option[]
+  /** Authenticated, bounded record search supplied by the page (features do not import each other). */
+  searchRecords: (input: {
+    matterId: string
+    query: string
+    kind: 'REQUIREMENT'
+  }) => Promise<PickerResult>
   parties: Option[]
   members: Option[]
 }) {
@@ -99,14 +112,22 @@ export function CreateFilingForm({
           >
             {(c) => <Textarea name="outcome" rows={2} maxLength={2000} {...c} />}
           </FormField>
-          <FormField
-            label={
+          <SearchPicker
+            name="requirementId"
+            legend={
               <LocalizedText
                 en="Requirement this filing serves"
                 vi="Yêu cầu mà thủ tục này phục vụ"
               />
             }
+            searchLabel={
+              <LocalizedText
+                en="Search this matter’s Requirements by title"
+                vi="Tìm yêu cầu của hồ sơ theo tiêu đề"
+              />
+            }
             required
+            search={(query) => searchRecords({ matterId, query, kind: 'REQUIREMENT' })}
             hint={
               <LocalizedText
                 en="Approval never completes or verifies the Requirement by itself."
@@ -114,16 +135,7 @@ export function CreateFilingForm({
               />
             }
             error={errors.requirementId?.[0]}
-          >
-            {(c) => (
-              <Select
-                name="requirementId"
-                placeholder="Choose a Requirement"
-                options={requirements.map((r) => ({ value: r.id, label: r.label }))}
-                {...c}
-              />
-            )}
-          </FormField>
+          />
           <FormField
             label={<LocalizedText en="Authority" vi="Cơ quan phụ trách" />}
             required
@@ -163,7 +175,18 @@ export function CreateFilingForm({
             )}
           </FormField>
           <FormField
-            label={<LocalizedText en="Is proof required?" vi="Có cần bằng chứng không?" />}
+            label={
+              <LocalizedText
+                en="Independent verification of the authority’s outcome?"
+                vi="Có xác minh độc lập kết quả của cơ quan không?"
+              />
+            }
+            hint={
+              <LocalizedText
+                en="The package and signature checks apply either way. This only decides whether a verifier must also accept the authority’s outcome."
+                vi="Các điều kiện bộ hồ sơ và chữ ký luôn áp dụng. Lựa chọn này chỉ quyết định có cần người xác minh chấp nhận kết quả của cơ quan hay không."
+              />
+            }
           >
             {(c) => (
               <Select
@@ -174,8 +197,8 @@ export function CreateFilingForm({
                     value: 'yes',
                     label: (
                       <LocalizedText
-                        en="Yes: package criteria must be verified"
-                        vi="Có: tiêu chí bộ hồ sơ phải được xác minh"
+                        en="Yes: a verifier must also accept the authority’s outcome"
+                        vi="Có: người xác minh phải chấp nhận cả kết quả của cơ quan"
                       />
                     ),
                   },
@@ -183,8 +206,8 @@ export function CreateFilingForm({
                     value: 'no',
                     label: (
                       <LocalizedText
-                        en="No: only the authority’s outcome evidence is needed"
-                        vi="Không: chỉ cần bằng chứng kết quả của cơ quan"
+                        en="No: the outcome is recorded as evidence only, with no verification state"
+                        vi="Không: kết quả chỉ được ghi nhận bằng chứng, không có trạng thái xác minh"
                       />
                     ),
                   },
@@ -235,6 +258,7 @@ export function AdvanceForm({
   evidence: Option[]
   members: Option[]
 }) {
+  const zone = useTimeZone()
   const [to, setTo] = useState<FilingStage>(detail.next[0]!)
   if (detail.next.length === 0) return null
   const submits = to === 'SUBMISSION' || to === 'RESPONSE'
@@ -243,23 +267,27 @@ export function AdvanceForm({
       receipted={false}
       draftKey={`filing:${detail.item.id}:advance`}
       submitLabel={`Record ${STAGE_LABEL[to].toLowerCase()}`}
-      run={(v) =>
-        advanceFilingAction({
+      run={(v) => {
+        const observed = readLocalField(v, 'observed', zone, null)
+        if (!observed.ok) return Promise.resolve(fieldFailure('observedAt', observed.error))
+        const due = readLocalField(v, 'cycleDue', zone, null)
+        if (!due.ok) return Promise.resolve(fieldFailure('cycleDue', due.error))
+        return advanceFilingAction({
           matterId,
           filingId: detail.item.id,
           ifMatch: detail.etag,
           to,
           reference: v.reference ?? '',
-          observedAt: toInstant(v.observedAt),
+          observedAt: observed.iso,
           evidenceIds: v.evidenceIds ?? '',
           versionIds: v.versionIds ?? '',
           externalRefs: v.externalRefs ?? '',
           requestRef: v.requestRef ?? '',
           cycleOwnerId: v.cycleOwnerId ?? '',
-          cycleDue: toInstant(v.cycleDue),
+          cycleDue: due.iso,
           reason: v.reason ?? '',
         })
-      }
+      }}
     >
       {({ errors }) => (
         <>
@@ -288,18 +316,17 @@ export function AdvanceForm({
             </FormField>
           )}
           {(submits || to === 'RECEIPT' || to === 'APPROVAL' || to === 'SUPPLEMENT') && (
-            <FormField
+            <LocalDateTimeField
+              name="observed"
               label={<LocalizedText en="When this happened" vi="Thời điểm xảy ra" />}
               hint={
                 <LocalizedText
-                  en="Your local time. Empty means now. It cannot be in the future."
-                  vi="Giờ địa phương của bạn. Để trống là hiện tại; không được chọn tương lai."
+                  en="Empty means now. It cannot be in the future."
+                  vi="Để trống là hiện tại; không được chọn tương lai."
                 />
               }
               error={errors.observedAt?.[0]}
-            >
-              {(c) => <Input type="datetime-local" name="observedAt" {...c} />}
-            </FormField>
+            />
           )}
           {(to === 'SIGNATURE' || submits) && (
             <>
@@ -354,13 +381,12 @@ export function AdvanceForm({
                     />
                   )}
                 </FormField>
-                <FormField
-                  label={<LocalizedText en="Due" vi="Hạn" />}
+                <LocalDateTimeField
+                  name="cycleDue"
                   required
+                  label={<LocalizedText en="Due" vi="Hạn" />}
                   error={errors.cycleDue?.[0]}
-                >
-                  {(c) => <Input type="datetime-local" name="cycleDue" {...c} />}
-                </FormField>
+                />
               </div>
             </>
           )}
@@ -385,22 +411,25 @@ export function NegativeForm({
   detail: FilingDetail
   evidence: Option[]
 }) {
+  const zone = useTimeZone()
   return (
     <IntentForm
       receipted={false}
       draftKey={`filing:${detail.item.id}:negative`}
       submitLabel={<LocalizedText en="Record negative outcome" vi="Ghi nhận kết quả bất lợi" />}
-      run={(v) =>
-        recordNegativeAction({
+      run={(v) => {
+        const observed = readLocalField(v, 'observed', zone, null)
+        if (!observed.ok) return Promise.resolve(fieldFailure('observedAt', observed.error))
+        return recordNegativeAction({
           matterId,
           filingId: detail.item.id,
           ifMatch: detail.etag,
           outcome: v.outcome ?? '',
           reference: v.reference ?? '',
-          observedAt: toInstant(v.observedAt),
+          observedAt: observed.iso,
           evidenceIds: v.evidenceIds ?? '',
         })
-      }
+      }}
     >
       {({ errors }) => (
         <>
@@ -430,12 +459,11 @@ export function NegativeForm({
           >
             {(c) => <Input name="reference" maxLength={500} autoComplete="off" {...c} />}
           </FormField>
-          <FormField
+          <LocalDateTimeField
+            name="observed"
             label={<LocalizedText en="When this happened" vi="Thời điểm xảy ra" />}
             error={errors.observedAt?.[0]}
-          >
-            {(c) => <Input type="datetime-local" name="observedAt" {...c} />}
-          </FormField>
+          />
           <Checks name="evidenceIds" legend="Evidence (required)" options={evidence} />
         </>
       )}
@@ -534,23 +562,26 @@ export function SignatureApplicabilityForm({
 }
 
 export function CorrectionForm({ matterId, detail }: { matterId: string; detail: FilingDetail }) {
+  const zone = useTimeZone()
   const originals = detail.observations.filter((o) => o.kind !== 'CORRECTION')
   return (
     <IntentForm
       receipted={false}
       draftKey={`filing:${detail.item.id}:correction`}
       submitLabel={<LocalizedText en="Append correction" vi="Bổ sung đính chính" />}
-      run={(v) =>
-        correctObservationAction({
+      run={(v) => {
+        const observed = readLocalField(v, 'observed', zone, null)
+        if (!observed.ok) return Promise.resolve(fieldFailure('observedAt', observed.error))
+        return correctObservationAction({
           matterId,
           filingId: detail.item.id,
           ifMatch: detail.etag,
           observationId: v.observationId ?? '',
           reference: v.reference ?? '',
-          observedAt: toInstant(v.observedAt),
+          observedAt: observed.iso,
           reason: v.reason ?? '',
         })
-      }
+      }}
     >
       {({ errors }) => (
         <>
@@ -577,12 +608,11 @@ export function CorrectionForm({ matterId, detail }: { matterId: string; detail:
           >
             {(c) => <Input name="reference" maxLength={500} autoComplete="off" {...c} />}
           </FormField>
-          <FormField
+          <LocalDateTimeField
+            name="observed"
             label={<LocalizedText en="Corrected time" vi="Thời gian đã đính chính" />}
             error={errors.observedAt?.[0]}
-          >
-            {(c) => <Input type="datetime-local" name="observedAt" {...c} />}
-          </FormField>
+          />
           <FormField
             label={<LocalizedText en="Why it was wrong" vi="Lý do sai" />}
             required

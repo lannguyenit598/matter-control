@@ -1,0 +1,1070 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens.
+ * Raw values live ONLY here, as CSS variables. Components use the Tailwind utilities generated
+ * from @theme below (bg-primary, text-muted-foreground, rounded-md, shadow-sm...), never hex codes.
+ * The theme is switched by setting data-theme="light|dark" on <html> (see src/lib/theme.ts).
+ */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+:root {
+  color-scheme: light;
+
+  /* Selected R9 light roles; derived state axes remain independent. */
+  --background: #f7f8fa;
+  --foreground: #18181b;
+  --muted: #f1f2f4;
+  --muted-foreground: #60646c;
+  --card: #ffffff;
+  --card-foreground: var(--foreground);
+  --border: #e4e7eb;
+  --input: #cdd1d6;
+  --ring: #174ea6;
+  --primary: #202124;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f2f4;
+  --secondary-foreground: var(--foreground);
+  --accent: #eceef1;
+  --accent-foreground: var(--foreground);
+  --selected: #e8effa;
+  --destructive: #a12622;
+  --destructive-foreground: #ffffff;
+  --disabled: #626973;
+  --execution: #364152;
+  --verification: #236341;
+  --dependency-ready: #174ea6;
+  --dependency-blocked: #8a2925;
+  --timing: #775317;
+  --attention: #783e14;
+  --header: var(--background);
+  --header-foreground: var(--foreground);
+  --success: var(--verification);
+  --success-foreground: #ffffff;
+  --warning: var(--timing);
+  --warning-foreground: #ffffff;
+  --overlay: oklch(0 0 0 / 0.5);
+
+  /*
+   * Solid Glass material — adapted from deeplethe/solid-glass @6e8903e4 (MIT) into this token
+   * system. The finish is at the edge (rim + hairline + shadow, never a face gradient); depth is
+   * thickness: panel < card < popover. Light faces stay near-opaque so dense legal text keeps its
+   * contrast — only overlay panes take the backdrop blur; dark is the material as designed.
+   */
+  --panel: oklch(0.974 0.005 265 / 0.8);
+  --popover: oklch(0.995 0.003 265 / 0.97);
+  --glass-rim: oklch(1 0 0 / 0.9);
+  --glass-edge: oklch(0.38 0.03 265 / 0.12);
+  --glass-shade: oklch(0.3 0.06 265 / 0.2);
+  --glass-popover-edge: oklch(0.38 0.03 265 / 0.18);
+  --glass-state-rim: oklch(1 0 0 / 0.85);
+  --glass-field-rim: oklch(1 0 0 / 0.9);
+  --glass-blur: blur(26px) saturate(150%);
+  --liquid-face: oklch(0.995 0.007 245 / 0.68);
+  --liquid-control: oklch(0.99 0.006 245 / 0.58);
+  --liquid-row: oklch(0.97 0.022 245 / 0.72);
+  --liquid-sky: oklch(0.84 0.075 245 / 0.48);
+  --liquid-sea: oklch(0.89 0.055 175 / 0.35);
+  --liquid-sun: oklch(0.94 0.055 75 / 0.42);
+  --liquid-sheen: oklch(1 0 0 / 0.42);
+  --liquid-shadow: 0 8px 28px -16px var(--glass-shade);
+
+  /* Radius / shadows (border width = Tailwind `border` = 1px) */
+  --radius: 0.375rem;
+  --shadow-color: 240 6% 10%;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --background: oklch(0.16 0.005 285.8);
+  --foreground: oklch(0.96 0.002 286);
+  --muted: oklch(0.24 0.006 286);
+  --muted-foreground: oklch(0.71 0.013 286);
+  --card: oklch(0.2 0.006 285.9);
+  --border: oklch(0.3 0.008 286);
+  --input: oklch(0.36 0.01 286);
+  --ring: oklch(0.72 0.15 262);
+  /* Neutral actions stay distinct from the independent state-axis colors. */
+  --primary: oklch(0.94 0.002 286);
+  --primary-foreground: oklch(0.16 0.005 285.8);
+  --secondary: oklch(0.27 0.006 286);
+  --accent: oklch(0.27 0.006 286);
+  --destructive: oklch(0.7 0.18 25);
+  --destructive-foreground: oklch(0.16 0.005 285.8);
+  --success: oklch(0.65 0.15 155);
+  --success-foreground: oklch(0.16 0.005 285.8);
+  --warning: oklch(0.78 0.15 75);
+  --overlay: oklch(0 0 0 / 0.7);
+  --selected: oklch(0.3 0.06 262);
+  --disabled: oklch(0.74 0.01 286);
+  --execution: oklch(0.82 0.01 286);
+  --verification: var(--success);
+  --dependency-blocked: var(--destructive);
+  --timing: var(--warning);
+  --attention: oklch(0.8 0.12 60);
+  --dependency-ready: oklch(0.72 0.15 262);
+  --shadow-color: 0 0% 0%;
+
+  /* Dark is the material as designed: darker translucent panes, a faint lit rim, no saturate boost. */
+  --panel: oklch(0.24 0.006 286 / 0.62);
+  --popover: oklch(0.23 0.006 286 / 0.97);
+  --glass-rim: oklch(1 0 0 / 0.12);
+  --glass-edge: oklch(0 0 0 / 0.35);
+  --glass-shade: oklch(0 0 0 / 0.45);
+  --glass-popover-edge: oklch(0 0 0 / 0.45);
+  --glass-state-rim: oklch(1 0 0 / 0.14);
+  --glass-field-rim: oklch(1 0 0 / 0.08);
+  --glass-blur: blur(26px);
+  --liquid-face: oklch(0.23 0.015 255 / 0.78);
+  --liquid-control: oklch(0.31 0.018 255 / 0.68);
+  --liquid-row: oklch(0.36 0.04 250 / 0.62);
+  --liquid-sky: oklch(0.37 0.075 245 / 0.4);
+  --liquid-sea: oklch(0.33 0.045 185 / 0.32);
+  --liquid-sun: oklch(0.37 0.035 75 / 0.2);
+  --liquid-sheen: oklch(1 0 0 / 0.1);
+}
+
+/* Expose tokens as Tailwind utilities. `inline` keeps the var() reference so themes switch at runtime. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-overlay: var(--overlay);
+  --color-selected: var(--selected);
+  --color-disabled: var(--disabled);
+  --color-execution: var(--execution);
+  --color-verification: var(--verification);
+  --color-dependency-ready: var(--dependency-ready);
+  --color-dependency-blocked: var(--dependency-blocked);
+  --color-timing: var(--timing);
+  --color-attention: var(--attention);
+  --color-header: var(--header);
+  --color-header-foreground: var(--header-foreground);
+  --color-panel: var(--panel);
+  --color-popover: var(--popover);
+
+  --font-sans: var(--font-ui), Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 0.125rem);
+  --radius-xl: calc(var(--radius) + 0.5rem);
+
+  /*
+   * Pane finishes, composed into the existing shadow utilities so every consumer picks up the
+   * material without class changes: an inset top rim (the line of light), then the house shade.
+   */
+  --shadow-xs: inset 0 1px 0 var(--glass-rim), 0 1px 2px 0 hsl(var(--shadow-color) / 0.05);
+  --shadow-sm:
+    inset 0 1px 0 var(--glass-rim), 0 1px 3px 0 hsl(var(--shadow-color) / 0.1),
+    0 1px 2px -1px hsl(var(--shadow-color) / 0.1), 0 4px 10px -3px var(--glass-shade);
+  --shadow-md:
+    inset 0 1px 0 var(--glass-rim), 0 4px 6px -1px hsl(var(--shadow-color) / 0.1),
+    0 2px 4px -2px hsl(var(--shadow-color) / 0.1), 0 10px 24px -6px var(--glass-shade);
+  --shadow-lg:
+    inset 0 1px 0 var(--glass-rim), 0 10px 15px -3px hsl(var(--shadow-color) / 0.1),
+    0 4px 6px -4px hsl(var(--shadow-color) / 0.1), 0 20px 44px -12px var(--glass-shade);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    /* Tailwind v4 defaults borders to currentColor; use the token instead. */
+    border-color: var(--border);
+  }
+
+  body {
+    @apply bg-background font-sans text-sm leading-[1.5] text-foreground antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    background: var(--selected);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  dialog::backdrop {
+    background: var(--overlay);
+  }
+}
+
+/*
+ * Solid Glass surfaces. Unlayered rules map surfaces onto the material by hook (data-slot) or
+ * DOM owner — the depth ladder is panel < card < popover, and only overlay panes take the blur.
+ * Faces stay near-opaque wherever dense text or legal state colors sit on them.
+ */
+[data-slot='card'] {
+  box-shadow: var(--shadow-xs);
+}
+
+[data-slot='dialog-panel'] {
+  background: var(--popover);
+  border-color: var(--glass-popover-edge);
+  box-shadow: var(--shadow-md);
+}
+
+[data-slot='dialog-panel'][open]:not(.glass-host) {
+  backdrop-filter: var(--glass-blur);
+}
+
+[data-slot='input'],
+[data-slot='textarea'],
+[data-slot='select-trigger'] {
+  box-shadow: inset 0 1px 0 var(--glass-field-rim);
+}
+
+/* An unsupported backdrop engine degrades the thick popover to its near-opaque face. */
+@supports not (backdrop-filter: blur(1px)) {
+  [data-slot='dialog-panel'][open] {
+    background: var(--card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (forced-colors: active) {
+  [data-slot='dialog-panel'] {
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  [data-slot='input'],
+  [data-slot='textarea'],
+  [data-slot='select-trigger'] {
+    box-shadow: none;
+  }
+}
+
+/* A clear reading face, a refracting edge: blur is per panel, never per table cell. */
+[data-slot='card'],
+[data-slot='record-table'],
+[data-slot='stat-card'],
+[data-slot='matter-scope'],
+[data-slot='matter-tabs'],
+.glass-record-list,
+.liquid-panel {
+  background: var(--liquid-face);
+  border-color: var(--glass-edge);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    inset 0 -1px 0 var(--glass-edge),
+    var(--liquid-shadow);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
+}
+
+/* GlassSurface owns the material when refraction is supported; its fallback uses the host. */
+.liquid-panel:has(> .glass-surface) {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+[data-slot='card'] [data-slot='record-table'] {
+  backdrop-filter: none;
+}
+
+[data-slot='record-table'] thead {
+  background: color-mix(in oklab, var(--liquid-face) 72%, var(--muted));
+}
+
+[data-slot='record-row'],
+.glass-record-list > li,
+.control-room-section :is(ul, ol) > li {
+  transition: background-color 160ms ease;
+}
+
+[data-slot='record-row']:is(:hover, :focus-within),
+.glass-record-list > li:is(:hover, :focus-within) {
+  background: var(--liquid-row);
+}
+
+#records [data-slot='record-row'] {
+  padding-inline: 12px;
+  border-radius: 10px;
+}
+
+.control-room-section h2 {
+  margin-bottom: 6px;
+  font-size: 1rem;
+  letter-spacing: -0.015em;
+}
+
+.control-room-section :is(ul, ol):not(ul ul):not(ol ul) > li {
+  padding: 10px 12px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--card) 35%, transparent);
+}
+
+/* Keep native buttons/links and their focus/disabled semantics; the finish needs no JS. */
+.glass-button {
+  position: relative;
+  border: 1px solid var(--glass-edge);
+  background-image: linear-gradient(165deg, var(--liquid-sheen), transparent 58%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    inset 0 -1px 0 var(--glass-edge),
+    0 3px 8px -4px var(--glass-shade);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    translate 160ms ease;
+}
+
+.glass-button:is(.glass-button-outline, .glass-button-secondary) {
+  background-color: var(--liquid-control);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+}
+
+.glass-button:is(.glass-button-primary, .glass-button-destructive) {
+  /* Dense tint keeps primary and destructive text legible over every backdrop. */
+  --glass-rim: var(--liquid-sheen);
+}
+
+.glass-button-ghost {
+  border-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+.glass-button:where(:not(:disabled):not([aria-disabled='true'])):hover {
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    0 5px 14px -6px var(--glass-shade);
+  translate: 0 -1px;
+}
+
+.glass-button:where(:not(:disabled):not([aria-disabled='true'])):active {
+  translate: 0 0;
+  box-shadow: inset 0 1px 3px var(--glass-edge);
+}
+
+.glass-button:disabled,
+.glass-button[aria-disabled='true'] {
+  background-image: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+[data-slot='matter-tabs'] {
+  padding: 5px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 18px;
+  gap: 3px;
+}
+
+[data-slot='matter-tabs'] > a {
+  margin-bottom: 0;
+  border: 1px solid transparent;
+  border-radius: 13px;
+}
+
+[data-slot='matter-tabs'] > a[aria-current='page'] {
+  background: var(--liquid-control);
+  border-color: var(--glass-edge);
+  box-shadow: var(--shadow-xs);
+}
+
+.app-header {
+  background: var(--liquid-face);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-edge);
+}
+
+/* Operational feedback only; body and legal content are never clipped to enforce geometry. */
+@layer base {
+  button,
+  input:not([type='checkbox']):not([type='radio']),
+  select {
+    min-height: 2rem;
+  }
+
+  @media (max-width: 639px), (pointer: coarse) {
+    button,
+    input:not([type='hidden']),
+    select,
+    textarea,
+    a[data-control] {
+      min-height: 2.75rem;
+    }
+
+    input[type='checkbox'],
+    input[type='radio'] {
+      min-width: 2.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@media (max-width: 639px), (pointer: coarse) {
+  .control-target {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+}
+
+.app-header :focus-visible {
+  outline-color: var(--header-foreground);
+}
+
+/* Selected focused-workbench composition. Business state colors keep their independent roles. */
+.app-shell {
+  --background: #fafbfc;
+  --muted: #f5f7f9;
+  --muted-foreground: #606b7f;
+  --border: #dfe3e9;
+  --selected: #e8f0ff;
+  --navigation: #0754e8;
+  font-size: 14px;
+  background:
+    radial-gradient(ellipse at 12% 0%, var(--liquid-sky), transparent 48%),
+    radial-gradient(ellipse at 95% 32%, var(--liquid-sea), transparent 52%),
+    radial-gradient(ellipse at 45% 100%, var(--liquid-sun), transparent 60%), var(--background);
+  background-attachment: fixed;
+}
+
+[data-theme='dark'] .app-shell {
+  --background: oklch(0.16 0.005 285.8);
+  --muted: oklch(0.24 0.006 286);
+  --muted-foreground: oklch(0.76 0.013 286);
+  --border: oklch(0.3 0.008 286);
+  --selected: oklch(0.3 0.06 262);
+  --navigation: oklch(0.78 0.12 262);
+}
+
+.app-sidebar-slot {
+  position: sticky;
+  top: 0;
+  width: 232px;
+  height: 100dvh;
+  flex-shrink: 0;
+  padding: 12px 0 12px 12px;
+  border-radius: 20px;
+}
+
+.app-sidebar {
+  padding: 20px 14px;
+  background: var(--liquid-face);
+  border: 1px solid var(--glass-rim);
+  border-radius: 20px;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-sm), var(--liquid-shadow);
+}
+
+.app-sidebar-slot > .glass-surface {
+  border-radius: 20px;
+}
+
+.app-sidebar-slot > .glass-surface > .glass-content {
+  height: 100%;
+}
+
+.app-sidebar-slot > .glass-surface .app-sidebar {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.app-brand {
+  padding-inline: 16px;
+  font-size: 21px;
+  letter-spacing: -0.04em;
+}
+
+.app-navigation {
+  margin-top: 28px;
+}
+
+.app-navigation ul {
+  gap: 7px;
+}
+
+.app-navigation .app-nav-link {
+  gap: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+
+.app-navigation .app-nav-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.app-navigation .app-nav-link[aria-current='page'] {
+  background: var(--selected);
+  color: var(--navigation);
+  box-shadow: inset 0 1px 0 var(--glass-state-rim);
+}
+
+.app-mobile-header {
+  display: none;
+}
+
+.app-main {
+  padding: 24px 28px;
+}
+
+.app-main :where(h1, h2, h3, p, dd, summary, a) {
+  overflow-wrap: anywhere;
+}
+
+.app-main :where(section, fieldset, form, details),
+.work-up-next {
+  min-width: 0;
+}
+
+.app-main .control-target {
+  max-width: 100%;
+}
+
+.app-main .page-heading h1 {
+  font-size: 26px;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.app-main .page-heading p {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.my-work-page {
+  min-height: calc(100dvh - 50px);
+}
+
+.my-work-page .page-heading {
+  margin-bottom: 20px;
+}
+
+.work-queues {
+  column-gap: 18px;
+  min-height: 44px;
+}
+
+.work-queues > a {
+  white-space: nowrap;
+}
+
+.work-queues > a {
+  gap: 8px;
+  padding: 0 10px 12px;
+  font-size: 14px;
+}
+
+.work-queues > a[aria-current='page'] {
+  color: var(--navigation);
+  border-bottom-color: var(--navigation);
+}
+
+.work-queues > a > span {
+  font-size: 14px;
+}
+
+.work-columns {
+  grid-template-columns: minmax(0, 1fr) 224px;
+}
+
+.work-current {
+  padding: 20px 20px 0 0;
+}
+
+.work-sequence {
+  padding: 10px 14px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.work-sequence .control-target {
+  padding: 3px 0;
+  gap: 10px;
+}
+
+.work-identity {
+  padding: 20px 4px 0;
+}
+
+.work-title {
+  margin-top: 12px;
+  font-size: 28px;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.work-meta {
+  font-size: 14px;
+}
+
+.work-why {
+  padding: 24px 4px 0;
+}
+
+.work-section-title {
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.work-why > p {
+  max-width: 65ch;
+  font-size: 14px;
+}
+
+.work-actions {
+  gap: 14px;
+  margin: 18px 4px 24px;
+}
+
+.work-actions .work-primary {
+  min-width: min(160px, 100%);
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.work-needs {
+  padding: 24px 4px;
+}
+
+.work-needs dl {
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.work-disclosure > summary {
+  padding: 18px 4px;
+  font-size: 14px;
+}
+
+.work-disclosure > div {
+  padding: 0 8px 24px;
+}
+
+.work-up-next {
+  border-left: 1px solid var(--border);
+  padding: 24px 0 0 20px;
+}
+
+.work-up-next-link {
+  padding-block: 16px;
+}
+
+.work-read-at {
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+  padding-top: 12px;
+}
+
+@media (min-width: 801px) and (max-width: 1100px) {
+  .app-sidebar-slot {
+    width: 210px;
+  }
+  .app-sidebar {
+    padding-inline: 12px;
+  }
+  .app-brand {
+    font-size: 20px;
+    padding-inline: 8px;
+  }
+  .app-main {
+    padding: 26px 23px;
+  }
+  .work-columns {
+    grid-template-columns: minmax(0, 1fr) 190px;
+  }
+  .work-up-next {
+    padding-left: 20px;
+  }
+  .work-title {
+    font-size: 26px;
+  }
+  .work-queues {
+    column-gap: 14px;
+  }
+  .work-queues > a {
+    padding-inline: 7px;
+    gap: 7px;
+  }
+  .work-needs dl {
+    grid-template-columns: 145px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .app-shell {
+    display: block;
+  }
+  .app-sidebar-slot {
+    display: none;
+  }
+  .app-mobile-header {
+    display: block;
+  }
+  .app-main {
+    padding: 24px 18px;
+  }
+  .app-main .page-heading h1 {
+    font-size: 24px;
+  }
+  .app-main .page-heading p {
+    font-size: 14px;
+  }
+  .my-work-page {
+    min-height: calc(100dvh - 110px);
+  }
+  .my-work-page .page-heading {
+    margin-bottom: 20px;
+  }
+  .work-queues {
+    column-gap: 0;
+    justify-content: space-between;
+  }
+  .work-queues > a {
+    padding: 0 6px 14px;
+    gap: 7px;
+    font-size: 14px;
+  }
+  .work-queues > a > span {
+    font-size: 12px;
+  }
+  .work-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .work-current {
+    padding-right: 0;
+  }
+  .work-title {
+    font-size: 24px;
+    letter-spacing: -0.02em;
+  }
+  .work-meta {
+    font-size: 16px;
+  }
+  .work-identity,
+  .work-why {
+    padding-inline: 0;
+  }
+  .work-why {
+    padding-top: 26px;
+  }
+  .work-why > p {
+    font-size: 16px;
+  }
+  .work-actions {
+    margin-inline: 0;
+    gap: 20px;
+  }
+  .work-sequence {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .work-sequence .control-target {
+    gap: 2px;
+    font-size: 12px;
+  }
+  .work-needs {
+    padding: 25px 0;
+  }
+  .work-needs dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+  }
+  .work-up-next {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    margin-top: 22px;
+    padding: 22px 0 0;
+  }
+  .work-up-next-link {
+    padding-block: 15px;
+  }
+  .work-disclosure > summary {
+    font-size: 14px;
+    padding: 16px 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .work-queues > a {
+    font-size: 13px;
+    padding-inline: 5px;
+    gap: 6px;
+  }
+  .work-queues > a > svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.ui-select:not(:disabled) {
+  cursor: pointer;
+}
+
+.ui-select:not(:disabled):hover {
+  background-color: var(--muted);
+}
+
+.ui-select:has(option:checked[value='']) {
+  color: var(--muted-foreground);
+}
+
+/* shortcut: unsupported browsers retain their native picker; review this fallback with the browser support matrix. */
+@supports (appearance: base-select) {
+  .ui-select:not([multiple]):not([size]),
+  .ui-select:not([multiple]):not([size])::picker(select) {
+    appearance: base-select;
+  }
+
+  .ui-select::picker-icon {
+    display: none;
+  }
+
+  .ui-select:not([multiple]):not([size])::picker(select) {
+    min-inline-size: anchor-size(width);
+    max-inline-size: calc(100vw - 1rem);
+    max-block-size: min(20rem, 50dvh);
+    margin-block: 0.375rem;
+    padding: 0.25rem;
+    overflow-y: auto;
+    border: 1px solid var(--glass-popover-edge);
+    border-radius: calc(var(--radius) + 0.125rem);
+    background: var(--popover);
+    backdrop-filter: var(--glass-blur);
+    color: var(--foreground);
+    box-shadow: var(--shadow-md);
+    font: inherit;
+    scrollbar-width: thin;
+    scrollbar-color: var(--input) transparent;
+  }
+
+  .ui-select option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-block-size: 2.25rem;
+    padding: 0.5rem 0.625rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--foreground);
+    font: inherit;
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+  }
+
+  .ui-select option[value=''] {
+    color: var(--muted-foreground);
+  }
+
+  .ui-select option:checked {
+    background: var(--muted);
+    font-weight: 500;
+  }
+
+  .ui-select option:not(:disabled):hover,
+  .ui-select option:focus-visible {
+    background: var(--accent);
+    outline-offset: -2px;
+  }
+
+  .ui-select option:disabled {
+    color: var(--disabled);
+    cursor: not-allowed;
+  }
+
+  .ui-select option::checkmark {
+    order: 1;
+    margin-inline-start: auto;
+    color: var(--foreground);
+  }
+
+  @media (max-width: 639px), (pointer: coarse) {
+    .ui-select option {
+      min-block-size: 2.75rem;
+    }
+  }
+}
+
+/*
+ * Liquid Glass (tier `liquid`, Chromium): the five-layer anatomy rendered by GlassSurface —
+ * backdrop blur+saturate (layer A), feDisplacementMap refraction through a canvas-generated
+ * rounded-rect map (layer B), frost tint, rim-light specular, content. Frost tint and specular
+ * intensity arrive as CSS vars from the component; themes modulate the rim. The displacement
+ * itself needs no CSS here — it lives in the registered SVG filter.
+ */
+.glass-surface {
+  border-radius: inherit;
+}
+
+.glass-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.glass-content {
+  position: relative;
+}
+
+.glass-backdrop-a {
+  background: color-mix(
+    in oklab,
+    var(--popover) calc(var(--glass-frost, 0.35) * 100%),
+    transparent
+  );
+}
+
+.glass-specular {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.85)),
+    inset 0 0 0 1px rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.28));
+}
+
+.glass-specular::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    9rem circle at var(--spec-x, 50%) var(--spec-y, -12%),
+    rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.28)),
+    transparent 70%
+  );
+}
+
+[data-theme='dark'] .glass-specular {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.3)),
+    inset 0 0 0 1px rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.1));
+}
+
+[data-theme='dark'] .glass-specular::after {
+  background: radial-gradient(
+    9rem circle at var(--spec-x, 50%) var(--spec-y, -12%),
+    rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.12)),
+    transparent 70%
+  );
+}
+
+/* The dialog host yields its own material to the GlassSurface layers. The [open] blur rule
+ * above out-specifies a plain class override, so the host override carries [open] too. */
+[data-slot='dialog-panel'].glass-host,
+[data-slot='dialog-panel'][open].glass-host {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Belt-and-braces: the JS tier already resolves opaque for these media states. */
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .glass-layer {
+    display: none;
+  }
+
+  [data-slot='dialog-panel'].glass-host {
+    background: var(--popover);
+    border-color: var(--border);
+  }
+}
+
+/* Accessibility overrides follow the shell and liquid layer rules. */
+@supports not (backdrop-filter: blur(1px)) {
+  :is(
+    [data-slot='card'],
+    [data-slot='record-table'],
+    [data-slot='stat-card'],
+    [data-slot='matter-scope'],
+    [data-slot='matter-tabs'],
+    .app-header,
+    .glass-record-list,
+    .liquid-panel
+  ),
+  .glass-button:is(.glass-button-outline, .glass-button-secondary),
+  .app-sidebar {
+    background: var(--card);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .app-shell {
+    background: var(--background);
+  }
+  :is(
+    [data-slot='card'],
+    [data-slot='record-table'],
+    [data-slot='stat-card'],
+    [data-slot='matter-scope'],
+    [data-slot='matter-tabs'],
+    .app-header,
+    .glass-record-list,
+    .liquid-panel,
+    .app-sidebar
+  ) {
+    background: var(--card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    border-color: var(--border);
+  }
+  .glass-button {
+    background-image: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+  .glass-button:is(.glass-button-outline, .glass-button-secondary) {
+    background-color: var(--card);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-button {
+    translate: none !important;
+    transition: none;
+  }
+}

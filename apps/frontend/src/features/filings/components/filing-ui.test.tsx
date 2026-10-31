@@ -96,6 +96,7 @@ describe('Filing creation path', () => {
         <CreateFilingForm
           matterId="m1"
           requirements={hasRequirement ? [{ id: 'r1', label: 'Board approval obtained' }] : []}
+          searchRecords={vi.fn()}
           parties={hasAuthority ? [{ id: 'p1', label: 'Registry' }] : []}
           members={[]}
         />,
@@ -117,6 +118,7 @@ describe('Filing creation path', () => {
       <CreateFilingForm
         matterId="m1"
         requirements={[{ id: 'r1', label: 'Board approval obtained' }]}
+        searchRecords={vi.fn().mockResolvedValue({ status: 'ok', options: [] })}
         parties={[{ id: 'p1', label: 'Registry' }]}
         members={[]}
       />,
@@ -130,7 +132,71 @@ describe('Filing creation path', () => {
   })
 })
 
+describe('Filing creation: Requirement search and the no-outcome-proof label', () => {
+  it('finds a Requirement beyond the first page and sends its id (BF-04)', async () => {
+    actions.create.mockResolvedValue({ ok: true, id: 'f-new' })
+    const search = vi.fn().mockImplementation(async ({ query }: { query: string }) => ({
+      status: 'ok',
+      options: query ? [{ value: 'r301', label: 'Requirement 301' }] : [],
+      truncated: false,
+    }))
+    render(
+      <CreateFilingForm
+        matterId="m1"
+        requirements={[{ id: 'r1', label: 'Requirement 1' }]}
+        searchRecords={search}
+        parties={[{ id: 'p1', label: 'Registry' }]}
+        members={[]}
+      />,
+    )
+    fireEvent.change(screen.getByLabelText(/Search this matter’s Requirements/), {
+      target: { value: '301' },
+    })
+    fireEvent.click(await screen.findByRole('radio', { name: 'Requirement 301' }))
+    expect(search).toHaveBeenCalledWith({ matterId: 'm1', query: '301', kind: 'REQUIREMENT' })
+    fireEvent.change(screen.getByLabelText(/^Title/), { target: { value: 'Register' } })
+    fireEvent.change(screen.getByLabelText(/^Outcome sought/), { target: { value: 'Registered' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Create filing' }))
+    await waitFor(() => expect(actions.create).toHaveBeenCalled())
+    expect(actions.create.mock.calls[0]![0]).toMatchObject({ requirementId: 'r301' })
+  })
+
+  it('says the proof choice is about the outcome only, never the package (BF-02)', () => {
+    render(
+      <CreateFilingForm
+        matterId="m1"
+        requirements={[{ id: 'r1', label: 'R' }]}
+        searchRecords={vi.fn().mockResolvedValue({ status: 'ok', options: [] })}
+        parties={[{ id: 'p1', label: 'Registry' }]}
+        members={[]}
+      />,
+    )
+    expect(screen.getByText(/package and signature checks apply either way/i)).toBeInTheDocument()
+    const choice = screen.getByLabelText(/Independent verification of the authority/)
+    expect(
+      within(choice)
+        .getAllByRole('option')
+        .map((o) => o.textContent),
+    ).toEqual([
+      'Yes: a verifier must also accept the authority’s outcome',
+      'No: the outcome is recorded as evidence only, with no verification state',
+    ])
+  })
+})
+
 describe('FilingView', () => {
+  it('shows the outcome verification apart from the verification state (BF-01)', () => {
+    render(
+      <FilingView
+        detail={detail({ outcomeVerification: 'NOT_DECLARED' })}
+        labels={{ users: {}, versions: {}, evidence: {} }}
+      />,
+    )
+    expect(
+      screen.getByText(/Outcome not verified: no outcome criterion is declared/),
+    ).toBeInTheDocument()
+  })
+
   it('announces the current stage and shows each cycle with its own exact versions', () => {
     const d = detail({
       filing: {

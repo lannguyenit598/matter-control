@@ -1,4 +1,4 @@
-import { Flag, Users, Network } from 'lucide-react'
+import { Flag, ListChecks, Network, Pencil, Users } from 'lucide-react'
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 import { Badge } from '@/components/atoms/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/card'
+import { IconDisclosure } from '@/components/molecules/icon-disclosure'
 import { TaskDialog } from '@/components/organisms/form-dialog'
 import { withFrom } from '@/lib/mc/paths'
 
@@ -127,21 +128,19 @@ export function MilestoneList({
                   </ul>
                 )}
                 {isOwner && (
-                  <details className="text-sm">
-                    <summary className="cursor-pointer underline">
-                      <LocalizedText
-                        en="Change required Requirements…"
-                        vi="Đổi các yêu cầu bắt buộc…"
-                      />
-                    </summary>
-                    <div className="mt-2">
-                      <MilestonePrerequisitesForm
-                        matterId={matterId}
-                        view={v}
-                        requirements={requirements}
-                      />
-                    </div>
-                  </details>
+                  <IconDisclosure
+                    icon={<ListChecks />}
+                    label={{
+                      en: 'Change required Requirements',
+                      vi: 'Đổi các yêu cầu bắt buộc',
+                    }}
+                  >
+                    <MilestonePrerequisitesForm
+                      matterId={matterId}
+                      view={v}
+                      requirements={requirements}
+                    />
+                  </IconDisclosure>
                 )}
               </li>
             ))}
@@ -222,14 +221,12 @@ export function PartyList({
                   <p className="text-sm break-words text-muted-foreground">{p.contact}</p>
                 )}
                 {canEdit && (
-                  <details className="text-sm">
-                    <summary className="cursor-pointer underline">
-                      <LocalizedText en="Edit" vi="Sửa" /> {p.name}…
-                    </summary>
-                    <div className="mt-2">
-                      <EditPartyForm matterId={matterId} party={p} />
-                    </div>
-                  </details>
+                  <IconDisclosure
+                    icon={<Pencil />}
+                    label={{ en: `Edit ${p.name}`, vi: `Sửa ${p.name}` }}
+                  >
+                    <EditPartyForm matterId={matterId} party={p} />
+                  </IconDisclosure>
                 )}
               </li>
             ))}

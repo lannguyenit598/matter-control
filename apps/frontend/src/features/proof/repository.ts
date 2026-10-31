@@ -7,6 +7,7 @@ import {
   createdSchema,
   documentDetailSchema,
   documentPageSchema,
+  pendingAssessmentPageSchema,
   verifiersSchema,
 } from './schemas'
 
@@ -31,6 +32,15 @@ export const proofRepository = {
     })
     return { checklist: res.data, asOf: res.asOf }
   },
+
+  /** Claims the caller may assess now across their matters, oldest offer first (bounded, paged). */
+  reviewQueue: async (cursor?: string) =>
+    (
+      await mcRequest('/me/reviews', {
+        query: { limit: 25, cursor },
+        schema: pendingAssessmentPageSchema,
+      })
+    ).data,
 
   verifiers: async (matterId: string) =>
     (await mcRequest(`${m(matterId)}/verifiers`, { schema: verifiersSchema })).data.verifiers,

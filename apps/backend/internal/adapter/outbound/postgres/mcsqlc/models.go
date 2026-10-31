@@ -109,6 +109,7 @@ type Criterium struct {
 	ValidForSeconds int64
 	Retired         bool
 	Revision        int64
+	Purpose         string
 }
 
 type DependencyEdge struct {

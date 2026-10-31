@@ -144,16 +144,19 @@ func edgeDTO(e matter.EdgeView) edgeBody {
 }
 
 type workItemDetailBody struct {
-	Item       workItemBody `json:"item"`
-	Derived    derivedBody  `json:"derived"`
-	ETag       string       `json:"etag"`
-	Upstream   []edgeBody   `json:"upstream"`
-	Downstream []edgeBody   `json:"downstream"`
+	Item     workItemBody `json:"item"`
+	Derived  derivedBody  `json:"derived"`
+	ETag     string       `json:"etag"`
+	IsFiling bool         `json:"isFiling"`
+	// OutcomeVerification is set for a filing only (NOT_TRACKED | NOT_DECLARED | PENDING | ACCEPTED).
+	OutcomeVerification string     `json:"outcomeVerification,omitempty"`
+	Upstream            []edgeBody `json:"upstream"`
+	Downstream          []edgeBody `json:"downstream"`
 }
 
 func detailDTO(d matter.WorkItemDetail) workItemDetailBody {
 	_, tag := itemETag(d.View.Item)
-	out := workItemDetailBody{Item: workItemDTO(d.View.Item), Derived: derivedDTO(d.View), ETag: tag, Upstream: []edgeBody{}, Downstream: []edgeBody{}}
+	out := workItemDetailBody{Item: workItemDTO(d.View.Item), Derived: derivedDTO(d.View), ETag: tag, IsFiling: d.IsFiling, OutcomeVerification: d.OutcomeVerification, Upstream: []edgeBody{}, Downstream: []edgeBody{}}
 	for _, e := range d.Upstream {
 		out.Upstream = append(out.Upstream, edgeDTO(e))
 	}

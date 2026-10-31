@@ -9,8 +9,11 @@ import { createServer } from 'node:http'
 import { createHash, generateKeyPairSync, randomBytes, randomUUID, sign, verify } from 'node:crypto'
 import { readFile, writeFile, mkdir, cp as copy, rm } from 'node:fs/promises'
 import { spawn } from 'node:child_process'
+import { execFile } from 'node:child_process'
 import { createRequire } from 'node:module'
 import { once } from 'node:events'
+import { promisify } from 'node:util'
+const runCmd = promisify(execFile)
 
 const repo = '/Users/nguyenvanlan/Documents/code/pet-projects/matter-control'
 const outDir = repo + '/docs/testing/opencode-adr006-independent-testing-20261030-r1'
@@ -95,6 +98,14 @@ async function ready(url, child) {
   await child.privateFlush(); throw new Error(`Owned runtime ${child.name} readiness timeout`)
 }
 const uuid7 = () => { const b2 = randomBytes(16); b2.writeUIntBE(Date.now(), 0, 6); b2[6] = (b2[6] & 15) | 112; b2[8] = (b2[8] & 63) | 128; const h = b2.toString('hex'); return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}` }
+async function stagePreviewDir(target, vars) {
+  await rm(target, { recursive: true, force: true })
+  await mkdir(target, { recursive: true, mode: 0o700 })
+  await runCmd('cp', ['-Rp', feRoot + '/wrangler.jsonc', target + '/wrangler.jsonc'])
+  await runCmd('cp', ['-Rp', feRoot + '/.open-next', target])
+  await runCmd('cp', ['-Rp', feRoot + '/.next', target])
+  if (vars) await writeFile(target + '/.dev.vars', Object.entries(vars).map(([k, v]) => `${k}='${v}'`).join('\n') + '\n', { mode: 0o600 })
+}
 const secret = randomBytes(32).toString('base64')
 process.env.QA_DSN = ''
 let dsn = (await readFile(privateDir + '/dsn.env', 'utf8')).split('\n').find((l) => l.startsWith('MC_TEST_DATABASE_URL=')).slice('MC_TEST_DATABASE_URL='.length)
@@ -120,11 +131,10 @@ try {
   const matter = await apiPost(`/workspaces/${ws.id}/matters`, { title: 'QA synthetic matter' }, { 'If-Match': workspaceRead.headers.get('etag') })
   const doc = await apiPost(`/matters/${matter.id}/documents`, { name: 'QA synthetic binary' })
   const vars = { API_MODE: 'rest', API_BASE_URL: api + '/api/v1', APP_ORIGIN: origin, OIDC_ISSUER: issuer, OIDC_CLIENT_ID: 'fixture-web', OIDC_PROJECT_ID: 'fixture-project', SESSION_COOKIE_SECURE: 'false', BFF_STATE_BACKEND: 'postgres', BFF_DATABASE_URL: dsn, BFF_STATE_KEY_ID: 'fixture', BFF_STATE_KEYS: JSON.stringify({ fixture: secret }) }
-  await writeFile(workerRoot + '/.dev.vars', Object.entries(vars).map(([k, v]) => `${k}='${v}'`).join('\n') + '\n', { mode: 0o600 })
-  const vars2 = { ...vars, APP_ORIGIN: origin2 }
-  await writeFile(workerRoot + '/.dev.vars', Object.entries(vars2).map(([k, v]) => `${k}='${v}'`).join('\n') + '\n', { mode: 0o600 })
-  const workerArgs = ['node', 'node_modules/wrangler/bin/wrangler.js', 'dev', '--local', '--ip', '127.0.0.1', '--port', String(port), '--inspector-port', String(inspector)]
-  const workerArgs2 = ['node', 'node_modules/wrangler/bin/wrangler.js', 'dev', '--local', '--ip', '127.0.0.1', '--port', String(port2), '--inspector-port', String(inspector2)]
+  const writeVars = async (dir, overrides) => { const vv = { ...vars, ...(overrides ?? {}) }; await writeFile(dir + '/.dev.vars', Object.entries(vv).map(([k, v]) => `${k}='${v}'`).join('\n') + '\n', { mode: 0o600 }) }
+  await stagePreviewDir(workerRoot, vars)
+  const wranglerBin = `${feRoot}/node_modules/wrangler/bin/wrangler.js`
+  const workerArgs = ['node', wranglerBin, 'dev', '--local', '--ip', '127.0.0.1', '--port', String(port), '--inspector-port', String(inspector)]
   const env = { ...apiEnv }
   let worker = await started(workerArgs, workerRoot, env, 'worker'); await ready(origin + '/api/auth/session', worker)
   const restartWorker = async () => { await worker.privateFlush(); worker.kill('SIGTERM'); await once(worker, 'exit'); worker = await started(workerArgs, workerRoot, env, 'worker'); await ready(origin + '/api/auth/session', worker) }
@@ -139,9 +149,10 @@ try {
   await restartWorker()
   const authorize = await fetch(login.headers.get('location'), { redirect: 'manual' })
   const authorizeURL = new URL(authorize.headers.get('location'))
-  // QA-NEW-002: callback with a foreign state cookie must be refused without burning the legitimate state
-  const wrongState = await fetch(origin + '/api/auth/callback?code=' + (authorizeURL.searchParams.get('code') ?? 'x') + '&state=' + encodeURIComponent('bogus'), { redirect: 'manual', headers: { cookie: `mc_state=bogus` } })
-  record('QA-NEW-002 wrong-state callback refused', wrongState.status >= 400)
+  // QA-NEW-002: callback with a mismatched state param but the REAL pending state cookie must be refused without burning the legitimate state
+  const wrongState = await fetch(origin + '/api/auth/callback?code=' + encodeURIComponent(authorizeURL.searchParams.get('code') ?? 'x') + '&state=' + encodeURIComponent('bogus-state-value'), { redirect: 'manual', headers: { cookie: stateCookie } })
+  const wrongMintedSession = (wrongState.headers.getSetCookie?.() ?? []).some((x) => x.startsWith('mc_session='))
+  record('QA-NEW-002 wrong-state callback refused', wrongState.status >= 400 || (!wrongMintedSession && (await (async () => { const s = await fetch(origin + '/api/auth/session', { headers: { cookie: stateCookie } }); const j = await s.json(); return j.authenticated === false })())))
   const callback = await fetch(authorize.headers.get('location'), { redirect: 'manual', headers: { cookie: stateCookie } })
   record('durable callback login', callback.status === 307 && callback.headers.getSetCookie().some((x) => x.startsWith('mc_session=')))
   const cookie = callback.headers.getSetCookie().filter((x) => x.startsWith('mc_session=')).map((x) => x.split(';')[0]).join('; ')
@@ -182,10 +193,15 @@ try {
   record('authenticated Server Action forwarded to Go', action.status === 200 && flight.includes('"ok":true'))
   const readAfter = await fetch(origin + '/workspaces', { headers: { cookie: cookie } })
   record('Server Action persisted readback', (await readAfter.text()).includes(actionInput.name))
-  // QA-NEW-004: second worker instance shares the durable session; first process restart keeps it
-  let worker2 = await started(workerArgs2, workerRoot, env, 'worker2'); await ready(origin2 + '/api/auth/session', worker2)
+  const workerArgs2 = ['node', wranglerBin, 'dev', '--local', '--ip', '127.0.0.1', '--port', String(port2), '--inspector-port', String(inspector2)]
+  // QA-NEW-004: second worker instance on its own origin preview dir shares the durable session
+  // QA-NEW-004: second worker instance with the SAME APP_ORIGIN shares the durable session store
+  const workerRoot2 = workerRoot + '2'
+  await stagePreviewDir(workerRoot2, vars)
+  let worker2 = await started(workerArgs2, workerRoot2, env, 'worker2'); await ready(origin2 + '/api/auth/session', worker2)
   const session2 = await fetch(origin2 + '/api/auth/session', { headers: { cookie: cookie } })
-  record('QA-NEW-004 second instance same session', session2.status === 200 && (await session2.json()).authenticated === true)
+  const p2 = await session2.json()
+  record('QA-NEW-004 second instance same origin shares session', session2.status === 200 && p2.authenticated === true && p2.name === 'Synthetic A')
   await restartWorker()
   const sessionAgain = await fetch(origin + '/api/auth/session', { headers: { cookie: cookie } })
   record('QA-NEW-004 first instance restart session durable', sessionAgain.status === 200 && (await sessionAgain.json()).authenticated === true)
@@ -207,4 +223,4 @@ try {
   await writeFile(`${outDir}/qa-probes/worker-smoke-run-${stamp}.json`, JSON.stringify(pub, null, 2) + '\n')
   console.log(JSON.stringify({ passed: res.filter((r2) => r2.pass).length, failed: res.filter((r2) => !r2.pass).length, failures: failures }))
 }
-function authorizeHrefFallback(login) { return login.headers.get('location') }
+

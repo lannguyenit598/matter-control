@@ -450,7 +450,13 @@ func buildCriterion(in port.CriterionInput, set matter.EvidenceSet) (matter.Crit
 	if err != nil {
 		return matter.Criterion{}, err
 	}
-	c := matter.Criterion{Title: title, Description: strings.TrimSpace(in.Description), Mandatory: in.Mandatory, Rule: matter.VersionRule(strings.TrimSpace(in.Rule))}
+	c := matter.Criterion{Title: title, Description: strings.TrimSpace(in.Description), Mandatory: in.Mandatory, Rule: matter.VersionRule(strings.TrimSpace(in.Rule)), Purpose: matter.CriterionPurpose(strings.TrimSpace(in.Purpose))}
+	if c.Purpose == "" {
+		c.Purpose = matter.PurposePackage
+	}
+	if !c.Purpose.Valid() {
+		return c, rejected("invalid-purpose", "the purpose must be PACKAGE or OUTCOME")
+	}
 	if c.Rule == "" {
 		c.Rule = matter.VersionNone
 	}
@@ -531,6 +537,13 @@ func (s *EvidenceService) CreateCriterion(ctx context.Context, cmd port.CreateCr
 		if err != nil {
 			return err
 		}
+		if c.Purpose == matter.PurposeOutcome {
+			// An outcome criterion is the authority decision accepted after the fact: it exists only
+			// on a filing that has outcome verification, never on other records.
+			if _, isFiling := g.Filing.Of(it.ID); !isFiling || !it.ProofRequired {
+				return rejected("outcome-criterion-not-applicable", "an outcome criterion applies only to a filing that requires outcome verification")
+			}
+		}
 		c.ID, c.MatterID, c.SubjectID, c.Revision = matter.CriterionID(env.ids.NewRecordID()), env.header.MatterID, it.ID, 1
 		if err := ev.InsertCriterion(ctx, c); err != nil {
 			return err
@@ -550,7 +563,7 @@ func (s *EvidenceService) CreateCriterion(ctx context.Context, cmd port.CreateCr
 }
 
 func criterionSnapshot(c matter.Criterion) map[string]any {
-	m := map[string]any{"subject": c.SubjectID.String(), "title": c.Title, "mandatory": c.Mandatory, "rule": string(c.Rule), "validDays": int(c.ValidFor / (24 * time.Hour)), "retired": c.Retired, "revision": c.Revision}
+	m := map[string]any{"subject": c.SubjectID.String(), "title": c.Title, "mandatory": c.Mandatory, "purpose": string(c.EffectivePurpose()), "rule": string(c.Rule), "validDays": int(c.ValidFor / (24 * time.Hour)), "retired": c.Retired, "revision": c.Revision}
 	if c.DocumentID != nil {
 		m["document"] = c.DocumentID.String()
 	}
@@ -600,6 +613,9 @@ func (s *EvidenceService) ReviseCriterion(ctx context.Context, cmd port.ReviseCr
 			built, err := buildCriterion(cmd.Criterion, g.Evidence)
 			if err != nil {
 				return err
+			}
+			if strings.TrimSpace(cmd.Criterion.Purpose) != "" && built.Purpose != cur.EffectivePurpose() {
+				return rejected("purpose-immutable", "a criterion keeps its purpose; retire it and declare a new one")
 			}
 			next.Title, next.Description, next.Mandatory, next.Rule = built.Title, built.Description, built.Mandatory, built.Rule
 			next.DocumentID, next.FixedID, next.ValidFor = built.DocumentID, built.FixedID, built.ValidFor
@@ -1474,4 +1490,87 @@ func untilOf(t *time.Time) any {
 		return nil
 	}
 	return t.UTC().Format(time.RFC3339Nano)
+}
+
+// ReviewQueue lists, across the matters the caller can access, the claims they may assess now as a
+// designated independent verifier (BF-05). It is a read model separate from My Actions: nothing
+// here changes Next Action eligibility, and DecideReview keeps a submitter from seeing their own
+// offer. Rows come only from matters returned by MattersOf (ACTIVE matter and workspace
+// membership), and the queue is recomputed on every read, so a revoked designation, role or
+// membership removes rows and the count immediately.
+//
+// ponytail: loads each accessible matter's graph (as MyActions does); index by pending claim if
+// the number of accessible matters grows large.
+func (s *EvidenceService) ReviewQueue(ctx context.Context, q port.ReviewQueueQuery) (matter.ReviewQueue, error) {
+	actor, err := matter.NewActorID(q.ActorID)
+	if err != nil {
+		return matter.ReviewQueue{}, err
+	}
+	limit := q.Limit
+	if limit <= 0 || limit > 100 {
+		limit = 50
+	}
+	var out matter.ReviewQueue
+	err = s.w.store.View(ctx, func(snap port.MatterSnapshot) error {
+		gs, ok := snap.(port.WorkGraphSnapshot)
+		if !ok {
+			return fmt.Errorf("snapshot does not support the work graph")
+		}
+		reads, _ := snap.(port.MatterReadSnapshot)
+		asOf := snap.AsOf()
+		ids, err := gs.MattersOf(ctx, actor)
+		if err != nil {
+			return err
+		}
+		var rows []matter.PendingAssessment
+		for _, m := range ids {
+			mm, err := snap.MatterMembership(ctx, m, actor)
+			if err != nil {
+				if errors.Is(err, port.ErrNotFound) {
+					continue
+				}
+				return err
+			}
+			if mm.Status != matter.StatusActive {
+				continue
+			}
+			g, err := gs.LoadGraph(ctx, m)
+			if err != nil {
+				return err
+			}
+			if !g.Evidence.IsVerifier(actor) {
+				continue // not designated here: the matter contributes nothing, not even a count
+			}
+			found := matter.PendingAssessmentsIn(actor, mm.Role, g.Items, g.Evidence, asOf)
+			if len(found) == 0 {
+				continue
+			}
+			header, err := snap.MatterHeader(ctx, m)
+			if err != nil {
+				return err
+			}
+			names := map[matter.ActorID]string{}
+			if reads != nil {
+				members, err := reads.MatterMembers(ctx, m)
+				if err != nil {
+					return err
+				}
+				for _, mem := range members {
+					names[mem.UserID] = mem.DisplayName
+				}
+			}
+			for _, r := range found {
+				r.MatterTitle = header.Title
+				r.ClaimedByName, r.SubmittedByName = names[r.ClaimedBy], names[r.EvidenceSubmitter]
+				rows = append(rows, r)
+			}
+		}
+		out = matter.PageReviewQueue(rows, q.After, limit)
+		out.AsOf = asOf
+		return nil
+	})
+	if err != nil {
+		return matter.ReviewQueue{}, fmt.Errorf("review queue: %w", err)
+	}
+	return out, nil
 }

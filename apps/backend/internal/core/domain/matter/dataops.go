@@ -146,9 +146,12 @@ type BriefChange struct {
 	Type       string
 	TargetKind string
 	TargetID   string
-	ActorID    *string
-	Reason     *string
-	RecordedAt time.Time
+	// TargetLabel is the title or name the change itself recorded for its target (BF-10), as it
+	// was when the change happened: never today's name. Empty when the change carries none.
+	TargetLabel string
+	ActorID     *string
+	Reason      *string
+	RecordedAt  time.Time
 	// EffectiveAt is when the fact took effect. LateRecorded is true when it took effect at or
 	// before the baseline t1 but was only recorded inside the window (recorded-time semantics).
 	EffectiveAt  time.Time

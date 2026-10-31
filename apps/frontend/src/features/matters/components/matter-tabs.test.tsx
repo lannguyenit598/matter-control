@@ -18,6 +18,8 @@ it.each([
   ['/matters/m1/documents/d1', 'Documents'],
   ['/matters/m1/agenda', 'Agenda'],
   ['/matters/m1/reviews', 'Reviews'],
+  ['/matters/m1/control-room', 'Control Room'],
+  ['/matters/m1/data', 'Data'],
 ])('marks the section for %s as current', (pathname, label) => {
   nav.pathname = pathname
   render(<MatterTabs matterId="m1" />)
@@ -36,4 +38,26 @@ it('links every section with a real internal href', () => {
     '/matters/m1/reviews',
   )
   expect(screen.getAllByRole('link')).toHaveLength(10)
+})
+
+it('keeps every section in one row, with records, data and history after a divider (no menu)', () => {
+  render(<MatterTabs matterId="m1" />)
+  const nav = screen.getByRole('navigation', { name: 'Matter sections' })
+  expect(nav.querySelector('details')).toBeNull()
+  const order = [...nav.querySelectorAll('a, [data-slot="tab-divider"]')].map((n) =>
+    n.tagName === 'A' ? n.textContent : '|',
+  )
+  expect(order).toEqual([
+    'Overview',
+    'Work',
+    'Documents',
+    'Reviews',
+    'Filings',
+    'Planning',
+    'Agenda',
+    '|',
+    'Control Room',
+    'Data',
+    'History',
+  ])
 })

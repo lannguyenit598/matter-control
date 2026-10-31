@@ -144,7 +144,7 @@ describe('returnTo hardening (CW1-F03)', () => {
         }),
       )
       expect(new URL(cb.headers.get('location')!).origin).toBe(cfg.appOrigin)
-      expect(new URL(cb.headers.get('location')!).pathname).toBe('/workspaces')
+      expect(new URL(cb.headers.get('location')!).pathname).toBe('/my-actions')
       expect(cb.cookies.get(cfg.sessionCookie)).toBeDefined() // login itself still succeeded
     },
   )

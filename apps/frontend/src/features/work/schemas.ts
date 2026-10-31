@@ -74,6 +74,10 @@ const edgeSchema = z.object({
 })
 
 export const detailSchema = envelopeSchema.extend({
+  /** A filing keeps its package/signature checklist whatever its outcome-proof flag says. */
+  isFiling: z.boolean(),
+  /** Filings only: NOT_TRACKED | NOT_DECLARED | PENDING | ACCEPTED. */
+  outcomeVerification: z.string().optional(),
   upstream: z.array(edgeSchema),
   downstream: z.array(edgeSchema),
 })
@@ -163,6 +167,14 @@ export const gridQuerySchema = z.object({
   cursor: z.string().max(200).optional().catch(undefined),
 })
 export type GridQuery = z.infer<typeof gridQuerySchema>
+
+/** Find-a-record read for pickers (BF-04): one bounded page of matching records, never a dump. */
+export const searchWorkItemsInputSchema = z.object({
+  matterId: idSchema,
+  query: z.string().trim().max(100),
+  kind: z.enum(['REQUIREMENT', 'ACTION']).optional(),
+  excludeId: idSchema.optional(),
+})
 
 // ---- action inputs (untrusted: every Server Action re-validates) ----
 

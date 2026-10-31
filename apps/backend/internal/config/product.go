@@ -101,7 +101,7 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 			APIClientID:      p.str("MC_OIDC_API_CLIENT_ID", ""),
 			// A5: a deliberate small TTL bounds the revocation window (a cached "active" answer
 			// can be up to TTL stale after a ZITADEL revocation); 0 disables the cache entirely.
-			CacheTTL: p.duration("MC_OIDC_CACHE_TTL", "15s"),
+			CacheTTL: p.duration("MC_OIDC_CACHE_TTL", "30s"),
 		},
 	}
 	if err := cfg.LogLevel.UnmarshalText([]byte(p.str("MC_LOG_LEVEL", "info"))); err != nil {

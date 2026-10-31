@@ -127,6 +127,8 @@ func NewServer(d Deps) *echo.Echo {
 	v1.GET("/requirements/:id", s.getRequirement)
 	v1.GET("/operations/:key", s.ownReceipt)
 	v1.GET("/me/actions", s.myActions)
+	v1.GET("/me/reviews", s.myReviews)
+	v1.GET("/matters", s.discoverMatters)
 	v1.GET("/matters/:id/work-items", s.listWorkItems)
 	v1.POST("/matters/:id/actions", s.createAction)
 	v1.GET("/matters/:id/work-items/:itemId", s.getWorkItem)

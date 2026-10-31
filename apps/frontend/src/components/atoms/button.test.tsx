@@ -17,6 +17,21 @@ describe('Button', () => {
     expect(onClick).toHaveBeenCalledOnce()
   })
 
+  it('keeps native submit and keyboard behavior with the glass finish', async () => {
+    const submit = vi.fn((event: React.FormEvent) => event.preventDefault())
+    render(
+      <form onSubmit={submit}>
+        <Button type="submit" variant="outline">
+          Add record
+        </Button>
+      </form>,
+    )
+    await userEvent.tab()
+    expect(screen.getByRole('button', { name: 'Add record' })).toHaveFocus()
+    await userEvent.keyboard('{Enter}')
+    expect(submit).toHaveBeenCalledOnce()
+  })
+
   it('is disabled and busy while loading', async () => {
     const onClick = vi.fn()
     render(

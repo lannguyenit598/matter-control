@@ -70,11 +70,14 @@ type filingDetailBody struct {
 	Observations []observationBody `json:"observations"`
 	Next         []string          `json:"next"`
 	AsOf         string            `json:"asOf"`
+	// OutcomeVerification: NOT_TRACKED | NOT_DECLARED | PENDING | ACCEPTED, apart from `verification`.
+	OutcomeVerification string `json:"outcomeVerification"`
 }
 
 type filingSummaryBody struct {
 	workItemEnvelope
-	Filing filingBody `json:"filing"`
+	Filing              filingBody `json:"filing"`
+	OutcomeVerification string     `json:"outcomeVerification"`
 }
 
 func filingDTO(f matter.Filing, it matter.WorkItem) filingBody {
@@ -91,7 +94,7 @@ func filingDTO(f matter.Filing, it matter.WorkItem) filingBody {
 }
 
 func filingSummaryDTO(s matter.FilingSummary) filingSummaryBody {
-	return filingSummaryBody{workItemEnvelope: envelopeDTO(s.View), Filing: filingDTO(s.Filing, s.View.Item)}
+	return filingSummaryBody{workItemEnvelope: envelopeDTO(s.View), Filing: filingDTO(s.Filing, s.View.Item), OutcomeVerification: s.OutcomeVerification}
 }
 
 func filingDetailDTO(d matter.FilingDetail) filingDetailBody {
@@ -99,6 +102,7 @@ func filingDetailDTO(d matter.FilingDetail) filingDetailBody {
 		workItemEnvelope: envelopeDTO(d.View), Filing: filingDTO(d.Filing, d.View.Item), AsOf: ts(d.AsOf),
 		Cycles: make([]cycleBody, len(d.Cycles)), Submissions: make([]submissionBody, len(d.Submissions)),
 		Observations: make([]observationBody, len(d.Observations)), Next: strs(d.Next),
+		OutcomeVerification: d.OutcomeVerification,
 	}
 	for i, c := range d.Cycles {
 		cb := cycleBody{ID: c.ID, No: c.No, OpenedInEp: c.OpenedInEp, RequestRef: c.RequestRef, DueAt: tsPtr(c.DueAt), OpenedAt: ts(c.OpenedAt), SubmittedAt: tsPtr(c.SubmittedAt)}

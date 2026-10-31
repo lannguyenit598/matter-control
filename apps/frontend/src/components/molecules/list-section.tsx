@@ -3,7 +3,7 @@ import { useId, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 /** Shared look of a bordered list and its rows, so every list has the same density. */
-export const LIST_CLASS = 'divide-y divide-border rounded-lg border bg-card'
+export const LIST_CLASS = 'glass-record-list divide-y divide-border rounded-lg border bg-card'
 export const ROW_CLASS =
   'flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3'
 

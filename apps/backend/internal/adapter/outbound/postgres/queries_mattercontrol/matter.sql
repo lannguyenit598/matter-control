@@ -362,13 +362,13 @@ VALUES ($1, $2, $3, $4, $5, $6, $7);
 
 -- name: ListCriteriaOfMatter :many
 SELECT id, matter_id, subject_id, title, description, mandatory, version_rule, document_id,
-       fixed_version_id, valid_for_seconds, retired, revision
+       fixed_version_id, valid_for_seconds, retired, revision, purpose
 FROM criteria WHERE matter_id = $1 ORDER BY id;
 
 -- name: InsertCriterion :exec
 INSERT INTO criteria (id, matter_id, subject_id, title, description, mandatory, version_rule,
-                      document_id, fixed_version_id, valid_for_seconds, retired, revision)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);
+                      document_id, fixed_version_id, valid_for_seconds, retired, revision, purpose)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);
 
 -- name: UpdateCriterion :execrows
 UPDATE criteria SET title = sqlc.arg(title), description = sqlc.arg(description), mandatory = sqlc.arg(mandatory),

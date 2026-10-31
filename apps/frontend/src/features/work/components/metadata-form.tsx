@@ -7,11 +7,14 @@ import { Select } from '@/components/atoms/select'
 import { Textarea } from '@/components/atoms/textarea'
 import { FormField } from '@/components/molecules/form-field'
 import { IntentForm } from '@/components/organisms/intent-form'
+import { useTimeZone } from '@/hooks/use-time-zone'
+import { fieldFailure } from '@/lib/mc/action-result'
+import { readLocalField } from '@/lib/mc/local-time'
 
 import { updateWorkItemAction } from '../actions'
 import type { Envelope, Workstream } from '../schemas'
 
-import { composeDue, DueField } from './due-field'
+import { DueField } from './due-field'
 
 /**
  * Metadata only: title, outcome, owner, due date, workstream. There is deliberately no control for
@@ -31,6 +34,7 @@ export function MetadataForm({
   canEdit: boolean
 }) {
   const it = entry.item
+  const zone = useTimeZone()
   if (!canEdit) {
     return (
       <p className="text-sm text-muted-foreground">
@@ -46,18 +50,20 @@ export function MetadataForm({
       receipted={false}
       draftKey={`item:${it.id}:meta`}
       submitLabel={<LocalizedText en="Save changes" vi="Lưu thay đổi" />}
-      run={(v) =>
-        updateWorkItemAction({
+      run={(v) => {
+        const due = readLocalField(v, 'due', zone, it.dueAt)
+        if (!due.ok) return Promise.resolve(fieldFailure('dueAt', due.error))
+        return updateWorkItemAction({
           matterId,
           itemId: it.id,
           ifMatch: entry.etag,
           title: v.title,
           outcome: v.outcome,
           ownerId: v.ownerId ?? '',
-          dueAt: composeDue(v.dueLocal ?? '', v.dueOffset ?? '+00:00'),
+          dueAt: due.iso,
           workstreamId: v.workstreamId ?? '',
         })
-      }
+      }}
     >
       {({ errors }) => (
         <>

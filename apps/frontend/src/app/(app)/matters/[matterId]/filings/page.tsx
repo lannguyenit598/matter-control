@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
+import { OutcomeVerificationBadge } from '@/features/filings/components/outcome-verification'
 import { STAGE_LABEL } from '@/features/filings/labels'
 import { filingRepository } from '@/features/filings/repository'
 import { matterRepository } from '@/features/matters/repository'
@@ -93,6 +94,9 @@ async function Filings({ params }: Pick<PageProps<'/matters/[matterId]/filings'>
                     {partyName[f.filing.authorityPartyId] ?? 'authority'} · serves “
                     {reqTitle[f.filing.requirementId] ?? 'a Requirement'}”
                     {f.filing.negativeOpen ? ` · ${f.filing.negativeOutcome?.toLowerCase()}` : ''}
+                  </p>
+                  <p>
+                    <OutcomeVerificationBadge state={f.outcomeVerification} />
                   </p>
                 </li>
               ))}

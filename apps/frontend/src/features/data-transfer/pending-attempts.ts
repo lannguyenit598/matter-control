@@ -3,7 +3,7 @@ import 'server-only'
 import { createHash, randomBytes } from 'node:crypto'
 
 import { oidcConfig } from '@/lib/oidc/config'
-import { durableState } from '@/lib/oidc/durable-state'
+import { durableState, maxPendingBytes } from '@/lib/oidc/durable-state'
 import { withPersistentSession } from '@/lib/oidc/session-persistence'
 import { McError } from '@/lib/mc/errors'
 
@@ -47,6 +47,39 @@ export function attemptRows(attempt: PendingAttempt) {
   return attempt.kind === 'bulk'
     ? attempt.input.rows.map((row) => row.rowKey)
     : Object.keys(attempt.plan.rowKeys)
+}
+
+/**
+ * Conservative size estimate of what sealing this attempt would produce: the sealed JSON
+ * base64-encodes Uint8Array content (~4/3×) and adds the plan/metadata JSON. Used for the pilot's
+ * pending-import ceiling BEFORE any bytes are written anywhere (WP-7; the 36 MiB hard cap inside
+ * sealState stays as the physical backstop).
+ */
+export function estimatePendingSealedBytes(attempt: PendingAttempt): number {
+  if (attempt.kind !== 'import') return Buffer.byteLength(JSON.stringify(attempt))
+  const meta = Buffer.byteLength(
+    JSON.stringify({
+      matterId: attempt.matterId,
+      plan: attempt.plan,
+      sourceName: attempt.upload.sourceName,
+      format: attempt.upload.format,
+    }),
+  )
+  return Math.ceil((attempt.upload.content.length * 4) / 3) + meta + 256
+}
+
+/** Fail-closed ceiling check with a message that names the numbers, never the content. */
+export function assertPendingImportFits(proposed: PendingAttempt): void {
+  if (proposed.kind !== 'import') return
+  const ceiling = maxPendingBytes()
+  const estimated = estimatePendingSealedBytes(proposed)
+  if (estimated > ceiling)
+    throw new McError('payload-too-large', 413, {
+      cause: new Error(
+        `pending import exceeds the pilot ceiling (${estimated} > ${ceiling} bytes; BFF_MAX_PENDING_BYTES). ` +
+          'Documents upload through the separate streamed path; raising the ceiling is a deliberate decision (D7).',
+      ),
+    })
 }
 
 function identity(attempt: PendingAttempt) {
@@ -151,6 +184,8 @@ async function withSlots<R>(session: DurableIdentity, write: boolean, body: (loc
 }
 
 export async function beginAttemptAsync(session: DurableIdentity, proposed: PendingAttempt) {
+  // WP-7: the pilot's pending-import ceiling, enforced before any bytes reach memory or storage.
+  assertPendingImportFits(proposed)
   if (!durableState()) return beginAttempt(session, proposed)
   return withSlots(session, true, (local) => {
     const slots = attemptSlots(local)

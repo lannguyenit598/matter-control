@@ -1,0 +1,15 @@
+# Runtime environment — attempt r2 (redacted; values that matter for reproduction, secrets never stored here)
+# mcapi: 127.0.0.1:18081, built from the working tree at HEAD 0de3e5d (+dirty), go1.27.3 darwin/arm64
+MC_HTTP_ADDR=127.0.0.1:18081
+MC_DATABASE_URL=postgres://mcba:<REDACTED>@127.0.0.1:15499/mc_ba_flow_r1?sslmode=disable
+MC_MIGRATE_ON_START=true
+MC_OIDC_ISSUER=http://127.0.0.1:18099
+MC_OIDC_INTROSPECTION_URL=http://127.0.0.1:18099/introspect
+MC_OIDC_AUDIENCE=ba-stub-aud
+MC_OIDC_API_KEY_FILE=/private/tmp/mc-ba-flow-evidence/key.json   # synthetic key pair generated for this runtime
+MC_OIDC_API_CLIENT_ID=ba-stub-api
+MC_OBJECT_DIR=/private/tmp/mc-ba-flow-evidence/objects
+MC_LOG_LEVEL=warn
+# PG container: mc-ba-flow-pg (postgres:18.6-alpine, label mc.owner=zcode-ba-flow-review, 127.0.0.1:15499, db mc_ba_flow_r1)
+# Stub IdP: /private/tmp/mc-ba-flow-evidence/stub-idp (loopback only; accepts the runtime's own assertion; bearer tokens tok-ba-*)
+# Synthetic principals: ba-alice OWNER / ba-binh EDITOR+verifier / ba-editor2 EDITOR / ba-cuc VIEWER / ba-dung non-member

@@ -1,4 +1,5 @@
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
+import { GlassSurface } from '@/components/molecules/glass-surface'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 import Link from 'next/link'
@@ -24,12 +25,16 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <section aria-labelledby={id} className="rounded-md border p-4">
-      <h2 id={id} className="text-lg font-semibold">
-        {title}
-      </h2>
-      {hint && <p className="mb-2 text-sm text-muted-foreground">{hint}</p>}
-      {children}
+    <section aria-labelledby={id} className="control-room-section liquid-panel rounded-xl border">
+      <GlassSurface radius={14} bezel={12} refraction={8} frost={0.72} className="rounded-xl">
+        <div className="p-4">
+          <h2 id={id} className="text-lg font-semibold">
+            {title}
+          </h2>
+          {hint && <p className="mb-2 text-sm text-muted-foreground">{hint}</p>}
+          {children}
+        </div>
+      </GlassSurface>
     </section>
   )
 }
@@ -48,7 +53,10 @@ function Stat({
   emphasis?: boolean
 }) {
   return (
-    <div className={`rounded-md border p-3 ${emphasis && value > 0 ? 'border-primary' : ''}`}>
+    <div
+      data-slot="stat-card"
+      className={`rounded-xl border p-3 ${emphasis && value > 0 ? 'border-primary' : ''}`}
+    >
       <dt className="text-sm text-muted-foreground">{label}</dt>
       <dd className="text-2xl font-semibold">{value}</dd>
     </div>
@@ -77,18 +85,41 @@ function Decisions({ items, matterId }: { items: ContextRecord[]; matterId: stri
  * gaps, then what changed. Every row links to the record it describes. The boundary is shown, and a
  * section that could not be built is an error page, never an empty list.
  */
+const BRIEF_ROWS = 3
+
 export function ControlRoomView({
   matterId,
   room,
   labels,
+  fromPath,
+  variant = 'full',
 }: {
   matterId: string
   room: ControlRoom
   labels: RoomLabels
+  /** Where a record opened from here should send "Back" (default: the Control Room). */
+  fromPath?: string
+  /**
+   * `brief` is the Matter landing: the same read model and sections, but only the first few rows of
+   * what to act on and a short change list, with milestones as the dates; gaps, decisions and the
+   * full history live in the Control Room (`full`, the default).
+   */
+  variant?: 'full' | 'brief'
 }) {
+  const brief = variant === 'brief'
+  const cap = <T,>(rows: T[], n = BRIEF_ROWS) => (brief ? rows.slice(0, n) : rows)
+  const more = (total: number, shown = BRIEF_ROWS) =>
+    brief && total > shown ? (
+      <p className="mt-2 text-sm text-muted-foreground">
+        <LocalizedText
+          en={`${total - shown} more in the Control Room.`}
+          vi={`Còn ${total - shown} mục nữa trong Phòng điều hành.`}
+        />
+      </p>
+    ) : null
   const t = (id: string) => labels.titles[id] ?? `record ${id.slice(0, 8)}`
   const rec = (id: string) =>
-    `/matters/${matterId}/work/${id}?from=${encodeURIComponent(`/matters/${matterId}/control-room`)}`
+    `/matters/${matterId}/work/${id}?from=${encodeURIComponent(fromPath ?? `/matters/${matterId}/control-room`)}`
   const s = room.state
   return (
     <div className="flex flex-col gap-4">
@@ -143,7 +174,7 @@ export function ControlRoomView({
           </Empty>
         ) : (
           <ul className="flex flex-col gap-3">
-            {room.blockers.map((b) => (
+            {cap(room.blockers).map((b) => (
               <li key={b.item.id} className="text-sm">
                 <Link href={rec(b.item.id)} className="font-medium underline">
                   {b.item.title}
@@ -177,6 +208,7 @@ export function ControlRoomView({
             ))}
           </ul>
         )}
+        {more(room.blockers.length)}
       </Section>
 
       <Section
@@ -198,7 +230,7 @@ export function ControlRoomView({
           </Empty>
         ) : (
           <ol className="flex flex-col gap-3">
-            {room.nextActions.map((n) => (
+            {cap(room.nextActions).map((n) => (
               <li key={n.item.id} className="text-sm">
                 <Link href={rec(n.item.id)} className="font-medium underline">
                   {n.item.title}
@@ -216,6 +248,7 @@ export function ControlRoomView({
             ))}
           </ol>
         )}
+        {more(room.nextActions.length)}
       </Section>
 
       <Section
@@ -237,7 +270,7 @@ export function ControlRoomView({
           </Empty>
         ) : (
           <ul className="flex flex-col gap-2 text-sm">
-            {room.waiting.map((w) => (
+            {cap(room.waiting).map((w) => (
               <li key={w.item.id}>
                 <Link href={rec(w.item.id)} className="font-medium underline">
                   {w.item.title}
@@ -251,6 +284,7 @@ export function ControlRoomView({
             ))}
           </ul>
         )}
+        {more(room.waiting.length)}
       </Section>
 
       <Section id="milestones" title={<LocalizedText en="Milestones" vi="Cột mốc" />}>
@@ -260,7 +294,7 @@ export function ControlRoomView({
           </Empty>
         ) : (
           <ul className="flex flex-col gap-2 text-sm">
-            {room.milestones.map((m) => (
+            {cap(room.milestones).map((m) => (
               <li key={m.milestone.id}>
                 <span className="font-medium">{m.milestone.name}</span>:{' '}
                 {m.status.state === 'UNASSESSED'
@@ -283,65 +317,70 @@ export function ControlRoomView({
             ))}
           </ul>
         )}
+        {more(room.milestones.length)}
       </Section>
 
-      <Section
-        id="gaps"
-        title={<LocalizedText en="Gaps" vi="Khoảng trống" />}
-        hint={
-          <LocalizedText
-            en="Missing proof, criteria or owners."
-            vi="Thiếu bằng chứng, tiêu chí hoặc người phụ trách."
-          />
-        }
-      >
-        {room.gaps.length === 0 ? (
-          <Empty>
-            <LocalizedText en="No gaps found." vi="Không tìm thấy khoảng trống." />
-          </Empty>
-        ) : (
-          <ul className="flex flex-col gap-1 text-sm">
-            {room.gaps.map((g) => (
-              <li key={`${g.itemId}:${g.kind}`}>
-                <Link href={rec(g.itemId)} className="underline">
-                  {t(g.itemId)}
-                </Link>
-                : {GAP_LABEL[g.kind] ?? g.kind}
-              </li>
-            ))}
-          </ul>
-        )}
-      </Section>
+      {!brief && (
+        <Section
+          id="gaps"
+          title={<LocalizedText en="Gaps" vi="Khoảng trống" />}
+          hint={
+            <LocalizedText
+              en="Missing proof, criteria or owners."
+              vi="Thiếu bằng chứng, tiêu chí hoặc người phụ trách."
+            />
+          }
+        >
+          {room.gaps.length === 0 ? (
+            <Empty>
+              <LocalizedText en="No gaps found." vi="Không tìm thấy khoảng trống." />
+            </Empty>
+          ) : (
+            <ul className="flex flex-col gap-1 text-sm">
+              {room.gaps.map((g) => (
+                <li key={`${g.itemId}:${g.kind}`}>
+                  <Link href={rec(g.itemId)} className="underline">
+                    {t(g.itemId)}
+                  </Link>
+                  : {GAP_LABEL[g.kind] ?? g.kind}
+                </li>
+              ))}
+            </ul>
+          )}
+        </Section>
+      )}
 
-      <Section
-        id="context"
-        title={
-          <LocalizedText
-            en="Open decisions, risks and findings"
-            vi="Quyết định, rủi ro và phát hiện đang mở"
-          />
-        }
-      >
-        {room.decisions.length + room.risks.length + room.findings.length === 0 ? (
-          <Empty>
-            <LocalizedText en="Nothing is recorded yet." vi="Chưa có bản ghi." />
-          </Empty>
-        ) : (
-          <ul className="flex flex-col gap-2 text-sm">
-            {[...room.decisions, ...room.risks, ...room.findings].map((r) => (
-              <li key={r.id}>
-                <span className="font-medium">{KIND_LABEL[r.kind]}:</span> {r.title}
-                {r.links.length > 0 && (
-                  <span className="text-muted-foreground">
-                    {' '}
-                    — concerns {r.links.map(t).join(', ')}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </Section>
+      {!brief && (
+        <Section
+          id="context"
+          title={
+            <LocalizedText
+              en="Open decisions, risks and findings"
+              vi="Quyết định, rủi ro và phát hiện đang mở"
+            />
+          }
+        >
+          {room.decisions.length + room.risks.length + room.findings.length === 0 ? (
+            <Empty>
+              <LocalizedText en="Nothing is recorded yet." vi="Chưa có bản ghi." />
+            </Empty>
+          ) : (
+            <ul className="flex flex-col gap-2 text-sm">
+              {[...room.decisions, ...room.risks, ...room.findings].map((r) => (
+                <li key={r.id}>
+                  <span className="font-medium">{KIND_LABEL[r.kind]}:</span> {r.title}
+                  {r.links.length > 0 && (
+                    <span className="text-muted-foreground">
+                      {' '}
+                      — concerns {r.links.map(t).join(', ')}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </Section>
+      )}
 
       <Section
         id="changes"
@@ -354,7 +393,7 @@ export function ControlRoomView({
           </Empty>
         ) : (
           <ol className="flex flex-col gap-1 text-sm">
-            {room.changes.map((c) => (
+            {cap(room.changes, 5).map((c) => (
               <li key={c.id}>
                 <LocalizedInstant iso={c.recordedAt} /> · {c.type}
                 {c.reason ? ` — ${c.reason}` : ''}
@@ -362,6 +401,7 @@ export function ControlRoomView({
             ))}
           </ol>
         )}
+        {more(room.changes.length, 5)}
       </Section>
     </div>
   )

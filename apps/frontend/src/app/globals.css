@@ -1,3 +1,4 @@
+/* Hallmark check: app screen; modes: light+dark; built: the project; redesign: polish; render: BLOCKED_TOOL_DISABLED. */
 @import 'tailwindcss';
 
 /*
@@ -19,7 +20,7 @@
   --card: #ffffff;
   --card-foreground: var(--foreground);
   --border: #e4e7eb;
-  --input: #cdd1d6;
+  --input: #7b8190;
   --ring: #174ea6;
   --primary: #202124;
   --primary-foreground: #ffffff;
@@ -53,6 +54,7 @@
    */
   --panel: oklch(0.974 0.005 265 / 0.8);
   --popover: oklch(0.995 0.003 265 / 0.97);
+  --glass-specular-rgb: 255 255 255;
   --glass-rim: oklch(1 0 0 / 0.9);
   --glass-edge: oklch(0.38 0.03 265 / 0.12);
   --glass-shade: oklch(0.3 0.06 265 / 0.2);
@@ -60,8 +62,28 @@
   --glass-state-rim: oklch(1 0 0 / 0.85);
   --glass-field-rim: oklch(1 0 0 / 0.9);
   --glass-blur: blur(26px) saturate(150%);
+  --liquid-face: oklch(0.995 0.007 245 / 0.68);
+  --liquid-control: oklch(0.99 0.006 245 / 0.58);
+  --liquid-row: oklch(0.97 0.022 245 / 0.72);
+  --liquid-sky: oklch(0.84 0.075 245 / 0.48);
+  --liquid-sea: oklch(0.89 0.055 175 / 0.35);
+  --liquid-sun: oklch(0.94 0.055 75 / 0.42);
+  --liquid-sheen: oklch(1 0 0 / 0.42);
+  --liquid-action-sheen: oklch(1 0 0 / 0.08);
+  --dialog-muted: #465468;
+  /* Light: a cool inset tint that sits slightly below the glass, not a white plate. */
+  --field-face: oklch(0.96 0.008 255 / 0.66);
+  --field-hover: oklch(0.96 0.01 255 / 0.75);
+  --liquid-shadow: 0 8px 28px -16px var(--glass-shade);
 
   /* Radius / shadows (border width = Tailwind `border` = 1px) */
+  --workbench-background: #fafbfc;
+  --workbench-muted: #f5f7f9;
+  --workbench-muted-foreground: #606b7f;
+  --workbench-border: #dfe3e9;
+  --workbench-selected: #e8f0ff;
+  --navigation: #0754e8;
+
   --radius: 0.375rem;
   --shadow-color: 240 6% 10%;
 }
@@ -75,18 +97,19 @@
   --muted-foreground: oklch(0.71 0.013 286);
   --card: oklch(0.2 0.006 285.9);
   --border: oklch(0.3 0.008 286);
-  --input: oklch(0.36 0.01 286);
+  --input: oklch(0.66 0.015 286);
   --ring: oklch(0.72 0.15 262);
   /* Neutral actions stay distinct from the independent state-axis colors. */
   --primary: oklch(0.94 0.002 286);
   --primary-foreground: oklch(0.16 0.005 285.8);
   --secondary: oklch(0.27 0.006 286);
   --accent: oklch(0.27 0.006 286);
-  --destructive: oklch(0.7 0.18 25);
+  --destructive: oklch(0.79 0.13 25);
   --destructive-foreground: oklch(0.16 0.005 285.8);
-  --success: oklch(0.65 0.15 155);
+  --success: oklch(0.79 0.12 155);
   --success-foreground: oklch(0.16 0.005 285.8);
   --warning: oklch(0.78 0.15 75);
+  --warning-foreground: var(--background);
   --overlay: oklch(0 0 0 / 0.7);
   --selected: oklch(0.3 0.06 262);
   --disabled: oklch(0.74 0.01 286);
@@ -95,19 +118,37 @@
   --dependency-blocked: var(--destructive);
   --timing: var(--warning);
   --attention: oklch(0.8 0.12 60);
-  --dependency-ready: oklch(0.72 0.15 262);
+  --dependency-ready: oklch(0.77 0.12 262);
   --shadow-color: 0 0% 0%;
+  --workbench-background: var(--background);
+  --workbench-muted: var(--muted);
+  --workbench-muted-foreground: oklch(0.76 0.013 286);
+  --workbench-border: var(--border);
+  --workbench-selected: var(--selected);
+  --navigation: oklch(0.78 0.12 262);
 
   /* Dark is the material as designed: darker translucent panes, a faint lit rim, no saturate boost. */
   --panel: oklch(0.24 0.006 286 / 0.62);
   --popover: oklch(0.23 0.006 286 / 0.97);
   --glass-rim: oklch(1 0 0 / 0.12);
-  --glass-edge: oklch(0 0 0 / 0.35);
-  --glass-shade: oklch(0 0 0 / 0.45);
-  --glass-popover-edge: oklch(0 0 0 / 0.45);
+  --glass-edge: oklch(1 0 0 / 0.16);
+  --glass-shade: oklch(0 0 0 / 0.28);
+  --glass-popover-edge: oklch(1 0 0 / 0.22);
   --glass-state-rim: oklch(1 0 0 / 0.14);
   --glass-field-rim: oklch(1 0 0 / 0.08);
   --glass-blur: blur(26px);
+  --liquid-face: oklch(0.23 0.015 255 / 0.78);
+  --liquid-control: oklch(0.31 0.018 255 / 0.68);
+  --liquid-row: oklch(0.36 0.04 250 / 0.62);
+  --liquid-sky: oklch(0.37 0.075 245 / 0.4);
+  --liquid-sea: oklch(0.33 0.045 185 / 0.32);
+  --liquid-sun: oklch(0.37 0.035 75 / 0.2);
+  --liquid-sheen: oklch(1 0 0 / 0.1);
+  --liquid-action-sheen: oklch(1 0 0 / 0.06);
+  --dialog-muted: oklch(0.78 0.013 286);
+  --field-face: oklch(0.26 0.014 255 / 0.82);
+  --field-hover: oklch(0.29 0.014 255 / 0.9);
+  --liquid-shadow: 0 4px 16px -12px var(--glass-shade);
 }
 
 /* Expose tokens as Tailwind utilities. `inline` keeps the var() reference so themes switch at runtime. */
@@ -245,6 +286,146 @@
   }
 }
 
+/* A clear reading face, a refracting edge: blur is per panel, never per table cell. */
+[data-slot='card'],
+[data-slot='record-table'],
+[data-slot='stat-card'],
+[data-slot='matter-scope'],
+[data-slot='matter-tabs'],
+.glass-record-list,
+.liquid-panel {
+  background: var(--liquid-face);
+  border-color: var(--glass-edge);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    inset 0 -1px 0 var(--glass-edge),
+    var(--liquid-shadow);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
+}
+
+/* GlassSurface owns the material when refraction is supported; its fallback uses the host. */
+.liquid-panel:has(> .glass-surface) {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+[data-slot='card'] [data-slot='record-table'] {
+  backdrop-filter: none;
+}
+
+[data-slot='record-table'] thead {
+  background: color-mix(in oklab, var(--liquid-face) 72%, var(--muted));
+}
+
+[data-slot='record-row'],
+.glass-record-list > li,
+.control-room-section :is(ul, ol) > li {
+  transition: background-color 160ms ease;
+}
+
+[data-slot='record-row']:is(:hover, :focus-within),
+.glass-record-list > li:is(:hover, :focus-within) {
+  background: var(--liquid-row);
+}
+
+#records [data-slot='record-row'] {
+  padding-inline: 12px;
+  border-radius: 10px;
+}
+
+.control-room-section h2 {
+  margin-bottom: 6px;
+  font-size: 1rem;
+  letter-spacing: -0.015em;
+}
+
+.control-room-section :is(ul, ol):not(ul ul):not(ol ul) > li {
+  padding: 10px 12px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--card) 35%, transparent);
+}
+
+/* Keep native buttons/links and their focus/disabled semantics; the finish needs no JS. */
+.glass-button {
+  position: relative;
+  border: 1px solid var(--glass-edge);
+  background-image: linear-gradient(165deg, var(--liquid-sheen), transparent 58%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    inset 0 -1px 0 var(--glass-edge),
+    0 3px 8px -4px var(--glass-shade);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    translate 160ms ease;
+}
+
+.glass-button:is(.glass-button-outline, .glass-button-secondary) {
+  background-color: var(--liquid-control);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+}
+
+.glass-button:is(.glass-button-primary, .glass-button-destructive) {
+  /* Dense tint keeps primary and destructive text legible over every backdrop. */
+  --liquid-sheen: var(--liquid-action-sheen);
+  --glass-rim: var(--liquid-action-sheen);
+}
+
+.glass-button-ghost {
+  border-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+.glass-button:where(:not(:disabled):not([aria-disabled='true'])):hover {
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    0 5px 14px -6px var(--glass-shade);
+  translate: 0 -1px;
+}
+
+.glass-button:where(:not(:disabled):not([aria-disabled='true'])):active {
+  translate: 0 0;
+  box-shadow: inset 0 1px 3px var(--glass-edge);
+}
+
+.glass-button:disabled,
+.glass-button[aria-disabled='true'] {
+  background-image: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+[data-slot='matter-tabs'] {
+  padding: 5px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 18px;
+  gap: 3px;
+}
+
+[data-slot='matter-tabs'] > a {
+  margin-bottom: 0;
+  border: 1px solid transparent;
+  border-radius: 13px;
+}
+
+[data-slot='matter-tabs'] > a[aria-current='page'] {
+  background: var(--liquid-control);
+  border-color: var(--glass-edge);
+  box-shadow: var(--shadow-xs);
+}
+
+.app-header {
+  background: var(--liquid-face);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-edge);
+}
+
 /* Operational feedback only; body and legal content are never clipped to enforce geometry. */
 @layer base {
   button,
@@ -292,22 +473,17 @@
 
 /* Selected focused-workbench composition. Business state colors keep their independent roles. */
 .app-shell {
-  --background: #fafbfc;
-  --muted: #f5f7f9;
-  --muted-foreground: #606b7f;
-  --border: #dfe3e9;
-  --selected: #e8f0ff;
-  --navigation: #0754e8;
+  --background: var(--workbench-background);
+  --muted: var(--workbench-muted);
+  --muted-foreground: var(--workbench-muted-foreground);
+  --border: var(--workbench-border);
+  --selected: var(--workbench-selected);
   font-size: 14px;
-}
-
-[data-theme='dark'] .app-shell {
-  --background: oklch(0.16 0.005 285.8);
-  --muted: oklch(0.24 0.006 286);
-  --muted-foreground: oklch(0.76 0.013 286);
-  --border: oklch(0.3 0.008 286);
-  --selected: oklch(0.3 0.06 262);
-  --navigation: oklch(0.78 0.12 262);
+  background:
+    radial-gradient(ellipse at 12% 0%, var(--liquid-sky), transparent 48%),
+    radial-gradient(ellipse at 95% 32%, var(--liquid-sea), transparent 52%),
+    radial-gradient(ellipse at 45% 100%, var(--liquid-sun), transparent 60%), var(--background);
+  background-attachment: fixed;
 }
 
 .app-sidebar-slot {
@@ -316,12 +492,30 @@
   width: 232px;
   height: 100dvh;
   flex-shrink: 0;
+  padding: 12px 0 12px 12px;
+  border-radius: 20px;
 }
 
 .app-sidebar {
   padding: 20px 14px;
-  background: var(--panel);
-  border-right: 1px solid var(--border);
+  background: var(--liquid-face);
+  border: 1px solid var(--glass-rim);
+  border-radius: 20px;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-sm), var(--liquid-shadow);
+}
+
+.app-sidebar-slot > .glass-surface {
+  border-radius: 20px;
+}
+
+.app-sidebar-slot > .glass-surface > .glass-content {
+  height: 100%;
+}
+
+.app-sidebar-slot > .glass-surface .app-sidebar {
+  background: transparent;
+  backdrop-filter: none;
 }
 
 .app-brand {
@@ -782,8 +976,8 @@
 
 .glass-specular {
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.85)),
-    inset 0 0 0 1px rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.28));
+    inset 0 1px 0 rgb(var(--glass-specular-rgb) / calc(var(--glass-spec-int, 0.5) * 0.85)),
+    inset 0 0 0 1px rgb(var(--glass-specular-rgb) / calc(var(--glass-spec-int, 0.5) * 0.28));
 }
 
 .glass-specular::after {
@@ -793,21 +987,21 @@
   border-radius: inherit;
   background: radial-gradient(
     9rem circle at var(--spec-x, 50%) var(--spec-y, -12%),
-    rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.28)),
+    rgb(var(--glass-specular-rgb) / calc(var(--glass-spec-int, 0.5) * 0.28)),
     transparent 70%
   );
 }
 
 [data-theme='dark'] .glass-specular {
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.3)),
-    inset 0 0 0 1px rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.1));
+    inset 0 1px 0 rgb(var(--glass-specular-rgb) / calc(var(--glass-spec-int, 0.5) * 0.3)),
+    inset 0 0 0 1px rgb(var(--glass-specular-rgb) / calc(var(--glass-spec-int, 0.5) * 0.1));
 }
 
 [data-theme='dark'] .glass-specular::after {
   background: radial-gradient(
     9rem circle at var(--spec-x, 50%) var(--spec-y, -12%),
-    rgb(255 255 255 / calc(var(--glass-spec-int, 0.5) * 0.12)),
+    rgb(var(--glass-specular-rgb) / calc(var(--glass-spec-int, 0.5) * 0.12)),
     transparent 70%
   );
 }
@@ -833,4 +1027,116 @@
     background: var(--popover);
     border-color: var(--border);
   }
+}
+
+/* Accessibility overrides follow the shell and liquid layer rules. */
+@supports not (backdrop-filter: blur(1px)) {
+  :is(
+    [data-slot='card'],
+    [data-slot='record-table'],
+    [data-slot='stat-card'],
+    [data-slot='matter-scope'],
+    [data-slot='matter-tabs'],
+    .app-header,
+    .glass-record-list,
+    .liquid-panel
+  ),
+  .glass-button:is(.glass-button-outline, .glass-button-secondary),
+  .app-sidebar {
+    background: var(--card);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  .app-shell {
+    background: var(--background);
+  }
+  :is(
+    [data-slot='card'],
+    [data-slot='record-table'],
+    [data-slot='stat-card'],
+    [data-slot='matter-scope'],
+    [data-slot='matter-tabs'],
+    .app-header,
+    .glass-record-list,
+    .liquid-panel,
+    .app-sidebar
+  ) {
+    background: var(--card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    border-color: var(--border);
+  }
+  .glass-button {
+    background-image: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+  .glass-button:is(.glass-button-outline, .glass-button-secondary) {
+    background-color: var(--card);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-button {
+    translate: none !important;
+    transition: none;
+  }
+}
+
+/* Dense readable content inside the refracting rim; controls use a quiet inset material. */
+[data-slot='dialog-panel'] {
+  --muted-foreground: var(--dialog-muted);
+  color: var(--foreground);
+}
+
+[data-slot='dialog-panel']
+  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']) {
+  background: var(--field-face);
+  border-radius: 10px;
+  color: var(--foreground);
+  box-shadow:
+    inset 0 1px 0 var(--glass-field-rim),
+    inset 0 -1px 2px var(--glass-edge);
+}
+
+[data-slot='dialog-panel']
+  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']):not(
+    [aria-invalid='true']
+  ) {
+  border-color: var(--input);
+}
+
+[data-slot='dialog-panel']
+  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']):where(
+    :not(:disabled)
+  ):hover {
+  background: var(--field-hover);
+}
+
+[data-slot='dialog-panel'] :is([data-slot='input'], [data-slot='textarea'])::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1;
+}
+
+[data-slot='dialog-panel']
+  :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']):disabled {
+  color: var(--disabled);
+  background: var(--muted);
+  box-shadow: none;
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  [data-slot='dialog-panel']
+    :is([data-slot='input'], [data-slot='textarea'], [data-slot='select-trigger']) {
+    background: var(--card);
+    box-shadow: none;
+  }
+}
+
+/* Keep the edge light; broad moving highlights would wash over the form description. */
+[data-slot='dialog-panel'] > .glass-surface > .glass-specular::after {
+  content: none;
 }

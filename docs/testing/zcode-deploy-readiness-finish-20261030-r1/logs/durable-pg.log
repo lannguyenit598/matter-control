@@ -1,0 +1,42 @@
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+ ✓ src/lib/oidc/durable-state.test.ts (9 tests) 612ms
+ ❯ src/features/data-transfer/durable-attempts.test.ts (5 tests | 1 failed) 925ms
+   ❯ durable transfer intent (5)
+     ✓ recovers the frozen request across new session objects and only releases on matching ACK 162ms
+     ✓ keeps crashes read-only, allows explicit same-key retry after lease, rejects late completion 127ms
+     ✓ purges lost access and logout cannot be undone by a late completion 115ms
+     ✓ retains exact synthetic import bytes (1048576) in encrypted state 441ms
+     × retains exact synthetic import bytes (26213376) in encrypted state under an explicit ceiling 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/data-transfer/durable-attempts.test.ts > durable transfer intent > retains exact synthetic import bytes (26213376) in encrypted state under an explicit ceiling
+McError: product API problem: unavailable
+ ❯ maxPendingBytes src/lib/oidc/durable-state.ts:44:11
+     42|   const n = Number(raw)
+     43|   if (!Number.isInteger(n) || n < 1 || n > MAX_BYTES)
+     44|     throw new McError('unavailable', 503, {
+       |           ^
+     45|       cause: new Error('BFF_MAX_PENDING_BYTES must be an integer betwe…
+     46|     })
+ ❯ assertPendingImportFits src/features/data-transfer/pending-attempts.ts:74:19
+ ❯ Module.beginAttemptAsync src/features/data-transfer/pending-attempts.ts:188:3
+ ❯ src/features/data-transfer/durable-attempts.test.ts:152:25
+
+Caused by: Error: BFF_MAX_PENDING_BYTES must be an integer between 1 and 36 MiB (36288000)
+ ❯ maxPendingBytes src/lib/oidc/durable-state.ts:45:14
+ ❯ assertPendingImportFits src/features/data-transfer/pending-attempts.ts:74:19
+ ❯ Module.beginAttemptAsync src/features/data-transfer/pending-attempts.ts:188:3
+ ❯ src/features/data-transfer/durable-attempts.test.ts:152:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 13 passed (14)
+   Start at  22:54:18
+   Duration  1.21s (tests 79%, setup 14%, transform 4%, import 3%)
+
+DURABLE_EXIT=1

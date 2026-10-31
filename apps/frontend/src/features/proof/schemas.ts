@@ -94,6 +94,8 @@ export const criterionSchema = z.object({
   title: z.string(),
   description: z.string(),
   mandatory: z.boolean(),
+  /** PACKAGE gates a filing submission; OUTCOME is the authority decision accepted later. */
+  purpose: z.enum(['PACKAGE', 'OUTCOME']),
   versionRule: z.enum(['NONE', 'CURRENT_AUTHORITATIVE', 'FIXED']),
   documentId: z.string().nullable(),
   fixedVersionId: z.string().nullable(),
@@ -119,9 +121,20 @@ export const evidenceSchema = z.object({
   withdrawnAt: z.string().nullable(),
 })
 
+/** Criteria of one purpose: how many are declared and how many mandatory ones are satisfied. */
+const proofPartSchema = z.object({
+  declared: z.boolean(),
+  total: z.number().int(),
+  mandatory: z.number().int(),
+  satisfied: z.number().int(),
+  ready: z.boolean(),
+})
+
 export const checklistSchema = z.object({
   subject: subjectSchema,
   verification: z.string(),
+  package: proofPartSchema,
+  outcome: proofPartSchema,
   criteria: z.array(criterionSchema),
   evidence: z.array(evidenceSchema),
   verifiers: z.array(z.string()),
@@ -138,6 +151,34 @@ export const checklistSchema = z.object({
   callerId: z.string(),
   asOf: z.string(),
 })
+
+/** One claim the caller, as a designated independent verifier, could assess now (BF-05). */
+export const pendingAssessmentSchema = z.object({
+  matterId: z.string(),
+  matterTitle: z.string(),
+  subjectId: z.string(),
+  subjectKind: z.enum(['REQUIREMENT', 'ACTION']),
+  subjectTitle: z.string(),
+  subjectEpoch: z.number().int(),
+  criterionId: z.string(),
+  criterionTitle: z.string(),
+  criterionRevision: z.number().int(),
+  criterionPurpose: z.enum(['PACKAGE', 'OUTCOME']),
+  claimId: z.string(),
+  claimedAt: z.string(),
+  claimedBy: z.string(),
+  claimedByName: z.string(),
+  evidenceId: z.string(),
+  evidenceKind: z.enum(['DOCUMENT_VERSION', 'EXTERNAL_REFERENCE']),
+  evidenceReference: z.string(),
+  submittedBy: z.string(),
+  submittedByName: z.string(),
+  versionId: z.string().nullable(),
+  versionLabel: z.string(),
+  reason: z.enum(['PENDING_REVIEW', 'OLD_EPOCH']),
+})
+export const pendingAssessmentPageSchema = pageOf(pendingAssessmentSchema)
+export type PendingAssessment = z.infer<typeof pendingAssessmentSchema>
 
 export const verifiersSchema = z.object({ verifiers: z.array(z.string()) })
 export const createdSchema = z.object({ id: z.string(), kind: z.string(), seq: z.number().int() })
@@ -186,6 +227,8 @@ export const criterionInputSchema = z.object({
   title: text(200).min(1, 'Enter a title.'),
   description: text(2000),
   mandatory: z.enum(['yes', 'no']),
+  /** Empty keeps the criterion's purpose on a revision; a creation defaults to PACKAGE. */
+  purpose: z.enum(['', 'PACKAGE', 'OUTCOME']).default(''),
   versionRule: z.enum(['NONE', 'CURRENT_AUTHORITATIVE', 'FIXED']),
   documentId: z.string().max(100),
   fixedVersionId: z.string().max(100),

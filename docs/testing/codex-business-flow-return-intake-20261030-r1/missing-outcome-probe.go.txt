@@ -1,0 +1,18 @@
+package matter_test
+
+import (
+ "testing"
+ "leonx.me/matter-control/internal/core/domain/matter"
+)
+
+// Proposed conservative final-proof acceptance, not a new production policy assertion.
+func TestIntakeMissingOutcomeCannotBeFinalVerified(t *testing.T) {
+ pkg := purposeCriterion("PKG", matter.PurposePackage)
+ ev, claim, assessment := acceptedFor("1", pkg)
+ set := setOf([]matter.Criterion{pkg}, []matter.Evidence{ev}, []matter.Claim{claim}, []matter.Assessment{assessment})
+ got := matter.EvaluateVerification(filingItem(true), set, now)
+ t.Logf("aggregate=%s packageReady=%t outcomeDeclared=%t outcomeReady=%t",got.State,got.Package.Ready(),got.Outcome.Declared(),got.Outcome.Ready())
+ if got.State == matter.VerificationVerified {
+  t.Fatal("final-proof safety expectation: an undeclared outcome must not appear verified merely because package proof was accepted")
+ }
+}

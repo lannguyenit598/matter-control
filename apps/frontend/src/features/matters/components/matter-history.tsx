@@ -2,11 +2,12 @@
 
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 
-import { History } from 'lucide-react'
+import { History, Info } from 'lucide-react'
 import Link from 'next/link'
 
 import { buttonVariants } from '@/components/atoms/button'
 import { EmptyState } from '@/components/molecules/empty-state'
+import { IconDisclosure } from '@/components/molecules/icon-disclosure'
 import { useLocale } from '@/hooks/use-locale'
 
 import type { MatterEvent } from '../schemas'
@@ -111,11 +112,8 @@ export function MatterHistory({
                   {event.causeSeq === null ? c.missing : `#${event.causeSeq}`}
                 </Field>
               </dl>
-              <details className="mt-3">
-                <summary className="control-target w-fit cursor-pointer py-1 text-primary underline">
-                  {c.details}
-                </summary>
-                <dl className="mt-2 grid gap-3 sm:grid-cols-2">
+              <IconDisclosure className="mt-3" icon={<Info />} label={c.details}>
+                <dl className="grid gap-3 sm:grid-cols-2">
                   <Field label={c.correlation}>{event.correlationId ?? c.missing}</Field>
                   <Field label={c.command}>{event.commandKey ?? c.missing}</Field>
                   <Field label={c.before}>
@@ -129,7 +127,7 @@ export function MatterHistory({
                     </pre>
                   </Field>
                 </dl>
-              </details>
+              </IconDisclosure>
             </li>
           ))}
         </ol>

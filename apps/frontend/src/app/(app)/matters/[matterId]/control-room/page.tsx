@@ -128,7 +128,7 @@ async function ControlRoom({
           ) : (
             <ul className="flex flex-col divide-y">
               {records.map((r) => (
-                <li key={r.id} className="flex flex-col gap-1 py-3 text-sm">
+                <li data-slot="record-row" key={r.id} className="flex flex-col gap-1 py-3 text-sm">
                   <p>
                     <span className="font-medium">{KIND_LABEL[r.kind]}</span> · {r.title}
                     {r.status === 'CLOSED' && (

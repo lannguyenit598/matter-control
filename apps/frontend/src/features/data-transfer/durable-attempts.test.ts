@@ -118,25 +118,43 @@ describe.skipIf(!databaseUrl)('durable transfer intent', () => {
     const root = sessionKey(cfg, a.sessionHandle)
     expect(await store.transaction(root, (tx) => tx.read(root + ':attempt:bulk'))).toBeUndefined()
   })
-  it.each([1024 * 1024, 25 * 1024 * 1024 - 1024])(
-    'retains exact synthetic import bytes (%i) in encrypted state',
-    async (size) => {
-      const a = await session()
-      const content = new Uint8Array(size).fill(37)
-      const input: PendingAttempt = {
-        kind: 'import',
-        matterId: 'synthetic-matter',
-        plan: { runKey: 'run', rowKeys: { R1: 'original-row-key' } },
-        upload: { sourceName: 'synthetic.csv', format: 'csv', content },
-      }
-      const saved = await beginAttemptAsync(a, input)
-      await endAttemptAsync(a, saved!)
-      const loaded = (await attemptSlotsAsync({ ...a })).get('import')!.attempt!
-      expect(loaded.kind).toBe('import')
-      if (loaded.kind === 'import')
-        expect(Buffer.compare(Buffer.from(loaded.upload.content), Buffer.from(content))).toBe(0)
-      await destroyPersistentSession(cfg, a.sessionHandle, store)
-    },
-    20_000,
-  )
+  // WP-7: 1 MiB fits under the pilot pending-import ceiling (BFF_MAX_PENDING_BYTES default
+  // 5 MiB); the 25 MiB case proves the ceiling is a deliberate, explicit configuration — the
+  // test raises it for this scenario only, and the byte-equality assertions are unchanged.
+  it('retains exact synthetic import bytes (1048576) in encrypted state', async () => {
+    const a = await session()
+    const content = new Uint8Array(1024 * 1024).fill(37)
+    const input: PendingAttempt = {
+      kind: 'import',
+      matterId: 'synthetic-matter',
+      plan: { runKey: 'run', rowKeys: { R1: 'original-row-key' } },
+      upload: { sourceName: 'synthetic.csv', format: 'csv', content },
+    }
+    const saved = await beginAttemptAsync(a, input)
+    await endAttemptAsync(a, saved!)
+    const loaded = (await attemptSlotsAsync({ ...a })).get('import')!.attempt!
+    expect(loaded.kind).toBe('import')
+    if (loaded.kind === 'import')
+      expect(Buffer.compare(Buffer.from(loaded.upload.content), Buffer.from(content))).toBe(0)
+    await destroyPersistentSession(cfg, a.sessionHandle, store)
+  }, 20_000)
+
+  it('retains exact synthetic import bytes (26213376) in encrypted state under an explicit ceiling', async () => {
+    vi.stubEnv('BFF_MAX_PENDING_BYTES', String(35 * 1024 * 1024))
+    const a = await session()
+    const content = new Uint8Array(25 * 1024 * 1024 - 1024).fill(37)
+    const input: PendingAttempt = {
+      kind: 'import',
+      matterId: 'synthetic-matter',
+      plan: { runKey: 'run', rowKeys: { R1: 'original-row-key' } },
+      upload: { sourceName: 'synthetic.csv', format: 'csv', content },
+    }
+    const saved = await beginAttemptAsync(a, input)
+    await endAttemptAsync(a, saved!)
+    const loaded = (await attemptSlotsAsync({ ...a })).get('import')!.attempt!
+    expect(loaded.kind).toBe('import')
+    if (loaded.kind === 'import')
+      expect(Buffer.compare(Buffer.from(loaded.upload.content), Buffer.from(content))).toBe(0)
+    await destroyPersistentSession(cfg, a.sessionHandle, store)
+  }, 20_000)
 })

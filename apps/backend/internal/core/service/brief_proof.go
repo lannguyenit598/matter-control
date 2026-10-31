@@ -98,7 +98,7 @@ func replayBriefProof(events []matter.EventRecord, items map[string]*replayedIte
 		if !mandatory || !rule.Valid() || number(m, "revision") < 1 {
 			return nil, nil, unreconstructable("criterion %s lacks its decision fields", id)
 		}
-		c := matter.Criterion{ID: matter.CriterionID(id), SubjectID: matter.NodeID(subject), Mandatory: flag(m, "mandatory"), Rule: rule, Revision: number(m, "revision"), Retired: flag(m, "retired")}
+		c := matter.Criterion{ID: matter.CriterionID(id), SubjectID: matter.NodeID(subject), Mandatory: flag(m, "mandatory"), Purpose: purposeOf(text(m, "purpose")), Rule: rule, Revision: number(m, "revision"), Retired: flag(m, "retired")}
 		if d := text(m, "document"); d != "" {
 			v := matter.DocumentID(d)
 			c.DocumentID = &v
@@ -210,4 +210,13 @@ func replayBriefProof(events []matter.EventRecord, items map[string]*replayedIte
 		}
 	}
 	return out, expired, nil
+}
+
+// purposeOf reads a replayed criterion purpose; events written before BF-01 have none and read as
+// PACKAGE, the purpose that can only keep a gate closed.
+func purposeOf(raw string) matter.CriterionPurpose {
+	if matter.CriterionPurpose(raw) == matter.PurposeOutcome {
+		return matter.PurposeOutcome
+	}
+	return matter.PurposePackage
 }

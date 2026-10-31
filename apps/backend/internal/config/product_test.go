@@ -25,7 +25,7 @@ func TestLoadProduct_Defaults(t *testing.T) {
 		t.Fatal(err)
 	}
 	if cfg.HTTPAddr != "127.0.0.1:8081" || cfg.LogLevel != slog.LevelInfo || cfg.RequestTimeout != 10*time.Second ||
-		cfg.TransferTimeout != 60*time.Second || cfg.ShutdownTimeout != 10*time.Second || cfg.ShutdownDelay != 0 || cfg.MigrateOnStart || cfg.OIDC.CacheTTL != 15*time.Second || cfg.MaxUploadBytes != 25<<20 || cfg.ObjectDir == "" {
+		cfg.TransferTimeout != 60*time.Second || cfg.ShutdownTimeout != 10*time.Second || cfg.ShutdownDelay != 0 || cfg.MigrateOnStart || cfg.OIDC.CacheTTL != 30*time.Second || cfg.MaxUploadBytes != 25<<20 || cfg.ObjectDir == "" {
 		t.Fatalf("defaults: %+v", cfg)
 	}
 }

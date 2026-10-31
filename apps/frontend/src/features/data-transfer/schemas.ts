@@ -74,6 +74,8 @@ export const briefChangeSchema = z.object({
   type: z.string(),
   targetKind: z.string(),
   targetId: z.string(),
+  /** The name the change itself recorded for its target, as it was then; empty when none. */
+  targetLabel: z.string().optional().default(''),
   actorId: z.string().nullable().optional(),
   reason: z.string().nullable().optional(),
   recordedAt: z.string(),

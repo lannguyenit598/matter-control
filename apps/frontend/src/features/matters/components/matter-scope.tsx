@@ -31,6 +31,7 @@ export async function MatterScope({
   return (
     <div className="flex flex-col gap-5">
       <nav
+        data-slot="matter-scope"
         aria-label="Current matter scope"
         className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg border bg-card px-4 py-3 text-sm"
       >

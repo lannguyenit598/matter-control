@@ -115,6 +115,7 @@ type criterionBody struct {
 	Title       string      `json:"title"`
 	Description string      `json:"description"`
 	Mandatory   bool        `json:"mandatory"`
+	Purpose     string      `json:"purpose"`
 	Rule        string      `json:"versionRule"`
 	DocumentID  *string     `json:"documentId"`
 	FixedID     *string     `json:"fixedVersionId"`
@@ -173,9 +174,25 @@ type evidenceBody struct {
 	WithdrawnAt *string `json:"withdrawnAt"`
 }
 
+// proofPartBody summarises the criteria of one purpose (BF-01): the package readiness that gates
+// a filing submission is reported apart from the authority outcome accepted after the fact.
+type proofPartBody struct {
+	Declared  bool `json:"declared"`
+	Total     int  `json:"total"`
+	Mandatory int  `json:"mandatory"`
+	Satisfied int  `json:"satisfied"`
+	Ready     bool `json:"ready"`
+}
+
+func proofPartDTO(p matter.ProofPart) proofPartBody {
+	return proofPartBody{Declared: p.Declared(), Total: p.Total, Mandatory: p.Mandatory, Satisfied: p.Satisfied, Ready: p.Ready()}
+}
+
 type checklistBody struct {
 	Subject      workItemBody    `json:"subject"`
 	Verification string          `json:"verification"`
+	Package      proofPartBody   `json:"package"`
+	Outcome      proofPartBody   `json:"outcome"`
 	Criteria     []criterionBody `json:"criteria"`
 	Evidence     []evidenceBody  `json:"evidence"`
 	Verifiers    []string        `json:"verifiers"`
@@ -204,7 +221,7 @@ func assessmentDTO(a *matter.Assessment) *assessmentBody {
 
 func criterionDTO(c matter.CriterionStatus) criterionBody {
 	cr := c.Criterion
-	b := criterionBody{ID: cr.ID.String(), SubjectID: cr.SubjectID.String(), Title: cr.Title, Description: cr.Description, Mandatory: cr.Mandatory, Rule: string(cr.Rule),
+	b := criterionBody{ID: cr.ID.String(), SubjectID: cr.SubjectID.String(), Title: cr.Title, Description: cr.Description, Mandatory: cr.Mandatory, Purpose: string(cr.EffectivePurpose()), Rule: string(cr.Rule),
 		ValidDays: int(cr.ValidFor.Hours() / 24), Retired: cr.Retired, Revision: cr.Revision, Satisfied: c.Satisfied, Reason: string(c.Reason), Claims: make([]claimBody, len(c.Claims))}
 	if cr.DocumentID != nil {
 		s := cr.DocumentID.String()
@@ -225,15 +242,15 @@ func criterionDTO(c matter.CriterionStatus) criterionBody {
 // criterionETag hashes the revision-determined definition only (the claims move on their own).
 func criterionETag(c matter.Criterion) ([]byte, string) {
 	b, _ := json.Marshal(struct {
-		ID, Title, Description, Rule string
-		Mandatory, Retired           bool
-		Revision                     int64
-	}{c.ID.String(), c.Title, c.Description, string(c.Rule), c.Mandatory, c.Retired, c.Revision}) // skip: primitives only
+		ID, Title, Description, Rule, Purpose string
+		Mandatory, Retired                    bool
+		Revision                              int64
+	}{c.ID.String(), c.Title, c.Description, string(c.Rule), string(c.EffectivePurpose()), c.Mandatory, c.Retired, c.Revision}) // skip: primitives only
 	return b, etagOf(b)
 }
 
 func checklistDTO(p matter.ProofChecklist) checklistBody {
-	out := checklistBody{Subject: workItemDTO(p.Subject), Verification: string(p.Result.State), Criteria: make([]criterionBody, len(p.Result.Criteria)),
+	out := checklistBody{Subject: workItemDTO(p.Subject), Verification: string(p.Result.State), Package: proofPartDTO(p.Result.Package), Outcome: proofPartDTO(p.Result.Outcome), Criteria: make([]criterionBody, len(p.Result.Criteria)),
 		Evidence: make([]evidenceBody, len(p.Evidence)), Verifiers: strs(p.Verifiers), Dependents: make([]string, len(p.Dependencies)), AsOf: ts(p.AsOf)}
 	for i, c := range p.Result.Criteria {
 		out.Criteria[i] = criterionDTO(c)

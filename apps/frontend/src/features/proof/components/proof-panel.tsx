@@ -1,11 +1,15 @@
 'use client'
 
+import { ClipboardCheck, FileX, Flag, Pencil, Scale, Undo2 } from 'lucide-react'
+import type { ReactNode } from 'react'
+
 import { LocalizedText } from '@/components/molecules/localized-text'
 
 import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
 import { Textarea } from '@/components/atoms/textarea'
 import { FormField } from '@/components/molecules/form-field'
+import { IconDisclosure } from '@/components/molecules/icon-disclosure'
 import { ConfirmActionButton } from '@/components/organisms/confirm-action-button'
 import { IntentForm } from '@/components/organisms/intent-form'
 
@@ -35,6 +39,10 @@ export type ProofContext = {
   versions: { id: string; label: string }[]
   /** Active EDITOR/OWNER members who could be designated. */
   verifierCandidates: { id: string; name: string }[]
+  /** A filing keeps its package/signature checklist reachable whatever its outcome-proof flag says. */
+  isFiling?: boolean
+  /** Outcome criteria exist only on a filing that requires outcome verification. */
+  outcomeAllowed?: boolean
 }
 
 const STATE_TEXT: Record<string, string> = {
@@ -52,23 +60,205 @@ const canWrite = (role: string) => role === 'OWNER' || role === 'EDITOR'
  * assessment is an independent verifier's decision on one offer. Nothing here sets a verification
  * state: it is derived by the API and only displayed.
  */
+function CriteriaGroup({
+  title,
+  note,
+  criteria,
+  render,
+}: {
+  title: React.ReactNode
+  note: React.ReactNode
+  criteria: Criterion[]
+  render: (c: Criterion) => React.ReactNode
+}) {
+  return (
+    <section className="flex flex-col gap-3">
+      <h3 className="font-medium">{title}</h3>
+      <p className="text-sm text-muted-foreground">{note}</p>
+      {criteria.length > 0 && <ul className="flex flex-col gap-4">{criteria.map(render)}</ul>}
+    </section>
+  )
+}
+
 export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: ProofContext }) {
   const { subject } = checklist
   const isVerifier = checklist.verifiers.includes(checklist.callerId) && canWrite(ctx.role)
   const evidenceById = Object.fromEntries(checklist.evidence.map((e) => [e.id, e]))
+  const formCtx = { ...ctx, outcomeAllowed: Boolean(ctx.isFiling) && subject.proofRequired }
+  const criterionItem = (c: Criterion) => (
+    <li key={c.id} className="rounded-md border p-4">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h3 className="font-medium">
+          {c.title}
+          {c.retired && (
+            <span className="ml-2 text-xs text-muted-foreground">
+              <LocalizedText en="(retired)" vi="(ngừng áp dụng)" />
+            </span>
+          )}
+        </h3>
+        <span className="text-sm">
+          {c.satisfied ? 'Satisfied' : (CRITERION_REASON[c.reason ?? ''] ?? 'Not satisfied')}
+        </span>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {c.mandatory ? 'Mandatory' : 'Optional'} · {VERSION_RULE_LABEL[c.versionRule]}
+        {c.validDays > 0 ? ` · valid ${c.validDays} days once accepted` : ''} · revision{' '}
+        {c.revision}
+      </p>
+      {c.description && <p className="mt-1 text-sm break-words">{c.description}</p>}
+      <ul className="mt-3 flex flex-col gap-3">
+        {c.claims.length === 0 && (
+          <li className="text-sm text-muted-foreground">
+            <LocalizedText
+              en="No evidence offered for this criterion."
+              vi="Chưa cung cấp bằng chứng cho tiêu chí này."
+            />
+          </li>
+        )}
+        {c.claims.map((k) => {
+          const ev = evidenceById[k.evidenceId]
+          const a = k.assessment
+          const independent =
+            ev !== undefined &&
+            ev.submittedBy !== checklist.callerId &&
+            k.claimedBy !== checklist.callerId
+          const openDispute = checklist.openDisputes.find((d) => d.assessmentId === a?.id)
+          return (
+            <li key={k.id} className="rounded border bg-muted/30 p-3 text-sm">
+              <p>
+                {ev?.kind === 'DOCUMENT_VERSION'
+                  ? `Document version ${ev.versionId?.slice(0, 8)}`
+                  : `Reference “${ev?.reference ?? ''}”`}{' '}
+                offered by {userName(ctx.names, k.claimedBy)}
+                {ev?.withdrawnAt ? ' · withdrawn' : ''}
+                {k.criterionRevision !== c.revision
+                  ? ' · for an earlier revision of this criterion'
+                  : ''}
+              </p>
+              {a ? (
+                <p className="mt-1">
+                  <strong>{a.verdict === 'ACCEPTED' ? 'Accepted' : 'Rejected'}</strong> by{' '}
+                  {userName(ctx.names, a.reviewer)}: {a.rationale}
+                  {a.revokedAt ? ` · revoked (${a.revokedReason ?? ''})` : ''}
+                  {a.effectiveUntil ? ` · counts until ${a.effectiveUntil}` : ''}
+                </p>
+              ) : (
+                <p className="mt-1 text-muted-foreground">
+                  <LocalizedText
+                    en="Waiting for an independent verifier."
+                    vi="Đang chờ người xác minh độc lập."
+                  />
+                </p>
+              )}
+              {k.criterionRevision === c.revision &&
+                !ev?.withdrawnAt &&
+                isVerifier &&
+                independent &&
+                !openDispute && (
+                  <AssessForm
+                    matterId={ctx.matterId}
+                    claimId={k.id}
+                    epoch={subject.proofEpoch}
+                    versionId={ev?.versionId ?? ''}
+                    seenAssessmentId={a?.id ?? ''}
+                  />
+                )}
+              {isVerifier && !independent && !a && (
+                <p className="mt-1 text-muted-foreground">
+                  <LocalizedText
+                    en="You supplied or offered this, so someone else must review it."
+                    vi="Bạn đã cung cấp hoặc đề xuất bằng chứng này, nên người khác phải đánh giá."
+                  />
+                </p>
+              )}
+              {a?.verdict === 'ACCEPTED' && !a.revokedAt && k.criterionRevision === c.revision && (
+                <div className="mt-2 flex flex-wrap gap-4">
+                  {canWrite(ctx.role) && !openDispute && (
+                    <ReasonForm
+                      label="Challenge this acceptance"
+                      icon={<Flag />}
+                      draftKey={`assessment:${a.id}:dispute`}
+                      run={(reason) =>
+                        raiseDisputeAction({
+                          matterId: ctx.matterId,
+                          targetId: a.id,
+                          reason,
+                        })
+                      }
+                    />
+                  )}
+                  {isVerifier && independent && (
+                    <ReasonForm
+                      label="Revoke this acceptance"
+                      icon={<Undo2 />}
+                      draftKey={`assessment:${a.id}:revoke`}
+                      run={(reason) =>
+                        revokeAssessmentAction({
+                          matterId: ctx.matterId,
+                          targetId: a.id,
+                          reason,
+                        })
+                      }
+                    />
+                  )}
+                </div>
+              )}
+              {openDispute && (
+                <div className="mt-2 text-sm">
+                  <p>
+                    Challenged by {userName(ctx.names, openDispute.raisedBy)}: {openDispute.reason}
+                  </p>
+                  {isVerifier && independent && openDispute.raisedBy !== checklist.callerId && (
+                    <ReasonForm
+                      label="Resolve the dispute"
+                      icon={<Scale />}
+                      draftKey={`dispute:${openDispute.id}:resolve`}
+                      run={(resolution) =>
+                        resolveDisputeAction({
+                          matterId: ctx.matterId,
+                          disputeId: openDispute.id,
+                          resolution,
+                        })
+                      }
+                    />
+                  )}
+                </div>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+      {canWrite(ctx.role) && !c.retired && (
+        <IconDisclosure
+          className="mt-3"
+          icon={<Pencil />}
+          label={{
+            en: 'Revise or retire this criterion',
+            vi: 'Sửa đổi hoặc ngừng áp dụng tiêu chí',
+          }}
+        >
+          <CriterionForm ctx={formCtx} itemId={subject.id} existing={c} />
+        </IconDisclosure>
+      )}
+    </li>
+  )
   return (
     <div className="flex flex-col gap-6">
       <p className="text-sm">
         <span className="font-medium">
-          {STATE_TEXT[checklist.verification] ?? checklist.verification}
+          {subject.proofRequired
+            ? (STATE_TEXT[checklist.verification] ?? checklist.verification)
+            : 'No outcome verification state'}
         </span>
         {' · '}
         <span className="text-muted-foreground">
-          Derived from the criteria below at {checklist.asOf}. It cannot be edited.
+          {subject.proofRequired
+            ? `Derived from the criteria below at ${checklist.asOf}. It cannot be edited.`
+            : `This record has no outcome verification, so no state is derived. Its package criteria still apply (read at ${checklist.asOf}).`}
         </span>
       </p>
 
-      {checklist.criteria.length === 0 && (
+      {checklist.criteria.length === 0 && !ctx.isFiling && (
         <p className="text-sm text-muted-foreground">
           <LocalizedText
             en="No criteria yet, so nothing can be verified. Add what would count as proof."
@@ -76,174 +266,75 @@ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: Proo
           />
         </p>
       )}
-      <ul className="flex flex-col gap-4">
-        {checklist.criteria.map((c) => (
-          <li key={c.id} className="rounded-md border p-4">
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h3 className="font-medium">
-                {c.title}
-                {c.retired && (
-                  <span className="ml-2 text-xs text-muted-foreground">
-                    <LocalizedText en="(retired)" vi="(ngừng áp dụng)" />
-                  </span>
-                )}
-              </h3>
-              <span className="text-sm">
-                {c.satisfied ? 'Satisfied' : (CRITERION_REASON[c.reason ?? ''] ?? 'Not satisfied')}
-              </span>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              {c.mandatory ? 'Mandatory' : 'Optional'} · {VERSION_RULE_LABEL[c.versionRule]}
-              {c.validDays > 0 ? ` · valid ${c.validDays} days once accepted` : ''} · revision{' '}
-              {c.revision}
-            </p>
-            {c.description && <p className="mt-1 text-sm break-words">{c.description}</p>}
-            <ul className="mt-3 flex flex-col gap-3">
-              {c.claims.length === 0 && (
-                <li className="text-sm text-muted-foreground">
+      {ctx.isFiling ? (
+        <>
+          <CriteriaGroup
+            title={
+              <LocalizedText
+                en="Package and signature readiness"
+                vi="Sẵn sàng bộ hồ sơ và chữ ký"
+              />
+            }
+            note={
+              checklist.package.ready ? (
+                <LocalizedText
+                  en="Ready: every mandatory package criterion is accepted. This permits submission; it does not accept the authority’s decision."
+                  vi="Đã sẵn sàng: mọi tiêu chí bắt buộc của bộ hồ sơ đã được chấp nhận. Điều này cho phép nộp hồ sơ, không có nghĩa là quyết định của cơ quan đã được chấp nhận."
+                />
+              ) : (
+                <LocalizedText
+                  en="Submission stays blocked until every mandatory package criterion is accepted."
+                  vi="Chưa thể nộp hồ sơ cho đến khi mọi tiêu chí bắt buộc của bộ hồ sơ được chấp nhận."
+                />
+              )
+            }
+            criteria={checklist.criteria.filter((c) => c.purpose === 'PACKAGE')}
+            render={criterionItem}
+          />
+          {subject.proofRequired ? (
+            <CriteriaGroup
+              title={<LocalizedText en="Authority outcome" vi="Kết quả từ cơ quan" />}
+              note={
+                !checklist.outcome.declared ? (
                   <LocalizedText
-                    en="No evidence offered for this criterion."
-                    vi="Chưa cung cấp bằng chứng cho tiêu chí này."
+                    en="No outcome criterion is declared, so no outcome acceptance is tracked. Declare one to have an independent verifier accept the authority’s decision."
+                    vi="Chưa khai báo tiêu chí kết quả nên chưa theo dõi việc chấp nhận kết quả. Hãy khai báo để người xác minh độc lập chấp nhận quyết định của cơ quan."
                   />
-                </li>
-              )}
-              {c.claims.map((k) => {
-                const ev = evidenceById[k.evidenceId]
-                const a = k.assessment
-                const independent =
-                  ev !== undefined &&
-                  ev.submittedBy !== checklist.callerId &&
-                  k.claimedBy !== checklist.callerId
-                const openDispute = checklist.openDisputes.find((d) => d.assessmentId === a?.id)
-                return (
-                  <li key={k.id} className="rounded border bg-muted/30 p-3 text-sm">
-                    <p>
-                      {ev?.kind === 'DOCUMENT_VERSION'
-                        ? `Document version ${ev.versionId?.slice(0, 8)}`
-                        : `Reference “${ev?.reference ?? ''}”`}{' '}
-                      offered by {userName(ctx.names, k.claimedBy)}
-                      {ev?.withdrawnAt ? ' · withdrawn' : ''}
-                      {k.criterionRevision !== c.revision
-                        ? ' · for an earlier revision of this criterion'
-                        : ''}
-                    </p>
-                    {a ? (
-                      <p className="mt-1">
-                        <strong>{a.verdict === 'ACCEPTED' ? 'Accepted' : 'Rejected'}</strong> by{' '}
-                        {userName(ctx.names, a.reviewer)}: {a.rationale}
-                        {a.revokedAt ? ` · revoked (${a.revokedReason ?? ''})` : ''}
-                        {a.effectiveUntil ? ` · counts until ${a.effectiveUntil}` : ''}
-                      </p>
-                    ) : (
-                      <p className="mt-1 text-muted-foreground">
-                        <LocalizedText
-                          en="Waiting for an independent verifier."
-                          vi="Đang chờ người xác minh độc lập."
-                        />
-                      </p>
-                    )}
-                    {k.criterionRevision === c.revision &&
-                      !ev?.withdrawnAt &&
-                      isVerifier &&
-                      independent &&
-                      !openDispute && (
-                        <AssessForm
-                          matterId={ctx.matterId}
-                          claimId={k.id}
-                          epoch={subject.proofEpoch}
-                          versionId={ev?.versionId ?? ''}
-                          seenAssessmentId={a?.id ?? ''}
-                        />
-                      )}
-                    {isVerifier && !independent && !a && (
-                      <p className="mt-1 text-muted-foreground">
-                        <LocalizedText
-                          en="You supplied or offered this, so someone else must review it."
-                          vi="Bạn đã cung cấp hoặc đề xuất bằng chứng này, nên người khác phải đánh giá."
-                        />
-                      </p>
-                    )}
-                    {a?.verdict === 'ACCEPTED' &&
-                      !a.revokedAt &&
-                      k.criterionRevision === c.revision && (
-                        <div className="mt-2 flex flex-wrap gap-4">
-                          {canWrite(ctx.role) && !openDispute && (
-                            <ReasonForm
-                              label="Challenge this acceptance"
-                              draftKey={`assessment:${a.id}:dispute`}
-                              run={(reason) =>
-                                raiseDisputeAction({
-                                  matterId: ctx.matterId,
-                                  targetId: a.id,
-                                  reason,
-                                })
-                              }
-                            />
-                          )}
-                          {isVerifier && independent && (
-                            <ReasonForm
-                              label="Revoke this acceptance"
-                              draftKey={`assessment:${a.id}:revoke`}
-                              run={(reason) =>
-                                revokeAssessmentAction({
-                                  matterId: ctx.matterId,
-                                  targetId: a.id,
-                                  reason,
-                                })
-                              }
-                            />
-                          )}
-                        </div>
-                      )}
-                    {openDispute && (
-                      <div className="mt-2 text-sm">
-                        <p>
-                          Challenged by {userName(ctx.names, openDispute.raisedBy)}:{' '}
-                          {openDispute.reason}
-                        </p>
-                        {isVerifier &&
-                          independent &&
-                          openDispute.raisedBy !== checklist.callerId && (
-                            <ReasonForm
-                              label="Resolve the dispute"
-                              draftKey={`dispute:${openDispute.id}:resolve`}
-                              run={(resolution) =>
-                                resolveDisputeAction({
-                                  matterId: ctx.matterId,
-                                  disputeId: openDispute.id,
-                                  resolution,
-                                })
-                              }
-                            />
-                          )}
-                      </div>
-                    )}
-                  </li>
+                ) : checklist.outcome.ready ? (
+                  <LocalizedText
+                    en="Accepted: an independent verifier accepted the authority’s outcome."
+                    vi="Đã chấp nhận: người xác minh độc lập đã chấp nhận kết quả của cơ quan."
+                  />
+                ) : (
+                  <LocalizedText
+                    en="Pending: recording the authority’s decision does not accept it. Offer the outcome evidence for this criterion and a designated verifier who did not supply it decides."
+                    vi="Đang chờ: ghi nhận quyết định của cơ quan chưa phải là chấp nhận. Hãy cung cấp bằng chứng kết quả cho tiêu chí này để người xác minh độc lập quyết định."
+                  />
                 )
-              })}
-            </ul>
-            {canWrite(ctx.role) && !c.retired && (
-              <details className="mt-3">
-                <summary className="cursor-pointer text-sm underline">
-                  <LocalizedText
-                    en="Revise or retire this criterion"
-                    vi="Sửa đổi hoặc ngừng áp dụng tiêu chí"
-                  />
-                </summary>
-                <CriterionForm ctx={ctx} itemId={subject.id} existing={c} />
-              </details>
-            )}
-          </li>
-        ))}
-      </ul>
+              }
+              criteria={checklist.criteria.filter((c) => c.purpose === 'OUTCOME')}
+              render={criterionItem}
+            />
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              <LocalizedText
+                en="No independent outcome verification is tracked for this filing. The package and signature checks above still apply; the authority’s outcome evidence is recorded at the Approval stage."
+                vi="Hồ sơ này không theo dõi xác minh độc lập kết quả. Các điều kiện bộ hồ sơ và chữ ký ở trên vẫn áp dụng; bằng chứng kết quả của cơ quan được ghi nhận ở bước Phê duyệt."
+              />
+            </p>
+          )}
+        </>
+      ) : (
+        <ul className="flex flex-col gap-4">{checklist.criteria.map(criterionItem)}</ul>
+      )}
 
-      {canWrite(ctx.role) && subject.proofRequired && (
+      {canWrite(ctx.role) && (subject.proofRequired || ctx.isFiling) && (
         <>
           <section aria-labelledby="add-criterion">
             <h3 id="add-criterion" className="mb-2 font-medium">
               <LocalizedText en="Add a criterion" vi="Thêm tiêu chí" />
             </h3>
-            <CriterionForm ctx={ctx} itemId={subject.id} />
+            <CriterionForm ctx={formCtx} itemId={subject.id} />
           </section>
           <section aria-labelledby="offer-evidence">
             <h3 id="offer-evidence" className="mb-2 font-medium">
@@ -278,6 +369,7 @@ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: Proo
                     : e.reference}
                   <ReasonForm
                     label="Withdraw"
+                    icon={<FileX />}
                     draftKey={`evidence:${e.id}:withdraw`}
                     run={(reason) =>
                       withdrawEvidenceAction({ matterId: ctx.matterId, targetId: e.id, reason })
@@ -374,16 +466,18 @@ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: Proo
 
 function ReasonForm({
   label,
+  icon,
   draftKey,
   run,
 }: {
   label: string
+  /** The icon that stands for the action on its button; the label is its name and tooltip. */
+  icon: ReactNode
   draftKey: string
   run: (reason: string) => ReturnType<typeof withdrawEvidenceAction>
 }) {
   return (
-    <details>
-      <summary className="cursor-pointer text-sm underline">{label}</summary>
+    <IconDisclosure icon={icon} label={label}>
       <IntentForm
         receipted={false}
         draftKey={draftKey}
@@ -400,7 +494,7 @@ function ReasonForm({
           </FormField>
         )}
       </IntentForm>
-    </details>
+    </IconDisclosure>
   )
 }
 
@@ -418,10 +512,12 @@ function AssessForm({
   seenAssessmentId: string
 }) {
   return (
-    <details className="mt-2" open>
-      <summary className="cursor-pointer text-sm underline">
-        <LocalizedText en="Review this evidence" vi="Đánh giá bằng chứng" />
-      </summary>
+    <IconDisclosure
+      className="mt-2"
+      open
+      icon={<ClipboardCheck />}
+      label={{ en: 'Review this evidence', vi: 'Đánh giá bằng chứng' }}
+    >
       <IntentForm
         // A draft belongs to the assessment it was written against: a newer verdict remounts a clean form.
         key={`claim:${claimId}:assess:${seenAssessmentId || 'none'}`}
@@ -493,7 +589,7 @@ function AssessForm({
           </>
         )}
       </IntentForm>
-    </details>
+    </IconDisclosure>
   )
 }
 
@@ -518,6 +614,8 @@ function CriterionForm({
           title: v.title ?? '',
           description: v.description ?? '',
           mandatory: v.mandatory ?? 'yes',
+          // A purpose is fixed at creation: a revision never sends one.
+          purpose: existing ? '' : (v.purpose ?? 'PACKAGE'),
           versionRule: v.versionRule ?? 'NONE',
           documentId: v.documentId ?? '',
           fixedVersionId: v.fixedVersionId ?? '',
@@ -565,6 +663,39 @@ function CriterionForm({
               />
             )}
           </FormField>
+          {ctx.isFiling && !existing && (
+            <FormField
+              label={<LocalizedText en="What does it prove?" vi="Tiêu chí này chứng minh gì?" />}
+              hint={
+                <LocalizedText
+                  en="Package criteria must be accepted before submission. An outcome criterion is accepted later, after the authority decides; it never blocks submission."
+                  vi="Tiêu chí bộ hồ sơ phải được chấp nhận trước khi nộp. Tiêu chí kết quả được chấp nhận sau khi cơ quan quyết định và không chặn việc nộp."
+                />
+              }
+            >
+              {(c) => (
+                <Select
+                  name="purpose"
+                  defaultValue="PACKAGE"
+                  options={[
+                    {
+                      value: 'PACKAGE',
+                      label: <LocalizedText en="Package or signature" vi="Bộ hồ sơ hoặc chữ ký" />,
+                    },
+                    ...(ctx.outcomeAllowed
+                      ? [
+                          {
+                            value: 'OUTCOME',
+                            label: <LocalizedText en="Authority outcome" vi="Kết quả từ cơ quan" />,
+                          },
+                        ]
+                      : []),
+                  ]}
+                  {...c}
+                />
+              )}
+            </FormField>
+          )}
           <div className="grid gap-3 sm:grid-cols-2">
             <FormField label={<LocalizedText en="Required?" vi="Bắt buộc?" />}>
               {(c) => (

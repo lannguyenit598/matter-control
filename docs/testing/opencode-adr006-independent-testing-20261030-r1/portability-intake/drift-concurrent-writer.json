@@ -1,0 +1,142 @@
+{
+ "detected_utc": "2026-10-31T15:28:11Z",
+ "kind": "CONCURRENT_WRITER_DRIFT",
+ "candidate_under_test": {
+  "head": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+  "basis": "HEAD blobs = Claude portability delta as committed; my PORT renders/probes were executed against these bytes"
+ },
+ "observer_note": "Not the Claude portability author and not OpenCode. Working-tree changes appeared during the QA session (latest mtimes 2026-10-31T15:22-15:25Z). Live-tree bytes are an unreviewed moving target; this record pins them for audit only, no verdict is issued on them.",
+ "items": [
+  {
+   "path": "ops/deploy/profiles.mjs",
+   "head_sha256": "764fb30111d00eb502b6ca03d1e1a4cfe9667dc4c03c848fb11a7f9ea0937443",
+   "head_bytes": 5380,
+   "worktree_sha256": "4f054599a1f756d825ccbc6eda985885695d2ac3a7d5de072c6fde4ae6eef5b6",
+   "worktree_bytes": 5991,
+   "modified": true
+  },
+  {
+   "path": "ops/deploy/profiles.test.mjs",
+   "head_sha256": "bce288dd7e5a92f14827605a048ee0007c16dcbb5d035bd4b6a99f8295c1e8f6",
+   "head_bytes": 4702,
+   "worktree_sha256": "017258a724c2aca3f7334b9581625dac4517795fa9a6781ea2682b835ce38bf5",
+   "worktree_bytes": 6609,
+   "modified": true
+  },
+  {
+   "path": "ops/deploy/cloud-run/service.yaml",
+   "head_sha256": "322feb611371cecd98542a18a2a7cc0998347a4371d45dc40be43ce95c80f509",
+   "head_bytes": 3461,
+   "worktree_sha256": "4b6f7515bda4836e70662a3ca752825fc9e9697c8dd443e68cc8bb26be386d20",
+   "worktree_bytes": 3461,
+   "modified": true
+  },
+  {
+   "path": "ops/deploy/cloud-run/migrate-job.yaml",
+   "head_sha256": "03161da1176c3f2f0f0621ef3ee25b749c09c78ec14a6aeef89f6dc0faca6ec3",
+   "head_bytes": 1942,
+   "worktree_sha256": "966ec868a3ed9eda2e2c2e580b760f14c6ceb400c2f3e75e2d983ac9d97ad480",
+   "worktree_bytes": 2084,
+   "modified": true
+  },
+  {
+   "path": "ops/deploy/compute-engine/cloud-init.yaml",
+   "head_sha256": "ea84127de380a3794bf15b3c4473ec314972a96de76208fa527c433d3464401a",
+   "head_bytes": 6700,
+   "worktree_sha256": "58b750e349023288c9c2473545e00581aaf4c5233bcc5745179ec824e2d82266",
+   "worktree_bytes": 7768,
+   "modified": true
+  },
+  {
+   "path": "ops/deploy/cloud-run.values.example.json",
+   "head_sha256": "94c9c9b62eb50995e249cf94f890164985783e90b0d7a64e150c1330851d5f6b",
+   "head_bytes": 866,
+   "worktree_sha256": "d5c384b10345291b4f6f4eb7b0b1e53588896687148cdc8060c56b41f336c53e",
+   "worktree_bytes": 939,
+   "modified": true
+  },
+  {
+   "path": "apps/backend/internal/config/product.go",
+   "head_sha256": "f6f5daaf4e274742b4fc1babd9ef9c071dfa40eaf3a5ede6bf3b31f8b96cf8c0",
+   "head_bytes": 7249,
+   "worktree_sha256": "de1df119df6ef05b65de87a3bdff42fbdee96e5e85cdd47af7558d283e99f9d2",
+   "worktree_bytes": 7249,
+   "modified": true
+  },
+  {
+   "path": "apps/backend/internal/config/product_test.go",
+   "head_sha256": "49fcc14b288f1f68ef3ba14a2499409c5827b45dab2c260c923d1fc178964bb3",
+   "head_bytes": 7601,
+   "worktree_sha256": "6864e9447b2def234543b3adbe6046d61cedf008cff72d656d5099d2b8927a93",
+   "worktree_bytes": 7601,
+   "modified": true
+  }
+ ],
+ "diffstat": " apps/backend/internal/config/product.go      |  2 +-\n apps/backend/internal/config/product_test.go |  2 +-\n ops/deploy/cloud-run.values.example.json     |  1 +\n ops/deploy/cloud-run/migrate-job.yaml        |  7 +++---\n ops/deploy/cloud-run/service.yaml            |  2 +-\n ops/deploy/compute-engine/cloud-init.yaml    | 37 +++++++++++++++++++++++-----\n ops/deploy/profiles.mjs                      |  9 ++++++-\n ops/deploy/profiles.test.mjs                 | 26 ++++++++++++++++++-\n 8 files changed, 71 insertions(+), 15 deletions(-)\n",
+ "second_observation": {
+  "observed_utc": "2026-10-31T15:31:22Z",
+  "items": [
+   {
+    "path": "ops/deploy/profiles.mjs",
+    "present": true,
+    "sha256": "4f054599a1f756d825ccbc6eda985885695d2ac3a7d5de072c6fde4ae6eef5b6",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "ops/deploy/profiles.test.mjs",
+    "present": true,
+    "sha256": "017258a724c2aca3f7334b9581625dac4517795fa9a6781ea2682b835ce38bf5",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "ops/deploy/cloud-run/service.yaml",
+    "present": true,
+    "sha256": "4b6f7515bda4836e70662a3ca752825fc9e9697c8dd443e68cc8bb26be386d20",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "ops/deploy/cloud-run/migrate-job.yaml",
+    "present": true,
+    "sha256": "966ec868a3ed9eda2e2c2e580b760f14c6ceb400c2f3e75e2d983ac9d97ad480",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "ops/deploy/compute-engine/cloud-init.yaml",
+    "present": true,
+    "sha256": "58b750e349023288c9c2473545e00581aaf4c5233bcc5745179ec824e2d82266",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "ops/deploy/cloud-run.values.example.json",
+    "present": true,
+    "sha256": "d5c384b10345291b4f6f4eb7b0b1e53588896687148cdc8060c56b41f336c53e",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "apps/backend/internal/config/product.go",
+    "present": true,
+    "sha256": "de1df119df6ef05b65de87a3bdff42fbdee96e5e85cdd47af7558d283e99f9d2",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "apps/backend/internal/config/product_test.go",
+    "present": true,
+    "sha256": "6864e9447b2def234543b3adbe6046d61cedf008cff72d656d5099d2b8927a93",
+    "changed_since_first_observation": false
+   },
+   {
+    "path": "apps/frontend/scripts/release-preflight.mjs",
+    "present": true,
+    "sha256": "ef8cf795e27f5f3b164728b956e2eb8047f417172e131af165497f08b248f7ef",
+    "changed_since_first_observation": null
+   },
+   {
+    "path": "apps/frontend/scripts/release-preflight.test.mjs",
+    "present": true,
+    "sha256": "df4e37da702bbb9b82669f88a37288b1bdd5ea1e0e42a20800dbbedc9f46b60a",
+    "changed_since_first_observation": null
+   }
+  ]
+ },
+ "status": "ACTIVE_CONCURRENT_WRITER \u2014 the writer continued after the first pin (release-preflight.mjs and its test appeared at ~2026-10-31T15:29Z; profiles.mjs mtime unchanged at 15:22Z). Treat all live-tree hashes as a moving target; only HEAD blobs and the pinned renders are candidate evidence."
+}

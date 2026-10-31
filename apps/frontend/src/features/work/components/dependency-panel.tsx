@@ -2,16 +2,19 @@
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 
+import { Unlink } from 'lucide-react'
 import Link from 'next/link'
 
 import { Badge } from '@/components/atoms/badge'
 import { Select } from '@/components/atoms/select'
 import { Textarea } from '@/components/atoms/textarea'
 import { FormField } from '@/components/molecules/form-field'
+import { IconDisclosure } from '@/components/molecules/icon-disclosure'
+import { SearchPicker } from '@/components/molecules/search-picker'
 import { IntentForm } from '@/components/organisms/intent-form'
 import { withFrom } from '@/lib/mc/paths'
 
-import { addDependencyAction, removeDependencyAction } from '../actions'
+import { addDependencyAction, removeDependencyAction, searchWorkItemsAction } from '../actions'
 import { EXECUTION_LABEL, GATE_LABEL, GATE_REASON } from '../labels'
 import type { Detail } from '../schemas'
 
@@ -28,14 +31,12 @@ export function DependencyPanel({
   matterId,
   detail,
   here,
-  candidates,
   canEdit,
   titles,
 }: {
   matterId: string
   detail: Detail
   here: string
-  candidates: { id: string; title: string }[]
   canEdit: boolean
   titles: Record<string, string>
 }) {
@@ -115,22 +116,31 @@ export function DependencyPanel({
         >
           {({ errors }) => (
             <>
-              <FormField
-                label={<LocalizedText en="Must be satisfied first" vi="Phải được đáp ứng trước" />}
-                required
-                error={errors.sourceId?.[0]}
-              >
-                {(c) => (
-                  <Select
-                    name="sourceId"
-                    placeholder="Choose a record"
-                    options={candidates
-                      .filter((x) => x.id !== it.id)
-                      .map((x) => ({ value: x.id, label: x.title }))}
-                    {...c}
+              <SearchPicker
+                name="sourceId"
+                legend={<LocalizedText en="Must be satisfied first" vi="Phải được đáp ứng trước" />}
+                searchLabel={
+                  <LocalizedText
+                    en="Search this matter’s records by title"
+                    vi="Tìm bản ghi của hồ sơ theo tiêu đề"
                   />
-                )}
-              </FormField>
+                }
+                required
+                search={(query) => searchWorkItemsAction({ matterId, query, excludeId: it.id })}
+                noMatch={
+                  <LocalizedText
+                    en="No record you can read matches. Check the title, or add the record first."
+                    vi="Không có bản ghi nào bạn xem được khớp. Kiểm tra tiêu đề hoặc thêm bản ghi trước."
+                  />
+                }
+                hint={
+                  <LocalizedText
+                    en="Every record you can read is searchable, not only the first page."
+                    vi="Tìm được mọi bản ghi bạn xem được, không chỉ trang đầu."
+                  />
+                }
+                error={errors.sourceId?.[0]}
+              />
               <FormField
                 label={<LocalizedText en="Gate" vi="Điều kiện" />}
                 hint={
@@ -217,11 +227,11 @@ function RemoveForm({
   titles: Record<string, string>
 }) {
   return (
-    <details className="text-sm">
-      <summary className="cursor-pointer underline">
-        <LocalizedText en="Remove this prerequisite…" vi="Gỡ điều kiện tiên quyết…" />
-      </summary>
-      <div className="mt-2">
+    <IconDisclosure
+      icon={<Unlink />}
+      label={{ en: 'Remove this prerequisite…', vi: 'Gỡ điều kiện tiên quyết…' }}
+    >
+      <div>
         <IntentForm
           receipted={false}
           draftKey={`item:${targetId}:remove:${edgeId}`}
@@ -254,6 +264,6 @@ function RemoveForm({
           )}
         </IntentForm>
       </div>
-    </details>
+    </IconDisclosure>
   )
 }
