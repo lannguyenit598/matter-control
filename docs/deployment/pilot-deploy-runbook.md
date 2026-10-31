@@ -67,6 +67,16 @@ Because the budget does not exceed any documented limit, the `MC_DB_MAX_CONNS` k
 added. If provider qualification measures a lower client cap, that knob is the named backend
 follow-up — activation stays blocked until then.
 
+> **Erratum (2026-11-01, MC-ZCODE-ENABLEMENT-MINIFIX-20261101 / decision D-1(b)):** the pooler
+> client limit above is now verified from official docs — **Supavisor max pooler clients = 200
+> on the Nano (Free) compute tier** (Micro likewise 200; max direct connections 60), per
+> supabase.com/docs/guides/platform/compute-and-disk (the pooling-and-limits page,
+> supabase.com/docs/guides/database/connecting-to-postgres/pooling-and-limits, defers per-tier
+> numbers to it). WP-8 budget peak ≈ 72 steady / ≈ 102 during a rolling deploy < 200 → the
+> decision **not** to add `MC_DB_MAX_CONNS` **stands**. Caveats: the figures are per compute
+> tier and are stated as defaults (`max_connections` is customizable per project) — re-check the
+> compute-and-disk table if the project leaves the Nano/Free tier.
+
 ## 2. Backend (Cloud Run)
 
 1. Build and push the image once; record the **digest**
