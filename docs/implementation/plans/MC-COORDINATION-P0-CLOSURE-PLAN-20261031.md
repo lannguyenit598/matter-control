@@ -1,6 +1,18 @@
 # MC-COORDINATION-P0-CLOSURE-PLAN-20261031 — Plan điều phối đóng gói P0
 
-> **Trạng thái thực thi (cập nhật 2026-10-31 ~16:55Z bởi coordinator):** PO đã phê duyệt decision batch **4/4** (commit/re-pin, D-9, D-2, D-1(b)) — record trong `docs/implementation/workboard-findings.md` §0. CO-01 DONE (register materialised) · CO-02 DONE (orphan mcapi @18082 stopped; port audit sạch) · CO-05 prompt đã soạn · **3 prompt dispatch đã soạn**: `MC-ZCODE-P1-FIX-WAVE-20261031-PROMPT.md` (CO-03+CO-06..12, ZCode), `MC-OPENCODE-VERIFY-WAVE-20261031-PROMPT.md` (CO-13/14 — KHÔNG thể chuyển cho ZCode vì xung đột độc lập), `MC-CLAUDE-ADR006-FINAL-RETURN-20261031-PROMPT.md` (CO-05). Còn chờ: deploy-readiness session confirm freeze (chưa có ghi mới apps/** kể từ 16:30Z — tín hiệu tốt) → fix-wave session chạy CO-03 (commit baseline + contingency Mimosa git-gate) rồi CO-06..12.
+> **Trạng thái thực thi (cập nhật 2026-11-01 ~17:05Z bởi coordinator):** Decision batch #1 ratify 4/4 · **baseline committed `4b6a65f`** (git-gate không fired — playbook chuyển contingency) · coordination record `5e932bd` · OpenCode verify **tự re-pin 4b6a65f (0 drift) → CO-14 rerun bỏ** · OV-R13-01 (migrate-job.yaml YAML fail, P2) là defect thật đầu tiên do verify bắt. **Bảng dispatch (6 prompt, docs/implementation/handoffs/):**
+> | # | Prompt | Bên | Khuyến nghị dispatch | Trạng thái |
+> |---|---|---|---|---|
+> | 1 | MC-ZCODE-P1-FIX-WAVE-20261031-PROMPT | ZCode | — | **ĐANG CHẠY** (F1 migration 0011 lộ trên tree) |
+> | 2 | MC-OPENCODE-VERIFY-WAVE-20261031-PROMPT | OpenCode | — | **ĐANG CHẠY** (R1/R7/R9/R13/R14/R15; tự re-pin) |
+> | 3 | MC-CLAUDE-ADR006-FINAL-RETURN-20261031-PROMPT | Claude | Dispatch nếu chưa | chờ PO |
+> | 4 | MC-OPENDESIGN-UX-PLAN-REVIEW-20261101-PROMPT | OpenDesign | **Dispatch NGAY** (0 xung đột) | dispatched → BLOCKED_WRONG_CHECKOUT → **RESOLVED (pre-flight pass 6/6 tại `5e932bd`)** → review đang bắt đầu; OpenDesign đọc prompt gốc trực tiếp từ repo (`docs/implementation/handoffs/MC-OPENDESIGN-UX-PLAN-REVIEW-20261101-PROMPT.md`) |
+> | 5 | MC-ZCODE-ENABLEMENT-MINIFIX-20261101-PROMPT | ZCode mới | **Dispatch NGAY** (path-rời-nhau: ops/deploy + ops/local + docs/deployment) | mới soạn — gồm fix OV-R13-01 |
+> | 6 | MC-ZCODE-USABILITY-PREP-20261101-PROMPT | ZCode mới | Tuỳ lúc (docs-only) | **EXECUTED — RETURNED** (6 file; IN_REVIEW chờ OpenCode V2-3; 2 P2 mới US-R-01/02 vào register) |
+> | 7 | MC-OPENCODE-VERIFY-WAVE-2-20261101-PROMPT | OpenCode | **Dispatch ngay — tiếp tục phiên đang chạy** (V2-1 confirm OV-R13-01 · V2-2 verify CO-17 env · V2-3 review usability-prep · verdicts R1/R7/R9 · PORT remainder · Z-F/locale HOLD tới khi fix-unit commit) | mới soạn |
+> | 8 | MC-ZCODE-ENABLEMENT-USFIX-20261101-PROMPT | ZCode mới | **Sau fix-wave return** (hoặc NGAY với path-rời-nhau nghiêm ngặt — chỉ ops/local/walkthrough/**): U1 stub IdP browser login (US-R-01) · U2 fault-injection T10 (US-R-02) · U3 erratum nếu thiếu | mới soạn — mở khoá UI trial |
+>
+> Còn gated: CO-16 (82-case master — sau verify) · CO-18 (terminology — sau OpenDesign + fixes) · CO-20..23 (provider — chờ batch #2 R8) · CO-19 chạy phiên (sau fixes + env).
 
 - Điều phối: actual ZCode theo chỉ định trực tiếp của PO ("zcode đóng vai người điều phối"), 2026-10-31. **Plan là đề xuất điều phối: mọi approval product/architecture/cost/release vẫn thuộc PO; commit/push vẫn cần PO; independent verification vẫn thuộc OpenCode.** Vai orchestrator danh nghĩa của Codex được tôn trọng: Codex intake phê duyệt plan này hoặc PO phê duyệt trực tiếp.
 - Nguyên tắc bất di bất dịch: single-writer mỗi vùng file; không DONE khi thiếu reviewer độc lập; evidence theo namespace + manifest hash; không reopen positioning; không bỏ qua gate.
