@@ -408,8 +408,15 @@ func DecideAdvance(f Filing, it WorkItem, set EvidenceSet, fs FilingSet, in Adva
 				if len(missing) > 0 {
 					refused = append(refused, "signature criteria are not satisfied: "+strings.Join(missing, "; "))
 				}
-			} else if !everDeclared && len(refused) == 0 {
-				return out, guardFailed("signature-criteria-required", "declare a SIGNATURE criterion for the filing's signatures; a package criterion does not prove them")
+			} else if !everDeclared {
+				// OV-F1-04a: the undeclared gap joins the same refusal — one message names both
+				// gaps, matching the OpenDesign guard copy ("requires supporting evidence and a
+				// valid signature"). Standalone (package fine), it keeps its own code so the UI
+				// can route to the declaration form.
+				if len(refused) == 0 {
+					return out, guardFailed("signature-criteria-required", "declare a SIGNATURE criterion for the filing's signatures; a package criterion does not prove them")
+				}
+				refused = append(refused, "signature criteria are not declared: add a SIGNATURE-purpose criterion for the filing's signatures")
 			}
 			// A signature criterion retired with a recorded OWNER reason waives the requirement,
 			// exactly like the OWNER's no-signature applicability decision.

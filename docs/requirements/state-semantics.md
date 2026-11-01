@@ -70,7 +70,7 @@ Golden sequence remains Requirement → Package Preparation → Signature → Su
 | Submission → Receipt | Actual acknowledgement reference/evidence | IN_PROGRESS or WAITING while awaiting acknowledgement |
 | Receipt → Authority Review | Receipt retained, recorded awaiting authority outcome, external party identified | WAITING |
 | Authority Review → Supplement | Authority request recorded, follow-up owner/due and new package cycle | IN_PROGRESS (or WAITING for missing external input) |
-| Supplement → Response | Requested items satisfied, response evidence/reference and exact versions recorded | IN_PROGRESS |
+| Supplement → Response | Requested items satisfied, response evidence/reference and exact versions recorded; a response is the cycle's re-submission, so the D-9 package and SIGNATURE gates apply to it exactly as to a submission (fix-wave #2 G6 decision — OV-F1-04b) | IN_PROGRESS |
 | Response → Authority Review | Response submitted, awaiting next outcome | WAITING; repeat cycle retained |
 | Authority Review / Response → Approval | Actual authority outcome proof recorded; verification separately reviewed | COMPLETED may remain UNVERIFIED until verifier accepts |
 

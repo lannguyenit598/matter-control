@@ -73,6 +73,22 @@ func TestSubmissionStillRefusedByAnUnsatisfiedPackageCriterion(t *testing.T) {
 	}
 }
 
+// OV-F1-04a (fix-wave #2 G6): when the package is unmet AND no signature criterion is declared,
+// the ONE refusal names both gaps — the OpenDesign guard copy ("this filing requires supporting
+// evidence and a valid signature") is built on seeing both in a single message.
+func TestSubmissionRefusalNamesPackageAndMissingSignatureTogether(t *testing.T) {
+	pkg := purposeCriterion("PKG", matter.PurposePackage)
+	set := withVersion(setOf([]matter.Criterion{pkg}, nil, nil, nil))
+	_, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput())
+	var rej *matter.RejectedError
+	if !asRejected(err, &rej) || rej.Code != "guard-failed" {
+		t.Fatalf("the combined violation refuses with guard-failed: %v", err)
+	}
+	if !strings.Contains(rej.Message, "package criteria are not satisfied") || !strings.Contains(rej.Message, "signature criteria are not declared") {
+		t.Fatalf("the single refusal names both gaps: %q", rej.Message)
+	}
+}
+
 // Legacy rows carry no purpose: they keep gating submission (never loosened, never guessed).
 func TestUnspecifiedPurposeGatesLikeAPackageCriterion(t *testing.T) {
 	legacy := purposeCriterion("OLD", "")

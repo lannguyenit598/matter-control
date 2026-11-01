@@ -222,8 +222,10 @@ export function IntentForm({
       {children({ errors: failure?.fieldErrors ?? {}, pending })}
       {failure && (
         <Alert key={attempt} variant="destructive" title={titleFor(failure.kind)}>
-          {failure.error}
+          {/* The rendered rejection (friendly copy or structured details) leads; the raw message
+              follows as the technical tail. */}
           {failure.rejection && renderRejection?.(failure.rejection)}
+          {failure.error}
           {failure.kind === 'unauthenticated' && (
             <>
               {' '}

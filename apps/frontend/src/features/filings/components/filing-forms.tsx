@@ -16,6 +16,7 @@ import { LocalDateTimeField } from '@/components/molecules/local-datetime-field'
 import { IntentForm } from '@/components/organisms/intent-form'
 import { useTimeZone } from '@/hooks/use-time-zone'
 import { fieldFailure } from '@/lib/mc/action-result'
+import type { McRejection } from '@/lib/mc/errors'
 import { readLocalField } from '@/lib/mc/local-time'
 
 import {
@@ -247,6 +248,43 @@ function Checks({ name, legend, options }: { name: string; legend: string; optio
  * The next stage, with exactly the facts that stage needs. The API decides whether the guards hold
  * and answers a refusal with the reason; nothing here pre-judges it.
  */
+/**
+ * The D-9 guard refusal in the OpenDesign guard copy (docs/testing/opendesign-ux-plan-review-
+ * 20261101-r1/ux-copy-for-guards.md): one message names why the submission is blocked and what to
+ * attach, never a code. The technical criterion names follow underneath via the default
+ * rejection body, so the lawyer can still see exactly which criterion to satisfy.
+ */
+export function FilingGuardCopy({ rejection }: { rejection: McRejection }) {
+  const pkg = rejection.message.includes('package criteria are not satisfied')
+  const sigUnmet = rejection.message.includes('signature criteria are not satisfied')
+  const sigUndeclared =
+    rejection.message.includes('signature criteria are not declared') ||
+    rejection.code === 'signature-criteria-required'
+  if (rejection.code !== 'guard-failed' && !sigUndeclared) return null
+  if (pkg && (sigUnmet || sigUndeclared))
+    return (
+      <LocalizedText
+        en="Cannot submit — this filing requires supporting evidence and a valid signature. Please attach the required documents and correct signature type."
+        vi="Chưa thể nộp — hồ sơ khai này yêu cầu bằng chứng và chữ ký hợp lệ. Vui lòng đính kèm tài liệu chứng minh và chữ ký đúng loại."
+      />
+    )
+  if (sigUnmet || sigUndeclared)
+    return (
+      <LocalizedText
+        en="Cannot submit — this filing requires a valid signature. The attached evidence is not a signature. Please attach the correct signature type."
+        vi="Chưa thể nộp — hồ sơ khai này yêu cầu chữ ký hợp lệ. Bằng chứng đính kèm không phải loại chữ ký. Vui lòng đính kèm chữ ký đúng loại."
+      />
+    )
+  if (pkg)
+    return (
+      <LocalizedText
+        en="Cannot submit — this filing requires supporting evidence. Please attach at least one document before submitting."
+        vi="Chưa thể nộp — hồ sơ khai này yêu cầu bằng chứng. Vui lòng đính kèm ít nhất một tài liệu chứng minh trước khi nộp."
+      />
+    )
+  return null
+}
+
 export function AdvanceForm({
   matterId,
   detail,
@@ -269,6 +307,7 @@ export function AdvanceForm({
       receipted={false}
       draftKey={`filing:${detail.item.id}:advance`}
       submitLabel={`Record ${STAGE_LABEL[to].toLowerCase()}`}
+      renderRejection={(r) => <FilingGuardCopy rejection={r} />}
       run={(v) => {
         const observed = readLocalField(v, 'observed', zone, null)
         if (!observed.ok) return Promise.resolve(fieldFailure('observedAt', observed.error))
