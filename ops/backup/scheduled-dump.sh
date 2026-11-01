@@ -46,12 +46,15 @@ printf '%s\n' "$SHA" > "$DUMP.sha256"
 ARCHIVE_TABLES="$("$PG_RESTORE_BIN" -l "$DUMP" 2>/dev/null | grep -c 'TABLE DATA' || true)"
 [ "$ARCHIVE_TABLES" -ge 1 ] || { echo "backup archive lists no TABLE DATA entries; refusing to keep it" >&2; exit 1; }
 
-# Retention: keep the newest RETAIN archives (and their checksums), delete the rest.
+# Retention: keep the newest RETAIN archives (and their checksums), delete the rest. The list is
+# read one path per line (OV-R12-01: the quoted command substitution made every deletion a no-op
+# and the counter lied in both directions); PRUNED counts files actually removed.
 PRUNED=0
-for old in "$(ls -1t "$MC_BACKUP_DIR"/mcapi-*.dump 2>/dev/null | tail -n +$((RETAIN + 1)))"; do
-  rm -f "$old" "$old.sha256"
+while IFS= read -r old; do
+  [ -n "$old" ] || continue
+  rm -f -- "$old" "$old.sha256"
   PRUNED=$((PRUNED + 1))
-done
+done < <(ls -1t "$MC_BACKUP_DIR"/mcapi-*.dump 2>/dev/null | tail -n +$((RETAIN + 1)))
 
 printf '{"event":"scheduled_backup","stamp":"%s","bytes":%s,"sha256":"%s","table_data_entries":%s,"duration_seconds":%s,"retained":%s,"pruned":%s}\n' \
   "$STAMP" "$BYTES" "$SHA" "$ARCHIVE_TABLES" "$SECONDS_ELAPSED" "$RETAIN" "$PRUNED"
