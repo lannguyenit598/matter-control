@@ -6,8 +6,8 @@
 # real prod render). Assert per route: (1) <html lang="vi"> at t=0, (2) a vi string present,
 # (3) an <h1 present (UX-L-05: failures keep the h1).
 set -u
-BASE=http://127.0.0.1:18924
-OUT=docs/testing/mc-p1-fix-wave-20261031-r1/commands/probe-22-routes.log
+BASE="${PROBE_BASE:-http://127.0.0.1:18924}"
+OUT="${PROBE_OUT:-docs/testing/mc-p1-fix-wave-20261031-r1/commands/probe-22-routes.log}"
 routes=(
   /login
   /my-actions
