@@ -38,6 +38,7 @@ export function FormDialog({
 }: FormDialogProps) {
   const [open, setOpen] = useState(false)
   const [done, setDone] = useState<ReactNode>(null)
+  const [doneAnnounced, setDoneAnnounced] = useState(false)
   return (
     <>
       <Button
@@ -45,13 +46,14 @@ export function FormDialog({
         aria-haspopup="dialog"
         onClick={() => {
           setDone(null)
+          setDoneAnnounced(false)
           setOpen(true)
         }}
       >
         {trigger}
       </Button>
       {done && (
-        <p role="status" className="text-sm text-muted-foreground">
+        <p role={doneAnnounced ? undefined : 'status'} className="text-sm text-muted-foreground">
           {done}
         </p>
       )}
@@ -63,8 +65,9 @@ export function FormDialog({
         keepMounted
       >
         <TaskSuccess.Provider
-          value={(notice) => {
+          value={(notice, announced = false) => {
             setDone(notice ?? successNotice ?? null)
+            setDoneAnnounced(announced)
             setOpen(false)
           }}
         >

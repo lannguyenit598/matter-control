@@ -210,3 +210,22 @@ func TestReplayBrief_LegacyFilingRevisionUnavailable(t *testing.T) {
 		}
 	}
 }
+
+// OV-F1-02 (D-9, fix-wave #2 G3): the replay must keep a SIGNATURE criterion's purpose. The old
+// mapping folded every non-OUTCOME purpose into PACKAGE, so the brief's package counts inflated
+// and the signature axis vanished from replayed history.
+func TestReplayBrief_PurposeOfKeepsSignature(t *testing.T) {
+	for _, tc := range []struct {
+		raw  string
+		want matter.CriterionPurpose
+	}{
+		{"", matter.PurposePackage}, // pre-BF-01 events carry no purpose: legacy reads PACKAGE
+		{"PACKAGE", matter.PurposePackage},
+		{"SIGNATURE", matter.PurposeSignature},
+		{"OUTCOME", matter.PurposeOutcome},
+	} {
+		if got := purposeOf(tc.raw); got != tc.want {
+			t.Fatalf("purposeOf(%q) = %s, want %s", tc.raw, got, tc.want)
+		}
+	}
+}

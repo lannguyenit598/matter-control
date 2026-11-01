@@ -25,10 +25,11 @@ export function forbiddenFileName(name) {
   return null
 }
 
-/** Content sentinels any file may never carry; findings name the shape, never the value. */
+/** Content sentinels any file may never carry; findings name the shape, never the value. The
+ *  sentinel regex is assembled at runtime so this tracked source never matches itself. */
 const contentShapes = [
   { name: 'PEM private key block', re: /-----BEGIN [A-Z ]*PRIVATE KEY-----/ },
-  { name: 'release sentinel marker', re: /MC-RELEASE-SENTINEL/ },
+  { name: 'release sentinel marker', re: new RegExp('MC-RELEASE-' + 'SENTINEL') },
 ]
 
 /**
@@ -85,10 +86,13 @@ async function walk(dir, base = dir, out = []) {
   return out
 }
 
-async function main() {
-  const args = process.argv.slice(2)
-  const requireArtifacts = args.includes('--require-artifacts')
-  const artifactDirs = args.filter((a) => !a.startsWith('--'))
+/** CLI entry, also exported for the wiring integration test (OV-R8-01): the callbacks handed to
+ *  probeFactory must return the file CONTENT STRING — probeFactory derives name/key itself, and a
+ *  probe-shaped object made both scan paths content-blind (sentinels never matched) and crashed
+ *  on the first forbidden filename. */
+export async function main(argv = process.argv.slice(2)) {
+  const requireArtifacts = argv.includes('--require-artifacts')
+  const artifactDirs = argv.filter((a) => !a.startsWith('--'))
   const findings = []
 
   // 1. What git tracks: a forbidden file in the repository fails the release regardless of build.
@@ -105,10 +109,7 @@ async function main() {
     findings.push(
       ...(await scanFiles(
         tracked,
-        probeFactory(async (rel) => {
-          const content = await readFile(join(root, rel), 'utf8').catch(() => null)
-          return { name: null, key: content ? findRuntimeSecret(content) : null, content }
-        }),
+        probeFactory((rel) => readFile(join(root, rel), 'utf8').catch(() => null)),
       )),
     )
   } catch {
@@ -128,10 +129,7 @@ async function main() {
     findings.push(
       ...(await scanFiles(
         files,
-        probeFactory(async (rel) => {
-          const content = await readFile(join(dir, rel), 'utf8').catch(() => null)
-          return { name: null, key: content ? findRuntimeSecret(content) : null, content }
-        }),
+        probeFactory((rel) => readFile(join(dir, rel), 'utf8').catch(() => null)),
       )),
     )
   }

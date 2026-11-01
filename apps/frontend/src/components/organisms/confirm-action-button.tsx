@@ -10,6 +10,7 @@ import { useState, useTransition } from 'react'
 import { Button, type ButtonProps } from '@/components/atoms/button'
 import { Alert } from '@/components/molecules/alert'
 import { callMcAction, type McActionResult } from '@/lib/mc/action-result'
+import { announceActionResult, useShellAnnouncements } from './action-announcer'
 
 export type ConfirmActionButtonProps = {
   label: string
@@ -29,6 +30,7 @@ export function ConfirmActionButton({
   variant = 'destructive',
 }: ConfirmActionButtonProps) {
   const router = useRouter()
+  const shellAnnouncements = useShellAnnouncements()
   const [confirming, setConfirming] = useState(false)
   const [result, setResult] = useState<McActionResult | null>(null)
   const [pending, start] = useTransition()
@@ -42,6 +44,7 @@ export function ConfirmActionButton({
     start(async () => {
       const r = await callMcAction(run, { receipted: false })
       setResult(r)
+      if (shellAnnouncements) announceActionResult(r)
       if (r.ok) {
         setConfirming(false)
         router.refresh()
@@ -91,6 +94,7 @@ export function ConfirmActionButton({
       )}
       {result && !result.ok && (
         <Alert
+          live={!shellAnnouncements}
           variant="destructive"
           title={
             result.kind === 'stale'

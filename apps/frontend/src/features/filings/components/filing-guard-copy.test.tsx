@@ -36,7 +36,7 @@ describe('FilingGuardCopy', () => {
       <FilingGuardCopy
         rejection={rejection(
           'signature-criteria-required',
-          'declare a SIGNATURE criterion for the filing\'s signatures; a package criterion does not prove them',
+          "declare a SIGNATURE criterion for the filing's signatures; a package criterion does not prove them",
         )}
       />,
     )
@@ -50,7 +50,10 @@ describe('FilingGuardCopy', () => {
   it('renders the evidence copy when only the package is unmet', () => {
     render(
       <FilingGuardCopy
-        rejection={rejection('guard-failed', 'package criteria are not satisfied: Package complete (MISSING)')}
+        rejection={rejection(
+          'guard-failed',
+          'package criteria are not satisfied: Package complete (MISSING)',
+        )}
       />,
     )
     expect(
@@ -62,7 +65,9 @@ describe('FilingGuardCopy', () => {
 
   it('renders nothing for refusals the guard copy does not cover', () => {
     const { container } = render(
-      <FilingGuardCopy rejection={rejection('transition-not-allowed', 'a filing cannot move from X to Y')} />,
+      <FilingGuardCopy
+        rejection={rejection('transition-not-allowed', 'a filing cannot move from X to Y')}
+      />,
     )
     expect(container).toBeEmptyDOMElement()
   })

@@ -12,6 +12,7 @@ import { DashboardTemplate } from '@/components/templates/dashboard-template'
 import { mainNavigation } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
 import { AccountMenu } from '@/features/auth/components/account-menu'
+import { ActionAnnouncer } from '@/components/organisms/action-announcer'
 import { DraftScope } from '@/features/auth/components/draft-scope-server'
 
 /** Route layout: fills the DashboardTemplate slots with organisms + app config. */
@@ -79,9 +80,11 @@ export default function AppLayout({ children }: LayoutProps<'/'>) {
         />
       }
     >
-      <Suspense>
-        <DraftScope>{children}</DraftScope>
-      </Suspense>
+      <ActionAnnouncer>
+        <Suspense>
+          <DraftScope>{children}</DraftScope>
+        </Suspense>
+      </ActionAnnouncer>
     </DashboardTemplate>
   )
 }

@@ -213,10 +213,14 @@ func replayBriefProof(events []matter.EventRecord, items map[string]*replayedIte
 }
 
 // purposeOf reads a replayed criterion purpose; events written before BF-01 have none and read as
-// PACKAGE, the purpose that can only keep a gate closed.
+// PACKAGE, the purpose that can only keep a gate closed. D-9 purposes survive the replay as
+// written, so the brief's signature axis stays the signature axis.
 func purposeOf(raw string) matter.CriterionPurpose {
-	if matter.CriterionPurpose(raw) == matter.PurposeOutcome {
+	switch matter.CriterionPurpose(raw) {
+	case matter.PurposeOutcome:
 		return matter.PurposeOutcome
+	case matter.PurposeSignature:
+		return matter.PurposeSignature
 	}
 	return matter.PurposePackage
 }

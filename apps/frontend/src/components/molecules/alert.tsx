@@ -23,14 +23,16 @@ export type AlertProps = VariantProps<typeof alertVariants> & {
   title?: ReactNode
   children?: ReactNode
   className?: string
+  /** False when a persistent shell region already announces this result. */
+  live?: boolean
 }
 
 /** Inline message. Destructive alerts use role="alert" so screen readers announce them immediately. */
-export function Alert({ variant = 'info', title, children, className }: AlertProps) {
+export function Alert({ variant = 'info', title, children, className, live = true }: AlertProps) {
   const Icon = icons[variant ?? 'info']
   return (
     <div
-      role={variant === 'destructive' ? 'alert' : 'status'}
+      role={live ? (variant === 'destructive' ? 'alert' : 'status') : undefined}
       className={cn(alertVariants({ variant }), className)}
     >
       <Icon aria-hidden className="shrink-0" />

@@ -10,6 +10,7 @@ import { Button } from '@/components/atoms/button'
 import { Input } from '@/components/atoms/input'
 import { Alert } from '@/components/molecules/alert'
 import { callMcAction, type McActionResult } from '@/lib/mc/action-result'
+import { announceActionResult, useShellAnnouncements } from './action-announcer'
 
 export type InlineEditProps = {
   /** Names the field and the row for assistive technology, e.g. `title of "Draft SPA"`. */
@@ -27,6 +28,7 @@ export type InlineEditProps = {
  */
 export function InlineEdit({ label, value, canEdit, maxLength = 300, run }: InlineEditProps) {
   const router = useRouter()
+  const shellAnnouncements = useShellAnnouncements()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(value)
   const [result, setResult] = useState<McActionResult | null>(null)
@@ -39,6 +41,7 @@ export function InlineEdit({ label, value, canEdit, maxLength = 300, run }: Inli
     start(async () => {
       const r = await callMcAction(() => run(draft), { receipted: false })
       setResult(r)
+      if (shellAnnouncements) announceActionResult(r)
       if (r.ok) {
         setEditing(false)
         router.refresh()
@@ -98,7 +101,7 @@ export function InlineEdit({ label, value, canEdit, maxLength = 300, run }: Inli
         onChange={(e) => setDraft(e.target.value)}
       />
       {failure && (
-        <Alert variant="destructive">
+        <Alert live={!shellAnnouncements} variant="destructive">
           {failure.error}
           {failure.fieldErrors && Object.values(failure.fieldErrors).flat()[0]
             ? ` ${Object.values(failure.fieldErrors).flat()[0]}`

@@ -72,16 +72,20 @@ test('a copied .env.local with a runtime secret is found and only the key is nam
 })
 
 test('content sentinels are caught in any file', async () => {
+  // The shapes are assembled at runtime so this tracked source never matches the scanner's own
+  // content sentinels (OV-R8-01 made the scan actually see content).
+  const sentinel = 'MC-RELEASE-' + 'SENTINEL'
   const findings = await scanFiles(['assets/note.txt'], async () => ({
     name: null,
     key: null,
-    content: 'scratch note mentioning MC-RELEASE-SENTINEL planted by QA',
+    content: 'scratch note mentioning ' + sentinel + ' planted by QA',
   }))
   assert.deepEqual(findings, ['assets/note.txt: release sentinel marker'])
+  const beginLine = '-----BEGIN ' + 'PRIVATE KEY-----'
   const pem = await scanFiles(['bundle.js'], async () => ({
     name: null,
     key: null,
-    content: 'const k = `-----BEGIN PRIVATE KEY-----`',
+    content: 'const k = `' + beginLine + '`',
   }))
   assert.deepEqual(pem, ['bundle.js: PEM private key block'])
 })

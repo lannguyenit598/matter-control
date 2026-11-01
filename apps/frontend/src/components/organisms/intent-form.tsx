@@ -33,6 +33,7 @@ import { newIdempotencyKey } from '@/lib/mc/idempotency'
 import { usePendingAttempt } from '@/lib/mc/use-attempt'
 
 import { useDraftNamespace } from './draft-scope'
+import { announceActionResult, useShellAnnouncements } from './action-announcer'
 
 /**
  * Set by a surface that opened this form as a task (`FormDialog`): called once, after a confirmed
@@ -40,7 +41,9 @@ import { useDraftNamespace } from './draft-scope'
  * unknown outcome or a refusal, so those stay on screen where they can be acted on. A form may
  * pass its own notice (for example "already stored"); otherwise the dialog's `successNotice` shows.
  */
-export const TaskSuccess = createContext<((notice?: ReactNode) => void) | null>(null)
+export const TaskSuccess = createContext<
+  ((notice?: ReactNode, announced?: boolean) => void) | null
+>(null)
 
 /**
  * Lets a surface that can hide a form (a kind switch inside one dialog) learn that this form has
@@ -110,6 +113,8 @@ export function IntentForm({
   className,
 }: IntentFormProps) {
   const router = useRouter()
+  const shellAnnouncements = useShellAnnouncements()
+  const restoredAnnouncement = useRef<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const [ownKey, setOwnKey] = useState(() => newIdempotencyKey())
   const [result, setResult] = useState<McActionResult | null>(null)
@@ -127,6 +132,17 @@ export function IntentForm({
   // one offered. It is read from storage, not copied into state, so it can never go stale.
   const pendingAttempt = usePendingAttempt(receipted ? namespace : null, draftKey)
   const key = pendingAttempt?.key ?? ownKey
+  useEffect(() => {
+    if (
+      shellAnnouncements &&
+      result === null &&
+      pendingAttempt &&
+      restoredAnnouncement.current !== pendingAttempt.key
+    ) {
+      restoredAnnouncement.current = pendingAttempt.key
+      announceActionResult(RESTORED_UNKNOWN)
+    }
+  }, [shellAnnouncements, result, pendingAttempt])
   const dropDraft = () => {
     if (!draftsOn) return
     clearDraft(namespace, draftKey)
@@ -165,6 +181,7 @@ export function IntentForm({
     start(async () => {
       const r = await callMcAction(() => run(values, key), { receipted })
       setResult(r)
+      if (shellAnnouncements) announceActionResult(r)
       setAttempt((n) => n + 1)
       if (
         !r.ok &&
@@ -182,7 +199,7 @@ export function IntentForm({
         formRef.current?.reset()
         router.refresh()
         onSuccess?.(r)
-        taskDone?.()
+        taskDone?.(undefined, shellAnnouncements)
       } else if (r.kind === 'outcome-unknown' && r.retrySameKey) {
         frozen.current = values
         if (draftsOn) saveAttempt(namespace, draftKey, { key, values })
@@ -221,7 +238,12 @@ export function IntentForm({
     >
       {children({ errors: failure?.fieldErrors ?? {}, pending })}
       {failure && (
-        <Alert key={attempt} variant="destructive" title={titleFor(failure.kind)}>
+        <Alert
+          key={attempt}
+          live={!shellAnnouncements}
+          variant="destructive"
+          title={titleFor(failure.kind)}
+        >
           {/* The rendered rejection (friendly copy or structured details) leads; the raw message
               follows as the technical tail. */}
           {failure.rejection && renderRejection?.(failure.rejection)}
@@ -251,7 +273,7 @@ export function IntentForm({
         </Alert>
       )}
       {result?.ok && (
-        <Alert key={attempt}>
+        <Alert key={attempt} live={!shellAnnouncements}>
           {result.replayed ? (
             <LocalizedText
               en="Already saved: this request had been recorded before."
