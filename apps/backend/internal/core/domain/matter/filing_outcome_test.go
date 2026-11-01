@@ -2,6 +2,7 @@ package matter_test
 
 import (
 	"errors"
+	"strings"
 	"testing"
 
 	"leonx.me/matter-control/internal/core/domain/matter"
@@ -46,12 +47,19 @@ func withVersion(set matter.EvidenceSet) matter.EvidenceSet {
 	return set
 }
 
-func TestSubmissionNeedsPackageCriteriaNotTheFutureOutcome(t *testing.T) {
-	pkg, out := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("OUT", matter.PurposeOutcome)
-	ev, k, a := acceptedFor("1", pkg)
-	set := withVersion(setOf([]matter.Criterion{pkg, out}, []matter.Evidence{ev}, []matter.Claim{k}, []matter.Assessment{a}))
+// D-9 (2026-10-31): a proof-required filing proves its signatures through a satisfied
+// SIGNATURE-purpose criterion, so the submission flow declares one alongside the package.
+func proofRequiredSet() matter.EvidenceSet {
+	pkg, sig, out := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("SIG", matter.PurposeSignature), purposeCriterion("OUT", matter.PurposeOutcome)
+	pev, pk, pa := acceptedFor("1", pkg)
+	sev, sk, sa := acceptedFor("2", sig)
+	return withVersion(setOf([]matter.Criterion{pkg, sig, out}, []matter.Evidence{pev, sev}, []matter.Claim{pk, sk}, []matter.Assessment{pa, sa}))
+}
+
+func TestSubmissionNeedsPackageAndSignatureCriteriaNotTheFutureOutcome(t *testing.T) {
+	set := proofRequiredSet()
 	if _, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput()); err != nil {
-		t.Fatalf("a verified package must permit submission while the outcome criterion is still open: %v", err)
+		t.Fatalf("verified package and signature criteria must permit submission while the outcome criterion is still open: %v", err)
 	}
 }
 
@@ -102,6 +110,92 @@ func TestOutcomeNeedsADeclaredCriterionToBeReady(t *testing.T) {
 	res := matter.EvaluateVerification(filingItem(true), setOf([]matter.Criterion{pkg}, nil, nil, nil), now)
 	if res.Outcome.Declared() || res.Outcome.Ready() {
 		t.Fatalf("no outcome criterion declared is not an accepted outcome: %+v", res.Outcome)
+	}
+}
+
+// Z-F-01 (D-9, ratified 2026-10-31): the package gate counts PACKAGE-purpose criteria only. A
+// proof-required filing whose only criterion is the authority's OUTCOME cannot even enter
+// PACKAGE_PREPARATION — an empty declared package is never "prepared".
+func TestPackagePreparationRejectsAnOutcomeOnlyCriteriaSet(t *testing.T) {
+	out := purposeCriterion("OUT", matter.PurposeOutcome)
+	set := setOf([]matter.Criterion{out}, nil, nil, nil)
+	_, err := matter.DecideAdvance(filingAt(matter.StageRequirement), filingItem(true), set, matter.FilingSet{},
+		matter.AdvanceInput{To: matter.StagePackage, Actor: u1, Role: matter.MatterRoleEditor, AsOf: now})
+	var rej *matter.RejectedError
+	if !asRejected(err, &rej) || rej.Code != "package-criteria-required" {
+		t.Fatalf("an outcome-only criteria set refuses package preparation: %v", err)
+	}
+}
+
+// Z-F-01 (D-9): submission never reads an undeclared package as ready, even for a filing that
+// reached the SIGNATURE stage without package criteria (in-flight legacy data).
+func TestSubmissionNeverReadsAMissingPackageAsReady(t *testing.T) {
+	out := purposeCriterion("OUT", matter.PurposeOutcome)
+	set := withVersion(setOf([]matter.Criterion{out}, nil, nil, nil))
+	_, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput())
+	var rej *matter.RejectedError
+	if !asRejected(err, &rej) || rej.Code != "package-criteria-required" {
+		t.Fatalf("a proof-required filing without package criteria cannot be submitted: %v", err)
+	}
+}
+
+// Z-F-02 (D-9): submission of a proof-required filing without any SIGNATURE criterion is refused:
+// a generic package criterion no longer stands in for the signatures.
+func TestProofRequiredSubmissionRequiresADeclaredSignatureCriterion(t *testing.T) {
+	pkg := purposeCriterion("PKG", matter.PurposePackage)
+	ev, k, a := acceptedFor("1", pkg)
+	set := withVersion(setOf([]matter.Criterion{pkg}, []matter.Evidence{ev}, []matter.Claim{k}, []matter.Assessment{a}))
+	_, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput())
+	var rej *matter.RejectedError
+	if !asRejected(err, &rej) || rej.Code != "signature-criteria-required" {
+		t.Fatalf("a proof-required filing without a signature criterion cannot be submitted: %v", err)
+	}
+}
+
+// Z-F-02 (D-9): a declared but unmet signature criterion is named in the refusal.
+func TestProofRequiredSubmissionRequiresSatisfiedSignatureCriteria(t *testing.T) {
+	pkg, sig := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("SIG", matter.PurposeSignature)
+	pev, pk, pa := acceptedFor("1", pkg)
+	sev, sk := proof("2", sig, u1, u1)
+	set := withVersion(setOf([]matter.Criterion{pkg, sig}, []matter.Evidence{pev, sev}, []matter.Claim{pk, sk}, []matter.Assessment{pa}))
+	_, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput())
+	var rej *matter.RejectedError
+	if !asRejected(err, &rej) || rej.Code != "guard-failed" || !strings.Contains(rej.Message, "SIG") {
+		t.Fatalf("the refusal names the unmet signature criterion: %v", err)
+	}
+}
+
+// Z-F-02 (D-9): the OWNER's no-signature applicability decision still waives the signature
+// criteria, and a satisfied SIGNATURE criterion completes the proof-required submission.
+func TestSignatureCriteriaWaivedByTheOwnerDecision(t *testing.T) {
+	pkg := purposeCriterion("PKG", matter.PurposePackage)
+	ev, k, a := acceptedFor("1", pkg)
+	set := withVersion(setOf([]matter.Criterion{pkg}, []matter.Evidence{ev}, []matter.Claim{k}, []matter.Assessment{a}))
+	it := filingItem(true)
+	f := filingAt(matter.StageSignature)
+	f.SignatureNotRequired = true
+	if _, err := matter.DecideAdvance(f, it, set, matter.FilingSet{}, submitInput()); err != nil {
+		t.Fatalf("the owner's no-signature decision waives the signature criteria: %v", err)
+	}
+	if _, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), proofRequiredSet(), matter.FilingSet{}, submitInput()); err != nil {
+		t.Fatalf("a satisfied SIGNATURE criterion completes the submission: %v", err)
+	}
+}
+
+// D-9: the signature is its own proof axis on the checklist, apart from package and outcome.
+func TestSignatureIsItsOwnProofPart(t *testing.T) {
+	pkg, sig := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("SIG", matter.PurposeSignature)
+	pev, pk, pa := acceptedFor("1", pkg)
+	pkgOnly := setOf([]matter.Criterion{pkg}, []matter.Evidence{pev}, []matter.Claim{pk}, []matter.Assessment{pa})
+	res := matter.EvaluateVerification(filingItem(true), pkgOnly, now)
+	if res.Signature.Declared() || res.Signature.Ready() {
+		t.Fatalf("no signature criterion declared is not a proven signature: %+v", res.Signature)
+	}
+	sev, sk, sa := acceptedFor("2", sig)
+	both := setOf([]matter.Criterion{pkg, sig}, []matter.Evidence{pev, sev}, []matter.Claim{pk, sk}, []matter.Assessment{pa, sa})
+	res = matter.EvaluateVerification(filingItem(true), both, now)
+	if !res.Signature.Ready() || !res.Package.Ready() {
+		t.Fatalf("the signature part tracks its own criteria: %+v %+v", res.Package, res.Signature)
 	}
 }
 

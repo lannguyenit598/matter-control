@@ -1,5 +1,6 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
@@ -28,7 +29,18 @@ async function Workspace({ params }: Pick<PageProps<'/workspaces/[workspaceId]'>
   const { workspaceId } = await params
   await connection()
   const here = `/workspaces/${workspaceId}`
-  if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
+  // UX-L-05: the failure keeps the page's h1 — the hub link and the raw id, never a stale name.
+  const fallbackHeading = (
+    <nav aria-label="Current scope" className="flex items-center gap-2 text-sm font-normal">
+      <Link className="underline" href="/workspaces">
+        <LocalizedText en="Workspaces" vi="Không gian làm việc" />
+      </Link>
+      <span aria-hidden="true">/</span>
+      <span className="text-muted-foreground">{workspaceId}</span>
+    </nav>
+  )
+  if (!(await getSession()))
+    return <ReadFailure kind="sign-in" retryHref={here} heading={fallbackHeading} />
   const read = await attempt(async () => {
     const [{ workspace, etag }, matters] = await Promise.all([
       workspaceRepository.get(workspaceId),
@@ -42,7 +54,15 @@ async function Workspace({ params }: Pick<PageProps<'/workspaces/[workspaceId]'>
     })
     return { workspace, etag, matters, members }
   })
-  if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="workspace" />
+  if (!read.ok)
+    return (
+      <ReadFailure
+        kind={read.kind}
+        retryHref={here}
+        subject="workspace"
+        heading={fallbackHeading}
+      />
+    )
   const { workspace, etag, matters, members } = read.value
   return (
     <div className="flex flex-col gap-6">

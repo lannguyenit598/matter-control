@@ -316,10 +316,14 @@ export function WaitingOnList({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Waiting on ({items.length})</CardTitle>
+        <CardTitle>
+          <LocalizedText en="Waiting on" vi="Đang chờ" /> ({items.length})
+        </CardTitle>
         <CardDescription>
-          Waiting is not blocked: these records wait on an external party and keep an accountable
-          owner.
+          <LocalizedText
+            en="Waiting is not blocked: these records wait on an external party and keep an accountable owner."
+            vi="Đang chờ khác với bị chặn: các bản ghi này chờ một bên ngoài và vẫn có người phụ trách."
+          />
         </CardDescription>
       </CardHeader>
       <CardContent>

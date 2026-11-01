@@ -1,35 +1,7 @@
-import type { Metadata } from 'next'
-import localFont from 'next/font/local'
-
-import { siteConfig } from '@/config/site'
-import { themeInitScript } from '@/lib/theme'
-
-import './globals.css'
-
-const uiFont = localFont({
-  src: [
-    { path: './fonts/be-vietnam-pro/BeVietnamPro-Regular.ttf', weight: '400', style: 'normal' },
-    { path: './fonts/be-vietnam-pro/BeVietnamPro-Medium.ttf', weight: '500', style: 'normal' },
-    { path: './fonts/be-vietnam-pro/BeVietnamPro-SemiBold.ttf', weight: '600', style: 'normal' },
-    { path: './fonts/be-vietnam-pro/BeVietnamPro-Bold.ttf', weight: '700', style: 'normal' },
-  ],
-  variable: '--font-ui',
-  display: 'swap',
-})
-
-export const metadata: Metadata = {
-  title: { default: siteConfig.name, template: `%s · ${siteConfig.name}` },
-  description: siteConfig.description,
-}
-
-export default function RootLayout({ children }: LayoutProps<'/'>) {
-  return (
-    // data-theme is set by themeInitScript before hydration, hence suppressHydrationWarning.
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
-      <body className={uiFont.variable}>{children}</body>
-    </html>
-  )
-}
+// The root segment: re-exports the shell implementation so the Worker build can resolve it to
+// root-shell.worker.tsx (no `instant` segment config, which it cannot carry) through
+// next.config.ts's turbopack resolveAlias, while the Node build uses root-shell.tsx with
+// `instant = false` (D-2, UX-L-02). `export *` keeps the segment-config validator honest in both
+// builds: the flag name never appears in this file.
+export * from '@/app/root-shell'
+export { default } from '@/app/root-shell'

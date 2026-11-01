@@ -33,7 +33,12 @@ import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 import { safeInternalPath } from '@/lib/mc/paths'
 
-export const metadata: Metadata = { title: 'Work item' }
+export async function generateMetadata({
+  params,
+}: PageProps<'/matters/[matterId]/work/[itemId]'>): Promise<Metadata> {
+  const { itemId } = await params
+  return { title: `Work item \u00b7 ${itemId}` }
+}
 
 export default function WorkItemPage({
   params,

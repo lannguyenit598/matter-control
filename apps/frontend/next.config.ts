@@ -57,6 +57,13 @@ const nextConfig: NextConfig = {
     return [{ source: '/', destination: '/my-actions', permanent: false }]
   },
   turbopack: {
+    // D-2 (UX-L-02): the Worker build cannot carry the root shell's `instant = false` segment
+    // config (it requires cacheComponents), so it resolves '@/app/root-shell' to the worker
+    // variant without the config; the Node build keeps the flag and blocks the root shell for
+    // the per-request interface language.
+    resolveAlias: isWorkerBuild
+      ? { '@/app/root-shell': './src/app/root-shell.worker.tsx' }
+      : undefined,
     rules: {
       '*.css': {
         loaders: ['@tailwindcss/turbopack'],

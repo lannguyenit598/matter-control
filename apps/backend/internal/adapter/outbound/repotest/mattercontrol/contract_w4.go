@@ -186,7 +186,10 @@ func SuiteW4(t *testing.T, newBundle Factory) {
 
 		// REQUIREMENT -> PACKAGE needs declared package criteria.
 		mustCode(t, "criteria first", errOf(f.adv(e.editor, "PACKAGE_PREPARATION", nil)), "package-criteria-required")
-		sig, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE"})
+		// D-9 (2026-10-31): signatures are their own criterion purpose; a proof-required filing
+		// proves them through a satisfied SIGNATURE criterion, apart from the package criteria.
+		sig, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE", Purpose: "SIGNATURE"})
+		pkgC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
 		f.must("PACKAGE_PREPARATION", nil)
 		if it := f.get().View.Item; it.Execution != matter.ExecutionInProgress {
 			t.Fatalf("package preparation is in progress: %+v", it)
@@ -200,10 +203,10 @@ func SuiteW4(t *testing.T, newBundle Factory) {
 		})), "unknown-version")
 		f.must("SIGNATURE", func(c *port.AdvanceFilingCmd) { c.VersionIDs = []string{v1.String()} })
 
-		// FL-03: a missing signature blocks submission, with the reason, and records nothing.
+		// FL-03: unmet package and signature criteria block submission, with the reason, and record nothing.
 		evBefore, revBefore := len(e.events()), f.get().View.Item.Revision
 		_, err := f.adv(e.editor, "SUBMISSION", func(c *port.AdvanceFilingCmd) { c.Reference = "SUB-1"; c.VersionIDs = []string{v1.String()} })
-		mustCode(t, "AC-145 missing signature", err, "guard-failed")
+		mustCode(t, "AC-145 unmet package and signature criteria", err, "guard-failed")
 		var rej *matter.RejectedError
 		if !errors.As(err, &rej) || rej.Message == "" {
 			t.Fatalf("the refusal names what is missing: %v", err)
@@ -212,10 +215,13 @@ func SuiteW4(t *testing.T, newBundle Factory) {
 			t.Fatal("a refused stage change leaves no event, no revision and no submission")
 		}
 		// the proof is offered by the editor and accepted by an independent verifier
-		if _, err := e.submit(e.editor, func(s *port.SubmitEvidenceCmd) { s.Claims = []string{sig.String()} }); err != nil {
+		if _, err := e.submit(e.editor, func(s *port.SubmitEvidenceCmd) { s.Claims = []string{sig.String(), pkgC.String()} }); err != nil {
 			t.Fatal(err)
 		}
 		if _, err := e.assess(e.reviewer, f.filingID, e.claimOf(f.filingID, sig).Claim.ID, "ACCEPTED"); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := e.assess(e.reviewer, f.filingID, e.claimOf(f.filingID, pkgC).Claim.ID, "ACCEPTED"); err != nil {
 			t.Fatal(err)
 		}
 		// stale revision, future time, missing reference
@@ -400,7 +406,9 @@ func SuiteW4(t *testing.T, newBundle Factory) {
 
 		// FL-06: signature criteria made non-applicable by an owner revision, then submission is allowed
 		k := e.newFiling(true)
-		sig, _ := e.criterion(k.filingID, port.CriterionInput{Title: "Wet-ink signature", Mandatory: true, Rule: "NONE"})
+		// D-9: the signature criterion carries the SIGNATURE purpose; the package needs its own.
+		sig, _ := e.criterion(k.filingID, port.CriterionInput{Title: "Wet-ink signature", Mandatory: true, Rule: "NONE", Purpose: "SIGNATURE"})
+		pkgC, _ := e.criterion(k.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
 		v := e.version(e.document("Package").Document.ID.String(), sum(7))
 		k.must("PACKAGE_PREPARATION", nil)
 		k.must("SIGNATURE", func(c *port.AdvanceFilingCmd) { c.VersionIDs = []string{v.String()} })
@@ -408,7 +416,18 @@ func SuiteW4(t *testing.T, newBundle Factory) {
 			return k.adv(e.editor, "SUBMISSION", func(c *port.AdvanceFilingCmd) { c.Reference = "S"; c.VersionIDs = []string{v.String()} })
 		}
 		mustCode(t, "signature missing", errOf(submit()), "guard-failed")
-		rev := e.checklist(k.filingID).Result.Criteria[0].Criterion.Revision
+		if _, err := e.submit(e.editor, func(s *port.SubmitEvidenceCmd) { s.Claims = []string{pkgC.String()} }); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := e.assess(e.reviewer, k.filingID, e.claimOf(k.filingID, pkgC).Claim.ID, "ACCEPTED"); err != nil {
+			t.Fatal(err)
+		}
+		rev := int64(0)
+		for _, c := range e.checklist(k.filingID).Result.Criteria {
+			if c.Criterion.ID == sig {
+				rev = c.Criterion.Revision
+			}
+		}
 		if _, err := e.ev.ReviseCriterion(e.ctx, port.ReviseCriterionCmd{ActorID: e.owner.String(), MatterID: e.m.String(), CriterionID: sig.String(), ExpectedRevision: rev,
 			Reason: "no signature is required for this authority", Retire: true}); err != nil {
 			t.Fatal(err)

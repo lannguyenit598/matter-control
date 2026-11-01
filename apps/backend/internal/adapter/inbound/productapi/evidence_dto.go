@@ -175,7 +175,8 @@ type evidenceBody struct {
 }
 
 // proofPartBody summarises the criteria of one purpose (BF-01): the package readiness that gates
-// a filing submission is reported apart from the authority outcome accepted after the fact.
+// a filing submission is reported apart from the authority outcome accepted after the fact, and
+// the signature part carries the signature completeness a proof-required filing must show (D-9).
 type proofPartBody struct {
 	Declared  bool `json:"declared"`
 	Total     int  `json:"total"`
@@ -192,6 +193,7 @@ type checklistBody struct {
 	Subject      workItemBody    `json:"subject"`
 	Verification string          `json:"verification"`
 	Package      proofPartBody   `json:"package"`
+	Signature    proofPartBody   `json:"signature"`
 	Outcome      proofPartBody   `json:"outcome"`
 	Criteria     []criterionBody `json:"criteria"`
 	Evidence     []evidenceBody  `json:"evidence"`
@@ -250,7 +252,7 @@ func criterionETag(c matter.Criterion) ([]byte, string) {
 }
 
 func checklistDTO(p matter.ProofChecklist) checklistBody {
-	out := checklistBody{Subject: workItemDTO(p.Subject), Verification: string(p.Result.State), Package: proofPartDTO(p.Result.Package), Outcome: proofPartDTO(p.Result.Outcome), Criteria: make([]criterionBody, len(p.Result.Criteria)),
+	out := checklistBody{Subject: workItemDTO(p.Subject), Verification: string(p.Result.State), Package: proofPartDTO(p.Result.Package), Signature: proofPartDTO(p.Result.Signature), Outcome: proofPartDTO(p.Result.Outcome), Criteria: make([]criterionBody, len(p.Result.Criteria)),
 		Evidence: make([]evidenceBody, len(p.Evidence)), Verifiers: strs(p.Verifiers), Dependents: make([]string, len(p.Dependencies)), AsOf: ts(p.AsOf)}
 	for i, c := range p.Result.Criteria {
 		out.Criteria[i] = criterionDTO(c)

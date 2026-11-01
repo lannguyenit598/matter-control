@@ -4,6 +4,7 @@ import { ClipboardCheck, FileX, Flag, Pencil, Scale, Undo2 } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
+import { useLocale } from '@/hooks/use-locale'
 
 import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
@@ -82,6 +83,7 @@ function CriteriaGroup({
 
 export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: ProofContext }) {
   const { subject } = checklist
+  const locale = useLocale()
   const isVerifier = checklist.verifiers.includes(checklist.callerId) && canWrite(ctx.role)
   const evidenceById = Object.fromEntries(checklist.evidence.map((e) => [e.id, e]))
   const formCtx = { ...ctx, outcomeAllowed: Boolean(ctx.isFiling) && subject.proofRequired }
@@ -175,7 +177,11 @@ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: Proo
                 <div className="mt-2 flex flex-wrap gap-4">
                   {canWrite(ctx.role) && !openDispute && (
                     <ReasonForm
-                      label="Challenge this acceptance"
+                      label={
+                        locale === 'vi'
+                          ? 'Tranh chấp lời xác nhận này'
+                          : 'Challenge this acceptance'
+                      }
                       icon={<Flag />}
                       draftKey={`assessment:${a.id}:dispute`}
                       run={(reason) =>

@@ -20,7 +20,10 @@ export default function AppError({ error, retry }: { error: unknown; retry: () =
         variant="destructive"
         title={<LocalizedText en="Something went wrong" vi="Đã xảy ra lỗi" />}
       >
-        The data could not be loaded. Check your connection or try again.
+        <LocalizedText
+          en="The data could not be loaded. Check your connection or try again."
+          vi="Không tải được dữ liệu. Kiểm tra kết nối hoặc thử lại."
+        />
       </Alert>
       <Button variant="outline" onClick={retry}>
         <LocalizedText en="Try again" vi="Thử lại" />

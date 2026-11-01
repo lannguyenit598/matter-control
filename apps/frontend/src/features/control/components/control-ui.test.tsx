@@ -172,6 +172,27 @@ describe('ControlRoomView', () => {
     expect(within(waiting).getByText(/awaiting comments/)).toBeInTheDocument()
   })
 
+  // Z-F-03: a filing row states its own outcome axis; a non-filing row carries none.
+  it('shows the outcome axis on a filing row and none on a plain row', () => {
+    const r = room()
+    r.waiting = [
+      {
+        ...row('w2', 'Merger filing', {
+          execution: 'WAITING',
+          waitingPartyId: 'p1',
+          waitingCondition: 'acknowledgement outstanding',
+          proofRequired: true,
+        }),
+        derived: { ...r.waiting[0]!.derived, outcomeVerification: 'PENDING' },
+      },
+    ]
+    render(<ControlRoomView matterId="m1" room={r} labels={labels} />)
+    const waiting = screen.getByRole('region', { name: 'Waiting on' })
+    expect(within(waiting).getByText('outcome pending')).toBeInTheDocument()
+    const blockers = screen.getByRole('region', { name: 'Blocked' })
+    expect(within(blockers).queryByText(/^outcome /)).not.toBeInTheDocument()
+  })
+
   it('says plainly when a section is empty instead of hiding it or showing zero as unknown', () => {
     render(
       <ControlRoomView

@@ -1,5 +1,7 @@
 import type { McRejection } from '@/lib/mc/errors'
 
+import { LocalizedText } from '@/components/molecules/localized-text'
+
 import { GATE_LABEL, GATE_REASON } from '../labels'
 
 /**
@@ -19,7 +21,9 @@ export function RejectionDetails({
     <div className="mt-2 flex flex-col gap-2 text-sm">
       {rejection.gates.length > 0 && (
         <div>
-          <p className="font-medium">Not satisfied:</p>
+          <p className="font-medium">
+            <LocalizedText en="Not satisfied:" vi="Chưa thỏa mãn:" />
+          </p>
           <ul className="list-disc pl-5">
             {rejection.gates.map((g) => (
               <li key={g.edgeId}>

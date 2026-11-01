@@ -50,6 +50,8 @@ export const derivedSchema = z.object({
   attention: z.enum(['NORMAL', 'ATTENTION', 'CRITICAL']),
   attentionReasons: z.array(z.string()),
   criticalChain: z.boolean(),
+  // Z-F-03: the filing's own outcome axis, absent for non-filing rows.
+  outcomeVerification: z.enum(['NOT_TRACKED', 'NOT_DECLARED', 'PENDING', 'ACCEPTED']).optional(),
 })
 
 export const envelopeSchema = z.object({

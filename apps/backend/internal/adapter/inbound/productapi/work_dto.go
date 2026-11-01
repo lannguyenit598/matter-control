@@ -88,6 +88,9 @@ type derivedBody struct {
 	Attention        string   `json:"attention"`
 	AttentionReasons []string `json:"attentionReasons"`
 	CriticalChain    bool     `json:"criticalChain"`
+	// OutcomeVerification is set for a filing row (Z-F-03): the outcome axis apart from the
+	// package-driven verification aggregate.
+	OutcomeVerification string `json:"outcomeVerification,omitempty"`
 }
 
 func derivedDTO(v matter.WorkItemView) derivedBody {
@@ -97,7 +100,7 @@ func derivedDTO(v matter.WorkItemView) derivedBody {
 	}
 	return derivedBody{
 		Timing: string(v.Timing.State), NoDueDate: v.Timing.NoDue, Attention: string(v.Attention.State),
-		AttentionReasons: reasons, CriticalChain: v.CriticalChain,
+		AttentionReasons: reasons, CriticalChain: v.CriticalChain, OutcomeVerification: v.OutcomeVerification,
 	}
 }
 

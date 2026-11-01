@@ -21,6 +21,8 @@ const derivedSchema = z.object({
   attention: z.string(),
   attentionReasons: z.array(z.string()),
   criticalChain: z.boolean(),
+  // Z-F-03: the filing's own outcome axis, absent for non-filing rows.
+  outcomeVerification: z.string().optional(),
 })
 const rowSchema = z.object({ item: itemSchema, derived: derivedSchema, etag: z.string() })
 

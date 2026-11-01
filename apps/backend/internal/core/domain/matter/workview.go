@@ -46,6 +46,10 @@ type WorkItemView struct {
 	Timing        TimingResult
 	Attention     AttentionResult
 	CriticalChain bool
+	// OutcomeVerification is set for a filing whose caller derived it from a graph with the
+	// evidence loaded (Z-F-03): NOT_TRACKED | NOT_DECLARED | PENDING | ACCEPTED, apart from the
+	// package-driven Item.Verification. Empty for other records and for views built without it.
+	OutcomeVerification string
 }
 
 // ViewOf derives the view of one item inside its graph.

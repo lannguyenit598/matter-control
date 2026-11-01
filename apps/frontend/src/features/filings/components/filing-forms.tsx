@@ -1,6 +1,7 @@
 'use client'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
+import { useLocale } from '@/hooks/use-locale'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -50,6 +51,7 @@ export function CreateFilingForm({
   members: Option[]
 }) {
   const router = useRouter()
+  const locale = useLocale()
   if (!requirements.length || !parties.length)
     return (
       <div className="flex flex-col gap-3 text-sm">
@@ -150,7 +152,7 @@ export function CreateFilingForm({
             {(c) => (
               <Select
                 name="authorityPartyId"
-                placeholder="Choose the authority"
+                placeholder={locale === 'vi' ? 'Chọn cơ quan phụ trách' : 'Choose the authority'}
                 options={parties.map((p) => ({ value: p.id, label: p.label }))}
                 {...c}
               />

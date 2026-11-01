@@ -2,6 +2,7 @@ import { LocalizedInstant } from '@/components/molecules/localized-instant'
 import { GlassSurface } from '@/components/molecules/glass-surface'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
+import { Badge } from '@/components/atoms/badge'
 import Link from 'next/link'
 
 import { GAP_LABEL, GATE_LABEL, GATE_REASON, KIND_LABEL, userName } from '../labels'
@@ -11,6 +12,27 @@ export type RoomLabels = {
   users: Record<string, string>
   parties: Record<string, string>
   titles: Record<string, string>
+}
+
+const OUTCOME_AXIS: Record<string, { en: string; vi: string }> = {
+  NOT_DECLARED: { en: 'outcome not declared', vi: 'kết quả chưa khai báo' },
+  PENDING: { en: 'outcome pending', vi: 'kết quả đang chờ' },
+  ACCEPTED: { en: 'outcome verified', vi: 'kết quả đã xác minh' },
+  NOT_TRACKED: { en: 'outcome not tracked', vi: 'kết quả không theo dõi' },
+}
+
+/**
+ * A filing row's own outcome axis (Z-F-03), shown beside the aggregate so the room never reads a
+ * filing as verified without the outcome qualifier. Nothing is rendered for non-filing rows.
+ */
+function OutcomeAxis({ state }: { state: string | undefined }) {
+  const t = state ? OUTCOME_AXIS[state] : undefined
+  if (!t) return null
+  return (
+    <Badge variant="warning" data-slot="outcome-axis">
+      <LocalizedText en={t.en} vi={t.vi} />
+    </Badge>
+  )
 }
 
 function Section({
@@ -179,7 +201,8 @@ export function ControlRoomView({
                 <Link href={rec(b.item.id)} className="font-medium underline">
                   {b.item.title}
                 </Link>{' '}
-                · owner {userName(labels.users, b.item.ownerId)}
+                · owner {userName(labels.users, b.item.ownerId)}{' '}
+                <OutcomeAxis state={b.derived.outcomeVerification} />
                 <ul className="list-disc pl-5">
                   {b.reasons.map((r) => {
                     const u = b.upstream.find((x) => x.id === r.sourceId)
@@ -237,7 +260,10 @@ export function ControlRoomView({
                 </Link>{' '}
                 · owner {userName(labels.users, n.item.ownerId)}
                 {n.item.dueAt ? ` · due ${n.item.dueAt}` : ''}
-                {n.derived.attention !== 'NORMAL' ? ` · ${n.derived.attention.toLowerCase()}` : ''}
+                {n.derived.attention !== 'NORMAL'
+                  ? ` · ${n.derived.attention.toLowerCase()}`
+                  : ''}{' '}
+                <OutcomeAxis state={n.derived.outcomeVerification} />
                 {n.unblocks.length > 0 && (
                   <p>
                     <LocalizedText en="Releases:" vi="Gỡ chặn:" /> {n.unblocks.map(t).join(', ')}
@@ -279,7 +305,7 @@ export function ControlRoomView({
                 {w.item.waitingPartyId
                   ? (labels.parties[w.item.waitingPartyId] ?? 'an external party')
                   : 'an external party'}{' '}
-                — {w.item.waitingCondition}
+                — {w.item.waitingCondition} <OutcomeAxis state={w.derived.outcomeVerification} />
               </li>
             ))}
           </ul>

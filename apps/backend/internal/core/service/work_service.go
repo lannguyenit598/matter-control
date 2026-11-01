@@ -1019,6 +1019,11 @@ func (s *WorkService) ListWorkItems(ctx context.Context, q port.ListWorkItemsQue
 		var rows []matter.WorkItemView
 		for _, it := range g.Items {
 			v := matter.ViewOf(it, asOf, chain)
+			// Z-F-03: a filing row states its own outcome axis so the grid never hides it behind
+			// the package-driven verification aggregate.
+			if _, isFiling := g.Filing.Of(it.ID); isFiling {
+				v.OutcomeVerification = matter.OutcomeVerification(it, g.Evidence, asOf)
+			}
 			if matchesFilter(v, q.Filter) {
 				rows = append(rows, v)
 			}

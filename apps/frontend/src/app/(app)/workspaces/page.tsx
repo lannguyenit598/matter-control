@@ -12,13 +12,13 @@ import { workspaceRepository } from '@/features/workspaces/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 
-export const metadata: Metadata = { title: 'Matters' }
+export const metadata: Metadata = { title: 'Workspaces' }
 
 export default function WorkspacesPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title={<LocalizedText en="Matters" vi="Hồ sơ" />}
+        title={<LocalizedText en="Workspaces" vi="Không gian làm việc" />}
         description={
           <LocalizedText
             en="Choose a workspace, then open one of its matters or create a new one."

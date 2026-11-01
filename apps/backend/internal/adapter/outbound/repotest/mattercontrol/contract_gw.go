@@ -184,7 +184,9 @@ func gw03(t *testing.T, newBundle Factory) {
 
 	// Package Preparation: allowed only with declared package criteria; IN_PROGRESS.
 	l.refused("Package Preparation without criteria", f.filingID, func() error { return errOf(f.adv(e.editor, "PACKAGE_PREPARATION", nil)) }, "package-criteria-required")
-	sigC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE"})
+	// D-9 (2026-10-31): signatures are their own criterion purpose; a proof-required filing proves
+	// them through a satisfied SIGNATURE criterion, apart from the package criteria.
+	sigC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE", Purpose: "SIGNATURE"})
 	pkgC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
 	// BF-01: the authority's decision is its own OUTCOME criterion; it never gates submission and
 	// only an independent verifier's acceptance of the outcome evidence satisfies it.
@@ -236,8 +238,8 @@ func gw03(t *testing.T, newBundle Factory) {
 	}
 	// The package is ready, but the filing is not VERIFIED while its outcome criterion is open.
 	e.state("package accepted, outcome criterion still open", f.filingID, matter.VerificationPartiallyVerified)
-	if ck := e.checklist(f.filingID); !ck.Result.Package.Ready() || !ck.Result.Outcome.Declared() || ck.Result.Outcome.Ready() {
-		t.Fatalf("package ready, outcome declared but not accepted: %+v %+v", ck.Result.Package, ck.Result.Outcome)
+	if ck := e.checklist(f.filingID); !ck.Result.Package.Ready() || !ck.Result.Signature.Ready() || !ck.Result.Outcome.Declared() || ck.Result.Outcome.Ready() {
+		t.Fatalf("package and signature ready, outcome declared but not accepted: %+v %+v %+v", ck.Result.Package, ck.Result.Signature, ck.Result.Outcome)
 	}
 
 	// Submission: exact version set of cycle 1; denied wrong version, future time, missing reference.

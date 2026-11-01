@@ -352,10 +352,11 @@ func DecideAdvance(f Filing, it WorkItem, set EvidenceSet, fs FilingSet, in Adva
 		}
 		// F03: every filing declares its package criteria before package preparation. Neither the
 		// editor's outcome-verification flag nor the OWNER's no-signature decision waives this:
-		// "no signatures" never means "no package".
+		// "no signatures" never means "no package". Z-F-01 (D-9): the gate counts PACKAGE-purpose
+		// criteria only — the authority's OUTCOME criterion never stands in for a package.
 		n := 0
 		for _, c := range set.Criteria {
-			if c.SubjectID == it.ID && !c.Retired {
+			if c.SubjectID == it.ID && !c.Retired && c.EffectivePurpose() == PurposePackage {
 				n++
 			}
 		}
@@ -373,14 +374,49 @@ func DecideAdvance(f Filing, it WorkItem, set EvidenceSet, fs FilingSet, in Adva
 		}
 
 	case StageSubmission, StageResponse:
-		if missing := unsatisfied(it, set, in.AsOf); len(missing) > 0 {
-			return out, guardFailed("guard-failed", "package criteria are not satisfied: "+strings.Join(missing, "; "))
+		// Z-F-01 (D-9): an undeclared package is never a ready one, even for a filing that reached
+		// this stage without the package gate (in-flight legacy data).
+		res := EvaluateVerification(it, set, in.AsOf)
+		if it.ProofRequired && !res.Package.Declared() {
+			return out, guardFailed("package-criteria-required", "declare the package criteria first")
 		}
-		// F03: a proof-required filing proves its signatures through its mandatory criteria (checked
-		// above; the OWNER may retire the signature criterion with a reason). A no-proof filing has
-		// no signature criterion to retire, so it needs a signature observed on a submitted version
-		// or the OWNER's explicit no-signature decision. Either way something must be shown: the
-		// editor's choice about outcome proof never waives the signature requirement.
+		// F03: a no-proof filing has no signature criterion to retire, so it needs a signature
+		// observed on a submitted version or the OWNER's explicit no-signature decision. Z-F-02
+		// (D-9): a proof-required filing proves its signatures through SIGNATURE-purpose criteria —
+		// at least one declared and every mandatory one satisfied — unless the OWNER decided the
+		// authority requires none. Either way something must be shown: the editor's choice about
+		// outcome proof never waives the signature requirement. The refusal names exactly what is
+		// missing, package and signature alike (AC-145).
+		var refused []string
+		if missing := unsatisfied(it, set, in.AsOf); len(missing) > 0 {
+			refused = append(refused, "package criteria are not satisfied: "+strings.Join(missing, "; "))
+		}
+		if !f.SignatureNotRequired && it.ProofRequired {
+			everDeclared := false
+			for _, c := range set.Criteria {
+				if c.SubjectID == it.ID && c.EffectivePurpose() == PurposeSignature {
+					everDeclared = true
+				}
+			}
+			if everDeclared && res.Signature.Declared() {
+				var missing []string
+				for _, c := range res.Criteria {
+					if c.Criterion.EffectivePurpose() == PurposeSignature && c.Criterion.Mandatory && !c.Satisfied {
+						missing = append(missing, fmt.Sprintf("%s (%s)", c.Criterion.Title, c.Reason))
+					}
+				}
+				if len(missing) > 0 {
+					refused = append(refused, "signature criteria are not satisfied: "+strings.Join(missing, "; "))
+				}
+			} else if !everDeclared && len(refused) == 0 {
+				return out, guardFailed("signature-criteria-required", "declare a SIGNATURE criterion for the filing's signatures; a package criterion does not prove them")
+			}
+			// A signature criterion retired with a recorded OWNER reason waives the requirement,
+			// exactly like the OWNER's no-signature applicability decision.
+		}
+		if len(refused) > 0 {
+			return out, guardFailed("guard-failed", strings.Join(refused, "; "))
+		}
 		if !f.SignatureNotRequired && !it.ProofRequired {
 			signed := false
 			for _, so := range set.Signatures {

@@ -119,6 +119,29 @@ describe('WorkGrid', () => {
     filtered: false,
   }
 
+  // Z-F-03: the filing's own outcome axis shows beside the package-driven aggregate, and a
+  // non-filing row carries none.
+  it('states the outcome axis beside the verification aggregate for a filing row', () => {
+    const items = [
+      entry(
+        {
+          id: 'a3',
+          title: 'Merger filing',
+          proofRequired: true,
+          verification: 'PARTIALLY_VERIFIED',
+        },
+        { outcomeVerification: 'PENDING' },
+      ),
+      entry({ id: 'a2', title: 'Plain' }),
+    ]
+    render(<WorkGrid {...base} items={items} />)
+    const row = screen.getByText('Merger filing').closest('tr')!
+    expect(within(row).getByText('Outcome: pending')).toBeInTheDocument()
+    expect(within(row).getByText('Partially verified')).toBeInTheDocument()
+    const plain = screen.getByText('Plain').closest('tr')!
+    expect(within(plain).queryByText(/^Outcome:/)).not.toBeInTheDocument()
+  })
+
   it('shows each independent axis in its own column, with text not only colour', () => {
     const items = [
       entry(

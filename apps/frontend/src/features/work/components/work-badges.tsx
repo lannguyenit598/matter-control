@@ -179,3 +179,24 @@ export function VerificationBadge({ item }: { item: WorkItem }) {
     </Badge>
   )
 }
+
+const OUTCOME_AXIS: Record<string, { en: string; vi: string; variant: 'warning' | 'success' }> = {
+  NOT_DECLARED: { en: 'Outcome: not declared', vi: 'Kết quả: chưa khai báo', variant: 'warning' },
+  PENDING: { en: 'Outcome: pending', vi: 'Kết quả: đang chờ', variant: 'warning' },
+  ACCEPTED: { en: 'Outcome: verified', vi: 'Kết quả: đã xác minh', variant: 'success' },
+  NOT_TRACKED: { en: 'Outcome: not tracked', vi: 'Kết quả: không theo dõi', variant: 'warning' },
+}
+
+/**
+ * The filing's own outcome axis (Z-F-03), shown beside the package-driven verification aggregate
+ * so one axis never hides the other. Nothing is shown when the API did not state it (non-filing).
+ */
+export function OutcomeAxisBadge({ state }: { state: string | undefined }) {
+  const t = state ? OUTCOME_AXIS[state] : undefined
+  if (!t) return null
+  return (
+    <Badge variant={t.variant} data-slot="outcome-axis">
+      <LocalizedText en={t.en} vi={t.vi} />
+    </Badge>
+  )
+}

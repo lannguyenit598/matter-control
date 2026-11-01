@@ -85,17 +85,21 @@ func (r VersionRule) Valid() bool {
 
 // CriterionPurpose says what a criterion proves. PACKAGE criteria (the default, and the only
 // reading of every legacy row) are the readiness gates that must hold before a filing is
-// submitted; OUTCOME criteria are the authority's decision, accepted independently after the
-// fact (BF-01). Nothing infers a purpose from a title: an unspecified purpose is PACKAGE, which
-// can only keep a gate closed, never open one.
+// submitted; SIGNATURE criteria (D-9, ratified 2026-10-31) are the signature completeness a
+// proof-required filing must show; OUTCOME criteria are the authority's decision, accepted
+// independently after the fact (BF-01). Nothing infers a purpose from a title: an unspecified
+// purpose is PACKAGE, which can only keep a gate closed, never open one.
 type CriterionPurpose string
 
 const (
-	PurposePackage CriterionPurpose = "PACKAGE"
-	PurposeOutcome CriterionPurpose = "OUTCOME"
+	PurposePackage   CriterionPurpose = "PACKAGE"
+	PurposeSignature CriterionPurpose = "SIGNATURE"
+	PurposeOutcome   CriterionPurpose = "OUTCOME"
 )
 
-func (p CriterionPurpose) Valid() bool { return p == PurposePackage || p == PurposeOutcome }
+func (p CriterionPurpose) Valid() bool {
+	return p == PurposePackage || p == PurposeSignature || p == PurposeOutcome
+}
 
 // Criterion is one evidence requirement of a subject: what must be shown, distinct from any
 // proof. Revision changes whenever the criterion changes; claims pin the revision they were
@@ -145,8 +149,11 @@ func OutcomeVerification(item WorkItem, set EvidenceSet, asOf time.Time) string 
 
 // EffectivePurpose reads an unspecified (legacy) purpose as PACKAGE.
 func (c Criterion) EffectivePurpose() CriterionPurpose {
-	if c.Purpose == PurposeOutcome {
+	switch c.Purpose {
+	case PurposeOutcome:
 		return PurposeOutcome
+	case PurposeSignature:
+		return PurposeSignature
 	}
 	return PurposePackage
 }
@@ -323,13 +330,15 @@ func (p ProofPart) Declared() bool { return p.Total > 0 }
 func (p ProofPart) Ready() bool { return p.Mandatory > 0 && p.Satisfied == p.Mandatory }
 
 // VerificationResult is the derived verification of one subject at an explicit instant. State is
-// the aggregate over all mandatory criteria; Package and Outcome split it so that package
-// readiness is never shown as an accepted authority outcome.
+// the aggregate over all mandatory criteria; Package, Signature and Outcome split it so that
+// package readiness is never shown as an accepted authority outcome, and a generic package
+// criterion never stands in for the signatures (D-9).
 type VerificationResult struct {
-	State    VerificationState
-	Criteria []CriterionStatus
-	Package  ProofPart
-	Outcome  ProofPart
+	State     VerificationState
+	Criteria  []CriterionStatus
+	Package   ProofPart
+	Signature ProofPart
+	Outcome   ProofPart
 }
 
 // EvaluateVerification derives the subject aggregate from its criteria and proof at asOf
@@ -351,6 +360,8 @@ func EvaluateVerification(item WorkItem, set EvidenceSet, asOf time.Time) Verifi
 		part := &res.Package
 		if c.Criterion.EffectivePurpose() == PurposeOutcome {
 			part = &res.Outcome
+		} else if c.Criterion.EffectivePurpose() == PurposeSignature {
+			part = &res.Signature
 		}
 		part.Total++
 		if c.Criterion.Mandatory {

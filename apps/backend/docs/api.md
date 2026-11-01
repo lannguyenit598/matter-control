@@ -311,7 +311,7 @@ Binding detail: `docs/implementation/p0-zcode-execution/local-contract.md` Revis
 |---|---|
 | `GET /api/v1/me/reviews?limit&cursor` | Pending assessments the caller may decide as a designated independent verifier. Envelope `{items, page:{limit,maxLimit,total,nextCursor}}`; `MC-As-Of` header. 400 `urn:mc:bad-request` for a bad `limit`/`cursor`; 401/403 as every `/me` read. Empty for a submitter, viewer, undesignated owner or revoked member. |
 | `GET /api/v1/matters?q&limit&cursor` | Matters the caller can open across their active workspaces, by title. Rows add `workspaceName`. `total` is exact. 409 `urn:mc:rejected` (`query-too-long`) for `q` over 100 characters. |
-| `POST …/work-items/{id}/criteria` | Body adds `purpose` (`PACKAGE` default, `OUTCOME`). 409 `urn:mc:rejected` codes `invalid-purpose`, `outcome-criterion-not-applicable`; revising with another purpose: `purpose-immutable`. |
+| `POST …/work-items/{id}/criteria` | Body adds `purpose` (`PACKAGE` default, `SIGNATURE`, `OUTCOME` — D-9 ratified 2026-10-31). 409 `urn:mc:rejected` codes `invalid-purpose`, `outcome-criterion-not-applicable`; revising with another purpose: `purpose-immutable`. |
 | `GET …/work-items/{id}` | Adds `isFiling` and, for a filing, `outcomeVerification` (`NOT_TRACKED`/`NOT_DECLARED`/`PENDING`/`ACCEPTED`). `GET …/filings` rows and `GET …/filings/{id}` add the same field. |
-| `GET …/work-items/{id}/proof` | Adds `package` and `outcome` summaries; each criterion adds `purpose`. |
+| `GET …/work-items/{id}/proof` | Adds `package`, `signature` and `outcome` summaries (D-9); each criterion adds `purpose`. |
 | `GET /matters/{id}/brief?t1&t2` response | `changes[].targetLabel` (label recorded by the change itself; may be empty). |

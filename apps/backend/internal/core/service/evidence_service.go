@@ -455,7 +455,7 @@ func buildCriterion(in port.CriterionInput, set matter.EvidenceSet) (matter.Crit
 		c.Purpose = matter.PurposePackage
 	}
 	if !c.Purpose.Valid() {
-		return c, rejected("invalid-purpose", "the purpose must be PACKAGE or OUTCOME")
+		return c, rejected("invalid-purpose", "the purpose must be PACKAGE, SIGNATURE or OUTCOME")
 	}
 	if c.Rule == "" {
 		c.Rule = matter.VersionNone

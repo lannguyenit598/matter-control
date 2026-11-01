@@ -46,9 +46,11 @@ describe('authorized scope header', () => {
     api.get.mockRejectedValue(new McError('not-found', 404))
     render(await MatterScope({ matterId: 'matter-1', children: <p>Protected child</p> }))
     expect(screen.queryByText('Protected child')).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('navigation', { name: 'Current matter scope' }),
-    ).not.toBeInTheDocument()
+    // UX-L-05: the failure keeps a breadcrumb, but only of facts it still knows — the hub link
+    // and the raw id. No workspace name, no matter title, no authorized scope labels.
+    const nav = screen.getByRole('navigation', { name: 'Current matter scope' })
+    expect(nav).not.toHaveTextContent('Atlas')
+    expect(nav.textContent).toContain('matter-1')
     expect(screen.getByText('This matter is not available')).toBeInTheDocument()
   })
   it('requires a session before reading scope', async () => {

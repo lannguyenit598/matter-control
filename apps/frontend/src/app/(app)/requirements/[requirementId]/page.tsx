@@ -24,9 +24,29 @@ export default function RequirementPage({ params }: PageProps<'/requirements/[re
 async function Requirement({ params }: Pick<PageProps<'/requirements/[requirementId]'>, 'params'>) {
   const { requirementId } = await params
   const here = `/requirements/${requirementId}`
-  if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
+  // UX-L-05: the failure keeps the page's h1 — a breadcrumb of facts still known (the hub and
+  // the raw id), never a stale scope label.
+  const fallbackHeading = (
+    <nav aria-label="Current scope" className="flex items-center gap-2 text-sm font-normal">
+      <Link className="underline" href="/workspaces">
+        <LocalizedText en="Workspaces" vi="Không gian làm việc" />
+      </Link>
+      <span aria-hidden="true">/</span>
+      <span className="text-muted-foreground">{requirementId}</span>
+    </nav>
+  )
+  if (!(await getSession()))
+    return <ReadFailure kind="sign-in" retryHref={here} heading={fallbackHeading} />
   const read = await attempt(() => requirementRepository.get(requirementId))
-  if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="requirement" />
+  if (!read.ok)
+    return (
+      <ReadFailure
+        kind={read.kind}
+        retryHref={here}
+        subject="requirement"
+        heading={fallbackHeading}
+      />
+    )
   const { requirement, asOf } = read.value
   return (
     <div className="flex flex-col gap-6">

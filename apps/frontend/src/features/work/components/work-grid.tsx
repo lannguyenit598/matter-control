@@ -17,6 +17,7 @@ import {
   DependencyBadge,
   ExecutionBadge,
   KindBadge,
+  OutcomeAxisBadge,
   VerificationBadge,
   TimingBadge,
 } from './work-badges'
@@ -172,7 +173,11 @@ export function WorkGrid({
                   <ExecutionBadge state={e.item.execution} />
                 </td>
                 <td className={cell}>
-                  <VerificationBadge item={e.item} />
+                  <div className="flex flex-col items-start gap-1">
+                    <VerificationBadge item={e.item} />
+                    {/* Z-F-03: the filing's outcome axis beside the aggregate, never hidden by it. */}
+                    <OutcomeAxisBadge state={e.derived.outcomeVerification} />
+                  </div>
                 </td>
                 <td className={cell}>
                   <DependencyBadge state={e.item.dependency} />

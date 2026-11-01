@@ -91,6 +91,10 @@ func BuildControlRoom(g WorkGraph, asOf time.Time, revision int64, recent []Even
 	views := map[NodeID]WorkItemView{}
 	for _, it := range g.Items {
 		v := ViewOf(it, asOf, chain)
+		// Z-F-03: every filing row carries its own outcome axis, so the aggregate never hides it.
+		if _, isFiling := g.Filing.Of(it.ID); isFiling {
+			v.OutcomeVerification = OutcomeVerification(it, g.Evidence, asOf)
+		}
 		views[it.ID] = v
 		out.State.Total++
 		out.State.ByExecution[it.Execution]++

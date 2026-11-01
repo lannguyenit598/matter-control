@@ -23,9 +23,25 @@ export async function MatterScope({
   children: ReactNode
 }) {
   const here = `/matters/${encodeURIComponent(matterId)}`
-  if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
+  // UX-L-05: a failed matter read (or session) must not erase the page's context — the failure
+  // keeps a breadcrumb (the hub is always reachable) and an h1, even though the scope labels are
+  // unknown without the read.
+  const scopeFallback = (
+    <nav aria-label="Current matter scope" className="flex items-center gap-2 text-sm font-normal">
+      <Link className="underline" href="/workspaces">
+        <LocalizedText en="Workspaces" vi="Không gian làm việc" />
+      </Link>
+      <span aria-hidden="true">/</span>
+      <span className="text-muted-foreground">{matterId}</span>
+    </nav>
+  )
+  if (!(await getSession()))
+    return <ReadFailure kind="sign-in" retryHref={here} heading={scopeFallback} />
   const read = await attempt(() => matterRepository.get(matterId))
-  if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="matter" />
+  if (!read.ok)
+    return (
+      <ReadFailure kind={read.kind} retryHref={here} subject="matter" heading={scopeFallback} />
+    )
   const { matter, asOf } = read.value
   const workspace = await attempt(() => matterRepository.workspace(matter.workspaceId))
   return (

@@ -20,7 +20,12 @@ import { proofRepository } from '@/features/proof/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 
-export const metadata: Metadata = { title: 'Document' }
+export async function generateMetadata({
+  params,
+}: PageProps<'/matters/[matterId]/documents/[documentId]'>): Promise<Metadata> {
+  const { documentId } = await params
+  return { title: `Document \u00b7 ${documentId}` }
+}
 
 type Props = PageProps<'/matters/[matterId]/documents/[documentId]'>
 
@@ -144,13 +149,15 @@ async function DocumentView({ params, searchParams }: Pick<Props, 'params' | 'se
       {role === 'OWNER' && target && impact && (
         <Card>
           <CardHeader>
-            <CardTitle>Make version {target.no} current</CardTitle>
+            <CardTitle>
+              <LocalizedText en="Make version" vi="Đưa phiên bản" /> {target.no}{' '}
+              <LocalizedText en="current" vi="lên hiện hành" />
+            </CardTitle>
             <CardDescription>
-              Replaces{' '}
-              {doc.currentVersionId
-                ? `version ${detail.versions.find((v) => v.id === doc.currentVersionId)?.no ?? '?'}`
-                : 'no version'}
-              . Nothing changes until you confirm.
+              <LocalizedText
+                en={`Replaces ${doc.currentVersionId ? `version ${detail.versions.find((v) => v.id === doc.currentVersionId)?.no ?? '?'}` : 'no version'}. Nothing changes until you confirm.`}
+                vi={`Thay thế ${doc.currentVersionId ? `phiên bản ${detail.versions.find((v) => v.id === doc.currentVersionId)?.no ?? '?'}` : 'không có phiên bản nào'}. Không có gì thay đổi cho đến khi bạn xác nhận.`}
+              />
             </CardDescription>
           </CardHeader>
           <CardContent>

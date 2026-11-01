@@ -1,0 +1,482 @@
+diff --git a/apps/backend/docs/api.md b/apps/backend/docs/api.md
+index 2a0746e..2986bbc 100644
+--- a/apps/backend/docs/api.md
++++ b/apps/backend/docs/api.md
+@@ -311,7 +311,7 @@ Binding detail: `docs/implementation/p0-zcode-execution/local-contract.md` Revis
+ |---|---|
+ | `GET /api/v1/me/reviews?limit&cursor` | Pending assessments the caller may decide as a designated independent verifier. Envelope `{items, page:{limit,maxLimit,total,nextCursor}}`; `MC-As-Of` header. 400 `urn:mc:bad-request` for a bad `limit`/`cursor`; 401/403 as every `/me` read. Empty for a submitter, viewer, undesignated owner or revoked member. |
+ | `GET /api/v1/matters?q&limit&cursor` | Matters the caller can open across their active workspaces, by title. Rows add `workspaceName`. `total` is exact. 409 `urn:mc:rejected` (`query-too-long`) for `q` over 100 characters. |
+-| `POST …/work-items/{id}/criteria` | Body adds `purpose` (`PACKAGE` default, `OUTCOME`). 409 `urn:mc:rejected` codes `invalid-purpose`, `outcome-criterion-not-applicable`; revising with another purpose: `purpose-immutable`. |
++| `POST …/work-items/{id}/criteria` | Body adds `purpose` (`PACKAGE` default, `SIGNATURE`, `OUTCOME` — D-9 ratified 2026-10-31). 409 `urn:mc:rejected` codes `invalid-purpose`, `outcome-criterion-not-applicable`; revising with another purpose: `purpose-immutable`. |
+ | `GET …/work-items/{id}` | Adds `isFiling` and, for a filing, `outcomeVerification` (`NOT_TRACKED`/`NOT_DECLARED`/`PENDING`/`ACCEPTED`). `GET …/filings` rows and `GET …/filings/{id}` add the same field. |
+-| `GET …/work-items/{id}/proof` | Adds `package` and `outcome` summaries; each criterion adds `purpose`. |
++| `GET …/work-items/{id}/proof` | Adds `package`, `signature` and `outcome` summaries (D-9); each criterion adds `purpose`. |
+ | `GET /matters/{id}/brief?t1&t2` response | `changes[].targetLabel` (label recorded by the change itself; may be empty). |
+diff --git a/apps/backend/internal/adapter/inbound/productapi/evidence_dto.go b/apps/backend/internal/adapter/inbound/productapi/evidence_dto.go
+index 76ef773..9876b49 100644
+--- a/apps/backend/internal/adapter/inbound/productapi/evidence_dto.go
++++ b/apps/backend/internal/adapter/inbound/productapi/evidence_dto.go
+@@ -175,7 +175,8 @@ type evidenceBody struct {
+ }
+ 
+ // proofPartBody summarises the criteria of one purpose (BF-01): the package readiness that gates
+-// a filing submission is reported apart from the authority outcome accepted after the fact.
++// a filing submission is reported apart from the authority outcome accepted after the fact, and
++// the signature part carries the signature completeness a proof-required filing must show (D-9).
+ type proofPartBody struct {
+ 	Declared  bool `json:"declared"`
+ 	Total     int  `json:"total"`
+@@ -192,6 +193,7 @@ type checklistBody struct {
+ 	Subject      workItemBody    `json:"subject"`
+ 	Verification string          `json:"verification"`
+ 	Package      proofPartBody   `json:"package"`
++	Signature    proofPartBody   `json:"signature"`
+ 	Outcome      proofPartBody   `json:"outcome"`
+ 	Criteria     []criterionBody `json:"criteria"`
+ 	Evidence     []evidenceBody  `json:"evidence"`
+@@ -250,7 +252,7 @@ func criterionETag(c matter.Criterion) ([]byte, string) {
+ }
+ 
+ func checklistDTO(p matter.ProofChecklist) checklistBody {
+-	out := checklistBody{Subject: workItemDTO(p.Subject), Verification: string(p.Result.State), Package: proofPartDTO(p.Result.Package), Outcome: proofPartDTO(p.Result.Outcome), Criteria: make([]criterionBody, len(p.Result.Criteria)),
++	out := checklistBody{Subject: workItemDTO(p.Subject), Verification: string(p.Result.State), Package: proofPartDTO(p.Result.Package), Signature: proofPartDTO(p.Result.Signature), Outcome: proofPartDTO(p.Result.Outcome), Criteria: make([]criterionBody, len(p.Result.Criteria)),
+ 		Evidence: make([]evidenceBody, len(p.Evidence)), Verifiers: strs(p.Verifiers), Dependents: make([]string, len(p.Dependencies)), AsOf: ts(p.AsOf)}
+ 	for i, c := range p.Result.Criteria {
+ 		out.Criteria[i] = criterionDTO(c)
+diff --git a/apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0011_criterion_purpose_signature.sql b/apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0011_criterion_purpose_signature.sql
+new file mode 100644
+index 0000000..4db8870
+--- /dev/null
++++ b/apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0011_criterion_purpose_signature.sql
+@@ -0,0 +1,10 @@
++-- +goose Up
++-- D-9 (ratified 2026-10-31, Z-F-01/Z-F-02): a criterion's purpose gains the SIGNATURE value. A
++-- proof-required filing proves its signatures through SIGNATURE-purpose criteria; the existing
++-- PACKAGE and OUTCOME readings are unchanged and no row is rewritten.
++ALTER TABLE criteria DROP CONSTRAINT criteria_purpose_check;
++ALTER TABLE criteria ADD CONSTRAINT criteria_purpose_check CHECK (purpose IN ('PACKAGE', 'SIGNATURE', 'OUTCOME'));
++
++-- +goose Down
++ALTER TABLE criteria DROP CONSTRAINT criteria_purpose_check;
++ALTER TABLE criteria ADD CONSTRAINT criteria_purpose_check CHECK (purpose IN ('PACKAGE', 'OUTCOME'));
+diff --git a/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go b/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go
+index e1d0f39..093acd9 100644
+--- a/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go
++++ b/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go
+@@ -184,7 +184,9 @@ func gw03(t *testing.T, newBundle Factory) {
+ 
+ 	// Package Preparation: allowed only with declared package criteria; IN_PROGRESS.
+ 	l.refused("Package Preparation without criteria", f.filingID, func() error { return errOf(f.adv(e.editor, "PACKAGE_PREPARATION", nil)) }, "package-criteria-required")
+-	sigC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE"})
++	// D-9 (2026-10-31): signatures are their own criterion purpose; a proof-required filing proves
++	// them through a satisfied SIGNATURE criterion, apart from the package criteria.
++	sigC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE", Purpose: "SIGNATURE"})
+ 	pkgC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
+ 	// BF-01: the authority's decision is its own OUTCOME criterion; it never gates submission and
+ 	// only an independent verifier's acceptance of the outcome evidence satisfies it.
+@@ -236,8 +238,8 @@ func gw03(t *testing.T, newBundle Factory) {
+ 	}
+ 	// The package is ready, but the filing is not VERIFIED while its outcome criterion is open.
+ 	e.state("package accepted, outcome criterion still open", f.filingID, matter.VerificationPartiallyVerified)
+-	if ck := e.checklist(f.filingID); !ck.Result.Package.Ready() || !ck.Result.Outcome.Declared() || ck.Result.Outcome.Ready() {
+-		t.Fatalf("package ready, outcome declared but not accepted: %+v %+v", ck.Result.Package, ck.Result.Outcome)
++	if ck := e.checklist(f.filingID); !ck.Result.Package.Ready() || !ck.Result.Signature.Ready() || !ck.Result.Outcome.Declared() || ck.Result.Outcome.Ready() {
++		t.Fatalf("package and signature ready, outcome declared but not accepted: %+v %+v %+v", ck.Result.Package, ck.Result.Signature, ck.Result.Outcome)
+ 	}
+ 
+ 	// Submission: exact version set of cycle 1; denied wrong version, future time, missing reference.
+diff --git a/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w4.go b/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w4.go
+index 17129f9..f0b4e0d 100644
+--- a/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w4.go
++++ b/apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w4.go
+@@ -186,7 +186,10 @@ func SuiteW4(t *testing.T, newBundle Factory) {
+ 
+ 		// REQUIREMENT -> PACKAGE needs declared package criteria.
+ 		mustCode(t, "criteria first", errOf(f.adv(e.editor, "PACKAGE_PREPARATION", nil)), "package-criteria-required")
+-		sig, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE"})
++		// D-9 (2026-10-31): signatures are their own criterion purpose; a proof-required filing
++		// proves them through a satisfied SIGNATURE criterion, apart from the package criteria.
++		sig, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Signed filing form", Mandatory: true, Rule: "NONE", Purpose: "SIGNATURE"})
++		pkgC, _ := e.criterion(f.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
+ 		f.must("PACKAGE_PREPARATION", nil)
+ 		if it := f.get().View.Item; it.Execution != matter.ExecutionInProgress {
+ 			t.Fatalf("package preparation is in progress: %+v", it)
+@@ -200,10 +203,10 @@ func SuiteW4(t *testing.T, newBundle Factory) {
+ 		})), "unknown-version")
+ 		f.must("SIGNATURE", func(c *port.AdvanceFilingCmd) { c.VersionIDs = []string{v1.String()} })
+ 
+-		// FL-03: a missing signature blocks submission, with the reason, and records nothing.
++		// FL-03: unmet package and signature criteria block submission, with the reason, and record nothing.
+ 		evBefore, revBefore := len(e.events()), f.get().View.Item.Revision
+ 		_, err := f.adv(e.editor, "SUBMISSION", func(c *port.AdvanceFilingCmd) { c.Reference = "SUB-1"; c.VersionIDs = []string{v1.String()} })
+-		mustCode(t, "AC-145 missing signature", err, "guard-failed")
++		mustCode(t, "AC-145 unmet package and signature criteria", err, "guard-failed")
+ 		var rej *matter.RejectedError
+ 		if !errors.As(err, &rej) || rej.Message == "" {
+ 			t.Fatalf("the refusal names what is missing: %v", err)
+@@ -212,12 +215,15 @@ func SuiteW4(t *testing.T, newBundle Factory) {
+ 			t.Fatal("a refused stage change leaves no event, no revision and no submission")
+ 		}
+ 		// the proof is offered by the editor and accepted by an independent verifier
+-		if _, err := e.submit(e.editor, func(s *port.SubmitEvidenceCmd) { s.Claims = []string{sig.String()} }); err != nil {
++		if _, err := e.submit(e.editor, func(s *port.SubmitEvidenceCmd) { s.Claims = []string{sig.String(), pkgC.String()} }); err != nil {
+ 			t.Fatal(err)
+ 		}
+ 		if _, err := e.assess(e.reviewer, f.filingID, e.claimOf(f.filingID, sig).Claim.ID, "ACCEPTED"); err != nil {
+ 			t.Fatal(err)
+ 		}
++		if _, err := e.assess(e.reviewer, f.filingID, e.claimOf(f.filingID, pkgC).Claim.ID, "ACCEPTED"); err != nil {
++			t.Fatal(err)
++		}
+ 		// stale revision, future time, missing reference
+ 		_, err = e.fil.Advance(e.ctx, port.AdvanceFilingCmd{ActorID: e.editor.String(), MatterID: e.m.String(), FilingID: f.filingID.String(), ExpectedRevision: revBefore - 1, To: "SUBMISSION"})
+ 		mustIs(t, "stale", err, port.ErrPreconditionFailed)
+@@ -400,7 +406,9 @@ func SuiteW4(t *testing.T, newBundle Factory) {
+ 
+ 		// FL-06: signature criteria made non-applicable by an owner revision, then submission is allowed
+ 		k := e.newFiling(true)
+-		sig, _ := e.criterion(k.filingID, port.CriterionInput{Title: "Wet-ink signature", Mandatory: true, Rule: "NONE"})
++		// D-9: the signature criterion carries the SIGNATURE purpose; the package needs its own.
++		sig, _ := e.criterion(k.filingID, port.CriterionInput{Title: "Wet-ink signature", Mandatory: true, Rule: "NONE", Purpose: "SIGNATURE"})
++		pkgC, _ := e.criterion(k.filingID, port.CriterionInput{Title: "Package complete", Mandatory: true, Rule: "NONE"})
+ 		v := e.version(e.document("Package").Document.ID.String(), sum(7))
+ 		k.must("PACKAGE_PREPARATION", nil)
+ 		k.must("SIGNATURE", func(c *port.AdvanceFilingCmd) { c.VersionIDs = []string{v.String()} })
+@@ -408,7 +416,18 @@ func SuiteW4(t *testing.T, newBundle Factory) {
+ 			return k.adv(e.editor, "SUBMISSION", func(c *port.AdvanceFilingCmd) { c.Reference = "S"; c.VersionIDs = []string{v.String()} })
+ 		}
+ 		mustCode(t, "signature missing", errOf(submit()), "guard-failed")
+-		rev := e.checklist(k.filingID).Result.Criteria[0].Criterion.Revision
++		if _, err := e.submit(e.editor, func(s *port.SubmitEvidenceCmd) { s.Claims = []string{pkgC.String()} }); err != nil {
++			t.Fatal(err)
++		}
++		if _, err := e.assess(e.reviewer, k.filingID, e.claimOf(k.filingID, pkgC).Claim.ID, "ACCEPTED"); err != nil {
++			t.Fatal(err)
++		}
++		rev := int64(0)
++		for _, c := range e.checklist(k.filingID).Result.Criteria {
++			if c.Criterion.ID == sig {
++				rev = c.Criterion.Revision
++			}
++		}
+ 		if _, err := e.ev.ReviseCriterion(e.ctx, port.ReviseCriterionCmd{ActorID: e.owner.String(), MatterID: e.m.String(), CriterionID: sig.String(), ExpectedRevision: rev,
+ 			Reason: "no signature is required for this authority", Retire: true}); err != nil {
+ 			t.Fatal(err)
+diff --git a/apps/backend/internal/core/domain/matter/evidence.go b/apps/backend/internal/core/domain/matter/evidence.go
+index cf1f648..ccd08c2 100644
+--- a/apps/backend/internal/core/domain/matter/evidence.go
++++ b/apps/backend/internal/core/domain/matter/evidence.go
+@@ -85,17 +85,21 @@ func (r VersionRule) Valid() bool {
+ 
+ // CriterionPurpose says what a criterion proves. PACKAGE criteria (the default, and the only
+ // reading of every legacy row) are the readiness gates that must hold before a filing is
+-// submitted; OUTCOME criteria are the authority's decision, accepted independently after the
+-// fact (BF-01). Nothing infers a purpose from a title: an unspecified purpose is PACKAGE, which
+-// can only keep a gate closed, never open one.
++// submitted; SIGNATURE criteria (D-9, ratified 2026-10-31) are the signature completeness a
++// proof-required filing must show; OUTCOME criteria are the authority's decision, accepted
++// independently after the fact (BF-01). Nothing infers a purpose from a title: an unspecified
++// purpose is PACKAGE, which can only keep a gate closed, never open one.
+ type CriterionPurpose string
+ 
+ const (
+-	PurposePackage CriterionPurpose = "PACKAGE"
+-	PurposeOutcome CriterionPurpose = "OUTCOME"
++	PurposePackage   CriterionPurpose = "PACKAGE"
++	PurposeSignature CriterionPurpose = "SIGNATURE"
++	PurposeOutcome   CriterionPurpose = "OUTCOME"
+ )
+ 
+-func (p CriterionPurpose) Valid() bool { return p == PurposePackage || p == PurposeOutcome }
++func (p CriterionPurpose) Valid() bool {
++	return p == PurposePackage || p == PurposeSignature || p == PurposeOutcome
++}
+ 
+ // Criterion is one evidence requirement of a subject: what must be shown, distinct from any
+ // proof. Revision changes whenever the criterion changes; claims pin the revision they were
+@@ -145,8 +149,11 @@ func OutcomeVerification(item WorkItem, set EvidenceSet, asOf time.Time) string
+ 
+ // EffectivePurpose reads an unspecified (legacy) purpose as PACKAGE.
+ func (c Criterion) EffectivePurpose() CriterionPurpose {
+-	if c.Purpose == PurposeOutcome {
++	switch c.Purpose {
++	case PurposeOutcome:
+ 		return PurposeOutcome
++	case PurposeSignature:
++		return PurposeSignature
+ 	}
+ 	return PurposePackage
+ }
+@@ -323,13 +330,15 @@ func (p ProofPart) Declared() bool { return p.Total > 0 }
+ func (p ProofPart) Ready() bool { return p.Mandatory > 0 && p.Satisfied == p.Mandatory }
+ 
+ // VerificationResult is the derived verification of one subject at an explicit instant. State is
+-// the aggregate over all mandatory criteria; Package and Outcome split it so that package
+-// readiness is never shown as an accepted authority outcome.
++// the aggregate over all mandatory criteria; Package, Signature and Outcome split it so that
++// package readiness is never shown as an accepted authority outcome, and a generic package
++// criterion never stands in for the signatures (D-9).
+ type VerificationResult struct {
+-	State    VerificationState
+-	Criteria []CriterionStatus
+-	Package  ProofPart
+-	Outcome  ProofPart
++	State     VerificationState
++	Criteria  []CriterionStatus
++	Package   ProofPart
++	Signature ProofPart
++	Outcome   ProofPart
+ }
+ 
+ // EvaluateVerification derives the subject aggregate from its criteria and proof at asOf
+@@ -351,6 +360,8 @@ func EvaluateVerification(item WorkItem, set EvidenceSet, asOf time.Time) Verifi
+ 		part := &res.Package
+ 		if c.Criterion.EffectivePurpose() == PurposeOutcome {
+ 			part = &res.Outcome
++		} else if c.Criterion.EffectivePurpose() == PurposeSignature {
++			part = &res.Signature
+ 		}
+ 		part.Total++
+ 		if c.Criterion.Mandatory {
+diff --git a/apps/backend/internal/core/domain/matter/filing.go b/apps/backend/internal/core/domain/matter/filing.go
+index 38efc43..2e69209 100644
+--- a/apps/backend/internal/core/domain/matter/filing.go
++++ b/apps/backend/internal/core/domain/matter/filing.go
+@@ -352,10 +352,11 @@ func DecideAdvance(f Filing, it WorkItem, set EvidenceSet, fs FilingSet, in Adva
+ 		}
+ 		// F03: every filing declares its package criteria before package preparation. Neither the
+ 		// editor's outcome-verification flag nor the OWNER's no-signature decision waives this:
+-		// "no signatures" never means "no package".
++		// "no signatures" never means "no package". Z-F-01 (D-9): the gate counts PACKAGE-purpose
++		// criteria only — the authority's OUTCOME criterion never stands in for a package.
+ 		n := 0
+ 		for _, c := range set.Criteria {
+-			if c.SubjectID == it.ID && !c.Retired {
++			if c.SubjectID == it.ID && !c.Retired && c.EffectivePurpose() == PurposePackage {
+ 				n++
+ 			}
+ 		}
+@@ -373,14 +374,49 @@ func DecideAdvance(f Filing, it WorkItem, set EvidenceSet, fs FilingSet, in Adva
+ 		}
+ 
+ 	case StageSubmission, StageResponse:
++		// Z-F-01 (D-9): an undeclared package is never a ready one, even for a filing that reached
++		// this stage without the package gate (in-flight legacy data).
++		res := EvaluateVerification(it, set, in.AsOf)
++		if it.ProofRequired && !res.Package.Declared() {
++			return out, guardFailed("package-criteria-required", "declare the package criteria first")
++		}
++		// F03: a no-proof filing has no signature criterion to retire, so it needs a signature
++		// observed on a submitted version or the OWNER's explicit no-signature decision. Z-F-02
++		// (D-9): a proof-required filing proves its signatures through SIGNATURE-purpose criteria —
++		// at least one declared and every mandatory one satisfied — unless the OWNER decided the
++		// authority requires none. Either way something must be shown: the editor's choice about
++		// outcome proof never waives the signature requirement. The refusal names exactly what is
++		// missing, package and signature alike (AC-145).
++		var refused []string
+ 		if missing := unsatisfied(it, set, in.AsOf); len(missing) > 0 {
+-			return out, guardFailed("guard-failed", "package criteria are not satisfied: "+strings.Join(missing, "; "))
++			refused = append(refused, "package criteria are not satisfied: "+strings.Join(missing, "; "))
++		}
++		if !f.SignatureNotRequired && it.ProofRequired {
++			everDeclared := false
++			for _, c := range set.Criteria {
++				if c.SubjectID == it.ID && c.EffectivePurpose() == PurposeSignature {
++					everDeclared = true
++				}
++			}
++			if everDeclared && res.Signature.Declared() {
++				var missing []string
++				for _, c := range res.Criteria {
++					if c.Criterion.EffectivePurpose() == PurposeSignature && c.Criterion.Mandatory && !c.Satisfied {
++						missing = append(missing, fmt.Sprintf("%s (%s)", c.Criterion.Title, c.Reason))
++					}
++				}
++				if len(missing) > 0 {
++					refused = append(refused, "signature criteria are not satisfied: "+strings.Join(missing, "; "))
++				}
++			} else if !everDeclared && len(refused) == 0 {
++				return out, guardFailed("signature-criteria-required", "declare a SIGNATURE criterion for the filing's signatures; a package criterion does not prove them")
++			}
++			// A signature criterion retired with a recorded OWNER reason waives the requirement,
++			// exactly like the OWNER's no-signature applicability decision.
++		}
++		if len(refused) > 0 {
++			return out, guardFailed("guard-failed", strings.Join(refused, "; "))
+ 		}
+-		// F03: a proof-required filing proves its signatures through its mandatory criteria (checked
+-		// above; the OWNER may retire the signature criterion with a reason). A no-proof filing has
+-		// no signature criterion to retire, so it needs a signature observed on a submitted version
+-		// or the OWNER's explicit no-signature decision. Either way something must be shown: the
+-		// editor's choice about outcome proof never waives the signature requirement.
+ 		if !f.SignatureNotRequired && !it.ProofRequired {
+ 			signed := false
+ 			for _, so := range set.Signatures {
+diff --git a/apps/backend/internal/core/domain/matter/filing_outcome_test.go b/apps/backend/internal/core/domain/matter/filing_outcome_test.go
+index 5f27482..eacb092 100644
+--- a/apps/backend/internal/core/domain/matter/filing_outcome_test.go
++++ b/apps/backend/internal/core/domain/matter/filing_outcome_test.go
+@@ -2,6 +2,7 @@ package matter_test
+ 
+ import (
+ 	"errors"
++	"strings"
+ 	"testing"
+ 
+ 	"leonx.me/matter-control/internal/core/domain/matter"
+@@ -46,12 +47,19 @@ func withVersion(set matter.EvidenceSet) matter.EvidenceSet {
+ 	return set
+ }
+ 
+-func TestSubmissionNeedsPackageCriteriaNotTheFutureOutcome(t *testing.T) {
+-	pkg, out := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("OUT", matter.PurposeOutcome)
+-	ev, k, a := acceptedFor("1", pkg)
+-	set := withVersion(setOf([]matter.Criterion{pkg, out}, []matter.Evidence{ev}, []matter.Claim{k}, []matter.Assessment{a}))
++// D-9 (2026-10-31): a proof-required filing proves its signatures through a satisfied
++// SIGNATURE-purpose criterion, so the submission flow declares one alongside the package.
++func proofRequiredSet() matter.EvidenceSet {
++	pkg, sig, out := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("SIG", matter.PurposeSignature), purposeCriterion("OUT", matter.PurposeOutcome)
++	pev, pk, pa := acceptedFor("1", pkg)
++	sev, sk, sa := acceptedFor("2", sig)
++	return withVersion(setOf([]matter.Criterion{pkg, sig, out}, []matter.Evidence{pev, sev}, []matter.Claim{pk, sk}, []matter.Assessment{pa, sa}))
++}
++
++func TestSubmissionNeedsPackageAndSignatureCriteriaNotTheFutureOutcome(t *testing.T) {
++	set := proofRequiredSet()
+ 	if _, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput()); err != nil {
+-		t.Fatalf("a verified package must permit submission while the outcome criterion is still open: %v", err)
++		t.Fatalf("verified package and signature criteria must permit submission while the outcome criterion is still open: %v", err)
+ 	}
+ }
+ 
+@@ -105,6 +113,92 @@ func TestOutcomeNeedsADeclaredCriterionToBeReady(t *testing.T) {
+ 	}
+ }
+ 
++// Z-F-01 (D-9, ratified 2026-10-31): the package gate counts PACKAGE-purpose criteria only. A
++// proof-required filing whose only criterion is the authority's OUTCOME cannot even enter
++// PACKAGE_PREPARATION — an empty declared package is never "prepared".
++func TestPackagePreparationRejectsAnOutcomeOnlyCriteriaSet(t *testing.T) {
++	out := purposeCriterion("OUT", matter.PurposeOutcome)
++	set := setOf([]matter.Criterion{out}, nil, nil, nil)
++	_, err := matter.DecideAdvance(filingAt(matter.StageRequirement), filingItem(true), set, matter.FilingSet{},
++		matter.AdvanceInput{To: matter.StagePackage, Actor: u1, Role: matter.MatterRoleEditor, AsOf: now})
++	var rej *matter.RejectedError
++	if !asRejected(err, &rej) || rej.Code != "package-criteria-required" {
++		t.Fatalf("an outcome-only criteria set refuses package preparation: %v", err)
++	}
++}
++
++// Z-F-01 (D-9): submission never reads an undeclared package as ready, even for a filing that
++// reached the SIGNATURE stage without package criteria (in-flight legacy data).
++func TestSubmissionNeverReadsAMissingPackageAsReady(t *testing.T) {
++	out := purposeCriterion("OUT", matter.PurposeOutcome)
++	set := withVersion(setOf([]matter.Criterion{out}, nil, nil, nil))
++	_, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput())
++	var rej *matter.RejectedError
++	if !asRejected(err, &rej) || rej.Code != "package-criteria-required" {
++		t.Fatalf("a proof-required filing without package criteria cannot be submitted: %v", err)
++	}
++}
++
++// Z-F-02 (D-9): submission of a proof-required filing without any SIGNATURE criterion is refused:
++// a generic package criterion no longer stands in for the signatures.
++func TestProofRequiredSubmissionRequiresADeclaredSignatureCriterion(t *testing.T) {
++	pkg := purposeCriterion("PKG", matter.PurposePackage)
++	ev, k, a := acceptedFor("1", pkg)
++	set := withVersion(setOf([]matter.Criterion{pkg}, []matter.Evidence{ev}, []matter.Claim{k}, []matter.Assessment{a}))
++	_, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput())
++	var rej *matter.RejectedError
++	if !asRejected(err, &rej) || rej.Code != "signature-criteria-required" {
++		t.Fatalf("a proof-required filing without a signature criterion cannot be submitted: %v", err)
++	}
++}
++
++// Z-F-02 (D-9): a declared but unmet signature criterion is named in the refusal.
++func TestProofRequiredSubmissionRequiresSatisfiedSignatureCriteria(t *testing.T) {
++	pkg, sig := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("SIG", matter.PurposeSignature)
++	pev, pk, pa := acceptedFor("1", pkg)
++	sev, sk := proof("2", sig, u1, u1)
++	set := withVersion(setOf([]matter.Criterion{pkg, sig}, []matter.Evidence{pev, sev}, []matter.Claim{pk, sk}, []matter.Assessment{pa}))
++	_, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), set, matter.FilingSet{}, submitInput())
++	var rej *matter.RejectedError
++	if !asRejected(err, &rej) || rej.Code != "guard-failed" || !strings.Contains(rej.Message, "SIG") {
++		t.Fatalf("the refusal names the unmet signature criterion: %v", err)
++	}
++}
++
++// Z-F-02 (D-9): the OWNER's no-signature applicability decision still waives the signature
++// criteria, and a satisfied SIGNATURE criterion completes the proof-required submission.
++func TestSignatureCriteriaWaivedByTheOwnerDecision(t *testing.T) {
++	pkg := purposeCriterion("PKG", matter.PurposePackage)
++	ev, k, a := acceptedFor("1", pkg)
++	set := withVersion(setOf([]matter.Criterion{pkg}, []matter.Evidence{ev}, []matter.Claim{k}, []matter.Assessment{a}))
++	it := filingItem(true)
++	f := filingAt(matter.StageSignature)
++	f.SignatureNotRequired = true
++	if _, err := matter.DecideAdvance(f, it, set, matter.FilingSet{}, submitInput()); err != nil {
++		t.Fatalf("the owner's no-signature decision waives the signature criteria: %v", err)
++	}
++	if _, err := matter.DecideAdvance(filingAt(matter.StageSignature), filingItem(true), proofRequiredSet(), matter.FilingSet{}, submitInput()); err != nil {
++		t.Fatalf("a satisfied SIGNATURE criterion completes the submission: %v", err)
++	}
++}
++
++// D-9: the signature is its own proof axis on the checklist, apart from package and outcome.
++func TestSignatureIsItsOwnProofPart(t *testing.T) {
++	pkg, sig := purposeCriterion("PKG", matter.PurposePackage), purposeCriterion("SIG", matter.PurposeSignature)
++	pev, pk, pa := acceptedFor("1", pkg)
++	pkgOnly := setOf([]matter.Criterion{pkg}, []matter.Evidence{pev}, []matter.Claim{pk}, []matter.Assessment{pa})
++	res := matter.EvaluateVerification(filingItem(true), pkgOnly, now)
++	if res.Signature.Declared() || res.Signature.Ready() {
++		t.Fatalf("no signature criterion declared is not a proven signature: %+v", res.Signature)
++	}
++	sev, sk, sa := acceptedFor("2", sig)
++	both := setOf([]matter.Criterion{pkg, sig}, []matter.Evidence{pev, sev}, []matter.Claim{pk, sk}, []matter.Assessment{pa, sa})
++	res = matter.EvaluateVerification(filingItem(true), both, now)
++	if !res.Signature.Ready() || !res.Package.Ready() {
++		t.Fatalf("the signature part tracks its own criteria: %+v %+v", res.Package, res.Signature)
++	}
++}
++
+ // BF-01: a filing whose package is accepted can read VERIFIED with no outcome criterion; the outcome
+ // verification is reported separately and never as accepted in that case.
+ func TestOutcomeVerificationIsReportedApartFromThePackageState(t *testing.T) {
+diff --git a/apps/backend/internal/core/service/evidence_service.go b/apps/backend/internal/core/service/evidence_service.go
+index a18e781..ec95218 100644
+--- a/apps/backend/internal/core/service/evidence_service.go
++++ b/apps/backend/internal/core/service/evidence_service.go
+@@ -455,7 +455,7 @@ func buildCriterion(in port.CriterionInput, set matter.EvidenceSet) (matter.Crit
+ 		c.Purpose = matter.PurposePackage
+ 	}
+ 	if !c.Purpose.Valid() {
+-		return c, rejected("invalid-purpose", "the purpose must be PACKAGE or OUTCOME")
++		return c, rejected("invalid-purpose", "the purpose must be PACKAGE, SIGNATURE or OUTCOME")
+ 	}
+ 	if c.Rule == "" {
+ 		c.Rule = matter.VersionNone
+diff --git a/docs/requirements/state-semantics.md b/docs/requirements/state-semantics.md
+index 4adba73..b7d404c 100644
+--- a/docs/requirements/state-semantics.md
++++ b/docs/requirements/state-semantics.md
+@@ -64,9 +64,9 @@ Golden sequence remains Requirement → Package Preparation → Signature → Su
+ 
+ | Stage transition | Required observation / evidence | Execution proposal |
+ |---|---|---|
+-| Requirement → Package Preparation | Filing scope and responsible owner, applicable package criteria | NOT_STARTED → IN_PROGRESS |
++| Requirement → Package Preparation | Filing scope and responsible owner, applicable package criteria (≥1 PACKAGE-purpose criterion; an OUTCOME criterion never substitutes — D-9) | NOT_STARTED → IN_PROGRESS |
+ | Package Preparation → Signature | Required document versions identified, non-signature preparation complete | IN_PROGRESS; WAITING when signatory outstanding |
+-| Signature → Submission | All applicable signature/package criteria satisfied; submission reference/time and exact submitted versions | IN_PROGRESS; submission is not completion |
++| Signature → Submission | All applicable signature/package criteria satisfied; for a proof-required filing at least one SIGNATURE-purpose criterion declared and every mandatory one satisfied (a generic package criterion does not prove signatures — D-9); submission reference/time and exact submitted versions | IN_PROGRESS; submission is not completion |
+ | Submission → Receipt | Actual acknowledgement reference/evidence | IN_PROGRESS or WAITING while awaiting acknowledgement |
+ | Receipt → Authority Review | Receipt retained, recorded awaiting authority outcome, external party identified | WAITING |
+ | Authority Review → Supplement | Authority request recorded, follow-up owner/due and new package cycle | IN_PROGRESS (or WAITING for missing external input) |
+@@ -74,7 +74,7 @@ Golden sequence remains Requirement → Package Preparation → Signature → Su
+ | Response → Authority Review | Response submitted, awaiting next outcome | WAITING; repeat cycle retained |
+ | Authority Review / Response → Approval | Actual authority outcome proof recorded; verification separately reviewed | COMPLETED may remain UNVERIFIED until verifier accepts |
+ 
+-If signatures not applicable, OWNER records applicability reason before Signature→Submission; do not invent signatures. Rejection/withdrawal is an explicit outcome/reason (not Approval): close execution CANCELLED by OWNER, preserve rejection proof/history and linked Requirement unmet. Correction of erroneous stage appends an attributed correction; it must not fabricate missing events. Changes after final approval require OWNER reopen and preserve earlier submission/outcome. Repeating supplement cycles have distinct references; no overwriting the first request.
++If signatures not applicable, OWNER records applicability reason before Signature→Submission; do not invent signatures. **D-9 amendment (RATIFIED by PO 2026-10-31, Z-F-01/Z-F-02):** a criterion's purpose is typed `PACKAGE` (default, and the only reading of every legacy row), `SIGNATURE`, or `OUTCOME`. A proof-required filing enters Package Preparation only with ≥1 non-retired PACKAGE-purpose criterion, and its submission additionally requires a SIGNATURE-purpose criterion to be declared and every mandatory one satisfied — a generic package criterion never stands in for the signatures. Waivers stay OWNER-only: the no-signature applicability decision, or every SIGNATURE criterion retired with a recorded reason. An undeclared package is never a ready one, even for an in-flight filing that reached Signature without the package gate. Rejection/withdrawal is an explicit outcome/reason (not Approval): close execution CANCELLED by OWNER, preserve rejection proof/history and linked Requirement unmet. Correction of erroneous stage appends an attributed correction; it must not fabricate missing events. Changes after final approval require OWNER reopen and preserve earlier submission/outcome. Repeating supplement cycles have distinct references; no overwriting the first request.
+ 
+ ## Edge cases and verification
+ 

@@ -25,7 +25,14 @@ import { AddWorkDialog } from '@/features/work/components/add-work-dialog'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 
-export const metadata: Metadata = { title: 'Matter' }
+export async function generateMetadata({
+  params,
+}: PageProps<'/matters/[matterId]'>): Promise<Metadata> {
+  // The matter title is not worth a second read at the metadata boundary: the id names the route
+  // until a page that already loaded the matter shows the title itself.
+  const { matterId } = await params
+  return { title: `Matter \u00b7 ${matterId}` }
+}
 
 export default function MatterPage({ params, searchParams }: PageProps<'/matters/[matterId]'>) {
   return (

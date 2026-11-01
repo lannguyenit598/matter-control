@@ -157,6 +157,26 @@ func TestCriterionPurposeAndFilingMarker_HTTP(t *testing.T) {
 			t.Fatalf("every list row states it: %v", row)
 		}
 	}
+	// Z-F-03: the work grid rows state the outcome axis for a filing and never for a Requirement.
+	for _, row := range e.do("GET", base+"/work-items", "t-carol", nil, "").json()["items"].([]any) {
+		env := row.(map[string]any)
+		id := env["item"].(map[string]any)["id"].(string)
+		ov := env["derived"].(map[string]any)["outcomeVerification"]
+		switch id {
+		case withProof:
+			if ov != "PENDING" {
+				t.Fatalf("the grid row carries the filing's outcome axis: %v", env)
+			}
+		case noProof:
+			if ov != "NOT_TRACKED" {
+				t.Fatalf("a no-proof filing row still states its axis: %v", env)
+			}
+		default:
+			if ov != nil {
+				t.Fatalf("a non-filing grid row carries no outcome axis: %v", env)
+			}
+		}
+	}
 	// A no-outcome-proof filing keeps a reachable checklist for its package criteria.
 	nk := e.do("GET", base+"/work-items/"+noProof+"/proof", "t-carol", nil, "")
 	e.expect(nk, 200, "")

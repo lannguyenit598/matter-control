@@ -1,4 +1,5 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
+import type { ReactNode } from 'react'
 import { CloudOff, LockKeyhole, LogIn, RefreshCw, SearchX, TriangleAlert } from 'lucide-react'
 import Link from 'next/link'
 
@@ -14,6 +15,11 @@ export type ReadFailureProps = {
   /** Shown for not-found, e.g. "workspace". */
   subject?: string
   /**
+   * The page heading the failed read belongs to (UX-L-05): a failure state keeps the page's h1
+   * and context instead of leaving the page heading-less. Rendered above the state itself.
+   */
+  heading?: ReactNode
+  /**
    * A section of a page the user can still read (a role-limited or sub-resource read): its
    * denial is not a loss of the page's scope, so it keeps drafts. An ended session is never
    * partial. Default is a primary read.
@@ -21,8 +27,33 @@ export type ReadFailureProps = {
   partial?: boolean
 }
 
+/** The vi names of the read subjects; an unknown subject falls back to its own text. */
+const SUBJECT_VI: Record<string, string> = {
+  matter: 'hồ sơ',
+  'matter list': 'danh sách hồ sơ',
+  workspace: 'không gian làm việc',
+  'workspace list': 'danh sách không gian làm việc',
+  document: 'tài liệu',
+  filing: 'thủ tục',
+  agenda: 'lịch',
+  history: 'lịch sử',
+  grid: 'bảng công việc',
+  list: 'danh sách',
+  proof: 'bằng chứng',
+  record: 'bản ghi',
+  requirement: 'yêu cầu',
+  reviews: 'rà soát',
+  'review list': 'danh sách rà soát',
+  'Control Room': 'Phòng điều hành',
+  item: 'mục',
+}
+
+function subjectVi(subject: string): string {
+  return SUBJECT_VI[subject] ?? subject
+}
+
 /** One truthful state per read failure: never an empty list, a zero, or a spinner that never ends. */
-export function ReadFailure({ partial, ...props }: ReadFailureProps) {
+export function ReadFailure({ partial, heading, ...props }: ReadFailureProps) {
   // The session ended, or a primary read was denied (the right to see this ended): keep no draft.
   const lost =
     props.kind === 'sign-in' ||
@@ -30,7 +61,10 @@ export function ReadFailure({ partial, ...props }: ReadFailureProps) {
   return (
     <>
       {lost && <PurgeDrafts />}
-      <ReadFailureState {...props} />
+      <div className="flex flex-col gap-4">
+        {heading && <h1 className="text-2xl font-semibold tracking-tight">{heading}</h1>}
+        <ReadFailureState {...props} />
+      </div>
     </>
   )
 }
@@ -76,7 +110,12 @@ function ReadFailureState({ kind, retryHref, subject = 'item' }: ReadFailureProp
       return (
         <EmptyState
           icon={<SearchX />}
-          title={`This ${subject} is not available`}
+          title={
+            <LocalizedText
+              en={`This ${subject} is not available`}
+              vi={`${subjectVi(subject)} này không khả dụng`}
+            />
+          }
           description={
             <LocalizedText
               en="It does not exist, or you do not have access to it."
@@ -90,7 +129,12 @@ function ReadFailureState({ kind, retryHref, subject = 'item' }: ReadFailureProp
         <EmptyState
           icon={<CloudOff />}
           title={<LocalizedText en="Temporarily unavailable" vi="Tạm thời không khả dụng" />}
-          description="The service could not be reached. Your session is unaffected. Nothing shown here is a result."
+          description={
+            <LocalizedText
+              en="The service could not be reached. Your session is unaffected. Nothing shown here is a result."
+              vi="Chưa kết nối được dịch vụ. Phiên của bạn không bị ảnh hưởng. Không có gì hiển thị ở đây là một kết quả."
+            />
+          }
           action={
             retryHref ? (
               <Link href={retryHref} className={buttonVariants({ variant: 'outline' })}>

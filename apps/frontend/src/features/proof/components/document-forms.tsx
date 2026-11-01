@@ -1,6 +1,7 @@
 'use client'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
+import { useLocale } from '@/hooks/use-locale'
 
 import { Plus, FileSignature, Upload } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -131,6 +132,7 @@ export function UploadVersionForm({
 }) {
   const router = useRouter()
   const taskDone = useContext(TaskSuccess)
+  const locale = useLocale()
   const [file, setFile] = useState<File | null>(null)
   const [key, setKey] = useState(() => newIdempotencyKey())
   const [state, setState] = useState<UploadState>({ kind: 'idle' })
@@ -267,24 +269,48 @@ export function UploadVersionForm({
       </FormField>
       <div>
         <Button type="submit" loading={pending} disabled={!file || checking}>
-          {state.kind === 'failed' && state.result.retrySameKey ? 'Retry upload' : 'Upload version'}
+          {state.kind === 'failed' && state.result.retrySameKey
+            ? locale === 'vi'
+              ? 'Thử tải lại'
+              : 'Retry upload'
+            : locale === 'vi'
+              ? 'Tải lên phiên bản'
+              : 'Upload version'}
         </Button>
       </div>
       {earlierName && state.kind === 'idle' && (
-        <Alert title="Earlier upload not confirmed">
-          {`An earlier upload of "${earlierName}" was not confirmed. Choose the same file again to retry it safely; any other file starts a new upload.`}
+        <Alert
+          title={
+            locale === 'vi' ? 'Lượt tải trước chưa được xác nhận' : 'Earlier upload not confirmed'
+          }
+        >
+          {locale === 'vi'
+            ? `Lượt tải trước của "${earlierName}" chưa được xác nhận. Chọn lại đúng tệp đó để thử lại an toàn; một tệp khác sẽ bắt đầu lượt tải mới.`
+            : `An earlier upload of "${earlierName}" was not confirmed. Choose the same file again to retry it safely; any other file starts a new upload.`}
         </Alert>
       )}
       {state.kind === 'done' && (
         <p role="status" className="text-sm">
-          {state.replayed ? 'This file had already been stored.' : 'Version stored.'}
+          {state.replayed
+            ? locale === 'vi'
+              ? 'Tệp này đã được lưu trước đó.'
+              : 'This file had already been stored.'
+            : locale === 'vi'
+              ? 'Đã lưu phiên bản.'
+              : 'Version stored.'}
         </p>
       )}
       {state.kind === 'failed' && (
         <Alert
           variant="destructive"
           title={
-            state.result.kind === 'outcome-unknown' ? 'Outcome not confirmed' : 'Upload failed'
+            state.result.kind === 'outcome-unknown'
+              ? locale === 'vi'
+                ? 'Kết quả chưa được xác nhận'
+                : 'Outcome not confirmed'
+              : locale === 'vi'
+                ? 'Tải lên thất bại'
+                : 'Upload failed'
           }
         >
           {state.result.error}

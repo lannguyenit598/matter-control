@@ -11,7 +11,7 @@ vi.mock('@/features/matters/repository', () => ({ matterRepository: { discover: 
 import MattersPage from './page'
 
 async function renderPage(search: Record<string, string | string[]> = {}) {
-  const tree = MattersPage({ searchParams: Promise.resolve(search) } as never)
+  const tree = await MattersPage({ searchParams: Promise.resolve(search) } as never)
   const inner = (
     tree as { props: { children: Array<{ props?: { children?: unknown } } | unknown> } }
   ).props.children

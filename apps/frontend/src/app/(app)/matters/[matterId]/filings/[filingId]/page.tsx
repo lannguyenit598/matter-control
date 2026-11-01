@@ -33,7 +33,12 @@ import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 
-export const metadata: Metadata = { title: 'Filing' }
+export async function generateMetadata({
+  params,
+}: PageProps<'/matters/[matterId]/filings/[filingId]'>): Promise<Metadata> {
+  const { filingId } = await params
+  return { title: `Filing \u00b7 ${filingId}` }
+}
 
 type Props = PageProps<'/matters/[matterId]/filings/[filingId]'>
 
