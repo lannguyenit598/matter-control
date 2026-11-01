@@ -1,0 +1,79 @@
+{
+ "generated_utc": "2026-10-31T16:59:10Z",
+ "scopes": [
+  "docs/testing/opencode-verify-wave-20261031-r1",
+  "docs/testing/zcode-deploy-readiness-finish-20261030-r1",
+  "docs/testing/mc-p1-fix-wave-20261031-r1",
+  "docs/testing/zcode-ba-flow-completeness-20261030-r1",
+  "docs/testing/uiux-lawyer-experience-audit-20261030-r1"
+ ],
+ "files_scanned": 509,
+ "patterns": [
+  "postgres_dsn",
+  "private_key_marker",
+  "doc_password_literal",
+  "bearer_token",
+  "github_pat",
+  "aws_key",
+  "api_key_literal",
+  "client_secret_literal",
+  "slack_token"
+ ],
+ "results": {
+  "postgres_dsn": {
+   "hits": 6,
+   "real_looking": [],
+   "synthetic_or_redacted_count": 6,
+   "samples": [
+    {
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R13-yaml-structure/frontend.yml.parsed.yaml",
+     "line": 95,
+     "fragment": "postgres://mattercontrol:mattercontrol@localhost:5432/mc_fixture?sslmode=disable"
+    },
+    {
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R13-yaml-structure/frontend.yml.parsed.yaml",
+     "line": 96,
+     "fragment": "postgres://mattercontrol:mattercontrol@localhost:5432/mattercontrol?sslmode=disable"
+    },
+    {
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R13-yaml-structure/backend.yml.parsed.yaml",
+     "line": 64,
+     "fragment": "postgres://mattercontrol:mattercontrol@localhost:5432/mattercontrol?sslmode=disable"
+    },
+    {
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/receipts.json",
+     "line": 5,
+     "fragment": "postgres://mcba:***@127.0.0.1:15499/mc_ba_flow_r1?sslmode=disable"
+    },
+    {
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/receipts.json",
+     "line": 14,
+     "fragment": "postgres://mcba:***@127.0.0.1:15499/mc_ba_flow_test?sslmode=disable"
+    },
+    {
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/commands/runtime-env.txt",
+     "line": 4,
+     "fragment": "postgres://mcba:<REDACTED>@127.0.0.1:15499/mc_ba_flow_r1?sslmode=disable"
+    }
+   ]
+  },
+  "doc_password_literal": {
+   "hits": 2,
+   "real_looking": [],
+   "synthetic_or_redacted_count": 2,
+   "samples": [
+    {
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R13-yaml-structure/frontend.yml.parsed.yaml",
+     "line": 83,
+     "fragment": "POSTGRES_PASSWORD: mattercontrol"
+    },
+    {
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R13-yaml-structure/backend.yml.parsed.yaml",
+     "line": 53,
+     "fragment": "POSTGRES_PASSWORD: mattercontrol"
+    }
+   ]
+  }
+ },
+ "verdict": "CLEAN"
+}

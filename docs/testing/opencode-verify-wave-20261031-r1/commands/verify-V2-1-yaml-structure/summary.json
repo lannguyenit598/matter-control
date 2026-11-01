@@ -1,0 +1,108 @@
+{
+ "generated_utc": "2026-10-31T17:44:04Z",
+ "yaml_files": [
+  {
+   "path": ".github/workflows/backend.yml",
+   "kind": "ci_workflow",
+   "parses": true,
+   "docs": 1,
+   "job_names": [
+    "lint",
+    "test",
+    "vulncheck",
+    "docker"
+   ],
+   "top_keys": [
+    "name",
+    true,
+    "permissions",
+    "concurrency",
+    "defaults",
+    "jobs"
+   ]
+  },
+  {
+   "path": ".github/workflows/frontend.yml",
+   "kind": "ci_workflow",
+   "parses": true,
+   "docs": 1,
+   "job_names": [
+    "quality",
+    "worker",
+    "durable-bff",
+    "e2e"
+   ],
+   "top_keys": [
+    "name",
+    true,
+    "permissions",
+    "concurrency",
+    "defaults",
+    "jobs"
+   ]
+  },
+  {
+   "path": "ops/deploy/cloud-run/migrate-job.yaml",
+   "kind": "cloud_run_template",
+   "parses": true,
+   "docs": 1,
+   "job_names": [],
+   "top_keys": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+   ]
+  },
+  {
+   "path": "ops/deploy/cloud-run/service.yaml",
+   "kind": "cloud_run_template",
+   "parses": true,
+   "docs": 1,
+   "job_names": [],
+   "top_keys": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+   ]
+  },
+  {
+   "path": "ops/deploy/compute-engine/cloud-init.yaml",
+   "kind": "cloud_init",
+   "parses": true,
+   "docs": 1,
+   "job_names": [],
+   "top_keys": [
+    "write_files",
+    "runcmd"
+   ]
+  },
+  {
+   "path": "ops/deploy/ci/deploy.yml.disabled",
+   "kind": "disabled_ci",
+   "parses": true,
+   "docs": 1,
+   "job_names": [
+    "migrate",
+    "deploy"
+   ],
+   "top_keys": [
+    "name",
+    true,
+    "permissions",
+    "concurrency",
+    "jobs"
+   ]
+  }
+ ],
+ "deploy_yml_disabled": {
+  "path": "ops/deploy/ci/deploy.yml.disabled",
+  "inert_by_location": "outside .github/workflows; GitHub Actions never loads it",
+  "referenced_by_active_workflows": [],
+  "active_workflow_files": [
+   "backend.yml",
+   "frontend.yml"
+  ]
+ }
+}

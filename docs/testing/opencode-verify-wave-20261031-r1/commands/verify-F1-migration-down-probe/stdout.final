@@ -1,0 +1,18 @@
+  baseline_constraint   
+------------------------
+ criteria_purpose_check
+(1 row)
+
+== up
+up_exit=0
+        conname         |                                 pg_get_constraintdef                                 
+------------------------+--------------------------------------------------------------------------------------
+ criteria_purpose_check | CHECK ((purpose = ANY (ARRAY['PACKAGE'::text, 'SIGNATURE'::text, 'OUTCOME'::text])))
+(1 row)
+
+== down with one SIGNATURE row
+ALTER TABLE
+ERROR:  check constraint "criteria_purpose_check" of relation "criteria" is violated by some row
+down_exit=0
+== rows after failed down
+1

@@ -1,0 +1,68 @@
+{
+  "task": "MC-OPENCODE-VERIFY-WAVE-20261031",
+  "leg": 2,
+  "identity": "actual OpenCode — independent QA",
+  "generated_utc": "2026-11-01T01:00:00Z",
+  "anchors": {
+    "leg1_v1": "4b6a65f",
+    "wave_main": "bb54d6e",
+    "fix_wave_commit": "dac4262",
+    "head_at_final": "72266cb",
+    "note": "Verdicts bind the commit current at decision time. bb54d6e verdicts keep their anchor; ops/.github/frontend-scripts were unchanged by dac4262, backend suites that depend on migration 0011 were re-run on 72266cb."
+  },
+  "cases": [
+    {"case_id": "R1", "verdict": "PASS", "anchor": "4b6a65f", "evidence": "commands/verify-R1-config-tests", "note": "go test internal/config exit 0"},
+    {"case_id": "R2", "verdict": "PASS_BY_DESIGN", "anchor": "bb54d6e", "evidence": "commands/verify-R2-sync-guard-mutation", "note": "mutated ops SQL: only the sync subtest fails with exact drift messages"},
+    {"case_id": "R3", "verdict": "PASS", "anchor": "bb54d6e", "evidence": "commands/verify-R3-b1-suite-green", "note": "62 leaf, 0 fail, own PG container"},
+    {"case_id": "R3", "verdict": "PASS", "anchor": "72266cb", "evidence": "commands/verify-R3-b1-head-72266cb", "note": "B1/retention/0010 with -race on committed fix bytes, exit 0"},
+    {"case_id": "R4", "verdict": "PASS", "anchor": "bb54d6e", "evidence": "commands/verify-R4R5-extra-denials", "note": "6 new denials + INSERT capability"},
+    {"case_id": "R5", "verdict": "PASS", "anchor": "bb54d6e", "evidence": "commands/verify-R4R5-extra-denials", "note": "7 denials incl. TRUNCATE/FOR UPDATE/SET ROLE/GRANT; documented ALTER ROLE mc_maintenance LOGIN needed"},
+    {"case_id": "R6", "verdict": "PASS", "anchor": "bb54d6e", "evidence": "commands/verify-R3-b1-suite-green", "note": "2nd Up no-op, Down drops 4 indexes, re-Up restores 4 named"},
+    {"case_id": "R7", "verdict": "PASS", "anchor": "4b6a65f", "evidence": "commands/verify-R7-renderer-tests", "note": "vitest 6 pass / 0 fail"},
+    {"case_id": "R8", "verdict": "FAIL", "anchor": "bb54d6e", "evidence": "r8-release-preflight-plant.md; commands/verify-R8-preflight-plant; commands/verify-R8-isolate", "note": "sentinel and PEM block in normal-named artifact files exit 0 clean; .env.local crashes the script before any finding"},
+    {"case_id": "R9", "verdict": "PASS_6_OF_6_EXACT", "anchor": "4b6a65f", "evidence": "commands/verify-R9-action-refs/summary-final.json", "note": "all pins equal tag targets, GPG verified",
+      "pins": {"actions/checkout@v7.0.1": "3d3c42e5", "pnpm/action-setup@v6": "0977fd99", "actions/setup-node@v7": "949feb24", "actions/upload-artifact@v7": "cf430e03", "actions/setup-go@v7.0.0": "b7ad1dad", "golangci/golangci-lint-action@v9.3.0": "ba0d7d2ec"}},
+    {"case_id": "R10", "verdict": "PASS_14_OF_14", "anchor": "bb54d6e", "evidence": "commands/verify-R10-durable-suites", "note": "vitest 5 needs --reporter=dot"},
+    {"case_id": "R11", "verdict": "PASS", "anchor": "bb54d6e", "evidence": "commands/verify-R11-restore-rehearsal/evidence/summary.json", "note": "7/7 verdicts identical to author; backup/restore seconds, bytes and sha differ as expected on fresh containers"},
+    {"case_id": "R12", "verdict": "PASS_PROCEDURE_WITH_FINDING", "anchor": "bb54d6e", "evidence": "r12-scheduled-dump-retention.md; commands/verify-R12-scheduled-dump-3x; commands/verify-R12-multistale-probe", "note": "3x RETAIN=2 ends with exactly 2 archives + sidecars; retention contract fails with >=2 stale archives"},
+    {"case_id": "R13", "verdict": "PASS_6_OF_6", "anchor": "bb54d6e", "evidence": "commands/verify-V2-1-yaml-structure", "note": "OV-R13-01 closed verified after fix 6b0c358"},
+    {"case_id": "R14", "verdict": "CLEAN", "anchor": "4b6a65f", "evidence": "leg-1 run", "note": "509 files, every hit classified synthetic/fixture"},
+    {"case_id": "R15", "verdict": "CLEAN", "anchor": "4b6a65f", "evidence": "leg-1 run", "note": "no overclaim found"},
+    {"case_id": "V2-1", "verdict": "PASS_6_OF_6", "anchor": "bb54d6e", "evidence": "commands/verify-V2-1-yaml-structure", "note": "closes OV-R13-01"},
+    {"case_id": "V2-2", "verdict": "PASS", "anchor": "bb54d6e", "evidence": "commands/verify-V2-2-walkthrough-*; verify-V2-2-orphan-check-2", "note": "up exit 0, 4 milestones, down clean, orphan check clean; closes CO-17"},
+    {"case_id": "V2-3", "verdict": "AMEND", "anchor": "uncommitted usability-prep bytes 2026-10-31T17:15-17:52Z", "evidence": "v2-3-usability-prep-review.md", "note": "A-1..A-5: dataset aggregates, CSV row count, dependsOn self-reference, garbled moderator answer, CJK/evidence.go cite line; structural quality otherwise good"},
+    {"case_id": "PI-01", "verdict": "CLOSED_VERIFIED", "anchor": "bb54d6e", "evidence": "commands/verify-PORT-TTL-rerun", "note": "7/7 TTL values = 30s, all_equal true"},
+    {"case_id": "PI-02", "verdict": "RENDER_VERIFIED", "anchor": "bb54d6e", "evidence": "commands/verify-PORT-TTL-rerun/renders2", "note": "sa1 render distinct; job-only DB URL; equal identities fail closed; 4 negatives fail closed"},
+    {"case_id": "PI-03", "verdict": "FAIL", "anchor": "bb54d6e", "evidence": "r8-release-preflight-plant.md", "note": "same defect as R8: OV-R8-01"},
+    {"case_id": "F1", "verdict": "REWORK_REQUIRED", "anchor": "72266cb", "evidence": "f1-structural-prereview-opencode.md; commands/verify-F1-committed-redgreen; commands/verify-F1-contract-suites; commands/verify-F1-migration-down-probe", "note": "backend D-9 PASS on committed bytes (domain+service+postgres 46.5s; contract suites 22.3s; B1 -race exit 0); UI path blocked: OV-F1-01"}
+  ],
+  "findings": [
+    {"id": "OV-R8-01", "severity": "P1", "state": "OPEN", "anchor": "bb54d6e", "summary": "release-preflight content scan never matches (probe callback returns an object instead of the content string); forbidden-name files crash with TypeError before findings are formatted", "evidence": "r8-release-preflight-plant.md; commands/verify-R8-*"},
+    {"id": "OV-R12-01", "severity": "P2", "state": "OPEN", "anchor": "bb54d6e", "summary": "scheduled-dump prune loop is a no-op with >=2 stale archives and reports a false pruned count with 0 stale", "evidence": "r12-scheduled-dump-retention.md; commands/verify-R12-*"},
+    {"id": "OV-F1-01", "severity": "P1", "state": "OPEN", "anchor": "72266cb", "summary": "D-9 not operable through the UI: zod purpose enums omit SIGNATURE, checklist has no signature part, proof-panel only creates/filters PACKAGE/OUTCOME; proof-required submission is refused with no UI remedy and SIGNATURE rows break checklist parsing", "evidence": "f1-structural-prereview-opencode.md"},
+    {"id": "OV-F1-02", "severity": "P2", "state": "OPEN", "anchor": "72266cb", "summary": "brief_proof purposeOf maps SIGNATURE to PACKAGE on replay", "evidence": "f1-structural-prereview-opencode.md"},
+    {"id": "OV-F1-03", "severity": "P2", "state": "OPEN", "anchor": "72266cb", "summary": "migration 0011 Down fails while SIGNATURE rows exist (23514 reproduced)", "evidence": "f1-structural-prereview-opencode.md; commands/verify-F1-migration-down-probe"},
+    {"id": "OV-F1-04", "severity": "P3", "state": "OPEN", "anchor": "72266cb", "summary": "refusal text suppresses the signature reason when package is also missing; signature gate also applies at response stage; no 0011 up/down migration test", "evidence": "f1-structural-prereview-opencode.md"},
+    {"id": "OV-R13-01", "severity": "P2", "state": "CLOSED_VERIFIED", "anchor": "bb54d6e", "summary": "migrate-job YAML parse fixed and verified 6/6", "evidence": "commands/verify-V2-1-yaml-structure"},
+    {"id": "CO-17", "severity": "work-item", "state": "CLOSED_VERIFIED", "anchor": "bb54d6e", "summary": "walkthrough env up/milestones/down/orphan check all reproducible", "evidence": "commands/verify-V2-2-*"}
+  ],
+  "not_run": [
+    {"case_id": "PORT-02", "reason": "four pinned artifact profiles do not exist in this workspace; building them is engineering work and provider behaviour cannot be inferred"},
+    {"case_id": "PORT-03", "reason": "needs a running pinned BFF build plus stub IdP and origin/issuer/client swaps; no pinned runtime in this leg"},
+    {"case_id": "PORT-04", "reason": "needs an old/new build pair and a browser-driven stale Server Action submission"},
+    {"case_id": "PORT-10", "reason": "needs loaded SIGTERM/abort runs through both BE profiles and a load generator; only author receipts available"},
+    {"case_id": "PORT-11", "reason": "needs running Go+BFF under 25 MiB requests and large imports with memory/connection instrumentation; D7 numbers remain proposed"},
+    {"case_id": "F2-F7", "reason": "committed in dac4262 but outside this leg's scope; independent verification and the locale 22-route prod-build probe are the next unit"},
+    {"case_id": "UX-L-02-locale-probe", "reason": "deferred until the committed fix bytes are taken as a separate verification unit; requires a production build"}
+  ],
+  "skipped_checks": [
+    "No browser/E2E pass on the UI path; OV-F1-01 is established from the committed schema and component code plus the committed backend red-green, not from a browser run.",
+    "No production/provider behaviour inferred; R11 is a local synthetic rehearsal only."
+  ],
+  "limits": [
+    "Verdicts are gates, not approvals; no DONE is issued by this return.",
+    "bb54d6e verdicts keep their anchor; dac4262 touched backend core/service, migration 0011, frontend features and docs, not ops/.github/frontend scripts.",
+    "R11 numbers are local and synthetic; they are not an RPO/RTO commitment.",
+    "The R8/R12/F1 defects are reported on committed bytes; no fix was applied by QA."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+ "run": "verify-R10-durable-suites",
+ "argv": [
+  "rtk",
+  "proxy",
+  "env",
+  "CI=1",
+  "./node_modules/.bin/vitest",
+  "run",
+  "src/lib/oidc/durable-state.test.ts",
+  "src/features/data-transfer/durable-attempts.test.ts",
+  "--reporter=dot"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend",
+ "env_file": "/private/tmp/mc-opencode-verify-wave-20261031/private/dsn-fixture.env",
+ "started_utc": "2026-11-01T00:46:08Z",
+ "ended_utc": "2026-11-01T00:46:17Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": [
+  "MC_BFF_TEST_DATABASE_URL",
+  "MC_TEST_DATABASE_URL"
+ ]
+}

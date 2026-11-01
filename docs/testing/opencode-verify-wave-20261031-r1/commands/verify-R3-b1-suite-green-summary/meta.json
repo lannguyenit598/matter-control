@@ -1,0 +1,17 @@
+{
+ "run": "verify-R3-b1-suite-green-summary",
+ "argv": [
+  "bash",
+  "-c",
+  "rtk proxy python3 - <<PY\nimport json, sys\nraw = open(sys.argv[1]).read().splitlines()\ntests = {}\nfor l in raw:\n    try: e = json.loads(l)\n    except Exception: continue\n    if \"Test\" in e.get(\"Test\",\"\") or e.get(\"Test\"):\n        t = e[\"Test\"]\n        c = tests.setdefault(t, set())\n        c.add(e.get(\"Action\"))\n        if e.get(\"Action\") == \"output\" and e.get(\"Output\",\"\").startswith(\"=== RUN\"): pass\nn = 0; p = 0; f = 0; sk = 0\nfor t, acts in tests.items():\n    if \"pass\" in acts: p += 1; n += 1\n    if \"fail\" in acts: f += 1\n    if acts == {\"run\"} or \"skip\" in acts and \"pass\" not in acts: sk += 1\nprint({\"leaf_pass\": p, \"fail\": f, })\nfor t in sorted(tests):\n    print(t, sorted(x for x in tests[t] if x in (\"pass\",\"fail\",\"skip\")))\nPY",
+  "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R3-b1-suite-green/stdout.raw"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031",
+ "env_file": "NONE",
+ "started_utc": "2026-10-31T17:58:42Z",
+ "ended_utc": "2026-10-31T17:58:42Z",
+ "exit": 1,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": null
+}

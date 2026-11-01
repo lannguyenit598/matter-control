@@ -1,0 +1,10 @@
+== A: clean artifact copy
+release preflight: clean (tracked files + /private/tmp/mc-opencode-verify-wave-20261031/r8/artifact-clean)
+exit=0
+== B: planted artifact copy
+exit=1
+== C: missing artifact + --require-artifacts
+exit=1
+== D: missing artifact without flag
+release preflight: clean (tracked files + /private/tmp/mc-opencode-verify-wave-20261031/r8/does-not-exist)
+exit=0

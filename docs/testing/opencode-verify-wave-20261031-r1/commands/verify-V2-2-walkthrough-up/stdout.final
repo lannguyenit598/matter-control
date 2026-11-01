@@ -1,0 +1,20 @@
+[up] state dir /private/tmp/mc-opencode-verify-wave-20261031/mc-walkthrough-state (0700)
+[up] starting PG container mc-walkthrough-pg (postgres:18.6-alpine, 127.0.0.1:15432)
+[up] PG ready (db mc_walkthrough, user mcwt)
+[up] building mcapi from apps/backend (current tree)
+[up] building stub IdP
+[up] generating walkthrough API key pair (one-time, 0600, outside git)
+[up] starting stub IdP on 127.0.0.1:18093 (issuer http://127.0.0.1:18093)
+[up] applying product migrations (mcapi migrate)
+[up] starting mcapi on 127.0.0.1:18083
+[up] seeding 5 synthetic users (issuer http://127.0.0.1:18093)
+
+== MatterControl walkthrough is up ==
+  PG:        docker container "mc-walkthrough-pg" (label mc.task=MC-WALKTHROUGH) on 127.0.0.1:15432
+  API:       http://127.0.0.1:18083  (readyz OK; migrations applied)
+  Stub IdP:  http://127.0.0.1:18093  (introspection; issuer http://127.0.0.1:18093)
+  Users:     wt-alice (OWNER) / wt-binh (EDITOR, verifier) / wt-editor2 (EDITOR)
+             wt-cuc (VIEWER) / wt-dung (non-member)
+  Next:      ops/local/walkthrough/mint-token.sh wt-alice
+  Teardown:  ops/local/walkthrough/down.sh   (mandatory when done — no orphans)
+  State:     /private/tmp/mc-opencode-verify-wave-20261031/mc-walkthrough-state (0700, disposable keys, removed by down.sh)

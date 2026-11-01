@@ -1,0 +1,131 @@
+name: Backend
+
+# Runs only when the backend (or this workflow) changes. Because of the path filter, make the checks
+# required through a ruleset that allows "skipped" for pull requests that do not touch apps/backend.
+on:
+  push:
+    branches: [main]
+    paths: ["apps/backend/**", ".github/workflows/backend.yml"]
+  pull_request:
+    paths: ["apps/backend/**", ".github/workflows/backend.yml"]
+  # Weekly on main: govulncheck catches newly disclosed vulnerabilities even without code changes.
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: apps/backend
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.x"
+          check-latest: true
+          cache-dependency-path: apps/backend/go.sum
+      - name: go mod tidy is clean
+        run: go mod tidy -diff
+      - name: Generated queries are up to date (sqlc, no database)
+        run: make sqlc-check
+      - uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
+        with:
+          version: v2.14.0
+          working-directory: apps/backend
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: mattercontrol
+          POSTGRES_PASSWORD: mattercontrol
+          POSTGRES_DB: mattercontrol
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mattercontrol -d mattercontrol"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      # Enables the PostgreSQL contract suites (each test creates and drops its own schema).
+      MC_TEST_DATABASE_URL: postgres://mattercontrol:mattercontrol@localhost:5432/mattercontrol?sslmode=disable
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.x"
+          check-latest: true
+          cache-dependency-path: apps/backend/go.sum
+      - name: Test (unit, HTTP, memory and PostgreSQL contract suites)
+        run: |
+          set -o pipefail # a failing test must fail the step, not be hidden by tee
+          go test -race -count=1 -json -coverprofile=coverage.out ./... | tee test.json
+      - name: Coverage
+        run: go tool cover -func=coverage.out | tail -1
+      # A skipped PostgreSQL test would silently hide a product-database regression. Only tests
+      # that need an extra environment (performance run, restore rehearsal, the self-skip check, the
+      # one fault case that needs a second connection) may skip.
+      - name: No unexpected skips
+        run: |
+          python3 - <<'PY'
+          import json, re, sys
+          allowed = re.compile(r"^(TestPerf_LocalWorkloads|TestRestoreRehearsal|TestFreshSchemaDSNFrom_SkipsWithoutEnv|TestMatterSuiteW6_Postgres)(/|$)")
+          skipped = []
+          for line in open("test.json"):
+              try:
+                  e = json.loads(line)
+              except ValueError:
+                  continue
+              if e.get("Action") == "skip" and e.get("Test") and not allowed.match(e["Test"]):
+                  skipped.append(e["Package"].split("/internal/")[-1] + " :: " + e["Test"])
+          if skipped:
+              print("Unexpected skipped tests:", *skipped, sep="\n  ")
+              sys.exit(1)
+          print("No unexpected skips")
+          PY
+      # mcapi validates its whole configuration, so the migrate step gets non-secret placeholders;
+      # migrate never reads the key file or contacts the identity provider.
+      - name: Migrations apply cleanly and are idempotent
+        env:
+          MC_DATABASE_URL: ${{ env.MC_TEST_DATABASE_URL }}
+          MC_OBJECT_DIR: ${{ runner.temp }}/objects
+          MC_OIDC_ISSUER: https://idp.invalid
+          MC_OIDC_INTROSPECTION_URL: https://idp.invalid/oauth/v2/introspect
+          MC_OIDC_AUDIENCE: ci-placeholder
+          MC_OIDC_API_KEY_FILE: /nonexistent/key.json
+        run: |
+          go run ./cmd/mcapi migrate
+          go run ./cmd/mcapi migrate
+
+  vulncheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          # Same Go version as the production build image (Dockerfile): standard-library
+          # vulnerabilities depend on the toolchain that actually builds the binary.
+          go-version: "1.26.x"
+          check-latest: true
+          cache-dependency-path: apps/backend/go.sum
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build image
+        run: docker build --build-arg VERSION=${{ github.sha }} -t mcapi:ci .

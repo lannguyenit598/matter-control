@@ -1,0 +1,32 @@
+== docs/testing/zcode-deploy-readiness-finish-20261030-r1/return.md claims=11 not_run_mentions=7 author_labels=0
+   [deploy/cost claim] L11: IdP-side stays explicitly NOT_RUN. **Not DONE / DEPLOYED / DEPLOY_READY / $0 / production-ready.**
+   [completion claim] L11: IdP-side stays explicitly NOT_RUN. **Not DONE / DEPLOYED / DEPLOY_READY / $0 / production-ready.**
+   [completion claim] L17: | 1 TTL 30s (PI-01) | DONE | config/product.go, .env.example, both deploy templates, runbook, operations.md, tests |
+   [completion claim] L18: | 2 B1 SQL package | DONE (structural decision recorded) | ops/adr006/db/*, b1_least_privilege_test.go |
+   [completion claim] L19: | 3 Migration 0010 | DONE | migrations_mattercontrol/0010_*.sql + test |
+   [completion claim] L20: | 4 Identity split (PI-02) | DONE (templates+tests; IAM NOT_RUN) | profiles.mjs/.test.mjs, migrate-job.yaml, cloud-init.yaml |
+   [completion claim] L21: | 5 CI/preflight (PI-03) | DONE (CI itself NOT_RUN) | release-preflight.mjs(+test), frontend.yml, deploy.yml.disabled |
+   [completion claim] L22: | 6 Retention + backup | DONE locally; scheduling NOT_RUN | bff_retention.go(+test), app/bffcleanup.go, cmd/mcbffcleanup, ops/backup/scheduled-dump.sh, restore 
+   [completion claim] L23: | 7 Pending-import ceiling | DONE (number = PO D7) | durable-state.ts, pending-attempts.ts, tests, .dev.vars.example |
+   [completion claim] L24: | 8 Small debt | DONE | Dockerfile comment, PI-04 erratum, MC_DB_MAX_CONNS disposition (not added, math recorded) |
+   [completion claim] L25: | 9 Pilot runbook | DONE | docs/deployment/pilot-deploy-runbook.md + checklist addendum |
+== docs/testing/zcode-deploy-readiness-finish-20261030-r1/findings-disposition.md claims=13 not_run_mentions=15 author_labels=1
+   [completion claim] L9: ### WP-1 (P1) — `MC_OIDC_CACHE_TTL` restored to 30s (PI-01) — DONE
+   [completion claim] L21: ### WP-2 (P1) — B1 least-privilege packaged as deployable SQL — DONE (with a structural decision)
+   [completion claim] L25: Idempotent, NO passwords/DSNs (operator password step documented), fail-closed ordering.
+   [completion claim] L51: ### WP-3 (P1) — B2 index migration as 0010 — DONE
+   [completion claim] L63: ### WP-4 (P1) — Migrator/runtime identity separation (PI-02) — DONE (templates + tests)
+   [completion claim] L66: serving/migrator SAs (fails closed before writing anything).
+   [completion claim] L77: ### WP-5 (P1) — CI/release preflight + clean build artifact (PI-03) — DONE
+   [completion claim] L98: ### WP-6 (P1) — BFF state retention + real backup — DONE (local), scheduling NOT_RUN
+   [completion claim] L121: ### WP-7 (P1) — Pending-import ceiling in the Worker — DONE (default 5 MiB, PO owns the number)
+   [completion claim] L123: - `BFF_MAX_PENDING_BYTES` (default 5 MiB; integer 1..36 MiB; invalid → fail-closed 503) +
+   [completion claim] L129: by default, invalid configs fail closed, bulk not ceilinged, estimate never under-reports).
+   [completion claim] L135: ### WP-8 (P2) — Small real debt — DONE
+   [completion claim] L150: ### WP-9 (P1) — Current deploy runbook + checklist supersession — DONE
+== docs/testing/zcode-deploy-readiness-finish-20261030-r1/independent-review-packet.md claims=2 not_run_mentions=1 author_labels=1
+   [completion claim] L21: 4. `ops/deploy/profiles.mjs` + templates — the PI-02 fail-closed rule and the VM secret-fetch
+   [completion claim] L27: (fail-closed, before any storage, message quality, bulk not ceilinged, streamed document path
+== docs/implementation/workboard-findings.md claims=2 not_run_mentions=0 author_labels=0
+   [completion claim] L4: - Trạng thái: `OPEN → FIX_IN_PROGRESS → FIXED_PENDING_VERIFY → CLOSED_VERIFIED` (hoặc `WONTFIX_PO`, `BLOCKED:<lý do>`).
+   [deploy/cost claim] L21: | R2 | D2 "$0" | ENDORSE: "alerts fire trước khi mất tiền", không phải "không thể mất tiền" | Ngay |

@@ -1,0 +1,16 @@
+{
+ "run": "verify-R8-preflight-plant",
+ "argv": [
+  "bash",
+  "-c",
+  "\necho \"== A: clean artifact copy\"\nnode scripts/release-preflight.mjs /private/tmp/mc-opencode-verify-wave-20261031/r8/artifact-clean; echo \"exit=$?\"\necho \"== B: planted artifact copy\"\nnode scripts/release-preflight.mjs /private/tmp/mc-opencode-verify-wave-20261031/r8/artifact-planted; echo \"exit=$?\"\necho \"== C: missing artifact + --require-artifacts\"\nnode scripts/release-preflight.mjs --require-artifacts /private/tmp/mc-opencode-verify-wave-20261031/r8/does-not-exist; echo \"exit=$?\"\necho \"== D: missing artifact without flag\"\nnode scripts/release-preflight.mjs /private/tmp/mc-opencode-verify-wave-20261031/r8/does-not-exist; echo \"exit=$?\"\n"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend",
+ "env_file": "NONE",
+ "started_utc": "2026-11-01T00:50:19Z",
+ "ended_utc": "2026-11-01T00:50:19Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": null
+}
