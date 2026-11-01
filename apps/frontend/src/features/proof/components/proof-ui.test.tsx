@@ -56,6 +56,7 @@ const checklist = (callerId: string, over: Partial<Checklist> = {}): Checklist =
   },
   verification: 'UNVERIFIED',
   package: { declared: true, total: 1, mandatory: 1, satisfied: 0, ready: false },
+  signature: { declared: false, total: 0, mandatory: 0, satisfied: 0, ready: false },
   outcome: { declared: false, total: 0, mandatory: 0, satisfied: 0, ready: false },
   criteria: [
     {
@@ -139,13 +140,14 @@ describe('ProofPanel for a filing (BF-01/BF-02)', () => {
   it('keeps the package checklist and its commands reachable for a no-outcome-proof filing', () => {
     render(<ProofPanel checklist={filing(false)} ctx={ctx({ isFiling: true })} />)
     expect(screen.getByText('No outcome verification state')).toBeInTheDocument()
-    expect(screen.getByText('Package and signature readiness')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Package readiness' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Signed copy' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Add a criterion' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Offer evidence' })).toBeInTheDocument()
-    // No outcome criterion can be declared without outcome verification.
+    // No outcome criterion can be declared without outcome verification; PACKAGE and SIGNATURE
+    // purposes are always offered (D-9).
     const purpose = screen.getByLabelText(/What does it prove/) as HTMLSelectElement
-    expect([...purpose.options].map((o) => o.value)).toEqual(['PACKAGE'])
+    expect([...purpose.options].map((o) => o.value)).toEqual(['PACKAGE', 'SIGNATURE'])
     expect(screen.queryByText('Authority outcome')).not.toBeInTheDocument()
   })
 
@@ -166,10 +168,12 @@ describe('ProofPanel for a filing (BF-01/BF-02)', () => {
         ctx={ctx({ isFiling: true })}
       />,
     )
-    expect(screen.getByText(/This permits submission; it does not accept/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/this permits submission; it does not accept the authority’s decision/),
+    ).toBeInTheDocument()
     expect(screen.getByText(/Pending: recording the authority’s decision/)).toBeInTheDocument()
     const purpose = screen.getByLabelText(/What does it prove/) as HTMLSelectElement
-    expect([...purpose.options].map((o) => o.value)).toEqual(['PACKAGE', 'OUTCOME'])
+    expect([...purpose.options].map((o) => o.value)).toEqual(['PACKAGE', 'SIGNATURE', 'OUTCOME'])
   })
 
   it('says so when no outcome criterion is declared and never offers a purpose on other records', () => {

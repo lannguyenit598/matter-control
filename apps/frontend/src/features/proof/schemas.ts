@@ -94,8 +94,9 @@ export const criterionSchema = z.object({
   title: z.string(),
   description: z.string(),
   mandatory: z.boolean(),
-  /** PACKAGE gates a filing submission; OUTCOME is the authority decision accepted later. */
-  purpose: z.enum(['PACKAGE', 'OUTCOME']),
+  /** PACKAGE gates submission; SIGNATURE is the signature completeness a proof-required filing
+   *  must show (D-9); OUTCOME is the authority decision accepted later. */
+  purpose: z.enum(['PACKAGE', 'SIGNATURE', 'OUTCOME']),
   versionRule: z.enum(['NONE', 'CURRENT_AUTHORITATIVE', 'FIXED']),
   documentId: z.string().nullable(),
   fixedVersionId: z.string().nullable(),
@@ -134,6 +135,8 @@ export const checklistSchema = z.object({
   subject: subjectSchema,
   verification: z.string(),
   package: proofPartSchema,
+  /** D-9: the signature completeness a proof-required filing must show, apart from the package. */
+  signature: proofPartSchema,
   outcome: proofPartSchema,
   criteria: z.array(criterionSchema),
   evidence: z.array(evidenceSchema),
@@ -228,7 +231,7 @@ export const criterionInputSchema = z.object({
   description: text(2000),
   mandatory: z.enum(['yes', 'no']),
   /** Empty keeps the criterion's purpose on a revision; a creation defaults to PACKAGE. */
-  purpose: z.enum(['', 'PACKAGE', 'OUTCOME']).default(''),
+  purpose: z.enum(['', 'PACKAGE', 'SIGNATURE', 'OUTCOME']).default(''),
   versionRule: z.enum(['NONE', 'CURRENT_AUTHORITATIVE', 'FIXED']),
   documentId: z.string().max(100),
   fixedVersionId: z.string().max(100),

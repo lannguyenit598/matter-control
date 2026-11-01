@@ -275,17 +275,12 @@ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: Proo
       {ctx.isFiling ? (
         <>
           <CriteriaGroup
-            title={
-              <LocalizedText
-                en="Package and signature readiness"
-                vi="Sẵn sàng bộ hồ sơ và chữ ký"
-              />
-            }
+            title={<LocalizedText en="Package readiness" vi="Sẵn sàng bộ hồ sơ" />}
             note={
               checklist.package.ready ? (
                 <LocalizedText
-                  en="Ready: every mandatory package criterion is accepted. This permits submission; it does not accept the authority’s decision."
-                  vi="Đã sẵn sàng: mọi tiêu chí bắt buộc của bộ hồ sơ đã được chấp nhận. Điều này cho phép nộp hồ sơ, không có nghĩa là quyết định của cơ quan đã được chấp nhận."
+                  en="Ready: every mandatory package criterion is accepted. Together with the signature criteria below this permits submission; it does not accept the authority’s decision."
+                  vi="Đã sẵn sàng: mọi tiêu chí bắt buộc của bộ hồ sơ đã được chấp nhận. Cùng với tiêu chí chữ ký bên dưới, điều này cho phép nộp hồ sơ; không có nghĩa là quyết định của cơ quan đã được chấp nhận."
                 />
               ) : (
                 <LocalizedText
@@ -297,6 +292,31 @@ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: Proo
             criteria={checklist.criteria.filter((c) => c.purpose === 'PACKAGE')}
             render={criterionItem}
           />
+          {subject.proofRequired && (
+            <CriteriaGroup
+              title={<LocalizedText en="Signature" vi="Chữ ký" />}
+              note={
+                !checklist.signature.declared ? (
+                  <LocalizedText
+                    en="No signature criterion is declared. Declare one — a package criterion does not prove the signatures — or record the OWNER’s no-signature applicability decision."
+                    vi="Chưa khai báo tiêu chí chữ ký. Hãy khai báo một tiêu chí — tiêu chí bộ hồ sơ không chứng minh chữ ký — hoặc ghi nhận quyết định không yêu cầu chữ ký của người phụ trách."
+                  />
+                ) : checklist.signature.ready ? (
+                  <LocalizedText
+                    en="Signed: every mandatory signature criterion is accepted."
+                    vi="Đã có chữ ký: mọi tiêu chí chữ ký bắt buộc đã được chấp nhận."
+                  />
+                ) : (
+                  <LocalizedText
+                    en="Pending: offer the signature evidence for this criterion and a designated verifier who did not supply it decides."
+                    vi="Đang chờ: hãy cung cấp bằng chứng chữ ký cho tiêu chí này để người xác minh độc lập quyết định."
+                  />
+                )
+              }
+              criteria={checklist.criteria.filter((c) => c.purpose === 'SIGNATURE')}
+              render={criterionItem}
+            />
+          )}
           {subject.proofRequired ? (
             <CriteriaGroup
               title={<LocalizedText en="Authority outcome" vi="Kết quả từ cơ quan" />}
@@ -674,8 +694,8 @@ function CriterionForm({
               label={<LocalizedText en="What does it prove?" vi="Tiêu chí này chứng minh gì?" />}
               hint={
                 <LocalizedText
-                  en="Package criteria must be accepted before submission. An outcome criterion is accepted later, after the authority decides; it never blocks submission."
-                  vi="Tiêu chí bộ hồ sơ phải được chấp nhận trước khi nộp. Tiêu chí kết quả được chấp nhận sau khi cơ quan quyết định và không chặn việc nộp."
+                  en="Package and signature criteria must be accepted before submission (D-9: a package criterion does not prove the signatures). An outcome criterion is accepted later, after the authority decides; it never blocks submission."
+                  vi="Tiêu chí bộ hồ sơ và chữ ký phải được chấp nhận trước khi nộp (D-9: tiêu chí bộ hồ sơ không chứng minh chữ ký). Tiêu chí kết quả được chấp nhận sau khi cơ quan quyết định và không chặn việc nộp."
                 />
               }
             >
@@ -686,7 +706,11 @@ function CriterionForm({
                   options={[
                     {
                       value: 'PACKAGE',
-                      label: <LocalizedText en="Package or signature" vi="Bộ hồ sơ hoặc chữ ký" />,
+                      label: <LocalizedText en="Package readiness" vi="Sự sẵn sàng của bộ hồ sơ" />,
+                    },
+                    {
+                      value: 'SIGNATURE',
+                      label: <LocalizedText en="Signature" vi="Chữ ký" />,
                     },
                     ...(ctx.outcomeAllowed
                       ? [
