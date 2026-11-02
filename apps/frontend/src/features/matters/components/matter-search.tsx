@@ -8,6 +8,7 @@ import { useTransition, type FormEvent } from 'react'
 import { Button, buttonVariants } from '@/components/atoms/button'
 import { Input } from '@/components/atoms/input'
 import { LocalizedText } from '@/components/molecules/localized-text'
+import { useLocale } from '@/hooks/use-locale'
 
 /** The URL a search lands on: the query is the only state, so Back/Forward and sharing just work. */
 export function searchHref(raw: string): string {
@@ -25,6 +26,7 @@ export function searchHref(raw: string): string {
 export function MatterSearch({ query }: { query: string }) {
   const router = useRouter()
   const [pending, start] = useTransition()
+  const locale = useLocale()
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -59,7 +61,7 @@ export function MatterSearch({ query }: { query: string }) {
           maxLength={100}
           autoComplete="off"
           className="pl-8"
-          placeholder="Search matters by name"
+          placeholder={locale === 'vi' ? 'Tìm hồ sơ theo tên…' : 'Search matters by name…'}
         />
       </div>
       <Button type="submit" loading={pending}>

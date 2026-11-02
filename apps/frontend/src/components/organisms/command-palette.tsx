@@ -86,9 +86,9 @@ export function CommandPalette({
         </span>
         <kbd
           aria-hidden
-          className="hidden rounded border bg-muted px-1 text-xs text-muted-foreground sm:inline"
+          className="hidden rounded border bg-muted px-1 text-xs whitespace-nowrap text-muted-foreground sm:inline"
         >
-          {isApple ? '⌘K' : 'Ctrl K'}
+          {isApple ? '⌘K' : 'Ctrl\u00A0K'}
         </kbd>
       </Button>
       <Dialog

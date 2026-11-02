@@ -20,6 +20,7 @@ import { QuickSearch } from '@/features/search/components/quick-search'
 import { PrivateUiProvider } from '@/lib/mc/private-ui-events'
 import { publicUiSession } from '@/lib/auth-provider'
 import { awaitRequest } from '@/lib/request-time'
+import { uiLocale } from '@/lib/locale-server'
 
 /** Route layout: fills the DashboardTemplate slots with organisms + app config. */
 export default function AppLayout({ children }: LayoutProps<'/'>) {
@@ -32,7 +33,7 @@ export default function AppLayout({ children }: LayoutProps<'/'>) {
 
 async function AuthenticatedWorkbench({ children }: { children: React.ReactNode }) {
   await awaitRequest()
-  const identity = await publicUiSession()
+  const [identity, locale] = await Promise.all([publicUiSession(), uiLocale()])
   return (
     <PrivateUiProvider identity={identity}>
       <FocusProvider identity={identity}>
@@ -42,6 +43,7 @@ async function AuthenticatedWorkbench({ children }: { children: React.ReactNode 
             sidebar={
               <Suspense fallback={null}>
                 <AppSidebar
+                  navAriaLabel={locale === 'vi' ? 'Điều hướng chính' : 'Primary navigation'}
                   brand={
                     <span className="flex min-w-0 items-center gap-2.5">
                       <span className="app-brand-mark" aria-hidden>
@@ -87,7 +89,7 @@ async function AuthenticatedWorkbench({ children }: { children: React.ReactNode 
                     <QuickSearch identity={identity} destinations={mainDestinations} />
                     <ThemeToggle />
                     <details className="relative min-[801px]:hidden">
-                      <summary className="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center rounded-md hover:bg-accent">
+                      <summary className="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center rounded-md hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
                         <Settings2 aria-hidden className="size-4" />
                         <span className="sr-only">
                           <LocalizedText en="Preferences" vi="Tùy chọn" />

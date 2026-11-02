@@ -5,6 +5,7 @@ import { useEffect, useId, useReducer, useRef, type ReactNode } from 'react'
 
 import { Button } from '@/components/atoms/button'
 import { GlassSurface, useGlassTier } from '@/components/molecules/glass-surface'
+import { useLocale } from '@/hooks/use-locale'
 import { cn } from '@/lib/utils'
 
 export type DialogProps = {
@@ -37,6 +38,7 @@ export function Dialog({
   className,
   keepMounted,
 }: DialogProps) {
+  const locale = useLocale()
   const ref = useRef<HTMLDialogElement>(null)
   const titleId = useId()
   const descriptionId = useId()
@@ -117,7 +119,7 @@ export function Dialog({
               <Button
                 variant="ghost"
                 size="icon"
-                aria-label="Close"
+                aria-label={locale === 'vi' ? 'Đóng' : 'Close'}
                 className="-mt-2 -mr-2 size-8"
                 onClick={() => onOpenChange(false)}
               >

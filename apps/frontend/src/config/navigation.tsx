@@ -37,7 +37,7 @@ export const mainNavigation: NavItem[] = mainDestinations.map((destination) => {
   return {
     href: destination.href,
     label: <LocalizedText en={destination.en} vi={destination.vi} />,
-    icon: Icon ? <Icon /> : undefined,
+    icon: Icon ? <Icon aria-hidden /> : undefined,
     alsoActiveFor: destination.alsoActiveFor,
   }
 })

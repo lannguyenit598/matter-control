@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { UiLocaleContext } from '@/hooks/use-locale'
 import { Dialog } from './dialog'
 
 function setup() {
@@ -52,5 +53,21 @@ describe('Dialog', () => {
       </Dialog>,
     )
     expect(screen.getByLabelText('Name')).toBeInTheDocument()
+  })
+
+  it('renders default close button accessible name', () => {
+    setup()
+    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
+  })
+
+  it('renders Vietnamese close button accessible name when locale is vi', () => {
+    render(
+      <UiLocaleContext.Provider value="vi">
+        <Dialog open onOpenChange={() => {}} title="Edit">
+          <input aria-label="Name" />
+        </Dialog>
+      </UiLocaleContext.Provider>,
+    )
+    expect(screen.getByRole('button', { name: 'Đóng' })).toBeInTheDocument()
   })
 })

@@ -1,106 +1,110 @@
-# Stage 8: Intermediate Zoom-Out Review Report (Round 2)
+# Skeptical Architect Intermediate Review (Stage 8)
 
-- **Target Document**: [`docs/implementation/ui-issues-remediation.md`](ui-issues-remediation.md)
-- **Reviewer**: Skeptical Architect (`egm-zoom-out`)
-- **Review Inputs**:
-  - Stage 5: Initial Zoom-Out Review ([`zoom_out_report.md`](zoom_out_report.md))
-  - Stage 6: Comprehension Test ([`comprehension_report.md`](comprehension_report.md))
-  - Stage 7: Hostile Critic Review ([`critic_report.md`](critic_report.md))
-- **Overall Verdict**: ✅ **APPROVED WITH TARGETED REFINEMENTS (No Architectural Bloat)**
+**Target File**: [`docs/implementation/ui-issues-remediation.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/implementation/ui-issues-remediation.md) (Lines 1–252)  
+**Standard**: [`zoom-out-standard.md`](file:///Users/nguyenvanlan/.gemini/config/plugins/egm/resources/document_standards/zoom-out-standard.md)  
+**Stage**: Intermediate Zoom Out Review (Synthesis of Initial Zoom Out, Comprehension, and Critic Audits)  
+**Reviewer**: `egm-zoom-out` (Skeptical Architect)
 
 ---
 
-## 1. Synthesis of Findings Across Stages 5, 6, and 7
+### Executive Evaluation
 
-A synthesis of the three review stages reveals strong consensus on architectural direction, accompanied by concrete implementation corrections:
+An architectural audit of the remediation plan in light of the Initial Zoom Out, Comprehension, and Critic reports confirms that the core architectural invariants and boundaries remain structurally sound:
+1. **RSC vs. Client Boundary**: Pure Server Components (`AppSidebar`, `AuthenticatedWorkbench`) resolve locale asynchronously on the server (`await uiLocale()`), while Client Components (`Dialog`, `BottomNav`, `MatterSearch`, `LocaleToggle`) consume client state (`useLocale()`) without hydration flashes or client-hook leakage across the server boundary.
+2. **Sentence Case Invariant**: Form action buttons strictly preserve sentence-case labels (`Create workspace`, `Create requirement`, `Save revision`, `Add criterion`), matching automated test suites.
+3. **Centralized Field Styling**: `fieldControlClass` in `input.tsx` remains the single source of truth for `Input`, `Textarea`, and `Select`.
+4. **Touch Target Dimensions**: 44px min-dimensions (`min-h-11`, `min-w-11`) are preserved across mobile triggers and form controls.
 
-1. **Architectural Restraint (Stage 5 Validated)**:
-   The foundational architecture of `docs/implementation/ui-issues-remediation.md` is sound, lean, and strictly adheres to YAGNI. It solves real accessibility, usability, and styling bugs using standard HTML5/WAI-ARIA attributes, existing Tailwind design tokens, and canonical primitives (`useLocale`, `uiLocale`, `<LocalizedText />`), while rejecting heavy third-party abstractions.
-
-2. **Concrete Compilation Blockers (Stages 6 & 7 Unified)**:
-   Both the Naive Reader (Stage 6) and the Hostile Critic (Stage 7) correctly identified two compilation blockers: newly introduced props (`closeAriaLabel` in `DialogProps` and `navAriaLabel` in `AppSidebarProps`) were not destructured in their component function parameter lists, creating TypeScript `TS2304: Cannot find name` errors during build.
-
-3. **Location Drift & Code Invariants (Stages 6 & 7 Unified)**:
-   - Line numbers for native select trigger classes were cited as `select.tsx:31-35` when they actually reside at **lines 135–139**.
-   - `proof-panel.tsx:744-751` was described as an active code change, whereas inspection confirms the label/hint split is already implemented in the source tree (an invariant verification).
-
-4. **Critic Overreach Checked by Skeptical Architect**:
-   The Stage 7 Critic suggested introducing CSS `subgrid` for multi-column form layouts. From a skeptical architecture perspective, **this recommendation is rejected as premature over-engineering (YAGNI)**. Subgrid breaks the encapsulation of `FormField`'s flex-column layout, adds cross-browser fragility, and is unnecessary when concise single-line labels already maintain uniform horizontal alignment.
+However, several critiques proposed during earlier stages risk introducing unnecessary complexity, bloat, and premature refactorings. Furthermore, the remediation document itself exhibits severe altitude drops and redundant diff bloat that must be pruned.
 
 ---
 
-## 2. Rulings & Exact Remediations on Blockers & Majors
+### Architectural Invariant & Mitigation Assessment (Contrarian / YAGNI Lens)
 
-### 🔴 Finding F-01: Parameter Destructuring of `closeAriaLabel` in `Dialog`
-- **Severity**: **Blocker**
-- **Affected Scope**: Section 6 & Phase 3.1 (`apps/frontend/src/components/molecules/dialog.tsx:31-39`)
-- **Skeptical Architect Ruling**: **UPHELD**.
-- **Exact Remediation**:
-  In `dialog.tsx`, update `Dialog` parameter destructuring:
-  ```diff
-   export function Dialog({
-     open,
-     onOpenChange,
-     title,
-     description,
-     children,
-     className,
-     keepMounted,
-  +  closeAriaLabel,
-   }: DialogProps) {
-  ```
+#### 1. Native `<details>` vs. Custom Popover / JS Event Suite (Item 2)
+- **Critic Proposal**: Replace the native `<details>` preferences menu with an accessible dialog/popover library or implement custom JavaScript listeners for `Escape` dismissal and outside-click closure.
+- **Skeptical Architect Assessment (REJECT Critic Proposal)**: The mobile preferences menu in [`layout.tsx:92-105`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/src/app/%28app%29/layout.tsx#L92-L105) contains only two secondary controls (`LocaleToggle` and `AccountMenu`). Native `<details>` provides zero-JS, browser-native disclosure behavior that functions inside a React Server Component layout without hydration penalties or runtime overhead. Replacing this with a third-party popover library (e.g. Radix) or custom event listener hooks adds state overhead, hydration requirements, and runtime dependencies for zero tangible benefit. Adding visible focus indicators via Tailwind (`focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring`) resolves the accessibility defect with minimal footprint.
+
+#### 2. HTML5 `type="number"` vs. Custom Text/Regex Parsing (Item 5)
+- **Critic Proposal**: Replace `type="number"` with `type="text" inputMode="numeric" pattern="[0-9]*"` and custom validation handlers to prevent input of `'e'`, `'+'`, or decimal points.
+- **Skeptical Architect Assessment (REJECT Critic Proposal)**: `type="number" min={0} max={36500} step={1} inputMode="numeric"` in [`proof-panel.tsx:614, 761`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/src/features/proof/components/proof-panel.tsx#L614) leverages native browser spinners, HTML5 step constraints, and invokes numeric virtual keypads on iOS and Android. Backing action schemas already validate payload values server-side. Replacing native number semantics with bespoke regex string parsing and custom client-side validation logic is speculative edge-case hardening (YAGNI) that increases codebase maintenance overhead.
+
+#### 3. Responsive Navigation Landmark Uniqueness (Item 6)
+- **Critic Proposal**: Rename the mobile navigation landmark to `"Bottom navigation"` to avoid duplicate landmark announcements with desktop `AppSidebar`.
+- **Skeptical Architect Assessment (REJECT Critic Proposal)**: Inspection of the CSS architecture in [`globals.css:754`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/src/app/globals.css#L754) (`.app-sidebar-slot { display: none; }` at `<= 800px`) and [`pane-workbench.css:360-366`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/src/app/pane-workbench.css#L360-L366) (`.app-bottom-nav { display: none; }` at `> 800px`) reveals that desktop and mobile navigation slots are **mutually exclusive**. Elements styled with `display: none` are completely removed from the accessibility tree. At no point do assistive technologies encounter duplicate "Primary navigation" landmarks. Renaming the mobile bar to "Bottom navigation" would degrade screen reader UX on mobile devices, where the bottom bar is genuinely the primary navigation.
+
+#### 4. Native Select Centering vs. Flexbox Redesign (Item 9)
+- **Critic Proposal**: Re-engineer native `<select>` controls with flexbox (`h-11 flex items-center`) rather than padding adjustments.
+- **Skeptical Architect Assessment (REJECT Critic Proposal)**: CSS Flexbox on native `<select>` elements is non-standard and ignored by browser rendering engines (WebKit and Blink). Padding (`max-sm:py-3`) paired with `leading-normal` is the platform-standard method to align text baselines in native `<select>` elements without breaking cross-browser styling.
 
 ---
 
-### 🔴 Finding F-02: Parameter Destructuring of `navAriaLabel` in `AppSidebar`
-- **Severity**: **Blocker**
-- **Affected Scope**: Section 6 & Phase 3.2 (`apps/frontend/src/components/organisms/app-sidebar.tsx:15`)
-- **Skeptical Architect Ruling**: **UPHELD**.
-- **Exact Remediation**:
-  In `app-sidebar.tsx`, update `AppSidebar` parameter destructuring:
-  ```diff
-  - export function AppSidebar({ brand, items, footer, className }: AppSidebarProps) {
-  + export function AppSidebar({ brand, items, footer, className, navAriaLabel }: AppSidebarProps) {
-  ```
+### Detailed Findings
+
+#### 1. Severity: Blocker
+- **Affected Scope**: Lines 70–226 (`## Detailed Implementation Plan`)
+- **Simplicity Rationale**:
+  The document suffers from severe altitude collapse and bloat. Lines 5–67 (`## Feature Specification`) already clearly specify the exact components, invariants, and resolutions for each of the 10 items. Lines 70–226 duplicate these same 10 items almost verbatim across 150+ lines of raw `git diff` blocks.
+  Per the Zoom-Out Standard (Section 3: Anti-Weeds): *"High-level sections must focus on architecture, interfaces, and data flows, not code-level implementation details... writing detailed pseudocode or listing minor implementation helper functions instead of high-level structure."*
+  An architectural remediation plan is not a duplicate patch file. It must define contracts, invariants, file ownership, and verification gates. The low-level diff blocks add visual clutter, drift rapidly, and obscure high-level architectural tracking.
+- **Recommendation**: Condense Section 2 into a high-level Phase Roadmap listing target files, invariant requirements, and execution order. Strip the redundant raw git diffs.
 
 ---
 
-### 🟡 Finding F-03: Focus Shifting Acknowledgment on Form Validation Failure
-- **Severity**: **Major**
-- **Affected Scope**: Section 1 & Phase 1.3 (`apps/frontend/src/components/molecules/form-field.tsx`, `apps/frontend/src/components/organisms/intent-form.tsx`)
-- **Skeptical Architect Ruling**: **ARCHITECTURAL BOUNDARY ENFORCED (NO PREMATURE ABSTRACTIONS)**.
-- **Simplicity Rationale**: Retain `FormField` as a pure presenter. Note WCAG Technique G83/SCR32 in Section 1: form-level submission failure notification is handled globally by `ActionAnnouncer`, and any future focus shifting belongs at the form root in `IntentForm`.
+#### 2. Severity: Major
+- **Affected Scope**: Lines 9–10 (Section 1) & Lines 91–94 (Phase 1.3)
+- **Simplicity Rationale**:
+  Section 1 asserts:
+  > *"Focus shifting on server validation rejection belongs at the form root level in `IntentForm` (`form.querySelector('[aria-invalid="true"]')?.focus()`), preserving `FormField` as a pure presenter."*
+  
+  Inspection of [`apps/frontend/src/components/organisms/intent-form.tsx:180-210`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/src/components/organisms/intent-form.tsx#L180-L210) reveals that `IntentForm` currently relies on `ActionAnnouncer` for submission result announcements and does not shift DOM focus. The remediation plan neither schedules nor implements this focus shift.
+  Including architectural pseudocode for a root component without scheduling its execution creates ambiguity (as flagged by Comprehension) and invites premature scope creep. Form submission errors are already audibly announced by `ActionAnnouncer`.
+- **Recommendation**: Explicitly clarify that automated focus shifting in `IntentForm` is **Out of Scope (Non-Goal)** for this remediation milestone. Reaffirm that `FormField` remains a pure presenter relying on `aria-describedby` and `aria-invalid`.
 
 ---
 
-### 🟡 Finding F-04: Invariant Verification in `proof-panel.tsx` & Rejection of CSS Subgrid
-- **Severity**: **Major**
-- **Affected Scope**: Section 10 & Phase 2.4 (`apps/frontend/src/features/proof/components/proof-panel.tsx:744-765`)
-- **Skeptical Architect Ruling**: **RECLASSIFIED AS INVARIANT VERIFICATION; CSS SUBGRID FIRMLY REJECTED**.
-- **Simplicity Rationale**: Reclassify Area 10 as an **Invariant Verification** (no code diff required). CSS Subgrid is rejected as it breaks component encapsulation.
+#### 3. Severity: Major
+- **Affected Scope**: Lines 38, 143–163 (Item 6 & Phase 3.1); [`dialog.tsx:23`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/src/components/molecules/dialog.tsx#L23)
+- **Simplicity Rationale**:
+  The document introduces `closeAriaLabel?: string` into `DialogProps`. In the entire application, **zero** dialog consumers pass this prop. Every modal dialog in the application relies on the internal bilingual resolution:
+  `locale === 'vi' ? 'Đóng' : 'Close'`.
+  Exposing an unused configuration prop violates YAGNI and expands the public API surface of a core design system molecule purely to satisfy a synthetic test case.
+- **Recommendation**: Remove `closeAriaLabel` from `DialogProps` and `Dialog`. Keep `Dialog` self-contained using internal `locale === 'vi' ? 'Đóng' : 'Close'`.
 
 ---
 
-### 🟡 Finding F-05: Line Reference Correction for `select.tsx` (Lines 135–139) & Touch Sizing
-- **Severity**: **Major**
-- **Affected Scope**: Section 9 & Phase 2.3 (`apps/frontend/src/components/atoms/select.tsx:135-139`)
-- **Skeptical Architect Ruling**: **LINE REFERENCE CORRECTED; TOUCH SIZING CONFIRMED**.
-- **Exact Remediation**: Update Section 9 and Phase 2.3 line references from `select.tsx:31-35` to `select.tsx:135-139`.
+#### 4. Severity: Major
+- **Affected Scope**: Line 190 (`### Phase 4: Typography & Button Title Case (P3)`)
+- **Simplicity Rationale**:
+  The codebase enforces strict **sentence case** for English button labels (`Create workspace`, `Create requirement`, `Save revision`, `Add criterion`), verified by automated test suites (`create-requirement-form.test.tsx`, `creation-reload.test.tsx`). 
+  Naming the section heading "Button Title Case" directly contradicts the project invariant and Section 8 (lines 51–57). This terminological collision risks confusion and accidental regressions during future maintenance.
+- **Recommendation**: Rename line 190 to `### Phase 4: Typography & Button Sentence Case (P3)`.
 
 ---
 
-## 3. Secondary Cleanups & Invariant Alignments
-
-1. **`layout.tsx` Line References**:
-   - Mobile `<summary>` preferences menu resides at **line 90** (lines 89–95).
-   - `AuthenticatedWorkbench` and `<AppSidebar>` reside at **lines 33–44**.
-2. **`matter-search.tsx` Hook Insertion**:
-   - Specify line 28 (inside `MatterSearch`, alongside `useTransition`) for `const locale = useLocale()`.
-3. **Acronym Clarifications**:
-   - Expand EGM (Elephant-Goldfish Model), RSC (React Server Component), and HIG (Human Interface Guidelines) on initial occurrence.
+#### 5. Severity: Nit
+- **Affected Scope**: Lines 63–66 (Item 10) & Lines 136–140 (Phase 2.4)
+- **Simplicity Rationale**:
+  Item 10 ("Multi-column Form Grid Alignment Invariant") explicitly concludes: *"Invariant verified in current code; no code diff required."*
+  Listing non-remediations as active items across both the specification and implementation checklists introduces scope bloat and dilutes focus from actual engineering tasks.
+- **Recommendation**: Consolidate unchanged architectural invariants (including Item 1 and Item 10) into a dedicated "Architectural Invariants Preserved" section.
 
 ---
 
-## 4. Final Verdict
+#### 6. Severity: Nit
+- **Affected Scope**: Lines 13, 28, 43, 59, 128 (Absolute Line Citations)
+- **Simplicity Rationale**:
+  The document relies heavily on exact line numbers that have already drifted:
+  - `select.tsx:135-139` cites the outer JSX wrapper; the trigger class is at line 159.
+  - `layout.tsx:90` cites `<QuickSearch />`; `<summary>` is at line 93.
+  - `matter-search.tsx:62` is at line 64.
+- **Recommendation**: Reference target component names and JSX elements rather than brittle line numbers.
 
-**APPROVED FOR STAGE 9 FINAL POLISH**.
+---
+
+### Conclusion & Direction for Remediation Document
+The architecture is well-founded and minimal. We must resist the Critic's pressure to add heavy popover libraries, complex text/regex input managers, or landmark renames. To meet the Zoom-Out Standard, the remediation document simply needs to:
+1. Strip the 150+ lines of redundant git diff weeds.
+2. Formally declare `IntentForm` focus changes as out of scope.
+3. Remove the speculative `closeAriaLabel` prop from `Dialog`.
+4. Fix the "Title Case" heading collision.

@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { UiLocaleContext } from '@/hooks/use-locale'
+
 const router = vi.hoisted(() => ({ push: vi.fn(), refresh: vi.fn() }))
 vi.mock('next/navigation', () => ({ useRouter: () => router }))
 
@@ -45,5 +47,17 @@ describe('MatterSearch (client-side navigation)', () => {
 
   it('caps the query like the API', () => {
     expect(searchHref('x'.repeat(150))).toBe(`/matters?q=${'x'.repeat(100)}`)
+  })
+
+  it('renders localized placeholder with typographic ellipsis', () => {
+    const { rerender } = render(<MatterSearch query="" />)
+    expect(screen.getByPlaceholderText('Search matters by name…')).toBeInTheDocument()
+
+    rerender(
+      <UiLocaleContext.Provider value="vi">
+        <MatterSearch query="" />
+      </UiLocaleContext.Provider>,
+    )
+    expect(screen.getByPlaceholderText('Tìm hồ sơ theo tên…')).toBeInTheDocument()
   })
 })

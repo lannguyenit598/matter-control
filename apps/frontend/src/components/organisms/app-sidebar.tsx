@@ -9,16 +9,17 @@ export type AppSidebarProps = {
   items: readonly NavItem[]
   footer?: ReactNode
   className?: string
+  navAriaLabel?: string
 }
 
 /** Desktop navigation column. On small screens use MobileNav instead. */
-export function AppSidebar({ brand, items, footer, className }: AppSidebarProps) {
+export function AppSidebar({ brand, items, footer, className, navAriaLabel }: AppSidebarProps) {
   return (
     <aside className={cn('app-sidebar flex h-full flex-col', className)}>
       <Link href="/" className="app-brand flex items-center font-bold tracking-tight">
         {brand}
       </Link>
-      <nav aria-label="Main" className="app-navigation flex-1">
+      <nav aria-label={navAriaLabel ?? 'Main'} className="app-navigation flex-1">
         <NavMenu items={items} />
       </nav>
       {footer && <div className="app-sidebar-footer mt-6 border-t pt-4">{footer}</div>}

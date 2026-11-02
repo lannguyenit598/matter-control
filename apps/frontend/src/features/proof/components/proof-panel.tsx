@@ -611,7 +611,7 @@ function AssessForm({
               }
               error={errors.validDays?.[0]}
             >
-              {(c) => <Input type="number" min={0} max={36500} name="validDays" {...c} />}
+              {(c) => <Input type="number" min={0} max={36500} step={1} inputMode="numeric" name="validDays" {...c} />}
             </FormField>
           </>
         )}
@@ -633,7 +633,13 @@ function CriterionForm({
     <IntentForm
       receipted={false}
       draftKey={`item:${itemId}:criterion:${existing?.id ?? 'new'}`}
-      submitLabel={existing ? 'Save revision' : 'Add criterion'}
+      submitLabel={
+        existing ? (
+          <LocalizedText en="Save revision" vi="Lưu phiên bản" />
+        ) : (
+          <LocalizedText en="Add criterion" vi="Thêm tiêu chí" />
+        )
+      }
       run={(v) => {
         const base = {
           matterId: ctx.matterId,
@@ -756,6 +762,8 @@ function CriterionForm({
                   type="number"
                   min={0}
                   max={36500}
+                  step={1}
+                  inputMode="numeric"
                   name="validDays"
                   defaultValue={existing?.validDays ?? 0}
                   {...c}
