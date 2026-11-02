@@ -4,7 +4,7 @@ import { LocalizedText } from '@/components/molecules/localized-text'
 
 import { useRouter } from 'next/navigation'
 import { Pencil } from 'lucide-react'
-import { useState, useTransition } from 'react'
+import { useState, useTransition, type ReactNode } from 'react'
 
 import { Button } from '@/components/atoms/button'
 import { Input } from '@/components/atoms/input'
@@ -16,6 +16,8 @@ export type InlineEditProps = {
   /** Names the field and the row for assistive technology, e.g. `title of "Draft SPA"`. */
   label: string
   value: string
+  /** Read-mode content, e.g. a link, independent of the edit affordance. */
+  display?: ReactNode
   canEdit: boolean
   maxLength?: number
   /** Persists the new value. The caller binds the row id and its revision token. */
@@ -26,7 +28,14 @@ export type InlineEditProps = {
  * One editable field of one row. The draft stays in the box when a save fails; a CAS-only save
  * with an unknown outcome is never resent (only a re-read re-enables editing).
  */
-export function InlineEdit({ label, value, canEdit, maxLength = 300, run }: InlineEditProps) {
+export function InlineEdit({
+  label,
+  value,
+  display,
+  canEdit,
+  maxLength = 300,
+  run,
+}: InlineEditProps) {
   const router = useRouter()
   const shellAnnouncements = useShellAnnouncements()
   const [editing, setEditing] = useState(false)
@@ -59,13 +68,13 @@ export function InlineEdit({ label, value, canEdit, maxLength = 300, run }: Inli
 
   if (!editing) {
     return (
-      <span className="inline-flex flex-wrap items-center gap-1">
-        <span className="break-words">{value}</span>
+      <span className="inline-flex w-full min-w-0 items-start gap-1">
+        <span className="min-w-0 flex-1 break-words">{display ?? value}</span>
         {canEdit && (
           <Button
             size="icon"
             variant="ghost"
-            className="size-7"
+            className="size-7 shrink-0"
             aria-label={`Edit ${label}`}
             onClick={() => {
               setDraft(value)

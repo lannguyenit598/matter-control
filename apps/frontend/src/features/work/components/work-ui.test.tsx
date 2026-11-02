@@ -198,6 +198,7 @@ describe('WorkGrid', () => {
   it('viewers see no edit affordance', () => {
     render(<WorkGrid {...base} canEdit={false} items={[entry()]} />)
     expect(screen.queryByRole('button')).toBeNull()
+    expect(screen.getByRole('link', { name: 'Draft SPA' })).toBeInTheDocument()
   })
 
   it('inline save sends the row id and its etag; failure keeps the draft; success refreshes', async () => {
@@ -246,9 +247,11 @@ describe('WorkGrid', () => {
     expect(screen.getByText('No work items match these filters')).toBeInTheDocument()
   })
 
-  it('open-details links carry the current grid URL as their origin', () => {
+  it('the record name opens details with the current grid URL and no duplicate detail link', () => {
     render(<WorkGrid {...base} items={[entry({ title: 'Draft SPA' })]} />)
-    const link = screen.getByRole('link', { name: 'Open details of Draft SPA' })
+    const link = screen.getByRole('link', { name: 'Draft SPA' })
+    expect(link).toHaveTextContent('Draft SPA')
+    expect(screen.queryByRole('link', { name: 'Open details of Draft SPA' })).toBeNull()
     const url = new URL(link.getAttribute('href')!, 'http://x')
     expect(url.pathname).toBe('/matters/m1/work/a1')
     expect(url.searchParams.get('from')).toBe('/matters/m1/work?execution=WAITING')

@@ -1,7 +1,7 @@
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
-import { ListChecks, ChevronRight, ArrowUpRight } from 'lucide-react'
+import { ListChecks, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { buttonVariants } from '@/components/atoms/button'
@@ -147,24 +147,15 @@ export function WorkGrid({
                 data-row-id={e.item.id}
                 className={cn('align-top', density === 'compact' ? 'h-9' : 'h-11')}
               >
-                <th scope="row" className={cn('max-w-xs font-normal', cell)}>
-                  <div className="flex flex-col gap-1">
-                    <RowTitleEdit
-                      matterId={matterId}
-                      itemId={e.item.id}
-                      title={e.item.title}
-                      etag={e.etag}
-                      canEdit={canEdit}
-                    />
-                    <Link
-                      href={withFrom(`/matters/${matterId}/work/${e.item.id}`, here)}
-                      className="inline-flex w-fit items-center gap-1 text-xs underline"
-                      aria-label={`Open details of ${e.item.title}`}
-                    >
-                      <ArrowUpRight aria-hidden className="size-4 shrink-0" />
-                      <LocalizedText en="Open details" vi="Mở chi tiết" />
-                    </Link>
-                  </div>
+                <th scope="row" className={cn('max-w-xs min-w-64 font-normal', cell)}>
+                  <RowTitleEdit
+                    matterId={matterId}
+                    itemId={e.item.id}
+                    title={e.item.title}
+                    href={withFrom(`/matters/${matterId}/work/${e.item.id}`, here)}
+                    etag={e.etag}
+                    canEdit={canEdit}
+                  />
                 </th>
                 <td className={cell}>
                   <KindBadge kind={e.item.kind} />
