@@ -1,0 +1,32 @@
+{
+  "recordedAt": "2026-11-02T11:58:35.058305+00:00",
+  "red": {
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/components/organisms/app-sidebar.test.tsx"
+    ],
+    "exit": 1,
+    "filesFailed": 1,
+    "testsFailed": 2,
+    "toolSession": 81501,
+    "observedMismatch": "Main instead of live localized navigation name"
+  },
+  "green": {
+    "command": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/components/organisms/app-sidebar.test.tsx",
+      "src/components/organisms/bottom-nav.test.tsx",
+      "src/components/templates/dashboard-template.test.tsx",
+      "src/components/molecules/locale-provider.test.tsx"
+    ],
+    "exit": 0,
+    "filesPassed": 4,
+    "testsPassed": 9,
+    "toolSession": 16457
+  },
+  "rawTranscriptLocation": "tool outputs in this chat; no raw regression log claimed"
+}

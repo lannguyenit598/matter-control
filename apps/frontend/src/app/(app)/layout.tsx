@@ -20,7 +20,6 @@ import { QuickSearch } from '@/features/search/components/quick-search'
 import { PrivateUiProvider } from '@/lib/mc/private-ui-events'
 import { publicUiSession } from '@/lib/auth-provider'
 import { awaitRequest } from '@/lib/request-time'
-import { uiLocale } from '@/lib/locale-server'
 
 /** Route layout: fills the DashboardTemplate slots with organisms + app config. */
 export default function AppLayout({ children }: LayoutProps<'/'>) {
@@ -33,7 +32,7 @@ export default function AppLayout({ children }: LayoutProps<'/'>) {
 
 async function AuthenticatedWorkbench({ children }: { children: React.ReactNode }) {
   await awaitRequest()
-  const [identity, locale] = await Promise.all([publicUiSession(), uiLocale()])
+  const identity = await publicUiSession()
   return (
     <PrivateUiProvider identity={identity}>
       <FocusProvider identity={identity}>
@@ -43,7 +42,6 @@ async function AuthenticatedWorkbench({ children }: { children: React.ReactNode 
             sidebar={
               <Suspense fallback={null}>
                 <AppSidebar
-                  navAriaLabel={locale === 'vi' ? 'Điều hướng chính' : 'Primary navigation'}
                   brand={
                     <span className="flex min-w-0 items-center gap-2.5">
                       <span className="app-brand-mark" aria-hidden>

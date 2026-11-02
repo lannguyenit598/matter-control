@@ -29,7 +29,7 @@ describe('DashboardTemplate', () => {
       `#${main.id}`,
     )
     expect(within(main).getByRole('heading', { name: 'My Work' })).toBeInTheDocument()
-    expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Primary navigation' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Account preferences' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Open mobile navigation' })).toBeInTheDocument()
   })

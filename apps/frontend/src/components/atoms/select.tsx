@@ -156,7 +156,7 @@ export function Select({
         aria-activedescendant={open && active >= 0 ? `${id}-${active}` : undefined}
         className={cn(
           fieldControlClass,
-          'ui-select min-h-10 appearance-none truncate py-2 pr-9 text-left whitespace-nowrap leading-normal max-sm:min-h-11 max-sm:py-3',
+          'ui-select min-h-10 appearance-none truncate py-2 pr-9 text-left leading-normal whitespace-nowrap max-sm:min-h-11 max-sm:py-3',
           leadingIcon && 'pl-9',
         )}
         onPointerDown={(event) => {

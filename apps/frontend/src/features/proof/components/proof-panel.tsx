@@ -611,7 +611,17 @@ function AssessForm({
               }
               error={errors.validDays?.[0]}
             >
-              {(c) => <Input type="number" min={0} max={36500} step={1} inputMode="numeric" name="validDays" {...c} />}
+              {(c) => (
+                <Input
+                  type="number"
+                  min={0}
+                  max={36500}
+                  step={1}
+                  inputMode="numeric"
+                  name="validDays"
+                  {...c}
+                />
+              )}
             </FormField>
           </>
         )}
