@@ -1,5 +1,6 @@
 'use client'
 
+import { SelectionControl } from '@/components/atoms/selection-control'
 import { LocalizedText } from '@/components/molecules/localized-text'
 import { useLocale } from '@/hooks/use-locale'
 
@@ -236,7 +237,7 @@ function Checks({ name, legend, options }: { name: string; legend: string; optio
       )}
       {options.map((o) => (
         <label key={o.id} className="flex items-center gap-2 text-sm">
-          <input type="checkbox" name={name} value={o.id} className="size-4" />
+          <SelectionControl name={name} value={o.id} className="size-4" />
           {o.label}
         </label>
       ))}

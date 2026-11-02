@@ -21,7 +21,7 @@ export function AppSidebar({ brand, items, footer, className }: AppSidebarProps)
       <nav aria-label="Main" className="app-navigation flex-1">
         <NavMenu items={items} />
       </nav>
-      {footer && <div className="mt-6 border-t pt-4">{footer}</div>}
+      {footer && <div className="app-sidebar-footer mt-6 border-t pt-4">{footer}</div>}
     </aside>
   )
 }

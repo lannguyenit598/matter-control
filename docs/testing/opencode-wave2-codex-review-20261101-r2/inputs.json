@@ -1,0 +1,73 @@
+{
+  "task": "MC-OPENCODE-WAVE2-CODEX-CANDIDATE-REVIEW-20261101-r2",
+  "as_of_utc": "2026-11-02T02:47:45Z",
+  "reviewer": "actual OpenCode / non-author (independent QA; provider opencode, model glm-5.3-flash-free, OpenCode harness; second session)",
+  "session_provance": "this is a new OpenCode session; the directory docs/testing/opencode-wave2-codex-review-20261101-r1/ already exists and was produced by a different earlier session (its own return.md self-describes another model/harness); r1 was not resumed, edited, or adopted by this session; the suffix r2 is used for all outputs here",
+  "outputs": [
+    "return.md",
+    "inputs.json",
+    "checks.json",
+    "findings.json",
+    "outputs-manifest.json"
+  ],
+  "handoff": {
+    "path": "docs/implementation/handoffs/MC-OPENCODE-WAVE2-CODEX-CANDIDATE-REVIEW-20261101.md",
+    "scope": "independent nonauthor review of Wave2 G1..G7 candidate built by Local Codex takeover",
+    "constraints": [
+      "official browser disabled -> G1 browser smoke and G7 screen-reader smoke must be BLOCKED/NOT_RUN, never PASS; no headless/alternate-browser bypass",
+      "no login/provider/model changes; no new payload dispatches",
+      "no git stage/commit/push in the primary repo",
+      "do not mutate :3000/:8081 runtimes, IdP :8080, existing DBs/volumes, or the original OpenCode verify-wave namespace/receipts",
+      "PG tests only on a new independently-owned disposable fixture; never reuse manual/retained DBs or read their credential files",
+      "author receipts are citations, not reviewer evidence; no verdict extension without explicit re-pin",
+      "outputs only to this r2 directory; no automatic CLOSED_VERIFIED / MC-002 DONE / release / deploy"
+    ]
+  },
+  "candidate_inputs": {
+    "author_evidence_dir": "docs/testing/mc-p1-fix-wave-2-20261101-r1/",
+    "author_status_reviewed": "IMPLEMENTED_SELF_TESTED / IN_REVIEW_WITH_VERIFICATION_BLOCKERS / WAITING_COMMIT_AUTHORIZATION (author return.md header)",
+    "staged_manifest": "docs/testing/mc-p1-fix-wave-2-20261101-r1/codex-takeover/staged-candidate.json",
+    "staged_manifest_sha256": "600c78449cedd41a926c85caf8f1f32432285b2d412dee4437685e61124cb850",
+    "patch": {
+      "path": "docs/testing/mc-p1-fix-wave-2-20261101-r1/codex-takeover/candidate-source.patch",
+      "bytes": 38271,
+      "sha256": "60f018eb3dcf7cc25bf2e6921ef319f9d69fec7c85e9a5ee6ed62433f8a6fd01"
+    },
+    "base_commit": "64b9e0315e210953d7a7eaeacc0643b269a14ad9",
+    "pin_commit": "978d8fc694a47e9beee528076bcf1af9473997e3",
+    "declared_path_count": 16,
+    "pin_identity_check": "all 16 reconstructed files match staged-candidate.json bytes/sha256 (16/16) and all 16 blob hashes equal pin-commit tree blobs (base+patch == commit content, byte-identical)"
+  },
+  "context_refs": {
+    "original_findings": "docs/testing/opencode-verify-wave-20261031-r1/ (R8 release-preflight plant; R12 scheduled-dump retention; F1 filing-flow repro anchors)",
+    "opendesign_guard_copy": "docs/testing/opendesign-ux-plan-review-20261101-r1/ux-copy-for-guards.md",
+    "prior_review_r1": "docs/testing/opencode-wave2-codex-review-20261101-r1/ (different earlier session; cited only, not adopted)",
+    "later_author_smoke": "docs/testing/codex-wave2-browser-smoke-20261101-r1/ (author-side partial browser receipt incl. B06 W2-BROWSER-01)",
+    "workboard_register": "docs/implementation/workboard-findings.md already references the r1 intake; not edited by this session"
+  },
+  "environment": {
+    "go": "go1.27.3 darwin/arm64",
+    "node": "v24.22.1",
+    "pnpm": "12.11.2",
+    "rtk": "1.1.0",
+    "matches": "codex-takeover/tool-versions.json receipt",
+    "pg_fixture": "own disposable container mc-opencode-w2r2-fixture-g4q7p (postgres:18.6-alpine, 127.0.0.1:55459; generated password withheld from repo outputs; stopped and removed at teardown)",
+    "isolated_scratch_dirs": [
+      "wave2-review-b/repo (candidate B)",
+      "wave2-review-a (set A full copy)",
+      "wave2-review-red1fe / red3 / red6 (red trees)",
+      "g2 (release-preflight plants)"
+    ]
+  },
+  "source_sets": {
+    "B": "isolated clone of 64b9e031 + verified patch; frontend node_modules copied from the primary tree; all Wave2-scoped verification executed here",
+    "A": "primary working tree (commit 978d8fc + unrelated dirty focus/search and styling work); used only for the full-tree vitest sweep and a clean tracked-scan; 15/16 Wave2 paths byte-equal to B (delta: layout.tsx carries unrelated dirty edits while keeping the Wave2 ActionAnnouncer mount)"
+  },
+  "read_only_scope": "no product-source mutation anywhere; all five outputs confined to docs/testing/opencode-wave2-codex-review-20261101-r2/; scratch harnesses under /private/var/folders/.../T/opencode/",
+  "non_goals": [
+    "no CLOSED_VERIFIED for the wave as a whole",
+    "no MC-002 DONE",
+    "no release/deploy or provider claim",
+    "no commit-governance adjudication"
+  ]
+}

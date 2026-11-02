@@ -5,8 +5,10 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Input } from '@/components/atoms/input'
 import { Select } from '@/components/atoms/select'
 import { FormField } from '@/components/molecules/form-field'
+import { CalendarPopover } from '@/components/molecules/calendar-popover'
 import { LocalizedText } from '@/components/molecules/localized-text'
 import { useTimeZone } from '@/hooks/use-time-zone'
+import { useLocale } from '@/hooks/use-locale'
 import { instantToLocal, offsetLabel, resolveLocal } from '@/lib/mc/local-time'
 
 /**
@@ -32,6 +34,7 @@ export function LocalDateTimeField({
   required?: boolean
 }) {
   const zone = useTimeZone()
+  const vi = useLocale() === 'vi'
   const initial = current ? instantToLocal(current, zone) : ''
   const input = useRef<HTMLInputElement>(null)
   const [typed, setTyped] = useState(initial)
@@ -47,9 +50,13 @@ export function LocalDateTimeField({
   const problem =
     error ??
     (resolved.kind === 'nonexistent' && !untouched
-      ? 'That local time does not exist in your time zone (clocks skip it). Pick another.'
+      ? vi
+        ? 'Giờ này không tồn tại trong múi giờ thiết bị do chuyển giờ mùa hè. Hãy chọn giờ khác.'
+        : 'That local time does not exist in your time zone (clocks skip it). Pick another.'
       : resolved.kind === 'invalid'
-        ? 'Enter a valid date and time.'
+        ? vi
+          ? 'Nhập ngày và giờ hợp lệ.'
+          : 'Enter a valid date and time.'
         : undefined)
   const shown =
     resolved.kind === 'ok'
@@ -73,15 +80,30 @@ export function LocalDateTimeField({
         required={required}
       >
         {(control) => (
-          <Input
-            key={`${zone}:${initial}`}
-            ref={input}
-            type="datetime-local"
-            name={`${name}Local`}
-            defaultValue={initial}
-            onChange={(event) => setTyped(event.currentTarget.value)}
-            {...control}
-          />
+          <div className="calendar-field">
+            <Input
+              key={`${zone}:${initial}`}
+              ref={input}
+              type="datetime-local"
+              name={`${name}Local`}
+              defaultValue={initial}
+              onChange={(event) => setTyped(event.currentTarget.value)}
+              {...control}
+            />
+            <CalendarPopover
+              zone={zone}
+              label={vi ? 'Mở lịch chọn ngày và giờ' : 'Open date and time calendar'}
+              readValue={() => input.current?.value ?? ''}
+              onApply={(value) => {
+                if (!input.current || input.current.matches(':disabled') || input.current.readOnly)
+                  return
+                input.current.value = value
+                setTyped(value)
+                // IntentForm persists native input events, including values picked in the calendar.
+                input.current.dispatchEvent(new Event('input', { bubbles: true }))
+              }}
+            />
+          </div>
         )}
       </FormField>
       {resolved.kind === 'ambiguous' && !untouched && (
@@ -98,10 +120,16 @@ export function LocalDateTimeField({
             <Select
               name={`${name}Choice`}
               defaultValue=""
-              placeholder="Choose…"
+              placeholder={vi ? 'Chọn…' : 'Choose…'}
               options={[
-                { value: 'earlier', label: `First (${offsetLabel(resolved.earlier, zone)})` },
-                { value: 'later', label: `Second (${offsetLabel(resolved.later, zone)})` },
+                {
+                  value: 'earlier',
+                  label: `${vi ? 'Lần đầu' : 'First'} (${offsetLabel(resolved.earlier, zone)})`,
+                },
+                {
+                  value: 'later',
+                  label: `${vi ? 'Lần sau' : 'Second'} (${offsetLabel(resolved.later, zone)})`,
+                },
               ]}
               {...control}
             />

@@ -1,0 +1,728 @@
+{
+  "counts": {
+    "Button": 45,
+    "ul": 50,
+    "ol": 11,
+    "button": 4,
+    "table": 3,
+    "SearchPicker": 4,
+    "SearchInput": 1,
+    "DataTable": 1
+  },
+  "rows": [
+    {
+      "path": "src/app/(app)/error.tsx",
+      "line": 28,
+      "tag": "Button",
+      "attributes": "variant=\"outline\" onClick={retry}"
+    },
+    {
+      "path": "src/app/(app)/matters/[matterId]/control-room/page.tsx",
+      "line": 129,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col divide-y\""
+    },
+    {
+      "path": "src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx",
+      "line": 96,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col divide-y\""
+    },
+    {
+      "path": "src/app/(app)/matters/[matterId]/documents/page.tsx",
+      "line": 73,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col divide-y\""
+    },
+    {
+      "path": "src/app/(app)/matters/[matterId]/filings/page.tsx",
+      "line": 83,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col divide-y\""
+    },
+    {
+      "path": "src/app/global-error.tsx",
+      "line": 36,
+      "tag": "button",
+      "attributes": "type=\"button\"\n            onClick={retry}\n            className=\"rounded-md border border-input px-4 py-2 text-sm font-medium hover:bg-accent\""
+    },
+    {
+      "path": "src/components/atoms/button.tsx",
+      "line": 50,
+      "tag": "button",
+      "attributes": "type={type}\n      data-slot=\"button\"\n      className={cn(buttonVariants({ variant, size }), className)}\n      disabled={disabled || loading}\n      aria-busy={loading || undefined}\n      {...props}"
+    },
+    {
+      "path": "src/components/molecules/confirmation-dialog.tsx",
+      "line": 46,
+      "tag": "Button",
+      "attributes": "variant=\"outline\" disabled={pending} onClick={() => onOpenChange(false)}"
+    },
+    {
+      "path": "src/components/molecules/confirmation-dialog.tsx",
+      "line": 49,
+      "tag": "Button",
+      "attributes": "variant={destructive ? 'destructive' : 'primary'}\n          loading={pending}\n          onClick={onConfirm}"
+    },
+    {
+      "path": "src/components/molecules/dialog.tsx",
+      "line": 116,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\"\n                size=\"icon\"\n                aria-label=\"Close\"\n                className=\"-mt-2 -mr-2 size-8\"\n                onClick={() => onOpenChange(false)}"
+    },
+    {
+      "path": "src/components/molecules/nav-menu.tsx",
+      "line": 28,
+      "tag": "ul",
+      "attributes": "className={cn('flex flex-col gap-1', className)}"
+    },
+    {
+      "path": "src/components/molecules/pagination.tsx",
+      "line": 56,
+      "tag": "ul",
+      "attributes": "className=\"flex items-center gap-1\""
+    },
+    {
+      "path": "src/components/molecules/search-input.tsx",
+      "line": 32,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\" size=\"icon\" onClick={onClear}"
+    },
+    {
+      "path": "src/components/molecules/search-picker.tsx",
+      "line": 253,
+      "tag": "Button",
+      "attributes": "variant=\"outline\"\n              size=\"sm\"\n              onClick={() => {\n                setSettled(null)\n                setRetry((n) => n + 1)\n              }}"
+    },
+    {
+      "path": "src/components/molecules/search-picker.tsx",
+      "line": 278,
+      "tag": "ul",
+      "attributes": "aria-busy={loading || undefined}\n          className=\"max-h-56 divide-y overflow-y-auto rounded-md border bg-card\""
+    },
+    {
+      "path": "src/components/molecules/search-picker.tsx",
+      "line": 313,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\"\n            size=\"sm\"\n            onClick={() => {\n              setChosen(null)\n              queryBox.current?.focus()\n            }}"
+    },
+    {
+      "path": "src/components/molecules/task-choice.tsx",
+      "line": 28,
+      "tag": "button",
+      "attributes": "type=\"button\"\n      data-slot=\"task-choice\"\n      aria-pressed={pressed}\n      onClick={onClick}\n      className={cn(\n        'control-target flex items-start gap-3 rounded-md border p-3 text-left text-sm hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',\n        pressed && 'border-primary bg-accent',\n      )}"
+    },
+    {
+      "path": "src/components/molecules/theme-toggle.tsx",
+      "line": 14,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\" size=\"icon\" aria-label={label} title={label} onClick={toggleTheme}"
+    },
+    {
+      "path": "src/components/organisms/command-palette.tsx",
+      "line": 70,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\"\n        onClick={() => setOpen(true)}\n        aria-label={locale === 'vi' ? 'Tìm trang' : 'Search pages'}\n        className={cn('app-search-trigger text-muted-foreground', className)}"
+    },
+    {
+      "path": "src/components/organisms/command-palette.tsx",
+      "line": 154,
+      "tag": "ul",
+      "attributes": "ref={listRef} className=\"flex flex-col gap-1\""
+    },
+    {
+      "path": "src/components/organisms/confirm-action-button.tsx",
+      "line": 63,
+      "tag": "Button",
+      "attributes": "size=\"sm\" variant=\"outline\" loading={pending} onClick={reread}"
+    },
+    {
+      "path": "src/components/organisms/confirm-action-button.tsx",
+      "line": 68,
+      "tag": "Button",
+      "attributes": "size=\"sm\" variant=\"outline\" onClick={() => setConfirming(true)}"
+    },
+    {
+      "path": "src/components/organisms/confirm-action-button.tsx",
+      "line": 76,
+      "tag": "Button",
+      "attributes": "size=\"sm\" variant={variant} loading={pending} onClick={confirm}"
+    },
+    {
+      "path": "src/components/organisms/confirm-action-button.tsx",
+      "line": 80,
+      "tag": "Button",
+      "attributes": "size=\"sm\"\n              variant=\"ghost\"\n              disabled={pending}\n              onClick={() => setConfirming(false)}"
+    },
+    {
+      "path": "src/components/organisms/data-table.tsx",
+      "line": 43,
+      "tag": "table",
+      "attributes": "className=\"w-full text-sm\""
+    },
+    {
+      "path": "src/components/organisms/form-dialog.tsx",
+      "line": 43,
+      "tag": "Button",
+      "attributes": "variant={triggerVariant}\n        aria-haspopup=\"dialog\"\n        onClick={() => {\n          setDone(null)\n          setOpen(true)\n        }}"
+    },
+    {
+      "path": "src/components/organisms/inline-edit.tsx",
+      "line": 62,
+      "tag": "Button",
+      "attributes": "size=\"icon\"\n            variant=\"ghost\"\n            className=\"size-7\"\n            aria-label={`Edit ${label}`}\n            onClick={() => {\n              setDraft(value)\n              setResult(null)\n              setEditing(true)\n            }}"
+    },
+    {
+      "path": "src/components/organisms/inline-edit.tsx",
+      "line": 110,
+      "tag": "Button",
+      "attributes": "type=\"button\" size=\"sm\" variant=\"outline\" loading={pending} onClick={reread}"
+    },
+    {
+      "path": "src/components/organisms/inline-edit.tsx",
+      "line": 114,
+      "tag": "Button",
+      "attributes": "type=\"submit\" size=\"sm\" loading={pending}"
+    },
+    {
+      "path": "src/components/organisms/inline-edit.tsx",
+      "line": 118,
+      "tag": "Button",
+      "attributes": "type=\"button\"\n          size=\"sm\"\n          variant=\"ghost\"\n          disabled={pending}\n          onClick={() => setEditing(false)}"
+    },
+    {
+      "path": "src/components/organisms/intent-form.tsx",
+      "line": 241,
+      "tag": "button",
+      "attributes": "type=\"button\"\n                className=\"inline-flex items-center gap-1 underline\"\n                onClick={() => router.refresh()}"
+    },
+    {
+      "path": "src/components/organisms/intent-form.tsx",
+      "line": 267,
+      "tag": "Button",
+      "attributes": "type=\"button\" variant=\"outline\" loading={pending} onClick={reread}"
+    },
+    {
+      "path": "src/components/organisms/intent-form.tsx",
+      "line": 272,
+      "tag": "Button",
+      "attributes": "type=\"submit\" loading={pending}"
+    },
+    {
+      "path": "src/components/organisms/intent-form.tsx",
+      "line": 285,
+      "tag": "Button",
+      "attributes": "type=\"button\" variant=\"ghost\" disabled={pending} onClick={discard}"
+    },
+    {
+      "path": "src/components/organisms/mobile-nav.tsx",
+      "line": 19,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\"\n        size=\"icon\"\n        aria-label=\"Open navigation\"\n        className=\"min-[801px]:hidden\"\n        onClick={() => setOpen(true)}"
+    },
+    {
+      "path": "src/features/auth/components/sign-out-form.tsx",
+      "line": 14,
+      "tag": "Button",
+      "attributes": "type=\"submit\" variant=\"outline\" size=\"sm\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 88,
+      "tag": "ul",
+      "attributes": "className=\"mt-1 list-disc pl-5 text-sm\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 195,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-3\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 203,
+      "tag": "ul",
+      "attributes": "className=\"list-disc pl-5\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 252,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col gap-3\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 295,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-2 text-sm\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 319,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-2 text-sm\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 328,
+      "tag": "ul",
+      "attributes": "className=\"list-disc pl-5\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 362,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-1 text-sm\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 391,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-2 text-sm\""
+    },
+    {
+      "path": "src/features/control/components/control-room-view.tsx",
+      "line": 418,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col gap-1 text-sm\""
+    },
+    {
+      "path": "src/features/data-transfer/components/brief-section.tsx",
+      "line": 112,
+      "tag": "Button",
+      "attributes": "variant=\"outline\" size=\"sm\" disabled={pending} onClick={() => preset(7)}"
+    },
+    {
+      "path": "src/features/data-transfer/components/brief-section.tsx",
+      "line": 115,
+      "tag": "Button",
+      "attributes": "variant=\"outline\" size=\"sm\" disabled={pending} onClick={() => preset(30)}"
+    },
+    {
+      "path": "src/features/data-transfer/components/brief-section.tsx",
+      "line": 139,
+      "tag": "Button",
+      "attributes": "type=\"submit\" className=\"w-fit\" loading={pending}"
+    },
+    {
+      "path": "src/features/data-transfer/components/brief-section.tsx",
+      "line": 183,
+      "tag": "ul",
+      "attributes": "className=\"mt-1 flex flex-col gap-2\""
+    },
+    {
+      "path": "src/features/data-transfer/components/brief-section.tsx",
+      "line": 253,
+      "tag": "ul",
+      "attributes": "className=\"mt-1 flex flex-col gap-1\""
+    },
+    {
+      "path": "src/features/data-transfer/components/bulk-section.tsx",
+      "line": 304,
+      "tag": "Button",
+      "attributes": "variant=\"secondary\"\n            className=\"md:col-span-2 md:w-fit\"\n            onClick={() => {\n              invalidate()\n              setRows((rs) => rs.filter((_, j) => j !== i))\n            }}"
+    },
+    {
+      "path": "src/features/data-transfer/components/bulk-section.tsx",
+      "line": 317,
+      "tag": "Button",
+      "attributes": "variant=\"secondary\"\n          disabled={pending || locked}\n          onClick={() => {\n            invalidate()\n            setRows((rs) => [\n              ...rs,\n              {\n                rowKey: `row-${next.current++}`,\n                itemId: '',\n                expectedRevision: '1',\n                title: unchanged(),\n                description: unchanged(),\n                internalOwner: unchanged(),\n                due: unchanged(),\n              },\n            ])\n          }}"
+    },
+    {
+      "path": "src/features/data-transfer/components/bulk-section.tsx",
+      "line": 338,
+      "tag": "Button",
+      "attributes": "variant=\"secondary\"\n          disabled={pending || rows.length === 0 || locked}\n          onClick={() =>\n            start(async () => {\n              setPreviewError(null)\n              const r = await bulkPreviewAction(matterId, inputs)\n              if (r.ok && r.preview) {\n                setPreview({ result: r.preview, fingerprint, inputs })\n                setOutcome(null)\n              } else if (!r.ok && ACCESS_LOST.has(r.kind)) {\n                purge()\n              } else if (!r.ok) {\n                setPreview(null)\n                setPreviewError(r.error)\n              }\n            })\n          }"
+    },
+    {
+      "path": "src/features/data-transfer/components/bulk-section.tsx",
+      "line": 359,
+      "tag": "Button",
+      "attributes": "disabled={!canCommit} onClick={commit}"
+    },
+    {
+      "path": "src/features/data-transfer/components/bulk-section.tsx",
+      "line": 392,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-1 text-sm\" aria-label=\"Preview\""
+    },
+    {
+      "path": "src/features/data-transfer/components/import-section.tsx",
+      "line": 160,
+      "tag": "Button",
+      "attributes": "variant=\"secondary\"\n          disabled={pending || !file || locked}\n          onClick={() =>\n            start(async () => {\n              if (!file) return\n              setPreviewError(null)\n              const r = await importPreviewAction(matterId, file)\n              if (r.ok && r.preview) {\n                setPreview({\n                  result: r.preview,\n                  fingerprint: importFingerprint(\n                    file,\n                    r.preview.rows.map((x) => x.rowKey),\n                  ),\n                })\n                setOutcome(null)\n                setIntent(null)\n              } else if (!r.ok && ACCESS_LOST.has(r.kind)) {\n                purge()\n              } else if (!r.ok) {\n                setPreview(null)\n                setPreviewError(r.error)\n              }\n            })\n          }"
+    },
+    {
+      "path": "src/features/data-transfer/components/import-section.tsx",
+      "line": 189,
+      "tag": "Button",
+      "attributes": "disabled={pending || !file || !preview || (validGroups === 0 && !locked)}\n          onClick={commit}"
+    },
+    {
+      "path": "src/features/data-transfer/components/import-section.tsx",
+      "line": 216,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-2 text-sm\" aria-label=\"Groups\""
+    },
+    {
+      "path": "src/features/data-transfer/components/import-section.tsx",
+      "line": 226,
+      "tag": "ul",
+      "attributes": "className=\"mt-1 list-disc pl-5\""
+    },
+    {
+      "path": "src/features/data-transfer/components/outcome-list.tsx",
+      "line": 53,
+      "tag": "ul",
+      "attributes": "className=\"mt-1 flex flex-col gap-1\""
+    },
+    {
+      "path": "src/features/data-transfer/components/recovery-gate.tsx",
+      "line": 140,
+      "tag": "Button",
+      "attributes": "variant=\"secondary\"\n          disabled={pending || retained?.some((attempt) => attempt.blocked)}\n          onClick={() => void retry()}"
+    },
+    {
+      "path": "src/features/filings/components/filing-forms.tsx",
+      "line": 118,
+      "tag": "SearchPicker",
+      "attributes": "name=\"requirementId\"\n            legend={\n              <LocalizedText\n                en=\"Requirement this filing serves\"\n                vi=\"Yêu cầu mà thủ tục này phục vụ\"\n              />\n            }\n            searchLabel={\n              <LocalizedText\n                en=\"Search this matter’s Requirements by title\"\n                vi=\"Tìm yêu cầu của hồ sơ theo tiêu đề\"\n              />\n            }\n            required\n            search={(query) => searchRecords({ matterId, query, kind: 'REQUIREMENT' })}\n            hint={\n              <LocalizedText\n                en=\"Approval never completes or verifies the Requirement by itself.\"\n                vi=\"Phê duyệt thủ tục không tự động hoàn tất hoặc xác minh yêu cầu.\"\n              />\n            }\n            error={errors.requirementId?.[0]}"
+    },
+    {
+      "path": "src/features/filings/components/filing-view.tsx",
+      "line": 30,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-wrap gap-2\" aria-label=\"Filing stages\""
+    },
+    {
+      "path": "src/features/filings/components/filing-view.tsx",
+      "line": 98,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col gap-3\""
+    },
+    {
+      "path": "src/features/filings/components/filing-view.tsx",
+      "line": 125,
+      "tag": "ul",
+      "attributes": "className=\"list-disc pl-5\""
+    },
+    {
+      "path": "src/features/filings/components/filing-view.tsx",
+      "line": 151,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col gap-2\""
+    },
+    {
+      "path": "src/features/matters/components/grant-matter-member-form.tsx",
+      "line": 81,
+      "tag": "SearchPicker",
+      "attributes": "name=\"userId\"\n                  active={open}\n                  legend={<LocalizedText en=\"Workspace member\" vi=\"Thành viên không gian\" />}\n                  searchLabel={\n                    <LocalizedText\n                      en=\"Search workspace members by name\"\n                      vi=\"Tìm thành viên không gian theo tên\"\n                    />\n                  }\n                  required\n                  eligible={eligible}\n                  search={async (query) => {\n                    const q = query.toLowerCase()\n                    return {\n                      status: 'ok',\n                      options: eligible.filter((o) => o.label.toLowerCase().includes(q)),\n                    }\n                  }}\n                  noMatch={\n                    <LocalizedText\n                      en=\"No one to add. Everyone matching is already on this matter; add people to the workspace first to include them here.\"\n                      vi=\"Không còn ai để thêm. Mọi người khớp đã có trong hồ sơ; hãy thêm họ vào không gian làm việc trước.\"\n                    />\n                  }\n                  hint={\n                    <LocalizedText\n                      en=\"Only active members of this workspace can be added.\"\n                      vi=\"Chỉ thêm được thành viên đang hoạt động trong không gian làm việc.\"\n                    />\n                  }\n                  error={errors.userId?.[0]}"
+    },
+    {
+      "path": "src/features/matters/components/matter-discovery.tsx",
+      "line": 87,
+      "tag": "ul",
+      "attributes": "className={LIST_CLASS}"
+    },
+    {
+      "path": "src/features/matters/components/matter-history.tsx",
+      "line": 85,
+      "tag": "ol",
+      "attributes": "className=\"divide-y rounded-lg border bg-card\""
+    },
+    {
+      "path": "src/features/matters/components/matter-list.tsx",
+      "line": 48,
+      "tag": "ul",
+      "attributes": "className={LIST_CLASS}"
+    },
+    {
+      "path": "src/features/matters/components/matter-members.tsx",
+      "line": 55,
+      "tag": "ul",
+      "attributes": "className={LIST_CLASS}"
+    },
+    {
+      "path": "src/features/matters/components/matter-search.tsx",
+      "line": 65,
+      "tag": "Button",
+      "attributes": "type=\"submit\" loading={pending}"
+    },
+    {
+      "path": "src/features/proof/components/document-forms.tsx",
+      "line": 271,
+      "tag": "Button",
+      "attributes": "type=\"submit\" loading={pending} disabled={!file || checking}"
+    },
+    {
+      "path": "src/features/proof/components/document-forms.tsx",
+      "line": 373,
+      "tag": "ul",
+      "attributes": "className=\"list-disc pl-5\""
+    },
+    {
+      "path": "src/features/proof/components/evidence-basis.tsx",
+      "line": 69,
+      "tag": "ul",
+      "attributes": "className={LIST_CLASS}"
+    },
+    {
+      "path": "src/features/proof/components/evidence-basis.tsx",
+      "line": 148,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col gap-4\""
+    },
+    {
+      "path": "src/features/proof/components/proof-panel.tsx",
+      "line": 79,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-4\""
+    },
+    {
+      "path": "src/features/proof/components/proof-panel.tsx",
+      "line": 111,
+      "tag": "ul",
+      "attributes": "className=\"mt-3 flex flex-col gap-3\""
+    },
+    {
+      "path": "src/features/proof/components/proof-panel.tsx",
+      "line": 354,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-4\""
+    },
+    {
+      "path": "src/features/proof/components/proof-panel.tsx",
+      "line": 385,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-2\""
+    },
+    {
+      "path": "src/features/proof/components/proof-panel.tsx",
+      "line": 435,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-2 text-sm\""
+    },
+    {
+      "path": "src/features/proof/components/review-queue.tsx",
+      "line": 62,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col divide-y rounded-xl border\""
+    },
+    {
+      "path": "src/features/review/components/cell-detail.tsx",
+      "line": 223,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col gap-3\""
+    },
+    {
+      "path": "src/features/review/components/cell-detail.tsx",
+      "line": 273,
+      "tag": "Button",
+      "attributes": "type=\"button\" variant=\"outline\" onClick={loadOlder}"
+    },
+    {
+      "path": "src/features/review/components/cell-detail.tsx",
+      "line": 280,
+      "tag": "Button",
+      "attributes": "type=\"button\" variant=\"outline\" className=\"self-start\" onClick={loadOlder}"
+    },
+    {
+      "path": "src/features/review/components/review-filters.tsx",
+      "line": 66,
+      "tag": "Button",
+      "attributes": "type=\"submit\" variant=\"outline\""
+    },
+    {
+      "path": "src/features/review/components/review-grid-list.tsx",
+      "line": 45,
+      "tag": "ul",
+      "attributes": "className={LIST_CLASS}"
+    },
+    {
+      "path": "src/features/review/components/review-matrix.tsx",
+      "line": 75,
+      "tag": "table",
+      "attributes": "className=\"w-full min-w-max border-collapse text-sm\""
+    },
+    {
+      "path": "src/features/tasks/components/delete-task-button.tsx",
+      "line": 27,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\"\n        size=\"icon\"\n        aria-label={`Delete ${task.title}`}\n        onClick={() => {\n          setError(undefined)\n          setOpen(true)\n        }}"
+    },
+    {
+      "path": "src/features/tasks/components/recent-tasks.tsx",
+      "line": 26,
+      "tag": "ul",
+      "attributes": "className=\"divide-y\""
+    },
+    {
+      "path": "src/features/tasks/components/task-filters.tsx",
+      "line": 64,
+      "tag": "SearchInput",
+      "attributes": "aria-label=\"Search tasks\"\n        placeholder=\"Search tasks…\"\n        className=\"sm:w-72\"\n        maxLength={TASK_SEARCH_MAX_LENGTH}\n        value={query}\n        onChange={(event) => {\n          const next = event.target.value\n          setQuery(next)\n          clearTimeout(timer.current)\n          timer.current = setTimeout(() => navigate(next, statusValue), SEARCH_DEBOUNCE_MS)\n        }}\n        onClear={() => {\n          setQuery('')\n          navigate('', statusValue)\n        }}"
+    },
+    {
+      "path": "src/features/tasks/components/task-form-dialog.tsx",
+      "line": 22,
+      "tag": "Button",
+      "attributes": "variant=\"ghost\"\n          size=\"icon\"\n          aria-label={`Edit ${task.title}`}\n          onClick={() => setOpen(true)}"
+    },
+    {
+      "path": "src/features/tasks/components/task-form-dialog.tsx",
+      "line": 31,
+      "tag": "Button",
+      "attributes": "onClick={() => setOpen(true)}"
+    },
+    {
+      "path": "src/features/tasks/components/task-form.tsx",
+      "line": 124,
+      "tag": "Button",
+      "attributes": "variant=\"outline\" disabled={submitting} onClick={onCancel}"
+    },
+    {
+      "path": "src/features/tasks/components/task-form.tsx",
+      "line": 128,
+      "tag": "Button",
+      "attributes": "type=\"submit\" loading={submitting}"
+    },
+    {
+      "path": "src/features/tasks/components/task-table.tsx",
+      "line": 54,
+      "tag": "DataTable",
+      "attributes": "caption=\"Tasks\"\n      columns={columns}\n      rows={tasks}\n      getRowKey={(task) => task.id}\n      empty={\n        <EmptyState\n          icon={<ListTodo />}\n          title={filtered ? 'No matching tasks' : 'No tasks yet'}\n          description={\n            filtered\n              ? 'Try a different search term or status filter.'\n              : 'Create your first task to get started.'\n          }\n        />\n      }"
+    },
+    {
+      "path": "src/features/work/components/agenda-view.tsx",
+      "line": 79,
+      "tag": "ol",
+      "attributes": "className=\"divide-y rounded-lg border bg-card\""
+    },
+    {
+      "path": "src/features/work/components/dependency-panel.tsx",
+      "line": 59,
+      "tag": "ul",
+      "attributes": "className=\"divide-y rounded-md border\""
+    },
+    {
+      "path": "src/features/work/components/dependency-panel.tsx",
+      "line": 90,
+      "tag": "ul",
+      "attributes": "className=\"divide-y rounded-md border\""
+    },
+    {
+      "path": "src/features/work/components/dependency-panel.tsx",
+      "line": 119,
+      "tag": "SearchPicker",
+      "attributes": "name=\"sourceId\"\n                legend={<LocalizedText en=\"Must be satisfied first\" vi=\"Phải được đáp ứng trước\" />}\n                searchLabel={\n                  <LocalizedText\n                    en=\"Search this matter’s records by title\"\n                    vi=\"Tìm bản ghi của hồ sơ theo tiêu đề\"\n                  />\n                }\n                required\n                search={(query) => searchWorkItemsAction({ matterId, query, excludeId: it.id })}\n                noMatch={\n                  <LocalizedText\n                    en=\"No record you can read matches. Check the title, or add the record first.\"\n                    vi=\"Không có bản ghi nào bạn xem được khớp. Kiểm tra tiêu đề hoặc thêm bản ghi trước.\"\n                  />\n                }\n                hint={\n                  <LocalizedText\n                    en=\"Every record you can read is searchable, not only the first page.\"\n                    vi=\"Tìm được mọi bản ghi bạn xem được, không chỉ trang đầu.\"\n                  />\n                }\n                error={errors.sourceId?.[0]}"
+    },
+    {
+      "path": "src/features/work/components/matter-attention.tsx",
+      "line": 67,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col divide-y\""
+    },
+    {
+      "path": "src/features/work/components/matter-attention.tsx",
+      "line": 152,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-wrap gap-x-4 gap-y-1 text-sm\""
+    },
+    {
+      "path": "src/features/work/components/my-actions-view.tsx",
+      "line": 310,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-1 text-sm\""
+    },
+    {
+      "path": "src/features/work/components/my-actions-view.tsx",
+      "line": 383,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-1 text-sm\""
+    },
+    {
+      "path": "src/features/work/components/my-actions-view.tsx",
+      "line": 456,
+      "tag": "ol",
+      "attributes": "className=\"flex flex-col divide-y\""
+    },
+    {
+      "path": "src/features/work/components/planning-view.tsx",
+      "line": 79,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-col gap-4\""
+    },
+    {
+      "path": "src/features/work/components/planning-view.tsx",
+      "line": 113,
+      "tag": "ul",
+      "attributes": "className=\"list-disc pl-5 text-sm\""
+    },
+    {
+      "path": "src/features/work/components/planning-view.tsx",
+      "line": 213,
+      "tag": "ul",
+      "attributes": "className=\"divide-y rounded-md border\""
+    },
+    {
+      "path": "src/features/work/components/planning-view.tsx",
+      "line": 291,
+      "tag": "ul",
+      "attributes": "className=\"flex flex-wrap gap-2\""
+    },
+    {
+      "path": "src/features/work/components/planning-view.tsx",
+      "line": 335,
+      "tag": "ul",
+      "attributes": "className=\"divide-y rounded-md border\""
+    },
+    {
+      "path": "src/features/work/components/rejection-details.tsx",
+      "line": 27,
+      "tag": "ul",
+      "attributes": "className=\"list-disc pl-5\""
+    },
+    {
+      "path": "src/features/work/components/work-filters.tsx",
+      "line": 162,
+      "tag": "Button",
+      "attributes": "type=\"submit\""
+    },
+    {
+      "path": "src/features/work/components/work-filters.tsx",
+      "line": 214,
+      "tag": "Button",
+      "attributes": "type=\"submit\" className=\"mt-3\""
+    },
+    {
+      "path": "src/features/work/components/work-grid.tsx",
+      "line": 97,
+      "tag": "table",
+      "attributes": "className=\"w-full min-w-[56rem] text-left text-sm\""
+    },
+    {
+      "path": "src/features/work/components/work-now.tsx",
+      "line": 92,
+      "tag": "ul",
+      "attributes": "className=\"list-disc pl-5 text-sm\""
+    },
+    {
+      "path": "src/features/workspaces/components/grant-workspace-member-form.tsx",
+      "line": 77,
+      "tag": "SearchPicker",
+      "attributes": "name=\"userId\"\n                  active={open}\n                  legend={<LocalizedText en=\"Person\" vi=\"Thành viên\" />}\n                  searchLabel={<LocalizedText en=\"Search people by name\" vi=\"Tìm người theo tên\" />}\n                  required\n                  search={(query) => searchWorkspacePeopleAction({ workspaceId, query })}\n                  noMatch={\n                    <LocalizedText\n                      en=\"No matching people to add. Try another name, or provision their product account first.\"\n                      vi=\"Không tìm thấy người để thêm. Thử tên khác hoặc tạo tài khoản sản phẩm cho họ trước.\"\n                    />\n                  }\n                  hint={\n                    <LocalizedText\n                      en=\"Type a name to search. The person must already have a product account.\"\n                      vi=\"Nhập tên để tìm. Người này phải có sẵn tài khoản sản phẩm.\"\n                    />\n                  }\n                  error={errors.userId?.[0]}"
+    },
+    {
+      "path": "src/features/workspaces/components/workspace-list.tsx",
+      "line": 47,
+      "tag": "ul",
+      "attributes": "className={LIST_CLASS}"
+    },
+    {
+      "path": "src/features/workspaces/components/workspace-members.tsx",
+      "line": 35,
+      "tag": "ul",
+      "attributes": "className={LIST_CLASS}"
+    }
+  ]
+}

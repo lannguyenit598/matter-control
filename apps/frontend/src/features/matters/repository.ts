@@ -32,8 +32,8 @@ export const matterRepository = {
       })
     ).data,
 
-  get: async (id: string) => {
-    const res = await mcRequest(`/matters/${pathId(id)}`, { schema: matterSchema })
+  get: async (id: string, read: { signal?: AbortSignal; operationId?: string } = {}) => {
+    const res = await mcRequest(`/matters/${pathId(id)}`, { schema: matterSchema, ...read })
     return { matter: res.data, etag: res.etag, asOf: res.asOf }
   },
 

@@ -1,0 +1,51 @@
+{
+  "utc": "2026-11-01T03:31:09.811198+00:00",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8081/healthz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8081/readyz",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "status": 200,
+      "css": [
+        {
+          "status": 200,
+          "path": "/_next/static/css/359ba94886f1ddc4.css"
+        },
+        {
+          "status": 200,
+          "path": "/_next/static/css/ad0c0760cafd6d42.css"
+        }
+      ]
+    },
+    {
+      "url": "http://localhost:3000/",
+      "status": 307,
+      "location": "/my-actions"
+    },
+    {
+      "url": "http://localhost:3000/api/auth/session",
+      "status": 200,
+      "session": {
+        "authenticated": false
+      }
+    },
+    {
+      "url": "http://localhost:3000/api/auth/login",
+      "status": 307,
+      "issuer_host": "matter-control-legal-dev-fm2k48.au1.zitadel.cloud",
+      "callback": [
+        "http://localhost:3000/api/auth/callback"
+      ],
+      "pkce": [
+        "S256"
+      ],
+      "css": []
+    }
+  ]
+}

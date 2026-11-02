@@ -60,7 +60,9 @@ export function ReadFailure({ partial, heading, ...props }: ReadFailureProps) {
     (!partial && (props.kind === 'forbidden' || props.kind === 'not-found'))
   return (
     <>
-      {lost && <PurgeDrafts />}
+      {lost && (
+        <PurgeDrafts reason={props.kind === 'sign-in' ? 'session-ended' : 'access-recheck'} />
+      )}
       <div className="flex flex-col gap-4">
         {heading && <h1 className="text-2xl font-semibold tracking-tight">{heading}</h1>}
         <ReadFailureState {...props} />

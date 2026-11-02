@@ -62,3 +62,7 @@ A request deadline after a possible write means OUTCOME_UNKNOWN. Reconcile using
 ## Backups
 
 Restore has been rehearsed locally with synthetic data only (`ops/p0-local/restore-rehearsal`). It is not a production recovery objective: no RPO/RTO has been agreed.
+
+## Metadata Quick Search
+
+`MC_SEARCH_CURSOR_KEY` is optional, with no default secret. Inject a dedicated 32-byte base64 key shared across instances. Missing/invalid configuration leaves POST /api/v1/search unavailable and logs a fixed capability warning; ordinary endpoints retain their existing behavior. Migration0012 requires UTF8, ICU and schema CREATE permission for the migrator. A failed required migration prevents the new candidate from starting: retain the baseline, never fake a migration version. Runtime reads need SELECT on the existing metadata/membership tables and execution of mc_search_key_v1; no legal write privilege is added by Search. Key rotation invalidates five-minute encrypted cursors; the UI explicitly refreshes. Do not log request bodies, query terms, cursor keys or tokens. Local PG17/18 tests do not prove Supabase/provider readiness.

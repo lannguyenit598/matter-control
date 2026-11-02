@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Badge } from '@/components/atoms/badge'
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 import { LocalizedText } from '@/components/molecules/localized-text'
+import { LIST_CLASS } from '@/components/molecules/list-section'
 
 import { criterionBasis, type BasisClaim } from '../evidence-basis'
 import { CRITERION_REASON, userName, VERSION_RULE_LABEL } from '../labels'
@@ -65,7 +66,7 @@ export function EvidenceBasis({
           />
         </p>
       </div>
-      <ul className="flex flex-col divide-y rounded-lg border bg-card">
+      <ul className={LIST_CLASS}>
         {checklist.criteria.map((c) => (
           <li key={c.id}>
             <Link

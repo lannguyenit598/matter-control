@@ -96,7 +96,8 @@ export function Dialog({
         <GlassSurface
           className="max-h-[calc(100dvh-2rem)] rounded-2xl"
           frost={0.84}
-          refraction={12}
+          // Optical displacement folds the backdrop into star-shaped corners on modal forms.
+          refraction={0}
           bezel={18}
           blur={18}
           radius={16}

@@ -45,15 +45,20 @@ export const workRepository = {
     return { page: res.data, asOf: res.asOf }
   },
 
-  get: async (matterId: string, itemId: string) => {
+  get: async (
+    matterId: string,
+    itemId: string,
+    read: { signal?: AbortSignal; operationId?: string } = {},
+  ) => {
     const res = await mcRequest(`/matters/${pathId(matterId)}/work-items/${pathId(itemId)}`, {
       schema: detailSchema,
+      ...read,
     })
     return { detail: res.data, asOf: res.asOf }
   },
 
-  myActions: async () => {
-    const res = await mcRequest('/me/actions', { schema: myActionsSchema })
+  myActions: async (read: { signal?: AbortSignal; operationId?: string } = {}) => {
+    const res = await mcRequest('/me/actions', { schema: myActionsSchema, ...read })
     return { actions: res.data, asOf: res.asOf }
   },
 

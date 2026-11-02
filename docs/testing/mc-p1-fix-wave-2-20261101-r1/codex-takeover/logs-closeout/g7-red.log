@@ -1,0 +1,199 @@
+
+ RUN  v5.0.5 /private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend
+
+ ❯ src/components/organisms/action-announcer.test.tsx (6 tests | 5 failed) 94ms
+   ❯ shell action announcements (6)
+     × keeps confirmed success after the submitting surface unmounts, without stealing focus 42ms
+     × updates the persistent region even when two successive messages are identical 4ms
+     × announces unknown results honestly once, without echoing raw result data into the shell 2ms
+     × does not announce the dialog success notice a second time 2ms
+     × announces confirmed actions and inline saves through the same shell channel 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/organisms/action-announcer.test.tsx > shell action announcements > keeps confirmed success after the submitting surface unmounts, without stealing focus
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Keep reading"
+
+Here are the accessible roles:
+
+  status:
+
+  Name "":
+  [36m<div[39m
+    [33maria-live[39m=[32m"polite"[39m
+    [33mclass[39m=[32m"sr-only"[39m
+    [33mdata-slot[39m=[32m"action-announcer"[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33maria-live[39m=[32m"polite"[39m
+      [33mclass[39m=[32m"sr-only"[39m
+      [33mdata-slot[39m=[32m"action-announcer"[39m
+      [33mrole[39m=[32m"status"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/organisms/action-announcer.test.tsx:36:28
+     34|     }
+     35|     render(<Page />)
+     36|     const reading = screen.getByRole('button', { name: 'Keep reading' …
+       |                            ^
+     37|     reading.focus()
+     38|     fireEvent.click(screen.getByRole('button', { name: 'Save' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/components/organisms/action-announcer.test.tsx > shell action announcements > updates the persistent region even when two successive messages are identical
+AssertionError: expected <div aria-live="polite" …(3)></div> not to be <div aria-live="polite" …(3)></div> // Object.is equality
+ ❯ src/components/organisms/action-announcer.test.tsx:51:44
+     49|     const first = screen.getByText('Saved.')
+     50|     act(() => announceAction({ en: 'Saved.', vi: 'Đã lưu.' }))
+     51|     expect(screen.getByText('Saved.')).not.toBe(first)
+       |                                            ^
+     52|     expect(screen.getAllByRole('status')).toHaveLength(1)
+     53|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/components/organisms/action-announcer.test.tsx > shell action announcements > announces unknown results honestly once, without echoing raw result data into the shell
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Save"
+
+Here are the accessible roles:
+
+  status:
+
+  Name "":
+  [36m<div[39m
+    [33maria-live[39m=[32m"polite"[39m
+    [33mclass[39m=[32m"sr-only"[39m
+    [33mdata-slot[39m=[32m"action-announcer"[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33maria-live[39m=[32m"polite"[39m
+      [33mclass[39m=[32m"sr-only"[39m
+      [33mdata-slot[39m=[32m"action-announcer"[39m
+      [33mrole[39m=[32m"status"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/organisms/action-announcer.test.tsx:63:28
+     61|       </UiLocaleContext.Provider>,
+     62|     )
+     63|     fireEvent.click(screen.getByRole('button', { name: 'Save' }))
+       |                            ^
+     64|     await waitFor(() => expect(screen.getByRole('status')).toHaveTextC…
+     65|     expect(screen.getByRole('status')).not.toHaveTextContent('technica…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/components/organisms/action-announcer.test.tsx > shell action announcements > does not announce the dialog success notice a second time
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Add"
+
+Here are the accessible roles:
+
+  status:
+
+  Name "":
+  [36m<div[39m
+    [33maria-live[39m=[32m"polite"[39m
+    [33mclass[39m=[32m"sr-only"[39m
+    [33mdata-slot[39m=[32m"action-announcer"[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33maria-live[39m=[32m"polite"[39m
+      [33mclass[39m=[32m"sr-only"[39m
+      [33mdata-slot[39m=[32m"action-announcer"[39m
+      [33mrole[39m=[32m"status"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/organisms/action-announcer.test.tsx:84:28
+     82|       </ActionAnnouncer>,
+     83|     )
+     84|     fireEvent.click(screen.getByRole('button', { name: 'Add' }))
+       |                            ^
+     85|     fireEvent.click(screen.getByRole('button', { name: 'Save' }))
+     86|     await waitFor(() => expect(screen.getByText('Record added')).toBeV…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/components/organisms/action-announcer.test.tsx > shell action announcements > announces confirmed actions and inline saves through the same shell channel
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Remove"
+
+Here are the accessible roles:
+
+  status:
+
+  Name "":
+  [36m<div[39m
+    [33maria-live[39m=[32m"polite"[39m
+    [33mclass[39m=[32m"sr-only"[39m
+    [33mdata-slot[39m=[32m"action-announcer"[39m
+    [33mrole[39m=[32m"status"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33maria-live[39m=[32m"polite"[39m
+      [33mclass[39m=[32m"sr-only"[39m
+      [33mdata-slot[39m=[32m"action-announcer"[39m
+      [33mrole[39m=[32m"status"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ ../../../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/organisms/action-announcer.test.tsx:100:28
+     98|       </ActionAnnouncer>,
+     99|     )
+    100|     fireEvent.click(screen.getByRole('button', { name: 'Remove' }))
+       |                            ^
+    101|     fireEvent.click(screen.getByRole('button', { name: 'Confirm remova…
+    102|     await waitFor(() => expect(screen.getByRole('status')).toHaveTextC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 1 passed (6)
+   Start at  15:07:17
+   Duration  881ms (environment 51%, setup 14%, import 12%, tests 12%, transform 10%)
+

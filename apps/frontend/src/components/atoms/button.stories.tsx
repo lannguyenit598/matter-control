@@ -50,7 +50,10 @@ export const Disabled: Story = { args: { disabled: true } }
 /** The material needs a backdrop; this uses the same atmospheric field as the real app. */
 export const GlassOnBackdrop: Story = {
   render: () => (
-    <div className="app-shell flex min-h-64 flex-wrap items-center justify-center gap-3 rounded-xl p-8">
+    <div
+      data-workbench="pane"
+      className="app-shell flex min-h-64 flex-wrap items-center justify-center gap-3 rounded-xl p-8"
+    >
       <Button>
         <Plus aria-hidden /> Add record
       </Button>

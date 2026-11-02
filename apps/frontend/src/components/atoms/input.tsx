@@ -13,7 +13,7 @@ export function Input({ className, type = 'text', ...props }: InputProps) {
     <input
       type={type}
       data-slot="input"
-      className={cn(fieldControlClass, 'min-h-10 py-2', className)}
+      className={cn(fieldControlClass, 'min-h-10 py-2 max-sm:min-h-11 max-sm:py-2.5', className)}
       {...props}
     />
   )

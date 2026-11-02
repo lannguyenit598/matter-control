@@ -24,6 +24,8 @@ export type McCode =
   | 'outcome-unknown'
   | 'brief-unreconstructable'
   | 'invalid-window'
+  | 'search-stale'
+  | 'ui-session-changed'
   | 'internal'
   | 'unknown'
 
@@ -98,6 +100,8 @@ const KNOWN = new Set<McCode>([
   'outcome-unknown',
   'brief-unreconstructable',
   'invalid-window',
+  'search-stale',
+  'ui-session-changed',
   'internal',
 ])
 

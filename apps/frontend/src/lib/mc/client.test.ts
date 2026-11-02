@@ -39,6 +39,30 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllGlobals())
 
 describe('mcRequest', () => {
+  it('classifies only owned Search POST as a read and forwards cancellation/correlation', async () => {
+    fetchMock.mockRejectedValue(new Error('lost'))
+    await expect(
+      mcRequest('/search', { method: 'POST', semantics: 'read', body: { q: 'ab' }, schema }),
+    ).rejects.toMatchObject({ code: 'unavailable' })
+    await expect(
+      mcRequest('/workspaces', { method: 'POST', semantics: 'read', schema }),
+    ).rejects.toMatchObject({ code: 'internal' })
+    await expect(
+      mcRequest('/search', { method: 'POST', semantics: 'read', idempotencyKey: 'key', schema }),
+    ).rejects.toMatchObject({ code: 'internal' })
+    const controller = new AbortController()
+    fetchMock.mockResolvedValue(new Response('{"id":"ok"}'))
+    await mcRequest('/search', {
+      method: 'POST',
+      semantics: 'read',
+      signal: controller.signal,
+      operationId: 'abc123',
+      schema,
+    })
+    expect(new Headers(fetchMock.mock.calls.at(-1)![1].headers).get('X-Request-Id')).toBe('abc123')
+    controller.abort()
+    expect(fetchMock.mock.calls.at(-1)![1].signal.aborted).toBe(true)
+  })
   it('sends the USER token, If-Match and Idempotency-Key and returns ETag/replay metadata', async () => {
     fetchMock.mockResolvedValue(
       new Response('{"id":"w1"}', {

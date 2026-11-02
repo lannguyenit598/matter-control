@@ -74,7 +74,7 @@ export function GlassSurface({
   const [filterId, setFilterId] = useState<string | null>(null)
 
   useEffect(() => {
-    if (tier !== 'liquid') return
+    if (tier !== 'liquid' || refraction <= 0) return
     const el = surfaceRef.current
     if (!el) return
     let id: string | null = null
@@ -143,7 +143,7 @@ export function GlassSurface({
           style={{ backdropFilter: `blur(${blur}px) saturate(150%)` }}
         />
       ) : null}
-      {liquid ? (
+      {liquid && refraction > 0 ? (
         <div
           aria-hidden
           className="glass-layer glass-backdrop-b"

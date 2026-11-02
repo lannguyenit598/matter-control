@@ -41,6 +41,8 @@ type ProductConfig struct {
 	// MaxInFlight caps concurrent API requests; 0 = unlimited. The right number is a workload
 	// decision (owned by the Product Owner), so it defaults to off.
 	MaxInFlight int
+	// SearchCursorKey is optional; missing/invalid dedicated key disables Search only.
+	SearchCursorKey string
 
 	OIDC OIDC
 }
@@ -91,8 +93,9 @@ func LoadProduct(lookup func(string) (string, bool)) (ProductConfig, error) {
 			AccessKeyID:     p.str("MC_R2_ACCESS_KEY_ID", ""),
 			SecretAccessKey: p.str("MC_R2_SECRET_ACCESS_KEY", ""),
 		},
-		MaxUploadBytes: p.int64("MC_MAX_UPLOAD_BYTES", 25<<20),
-		MaxInFlight:    int(inFlight),
+		MaxUploadBytes:  p.int64("MC_MAX_UPLOAD_BYTES", 25<<20),
+		MaxInFlight:     int(inFlight),
+		SearchCursorKey: p.str("MC_SEARCH_CURSOR_KEY", ""),
 		OIDC: OIDC{
 			Issuer:           p.str("MC_OIDC_ISSUER", ""),
 			IntrospectionURL: p.str("MC_OIDC_INTROSPECTION_URL", ""),

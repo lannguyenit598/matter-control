@@ -1,0 +1,911 @@
+{
+  "utc": "2026-11-01T10:13:58.594Z",
+  "head": "978d8fc694a47e9beee528076bcf1af9473997e3",
+  "scope": "All non-test/non-story TSX JSX popup/shared wrapper/picker/select/native details call sites. Includes inactive template components; call sites are not executed scenario counts.",
+  "counts": {
+    "Dialog": 5,
+    "FormDialog": 12,
+    "TaskDialog": 12,
+    "ConfirmationDialog": 1,
+    "TaskFormDialog": 1,
+    "MobileNav": 0,
+    "CommandPalette": 1,
+    "SearchPicker": 4,
+    "Select": 38,
+    "details": 7
+  },
+  "entries": [
+    {
+      "path": "apps/frontend/src/app/(app)/layout.tsx",
+      "line": 68,
+      "tag": "CommandPalette",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/layout.tsx",
+      "line": 70,
+      "tag": "details",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+      "line": 91,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <FilePlus aria-hidden /> <LocalizedText en=\"Add context record\" vi=\"Thêm bản ghi bối cảnh\" /> </> }",
+        "title": "{<LocalizedText en=\"Add context record\" vi=\"Thêm bản ghi bối cảnh\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+      "line": 145,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <ArrowRight aria-hidden /> <LocalizedText en=\"Record the next step\" vi=\"Ghi nhận bước tiếp theo\" /> </> }",
+        "title": "{<LocalizedText en=\"Record the next step\" vi=\"Ghi nhận bước tiếp theo\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+      "line": 183,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <CircleAlert aria-hidden /> <LocalizedText en=\"Record a rejection or withdrawal\" vi=\"Ghi nhận từ chối hoặc rút hồ sơ\" /> </> }",
+        "title": "{ <LocalizedText en=\"Record a rejection or withdrawal\" vi=\"Ghi nhận từ chối hoặc rút hồ sơ\" /> }"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+      "line": 213,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <FileSignature aria-hidden /> <LocalizedText en=\"Signature applicability\" vi=\"Yêu cầu chữ ký\" /> </> }",
+        "title": "{<LocalizedText en=\"Signature applicability\" vi=\"Yêu cầu chữ ký\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+      "line": 237,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <Archive aria-hidden /> <LocalizedText en=\"Close after the negative outcome\" vi=\"Đóng sau kết quả bất lợi\" /> </> }",
+        "title": "{ <LocalizedText en=\"Close after the negative outcome\" vi=\"Đóng sau kết quả bất lợi\" /> }"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+      "line": 261,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <RotateCcw aria-hidden /> <LocalizedText en=\"Reopen\" vi=\"Mở lại\" /> </> }",
+        "title": "{<LocalizedText en=\"Reopen\" vi=\"Mở lại\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+      "line": 277,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <Pencil aria-hidden /> <LocalizedText en=\"Correct an observation\" vi=\"Đính chính ghi nhận\" /> </> }",
+        "title": "{<LocalizedText en=\"Correct an observation\" vi=\"Đính chính ghi nhận\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+      "line": 193,
+      "tag": "details",
+      "attributes": {
+        "open": "{created || undefined}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+      "line": 212,
+      "tag": "details",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+      "line": 399,
+      "tag": "details",
+      "attributes": {
+        "open": "{open || undefined}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/confirmation-dialog.tsx",
+      "line": 37,
+      "tag": "Dialog",
+      "attributes": {
+        "open": "{open}",
+        "title": "{title}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/icon-disclosure.tsx",
+      "line": 34,
+      "tag": "details",
+      "attributes": {
+        "open": "{open || undefined}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/local-datetime-field.tsx",
+      "line": 98,
+      "tag": "Select",
+      "attributes": {
+        "name": "{`${name}Choice`}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/locale-toggle.tsx",
+      "line": 11,
+      "tag": "Select",
+      "attributes": {
+        "aria-label": "{locale === 'vi' ? 'Ngôn ngữ giao diện' : 'Interface language'}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/command-palette.tsx",
+      "line": 87,
+      "tag": "Dialog",
+      "attributes": {
+        "open": "{open}",
+        "title": "{<LocalizedText en=\"Quick search\" vi=\"Tìm kiếm nhanh\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/form-dialog.tsx",
+      "line": 60,
+      "tag": "Dialog",
+      "attributes": {
+        "open": "{open}",
+        "title": "{title}",
+        "keepMounted": true
+      }
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/form-dialog.tsx",
+      "line": 89,
+      "tag": "FormDialog",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/mobile-nav.tsx",
+      "line": 28,
+      "tag": "Dialog",
+      "attributes": {
+        "open": "{open}",
+        "title": "\"Navigation\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/control/components/context-forms.tsx",
+      "line": 50,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"kind\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/bulk-section.tsx",
+      "line": 228,
+      "tag": "Select",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/bulk-section.tsx",
+      "line": 262,
+      "tag": "Select",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/bulk-section.tsx",
+      "line": 285,
+      "tag": "Select",
+      "attributes": {
+        "aria-label": "{`${f.label} new value`}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 118,
+      "tag": "SearchPicker",
+      "attributes": {
+        "name": "\"requirementId\"",
+        "legend": "{ <LocalizedText en=\"Requirement this filing serves\" vi=\"Yêu cầu mà thủ tục này phục vụ\" /> }",
+        "searchLabel": "{ <LocalizedText en=\"Search this matter’s Requirements by title\" vi=\"Tìm yêu cầu của hồ sơ theo tiêu đề\" /> }"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 154,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"authorityPartyId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 172,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"ownerId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 195,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"proofRequired\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 341,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"to\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 417,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"cycleOwnerId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 483,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"outcome\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "line": 635,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"observationId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/matters/components/create-matter-form.tsx",
+      "line": 30,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <Plus aria-hidden /> <LocalizedText en=\"Create matter\" vi=\"Tạo hồ sơ\" /> </> }",
+        "title": "{<LocalizedText en=\"Create matter\" vi=\"Tạo hồ sơ\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/matters/components/grant-matter-member-form.tsx",
+      "line": 44,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <UserPlus aria-hidden /> <LocalizedText en=\"Add to matter\" vi=\"Thêm vào hồ sơ\" /> </> }",
+        "title": "{<LocalizedText en=\"Add to matter\" vi=\"Thêm vào hồ sơ\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/matters/components/grant-matter-member-form.tsx",
+      "line": 81,
+      "tag": "SearchPicker",
+      "attributes": {
+        "name": "\"userId\"",
+        "legend": "{<LocalizedText en=\"Workspace member\" vi=\"Thành viên không gian\" />}",
+        "searchLabel": "{ <LocalizedText en=\"Search workspace members by name\" vi=\"Tìm thành viên không gian theo tên\" /> }"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/matters/components/grant-matter-member-form.tsx",
+      "line": 125,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"role\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/document-forms.tsx",
+      "line": 42,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <Plus aria-hidden /> <LocalizedText en=\"New document\" vi=\"Tài liệu mới\" /> </> }",
+        "title": "{<LocalizedText en=\"New document\" vi=\"Tài liệu mới\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/document-forms.tsx",
+      "line": 466,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> <Upload aria-hidden /> <LocalizedText en=\"Upload new version\" vi=\"Tải lên phiên bản mới\" /> </> }",
+        "title": "{<LocalizedText en=\"Upload new version\" vi=\"Tải lên phiên bản mới\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/document-forms.tsx",
+      "line": 502,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> <FileSignature aria-hidden /> <LocalizedText en=\"Record signature\" vi=\"Ghi nhận chữ ký\" /> </> }",
+        "title": "{<LocalizedText en=\"Record an observed signature\" vi=\"Ghi nhận chữ ký đã quan sát\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 474,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"userId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 580,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"verdict\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 703,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"purpose\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 732,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"mandatory\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 774,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"versionRule\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 794,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"documentId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 812,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"fixedVersionId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 843,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"retire\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "line": 900,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"versionId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/answer-form.tsx",
+      "line": 82,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"state\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/create-grid-dialog.tsx",
+      "line": 18,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <Plus aria-hidden /> <LocalizedText en=\"New review grid\" vi=\"Bảng rà soát mới\" /> </> }",
+        "title": "{<LocalizedText en=\"New review grid\" vi=\"Bảng rà soát mới\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "line": 54,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <Plus aria-hidden /> <LocalizedText en=\"Add version\" vi=\"Thêm phiên bản\" /> </> }",
+        "title": "{<LocalizedText en=\"Add a document version\" vi=\"Thêm phiên bản tài liệu\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "line": 87,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"versionId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "line": 105,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{<LocalizedText en=\"Remove version\" vi=\"Gỡ phiên bản\" />}",
+        "title": "{<LocalizedText en=\"Remove a version from this grid\" vi=\"Gỡ phiên bản khỏi bảng\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "line": 133,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"versionId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "line": 151,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <Plus aria-hidden /> <LocalizedText en=\"Add question\" vi=\"Thêm câu hỏi\" /> </> }",
+        "title": "{<LocalizedText en=\"Add a question\" vi=\"Thêm câu hỏi\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "line": 193,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{<LocalizedText en=\"Reword question\" vi=\"Sửa lời câu hỏi\" />}",
+        "title": "{<LocalizedText en=\"Reword a question\" vi=\"Sửa lời câu hỏi\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "line": 228,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"questionId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/delete-task-button.tsx",
+      "line": 38,
+      "tag": "ConfirmationDialog",
+      "attributes": {
+        "open": "{open}",
+        "title": "\"Delete task?\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-filters.tsx",
+      "line": 81,
+      "tag": "Select",
+      "attributes": {
+        "aria-label": "\"Filter by status\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-form-dialog.tsx",
+      "line": 36,
+      "tag": "Dialog",
+      "attributes": {
+        "open": "{open}",
+        "title": "{task ? 'Edit task' : 'New task'}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-form.tsx",
+      "line": 97,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"status\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-form.tsx",
+      "line": 107,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"priority\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-status-select.tsx",
+      "line": 20,
+      "tag": "Select",
+      "attributes": {
+        "aria-label": "{`Status of ${task.title}`}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-table.tsx",
+      "line": 44,
+      "tag": "TaskFormDialog",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/add-work-dialog.tsx",
+      "line": 63,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <Plus aria-hidden /> <LocalizedText en=\"Add work\" vi=\"Thêm công việc\" /> </> }",
+        "title": "{<LocalizedText en=\"Add work\" vi=\"Thêm công việc\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+      "line": 119,
+      "tag": "SearchPicker",
+      "attributes": {
+        "name": "\"sourceId\"",
+        "legend": "{<LocalizedText en=\"Must be satisfied first\" vi=\"Phải được đáp ứng trước\" />}",
+        "searchLabel": "{ <LocalizedText en=\"Search this matter’s records by title\" vi=\"Tìm bản ghi của hồ sơ theo tiêu đề\" /> }"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+      "line": 154,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"gate\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/execution-panel.tsx",
+      "line": 120,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"to\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/execution-panel.tsx",
+      "line": 151,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"waitingPartyId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/metadata-form.tsx",
+      "line": 102,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"ownerId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/metadata-form.tsx",
+      "line": 114,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"workstreamId\""
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/my-actions-view.tsx",
+      "line": 488,
+      "tag": "details",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/planning-view.tsx",
+      "line": 52,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <Flag aria-hidden /> <LocalizedText en=\"Add milestone\" vi=\"Thêm cột mốc\" /> </> }",
+        "title": "{<LocalizedText en=\"Add milestone\" vi=\"Thêm cột mốc\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/planning-view.tsx",
+      "line": 186,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <Users aria-hidden /> <LocalizedText en=\"Add external party\" vi=\"Thêm bên ngoài\" /> </> }",
+        "title": "{<LocalizedText en=\"Add external party\" vi=\"Thêm bên ngoài\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/planning-view.tsx",
+      "line": 264,
+      "tag": "TaskDialog",
+      "attributes": {
+        "trigger": "{ <> {' '} <Network aria-hidden /> <LocalizedText en=\"Add workstream\" vi=\"Thêm nhóm công việc\" /> </> }",
+        "title": "{<LocalizedText en=\"Add workstream\" vi=\"Thêm nhóm công việc\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/work-filters.tsx",
+      "line": 167,
+      "tag": "details",
+      "attributes": {}
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/work-filters.tsx",
+      "line": 273,
+      "tag": "Select",
+      "attributes": {
+        "name": "{name}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/workspaces/components/create-workspace-form.tsx",
+      "line": 18,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <Plus aria-hidden /> <LocalizedText en=\"New workspace\" vi=\"Không gian làm việc mới\" /> </> }",
+        "title": "{<LocalizedText en=\"New workspace\" vi=\"Không gian làm việc mới\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/workspaces/components/grant-workspace-member-form.tsx",
+      "line": 40,
+      "tag": "FormDialog",
+      "attributes": {
+        "trigger": "{ <> <UserPlus aria-hidden /> <LocalizedText en=\"Add member\" vi=\"Thêm thành viên\" /> </> }",
+        "title": "{<LocalizedText en=\"Add workspace member\" vi=\"Thêm thành viên không gian làm việc\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/workspaces/components/grant-workspace-member-form.tsx",
+      "line": 77,
+      "tag": "SearchPicker",
+      "attributes": {
+        "name": "\"userId\"",
+        "legend": "{<LocalizedText en=\"Person\" vi=\"Thành viên\" />}",
+        "searchLabel": "{<LocalizedText en=\"Search people by name\" vi=\"Tìm người theo tên\" />}"
+      }
+    },
+    {
+      "path": "apps/frontend/src/features/workspaces/components/grant-workspace-member-form.tsx",
+      "line": 109,
+      "tag": "Select",
+      "attributes": {
+        "name": "\"role\""
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "apps/frontend/src/app/(app)/layout.tsx",
+      "bytes": 4067,
+      "sha256": "0fb4576e900de1f251e6e462f781160fc44c87ac8b205abc358373be41365d45",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/control-room/page.tsx",
+      "bytes": 6681,
+      "sha256": "01831b0737648b1e56688dd6e478d3d409dd76755dc8c1b83975d54032efc2c5",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx",
+      "bytes": 12313,
+      "sha256": "ae564544c4d746da6dd6e36d0684ceae1a8c423ac02fb9e769fc71c6060de2b7",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+      "bytes": 9918,
+      "sha256": "ede0345673a4f8ce38e92511a31884cf3a844b11fb888de8c402cdc8f0cea0ae",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+      "bytes": 15920,
+      "sha256": "13f2fe89ed7cc92fcac8eebe3431b6c61507a4ea3bb3e7032b45735ea5bf1060",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/confirmation-dialog.tsx",
+      "bytes": 1523,
+      "sha256": "fc5f25314c38ca1fa69683d4b24b5701fa1bd21a93113e6136eaab6d622907c6",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/icon-disclosure.tsx",
+      "bytes": 1520,
+      "sha256": "1d5f1a6741d367664fd71c53c86c0d40eb4253f0359a5377ebc8e179d50ca1d2",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/local-datetime-field.tsx",
+      "bytes": 3567,
+      "sha256": "4bedc167365ec42c4bac50ca2e1451f00d93f71c7747a5e58c1336164c0fc1d6",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/locale-toggle.tsx",
+      "bytes": 609,
+      "sha256": "10443fd73a15166e1d092e45c32b60da9df12ba5d22e34ee5fe632f1a672ffdd",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/command-palette.tsx",
+      "bytes": 6198,
+      "sha256": "62e556422f51e038d6b07b25c9afb5bd139b64c00151b9bbee82ccb1fac89bca",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/form-dialog.tsx",
+      "bytes": 2731,
+      "sha256": "ab23cf4e106a300701df5009a7b2d95c2927e01d380f88163cbd7ded15f70ac7",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/mobile-nav.tsx",
+      "bytes": 1099,
+      "sha256": "c0c5c8aae920a6391025193f2fb42dc37039621e6c8b5693246ae2632b353f96",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/control/components/context-forms.tsx",
+      "bytes": 4376,
+      "sha256": "f4ce7148b526ede07e73debb8ce5478a67123c0d9e894512fc7865aca41cc6a5",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/bulk-section.tsx",
+      "bytes": 15857,
+      "sha256": "53ac81496d0f590c86c7b6d68f080ed63f179c5023e498ce6b34a17276b2f79a",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-forms.tsx",
+      "bytes": 24029,
+      "sha256": "d595d8411840084b7f4f7874a129a0572ac75a1e86cc879b34673dabc3e3b017",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/matters/components/create-matter-form.tsx",
+      "bytes": 3196,
+      "sha256": "6eb4b9fc39bb072ecee6bcdfd08d5d2e89d02d7ca78f5ec5f5261ca83a946b08",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/matters/components/grant-matter-member-form.tsx",
+      "bytes": 5269,
+      "sha256": "ae7a1abb6f17349e9df8867d34fedc19ce7c565469641e503a901b2e600480d6",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/document-forms.tsx",
+      "bytes": 18286,
+      "sha256": "01567c08b4c545519ce7985f35087b94be271f79f12874034e5fcb0631aaeaab",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/proof/components/proof-panel.tsx",
+      "bytes": 37907,
+      "sha256": "8678a8dfd36c5856735c93982b643ece57ed51ec09ae8b6d191e93cbe0d2859b",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/answer-form.tsx",
+      "bytes": 4891,
+      "sha256": "86b924663e635def27924312399a711305f0913ae2b2b907639ffb8a8f914ce1",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/create-grid-dialog.tsx",
+      "bytes": 2302,
+      "sha256": "f282981111ae943e2b18268ab2b9b63344c4372ad7e7fafc9fc7d36c0123152e",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/review/components/grid-structure-forms.tsx",
+      "bytes": 8450,
+      "sha256": "213fcd23de125f16492e94f0f1c3f9480fa49ceabd9f8cee5676da4834a7837b",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/delete-task-button.tsx",
+      "bytes": 1388,
+      "sha256": "39f877f7a12d4366fcf31a52fc87144ce6be452b866156abaf4cbb3af0308d94",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-filters.tsx",
+      "bytes": 3352,
+      "sha256": "dc7d06256349d58b2429535c6600c8a4788a356e13f41643d0dffd4f304adf83",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-form-dialog.tsx",
+      "bytes": 2041,
+      "sha256": "06880159844ced9dc90068bf895d459c68ceddf2d29e4c0e2b5961e0e9ee7eb0",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-form.tsx",
+      "bytes": 4398,
+      "sha256": "329733f51cc25cffe35c507ad95dcbfee6bdd0930c217ee5079e505be77427a6",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-status-select.tsx",
+      "bytes": 1408,
+      "sha256": "0ef576f01b18f3d82a1353f362aa7e02f09bddb20410a3fa8ba7f84932a5966d",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/tasks/components/task-table.tsx",
+      "bytes": 2165,
+      "sha256": "9344113fc8355034b41e012325b3e0776a7809ff9d86b7d294bbe9ed26626884",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/add-work-dialog.tsx",
+      "bytes": 4076,
+      "sha256": "d300db443a57bd4631401dc6f4dd8cde043d43e73b3d934dcfb6549b050aa52e",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/dependency-panel.tsx",
+      "bytes": 9292,
+      "sha256": "b4943148ec46ce8b0d89718366f80f8437fdb279bbbbae224b64763ffabf3948",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/execution-panel.tsx",
+      "bytes": 6158,
+      "sha256": "6ef8839702ce571d48b612d84ad9be37adc5514f82a3e0c83364e526f84753a3",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/metadata-form.tsx",
+      "bytes": 4096,
+      "sha256": "7f4f291f74ca62227bfc3ec83df25b48cf0d8746e52cf85e455381106c76bd24",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/my-actions-view.tsx",
+      "bytes": 18738,
+      "sha256": "9bdd70e4ea6a1a8b52feb7cf17e3a16aa998111460e33fc8c945a495dc05f0f7",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/planning-view.tsx",
+      "bytes": 13847,
+      "sha256": "b3ad32077c6b6870f2d819ce15122ff2e9a8722f124ee37ba93ba9c41db2407f",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/work/components/work-filters.tsx",
+      "bytes": 9483,
+      "sha256": "02784938231f4ada7774d1e0ac54e9bfc03a18fe1175b696ca07e6254d37a803",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/workspaces/components/create-workspace-form.tsx",
+      "bytes": 2463,
+      "sha256": "a29d82bde4371a23899dfa86af13d82a1217b3220ac8ea81d0640afc3628aa28",
+      "runtimeByteMatch": true
+    },
+    {
+      "path": "apps/frontend/src/features/workspaces/components/grant-workspace-member-form.tsx",
+      "bytes": 4778,
+      "sha256": "b6e4a016e32676b190f5c0a4e6dbc1a368e904f4c2a0e636205c7cd037e73c34",
+      "runtimeByteMatch": true
+    }
+  ]
+}

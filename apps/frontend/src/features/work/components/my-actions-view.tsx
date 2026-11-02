@@ -23,6 +23,7 @@ import { cn } from '@/lib/utils'
 import { myWorkHref, QUEUES, type MyWorkSelection, type Queue } from '../my-work-selection'
 import { GATE_REASON } from '../labels'
 import type { Assigned, Detail } from '../schemas'
+import { FocusCard } from '../focus/components/focus-card'
 
 import {
   AttentionBadge,
@@ -277,6 +278,11 @@ function CurrentItem({
           <LocalizedText en="View matter" vi="Xem hồ sơ" />
         </Link>
       </div>
+
+      <FocusCard
+        target={{ matterId: a.matterId, actionId: a.item.id }}
+        eligible={a.class === 'ELIGIBLE' && a.item.kind === 'ACTION'}
+      />
 
       <div className="work-needs flex flex-col gap-2 border-t">
         <h3 className="work-section-title font-semibold">

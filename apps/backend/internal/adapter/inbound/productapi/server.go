@@ -36,6 +36,7 @@ type Deps struct {
 	Workspaces           port.WorkspaceService
 	Matters              port.MatterService
 	Work                 port.WorkService
+	Search               port.SearchService
 	Evidence             port.EvidenceService
 	Filings              port.FilingService
 	Control              port.ControlService
@@ -75,6 +76,14 @@ func NewServer(d Deps) *echo.Echo {
 	}
 	s := &server{d}
 	e := echo.New()
+	e.Pre(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c *echo.Context) error {
+			if c.Request().URL.Path == apiPrefix+"/search" {
+				c.Response().Header().Set("Cache-Control", "private, no-store")
+			}
+			return next(c)
+		}
+	})
 	e.Logger = d.Logger
 	e.HTTPErrorHandler = s.errorHandler
 	e.Use(middleware.Recover())
@@ -108,6 +117,7 @@ func NewServer(d Deps) *echo.Echo {
 	})
 
 	v1 := e.Group(apiPrefix, inFlightLimit(d.MaxInFlight), requestMeta, s.authenticate)
+	v1.POST("/search", s.search)
 	v1.GET("/workspaces", s.listWorkspaces)
 	v1.POST("/workspaces", s.createWorkspace)
 	v1.GET("/workspaces/:id", s.getWorkspace)

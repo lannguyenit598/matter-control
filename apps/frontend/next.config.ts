@@ -2,6 +2,7 @@ import type { NextConfig } from 'next'
 
 const isDev = process.env.NODE_ENV === 'development'
 const isWorkerBuild = process.env.MC_WORKER_BUILD === '1'
+const exposeTestingApi = process.env.EXPOSE_TESTING_API === '1'
 
 /**
  * CSP without nonces (docs: 02-guides/content-security-policy.md, "Without Nonces").
@@ -50,6 +51,9 @@ const nextConfig: NextConfig = {
   cacheComponents: !isWorkerBuild,
   partialPrefetching: !isWorkerBuild,
   poweredByHeader: false,
+  experimental: {
+    exposeTestingApiInProductionBuild: exposeTestingApi,
+  },
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }]
   },

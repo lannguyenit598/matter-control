@@ -1,0 +1,220 @@
+[WARN] The store at /Users/nguyenvanlan/Library/pnpm/store/v11 is not used because packages cannot be hard linked from it into this project. Using the store at /private/tmp/.pnpm-store/v11 instead. Set storeDir to choose the store.
+✓ Lockfile passes supply-chain policies (verified 2d ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "/private/tmp/mc-calendar-controls-
+      20261101-03d0m22i/frontend/node_modules": workspace hoist directory is
+      not a real directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/mc-calendar-controls-20261101-03d0m22i/frontend
+
+ ❯ src/features/work/components/client-zone-dates.test.tsx (7 tests | 1 failed) 1021ms
+   ❯ due date entry (6)
+     × shows the device zone read-only, with no manual offset choice 74ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/work/components/client-zone-dates.test.tsx > due date entry > shows the device zone read-only, with no manual offset choice
+TestingLibraryElementError: Found multiple elements with the text: /Asia\/Ho_Chi_Minh/
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+[36m>[39m
+  [0mAsia/Ho_Chi_Minh[0m
+[36m</p>[39m
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+  [33mid[39m=[32m"_r_3_-hint"[39m
+[36m>[39m
+  [0mTime zone[0m
+  [0m: [0m
+  [0mAsia/Ho_Chi_Minh[0m
+  [0m · [0m
+  [0mLeave empty for no due date.[0m
+[36m</p>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<form[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+      [33mnovalidate[39m=[32m""[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+          [33mfor[39m=[32m"_r_0_"[39m
+        [36m>[39m
+          [0mTitle[0m
+          [36m<span[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"ml-0.5 text-destructive"[39m
+          [36m>[39m
+            [0m*[0m
+          [36m</span>[39m
+        [36m</label>[39m
+        [36m<input[39m
+          [33mautocomplete[39m=[32m"off"[39m
+          [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive min-h-10 py-2"[39m
+          [33mdata-slot[39m=[32m"input"[39m
+          [33mid[39m=[32m"_r_0_"[39m
+          [33mmaxlength[39m=[32m"300"[39m
+          [33mname[39m=[32m"title"[39m
+          [33mtype[39m=[32m"text"[39m
+          [33mvalue[39m=[32m"Draft SPA"[39m
+        [36m/>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+          [33mfor[39m=[32m"_r_1_"[39m
+        [36m>[39m
+          [0mOutcome[0m
+          [36m<span[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"ml-0.5 text-destructive"[39m
+          [36m>[39m
+            [0m*[0m
+          [36m</span>[39m
+        [36m</label>[39m
+        [36m<textarea[39m
+          [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive py-2"[39m
+          [33mdata-slot[39m=[32m"textarea"[39m
+          [33mid[39m=[32m"_r_1_"[39m
+          [33mmaxlength[39m=[32m"5000"[39m
+          [33mname[39m=[32m"outcome"[39m
+          [33mrows[39m=[32m"4"[39m
+        [36m>[39m
+          [0mFirst draft[0m
+        [36m</textarea>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+          [33mfor[39m=[32m"_r_2_"[39m
+        [36m>[39m
+          [0mOwner[0m
+        [36m</label>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"relative min-w-0"[39m
+        [36m>[39m
+          [36m<select[39m
+            [33maria-describedby[39m=[32m"_r_2_-hint"[39m
+            [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive ui-select min-h-9 appearance-none truncate py-1.5 pr-9 text-left whitespace-nowrap"[39m
+            [33mdata-slot[39m=[32m"select-trigger"[39m
+            [33mid[39m=[32m"_r_2_"[39m
+            [33mname[39m=[32m"ownerId"[39m
+          [36m>[39m
+            [36m<option[39m
+              [33mselected[39m=[32m""[39m
+              [33mvalue[39m=[32m""[39m
+            [36m>[39m
+              [0mUnassigned[0m
+            [36m</option>[39m
+          [36m</select>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-chevron-down pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 text-muted-foreground"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"m6 9 6 6 6-6"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+          [33mid[39m=[32m"_r_2_-hint"[39m
+        [36m>[39m
+          [0mAssignment never grants access: only active matter members can be assigned.[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-2"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col gap-1.5"[39m
+        [36m>[39m
+          [36m<label[39m
+            [33mclass[39m=[32m"text-sm leading-none font-medium"[39m
+            [33mfor[39m=[32m"_r_3_"[39m
+          [36m>[39m
+            [0mDue (date and time)[0m
+          [36m</label>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"calendar-field"[39m
+          [36m>[39m
+            [36m<input[39m
+              [33maria-describedby[39m=[32m"_r_3_-hint"[39m
+              [33mclass[39m=[32m"control-target w-full min-w-0 rounded-md border border-input bg-card px-3 text-sm transition-colors duration-160 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-disabled aria-invalid:border-destructive aria-invalid:outline-destructive min-h-10 py-2"[39m
+              [33mdata-slot[39m=[32m"input"[39m
+              [33mid[39m=[32m"_r_3_"[39m
+              [33mname[39m=[32m"dueLocal"[39m
+              [33mtype[39m=[32m"datetime-local"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+            [36m<button[39m
+              [33maria-haspopup[39m=[32m"dialog"[39m
+              [33maria-label[39m=[32m"Open date and time calendar"[39m
+              [33mclass[39m=[32m"glass-button control-target inline-flex max-w-full items-center justify-center gap-2 rounded-full text-sm leading-5 font-medium [overflow-wrap:anywhere] whitespace-normal transition-colors duration-160 disabled:pointer-events-none disabled:border-border disabled:bg-muted disabled:text-disabled [&_svg]:size-4 [&_svg]:shrink-0 glass-button-ghost hover:bg-accent hover:text-accent-foreground min-h-8 min-w-8 p-1.5 calendar-trigger"[39m
+              [33mdata-slot[39m=[32m"button"...
+ ❯ Object.getElementError ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getElementError ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:20:35
+ ❯ getMultipleElementsFoundError ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:23:10
+ ❯ ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+ ❯ ../../../../Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules/.pnpm/@testing-library+dom@10.4.2/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/work/components/client-zone-dates.test.tsx:75:19
+     73|   it('shows the device zone read-only, with no manual offset choice', …
+     74|     render(metadata(null))
+     75|     expect(screen.getByText(/Asia\/Ho_Chi_Minh/)).toBeInTheDocument()
+       |                   ^
+     76|     expect(screen.queryByLabelText(/Offset from UTC/)).not.toBeInTheDo…
+     77|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 107 passed | 1 skipped (109)
+      Tests  1 failed | 869 passed | 12 skipped (882)
+   Start at  21:20:47
+   Duration  13.37s (environment 42%, tests 29%, setup 12%, import 11%, transform 5%)
+
+Environment  jsdom was created 109 times · 44.87s total, 42% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

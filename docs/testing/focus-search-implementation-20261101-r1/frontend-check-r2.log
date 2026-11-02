@@ -1,0 +1,12 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+[warn] e2e/prefetch-optimization.spec.ts
+[warn] src/features/proof/components/proof-panel.tsx
+[warn] Code style issues found in 2 files. Run Prettier with --write to fix.
+[ELIFECYCLE] Command failed with exit code 1.
+[ELIFECYCLE] Command failed with exit code 1.

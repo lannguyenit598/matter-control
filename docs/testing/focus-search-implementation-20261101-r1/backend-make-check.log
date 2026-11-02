@@ -1,0 +1,14 @@
+go mod tidy -diff
+golangci-lint run ./...
+internal/adapter/outbound/repotest/mattercontrol/contract_search.go:5:1: File is not properly formatted (goimports)
+	"fmt"
+^
+internal/adapter/outbound/repotest/mattercontrol/memory_search.go:8:1: File is not properly formatted (goimports)
+	"golang.org/x/text/unicode/norm"
+^
+internal/core/port/search.go:5:1: File is not properly formatted (goimports)
+	"errors"
+^
+3 issues:
+* goimports: 3
+make: *** [check] Error 1

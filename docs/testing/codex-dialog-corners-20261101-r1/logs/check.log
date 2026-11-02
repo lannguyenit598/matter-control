@@ -1,0 +1,87 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/mc-dialog-corners-20261101-16bq2ao6/frontend
+
+ ❯ src/lib/env.test.ts (13 tests | 2 failed) 93ms
+   ❯ serverEnv (13)
+     ❯ production server (TB-12) (5)
+       × refuses demo when no phase is set (standalone server.js sets none) 12ms
+       × allows the build to load the module without a real API 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/env.test.ts > serverEnv > production server (TB-12) > refuses demo when no phase is set (standalone server.js sets none)
+AssertionError: promise resolved "{ API_MODE: 'rest', …(6) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "API_BASE_URL": "https://unconfigured.invalid/api/v1",
++   "API_MODE": "rest",
++   "API_TIMEOUT_MS": 10000,
++   "AUTH_ALLOW_ANONYMOUS": false,
++   "SESSION_ABSOLUTE_SECONDS": 86400,
++   "SESSION_COOKIE_SECURE": true,
++   "SESSION_IDLE_SECONDS": 28800,
+  }
+
+ ❯ src/lib/env.test.ts:33:79
+     31|
+     32|     it('refuses demo when no phase is set (standalone server.js sets n…
+     33|       await expect(loadEnv({ NODE_ENV: 'production', NEXT_PHASE: undef…
+       |                                                                               ^
+     34|         /API_MODE must be "rest"/,
+     35|       )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/lib/env.test.ts > serverEnv > production server (TB-12) > allows the build to load the module without a real API
+AssertionError: expected { API_MODE: 'rest', …(6) } to deeply equal { API_MODE: 'demo' }
+
+- Expected
++ Received
+
+  {
+-   "API_MODE": "demo",
++   "API_BASE_URL": "https://unconfigured.invalid/api/v1",
++   "API_MODE": "rest",
++   "API_TIMEOUT_MS": 10000,
++   "AUTH_ALLOW_ANONYMOUS": false,
++   "SESSION_ABSOLUTE_SECONDS": 86400,
++   "SESSION_COOKIE_SECURE": true,
++   "SESSION_IDLE_SECONDS": 28800,
+  }
+
+ ❯ src/lib/env.test.ts:40:19
+     38|     it('allows the build to load the module without a real API', async…
+     39|       const env = await loadEnv({ NODE_ENV: 'production', NEXT_PHASE: …
+     40|       expect(env).toEqual({ API_MODE: 'demo' })
+       |                   ^
+     41|     })
+     42|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 104 passed | 1 skipped (106)
+      Tests  2 failed | 858 passed | 12 skipped (872)
+   Start at  16:50:59
+   Duration  12.94s (environment 43%, tests 27%, setup 13%, import 11%, transform 5%)
+
+Environment  jsdom was created 106 times · 44.88s total, 43% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

@@ -1,0 +1,17 @@
+✔ lists sentinel, PEM and env findings from a planted artifact and exits non-zero (13.85475ms)
+✔ reports a single .env.local as a finding instead of crashing (9.068042ms)
+✔ stays clean on an artifact without findings (8.453959ms)
+✔ the real CLI also inspects content and env names in the git-tracked scan (72.511292ms)
+✔ clean tracked set and clean artifact pass (3.544166ms)
+✔ env/dev-vars/key files planted in an artifact are rejected by name (0.158791ms)
+✔ a copied .env.local with a runtime secret is found and only the key is named (1.866417ms)
+✔ content sentinels are caught in any file (0.192458ms)
+✔ plain env files without secret-shaped keys pass the key scan but not the name scan (0.065458ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139.704958

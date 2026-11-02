@@ -79,6 +79,7 @@ func newEnvSized(t *testing.T, maxUpload int64, localDirectory ...bool) *env {
 	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
 	ids := system.RecordIDv7{}
 	e.h = NewServer(Deps{
+		Search:               service.NewSearchService(store, NewSearchCursors("a2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2s=", time.Now), logger),
 		LocalPeopleDirectory: len(localDirectory) > 0 && localDirectory[0],
 		Workspaces:           service.NewWorkspaceService(store, ids, logger, matter.KeyAgePolicy{}),
 		Matters:              service.NewMatterService(store, ids, logger, matter.KeyAgePolicy{}),

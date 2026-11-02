@@ -315,3 +315,7 @@ Binding detail: `docs/implementation/p0-zcode-execution/local-contract.md` Revis
 | `GET …/work-items/{id}` | Adds `isFiling` and, for a filing, `outcomeVerification` (`NOT_TRACKED`/`NOT_DECLARED`/`PENDING`/`ACCEPTED`). `GET …/filings` rows and `GET …/filings/{id}` add the same field. |
 | `GET …/work-items/{id}/proof` | Adds `package`, `signature` and `outcome` summaries (D-9); each criterion adds `purpose`. |
 | `GET /matters/{id}/brief?t1&t2` response | `changes[].targetLabel` (label recorded by the change itself; may be empty). |
+
+## Record-name Search
+
+POST `/api/v1/search` is an authenticated, bounded read (not a receipted command). Its JSON body, typed groups, EN/VI comparison, cursor/privacy/error and authorized duplicate-metadata contract are specified in the shared local implementation contract revision13 §8. Every response is private/no-store; authentication still runs before validation. Errors use the existing problem format: 400 invalid request, 413 payload-too-large, 409 search-stale, 503 unavailable. Each group has its own snapshot instant. Hidden and nonexistent records are indistinguishable; Workspace OWNER has no implicit Matter access. No file-content/people search or new permission is introduced.

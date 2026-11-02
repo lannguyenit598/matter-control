@@ -19,7 +19,7 @@ vi.mock('next/headers', () => ({
   }),
 }))
 
-import { resolveSession } from '@/lib/auth-provider'
+import { resolveSession, publicUiSession } from '@/lib/auth-provider'
 import { resetOidcState } from '@/lib/oidc/flow'
 import { createSession, readSession, resetSessions } from '@/lib/oidc/session-store'
 
@@ -220,6 +220,26 @@ describe('logout', () => {
 })
 
 describe('resolveSession + session route', () => {
+  it('projects no token/subject/handle and changes the UI epoch on a new login', async () => {
+    const record = {
+      sub: 'subject-secret',
+      name: 'Alice',
+      accessToken: 'ACCESS-SECRET',
+      accessExpiresAt: Date.now() + 600_000,
+    }
+    cookieJar.value = createSession(record)
+    const one = await publicUiSession()
+    expect(one).toMatchObject({
+      principalKey: expect.stringMatching(/^[a-f0-9]{64}$/),
+      epoch: expect.stringMatching(/^[a-f0-9]{24}$/),
+    })
+    expect(JSON.stringify(one)).not.toContain('SECRET')
+    expect(JSON.stringify(one)).not.toContain(cookieJar.value)
+    cookieJar.value = createSession(record)
+    const two = await publicUiSession()
+    expect(two?.principalKey).toBe(one?.principalKey)
+    expect(two?.epoch).not.toBe(one?.epoch)
+  })
   it('reports invalid durable storage as unavailable, never as anonymous or successful logout', async () => {
     cookieJar.value = createSession({
       sub: 'synthetic',

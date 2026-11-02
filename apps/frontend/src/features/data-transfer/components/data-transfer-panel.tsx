@@ -1,7 +1,7 @@
 'use client'
 
-import { Download, FileDown, FileText, FileUp, Pencil } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { Download, FileDown, FileText, FileUp, Pencil, ScanEye, ShieldCheck } from 'lucide-react'
+import { useId, useState, type ReactNode } from 'react'
 
 import { buttonVariants } from '@/components/atoms/button'
 import { LocalizedText } from '@/components/molecules/localized-text'
@@ -28,6 +28,8 @@ export function DataTransferPanel({
   members,
 }: { matterId: string } & BulkChoices) {
   const [task, setTask] = useState<Task | null>(null)
+  const toolsHeading = useId()
+  const guidanceHeading = useId()
   const [attention, setAttention] = useState({ import: false, bulk: false })
   const [reportImport] = useState(() => (v: boolean) => setAttention((a) => ({ ...a, import: v })))
   const [reportBulk] = useState(() => (v: boolean) => setAttention((a) => ({ ...a, bulk: v })))
@@ -83,18 +85,54 @@ export function DataTransferPanel({
 
   return (
     <div className="flex flex-col gap-6">
-      <div role="group" aria-label="Data tasks" className="grid gap-2 sm:grid-cols-2">
-        {choices.map((c) => (
-          <TaskChoice
-            key={c.task}
-            icon={c.icon}
-            title={c.title}
-            description={c.description}
-            pressed={task === c.task}
-            unfinished={flagged(c.task)}
-            onClick={() => setTask(task === c.task ? null : c.task)}
-          />
-        ))}
+      <div className="data-task-layout">
+        <div data-slot="data-tools" className="data-tools">
+          <div className="data-tools-heading">
+            <h2 id={toolsHeading} className="font-semibold">
+              <LocalizedText en="Data tools" vi="Công cụ dữ liệu" />
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              <LocalizedText en="Choose the task you need." vi="Chọn thao tác bạn cần thực hiện." />
+            </p>
+          </div>
+          <div role="group" aria-labelledby={toolsHeading} className="data-task-list">
+            {choices.map((c) => (
+              <TaskChoice
+                key={c.task}
+                icon={c.icon}
+                title={c.title}
+                description={c.description}
+                pressed={task === c.task}
+                unfinished={flagged(c.task)}
+                onClick={() => setTask(task === c.task ? null : c.task)}
+              />
+            ))}
+          </div>
+        </div>
+        <aside className="data-guidance" aria-labelledby={guidanceHeading}>
+          <h2 id={guidanceHeading} className="flex items-center gap-2 font-medium">
+            <ShieldCheck aria-hidden className="size-4 shrink-0" />
+            <LocalizedText en="Before you start" vi="Trước khi bắt đầu" />
+          </h2>
+          <div className="flex items-start gap-3">
+            <ScanEye aria-hidden className="mt-0.5 size-4 shrink-0" />
+            <p className="text-sm text-muted-foreground">
+              <LocalizedText
+                en="Preview imports and bulk updates before confirming changes."
+                vi="Xem trước dữ liệu nhập và cập nhật hàng loạt trước khi xác nhận thay đổi."
+              />
+            </p>
+          </div>
+          <div className="flex items-start gap-3">
+            <Download aria-hidden className="mt-0.5 size-4 shrink-0" />
+            <p className="text-sm text-muted-foreground">
+              <LocalizedText
+                en="Exports follow your access. Status briefs stay read-only drafts."
+                vi="Dữ liệu xuất tuân theo quyền của bạn. Báo cáo tình trạng luôn là bản nháp chỉ đọc."
+              />
+            </p>
+          </div>
+        </aside>
       </div>
       <RecoveryGate key={matterId} matterId={matterId}>
         <div hidden={hidden('import')}>

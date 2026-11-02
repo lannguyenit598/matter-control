@@ -7,6 +7,26 @@ import { cookies } from 'next/headers'
 import type { Session } from './auth'
 import { oidcConfig } from './oidc/config'
 import { liveSession } from './oidc/session'
+import type { UiSession } from './ui-session'
+
+/** One live-session projection; no token, subject or cookie handle is serialized. */
+export async function publicUiSession(): Promise<UiSession | null> {
+  const cfg = oidcConfig()
+  if (!cfg) return null
+  const handle = (await cookies()).get(cfg.sessionCookie)?.value
+  if (!handle) return null
+  const live = await liveSession(cfg, handle)
+  if (!live) return null
+  return {
+    principalKey: createHash('sha256')
+      .update(JSON.stringify(['mc-ui-v1', cfg.issuer, live.record.sub]))
+      .digest('hex'),
+    epoch: createHash('sha256').update(`mc-draft:${handle}`).digest('hex').slice(0, 24),
+    validUntil: new Date(
+      Math.min(live.record.createdAt + cfg.absoluteMs, live.record.lastSeenAt + cfg.idleMs),
+    ).toISOString(),
+  }
+}
 
 let warned = false
 

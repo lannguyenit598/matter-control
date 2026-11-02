@@ -32,3 +32,42 @@ export const All: Story = {
     </div>
   ),
 }
+
+export const SelectPicker: Story = {
+  render: () => (
+    <div className="flex max-w-sm flex-col gap-4">
+      <label className="flex flex-col gap-1.5 text-sm">
+        Loại công việc
+        <Select
+          defaultValue=""
+          placeholder="Bất kỳ"
+          options={[
+            { value: 'requirement', label: 'Yêu cầu' },
+            { value: 'action', label: 'Hành động' },
+            { value: 'unavailable', label: 'Không khả dụng', disabled: true },
+          ]}
+        />
+      </label>
+      <Select
+        aria-label="Long options"
+        options={[
+          {
+            value: 'long',
+            label: 'Chuẩn bị hồ sơ tái cấu trúc và rà soát các điều kiện hoàn tất giao dịch',
+          },
+          { value: 'short', label: 'Rà soát hợp đồng' },
+        ]}
+      />
+      <Select
+        aria-label="Invalid choice"
+        aria-invalid
+        options={[{ value: '', label: 'Chọn trạng thái' }]}
+      />
+      <Select
+        aria-label="Disabled choice"
+        disabled
+        options={[{ value: 'read-only', label: 'Chỉ xem' }]}
+      />
+    </div>
+  ),
+}

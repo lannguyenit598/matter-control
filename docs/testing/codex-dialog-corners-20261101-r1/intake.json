@@ -1,0 +1,41 @@
+{
+  "task": "MC-CODEX-DIALOG-CORNERS-20261101",
+  "agent": "actual Local Codex",
+  "priority": "P2",
+  "head": "978d8fc694a47e9beee528076bcf1af9473997e3",
+  "run": "/private/tmp/mc-dialog-corners-20261101-16bq2ao6",
+  "snapshot": "/private/tmp/mc-dialog-corners-20261101-16bq2ao6/frontend",
+  "utc": "2026-11-01T09:49:37.031340+00:00",
+  "scope": "Shared Dialog/GlassSurface optical corner artifacts, focus stability, snapshot build and owned local frontend refresh; preserve unrelated source and QA checkpoint.",
+  "requirements": [
+    "Existing Liquid Form legibility",
+    "GL-FORM-02 focus/draft persistence",
+    "Shared dialog consistency"
+  ],
+  "reviewer": "Independent review pending",
+  "red": {
+    "command": "rtk proxy node node_modules/vitest/vitest.mjs run src/components/molecules/glass-tier-focus.test.tsx",
+    "result": "1 fail / 3 pass before fix; dialog registered refraction 12 filter, violating stable-form no displacement regression"
+  },
+  "initialGreen": {
+    "command": "rtk proxy node node_modules/vitest/vitest.mjs run src/components/molecules/glass-tier-focus.test.tsx src/components/molecules/glass-surface.test.tsx src/components/molecules/dialog.test.tsx src/components/organisms/form-dialog.test.tsx",
+    "result": "16/16 PASS"
+  },
+  "files": [
+    {
+      "path": "apps/frontend/src/components/molecules/dialog.tsx",
+      "bytes": 4991,
+      "sha256": "d75c0223b83bc3602bc23e0a2bac6cf5aca28ff46245e5d4d28677e237549144"
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/glass-surface.tsx",
+      "bytes": 5495,
+      "sha256": "e6a09c3ea6c89524cc75cb23a52eb3db13f1cd650abeaede046f393ea1ab79e8"
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/glass-tier-focus.test.tsx",
+      "bytes": 3399,
+      "sha256": "bc8728bbd14756603ccb2c494afceda0c74123f5f7b3aff908a66007be98c198"
+    }
+  ]
+}

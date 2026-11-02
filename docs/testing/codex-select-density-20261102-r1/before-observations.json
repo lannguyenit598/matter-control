@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-11-02T06:47:28.616925+00:00",
+  "authority": "Actual official browser observations in this turn; recording timestamp is not a fabricated precise measurement time",
+  "route": "synthetic Matter/work",
+  "nativePicker": "User screenshots show native OS menu. CSS customizable-select fallback cannot guarantee the current browser surface appearance. Existing DOM probe reports base-select support but picker pseudo appearance none.",
+  "density": {
+    "comfortable": [
+      {
+        "height": 148.5,
+        "padding": "12px 20px"
+      },
+      {
+        "height": 149,
+        "padding": "12px 20px"
+      }
+    ],
+    "compact": [
+      {
+        "height": 148.5,
+        "padding": "12px 20px"
+      },
+      {
+        "height": 149,
+        "padding": "12px 20px"
+      }
+    ],
+    "urlCompact": "density=compact",
+    "selectedLabel": "G\u1ecdn"
+  },
+  "redTests": {
+    "source": "pre-fix Select at Focus/Search final manifest baseline",
+    "command": "rtk proxy node node_modules/vitest/vitest.mjs run src/components/atoms/select.test.tsx",
+    "result": "2 failed /4 passed: no themed listbox, keyboard selection not committed"
+  }
+}

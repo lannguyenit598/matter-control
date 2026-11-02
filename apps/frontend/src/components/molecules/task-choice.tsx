@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { ChevronRight } from 'lucide-react'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 import { cn } from '@/lib/utils'
@@ -26,6 +27,7 @@ export function TaskChoice({
   return (
     <button
       type="button"
+      data-slot="task-choice"
       aria-pressed={pressed}
       onClick={onClick}
       className={cn(
@@ -36,7 +38,7 @@ export function TaskChoice({
       <span aria-hidden className="mt-0.5 shrink-0 text-muted-foreground [&_svg]:size-5">
         {icon}
       </span>
-      <span className="flex min-w-0 flex-col gap-1">
+      <span className="flex min-w-0 flex-1 flex-col gap-1">
         <span className="font-medium">
           {title}
           {unfinished && !pressed && (
@@ -47,6 +49,7 @@ export function TaskChoice({
         </span>
         <span className="text-muted-foreground">{description}</span>
       </span>
+      <ChevronRight aria-hidden className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
     </button>
   )
 }

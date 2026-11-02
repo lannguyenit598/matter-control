@@ -1,5 +1,6 @@
 'use client'
 
+import { SelectionControl } from '@/components/atoms/selection-control'
 import { Search, X } from 'lucide-react'
 import {
   useCallback,
@@ -282,7 +283,7 @@ export function SearchPicker({
           {shown.map((option) => (
             <li key={option.value}>
               <label className="flex min-h-10 cursor-pointer items-center gap-3 px-3 py-2 text-sm has-[:checked]:bg-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:-outline-offset-2 has-[:focus-visible]:outline-ring">
-                <input
+                <SelectionControl
                   type="radio"
                   name={name}
                   value={option.value}

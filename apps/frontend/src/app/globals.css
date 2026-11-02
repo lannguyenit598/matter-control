@@ -1,5 +1,6 @@
 /* Hallmark check: app screen; modes: light+dark; built: the project; redesign: polish; render: BLOCKED_TOOL_DISABLED. */
 @import 'tailwindcss';
+@import './pane-workbench.css';
 
 /*
  * Design tokens.
@@ -443,9 +444,9 @@
       min-height: 2.75rem;
     }
 
-    input[type='checkbox'],
-    input[type='radio'] {
-      min-width: 2.75rem;
+    /* Small marks belong in a large clickable label, not a stretched native checkbox. */
+    label:has(.selection-control) {
+      min-height: 2.75rem;
     }
   }
 
@@ -864,83 +865,84 @@
   color: var(--muted-foreground);
 }
 
-/* shortcut: unsupported browsers retain their native picker; review this fallback with the browser support matrix. */
-@supports (appearance: base-select) {
-  .ui-select:not([multiple]):not([size]),
-  .ui-select:not([multiple]):not([size])::picker(select) {
-    appearance: base-select;
-  }
+/* The native field keeps form/validation semantics; its enhanced list uses the top layer. */
+.ui-select {
+  appearance: none;
+}
 
-  .ui-select::picker-icon {
-    display: none;
-  }
+.select-popover {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--glass-popover-edge);
+  border-radius: 12px;
+  background: var(--popover);
+  color: var(--foreground);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-md);
+  scrollbar-width: thin;
+  scrollbar-color: var(--input) transparent;
+}
 
-  .ui-select:not([multiple]):not([size])::picker(select) {
-    min-inline-size: anchor-size(width);
-    max-inline-size: calc(100vw - 1rem);
-    max-block-size: min(20rem, 50dvh);
-    margin-block: 0.375rem;
-    padding: 0.25rem;
-    overflow-y: auto;
-    border: 1px solid var(--glass-popover-edge);
-    border-radius: calc(var(--radius) + 0.125rem);
-    background: var(--popover);
-    backdrop-filter: var(--glass-blur);
-    color: var(--foreground);
-    box-shadow: var(--shadow-md);
-    font: inherit;
-    scrollbar-width: thin;
-    scrollbar-color: var(--input) transparent;
-  }
+.select-popover [role='option'] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
 
-  .ui-select option {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    min-block-size: 2.25rem;
-    padding: 0.5rem 0.625rem;
-    border: 0;
-    border-radius: var(--radius);
-    background: transparent;
-    color: var(--foreground);
-    font: inherit;
-    font-weight: 400;
-    line-height: 1.4;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    cursor: pointer;
-  }
+.select-popover [role='option'] > span {
+  min-width: 0;
+}
+.select-popover [role='option'] > svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  visibility: hidden;
+}
+.select-popover [role='option'][aria-selected='true'] {
+  font-weight: 600;
+}
+.select-popover [role='option'][aria-selected='true'] > svg {
+  visibility: visible;
+}
+.select-popover [role='option'][data-active='true'] {
+  background: var(--accent);
+}
+.select-popover [role='option']:disabled {
+  color: var(--disabled);
+  cursor: not-allowed;
+}
 
-  .ui-select option[value=''] {
-    color: var(--muted-foreground);
+@media (max-width: 639px), (pointer: coarse) {
+  .select-popover [role='option'] {
+    min-height: 44px;
   }
+}
 
-  .ui-select option:checked {
-    background: var(--muted);
-    font-weight: 500;
+@media (forced-colors: active) {
+  .select-popover {
+    border-color: CanvasText;
+    box-shadow: none;
   }
-
-  .ui-select option:not(:disabled):hover,
-  .ui-select option:focus-visible {
-    background: var(--accent);
-    outline-offset: -2px;
-  }
-
-  .ui-select option:disabled {
-    color: var(--disabled);
-    cursor: not-allowed;
-  }
-
-  .ui-select option::checkmark {
-    order: 1;
-    margin-inline-start: auto;
-    color: var(--foreground);
-  }
-
-  @media (max-width: 639px), (pointer: coarse) {
-    .ui-select option {
-      min-block-size: 2.75rem;
-    }
+  .select-popover [role='option'][data-active='true'] {
+    outline: 1px solid Highlight;
   }
 }
 
@@ -1139,4 +1141,289 @@
 /* Keep the edge light; broad moving highlights would wash over the form description. */
 [data-slot='dialog-panel'] > .glass-surface > .glass-specular::after {
   content: none;
+}
+
+/* Native inputs keep submission, checked/indeterminate state and keyboard behavior. */
+.selection-control {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 1.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  vertical-align: middle;
+}
+
+.selection-control > .selection-control-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.selection-control-mark {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  pointer-events: none;
+  border: 1px solid var(--muted-foreground);
+  border-radius: 5px;
+  background: var(--card);
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-xs);
+}
+
+.selection-control-mark svg {
+  display: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  stroke-width: 2.5;
+}
+
+.selection-control-input:checked + .selection-control-mark,
+.selection-control-input:indeterminate + .selection-control-mark {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+.selection-control-input:checked + .selection-control-mark .selection-control-check,
+.selection-control-input:indeterminate + .selection-control-mark .selection-control-mixed {
+  display: block;
+}
+
+.selection-control-input:indeterminate + .selection-control-mark .selection-control-check {
+  display: none;
+}
+
+.selection-control-input[type='radio'] + .selection-control-mark {
+  border-radius: 50%;
+}
+
+.selection-control-dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: currentColor;
+  visibility: hidden;
+}
+
+.selection-control-input:checked + .selection-control-mark .selection-control-dot {
+  visibility: visible;
+}
+
+.selection-control-input:focus-visible + .selection-control-mark {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.selection-control-input[aria-invalid='true'] + .selection-control-mark {
+  border-color: var(--destructive);
+}
+
+.selection-control-input:disabled {
+  cursor: not-allowed;
+}
+
+.selection-control-input:disabled + .selection-control-mark {
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.calendar-field {
+  position: relative;
+  min-width: 0;
+}
+
+.calendar-field > input {
+  padding-right: 3rem;
+}
+
+.calendar-field > input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.calendar-trigger {
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+}
+
+.calendar-popover {
+  position: fixed;
+  inset: 0;
+  width: min(20rem, calc(100vw - 1.5rem));
+  max-height: calc(100dvh - 1.5rem);
+  margin: auto;
+  padding: 0.75rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  background: var(--liquid-face);
+  color: var(--foreground);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(24px) saturate(1.2);
+}
+
+@supports (position-area: bottom span-left) {
+  .calendar-popover {
+    inset: auto;
+    margin: 0.375rem 0;
+    position-area: bottom span-left;
+    position-try-fallbacks: flip-block, flip-inline;
+  }
+}
+
+.calendar-heading,
+.calendar-time,
+.calendar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.calendar-heading {
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.calendar-heading strong {
+  min-width: 0;
+  text-transform: capitalize;
+}
+
+.calendar-grid {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 2px;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.calendar-grid th {
+  padding-bottom: 0.375rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.calendar-grid td {
+  padding: 0;
+}
+
+.calendar-grid button {
+  width: 100%;
+  height: 2.25rem;
+  min-height: 2.25rem;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.calendar-grid button[data-outside] {
+  color: var(--muted-foreground);
+}
+
+.calendar-grid button:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+.calendar-grid button[aria-current='date'] {
+  border-color: var(--muted-foreground);
+}
+
+.calendar-grid [aria-selected='true'] button {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+}
+
+.calendar-time {
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8125rem;
+}
+
+.calendar-time label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.calendar-time svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--muted-foreground);
+}
+
+.calendar-time input {
+  width: 7.5rem;
+}
+
+.calendar-popover > p {
+  margin-top: 0.5rem;
+}
+
+.calendar-footer {
+  margin-top: 0.75rem;
+}
+
+.calendar-footer > :last-child {
+  margin-left: auto;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .calendar-popover {
+    background: var(--card);
+    backdrop-filter: none;
+  }
+}
+
+@supports not selector(:popover-open) {
+  .calendar-popover,
+  .calendar-trigger {
+    display: none;
+  }
+
+  .calendar-field > input::-webkit-calendar-picker-indicator {
+    display: block;
+  }
+}
+
+@media (forced-colors: active) {
+  .selection-control > .selection-control-input {
+    position: static;
+    opacity: 1;
+    appearance: auto;
+    forced-color-adjust: auto;
+  }
+
+  .selection-control-mark {
+    display: none;
+  }
+
+  .calendar-popover {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    backdrop-filter: none;
+  }
+
+  .calendar-grid [aria-selected='true'] button {
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
 }

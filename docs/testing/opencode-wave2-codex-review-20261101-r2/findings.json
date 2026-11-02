@@ -1,0 +1,112 @@
+{
+  "task": "MC-OPENCODE-WAVE2-CODEX-CANDIDATE-REVIEW-20261101-r2",
+  "as_of_utc": "2026-11-02T02:47:45Z",
+  "reviewer": "actual OpenCode / non-author (provider opencode, model glm-5.3-flash-free, OpenCode harness; second session)",
+  "wave_status": "IN_REVIEW_COMPLETE_WITH_BLOCKERS",
+  "scope_declaration": "verdicts apply to the 16 declared Wave2 paths, byte-identical across candidate B (base 64b9e03 + verified patch) and actual HEAD 978d8fc; dirty non-Wave2 work in the primary tree is outside this set",
+  "units": [
+    {
+      "unit": "G1",
+      "finding": "OV-F1-01 (filing proof-required with SIGNATURE purpose end-to-end)",
+      "disposition": "SOURCE_PASS / FIXED_PENDING_VERIFY — browser journey BLOCKED/NOT_RUN",
+      "verified_by_reviewer": {
+        "backend_green_on_B": "TestZFRepro_R2FilingF_OnD9Semantics_HTTP + TestFilings_HTTPFlow + TestSuiteW4_MemoryStore PASS (exit 0); refusal codes package-criteria-required and signature-criteria-required; full PACKAGE+SIGNATURE acceptance via independent verifier; OUTCOME PENDING",
+        "frontend_red": "3 failed / 15 passed at 2dd84c9 + d9-signature-ui.test.tsx overlay (schema/checklist parse, panel signature-axis, purpose selector)",
+        "frontend_green_on_B": "targeted 8-file suite 57/57 PASS"
+      },
+      "receipts_cited": ["codex-takeover/browser-gates.json", "codex-takeover/g1-red.json/g1-green.json", "docs/testing/codex-wave2-browser-smoke-20261101-r1 (partial, author-side)"],
+      "not_run": ["real two-actor Filing browser submission journey"],
+      "open_gates": ["browser journey in a live synthetic run (needs a session with working browser or explicit later authorization)"]
+    },
+    {
+      "unit": "G2",
+      "finding": "OV-R8-01 (release preflight content-blind scan fix)",
+      "disposition": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "verified_by_reviewer": {
+        "red_R1": "old CLI (4b6a65f blob, sha256 f3d590bd...) exit 0 'clean' on planted PEM + sentinel artifact (false clean); no value echo",
+        "red_R2": "old CLI exit 1 TypeError: text.split is not a function on .env.local plant; no value echo",
+        "green_artifacts": "fixed CLI exit 1 with 3 findings (env file + API_KEY key named, PEM block, sentinel marker); values withheld",
+        "green_tracked_source": "fixed CLI exit 1 with 3 findings (.env.staging BFF_TOKEN key named, tracked-pem.dat PEM, tracked-sentinel.txt sentinel); values withheld",
+        "clean_scans": "exit 0 on both candidate B and primary A",
+        "node_suites": "unit 5/5 and integration 4/4 PASS (exit 0)"
+      },
+      "not_run": ["byte-scan of rebuilt webpack/worker/standalone artifacts (receipt-only); certification beyond tracked-scan surface"]
+    },
+    {
+      "unit": "G3",
+      "finding": "OV-F1-02 (SIGNATURE purpose preserved through replay)",
+      "disposition": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "verified_by_reviewer": {
+        "red": "TestReplayBrief_PurposeOfKeepsSignature FAIL 'purposeOf(\"SIGNATURE\") = PACKAGE, want SIGNATURE' on pre-fix purposeOf",
+        "green": "12 TestReplayBrief cases pass in candidate B (exit 0)"
+      }
+    },
+    {
+      "unit": "G4",
+      "finding": "OV-F1-03 (migration 0011 Down data-safe)",
+      "disposition": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "verified_by_reviewer": {
+        "fixture": "own disposable PG fixture mc-opencode-w2r2-fixture-g4q7p (fresh; never a retained/manual DB)",
+        "red": "pre-fix Down → SQLSTATE 23514 (criteria_purpose_check violated by some row)",
+        "green": "KeepsLegacyRowsAsPackage PASS + DownIsDataSafe PASS; legacy rows stay PACKAGE through Up and rollback remaps SIGNATURE→PACKAGE before re-adding the two-value CHECK (documented lossy rollback-only mapping)"
+      },
+      "boundaries": "no Down executed against production or any retained/manual DB"
+    },
+    {
+      "unit": "G5",
+      "finding": "OV-R12-01 (scheduled-dump retention prune)",
+      "disposition": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "verified_by_reviewer": {
+        "probe": "case1 dumps=2 sidecars=2 pruned=3; case2 dumps=1 pruned=0; 'G5 PROBE: ALL PASS' exit 0",
+        "probe_safety": "fake pg_dump/pg_restore; temp dirs only; synthetic synthetic DSN; no DB/provider touched"
+      },
+      "scope_limit": "retention logic only; no scheduler/cloud/provider reliability claim"
+    },
+    {
+      "unit": "G6",
+      "finding": "OV-F1-04 (one refusal names package and signature gaps together)",
+      "disposition": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "verified_by_reviewer": {
+        "red": "TestSubmissionRefusalNamesPackageAndMissingSignatureTogether FAIL with old one-gap refusal 'package criteria are not satisfied: PKG (MISSING)'",
+        "green": "internal/core/domain/matter suite passes (exit 0; 52 verdict lines)",
+        "source_check": "case StageSubmission, StageResponse: shares the D-9 gate block; standalone undeclared signature keeps its own signature-criteria-required code; no guard weakening found"
+      },
+      "receipts_cited": ["filed-guard-copy red is receipt-only (author g6-red.json); backend red reproduced instead"]
+    },
+    {
+      "unit": "G7",
+      "finding": "F8/P-09 (shell-level action announcer wiring)",
+      "disposition": "SOURCE_PASS / FIXED_PENDING_VERIFY — screen-reader smoke BLOCKED/NOT_RUN",
+      "verified_by_reviewer": {
+        "source_pass": "persistent sr-only polite role=status region in action-announcer.tsx (starts empty; identical repeats re-keyed; fixed EN/VI failure map; no raw record/test text; outcome-unknown never says 'Saved'; CAS-only blocked); intent-form pending-attempt recovery RESTORED_UNKNOWN + same-key frozen-attempt retry + key rotation only on success; alert live={!shellAnnouncements} dedup; confirm-action-button and inline-edit wired; form-dialog doneAnnounced suppresses duplicate role=status; layout mount verified in B and retained in A's dirty layout",
+        "suites": "action-announcer/proof/form-dialog/intent-attempt/recovery tests pass in the B targeted suite and in the A full run"
+      },
+      "not_run": ["actual screen-reader smoke (BLOCKED/NOT_RUN; no bypass)"],
+      "red_note": "G7 red is receipt-only in r2 (author g7-red.json)"
+    }
+  ],
+  "aggregated_suites": {
+    "B_targeted_frontend": "8 files / 57 tests / 57 PASS",
+    "A_full_vitest": "exit 0; 896 passed / 12 skipped (117 files); author receipt claimed 858/12 (delta +38 = unrelated dirty-work tests added since)",
+    "B_backend_gate": "sqlc-check exit 0; gofmt clean; go mod tidy -diff clean; golangci-lint 0 issues; go test -race ./... exit 0 direct-captured (14 ok / 0 FAIL / 7 no-test-files; genuine full run; postgres package 106.261s includes the PG-adapted shared contract battery; repotest memory 1.522s; objectstore 7.951s)"
+  },
+  "author_side_items_left_open": [
+    "W2-BROWSER-01 (AdvanceForm retained stage-state mismatch; B06 REPRODUCED_DEFECT in codex-wave2-browser-smoke-20261101-r1; workboard-registered OPEN; outside this review set)",
+    "G1 two-actor positive submission and verifier designation (B07 BLOCKED_AUTHORIZATION / B08 NOT_RUN in the same smoke)",
+    "G7 real speech (B09 NOT_RUN_STALE_RUNTIME then a later :3000 refresh reported receipt-only)"
+  ],
+  "return_path": "docs/testing/opencode-wave2-codex-review-20261101-r2/return.md",
+  "non_goals": [
+    "no CLOSED_VERIFIED for the Wave2 wave as a whole",
+    "no MC-002 DONE",
+    "no release/deploy or provider/infrastructure claim",
+    "no commit-governance adjudication"
+  ],
+  "provenance_sources": [
+    "docs/testing/mc-p1-fix-wave-2-20261101-r1/codex-takeover/staged-candidate.json (byte-verified)",
+    "docs/testing/mc-p1-fix-wave-2-20261101-r1/return.md + findings-update.md (author claims)",
+    "docs/testing/opencode-verify-wave-20261031-r1/ (original R8/R12/F1 context)",
+    "docs/testing/opendesign-ux-plan-review-20261101-r1/ux-copy-for-guards.md (G6 design intent)",
+    "docs/testing/opencode-wave2-codex-review-20261101-r1/ (different earlier session; not adopted, not edited)"
+  ]
+}

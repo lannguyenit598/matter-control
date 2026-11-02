@@ -1,0 +1,5 @@
+--- FAIL: TestCriterionPurposeMigration0011DownIsDataSafe (0.27s)
+    criterion_purpose_migration_test.go:100: data-safe down 0011: partial migration error (type:sql,version:11): ERROR: check constraint "criteria_purpose_check" of relation "criteria" is violated by some row (SQLSTATE 23514)
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/outbound/postgres	0.674s
+FAIL

@@ -90,6 +90,7 @@ export function WorkGrid({
       </p>
       <div
         data-slot="record-table"
+        data-density={density}
         className="overflow-x-auto rounded-lg border"
         tabIndex={0}
         aria-label="Work items table, scrollable"

@@ -1,5 +1,6 @@
 'use client'
 
+import { SelectionControl } from '@/components/atoms/selection-control'
 import { LocalizedText } from '@/components/molecules/localized-text'
 import { useLocale } from '@/hooks/use-locale'
 
@@ -395,7 +396,7 @@ export function PromoteForm({
             {(c) => <Textarea name="reason" rows={2} maxLength={2000} {...c} />}
           </FormField>
           <label className="flex items-center gap-2 text-sm">
-            <input type="checkbox" name="acknowledged" value="yes" className="size-4" />
+            <SelectionControl name="acknowledged" value="yes" className="size-4" />
             <LocalizedText en="I have read this impact" vi="Tôi đã đọc các ảnh hưởng này" />
           </label>
           {errors.acknowledged?.[0] && (

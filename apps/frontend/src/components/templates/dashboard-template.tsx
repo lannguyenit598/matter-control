@@ -7,6 +7,7 @@ export type DashboardTemplateProps = {
   /** Desktop navigation (hidden below md). */
   sidebar: ReactNode
   header: ReactNode
+  bottomNavigation?: ReactNode
   children: ReactNode
 }
 
@@ -15,9 +16,14 @@ export type DashboardTemplateProps = {
  * Pure layout with slots. It knows nothing about routes, data or navigation items;
  * the route layout (app/(app)/layout.tsx) fills the slots.
  */
-export function DashboardTemplate({ sidebar, header, children }: DashboardTemplateProps) {
+export function DashboardTemplate({
+  sidebar,
+  header,
+  bottomNavigation,
+  children,
+}: DashboardTemplateProps) {
   return (
-    <div className="app-shell flex min-h-dvh bg-background">
+    <div data-workbench="pane" className="app-shell flex min-h-dvh bg-background">
       <a
         href="#main-content"
         className="sr-only z-50 rounded-md bg-background px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
@@ -30,11 +36,12 @@ export function DashboardTemplate({ sidebar, header, children }: DashboardTempla
         </GlassSurface>
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="app-mobile-header">{header}</div>
+        <div className="app-toolbar-slot">{header}</div>
         <main id="main-content" className="app-main min-w-0 flex-1">
           <div className="w-full">{children}</div>
         </main>
       </div>
+      {bottomNavigation}
     </div>
   )
 }

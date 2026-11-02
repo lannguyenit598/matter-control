@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, type ReactNode } from 'react'
 
 import { clearAllDrafts } from '@/lib/mc/drafts'
+import { notifyPrivateUi, usePrivateScope } from '@/lib/mc/private-ui-events'
 
 const DraftNamespace = createContext<string | null>(null)
 
@@ -28,9 +29,15 @@ export const useDraftNamespace = () => useContext(DraftNamespace)
  * with it and a later re-grant cannot revive it. Drafts are not indexed by Matter, so the purge is
  * tab-wide rather than guessing which keys belonged to the lost scope.
  */
-export function PurgeDrafts() {
+export function PurgeDrafts({
+  reason = 'access-recheck',
+}: {
+  reason?: 'session-ended' | 'access-recheck'
+}) {
+  const scope = usePrivateScope()
   useEffect(() => {
     clearAllDrafts()
-  }, [])
+    if (scope) void notifyPrivateUi({ type: reason, scope })
+  }, [scope, reason])
   return null
 }

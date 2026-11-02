@@ -1,5 +1,6 @@
 'use client'
 
+import { SelectionControl } from '@/components/atoms/selection-control'
 import { ClipboardCheck, FileX, Flag, Pencil, Scale, Undo2 } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -726,7 +727,7 @@ function CriterionForm({
               )}
             </FormField>
           )}
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid items-start gap-3 sm:grid-cols-2">
             <FormField label={<LocalizedText en="Required?" vi="Bắt buộc?" />}>
               {(c) => (
                 <Select
@@ -741,10 +742,11 @@ function CriterionForm({
               )}
             </FormField>
             <FormField
-              label={
+              label={<LocalizedText en="Valid for (days)" vi="Thời hạn hiệu lực (ngày)" />}
+              hint={
                 <LocalizedText
-                  en="Valid for (days once accepted, 0 = unbounded)"
-                  vi="Hiệu lực sau chấp nhận (ngày; 0 = không giới hạn)"
+                  en="Days once accepted; 0 = unbounded."
+                  vi="Số ngày sau chấp nhận; 0 = không giới hạn."
                 />
               }
               error={errors.validDays?.[0]}
@@ -928,7 +930,7 @@ function EvidenceForm({ ctx, criteria }: { ctx: ProofContext; criteria: Criterio
             )}
             {criteria.map((c) => (
               <label key={c.id} className="flex items-center gap-2 text-sm">
-                <input type="checkbox" name="claims" value={c.id} className="size-4" />
+                <SelectionControl name="claims" value={c.id} className="size-4" />
                 {c.title}
               </label>
             ))}

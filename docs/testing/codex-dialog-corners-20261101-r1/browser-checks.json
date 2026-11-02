@@ -1,0 +1,65 @@
+{
+  "utc": "2026-11-01T10:00:27.583521+00:00",
+  "agent": "actual Local Codex",
+  "browserTool": "mcp__cua_repl",
+  "scope": "Real authenticated UI, default 602px viewport, dark/light, 390x844 and 390x600 override then reset",
+  "before": {
+    "dialogRadius": "16px",
+    "glassRadius": "16px",
+    "opticalLayerCount": 1,
+    "svgRefractionScale": 12,
+    "visual": "Star-shaped corner artifacts reproduced and screenshot saved"
+  },
+  "after": {
+    "opticalLayerCount": 0,
+    "blurLayerCount": 1,
+    "specularLayerCount": 1,
+    "radius": "16px",
+    "visual": "No star-shaped corners observed in light/dark and narrow workspace dialog",
+    "focus": [
+      "Input receives initial focus",
+      "Tab moves to Create workspace",
+      "Escape closes dialog",
+      "Focus returns to New workspace trigger"
+    ],
+    "mobile": {
+      "viewportWidth": 390,
+      "documentScrollWidth": 390,
+      "dialogWidth": 358
+    },
+    "longForm": {
+      "viewport": "390x600",
+      "dialogHeight": 566,
+      "scrollClientHeight": 568,
+      "scrollHeight": 716,
+      "observedScrollTop": 148,
+      "submitButtonRect": {
+        "top": 518,
+        "bottom": 562
+      },
+      "submitted": false
+    },
+    "G7InitialMount": {
+      "role": "status",
+      "ariaLive": "polite",
+      "ariaAtomic": true,
+      "screenReaderOnly": true,
+      "text": "",
+      "speechTest": "NOT_RUN"
+    },
+    "viewportRestored": true,
+    "themeRestored": "light"
+  },
+  "gates": {
+    "related": "4 files /16 PASS",
+    "regressionRed": "1 FAIL /4 PASS before fix in isolated old-source copy",
+    "checkFinal": "PASS,860 passed/12 skipped, typecheck/lint/format/agents pass",
+    "buildWebpackCss": "PASS",
+    "storybook": "PASS"
+  },
+  "firstCheckFailure": "2 env-test failures caused by verification runner injecting build-only API_MODE/API_BASE_URL into check. Runner corrected; no test assertions or product source changed for those failures. Failed receipt/log retained.",
+  "snapshotBoundary": "Existing dependencies reused without install/relink; .env and raw .mimosa history excluded from isolated source copy, no formatter policy/exclusion edited in primary",
+  "domainMutations": false,
+  "primarySourcePinsAtClose": "3/3 MATCH",
+  "independentAcceptance": "PENDING"
+}

@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const PORT = Number(process.env.PORT ?? 3000)
+const isProduction = process.env.NODE_ENV === 'production' || process.env.PREFETCH_TEST === '1'
 
 /**
  * E2E tests run against demo mode (in-memory data shared by the server process),
@@ -20,11 +21,10 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    // Demo mode is refused by a production server (TB-12): these template e2e use the dev server.
-    command: 'pnpm dev',
-    url: `http://localhost:${PORT}/dashboard`,
+    command: isProduction ? 'pnpm start' : 'pnpm dev',
+    url: `http://localhost:${PORT}/my-actions`,
     reuseExistingServer: !process.env.CI,
-    env: { PORT: String(PORT), API_MODE: 'demo' },
+    env: isProduction ? { PORT: String(PORT) } : { PORT: String(PORT), API_MODE: 'demo' },
     timeout: 120_000,
   },
 })

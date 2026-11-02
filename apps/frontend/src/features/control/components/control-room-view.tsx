@@ -1,5 +1,4 @@
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
-import { GlassSurface } from '@/components/molecules/glass-surface'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 import { Badge } from '@/components/atoms/badge'
@@ -48,15 +47,13 @@ function Section({
 }) {
   return (
     <section aria-labelledby={id} className="control-room-section liquid-panel rounded-xl border">
-      <GlassSurface radius={14} bezel={12} refraction={8} frost={0.72} className="rounded-xl">
-        <div className="p-4">
-          <h2 id={id} className="text-lg font-semibold">
-            {title}
-          </h2>
-          {hint && <p className="mb-2 text-sm text-muted-foreground">{hint}</p>}
-          {children}
-        </div>
-      </GlassSurface>
+      <div className="p-4">
+        <h2 id={id} className="text-lg font-semibold">
+          {title}
+        </h2>
+        {hint && <p className="mb-2 text-sm text-muted-foreground">{hint}</p>}
+        {children}
+      </div>
     </section>
   )
 }

@@ -53,6 +53,10 @@ func toProblem(ctx context.Context, err error) problem {
 	var rej *matter.RejectedError
 	var role matter.InvalidRoleError
 	switch {
+	case errors.Is(err, port.ErrSearchInvalid):
+		return mk(http.StatusBadRequest, "bad-request", "Bad Request", "invalid search request", false)
+	case errors.Is(err, port.ErrSearchStale):
+		return mk(http.StatusConflict, "search-stale", "Conflict", "search results changed; refresh the search", false)
 	case errors.Is(err, context.Canceled) || (ctx != nil && ctx.Err() == context.Canceled):
 		return problem{Type: "urn:mc:client-closed-request", Title: "Client Closed Request", Status: StatusClientClosedRequest}
 	case errors.Is(err, errMalformed):

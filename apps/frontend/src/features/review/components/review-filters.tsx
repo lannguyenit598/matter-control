@@ -1,5 +1,8 @@
 import Link from 'next/link'
+import { Search } from 'lucide-react'
 
+import { Button } from '@/components/atoms/button'
+import { Input } from '@/components/atoms/input'
 import { LocalizedText } from '@/components/molecules/localized-text'
 import { cn } from '@/lib/utils'
 
@@ -52,20 +55,18 @@ export function ReviewFilters({
             vi="Tìm câu trả lời, câu hỏi và tài liệu"
           />
         </label>
-        <input
+        <Input
           id="review-q"
           name="q"
           type="search"
           maxLength={100}
           defaultValue={filter.q ?? ''}
-          className="control-target min-w-0 flex-1 rounded-md border border-input bg-card px-3 text-sm"
+          className="flex-1"
         />
-        <button
-          type="submit"
-          className="control-target rounded-md border border-input bg-card px-3 text-sm hover:bg-accent"
-        >
+        <Button type="submit" variant="outline">
+          <Search aria-hidden />
           <LocalizedText en="Search" vi="Tìm" />
-        </button>
+        </Button>
       </form>
     </div>
   )

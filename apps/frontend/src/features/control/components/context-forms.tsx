@@ -1,5 +1,6 @@
 'use client'
 
+import { SelectionControl } from '@/components/atoms/selection-control'
 import { LocalizedText } from '@/components/molecules/localized-text'
 
 import { CircleX } from 'lucide-react'
@@ -71,7 +72,7 @@ export function CreateContextForm({
             </legend>
             {items.map((i) => (
               <label key={i.id} className="flex items-center gap-2 text-sm">
-                <input type="checkbox" name="links" value={i.id} className="size-4" />
+                <SelectionControl name="links" value={i.id} className="size-4" />
                 {i.label}
               </label>
             ))}

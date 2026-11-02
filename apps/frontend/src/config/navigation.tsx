@@ -1,30 +1,43 @@
-import { Building2, ClipboardCheck, FolderOpen, ListChecks } from 'lucide-react'
+import { Building2, ClipboardCheck, FolderOpen, ListChecks, type LucideIcon } from 'lucide-react'
 
 import { LocalizedText } from '@/components/molecules/localized-text'
 
 import type { NavItem } from '@/components/molecules/nav-menu'
 
-/** Main navigation. Add an entry here when you add a feature route. */
-export const mainNavigation: NavItem[] = [
-  {
-    href: '/my-actions',
-    label: <LocalizedText en="My Work" vi="Việc của tôi" />,
-    icon: <ListChecks />,
-  },
-  {
-    href: '/my-reviews',
-    label: <LocalizedText en="Reviews due" vi="Cần xác minh" />,
-    icon: <ClipboardCheck />,
-  },
-  {
-    href: '/matters',
-    label: <LocalizedText en="Matters" vi="Hồ sơ" />,
-    icon: <FolderOpen />,
-    alsoActiveFor: ['/requirements'],
-  },
-  {
-    href: '/workspaces',
-    label: <LocalizedText en="Workspaces" vi="Không gian làm việc" />,
-    icon: <Building2 />,
-  },
+/**
+ * Plain-data jump destinations: the single source shared by the sidebar/mobile navigation
+ * (mainNavigation) and the command palette (CommandPalette). Add an entry here when you add a
+ * feature route.
+ */
+export type MainDestination = {
+  href: string
+  en: string
+  vi: string
+  /** Other path prefixes that belong to this destination, e.g. a requirement lives under Matters. */
+  alsoActiveFor?: readonly string[]
+}
+
+export const mainDestinations: readonly MainDestination[] = [
+  { href: '/my-actions', en: 'My Work', vi: 'Việc của tôi' },
+  { href: '/my-reviews', en: 'Reviews due', vi: 'Cần xác minh' },
+  { href: '/matters', en: 'Matters', vi: 'Hồ sơ', alsoActiveFor: ['/requirements'] },
+  { href: '/workspaces', en: 'Workspaces', vi: 'Không gian làm việc' },
 ]
+
+const NAV_ICONS: Partial<Record<string, LucideIcon>> = {
+  '/my-actions': ListChecks,
+  '/my-reviews': ClipboardCheck,
+  '/matters': FolderOpen,
+  '/workspaces': Building2,
+}
+
+/** Main navigation for the sidebar and the mobile drawer. */
+export const mainNavigation: NavItem[] = mainDestinations.map((destination) => {
+  const Icon = NAV_ICONS[destination.href]
+  return {
+    href: destination.href,
+    label: <LocalizedText en={destination.en} vi={destination.vi} />,
+    icon: Icon ? <Icon /> : undefined,
+    alsoActiveFor: destination.alsoActiveFor,
+  }
+})

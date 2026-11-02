@@ -34,6 +34,9 @@ export type McRequest<T> = {
   receiptedInBody?: boolean
   schema: z.ZodType<T>
   timeoutMs?: number
+  semantics?: 'read'
+  signal?: AbortSignal
+  operationId?: string
 }
 
 const ID = /^[A-Za-z0-9_-]{1,100}$/
@@ -53,6 +56,16 @@ export async function mcRequest<T>(path: string, req: McRequest<T>): Promise<McR
   if (serverEnv.API_MODE !== 'rest') throw new McError('unavailable', 503)
   const session = await requireSession()
   const method = req.method ?? 'GET'
+  if (
+    req.semantics === 'read' &&
+    (path !== '/search' ||
+      method !== 'POST' ||
+      req.raw ||
+      req.idempotencyKey ||
+      req.receiptedInBody ||
+      req.ifMatch)
+  )
+    throw new McError('internal', 500)
   const url = new URL(`${serverEnv.API_BASE_URL.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`)
   for (const [k, v] of Object.entries(req.query ?? {}))
     if (v !== undefined && v !== '') url.searchParams.set(k, String(v))
@@ -68,8 +81,10 @@ export async function mcRequest<T>(path: string, req: McRequest<T>): Promise<McR
   }
   if (req.ifMatch) headers.set('If-Match', req.ifMatch)
   if (req.idempotencyKey) headers.set('Idempotency-Key', req.idempotencyKey)
+  if (req.operationId && /^[a-f0-9-]{6,64}$/.test(req.operationId))
+    headers.set('X-Request-Id', req.operationId)
 
-  const command = method !== 'GET'
+  const command = method !== 'GET' && req.semantics !== 'read'
   const receipted = req.idempotencyKey !== undefined || req.receiptedInBody === true
   // A lost or unusable answer is UNKNOWN for a command (it may have committed) and plain
   // unavailability for a read. Only transport/body-consumption failures are caught here:
@@ -87,7 +102,10 @@ export async function mcRequest<T>(path: string, req: McRequest<T>): Promise<McR
       body: req.raw ? req.raw.body : req.body === undefined ? undefined : JSON.stringify(req.body),
       // A streamed request body needs half-duplex fetch (undici); it is not in lib.dom's types.
       ...(req.raw && typeof req.raw.body !== 'string' ? { duplex: 'half' } : {}),
-      signal: AbortSignal.timeout(req.timeoutMs ?? serverEnv.API_TIMEOUT_MS),
+      signal: AbortSignal.any([
+        AbortSignal.timeout(req.timeoutMs ?? serverEnv.API_TIMEOUT_MS),
+        ...(req.signal ? [req.signal] : []),
+      ]),
       cache: 'no-store',
     })
   } catch (cause) {
@@ -110,7 +128,8 @@ export async function mcRequest<T>(path: string, req: McRequest<T>): Promise<McR
   } catch {
     // skip: a non-JSON body (proxy error page) is classified by status or treated as unusable
     json = undefined
-    if (res.ok) throw lost(new SyntaxError('unusable response body'))
+    if (res.ok)
+      throw command ? lost(new SyntaxError('unusable response body')) : new McError('internal', 502)
   }
 
   if (!res.ok) throw problemFrom(res.status, json, { command, receipted })
