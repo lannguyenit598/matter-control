@@ -1,6 +1,8 @@
+> Maintained reference: approved business semantics are preserved from the coordination baseline. Dated implementation/approval observations below are historical; use the [application contract](../api/contract.md) and [architecture](../architecture/README.md) for current source behavior. No production acceptance is implied.
+
 # Golden Workflow Acceptance Specifications
 
-Owner: Codex. Status: APPROVED_BY_PO / NOT_RUN, 2026-10-24, subject `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Sequences are APPROVED_INPUT; guards and policies are approved per RULE/OBD. Tests must exercise persisted business behavior, permissions, history and state readback across views; mock screens alone do not pass. Synthetic Atlas at `20f12fe` is a starting context, not a completed workflow fixture.
+Owner: Codex. Status: APPROVED_BY_PO / NOT_RUN, 2026-10-24, subject `572835a`; [approval record](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/ai-sdlc/step-01-approval.md). Sequences are APPROVED_INPUT; guards and policies are approved per RULE/OBD. Tests must exercise persisted business behavior, permissions, history and state readback across views; mock screens alone do not pass. Synthetic Atlas at `20f12fe` is a starting context, not a completed workflow fixture.
 
 ## GW-01 — Transaction / Restructuring
 

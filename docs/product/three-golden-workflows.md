@@ -1,3 +1,5 @@
+> Maintained reference: approved business semantics are preserved from the coordination baseline. Dated implementation/approval observations below are historical; use the [application contract](../api/contract.md) and [architecture](../architecture/README.md) for current source behavior. No production acceptance is implied.
+
 # Three Golden Workflows
 
 Source: SRC-00A / Task 4. **Cả ba workflows là acceptance targets đã được chấp thuận của Operational MVP.**

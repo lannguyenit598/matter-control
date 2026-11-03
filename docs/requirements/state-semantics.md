@@ -1,6 +1,8 @@
+> Maintained reference: approved business semantics are preserved from the coordination baseline. Dated implementation/approval observations below are historical; use the [application contract](../api/contract.md) and [architecture](../architecture/README.md) for current source behavior. No production acceptance is implied.
+
 # Five State Dimensions — Business Semantics
 
-Owner: Codex. Vocabulary/separation: APPROVED_INPUT. Applicability, transitions, guards and side effects below: **APPROVED_BY_PO**, 2026-10-24, under OBD-02/04/05/06/11 at `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Not a storage/API design. Authoritative evaluation belongs to the system business rules; the frontend displays returned state/reasons and cannot independently establish verification/readiness.
+Owner: Codex. Vocabulary/separation: APPROVED_INPUT. Applicability, transitions, guards and side effects below: **APPROVED_BY_PO**, 2026-10-24, under OBD-02/04/05/06/11 at `572835a`; [approval record](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/ai-sdlc/step-01-approval.md). Not a storage/API design. Authoritative evaluation belongs to the system business rules; the frontend displays returned state/reasons and cannot independently establish verification/readiness.
 
 ## Applicability and defaults
 
@@ -64,17 +66,17 @@ Golden sequence remains Requirement → Package Preparation → Signature → Su
 
 | Stage transition | Required observation / evidence | Execution proposal |
 |---|---|---|
-| Requirement → Package Preparation | Filing scope and responsible owner, applicable package criteria | NOT_STARTED → IN_PROGRESS |
+| Requirement → Package Preparation | Filing scope and responsible owner, applicable package criteria (≥1 PACKAGE-purpose criterion; an OUTCOME criterion never substitutes — D-9) | NOT_STARTED → IN_PROGRESS |
 | Package Preparation → Signature | Required document versions identified, non-signature preparation complete | IN_PROGRESS; WAITING when signatory outstanding |
-| Signature → Submission | All applicable signature/package criteria satisfied; submission reference/time and exact submitted versions | IN_PROGRESS; submission is not completion |
+| Signature → Submission | All applicable signature/package criteria satisfied; for a proof-required filing at least one SIGNATURE-purpose criterion declared and every mandatory one satisfied (a generic package criterion does not prove signatures — D-9); submission reference/time and exact submitted versions | IN_PROGRESS; submission is not completion |
 | Submission → Receipt | Actual acknowledgement reference/evidence | IN_PROGRESS or WAITING while awaiting acknowledgement |
 | Receipt → Authority Review | Receipt retained, recorded awaiting authority outcome, external party identified | WAITING |
 | Authority Review → Supplement | Authority request recorded, follow-up owner/due and new package cycle | IN_PROGRESS (or WAITING for missing external input) |
-| Supplement → Response | Requested items satisfied, response evidence/reference and exact versions recorded | IN_PROGRESS |
+| Supplement → Response | Requested items satisfied, response evidence/reference and exact versions recorded; a response is the cycle's re-submission, so the D-9 package and SIGNATURE gates apply to it exactly as to a submission (fix-wave #2 G6 decision — OV-F1-04b) | IN_PROGRESS |
 | Response → Authority Review | Response submitted, awaiting next outcome | WAITING; repeat cycle retained |
 | Authority Review / Response → Approval | Actual authority outcome proof recorded; verification separately reviewed | COMPLETED may remain UNVERIFIED until verifier accepts |
 
-If signatures not applicable, OWNER records applicability reason before Signature→Submission; do not invent signatures. Rejection/withdrawal is an explicit outcome/reason (not Approval): close execution CANCELLED by OWNER, preserve rejection proof/history and linked Requirement unmet. Correction of erroneous stage appends an attributed correction; it must not fabricate missing events. Changes after final approval require OWNER reopen and preserve earlier submission/outcome. Repeating supplement cycles have distinct references; no overwriting the first request.
+If signatures not applicable, OWNER records applicability reason before Signature→Submission; do not invent signatures. **D-9 amendment (RATIFIED by PO 2026-10-31, Z-F-01/Z-F-02):** a criterion's purpose is typed `PACKAGE` (default, and the only reading of every legacy row), `SIGNATURE`, or `OUTCOME`. A proof-required filing enters Package Preparation only with ≥1 non-retired PACKAGE-purpose criterion, and its submission additionally requires a SIGNATURE-purpose criterion to be declared and every mandatory one satisfied — a generic package criterion never stands in for the signatures. Waivers stay OWNER-only: the no-signature applicability decision, or every SIGNATURE criterion retired with a recorded reason. An undeclared package is never a ready one, even for an in-flight filing that reached Signature without the package gate. Rejection/withdrawal is an explicit outcome/reason (not Approval): close execution CANCELLED by OWNER, preserve rejection proof/history and linked Requirement unmet. Correction of erroneous stage appends an attributed correction; it must not fabricate missing events. Changes after final approval require OWNER reopen and preserve earlier submission/outcome. Repeating supplement cycles have distinct references; no overwriting the first request.
 
 ## Edge cases and verification
 

@@ -1,6 +1,8 @@
+> Maintained reference: approved business semantics are preserved from the coordination baseline. Dated implementation/approval observations below are historical; use the [application contract](../api/contract.md) and [architecture](../architecture/README.md) for current source behavior. No production acceptance is implied.
+
 # P0 / P1 / P2 Capability Baseline
 
-Source: [SRC-00A / Task 3](../ai-sdlc/step-00a-request.md), clarified by [SRC-00A1 / §5.5–5.7](../ai-sdlc/step-00a1-request.md). **APPROVED_INPUT**: product direction và danh sách capability đã được Product Owner chấp thuận. Không xin phê duyệt lại danh sách này; acceptance rules chi tiết sẽ ở Step 01.
+Source: [SRC-00A / Task 3](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/ai-sdlc/step-00a-request.md), clarified by [SRC-00A1 / §5.5–5.7](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/ai-sdlc/step-00a1-request.md). **APPROVED_INPUT**: product direction và danh sách capability đã được Product Owner chấp thuận. Không xin phê duyệt lại danh sách này; acceptance rules chi tiết sẽ ở Step 01.
 
 Các ID REQ-MC dưới đây định danh capability, không phải bảng dữ liệu hay implementation task. Giữ nguyên các ID cũ khi chuẩn hóa tên; thêm P0-20 để trace Separate State Dimensions đã có trong canonical context. Đây là sửa coverage, không promote P1/P2.
 

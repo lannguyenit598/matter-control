@@ -1,0 +1,80 @@
+import type { NextConfig } from 'next'
+
+const isDev = process.env.NODE_ENV === 'development'
+const isWorkerBuild = process.env.MC_WORKER_BUILD === '1'
+const exposeTestingApi = process.env.EXPOSE_TESTING_API === '1'
+
+/**
+ * CSP without nonces (docs: 02-guides/content-security-policy.md, "Without Nonces").
+ * Nonces would force every page to render dynamically and are incompatible with Partial
+ * Prerendering, which the product routes use. 'unsafe-inline' is required for Next.js' own
+ * inline scripts and the theme script in app/layout.tsx; everything else is locked to 'self'.
+ * Add third-party origins (analytics, CDN, API called from the browser) here when you need them.
+ */
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' blob: data:",
+  "font-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  // 'upgrade-insecure-requests' is left out on purpose: it breaks plain-HTTP intranet deployments.
+  // Behind HTTPS, add it (or better, HSTS at your proxy/CDN).
+].join('; ')
+
+const securityHeaders = [
+  { key: 'Content-Security-Policy', value: contentSecurityPolicy },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  // Legacy equivalent of frame-ancestors 'none' for older browsers.
+  { key: 'X-Frame-Options', value: 'DENY' },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+  },
+]
+
+const nextConfig: NextConfig = {
+  // Self-contained server (`node server.js`) for the container image; see Dockerfile.
+  output: 'standalone',
+  // Node tracing selects pg-cloudflare's empty default export; the Worker bundle resolves
+  // the conditional workerd branch too. Keep that package's published runtime files.
+  outputFileTracingIncludes: {
+    '/*': ['./node_modules/.pnpm/pg-cloudflare@*/node_modules/pg-cloudflare/**/*'],
+  },
+  // Next.js 16 defaults: Cache Components (explicit caching with 'use cache', streaming with <Suspense>).
+  // Next16.4 atomic timers hang on workerd with this adapter; the tested Worker profile
+  // uses dynamic SSR. The Node/local profile retains Cache Components and prefetching.
+  cacheComponents: !isWorkerBuild,
+  partialPrefetching: !isWorkerBuild,
+  poweredByHeader: false,
+  experimental: {
+    exposeTestingApiInProductionBuild: exposeTestingApi,
+  },
+  async headers() {
+    return [{ source: '/(.*)', headers: securityHeaders }]
+  },
+  async redirects() {
+    return [{ source: '/', destination: '/my-actions', permanent: false }]
+  },
+  turbopack: {
+    // D-2 (UX-L-02): the Worker build cannot carry the root shell's `instant = false` segment
+    // config (it requires cacheComponents), so it resolves '@/app/root-shell' to the worker
+    // variant without the config; the Node build keeps the flag and blocks the root shell for
+    // the per-request interface language.
+    resolveAlias: isWorkerBuild
+      ? { '@/app/root-shell': './src/app/root-shell.worker.tsx' }
+      : undefined,
+    rules: {
+      '*.css': {
+        loaders: ['@tailwindcss/turbopack'],
+        as: '*.css',
+      },
+    },
+  },
+}
+
+export default nextConfig

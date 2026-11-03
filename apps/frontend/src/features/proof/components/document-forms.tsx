@@ -1,0 +1,527 @@
+'use client'
+
+import { SelectionControl } from '@/components/atoms/selection-control'
+import { LocalizedText } from '@/components/molecules/localized-text'
+import { useLocale } from '@/hooks/use-locale'
+
+import { Plus, FileSignature, Upload } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useContext, useRef, useState, useTransition, type FormEvent } from 'react'
+
+import { Button } from '@/components/atoms/button'
+import { Input } from '@/components/atoms/input'
+import { Textarea } from '@/components/atoms/textarea'
+import { Alert } from '@/components/molecules/alert'
+import { FormField } from '@/components/molecules/form-field'
+import { useDraftNamespace } from '@/components/organisms/draft-scope'
+import { FormDialog, TaskDialog } from '@/components/organisms/form-dialog'
+import { LocalDateTimeField } from '@/components/molecules/local-datetime-field'
+import { IntentForm, TaskSuccess } from '@/components/organisms/intent-form'
+import { useTimeZone } from '@/hooks/use-time-zone'
+import { fieldFailure, MESSAGES, type McActionResult } from '@/lib/mc/action-result'
+import { clearAttempt, saveAttempt } from '@/lib/mc/drafts'
+import { newIdempotencyKey } from '@/lib/mc/idempotency'
+import { readLocalField } from '@/lib/mc/local-time'
+import { usePendingAttempt } from '@/lib/mc/use-attempt'
+
+import { createDocumentAction, promoteVersionAction, recordSignatureAction } from '../actions'
+import type { DocumentDetail } from '../schemas'
+
+/**
+ * One header action opens a title-only dialog. The form stays mounted, so the draft, the
+ * idempotency key and an unconfirmed create survive close and reopen.
+ */
+export function CreateDocumentForm({
+  matterId,
+  matterTitle,
+}: {
+  matterId: string
+  matterTitle: string
+}) {
+  const router = useRouter()
+  return (
+    <FormDialog
+      trigger={
+        <>
+          <Plus aria-hidden />
+          <LocalizedText en="New document" vi="Tài liệu mới" />
+        </>
+      }
+      title={<LocalizedText en="New document" vi="Tài liệu mới" />}
+      description={
+        <LocalizedText
+          en="Start with a name. Files are uploaded afterwards as versions."
+          vi="Bắt đầu bằng tên tài liệu. Tệp được tải lên sau, dưới dạng các phiên bản."
+        />
+      }
+    >
+      {({ close }) => (
+        <IntentForm
+          receipted
+          draftKey={`matter:${matterId}:new-document`}
+          submitLabel={<LocalizedText en="Create document" vi="Tạo tài liệu" />}
+          run={(v, key) =>
+            createDocumentAction({ matterId, idempotencyKey: key, name: v.name ?? '' })
+          }
+          onSuccess={(r) => {
+            close()
+            if (r.id) router.push(`/matters/${matterId}/documents/${r.id}`)
+          }}
+        >
+          {({ errors }) => (
+            <>
+              <p className="text-sm">
+                <LocalizedText en="Matter:" vi="Hồ sơ:" />{' '}
+                <strong className="break-words">{matterTitle}</strong>
+              </p>
+              <FormField
+                label={<LocalizedText en="Document name" vi="Tên tài liệu" />}
+                required
+                error={errors.name?.[0]}
+              >
+                {(c) => (
+                  <Input name="name" maxLength={200} autoComplete="off" data-autofocus {...c} />
+                )}
+              </FormField>
+            </>
+          )}
+        </IntentForm>
+      )}
+    </FormDialog>
+  )
+}
+
+type UploadState =
+  | { kind: 'idle' }
+  | { kind: 'done'; replayed: boolean }
+  | { kind: 'failed'; result: Extract<McActionResult, { ok: false }> }
+
+/** Lower-case hex SHA-256 of the file bytes, or '' when the browser cannot compute it. */
+async function sha256Hex(file: File): Promise<string> {
+  try {
+    const digest = await crypto.subtle.digest('SHA-256', await file.arrayBuffer())
+    return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('')
+  } catch {
+    // skip: without a digest the attempt simply is not kept across a reload
+    return ''
+  }
+}
+
+const UNKNOWN_RETRY: Extract<McActionResult, { ok: false }> = {
+  ok: false,
+  kind: 'outcome-unknown',
+  error: MESSAGES['outcome-unknown'],
+  retrySameKey: true,
+}
+
+/**
+ * Uploads one file as the next version. The bytes go straight to the same-origin upload route
+ * (never through a Server Action) with an idempotency key that stays the same for every retry of
+ * this selection: an interrupted request is UNKNOWN, retrying with the same key either replays the
+ * stored version or stores it once. A new file mints a new key.
+ *
+ * A File cannot survive a reload, so when the answer was lost the key is kept with the file's name,
+ * size and SHA-256 (session storage, same scope rules as drafts). After a reload the key is reused
+ * only if the person chooses the same bytes again; any other file is a new intent.
+ */
+export function UploadVersionForm({
+  matterId,
+  documentId,
+}: {
+  matterId: string
+  documentId: string
+}) {
+  const router = useRouter()
+  const taskDone = useContext(TaskSuccess)
+  const locale = useLocale()
+  const [file, setFile] = useState<File | null>(null)
+  const [key, setKey] = useState(() => newIdempotencyKey())
+  const [state, setState] = useState<UploadState>({ kind: 'idle' })
+  const [pending, start] = useTransition()
+  const namespace = useDraftNamespace()
+  const scope = `document:${documentId}:upload`
+  // An upload whose answer was lost before a reload, read from storage: name, size and SHA-256.
+  const stored = usePendingAttempt(namespace, scope)
+  const earlier =
+    stored?.values.name && stored.values.size && stored.values.sha256
+      ? {
+          key: stored.key,
+          name: stored.values.name,
+          size: stored.values.size,
+          sha256: stored.values.sha256,
+        }
+      : null
+  const earlierName = earlier?.name ?? null
+  const [checking, setChecking] = useState(false)
+  const selection = useRef(0)
+
+  function forget() {
+    if (namespace) clearAttempt(namespace, scope)
+  }
+
+  async function remember(f: File, k: string) {
+    if (!namespace) return
+    const sha256 = await sha256Hex(f)
+    if (sha256)
+      saveAttempt(namespace, scope, {
+        key: k,
+        values: { name: f.name, size: String(f.size), sha256 },
+      })
+  }
+
+  function submit(e: FormEvent) {
+    e.preventDefault()
+    if (!file) return
+    const fail = (result: Extract<McActionResult, { ok: false }>) => {
+      setState({ kind: 'failed', result })
+      if (result.retrySameKey) void remember(file, key)
+      else forget()
+    }
+    start(async () => {
+      try {
+        const res = await fetch(`/api/matters/${matterId}/documents/${documentId}/versions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': file.type || 'application/octet-stream',
+            'Idempotency-Key': key,
+            'X-Filename': encodeURIComponent(file.name),
+          },
+          body: file,
+        })
+        const json = (await res.json().catch(() => null)) as McActionResult | null
+        if (res.ok && json?.ok) {
+          setState({ kind: 'done', replayed: json.replayed === true })
+          forget()
+          setFile(null)
+          setKey(newIdempotencyKey())
+          router.refresh()
+          taskDone?.(
+            json.replayed === true ? (
+              <LocalizedText
+                en="This file had already been stored."
+                vi="Tệp này đã được lưu trước đó."
+              />
+            ) : (
+              <LocalizedText en="Version stored." vi="Đã lưu phiên bản." />
+            ),
+          )
+          return
+        }
+        if (json && !json.ok) return fail(json)
+        // A 2xx or 5xx whose body is unusable may have committed: unknown, same key is safe.
+        fail(UNKNOWN_RETRY)
+      } catch {
+        fail(UNKNOWN_RETRY)
+      }
+    })
+  }
+
+  return (
+    <form onSubmit={submit} className="flex flex-col gap-3" aria-label="Upload a new version">
+      <FormField
+        label={<LocalizedText en="File" vi="Tệp" />}
+        required
+        hint={
+          <LocalizedText
+            en="Becomes the next version. It does not become current by being uploaded."
+            vi="Tạo phiên bản tiếp theo. Việc tải lên không tự chọn làm hiện hành."
+          />
+        }
+      >
+        {(c) => (
+          <Input
+            type="file"
+            name="file"
+            onChange={(e) => {
+              const chosen = e.target.files?.[0] ?? null
+              const ticket = ++selection.current
+              setFile(chosen)
+              setState({ kind: 'idle' })
+              const was = earlier
+              if (!chosen || !was) {
+                setKey(newIdempotencyKey()) // a different file is a different intent
+                return
+              }
+              // Same name, size and bytes as the upload whose answer was lost: same intent, same key.
+              setChecking(true)
+              void sha256Hex(chosen)
+                .then((sha256) => {
+                  if (ticket !== selection.current) return // a newer selection won
+                  const same =
+                    sha256 !== '' &&
+                    sha256 === was.sha256 &&
+                    chosen.name === was.name &&
+                    String(chosen.size) === was.size
+                  if (same) {
+                    setKey(was.key)
+                    setState({ kind: 'failed', result: UNKNOWN_RETRY })
+                  } else {
+                    setKey(newIdempotencyKey())
+                    forget()
+                  }
+                })
+                .finally(() => {
+                  if (ticket === selection.current) setChecking(false)
+                })
+            }}
+            {...c}
+          />
+        )}
+      </FormField>
+      <div>
+        <Button type="submit" loading={pending} disabled={!file || checking}>
+          {state.kind === 'failed' && state.result.retrySameKey
+            ? locale === 'vi'
+              ? 'Thử tải lại'
+              : 'Retry upload'
+            : locale === 'vi'
+              ? 'Tải lên phiên bản'
+              : 'Upload version'}
+        </Button>
+      </div>
+      {earlierName && state.kind === 'idle' && (
+        <Alert
+          title={
+            locale === 'vi' ? 'Lượt tải trước chưa được xác nhận' : 'Earlier upload not confirmed'
+          }
+        >
+          {locale === 'vi'
+            ? `Lượt tải trước của "${earlierName}" chưa được xác nhận. Chọn lại đúng tệp đó để thử lại an toàn; một tệp khác sẽ bắt đầu lượt tải mới.`
+            : `An earlier upload of "${earlierName}" was not confirmed. Choose the same file again to retry it safely; any other file starts a new upload.`}
+        </Alert>
+      )}
+      {state.kind === 'done' && (
+        <p role="status" className="text-sm">
+          {state.replayed
+            ? locale === 'vi'
+              ? 'Tệp này đã được lưu trước đó.'
+              : 'This file had already been stored.'
+            : locale === 'vi'
+              ? 'Đã lưu phiên bản.'
+              : 'Version stored.'}
+        </p>
+      )}
+      {state.kind === 'failed' && (
+        <Alert
+          variant="destructive"
+          title={
+            state.result.kind === 'outcome-unknown'
+              ? locale === 'vi'
+                ? 'Kết quả chưa được xác nhận'
+                : 'Outcome not confirmed'
+              : locale === 'vi'
+                ? 'Tải lên thất bại'
+                : 'Upload failed'
+          }
+        >
+          {state.result.error}
+        </Alert>
+      )}
+    </form>
+  )
+}
+
+/**
+ * Promotion of one exact version to current. The caller must state the current version it saw, a
+ * reason, and acknowledge the impact that was computed for exactly this target; a changed document
+ * makes the API refuse, so a stale screen can never promote.
+ */
+export function PromoteForm({
+  matterId,
+  detail,
+  etag,
+  targetVersionId,
+  invalidated,
+  unaffected,
+  titles,
+}: {
+  matterId: string
+  detail: DocumentDetail
+  etag: string
+  targetVersionId: string
+  invalidated: string[]
+  unaffected: string[]
+  titles: Record<string, string>
+}) {
+  const doc = detail.document
+  const token = detail.promotionImpact?.token ?? ''
+  return (
+    <IntentForm
+      receipted={false}
+      draftKey={`document:${doc.id}:promote:${targetVersionId}`}
+      submitLabel={
+        <LocalizedText en="Make this the current version" vi="Chọn phiên bản này làm hiện hành" />
+      }
+      run={(v) =>
+        promoteVersionAction({
+          matterId,
+          documentId: doc.id,
+          ifMatch: etag,
+          targetVersionId,
+          expectedCurrentVersionId: doc.currentVersionId ?? '',
+          impactToken: token,
+          acknowledged: v.acknowledged ?? '',
+          reason: v.reason ?? '',
+        })
+      }
+    >
+      {({ errors }) => (
+        <>
+          <div className="text-sm">
+            <p className="font-medium">
+              <LocalizedText en="Impact of this promotion" vi="Ảnh hưởng của việc chọn phiên bản" />
+            </p>
+            <ul className="list-disc pl-5">
+              <li>
+                {invalidated.length === 0
+                  ? 'No accepted proof depends on the current version.'
+                  : `Proof that needs the current version is invalidated until reviewed again: ${invalidated.map((i) => titles[i] ?? i.slice(0, 8)).join(', ')}.`}
+              </li>
+              {unaffected.length > 0 && (
+                <li>
+                  <LocalizedText
+                    en="Fixed-version criteria stay as they are:"
+                    vi="Tiêu chí gắn với phiên bản cố định giữ nguyên:"
+                  />{' '}
+                  {unaffected.map((i) => titles[i] ?? i.slice(0, 8)).join(', ')}.
+                </li>
+              )}
+            </ul>
+          </div>
+          <FormField
+            label={<LocalizedText en="Reason" vi="Lý do" />}
+            required
+            error={errors.reason?.[0]}
+          >
+            {(c) => <Textarea name="reason" rows={2} maxLength={2000} {...c} />}
+          </FormField>
+          <label className="flex items-center gap-2 text-sm">
+            <SelectionControl name="acknowledged" value="yes" className="size-4" />
+            <LocalizedText en="I have read this impact" vi="Tôi đã đọc các ảnh hưởng này" />
+          </label>
+          {errors.acknowledged?.[0] && (
+            <p role="alert" className="text-sm text-destructive">
+              {errors.acknowledged[0]}
+            </p>
+          )}
+        </>
+      )}
+    </IntentForm>
+  )
+}
+
+export function SignatureForm({ matterId, versionId }: { matterId: string; versionId: string }) {
+  const zone = useTimeZone()
+  return (
+    <IntentForm
+      receipted={false}
+      draftKey={`version:${versionId}:signature`}
+      submitLabel={<LocalizedText en="Record signature" vi="Ghi nhận chữ ký" />}
+      run={(v) => {
+        const signed = readLocalField(v, 'signed', zone, null)
+        if (!signed.ok) return Promise.resolve(fieldFailure('signedAt', signed.error))
+        return recordSignatureAction({
+          matterId,
+          versionId,
+          signer: v.signer ?? '',
+          signedAt: signed.iso,
+        })
+      }}
+    >
+      {({ errors }) => (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <FormField
+            label={<LocalizedText en="Signer" vi="Người ký" />}
+            required
+            error={errors.signer?.[0]}
+          >
+            {(c) => <Input name="signer" maxLength={200} autoComplete="off" {...c} />}
+          </FormField>
+          <LocalDateTimeField
+            name="signed"
+            required
+            label={<LocalizedText en="Observed signed at" vi="Thời điểm ký được ghi nhận" />}
+            error={errors.signedAt?.[0]}
+          />
+        </div>
+      )}
+    </IntentForm>
+  )
+}
+
+/**
+ * Header action on a document: opens the upload task. The dialog stays mounted, so a chosen File
+ * (kept in memory only) and an unconfirmed upload survive close and reopen. A reload cannot keep
+ * the File: the form then asks for the same file again before it reuses the earlier key.
+ */
+export function UploadVersionDialog({
+  matterId,
+  documentId,
+  documentName,
+}: {
+  matterId: string
+  documentId: string
+  documentName: string
+}) {
+  return (
+    <TaskDialog
+      trigger={
+        <>
+          <Upload aria-hidden />
+          <LocalizedText en="Upload new version" vi="Tải lên phiên bản mới" />
+        </>
+      }
+      title={<LocalizedText en="Upload new version" vi="Tải lên phiên bản mới" />}
+      description={
+        <>
+          <strong className="break-words">{documentName}</strong>
+          {' · '}
+          <LocalizedText
+            en="Every upload is a new immutable version."
+            vi="Mỗi lần tải lên tạo một phiên bản bất biến."
+          />
+        </>
+      }
+    >
+      <UploadVersionForm matterId={matterId} documentId={documentId} />
+    </TaskDialog>
+  )
+}
+
+/** Per-version action: records an observed signature for exactly this version. */
+export function SignatureDialog({
+  matterId,
+  versionId,
+  versionLabel,
+}: {
+  matterId: string
+  versionId: string
+  /** Human label such as "Version 3 · contract.pdf". */
+  versionLabel: string
+}) {
+  return (
+    <TaskDialog
+      trigger={
+        <>
+          <FileSignature aria-hidden />
+          <LocalizedText en="Record signature" vi="Ghi nhận chữ ký" />
+        </>
+      }
+      triggerVariant="outline"
+      title={<LocalizedText en="Record an observed signature" vi="Ghi nhận chữ ký đã quan sát" />}
+      description={
+        <>
+          <strong className="break-words">{versionLabel}</strong>
+          {' · '}
+          <LocalizedText
+            en="Records that a signature was observed on this version. It does not sign anything."
+            vi="Ghi nhận rằng đã quan sát chữ ký trên phiên bản này. Hệ thống không ký thay."
+          />
+        </>
+      }
+      successNotice={<LocalizedText en="Signature recorded." vi="Đã ghi nhận chữ ký." />}
+    >
+      <SignatureForm matterId={matterId} versionId={versionId} />
+    </TaskDialog>
+  )
+}

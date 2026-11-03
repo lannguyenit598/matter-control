@@ -1,28 +1,42 @@
 # MatterControl
 
-**Control Plane for High-Stakes Legal Work**
-**The System of Operational Truth for Complex Legal Matters.**
+An operational control plane for legal teams: coordinate Matters, Requirements, Actions,
+documents, evidence, filings and accountable changes. Completion and verification remain
+independent; attachments alone never establish readiness.
 
-Vertical ban đầu: Transactions & Corporate Legal Work. Product Discovery đã kết thúc.
+## Repository
 
-Đây là repository quản trị AI SDLC, chưa chứa product implementation. Bộ bootstrap được tạo ngày 2026-10-24 (Asia/Ho_Chi_Minh); nội dung quản trị mới ở trạng thái chờ review, không phải quyết định kiến trúc đã được phê duyệt.
+| Path | Purpose |
+|---|---|
+| [apps/backend](apps/backend/README.md) | Go product API, PostgreSQL migrations and contract tests |
+| [apps/frontend](apps/frontend/README.md) | Next.js application and server-side authentication/BFF |
+| [ops](docs/operations/README.md) | Database roles, local tooling, backup and deployment profiles |
+| [docs](docs/README.md) | Current architecture, application contract and operator documentation |
 
-- [Step 01 PRD](docs/requirements/prd.md)
-- [Step 01 SRS](docs/requirements/srs.md)
-- [Product Requirements Approval Packet](docs/requirements/open-business-decisions.md)
-- [Canonical Product Context — validated prompt baseline](docs/product/canonical-product-context.md)
-- [Approved P0/P1/P2 capabilities](docs/requirements/p0-p1-p2-priorities.md)
-- [Project Atlas synthetic dataset specification](docs/product/project-atlas-dataset.md)
-- [Project status và Step 01 readiness](docs/ai-sdlc/project-status.md)
-- [Operating model](docs/ai-sdlc/operating-model.md)
-- [Project charter](docs/ai-sdlc/project-charter.md)
-- [RACI và trách nhiệm agents](docs/ai-sdlc/raci-matrix.md)
-- [Verified capability matrix](docs/ai-sdlc/agent-capabilities.md)
-- [Orchestration protocol](docs/ai-sdlc/orchestration-protocol.md)
-- [Task contract](docs/ai-sdlc/task-template.md)
-- [Quality gates, DoR, DoD](docs/ai-sdlc/quality-gates.md)
-- [Requirements traceability](docs/ai-sdlc/requirements-traceability.md)
-- [Source-of-truth structure](docs/ai-sdlc/source-of-truth.md)
-- [Verification evidence](docs/tooling/verification-2026-10-24.md)
+## Start locally
 
-Step 00A COMPLETED; MC-00A DONE cho baseline 20f12fe sau review độc lập OpenCode PASS. Step 01 COMPLETED / PRODUCT_REQUIREMENTS_APPROVED; MC-001 DONE sau [phê duyệt trực tiếp của PO](docs/ai-sdlc/step-01-approval.md) cho bộ requirements tại 572835a. Workload, retention và RPO/RTO được phép hoãn chốt số sang Step 02; vẫn phải kiểm chứng trước cam kết hoặc phát hành. [Architecture handoff](docs/architecture/solution-architecture-handoff.md) đã chuẩn bị nhưng chưa bắt đầu Step 02. [Provenance](docs/product/context-provenance.md) giữ approved prompts là nguồn hợp lệ. Không có product code, architecture/UI design hoặc deploy.
+Follow the [local setup guide](docs/operations/local-development.md). Use synthetic data and your
+own configured identity provider. There are no committed runtime credentials or working private
+keys. The [API walkthrough](ops/local/walkthrough/README.md) is a separate loopback-only synthetic
+backend environment; it is not a browser login or production profile.
+
+## Checks
+
+- Backend: `cd apps/backend` then `make check`. Set `MC_TEST_DATABASE_URL` only to a disposable
+  PostgreSQL fixture to run database suites; without it those suites skip.
+- Frontend: `cd apps/frontend` then `pnpm check`, `pnpm build:webpack`, and `pnpm build-storybook`.
+- Deployment profile renderer: `node --test ops/deploy/profiles.test.mjs`.
+
+See each app's instructions for tool versions, additional browser tests and durable-state suites.
+
+## Deployment and status
+
+The selected pilot topology is Workers + Cloud Run + Supabase + private R2 + ZITADEL.
+[ADR-006](docs/architecture/adr/ADR-006-workers-cloud-run-supabase-r2-topology.md) records that
+selection; [ADR-007](docs/architecture/adr/ADR-007-portable-fe-be-deployment-profiles.md) records
+proposed alternative profiles. Local builds and tests do not establish cloud, cost, residency,
+security, human usability or release acceptance. Follow the [deployment guide](docs/deployment/README.md).
+
+`main` contains maintained product source and documentation. Development prompts, task ledgers,
+review packets, screenshots, prototypes and test-run logs remain in the coordination archive;
+see [repository policy](CONTRIBUTING.md) and [integration provenance](docs/release/integration.md).

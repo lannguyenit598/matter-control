@@ -1,43 +1,36 @@
-# MatterControl — agent instructions
+# MatterControl — repository instructions
 
-## Product and current boundary
+## Product and scope
 
-MatterControl is the Control Plane for High-Stakes Legal Work and the System of Operational Truth for Complex Legal Matters. Initial vertical: Transactions & Corporate Legal Work. Discovery is closed; do not reopen positioning.
+MatterControl coordinates high-stakes legal work. A Requirement is a condition to satisfy; an
+Action is work to perform. Completion, proof verification, dependencies, timing and attention
+are independent. Preserve explicit Matter membership and uniform hidden-resource denials.
+The implemented contract is [docs/api/contract.md](docs/api/contract.md); the product vocabulary
+is [GLOSSARY.md](GLOSSARY.md). Do not infer release approval from source or local tests.
 
-This repository holds governance and versioned evidence. The Product Owner has explicitly authorized Step 00A: Canonical Product Context, superseding the earlier proposed technical audit. Apply the Step 00 operating model. Product direction and the P0/P1/P2 capability baseline are approved inputs; do not ask for their approval again. Step 00A.1 confirms approved prompts as valid initial product context; originals A/B never existed in this initially empty repository/workspace. Archival is optional, not a Step 01 gate; never invent originals or claim direct verification. See docs/product/context-provenance.md. Preserve Requirement versus Action and independent state axes. Current authorization is Step 01 Business Analysis and Requirements Engineering (docs/ai-sdlc/step-01-request.md). Create requirements and architecture handoff only; no code, solution architecture, high-fidelity UI, deployment or automatic Step 02. The PO explicitly approved OBD-02..08/10/11 recommendations at 572835a on 2026-10-24 and deferred numeric workload/retention/RPO/RTO to Step 02 (docs/ai-sdlc/step-01-approval.md). Do not re-request those approvals. Material new policy changes still require PO approval; feasibility remains unverified. Raise only real semantic, release-criteria or infrastructure trade-offs for additional approval.
+## Work safely
 
-## Start and execution
+Read the nearest app instructions before changing code. Preserve dirty files and other writers'
+work. Use isolated worktrees for parallel changes. Never reset, stash, clean or rewrite history
+without explicit authorization. Commit, merge, push, provisioning and deployment are separate
+permissions. Do not claim that an external engineering tool ran without actual invocation.
 
-Read docs/ai-sdlc/project-status.md, your assigned task in docs/implementation/tasks/, and its input artifacts. Confirm actual repository, branch, base commit and allowed paths before work. Never overwrite existing changes. One owner per task; use isolated branches/worktrees when parallel work is authorized. Do not create additional agents merely because roles are listed here.
+Use synthetic data. Never commit private keys, tokens, database credentials, runtime state,
+build outputs or raw sensitive logs. Unknown write outcomes require the existing receipt and
+same-key reconciliation flow; do not resend with a new key merely to discover the result.
 
-Every task must record requirement IDs, owner, priority, scope, dependencies, inputs, outputs, acceptance criteria, tests, reviewer and completion evidence. Use BACKLOG → READY → IN_PROGRESS → IN_REVIEW → TESTING → DONE, with BLOCKED / REWORK_REQUIRED / WAITING_APPROVAL where appropriate. A report is not a completed review; no DONE without evidence and an independent reviewer. Step 00A stage completion and Step 01 readiness follow the revised PO exit criteria; MC-00A is DONE for baseline 20f12fe after actual OpenCode review PASS; this does not approve Step 01 proposals. MC-001 is DONE for documentation after explicit PO approval and actual REV-01 round 2 PASS. Step 02 handoff is READY_FOR_ASSIGNMENT / NOT_AUTHORIZED_TO_START / NOT_DISPATCHED; require a separate assignment.
+## Documentation and verification
 
-## Official roles
+Keep one canonical document per subject; link instead of copying. See [docs/README.md](docs/README.md).
+Update the application contract when wire behavior changes and operator docs when configuration
+changes. Historical prompts, tasks and evidence belong in the coordination archive, not the
+product tree. Keep concise test results with the PR; raw logs are CI artifacts.
 
-- Codex: PM, BA, Cloud, DevOps, orchestration, requirements, backlog, traceability, risks, CI/CD and releases; does not self-approve product/architecture/cost/release decisions.
-- Claude Code: Solution Architect; owns system/domain/data/security architecture, API contracts, ADRs and architecture reviews. Record alternatives, compatibility and risks before design approval.
-- OpenDesign: UI/UX; owns research, flows, information architecture, design system, screens, interactions, prototypes and handoff. Record source revision/export and approval; never treat a preview URL alone as a complete handoff.
-- ZCode: Go backend and hexagonal boundaries, domain, APIs, persistence, backend tests. Preserve approved contracts and inspect the actual backend checkout before edits.
-- Antigravity: Next.js frontend, Atomic Design, responsive UI, animations and API integration/tests. Implement approved flows and contracts; do not invent business rules.
-- OpenCode: independent QA, API/integration/E2E, visual, accessibility, performance and regression checks. Supporting code changes require Codex assignment; another reviewer must approve code OpenCode changes.
-- Human Product Owner: product scope, critical business rules, architecture trade-offs, design direction, infrastructure costs and production release.
+Backend checks are defined in `apps/backend/AGENTS.md`; frontend checks in
+`apps/frontend/AGENTS.md`. Report commands actually run and distinguish source, local runtime,
+browser, real-provider and production proof. Do not mark skipped checks as passing.
 
-These names describe external products and responsibilities, not interchangeable Codex subagents. Never claim an external agent ran without invocation and returned evidence.
-
-## Evidence and security
-
-Use synthetic data. Do not put legal matter data, secrets, tokens or credentials in Git, prompts, screenshots or logs. Redact evidence before committing. Never bypass agent permissions, invalid application signatures or missing credentials. Do not initiate authentication or modify global agent settings during bootstrap.
-
-Record tool/version, environment, timestamp, exact command or UI action, exit/error, input revision and output location. Distinguish documented support, local executable presence, successful invocation, and completed workspace handoff. Static/local evidence never proves production behavior or a $0 infrastructure bill.
-
-## Local command and research rules
-
-On this workstation prefix shell commands with rtk; use rtk proxy for commands it does not wrap. Follow the user's /Users/nguyenvanlan/.codex/RTK.md when available. This machine path is not a portable project dependency.
-
-Before exploring code, use Semble search with the exact repo path/URL (content docs/config/all as relevant). If unavailable, record the failure, then use targeted search. Read exact returned paths; do not repeat the same semantic search with grep. Literal exhaustive checks and known-path reads are allowed.
-
-For library/framework/SDK/API/CLI/cloud documentation, resolve the library through Context7, then query relevant current docs. Use official sources if lookup is unavailable; do not invent supported instruction filenames or CLI flags.
-
-## Delivery
-
-Return task ID, actual agent/tool identity, base/head, changed files, acceptance results, tests run/not run, risks, evidence and proposed next status. Follow docs/ai-sdlc/orchestration-protocol.md. Keep scope minimal. End reports with what was skipped and any remaining risk.
+On workstations configured with RTK, prefix shell commands with `rtk` or `rtk proxy`. Use Semble
+first for semantic exploration when available; record unavailability before targeted fallback.
+Use Context7 for current library/framework/SDK/CLI documentation questions. Repository-specific
+rules override generic skill advice; direct user instructions take precedence.

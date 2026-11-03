@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mattercontrol-pilot",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  "vars": {
+    "API_MODE": "rest",
+    "API_BASE_URL": "https://unconfigured.invalid/api/v1",
+    "AUTH_ALLOW_ANONYMOUS": "false",
+    "BFF_STATE_BACKEND": "postgres",
+    "SESSION_COOKIE_SECURE": "true",
+  },
+}

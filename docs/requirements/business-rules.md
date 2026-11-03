@@ -1,8 +1,10 @@
+> Maintained reference: approved business semantics are preserved from the coordination baseline. Dated implementation/approval observations below are historical; use the [application contract](../api/contract.md) and [architecture](../architecture/README.md) for current source behavior. No production acceptance is implied.
+
 # Business Rules and Invariants
 
-Owner: Codex — BA. Source: approved prompts plus explicit recommendations below. **APPROVED_INPUT rules retain original authority; formerly PROPOSED policy is now APPROVED_BY_PO** under OBD-02..08/10/11 at `572835a`, 2026-10-24; [approval record](../ai-sdlc/step-01-approval.md). Numeric workload/retention/RPO/RTO remain explicitly deferred; no implementation start is authorized. No jurisdiction-specific legal rule is asserted.
+Owner: Codex — BA. Source: approved prompts plus explicit recommendations below. **APPROVED_INPUT rules retain original authority; formerly PROPOSED policy is now APPROVED_BY_PO** under OBD-02..08/10/11 at `572835a`, 2026-10-24; [approval record](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/ai-sdlc/step-01-approval.md). Numeric workload/retention/RPO/RTO remain explicitly deferred; no implementation start is authorized. No jurisdiction-specific legal rule is asserted.
 
-All mutations must satisfy RULE-017/018/019 and [permissions](permission-matrix.md). Detailed transitions are defined once in [state semantics](state-semantics.md); scenarios in [acceptance criteria](acceptance-criteria.md). Numbers/thresholds marked proposed are not benchmarks.
+All mutations must satisfy RULE-017/018/019 and [permissions](permission-matrix.md). Detailed transitions are defined once in [state semantics](state-semantics.md); scenarios in [acceptance criteria](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/requirements/acceptance-criteria.md). Numbers/thresholds marked proposed are not benchmarks.
 
 | ID | Status / gate | Business rule and observable invariant |
 |---|---|---|
@@ -28,4 +30,4 @@ All mutations must satisfy RULE-017/018/019 and [permissions](permission-matrix.
 | RULE-020 | APPROVED_BY_PO / OBD-03 | P0 Decision has question/owner/outcome/rationale/time and related records; Finding has observed gap/owner/follow-up/resolution proof; Risk has description/owner/attention/response. Entity is a typed contextual reference. These can be linked in workflows and history without adding advanced legal ontology, ownership graph, scoring engine or decision automation. |
 | RULE-021 | APPROVED_BY_PO / OBD-04 | Next Action candidates are visible assigned Actions that are NOT_STARTED/IN_PROGRESS and dependency READY. WAITING actions belong to Waiting On; explicit follow-up Action may be actionable. Order critical-chain first, then due ascending (no due last), then stable ID. Show reason/owner; no candidate means explain missing assignment, waiting or blocker instead of inventing work. Human choice may differ without changing dependency truth. |
 
-Acceptance references and rule decisions are indexed in [traceability](../ai-sdlc/requirements-traceability.md). Proposal rejection requires updating impacted FR/US/AC/state/workflow sections together before implementation.
+Acceptance references and rule decisions are indexed in [traceability](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/ai-sdlc/requirements-traceability.md). Proposal rejection requires updating impacted FR/US/AC/state/workflow sections together before implementation.

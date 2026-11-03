@@ -1,0 +1,22 @@
+# sqlc generates typed query code for the postgres adapter. Regenerate with
+# `make sqlc-generate`; `make sqlc-check` (part of `make check`) fails when the output is stale.
+# One job: mcsqlc serves the MatterControl product bundle (migrations_mattercontrol is the schema).
+version: "2"
+sql:
+  - engine: postgresql
+    # MatterControl product bundle: the Goose migrations are the schema. sqlc applies their Up
+    # sections in file order and ignores everything after "-- +goose Down".
+    schema: internal/adapter/outbound/postgres/migrations_mattercontrol
+    queries: internal/adapter/outbound/postgres/queries_mattercontrol
+    gen:
+      go:
+        package: mcsqlc
+        out: internal/adapter/outbound/postgres/mcsqlc
+        sql_package: pgx/v5
+        overrides:
+          - db_type: uuid
+            go_type: string
+          - db_type: timestamptz
+            go_type: time.Time
+          # Nullable columns surface as pgtype.*; the adapter converts at the boundary,
+          # by hand.
