@@ -380,6 +380,130 @@ describe('AdvanceForm', () => {
     expect(screen.getByText(/Authority outcome evidence/)).toBeInTheDocument()
   })
 
+  it('never sends a stale stage after a refresh changes the allowed transitions', async () => {
+    actions.advance.mockResolvedValue({ ok: true })
+    const authorityReview = detail({
+      item: { ...detail().item, revision: 5 },
+      etag: '"filing-5"',
+      filing: {
+        requirementId: 'r1',
+        authorityPartyId: 'p1',
+        stage: 'AUTHORITY_REVIEW',
+        negativeOpen: false,
+        currentCycle: 1,
+        signatureNotRequired: false,
+      },
+      next: ['SUPPLEMENT', 'APPROVAL'],
+    })
+    const view = render(
+      <AdvanceForm
+        matterId="m1"
+        detail={detail()}
+        versions={versions}
+        evidence={[]}
+        members={[{ id: 'u1', label: 'Alice' }]}
+      />,
+    )
+    fireEvent.change(screen.getByLabelText(/Submission reference/), { target: { value: 'SUB-1' } })
+    // The filing moves on the server while this form stays mounted.
+    view.rerender(
+      <AdvanceForm
+        matterId="m1"
+        detail={authorityReview}
+        versions={versions}
+        evidence={[]}
+        members={[{ id: 'u1', label: 'Alice' }]}
+      />,
+    )
+    expect(screen.getByLabelText(/Move to/)).toHaveValue('SUPPLEMENT')
+    expect(screen.queryByLabelText(/Submission reference/)).toBeNull()
+    fireEvent.change(screen.getByLabelText(/Authority request reference/), {
+      target: { value: 'AUTH-2' },
+    })
+    fireEvent.change(screen.getByLabelText(/Owner of this cycle/), { target: { value: 'u1' } })
+    fireEvent.click(screen.getByRole('button', { name: /Record supplement/ }))
+    await waitFor(() => expect(actions.advance).toHaveBeenCalled())
+    expect(actions.advance.mock.calls[0]![0]).toMatchObject({
+      to: 'SUPPLEMENT',
+      ifMatch: '"filing-5"',
+    })
+  })
+
+  it('keeps a still-allowed selection and its in-progress input across a refresh', async () => {
+    actions.advance.mockResolvedValue({ ok: true })
+    const authorityReview = detail({
+      filing: {
+        requirementId: 'r1',
+        authorityPartyId: 'p1',
+        stage: 'AUTHORITY_REVIEW',
+        negativeOpen: false,
+        currentCycle: 1,
+        signatureNotRequired: false,
+      },
+      next: ['SUPPLEMENT', 'APPROVAL'],
+    })
+    const refreshed = detail({
+      item: { ...authorityReview.item, revision: 5 },
+      etag: '"filing-5"',
+      filing: authorityReview.filing,
+      next: ['SUPPLEMENT', 'APPROVAL'],
+    })
+    const view = render(
+      <AdvanceForm
+        matterId="m1"
+        detail={authorityReview}
+        versions={versions}
+        evidence={[]}
+        members={[]}
+      />,
+    )
+    fireEvent.change(screen.getByLabelText(/Move to/), { target: { value: 'APPROVAL' } })
+    view.rerender(
+      <AdvanceForm
+        matterId="m1"
+        detail={refreshed}
+        versions={versions}
+        evidence={[]}
+        members={[]}
+      />,
+    )
+    expect(screen.getByLabelText(/Move to/)).toHaveValue('APPROVAL')
+    fireEvent.click(screen.getByRole('button', { name: /Record approval/ }))
+    await waitFor(() => expect(actions.advance).toHaveBeenCalled())
+    expect(actions.advance.mock.calls[0]![0]).toMatchObject({
+      to: 'APPROVAL',
+      ifMatch: '"filing-5"',
+    })
+  })
+
+  it('renders no action once no transition is permitted', () => {
+    const closed = detail({
+      filing: {
+        requirementId: 'r1',
+        authorityPartyId: 'p1',
+        stage: 'APPROVAL',
+        negativeOpen: false,
+        currentCycle: 1,
+        signatureNotRequired: false,
+      },
+      next: [],
+    })
+    const view = render(
+      <AdvanceForm
+        matterId="m1"
+        detail={detail()}
+        versions={versions}
+        evidence={[]}
+        members={[]}
+      />,
+    )
+    view.rerender(
+      <AdvanceForm matterId="m1" detail={closed} versions={versions} evidence={[]} members={[]} />,
+    )
+    expect(screen.queryByLabelText(/Move to/)).toBeNull()
+    expect(screen.queryByRole('button', { name: /Record/ })).toBeNull()
+  })
+
   it('shows the domain’s own reason when the guard refuses, and nothing is assumed saved', async () => {
     actions.advance.mockResolvedValue({
       ok: false,

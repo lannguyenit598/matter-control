@@ -102,6 +102,21 @@ export const myActionsSchema = z.object({
   historical: z.array(assignedSchema),
 })
 
+/** One dated row of the caller's cross-Matter agenda (RLF-03, GET /me/agenda). */
+export const agendaRowSchema = z.object({
+  matterId: z.string(),
+  matterTitle: z.string(),
+  kind: z.enum(['work', 'milestone']),
+  itemId: z.string(),
+  title: z.string(),
+  dueAt: z.string(),
+  execution: z.string(),
+  timing: z.string(),
+  readiness: z.string(),
+  critical: z.boolean(),
+})
+export const meAgendaPageSchema = pageOf(agendaRowSchema)
+
 export const workstreamSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -183,6 +198,46 @@ export const searchWorkItemsInputSchema = z.object({
 const key = z.string().min(1).max(100)
 const etag = z.string().min(1).max(200)
 const text = (max: number, msg: string) => z.string().trim().min(1, msg).max(max)
+
+// ---- saved views (RLF-04, REQ-MC-P1-12): private named filter definitions ----
+
+/** The filter shape a view may store: the grid query without paging (a view never stores a page). */
+export const savedViewFiltersSchema = gridQuerySchema.omit({ cursor: true })
+export type SavedViewFilters = z.infer<typeof savedViewFiltersSchema>
+
+export const savedViewSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  filters: savedViewFiltersSchema,
+  revision: z.number().int(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  etag: z.string(),
+})
+export const savedViewPageSchema = pageOf(savedViewSchema)
+export type SavedView = z.infer<typeof savedViewSchema>
+
+/** A receipted creation's response: the record kind, its id and the history seq. */
+export const createdSchema = z.object({ id: z.string(), kind: z.string(), seq: z.number().int() })
+
+export const saveViewInputSchema = z.object({
+  idempotencyKey: key,
+  matterId: idSchema,
+  name: text(100, 'Enter a name'),
+  filters: savedViewFiltersSchema,
+})
+export const updateSavedViewInputSchema = z.object({
+  matterId: idSchema,
+  viewId: idSchema,
+  ifMatch: etag,
+  name: text(100, 'Enter a name'),
+  filters: savedViewFiltersSchema,
+})
+export const deleteSavedViewInputSchema = z.object({
+  matterId: idSchema,
+  viewId: idSchema,
+  ifMatch: etag,
+})
 
 export const createActionInputSchema = z.object({
   idempotencyKey: key,

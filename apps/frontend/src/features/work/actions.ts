@@ -17,8 +17,11 @@ import {
   escalateInputSchema,
   milestonePrerequisitesInputSchema,
   removeDependencyInputSchema,
+  saveViewInputSchema,
   searchWorkItemsInputSchema,
   transitionInputSchema,
+  updateSavedViewInputSchema,
+  deleteSavedViewInputSchema,
   updateItemInputSchema,
   updatePartyInputSchema,
 } from './schemas'
@@ -251,5 +254,46 @@ export async function searchWorkItemsAction(input: unknown): Promise<PickerResul
       status:
         failure.kind === 'not-found' || failure.kind === 'unavailable' ? 'unavailable' : 'error',
     }
+  }
+}
+
+// ---- Saved Views (RLF-04, REQ-MC-P1-12): private named filter definitions ----
+
+export async function saveViewAction(input: unknown): Promise<McActionResult> {
+  try {
+    await requireSession()
+    const p = saveViewInputSchema.safeParse(input)
+    if (!p.success) return invalid(p.error)
+    const res = await workRepository.createSavedView(p.data)
+    matterPaths(p.data.matterId)
+    return { ok: true, id: res.data.id, replayed: res.replayed }
+  } catch (error) {
+    return toMcFailure(error)
+  }
+}
+
+export async function updateSavedViewAction(input: unknown): Promise<McActionResult> {
+  try {
+    await requireSession()
+    const p = updateSavedViewInputSchema.safeParse(input)
+    if (!p.success) return invalid(p.error)
+    const res = await workRepository.updateSavedView(p.data)
+    matterPaths(p.data.matterId)
+    return { ok: true, id: res.data.id }
+  } catch (error) {
+    return toMcFailure(error)
+  }
+}
+
+export async function deleteSavedViewAction(input: unknown): Promise<McActionResult> {
+  try {
+    await requireSession()
+    const p = deleteSavedViewInputSchema.safeParse(input)
+    if (!p.success) return invalid(p.error)
+    await workRepository.deleteSavedView(p.data)
+    matterPaths(p.data.matterId)
+    return { ok: true, id: p.data.viewId }
+  } catch (error) {
+    return toMcFailure(error)
   }
 }

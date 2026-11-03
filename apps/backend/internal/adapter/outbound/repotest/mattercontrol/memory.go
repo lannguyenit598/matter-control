@@ -109,6 +109,17 @@ type Store struct {
 	// W5 context records.
 	contexts map[string]matter.ContextRecord
 
+	// RLF-04 saved views: per matter, per view id; private to their owner.
+	savedViews map[matter.MatterID]map[matter.SavedViewID]matter.SavedView
+	// RLF-05 playbooks: workspace-scoped containers, immutable revisions, application provenance.
+	playbooks         map[matter.PlaybookID]matter.Playbook
+	playbookRevs      map[matter.PlaybookRevisionID]matter.PlaybookRevision
+	playbookInstances []matter.PlaybookInstance
+	// RLF-06 + RLF-07: intake records and versioned guidance.
+	intakeRecords map[matter.IntakeID]matter.IntakeRecord
+	guidanceDocs  map[matter.GuidanceDocumentID]matter.GuidanceDocument
+	guidanceRevs  map[matter.GuidanceRevisionID]matter.GuidanceRevision
+
 	reviewGrids        map[string]matter.ReviewGrid
 	reviewAnswers      []matter.ReviewAnswer
 	reviewQuestionRevs []reviewQuestionRev
@@ -182,6 +193,12 @@ func NewMemoryStore(clock func() time.Time) *Store {
 		verifiers:     map[mmKey]bool{},
 		filings:       map[matter.NodeID]matter.Filing{},
 		contexts:      map[string]matter.ContextRecord{},
+		savedViews:    map[matter.MatterID]map[matter.SavedViewID]matter.SavedView{},
+		playbooks:     map[matter.PlaybookID]matter.Playbook{},
+		playbookRevs:  map[matter.PlaybookRevisionID]matter.PlaybookRevision{},
+		intakeRecords: map[matter.IntakeID]matter.IntakeRecord{},
+		guidanceDocs:  map[matter.GuidanceDocumentID]matter.GuidanceDocument{},
+		guidanceRevs:  map[matter.GuidanceRevisionID]matter.GuidanceRevision{},
 		reviewGrids:   map[string]matter.ReviewGrid{},
 		receipts:      map[receiptKey]matter.Receipt{},
 		importSources: map[importSourceKey]matter.ImportSource{},
@@ -269,6 +286,22 @@ func (s *Store) snapshot() *Store {
 	cp.verifiers = copyMap(s.verifiers)
 	cp.filings = copyMap(s.filings)
 	cp.contexts = copyMap(s.contexts)
+	// Saved views are replaced whole on every write; a shallow per-matter map copy is a
+	// faithful rollback point.
+	cp.playbooks = copyMap(s.playbooks)
+	cp.playbookRevs = copyMap(s.playbookRevs)
+	cp.playbookInstances = append([]matter.PlaybookInstance(nil), s.playbookInstances...)
+	cp.intakeRecords = copyMap(s.intakeRecords)
+	cp.guidanceDocs = copyMap(s.guidanceDocs)
+	cp.guidanceRevs = copyMap(s.guidanceRevs)
+	cp.savedViews = make(map[matter.MatterID]map[matter.SavedViewID]matter.SavedView, len(s.savedViews))
+	for m, views := range s.savedViews {
+		inner := make(map[matter.SavedViewID]matter.SavedView, len(views))
+		for id, v := range views {
+			inner[id] = v
+		}
+		cp.savedViews[m] = inner
+	}
 	cp.reviewGrids = copyMap(s.reviewGrids)
 	cp.reviewAnswers = append([]matter.ReviewAnswer(nil), s.reviewAnswers...)
 	cp.reviewQuestionRevs = append([]reviewQuestionRev(nil), s.reviewQuestionRevs...)
@@ -366,6 +399,9 @@ func (s *Store) adopt(work *Store) {
 	s.assessments, s.disputes, s.verifiers = work.assessments, work.disputes, work.verifiers
 	s.filings, s.filingCyc, s.filingSubs, s.filingObs = work.filings, work.filingCyc, work.filingSubs, work.filingObs
 	s.contexts = work.contexts
+	s.savedViews = work.savedViews
+	s.playbooks, s.playbookRevs, s.playbookInstances = work.playbooks, work.playbookRevs, work.playbookInstances
+	s.intakeRecords, s.guidanceDocs, s.guidanceRevs = work.intakeRecords, work.guidanceDocs, work.guidanceRevs
 	s.reviewGrids, s.reviewAnswers, s.reviewQuestionRevs = work.reviewGrids, work.reviewAnswers, work.reviewQuestionRevs
 	s.events = work.events
 	s.records = work.records

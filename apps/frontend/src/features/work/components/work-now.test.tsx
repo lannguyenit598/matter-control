@@ -59,14 +59,15 @@ describe('primaryTransition', () => {
 })
 
 describe('WorkNow', () => {
-  it('leads with why it matters, the outcome and one stated next step, keeping the form', () => {
+  it('leads with why it matters and one stated next step, keeping the form', () => {
     render(
       <WorkNow item={item({ execution: 'IN_PROGRESS' })} derived={derived()} role="EDITOR">
         <form aria-label="status form" />
       </WorkNow>,
     )
     expect(screen.getByRole('heading', { name: 'Why it matters now' })).toBeInTheDocument()
-    expect(screen.getByText('First draft agreed')).toBeInTheDocument()
+    // The outcome the record must reach is composed in WorkContext; WorkNow never repeats it.
+    expect(screen.queryByText('First draft agreed')).not.toBeInTheDocument()
     expect(screen.getByText(/Mark completed\./)).toBeInTheDocument()
     expect(screen.getByText(/Completed is not verified/)).toBeInTheDocument()
     expect(screen.getByRole('form', { name: 'status form' })).toBeInTheDocument()

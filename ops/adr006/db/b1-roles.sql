@@ -102,6 +102,10 @@ GRANT SELECT, INSERT, UPDATE ON mcapp.evidence TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.evidence_claims TO mc_runtime;
 
+GRANT SELECT, INSERT, UPDATE ON mcapp.guidance_documents TO mc_runtime;
+
+GRANT SELECT, INSERT, UPDATE ON mcapp.guidance_revisions TO mc_runtime;
+
 GRANT SELECT, INSERT, UPDATE ON mcapp.filing_cycles TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.filing_details TO mc_runtime;
@@ -114,6 +118,8 @@ GRANT SELECT, INSERT, UPDATE ON mcapp.goose_db_version TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.graph_nodes TO mc_runtime;
 
+GRANT SELECT, INSERT, UPDATE ON mcapp.intake_records TO mc_runtime;
+
 GRANT SELECT, INSERT, UPDATE ON mcapp.import_sources TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.matter_memberships TO mc_runtime;
@@ -124,6 +130,12 @@ GRANT SELECT, INSERT, UPDATE ON mcapp.milestones TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.parties TO mc_runtime;
 
+GRANT SELECT, INSERT, UPDATE ON mcapp.playbook_instances TO mc_runtime;
+
+GRANT SELECT, INSERT, UPDATE ON mcapp.playbook_revisions TO mc_runtime;
+
+GRANT SELECT, INSERT, UPDATE ON mcapp.playbooks TO mc_runtime;
+
 GRANT SELECT, INSERT, UPDATE ON mcapp.requirements TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.review_answers TO mc_runtime;
@@ -133,6 +145,8 @@ GRANT SELECT, INSERT, UPDATE ON mcapp.review_grids TO mc_runtime;
 GRANT SELECT, INSERT, UPDATE ON mcapp.review_question_revisions TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.review_questions TO mc_runtime;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.saved_views TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.signature_observations TO mc_runtime;
 

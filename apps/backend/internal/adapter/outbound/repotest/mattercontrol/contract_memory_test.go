@@ -155,3 +155,55 @@ func TestSuiteBF_MemoryStore(t *testing.T) {
 		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
 	})
 }
+
+// The RLF-06/07 intake and guidance contracts run against the same in-memory double.
+func TestSuiteIntakeGuidance_MemoryStore(t *testing.T) {
+	mattercontrol.SuiteIntakeGuidance(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}
+
+// The RLF-05 playbook contracts run against the same in-memory double.
+func TestSuitePlaybooks_MemoryStore(t *testing.T) {
+	mattercontrol.SuitePlaybooks(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}
+
+// The RLF-04 Saved Views contracts run against the same in-memory double.
+func TestSuiteSavedViews_MemoryStore(t *testing.T) {
+	mattercontrol.SuiteSavedViews(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}
+
+// The RLF-03 My Agenda read-model contracts run against the same in-memory double.
+func TestSuiteAgenda_MemoryStore(t *testing.T) {
+	mattercontrol.SuiteAgenda(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}

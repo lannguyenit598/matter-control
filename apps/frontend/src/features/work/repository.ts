@@ -4,19 +4,27 @@ import { mcRequest, pathId } from '@/lib/mc/client'
 
 import {
   createActionInputSchema,
+  agendaRowSchema,
+  createdSchema,
+  deleteSavedViewInputSchema,
   detailSchema,
   envelopeSchema,
+  meAgendaPageSchema,
   milestonePageSchema,
   myActionsSchema,
   partyPageSchema,
   partySchema,
+  saveViewInputSchema,
+  savedViewPageSchema,
+  savedViewSchema,
+  updateSavedViewInputSchema,
   workPageSchema,
   workstreamPageSchema,
   workstreamSchema,
   milestoneViewSchema,
   type GridQuery,
 } from './schemas'
-import type { z } from 'zod'
+import { z } from 'zod'
 
 type Query = Record<string, string | number | undefined>
 
@@ -62,6 +70,37 @@ export const workRepository = {
     return { actions: res.data, asOf: res.asOf }
   },
 
+  /**
+   * My Agenda (RLF-03): the caller's recorded due dates across all authorized Matters, read as
+   * one aggregate — the UI never fans out per Matter. Keyset cursors are followed server-side
+   * up to a declared bound (10 pages × 200 rows); anything beyond that bound is reported
+   * honestly as `truncated`, never silently dropped.
+   */
+  meAgenda: async (
+    params: {
+      from?: string
+      until?: string
+      read?: { signal?: AbortSignal; operationId?: string }
+    } = {},
+  ) => {
+    const { read, from, until } = params
+    const MAX_PAGES = 10
+    const items: z.infer<typeof agendaRowSchema>[] = []
+    let cursor: string | undefined
+    for (let page = 0; page < MAX_PAGES; page++) {
+      const res = await mcRequest('/me/agenda', {
+        query: { from, until, limit: 200, cursor },
+        schema: meAgendaPageSchema,
+        ...read,
+      })
+      items.push(...res.data.items)
+      const next = res.data.page.nextCursor
+      if (!next) return { items, truncated: false, asOf: res.asOf }
+      cursor = next
+    }
+    return { items, truncated: true, asOf: undefined }
+  },
+
   waitingOn: async (matterId: string) =>
     (await mcRequest(`/matters/${pathId(matterId)}/waiting-on`, { schema: workPageSchema })).data,
 
@@ -92,6 +131,36 @@ export const workRepository = {
       body,
       ifMatch,
       schema: envelopeSchema,
+    }),
+
+  // ---- saved views (RLF-04): private named filter definitions ----
+
+  savedViews: async (matterId: string) =>
+    (await mcRequest(`/matters/${pathId(matterId)}/saved-views`, { schema: savedViewPageSchema }))
+      .data,
+
+  createSavedView: (input: z.infer<typeof saveViewInputSchema>) =>
+    mcRequest(`/matters/${pathId(input.matterId)}/saved-views`, {
+      method: 'POST',
+      body: { name: input.name, filters: input.filters },
+      idempotencyKey: input.idempotencyKey,
+      schema: createdSchema,
+    }),
+
+  updateSavedView: (input: z.infer<typeof updateSavedViewInputSchema>) =>
+    mcRequest(`/matters/${pathId(input.matterId)}/saved-views/${pathId(input.viewId)}`, {
+      method: 'PATCH',
+      body: { name: input.name, filters: input.filters },
+      ifMatch: input.ifMatch,
+      schema: savedViewSchema,
+    }),
+
+  deleteSavedView: (input: z.infer<typeof deleteSavedViewInputSchema>) =>
+    mcRequest(`/matters/${pathId(input.matterId)}/saved-views/${pathId(input.viewId)}/removal`, {
+      method: 'POST',
+      body: {},
+      ifMatch: input.ifMatch,
+      schema: z.object({}).passthrough(),
     }),
 
   transition: (matterId: string, itemId: string, body: Record<string, unknown>, ifMatch: string) =>

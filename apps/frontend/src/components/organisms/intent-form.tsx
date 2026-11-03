@@ -55,6 +55,11 @@ export const UnresolvedReporter = createContext<((unresolved: boolean) => void) 
 export type IntentFormProps = {
   submitLabel: ReactNode
   /**
+   * Accessible name for the submit button when the visible label alone is ambiguous in
+   * context (e.g. several identical "Delete" rows in one list — WCAG 2.4.6/2.4.9).
+   */
+  submitAriaLabel?: string
+  /**
    * Whether the command is receipted (creation sent with an idempotency key, contract §2.1).
    * Only a receipted command may be retried with the same key after an unknown outcome. A
    * CAS-only command (membership grant) is never resent: it must be re-read first.
@@ -103,6 +108,7 @@ const RESTORED_UNKNOWN: Extract<McActionResult, { ok: false }> = {
  */
 export function IntentForm({
   submitLabel,
+  submitAriaLabel,
   receipted,
   draftKey,
   run,
@@ -291,7 +297,7 @@ export function IntentForm({
             <LocalizedText en="Reload current state" vi="Đọc lại trạng thái hiện tại" />
           </Button>
         ) : (
-          <Button type="submit" loading={pending}>
+          <Button type="submit" loading={pending} aria-label={submitAriaLabel}>
             {!pending && (retrying ? <RefreshCw aria-hidden /> : <ArrowRight aria-hidden />)}
             {retrying ? (
               <LocalizedText

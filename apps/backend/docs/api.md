@@ -319,3 +319,23 @@ Binding detail: `docs/implementation/p0-zcode-execution/local-contract.md` Revis
 ## Record-name Search
 
 POST `/api/v1/search` is an authenticated, bounded read (not a receipted command). Its JSON body, typed groups, EN/VI comparison, cursor/privacy/error and authorized duplicate-metadata contract are specified in the shared local implementation contract revision13 §8. Every response is private/no-store; authentication still runs before validation. Errors use the existing problem format: 400 invalid request, 413 payload-too-large, 409 search-stale, 503 unavailable. Each group has its own snapshot instant. Hidden and nonexistent records are indistinguishable; Workspace OWNER has no implicit Matter access. No file-content/people search or new permission is introduced.
+
+## Remaining local features (RLF, 2026-11-03)
+
+The shared local implementation contract revision 14, section 9 records the approved local
+scope. All paths below have the `/api/v1` prefix and use the existing authentication, problem
+responses and hidden-resource rules.
+
+| Routes | Contract |
+|---|---|
+| `GET /me/agenda?from&until&limit&cursor` | Authorized work and milestone due dates across accessible Matters. Date bounds are inclusive UTC `YYYY-MM-DD`; limit is at most 200. Keyset paging uses due date, Matter, kind and item identity; no total is invented. |
+| `GET/POST /matters/{id}/saved-views`, `PATCH /matters/{id}/saved-views/{viewId}`, `POST /matters/{id}/saved-views/{viewId}/removal` | Private named filter definitions, not record snapshots. Create is receipted; update/removal require the view's strong ETag. Only the view owner may mutate it, with Matter EDITOR/OWNER authority. Duplicate names within the same Matter/user return 409 `urn:mc:rejected`. |
+| `GET/POST /workspaces/{id}/playbooks`, `GET /workspaces/{id}/playbooks/{playbookId}`, `POST /workspaces/{id}/playbooks/{playbookId}/revisions` | Active workspace members read; Workspace OWNER creates/publishes. Create and publication are receipted commands with workspace `If-Match`. Published revisions retain exact entries. Duplicate workspace/name returns 409 `urn:mc:rejected`. |
+| `GET /matters/{id}/playbook-applications/preview?revision`, `POST /matters/{id}/playbook-applications`, `GET /matters/{id}/playbook-instances` | Matter OWNER previews/applies an exact revision from the same workspace. Apply body contains `revisionId` and `ownerMap`; apply is atomic and receipted. Same-key replay recovers the outcome; a new-key application of the same revision is refused. |
+| `GET/POST /matters/{id}/intake`, `GET /matters/{id}/intake/{intakeId}`, `POST /matters/{id}/intake/{intakeId}/decline`, `POST /matters/{id}/intake/{intakeId}/conversion` | Matter members read; OWNER/EDITOR create and triage. Create/conversion are receipted; decline requires `If-Match`. States are PENDING, DECLINED and CONVERTED. Exact document-version attachments and conversion are validated inside the Matter transaction. Read failures propagate instead of fabricating absence. |
+| `GET/POST /matters/{id}/guidance`, `POST /matters/{id}/guidance/{docId}/revisions`, `POST /matters/{id}/guidance/{docId}/publication` | Matter OWNER/EDITOR draft; OWNER publishes one exact revision. Draft/create/publication are receipted. Viewers see published revisions. Publication neither completes work nor verifies legal claims. Duplicate Matter/title returns 409 `urn:mc:rejected`. |
+
+Migrations 0013–0016 add the seven feature tables. Reapply the operator's B1 grants after
+migration; `saved_views` needs DELETE as well as SELECT/INSERT/UPDATE. Other feature tables
+retain their narrower grant classes. Browser, real IdP, load and production acceptance are
+separate from the local suite results.

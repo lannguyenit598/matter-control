@@ -2,6 +2,7 @@ package port
 
 import (
 	"context"
+	"time"
 
 	"leonx.me/matter-control/internal/core/domain/matter"
 )
@@ -163,6 +164,17 @@ type MatterListQuery struct {
 
 type MyActionsQuery struct{ ActorID string }
 
+// MeAgendaQuery is one cross-Matter agenda page (RLF-03). From is an inclusive lower bound on
+// the recorded dueAt; Until is an exclusive upper bound; After is the previous page's
+// nextCursor. Limit 0 means the default page size.
+type MeAgendaQuery struct {
+	ActorID string
+	From    *time.Time
+	Until   *time.Time
+	After   *matter.AgendaCursor
+	Limit   int
+}
+
 // WorkService defines the W2 use cases.
 type WorkService interface {
 	CreateAction(ctx context.Context, cmd CreateActionCmd) (matter.WorkItemCreatedResult, error)
@@ -186,6 +198,9 @@ type WorkService interface {
 	WaitingOn(ctx context.Context, q MatterListQuery) ([]matter.WorkItemView, error)
 	// MyActions lists the caller's assigned items across the matters they can access.
 	MyActions(ctx context.Context, q MyActionsQuery) (matter.MyActions, error)
+	// MeAgenda lists the caller's recorded due dates (work items and milestones) across the
+	// matters they can access, with per-page authorization and keyset cursors.
+	MeAgenda(ctx context.Context, q MeAgendaQuery) (matter.MeAgenda, error)
 }
 
 // ---------- Outbound (driven): work-graph transaction + snapshot ----------

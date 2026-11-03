@@ -1311,6 +1311,105 @@ func (s *WorkService) MyActions(ctx context.Context, q port.MyActionsQuery) (mat
 	return out, nil
 }
 
+// MeAgenda (RLF-03) lists the caller's recorded due dates across the Matters they can access,
+// in one pass per Matter snapshot. Included rows: work items and milestones that carry a
+// recorded dueAt inside the requested window; an item without a due date is never scheduled and
+// never appears. Work rows carry the derived timing at the read instant; milestones carry their
+// readiness instead. Authorization is re-evaluated on every call, so a page request always
+// reflects current memberships, and a row whose access was revoked simply stops existing — a
+// cursor carries ids only and can never resurrect content. No total is offered: an uncomputed
+// count must not be invented.
+func (s *WorkService) MeAgenda(ctx context.Context, q port.MeAgendaQuery) (matter.MeAgenda, error) {
+	actor, err := matter.NewActorID(q.ActorID)
+	if err != nil {
+		return matter.MeAgenda{}, err
+	}
+	if q.Limit <= 0 {
+		q.Limit = 100
+	}
+	var out matter.MeAgenda
+	err = s.store.View(ctx, func(snap port.MatterSnapshot) error {
+		gs, ok := snap.(port.WorkGraphSnapshot)
+		if !ok {
+			return fmt.Errorf("snapshot does not support the work graph")
+		}
+		out.AsOf = snap.AsOf()
+		matters, err := gs.MattersOf(ctx, actor)
+		if err != nil {
+			return err
+		}
+		var all []matter.AgendaEntry
+		for _, m := range matters {
+			header, err := snap.MatterHeader(ctx, m)
+			if err != nil {
+				return err
+			}
+			g, err := gs.LoadGraph(ctx, m)
+			if err != nil {
+				return err
+			}
+			g = matter.EffectiveGraph(g, out.AsOf)
+			chain := matter.CriticalChain(g)
+			for _, it := range g.Items {
+				if it.DueAt == nil || !inAgendaWindow(*it.DueAt, q.From, q.Until) {
+					continue
+				}
+				all = append(all, matter.AgendaEntry{
+					MatterID: m, MatterTitle: header.Title, Kind: "work",
+					ItemID: it.ID.String(), Title: it.Title, DueAt: *it.DueAt,
+					Execution: string(it.Execution),
+					Timing:    string(matter.TimingOf(it, out.AsOf).State),
+					Critical:  chain[it.ID],
+				})
+			}
+			for _, ms := range g.Milestones {
+				if ms.DueAt == nil || !inAgendaWindow(*ms.DueAt, q.From, q.Until) {
+					continue
+				}
+				st := matter.MilestoneReadiness(ms, g)
+				all = append(all, matter.AgendaEntry{
+					MatterID: m, MatterTitle: header.Title, Kind: "milestone",
+					ItemID: ms.ID.String(), Title: ms.Name, DueAt: *ms.DueAt,
+					Readiness: string(st.State), Critical: ms.Critical,
+				})
+			}
+		}
+		sort.Slice(all, func(i, j int) bool { return matter.CompareAgenda(all[i], all[j]) < 0 })
+		start := 0
+		if q.After != nil {
+			seek := matter.AgendaEntry{DueAt: q.After.DueAt, MatterID: q.After.MatterID, Kind: q.After.Kind, ItemID: q.After.ID}
+			for start < len(all) && matter.CompareAgenda(all[start], seek) <= 0 {
+				start++
+			}
+		}
+		end := start + q.Limit
+		if end > len(all) {
+			end = len(all)
+		}
+		out.Entries = all[start:end]
+		if end < len(all) {
+			last := out.Entries[len(out.Entries)-1]
+			out.Next = &matter.AgendaCursor{DueAt: last.DueAt, MatterID: last.MatterID, Kind: last.Kind, ID: last.ItemID}
+		}
+		return nil
+	})
+	if err != nil {
+		return matter.MeAgenda{}, fmt.Errorf("my agenda: %w", err)
+	}
+	return out, nil
+}
+
+// inAgendaWindow applies the optional bounds: From inclusive, Until exclusive.
+func inAgendaWindow(d time.Time, from, until *time.Time) bool {
+	if from != nil && d.Before(*from) {
+		return false
+	}
+	if until != nil && !d.Before(*until) {
+		return false
+	}
+	return true
+}
+
 func assignedReason(it matter.WorkItem, class matter.ActionClass) string {
 	switch class {
 	case matter.ClassEligible:

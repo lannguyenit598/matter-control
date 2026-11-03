@@ -688,3 +688,35 @@ func TestMatterSuiteBF_Postgres(t *testing.T) {
 		return b
 	})
 }
+
+// TestMatterSuiteIntakeGuidance_Postgres runs the RLF-06/07 contracts against the real adapter.
+func TestMatterSuiteIntakeGuidance_Postgres(t *testing.T) {
+	mattercontrol.SuiteIntakeGuidance(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}
+
+// TestMatterSuitePlaybooks_Postgres runs the RLF-05 playbook contracts against the real adapter.
+func TestMatterSuitePlaybooks_Postgres(t *testing.T) {
+	mattercontrol.SuitePlaybooks(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}
+
+// TestMatterSuiteSavedViews_Postgres runs the RLF-04 Saved Views contracts against the real adapter.
+func TestMatterSuiteSavedViews_Postgres(t *testing.T) {
+	mattercontrol.SuiteSavedViews(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}
+
+// TestMatterSuiteAgenda_Postgres runs the RLF-03 My Agenda read-model contracts against the real adapter.
+func TestMatterSuiteAgenda_Postgres(t *testing.T) {
+	mattercontrol.SuiteAgenda(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}

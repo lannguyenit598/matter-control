@@ -115,6 +115,9 @@ func b1RuntimeGrants(schema string, tables []string) []string {
 	deletable := map[string]bool{
 		"context_links": true, "dependency_edges": true,
 		"milestone_prerequisites": true, "review_grid_versions": true,
+		// RLF-04: a saved view is a private row its owner may remove; DELETE is part of
+		// its discovered contract (DeleteSavedView), granted on this table only.
+		"saved_views": true,
 	}
 	for _, tb := range tables {
 		switch {
@@ -442,6 +445,19 @@ func TestB1LeastPrivilegeProfile(t *testing.T) {
 		if _, err := run.Exec(ctx, `GRANT mc_owner TO mc_runtime`); err == nil {
 			t.Fatal("runtime granted itself the schema owner role")
 		}
+		// Positive probe for the RLF-04 removal path: the runtime role must be able to delete
+		// its own saved views (the one new-feature DELETE), while matters stay undeletable.
+		if _, err := run.Exec(ctx, `INSERT INTO mcapp.users (id, idp_issuer, idp_subject, display_name) VALUES (gen_random_uuid(), 'http://localhost:8080', 'b1-probe', 'probe')`); err != nil {
+			t.Fatalf("probe user: %v", err)
+		}
+		if _, err := run.Exec(ctx, `INSERT INTO mcapp.saved_views (id, matter_id, owner_id, name, filters, created_at, updated_at, revision)
+			SELECT gen_random_uuid(), m.id, u.id, 'probe view', '{}'::jsonb, now(), now(), 1
+			FROM mcapp.matters m, mcapp.users u WHERE u.idp_subject = 'b1-probe' LIMIT 1`); err != nil {
+			t.Fatalf("probe saved view insert: %v", err)
+		}
+		if _, err := run.Exec(ctx, `DELETE FROM mcapp.saved_views WHERE name = 'probe view'`); err != nil {
+			t.Fatalf("runtime must be able to delete saved views: %v", err)
+		}
 	})
 
 	t.Run("every table has its grant class", func(t *testing.T) {
@@ -454,6 +470,9 @@ func TestB1LeastPrivilegeProfile(t *testing.T) {
 		deletable := map[string]bool{
 			"context_links": true, "dependency_edges": true,
 			"milestone_prerequisites": true, "review_grid_versions": true,
+			// RLF-04: a saved view is a private row its owner may remove; DELETE is part of
+			// its discovered contract (DeleteSavedView), granted on this table only.
+			"saved_views": true,
 		}
 		for _, tb := range tables {
 			want := map[string]bool{"SELECT": true, "INSERT": true, "UPDATE": true}

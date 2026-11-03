@@ -90,6 +90,7 @@ export function AgendaView({ entries, here }: { entries: AgendaEntry[]; here: st
                     {e.title}
                   </Link>
                   <p className="text-xs text-muted-foreground">
+                    {e.matterName && <span className="font-medium">{e.matterName} · </span>}
                     {e.kind === 'work' ? (
                       <LocalizedText en="Work item due date" vi="Hạn của công việc" />
                     ) : (

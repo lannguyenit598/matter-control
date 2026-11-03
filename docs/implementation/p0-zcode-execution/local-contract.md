@@ -1,4 +1,4 @@
-# MatterControl local implementation contract — revision 13
+# MatterControl local implementation contract — revision 14
 
 Task MC-P0-ZCODE-EXECUTION. Author: actual ZCode through revision 4; revision 5 onward by actual Claude Code (takeover MC-P0-CLAUDE-TAKEOVER); owner transition Claude→ZCode at revision 10 per `MC-P0-ZCODE-RESUME-AFTER-CLAUDE-STOP-PROMPT.md` (W1–W5 and the sheet codec preserved as Claude's authorship; takeover snapshot verified: 665 entries, aggregate SHA-256 `c6821c3cf3d58fe9dbc8ba510711445f00d10bce5c1b064e373051f0af14e6d7`; R9 return `d4dc769f…` and manifest `2b68bc92…` verified). Revision 11 (2026-10-28, actual Claude Code, continuation MC-P0-CLAUDE-FINISH-AFTER-ZCODE-20261028): corrections found by executing W6 against PostgreSQL, HTTP and the frontend; see the delta table in §0. Revision 12 (2026-10-28, actual Local Codex after PO-confirmed Claude stop) adds the bounded remediation delta below. Revision 10 (2026-10-27, W6): adds §2.7 — the data-operations catalogue (scoped bulk edit with per-row receipts keyed `attemptId:rowKey`, CSV/XLSX import with RULE-014 source-identity+row-key+content idempotency and connected-group rejection, scoped export with formula-neutral encoding, and the delta brief with `(t1,t2]` recorded changes separate from outstanding-at-t2 reconstructed by deterministic event replay of the command-owned item snapshots); `description` in the approved bulk allowlist maps to the work item's `outcome` text (the record's description/outcome field); no approved business meaning changes. Revision 9 (2026-10-27, W5): adds §2.6 (Control Room read built from ONE snapshot with its boundary, basic Decision/Finding/Risk/Entity context records linked to work items); no approved business meaning changes. Revision 8 (2026-10-27, W4): adds the regulatory-filing catalogue §2.5 (nine-stage flow, exact submissions per cycle, repeated supplement cycles, negative paths, owner reopen with proof epochs, append-only observations and corrections); a filing is an ACTION work item with a filing sidecar, so execution, timing, waiting, dependencies and proof criteria are the shared ones; no approved business meaning changes. Revision 7 (2026-10-27, W3): adds the documents/proof catalogue §2.4 (documents with immutable versions and guarded promotion, evidence criteria, claims, independent per-claim assessment, disputes, revocation, applicability, verifier designation, raw-body upload and content streaming); verification and dependency state are now always recomputed from inputs at the read/command instant; no approved business meaning changes. Revision 6 (2026-10-27, W2): adds the work-graph catalogue §2.3 (typed Actions, metadata, execution transitions, AND-gate dependencies, workstreams, external parties, milestones, grid/My Actions/Waiting On), the `urn:mc:rejected` 409 problem, and the ETag refinement for time-derived members (§4); no approved business meaning changes. Revision 5 (2026-10-27): adds `GET /workspaces` (my workspaces), amends error precedence to authentication-first, adds the two member-list reads and `GET /matters/{id}` to the W1 catalogue as implemented, fixes the exact If-Match→revision mapping, the Idempotency-Key header, the `MC-*` provenance headers and the page envelope (§2.2), and records the implemented product API (`internal/adapter/inbound/productapi`, `cmd/mcapi`); no approved business meaning changes. Revision 4 (2026-10-27): resolves W1-A03 — an explicit per-operation receipt/CAS/lost-response table (§2.1) now defines which commands are receipted, what CAS guards them, and the exact unknown-outcome/retry/readback rules; non-receipted membership commands can no longer be misread as receipted. Revision 3 made the BFF session-storage model explicit (server-side token store, opaque cookie handle). Revision 2 integrated the Design R2 W1 consumer contract (`docs/design/p0-handoff-r2/`, return `4eb3ed8b…`) — accessible-matter list read + BFF session-currentness endpoint. Status: **IMPLEMENTATION_CONTRACT_FROZEN_V12** — binding for both stacks and their tests under this assignment. Choices below are implementation choices within approved rules, made for review; items marked PENDING-[authority] remain with their actual owners and are never silently adopted. Basis: `docs/architecture/backend-http-preparation.md` (BG-01..08), `docs/architecture/api-auth-decision-analysis.md` (INT-D01..09), approved requirements/rules/permissions, D-UX01..04 + local-r3 + R2/R3 source/spec proposals (pending nonauthor semantic review), W0 decision package. Approved business semantics are never changed here.
 
@@ -276,3 +276,38 @@ Local Codex implementation requested directly by the PO; current candidate verif
 - The internal `mcRequest` read-POST option is allowed only for exact POST `/search`, without receipt/CAS parameters; other writes retain UNKNOWN semantics. New reads propagate a fresh server operation ID to existing Go request metadata; diagnostics exclude query, names, tokens and cursor data.
 
 Production Supabase/ICU/pooler, Cloudflare limits, real IdP acceptance, assistive technology and human trials remain separate gates. No cloud deployment or production SLO is inferred.
+
+## 9. Remaining local features — revision 14 (2026-11-03)
+
+Actual Local Codex records the already PO-approved RLF scope and the actual ZCode implementation;
+this addendum changes no existing Requirement/Action, Filing proof or independent-state semantics.
+Revision 13 remains the baseline for the preceding sections. The concrete route catalogue is in
+[`apps/backend/docs/api.md`](../../../apps/backend/docs/api.md#remaining-local-features-rlf-2026-11-03).
+
+- **RLF-01/02:** derive a valid Filing transition from the current read on every render; retain a
+  still-valid choice, refuse a terminal action, and show failed proof reads as unavailable. The
+  contextual work composition is read-only and uses already-authorized data.
+- **RLF-03:** My Agenda contains recorded work/milestone due dates from currently accessible
+  Matters. Reauthorize every page; use deterministic keyset paging without an invented total.
+  The frontend follows at most ten pages of 200 and discloses truncation. No reminders are sent.
+- **RLF-04:** Saved Views belong to one user in one Matter and store filters only. Creation is
+  receipted; update/removal use revision CAS. No sharing or record snapshots. Mutation requires
+  both view ownership and Matter OWNER/EDITOR permission; duplicate names are typed refusals.
+- **RLF-05:** Workspace OWNER publishes immutable playbook revisions. Matter OWNER previews and
+  atomically applies an exact revision from that workspace, with active-member owner mappings.
+  Same-key replay recovers an outcome; applying that revision with another key is refused.
+- **RLF-06:** Matter-scoped intake preserves the original request and exact-version attachments.
+  OWNER/EDITOR triage; conversion creates work atomically and is receipted. Decline is CAS-only.
+  A failed read is not a not-found result; requester text never grants membership.
+- **RLF-07:** Matter OWNER/EDITOR append guidance drafts; OWNER publishes an exact revision.
+  Viewers read published revisions only. References are validated; publication changes no legal
+  state. Duplicate titles have the same typed refusal on memory and PostgreSQL stores.
+- **RLF-08:** migrations 0013–0016, generated queries and B1 grants ship together. The private
+  Saved View removal path alone adds DELETE for its table; existing legal history protections
+  remain intact. Human/browser, real IdP, recovery and cloud acceptance remain separate gates.
+
+The uncommitted 0016 draft acquired its title uniqueness constraint after a local manual-testing
+copy had already applied an earlier draft. That retained copy is not evidence of final schema
+conformance: migration-version equality alone cannot detect this difference. Keep it intact;
+use a fresh migrated fixture for verification and explicitly reconcile it before a future
+runtime refresh. No retained database is automatically reset or altered by this addendum.

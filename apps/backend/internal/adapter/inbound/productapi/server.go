@@ -41,6 +41,10 @@ type Deps struct {
 	Filings              port.FilingService
 	Control              port.ControlService
 	Review               port.ReviewService
+	SavedViews           port.SavedViewService
+	Playbooks            port.PlaybookService
+	Intakes              port.IntakeService
+	Guidances            port.GuidanceService
 	DataOps              port.DataOpsService
 	DataOpsCodec         port.SheetCodec
 	Verifier             port.TokenVerifier
@@ -137,8 +141,29 @@ func NewServer(d Deps) *echo.Echo {
 	v1.GET("/requirements/:id", s.getRequirement)
 	v1.GET("/operations/:key", s.ownReceipt)
 	v1.GET("/me/actions", s.myActions)
+	v1.GET("/me/agenda", s.myAgenda)
 	v1.GET("/me/reviews", s.myReviews)
 	v1.GET("/matters", s.discoverMatters)
+	v1.GET("/workspaces/:id/playbooks", s.listPlaybooks)
+	v1.POST("/workspaces/:id/playbooks", s.createPlaybook)
+	v1.GET("/workspaces/:id/playbooks/:playbookId", s.getPlaybook)
+	v1.POST("/workspaces/:id/playbooks/:playbookId/revisions", s.publishPlaybookRevision)
+	v1.GET("/matters/:id/saved-views", s.listSavedViews)
+	v1.POST("/matters/:id/saved-views", s.createSavedView)
+	v1.PATCH("/matters/:id/saved-views/:viewId", s.updateSavedView)
+	v1.POST("/matters/:id/saved-views/:viewId/removal", s.deleteSavedView)
+	v1.GET("/matters/:id/playbook-applications/preview", s.previewPlaybookApplication)
+	v1.POST("/matters/:id/playbook-applications", s.applyPlaybook)
+	v1.GET("/matters/:id/playbook-instances", s.listPlaybookInstances)
+	v1.GET("/matters/:id/intake", s.listIntake)
+	v1.POST("/matters/:id/intake", s.createIntake)
+	v1.GET("/matters/:id/intake/:intakeId", s.getIntake)
+	v1.POST("/matters/:id/intake/:intakeId/decline", s.declineIntake)
+	v1.POST("/matters/:id/intake/:intakeId/conversion", s.convertIntake)
+	v1.GET("/matters/:id/guidance", s.listGuidance)
+	v1.POST("/matters/:id/guidance", s.createGuidance)
+	v1.POST("/matters/:id/guidance/:docId/revisions", s.addGuidanceDraft)
+	v1.POST("/matters/:id/guidance/:docId/publication", s.publishGuidance)
 	v1.GET("/matters/:id/work-items", s.listWorkItems)
 	v1.POST("/matters/:id/actions", s.createAction)
 	v1.GET("/matters/:id/work-items/:itemId", s.getWorkItem)

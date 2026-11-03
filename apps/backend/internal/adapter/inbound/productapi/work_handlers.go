@@ -2,6 +2,7 @@ package productapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -498,5 +499,90 @@ func (s *server) myActions(c *echo.Context) error {
 	_, err = respond(c, http.StatusOK, myActionsBody{
 		Next: assignedDTOs(m.Next), Waiting: assignedDTOs(m.Waiting), Blocked: assignedDTOs(m.Blocked), Historical: assignedDTOs(m.Historical),
 	}, false)
+	return err
+}
+
+// ---------- GET /me/agenda (RLF-03) ----------
+
+type agendaRowBody struct {
+	MatterID    string `json:"matterId"`
+	MatterTitle string `json:"matterTitle"`
+	Kind        string `json:"kind"`
+	ItemID      string `json:"itemId"`
+	Title       string `json:"title"`
+	DueAt       string `json:"dueAt"`
+	Execution   string `json:"execution"`
+	Timing      string `json:"timing"`
+	Readiness   string `json:"readiness"`
+	Critical    bool   `json:"critical"`
+}
+
+type agendaCursorJSON struct {
+	D string `json:"d"`
+	M string `json:"m"`
+	K string `json:"k"`
+	I string `json:"i"`
+}
+
+// myAgenda lists the caller's recorded due dates (work items and milestones) across the Matters
+// they can access. The actor is the authenticated principal; from/until are optional inclusive
+// UTC dates bounding the recorded dueAt; authorization is re-evaluated for every page. It reads
+// authorized aggregate data in one pass — the frontend never fans out per Matter.
+func (s *server) myAgenda(c *echo.Context) error {
+	limit, err := parseLimit(c)
+	if err != nil {
+		return err
+	}
+	q := port.MeAgendaQuery{ActorID: actorOf(c), Limit: limit}
+	if raw := c.QueryParam("from"); raw != "" {
+		from, perr := time.Parse("2006-01-02", raw)
+		if perr != nil {
+			return fmt.Errorf("%w: invalid from date", errBadRequest)
+		}
+		q.From = &from
+	}
+	if raw := c.QueryParam("until"); raw != "" {
+		until, perr := time.Parse("2006-01-02", raw)
+		if perr != nil {
+			return fmt.Errorf("%w: invalid until date", errBadRequest)
+		}
+		until = until.AddDate(0, 0, 1) // the named day is inclusive
+		q.Until = &until
+	}
+	if q.From != nil && q.Until != nil && q.Until.Before(*q.From) {
+		return fmt.Errorf("%w: until precedes from", errBadRequest)
+	}
+	if raw := c.QueryParam("cursor"); raw != "" {
+		var cur agendaCursorJSON
+		if err := decodeCursor(raw, &cur); err != nil {
+			return err
+		}
+		at, perr := time.Parse(time.RFC3339Nano, cur.D)
+		if perr != nil || (cur.K != "work" && cur.K != "milestone") {
+			return fmt.Errorf("%w: invalid cursor", errBadRequest)
+		}
+		mid, merr := matter.NewMatterID(cur.M)
+		if merr != nil {
+			return fmt.Errorf("%w: invalid cursor", errBadRequest)
+		}
+		q.After = &matter.AgendaCursor{DueAt: at, MatterID: mid, Kind: cur.K, ID: cur.I}
+	}
+	res, err := s.Work.MeAgenda(c.Request().Context(), q)
+	if err != nil {
+		return err
+	}
+	out := page[agendaRowBody]{Items: make([]agendaRowBody, 0, len(res.Entries)), Page: pageMeta{Limit: limit, MaxLimit: maxPageLimit}}
+	for _, e := range res.Entries {
+		out.Items = append(out.Items, agendaRowBody{
+			MatterID: e.MatterID.String(), MatterTitle: e.MatterTitle, Kind: e.Kind, ItemID: e.ItemID,
+			Title: e.Title, DueAt: ts(e.DueAt), Execution: e.Execution, Timing: e.Timing,
+			Readiness: e.Readiness, Critical: e.Critical,
+		})
+	}
+	if res.Next != nil {
+		out.Page.NextCursor = encodeCursor(agendaCursorJSON{D: ts(res.Next.DueAt), M: res.Next.MatterID.String(), K: res.Next.Kind, I: res.Next.ID})
+	}
+	provenance(c, res.AsOf, 0)
+	_, err = respond(c, http.StatusOK, out, false)
 	return err
 }

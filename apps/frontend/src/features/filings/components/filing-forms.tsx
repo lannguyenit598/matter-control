@@ -300,8 +300,14 @@ export function AdvanceForm({
   members: Option[]
 }) {
   const zone = useTimeZone()
-  const [to, setTo] = useState<FilingStage>(detail.next[0]!)
-  if (detail.next.length === 0) return null
+  const [chosen, setChosen] = useState<FilingStage | null>(null)
+  // A refresh that moves the filing also changes the allowed transitions: a still-permitted
+  // choice keeps the user's intent and the in-progress draft, a stale choice falls back to a
+  // permitted target of the current detail, and no permitted target means no action at all.
+  // The submitted command always names the effective target, never an old stage that only the
+  // select still remembers.
+  const to = chosen && detail.next.includes(chosen) ? chosen : (detail.next[0] ?? null)
+  if (!to) return null
   const submits = to === 'SUBMISSION' || to === 'RESPONSE'
   return (
     <IntentForm
@@ -342,7 +348,7 @@ export function AdvanceForm({
               <Select
                 name="to"
                 value={to}
-                onChange={(e) => setTo(e.target.value as FilingStage)}
+                onChange={(e) => setChosen(e.target.value as FilingStage)}
                 options={detail.next.map((s) => ({ value: s, label: STAGE_LABEL[s] }))}
                 {...c}
               />

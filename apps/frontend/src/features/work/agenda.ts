@@ -19,6 +19,8 @@ export type AgendaEntry = {
   key: string
   kind: 'work' | 'milestone'
   title: string
+  /** The owning Matter's name; present on cross-Matter (My Agenda) rows only. */
+  matterName?: string
   /** The recorded instant, never a computed deadline. */
   dueAt: string
   /** Where the date comes from. */

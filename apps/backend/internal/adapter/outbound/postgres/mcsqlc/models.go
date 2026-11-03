@@ -267,6 +267,29 @@ type GraphNode struct {
 	Kind     string
 }
 
+type GuidanceDocument struct {
+	ID        string
+	MatterID  string
+	Title     string
+	CreatedBy string
+	CreatedAt time.Time
+	Revision  int64
+}
+
+type GuidanceRevision struct {
+	ID          string
+	DocumentID  string
+	MatterID    string
+	No          int64
+	Body        string
+	SourceRefs  []byte
+	Status      string
+	CreatedBy   string
+	CreatedAt   time.Time
+	PublishedBy pgtype.UUID
+	PublishedAt pgtype.Timestamptz
+}
+
 type ImportSource struct {
 	MatterID        string
 	SourceName      string
@@ -274,6 +297,24 @@ type ImportSource struct {
 	ItemID          string
 	ContentHash     string
 	FirstImportedAt time.Time
+}
+
+type IntakeRecord struct {
+	ID           string
+	MatterID     string
+	Title        string
+	RequestText  string
+	Requester    string
+	ReceivedAt   time.Time
+	Attachments  []byte
+	Status       string
+	TriageReason string
+	TriagedBy    pgtype.UUID
+	TriagedAt    pgtype.Timestamptz
+	ItemID       pgtype.UUID
+	RecordedBy   string
+	CreatedAt    time.Time
+	Revision     int64
 }
 
 type Matter struct {
@@ -318,6 +359,34 @@ type Party struct {
 	Contact  string
 	Notes    string
 	Revision int64
+}
+
+type Playbook struct {
+	ID          string
+	WorkspaceID string
+	Name        string
+	CreatedBy   string
+	CreatedAt   time.Time
+	Revision    int64
+}
+
+type PlaybookInstance struct {
+	MatterID   string
+	RevisionID string
+	PlaybookID string
+	EntryKey   string
+	ItemID     string
+	AppliedBy  string
+	AppliedAt  time.Time
+}
+
+type PlaybookRevision struct {
+	ID         string
+	PlaybookID string
+	No         int64
+	Entries    []byte
+	CreatedBy  string
+	CreatedAt  time.Time
 }
 
 type Requirement struct {
@@ -395,6 +464,17 @@ type ReviewQuestionRevision struct {
 	Text       string
 	RevisedBy  string
 	RevisedAt  time.Time
+}
+
+type SavedView struct {
+	ID        string
+	MatterID  string
+	OwnerID   string
+	Name      string
+	Filters   []byte
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Revision  int64
 }
 
 type SecurityAuditEvent struct {

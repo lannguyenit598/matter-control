@@ -55,9 +55,11 @@ export function whyNow(
 }
 
 /**
- * Lead of a work record (BF-09): why it matters now, the outcome it must reach, and one meaningful
- * next operation permitted by its state and the caller's role. The status form is passed in as
- * `children` so every real control, error and recovery path stays exactly as it was.
+ * Lead of a work record (BF-09): why it matters now and one meaningful next operation permitted
+ * by its state and the caller's role. The outcome the record must reach and its standing proof
+ * context live in the composed read-only WorkContext section beside it, so the two never repeat
+ * each other. The status form is passed in as `children` so every real control, error and
+ * recovery path stays exactly as it was.
  */
 export function WorkNow({
   item,
@@ -98,12 +100,6 @@ export function WorkNow({
         <p className="flex flex-wrap items-center gap-2 text-sm">
           <TimingBadge derived={derived} />
         </p>
-      </section>
-      <section aria-labelledby="expected-outcome" className="flex flex-col gap-1">
-        <h2 id="expected-outcome" className="text-lg font-semibold">
-          <LocalizedText en="Outcome to reach" vi="Kết quả cần đạt" />
-        </h2>
-        <p className="text-sm break-words whitespace-pre-wrap">{item.outcome}</p>
       </section>
       <section aria-labelledby="next-step" className="flex flex-col gap-2">
         <h2 id="next-step" className="text-lg font-semibold">

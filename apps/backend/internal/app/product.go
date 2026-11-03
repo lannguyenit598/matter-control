@@ -166,6 +166,10 @@ type productServices struct {
 	Filings    port.FilingService
 	Control    port.ControlService
 	Review     port.ReviewService
+	SavedViews port.SavedViewService
+	Playbooks  port.PlaybookService
+	Intakes    port.IntakeService
+	Guidances  port.GuidanceService
 	DataOps    port.DataOpsService
 }
 
@@ -194,6 +198,10 @@ func newProductServices(store *postgres.MatterStore, objects port.ObjectStore, l
 		Filings:    service.NewFilingService(work),
 		Control:    service.NewControlService(work),
 		Review:     service.NewReviewService(work),
+		SavedViews: service.NewSavedViewService(work),
+		Playbooks:  service.NewPlaybookService(store, work, ids),
+		Intakes:    service.NewIntakeService(work),
+		Guidances:  service.NewGuidanceService(work),
 		Workspaces: service.NewWorkspaceService(store, ids, logger, matter.KeyAgePolicy{}),
 		Matters:    service.NewMatterService(store, ids, logger, matter.KeyAgePolicy{}),
 		Work:       work,
@@ -204,7 +212,7 @@ func newProductServices(store *postgres.MatterStore, objects port.ObjectStore, l
 // newProductHTTPServer mirrors newHTTPServer's lifecycle: synchronous listen, serve in the
 // background, drain on stop, cancel request contexts before the pool closes.
 func newProductHTTPServer(lc fx.Lifecycle, cfg config.ProductConfig, logger *slog.Logger, opts ProductOptions,
-	ws port.WorkspaceService, ms port.MatterService, work port.WorkService, evidence port.EvidenceService, filings port.FilingService, control port.ControlService, dataOps port.DataOpsService, review port.ReviewService, verifier port.TokenVerifier, ids port.IdentityResolver, pool *pgxpool.Pool, failed fatal,
+	ws port.WorkspaceService, ms port.MatterService, work port.WorkService, evidence port.EvidenceService, filings port.FilingService, control port.ControlService, dataOps port.DataOpsService, review port.ReviewService, savedViews port.SavedViewService, playbooks port.PlaybookService, intakes port.IntakeService, guidances port.GuidanceService, verifier port.TokenVerifier, ids port.IdentityResolver, pool *pgxpool.Pool, failed fatal,
 ) *http.Server {
 	var draining atomic.Bool
 	searchCursors := productapi.NewSearchCursors(cfg.SearchCursorKey, time.Now)
@@ -213,7 +221,7 @@ func newProductHTTPServer(lc fx.Lifecycle, cfg config.ProductConfig, logger *slo
 	}
 	e := productapi.NewServer(productapi.Deps{
 		Search:     service.NewSearchService(postgres.NewMatterStore(pool), searchCursors, logger),
-		Workspaces: ws, Matters: ms, Work: work, Evidence: evidence, Filings: filings, Control: control, Review: review, DataOps: dataOps, DataOpsCodec: sheet.Codec{}, MaxUploadBytes: cfg.MaxUploadBytes, Verifier: verifier, Identities: ids, Logger: logger,
+		Workspaces: ws, Matters: ms, Work: work, Evidence: evidence, Filings: filings, Control: control, Review: review, SavedViews: savedViews, Playbooks: playbooks, Intakes: intakes, Guidances: guidances, DataOps: dataOps, DataOpsCodec: sheet.Codec{}, MaxUploadBytes: cfg.MaxUploadBytes, Verifier: verifier, Identities: ids, Logger: logger,
 		Ready:                readiness(&draining, pool.Ping),
 		RequestTimeout:       cfg.RequestTimeout,
 		TransferTimeout:      cfg.TransferTimeout,

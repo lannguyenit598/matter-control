@@ -13,12 +13,15 @@ import { ReadFailure } from '@/components/organisms/read-failure'
 import { matterRepository } from '@/features/matters/repository'
 import { OutcomeVerificationBadge } from '@/features/filings/components/outcome-verification'
 import { EvidenceBasis } from '@/features/proof/components/evidence-basis'
+import { criterionBasis } from '@/features/proof/evidence-basis'
+import { CRITERION_REASON } from '@/features/proof/labels'
 import { ProofPanel } from '@/features/proof/components/proof-panel'
 import { proofRepository } from '@/features/proof/repository'
 import { DependencyPanel } from '@/features/work/components/dependency-panel'
 import { EscalationPanel } from '@/features/work/components/escalation-panel'
 import { ExecutionPanel } from '@/features/work/components/execution-panel'
 import { MetadataForm } from '@/features/work/components/metadata-form'
+import { WorkContext } from '@/features/work/components/work-context'
 import { WorkNow } from '@/features/work/components/work-now'
 import {
   AttentionBadge,
@@ -31,7 +34,7 @@ import {
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
-import { safeInternalPath } from '@/lib/mc/paths'
+import { safeInternalPath, withFrom } from '@/lib/mc/paths'
 
 export async function generateMetadata({
   params,
@@ -148,6 +151,53 @@ async function WorkItem({
               titles={titles}
             />
           </WorkNow>
+        </CardContent>
+      </Card>
+
+      {/* One read-only context composition: outcome, criteria, exact evidence versions and the
+          upstream reasons this record cannot proceed. No new read and no edit affordance here. */}
+      <Card id="context">
+        <CardContent className="pt-6">
+          <WorkContext
+            item={it}
+            criteria={
+              proof?.ok
+                ? proof.value.checklist.criteria.map((c) => ({
+                    id: c.id,
+                    title: c.title,
+                    purpose: c.purpose,
+                    mandatory: c.mandatory,
+                    satisfied: c.satisfied,
+                    reasonLabel: c.satisfied
+                      ? undefined
+                      : (CRITERION_REASON[c.reason ?? ''] ?? undefined),
+                  }))
+                : null
+            }
+            reliedOn={
+              proof?.ok
+                ? proof.value.checklist.criteria
+                    .filter((c) => c.satisfied)
+                    .flatMap((c) => {
+                      const basis = criterionBasis(proof.value.checklist, proof.value.details, c.id)
+                      if (!basis) return []
+                      return basis.claims
+                        .filter((cl) => cl.satisfying)
+                        .map((cl) => ({
+                          exact: cl.version
+                            ? `${cl.version.documentName} · v${cl.version.no} · ${cl.version.filename}`
+                            : cl.evidence?.kind === 'EXTERNAL_REFERENCE'
+                              ? cl.evidence.reference || cl.evidence.description
+                              : (cl.evidence?.description ?? ''),
+                          criterion: c.title,
+                        }))
+                        .filter((x) => x.exact)
+                    })
+                : []
+            }
+            titles={titles}
+            linkToItem={(id) => withFrom(`/matters/${matterId}/work/${id}`, here)}
+          />
         </CardContent>
       </Card>
 
