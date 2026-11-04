@@ -4,7 +4,6 @@ import { readFile } from 'node:fs/promises'
 import { test } from 'node:test'
 
 import { problems, render } from './profiles.mjs'
-
 const digest = '@sha256:' + 'a'.repeat(64)
 const common = {
   IMAGE: 'asia-southeast1-docker.pkg.dev/mc-synthetic/mattercontrol/mcapi' + digest,
@@ -98,4 +97,95 @@ test('profile timing and isolation invariants', async () => {
   assert.match(init, /docker stop -t 75 mcapi/)
   // Boot never applies DDL: migration is an operator step.
   assert.doesNotMatch(init.split('\nruncmd:')[1], /mcapi-migrate/)
+})
+
+test('public ingress boundary is explicit: invoker IAM check disabled declaratively (A10)', async () => {
+  const files = await render('cloud-run', cloudRun)
+  assert.match(files['service.yaml'], /run\.googleapis\.com\/ingress: all/)
+  // Official Cloud Run annotation (docs checked 2026-11-04): no roles/run.invoker binding needed;
+  // the application bearer remains the only auth boundary. Org policy can forbid this — the
+  // allUsers alternative stays an operator/PO step and is documented, not rendered here.
+  assert.match(files['service.yaml'], /run\.googleapis\.com\/invoker-iam-disabled: 'true'/)
+  assert.ok(!files['migrate-job.yaml'].includes('invoker-iam-disabled'), 'jobs are private; the annotation is a serving-service boundary only')
+})
+
+test('optional search cursor key: absent stays renderable and renders nothing (A7)', async () => {
+  const files = await render('cloud-run', cloudRun)
+  assert.ok(!files['service.yaml'].includes('MC_SEARCH_CURSOR_KEY'), 'the profile without the key must render with Search honestly unavailable')
+  assert.doesNotMatch(files['service.yaml'], /\{\{/)
+  assert.ok(!files['service.yaml'].includes('/secrets/dbca'), 'no CA mount when DATABASE_CA_SECRET is absent')
+  // Same values plus a secret NAME render the reference; the value never embeds.
+  const withSearch = await render('cloud-run', { ...cloudRun, MC_SEARCH_CURSOR_KEY: 'mcapi-search-cursor-key' })
+  assert.match(withSearch['service.yaml'], /name: MC_SEARCH_CURSOR_KEY/)
+  assert.match(withSearch['service.yaml'], /name: 'mcapi-search-cursor-key', key: latest/)
+  assert.equal(withSearch['service.yaml'].split('MC_SEARCH_CURSOR_KEY').length - 1, 2, 'only the env name and the secret reference appear')
+})
+
+test('optional database CA secret: present mounts /secrets/dbca in service AND migrate job (A3)', async () => {
+  const withCA = await render('cloud-run', { ...cloudRun, DATABASE_CA_SECRET: 'mcapi-database-ca' })
+  for (const name of ['service.yaml', 'migrate-job.yaml']) {
+    assert.match(withCA[name], /mountPath: \/secrets\/dbca/)
+    assert.match(withCA[name], /secretName: 'mcapi-database-ca'/)
+  }
+  assert.match(withCA['service.yaml'], /path: ca\.pem/)
+  const withoutCA = await render('cloud-run', cloudRun)
+  assert.ok(!withoutCA['migrate-job.yaml'].includes('volumeMounts'), 'migrate job renders no empty volume keys when the CA is absent')
+  assert.doesNotMatch(withoutCA['migrate-job.yaml'], /^\s*volumeMounts:\s*$/m)
+})
+
+test('malformed or unsafe optional secret references fail closed', () => {
+  const bad = [
+    { ...cloudRun, MC_SEARCH_CURSOR_KEY: 'postgresql://u:x@h/db' },
+    { ...cloudRun, MC_SEARCH_CURSOR_KEY: '-----BEGIN PRIVATE KEY-----' },
+    { ...cloudRun, MC_SEARCH_CURSOR_KEY: 'has space' },
+    { ...cloudRun, DATABASE_CA_SECRET: 'oci://not-a-secret-name' },
+    { ...cloudRun, MC_SEARCH_CURSOR_KEY: '' },
+    { ...cloudRun, MC_SEARCH_CURSOR_KEY: 'REPLACE_ME' },
+  ]
+  for (const values of bad) {
+    const got = problems('cloud-run', values)
+    assert.ok(got.some((m) => /must be a Secret Manager secret name|placeholder or unsafe characters|looks like a secret value|required/.test(m)), JSON.stringify(got))
+    assert.ok(!JSON.stringify(got).includes('postgresql://u:x'), 'no secret value echoed')
+  }
+})
+
+const workerVars = {
+  API_MODE: 'rest',
+  API_BASE_URL: 'https://mcapi-pilot.asia-southeast1.run.app/api/v1',
+  AUTH_ALLOW_ANONYMOUS: 'false',
+  SESSION_COOKIE_SECURE: 'true',
+  BFF_STATE_BACKEND: 'postgres',
+  APP_ORIGIN: 'https://mattercontrol-pilot.synthetic-subdomain.workers.dev',
+  OIDC_ISSUER: 'https://pilot.synthetic.test',
+  OIDC_CLIENT_ID: '555555555555555501',
+  OIDC_PROJECT_ID: '555555555555555502',
+  BFF_STATE_KEY_ID: 'v1',
+}
+
+test('worker profile renders deterministic non-secret vars (A9: no tracked-source hand-editing)', async () => {
+  const files = await render('worker', workerVars)
+  const parsed = JSON.parse(files['wrangler.vars.json'])
+  assert.deepEqual(parsed, workerVars)
+  assert.equal(await render('worker', workerVars).then((f) => f['wrangler.vars.json']), files['wrangler.vars.json'])
+  for (const secret of ['BFF_DATABASE_URL', 'BFF_STATE_KEYS', 'BFF_DATABASE_CA']) {
+    assert.ok(!JSON.stringify(parsed).includes(secret), `secret ${secret} must never be a worker var value`)
+  }
+})
+
+test('worker profile refuses demo mode, open anonymous auth, insecure cookies, wrong base path, path origins', () => {
+  const cases = [
+    [{ ...workerVars, API_MODE: 'demo' }, 'API_MODE: must be "rest"'],
+    [{ ...workerVars, AUTH_ALLOW_ANONYMOUS: 'true' }, 'AUTH_ALLOW_ANONYMOUS: must be "false"'],
+    [{ ...workerVars, SESSION_COOKIE_SECURE: 'false' }, 'SESSION_COOKIE_SECURE: must be "true"'],
+    [{ ...workerVars, BFF_STATE_BACKEND: 'memory' }, 'BFF_STATE_BACKEND: must be "postgres"'],
+    [{ ...workerVars, API_BASE_URL: 'https://mcapi-pilot.asia-southeast1.run.app/other' }, 'API_BASE_URL: must point at the backend /api/v1 base path'],
+    [{ ...workerVars, APP_ORIGIN: 'https://x.workers.dev/pilot/' }, 'APP_ORIGIN: must be the bare https origin'],
+    [{ ...workerVars, APP_ORIGIN: 'http://x.workers.dev' }, 'APP_ORIGIN: must be the bare https origin'],
+    [{ ...workerVars, OIDC_ISSUER: 'https://REPLACE.zitadel.cloud' }, 'OIDC_ISSUER: placeholder or unsafe characters'],
+    [{ ...workerVars, BFF_STATE_KEY_ID: 'v1 v2' }, 'BFF_STATE_KEY_ID: must be 1-32 ASCII'],
+  ]
+  for (const [values, expected] of cases) {
+    const got = problems('worker', values)
+    assert.ok(got.some((m) => m.startsWith(expected.split(':')[0]) && m.includes(expected.split(': ').slice(1).join(': '))), `${expected} not matched in ${JSON.stringify(got)}`)
+  }
 })

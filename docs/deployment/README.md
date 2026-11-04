@@ -5,8 +5,10 @@ pilot default: Next.js/Cloudflare Workers, Go/Cloud Run, Supabase PostgreSQL, pr
 ZITADEL. [ADR-007](../architecture/adr/ADR-007-portable-fe-be-deployment-profiles.md) describes
 proposed App Hosting and Compute Engine alternatives. Preserve their explicit approval status.
 
-- [Pilot runbook](pilot-deploy-runbook.md): roles, migration, runtime bindings, smoke, rollback,
-  monitoring, rotation and recovery order.
+- [Pilot runbook](pilot-deploy-runbook.md): the ONE canonical operator procedure — roles/
+  migration order, deployment bindings, smoke expectations, backup/retention, rollback truth,
+  the decision register (ADR-007 packet D-IDs + pilot PD-IDs) and the deduplicated three-tier
+  findings register (source-backed revision 2026-11-04).
 - [Portable profile runbook](portability-runbook.md): builder/profile selection and host switching.
 - [Unresolved provider decisions](portability-cloud-validation-packet.md): qualification and
   workload/cost decisions; a local build is not permission to activate them.
