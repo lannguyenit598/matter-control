@@ -1,0 +1,10 @@
+# MC-OPENCODE-PILOT-DEPLOY-READINESS-REVIEW-20261104 — independent review of MC-ZCODE-PILOT-DEPLOY-READINESS-20261103
+
+- Owner: actual OpenCode (independent QA/review role), non-author. Runtime: GLM-5.3-Flash.
+- Dispatch prompt: `docs/implementation/handoffs/MC-OPENCODE-PILOT-DEPLOY-READINESS-REVIEW-20261104-PROMPT.md`. Candidate: actual ZCode `MC-ZCODE-PILOT-DEPLOY-READINESS-20261103` (worktree `/private/tmp/mc-zcode-pilot-deploy-readiness-20261103`).
+- Status: **IN_REVIEW → review published; author fix pending.** Verdict: **CHANGES_REQUIRED** (single blocking finding: D7 decision-register approval status, plus two MINOR wording corrections). Local-source review only.
+- Review deliverable: `docs/reviews/pilot-deploy-readiness-opencode-review-20261104-r1/review.md` (§0 identity/independence + pins EXACT MATCH: HEAD `048776b3862a…`, diff SHA `164db6e8af39…`, 21 file hashes byte-for-byte; post-gates re-pin identical → no candidate source touched).
+- Local gates reproduced by the reviewer: renderer tests 12/12; backup rehearsal all-green (own container destroyed); B1 operator file sequence + least-privilege on disposable PG17 (ok 12.734s); 9 zitadel verifier tests; 2 migrate-identity tests; TLS verify-full 3-path test with a purpose-built local TLS fixture (all exit 0). Provider steps W1–W8: NOT_RUN (hard boundary). Details in the review §4.
+- Required change (author-side, for actual ZCode/Codex intake): correct runbook `packet D7` approval-status cell (numeric workload is OPEN/PO-owned per step-01-approval 2026-10-24 deferral, OBD-09 OPEN status, ADR-007 Decision item 5); align `disposition.md` Z6; adopt MINOR fixes D5 cite pointer ("ADR-007 Decision item 6") and scheduled-dump.sh argv wording.
+- Reviewer proposals for separate assignments (optional): YAML-parse pass for renderer structural tests; PGPASSWORD-env/argv-stripped DSN option in scheduled-dump.sh; mktemp for rehearsal error-path temp file.
+- Evidence rules honored: no provider calls; no source edits anywhere; synthetic runtime-generated credentials only, inside disposable containers, destroyed afterwards; no sandbox refusals encountered.

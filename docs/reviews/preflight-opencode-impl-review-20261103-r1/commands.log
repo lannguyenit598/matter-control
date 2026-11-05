@@ -1,0 +1,128 @@
+# commands.log — MC-OPENCODE-PREFLIGHT-IMPL-REVIEW-20261103 (r1)
+
+Session: OpenCode evidence-only implementation review of MC-PREFLIGHT-01 (Filing Package Pre-flight v1),
+uncommitted working tree on branch `codex/unified-project-flow` @ `6172f234be5a25393cddffaf841cc0370b587334`
+(implementation range base `978d8fc`).
+Reviewer-only constraints honored throughout: no author-file edits, no commit/push, no task-record writes,
+no stack/IdP start, no permission/signature bypass. All writes confined to
+`docs/reviews/preflight-opencode-impl-review-20261103-r1/`.
+
+Toolchain: rtk 1.1.0 (shell prefix; `rtk proxy` for raw fidelity)
+- go1.27.3 darwin/arm64
+- golangci-lint 2.14.0 (built with go1.27.1)
+- node v24.22.1 · pnpm 12.11.2
+- docker 29.9.2 · PG fixture container `mc-preflight-pg` (5433→5432)
+- host: Apple M4, macOS (UTC+7); all timestamps below are UTC
+Times marked ≈ fall between logged anchors.
+
+## Part 1 — 2026-11-03 ~16:44–16:54 UTC (review session part 1, serialized-context probes)
+
+Literal per-line commands are not all re-derivable from the resumed session's serialized context;
+methods and the one hard anchor are recorded. Every part-1 byte-level claim is validated by pinning +
+the resume-session re-verification (all-OK below).
+
+- [≈16:46Z] §0 HEAD/branch/scope: `git rev-parse HEAD` (= 6172f234…), `git branch --show-current`
+  (= codex/unified-project-flow), `git status --porcelain` (= 14 modified + 5 new implementation files
+  + pre-existing untracked docs) — EXIT=0. stdout only.
+- [16:51:28Z] §0 byte pin — CHECKSUM_CAPTURE — `shasum -a 256` over the 19 scoped implementation files
+  → `sha256-manifest.txt` (EXIT=0; capture-time hashes; file list embedded in the manifest).
+- [≈16:47–16:52Z] V1: `git diff --stat 978d8fc HEAD -- <4 guard files: filing.go, evidence.go,
+  workview.go, filing_service.go (region)>` → empty (committed bytes identical to 978d8fc); plus
+  byte-level comparison of the working tree against `git show 978d8fc:<path>` originals
+  (filing.go lines 368–426) for V2. EXIT=0. stdout only.
+- [≈16:48–16:52Z] V3–V6, V8, V9: file reads + targeted greps (no mutations). Subtest/line citations
+  were re-grounded on the resume session (Part 4) directly from the pinned bytes.
+
+## Part 2 — 2026-11-03 17:10 UTC (resume: binding re-check)
+
+- [17:10:15Z] drift recheck — CHECKSUM_VERIFY —
+  `date -u +"UTC_NOW=%Y-%m-%dT%H:%M:%SZ"; git rev-parse HEAD; git branch --show-current; git status --porcelain`
+  — EXIT=0; HEAD = 6172f234be5a25393cddffaf841cc0370b587334, branch unchanged, dirty scope unchanged. stdout.
+- [≈17:10:25Z] `docker ps --filter name=mc-preflight-pg --format '{{.Names}} {{.Status}} {{.Ports}}'`
+  — EXIT=0 → `mc-preflight-pg Up … 0.0.0.0:5433->5432/tcp`.
+- [≈17:10:40Z] pin re-verify — CHECKSUM_VERIFY —
+  `shasum -a 256 -c docs/reviews/preflight-opencode-impl-review-20261103-r1/sha256-manifest.txt`
+  — EXIT=0 → 19/19 `OK`.
+- [≈17:10:50Z] `docker exec mc-preflight-pg pg_isready -U mattercontrol -d mattercontrol`
+  — EXIT=0 → `/var/run/postgresql:5432 - accepting connections`.
+- [≈17:10:58Z] first rerun invocation — tool-provided `workdir` was ignored by the harness;
+  redirect target `../docs/...` failed: zsh `no such file or directory`, EXIT=1, no side effects.
+- [≈17:11:00Z] `pwd; ls -d <evidence-dir>` — EXIT=0 → shell cwd = repo root.
+  Decision: all later commands embed an explicit `cd`.
+
+## Part 3 — 2026-11-03 17:11–17:22 UTC (review gates, exact)
+
+- [17:11:00–17:14:04Z] V7 — single-package rerun (previously failed) —
+  LOG `v7-go-race-postgres-rerun.log`, EXIT=0.
+  ```
+  cd /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend
+  rtk proxy env MC_TEST_DATABASE_URL="postgres://mattercontrol:mattercontrol@localhost:5433/mattercontrol?sslmode=disable" go test -race -count=1 ./internal/adapter/outbound/postgres
+  ```
+  → `ok leonx.me/matter-control/internal/adapter/outbound/postgres 181.972s`
+- [17:14:20–17:18:10Z] V7 — authoritative full race suite —
+  LOG `v7-go-race-full-v.log`, EXIT=0.
+  ```
+  cd /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend
+  rtk proxy env MC_TEST_DATABASE_URL="postgres://mattercontrol:mattercontrol@localhost:5433/mattercontrol?sslmode=disable" go test -race -count=1 -v ./...
+  ```
+  → 805 `--- PASS` / 0 `--- FAIL` / 6 `--- SKIP` / 14 `ok` packages (log: 143,453 bytes / 1,674 lines).
+  Count probes: `grep -c -- '--- PASS'`, `'--- FAIL'`, `'--- SKIP'`, `'^ok  '`, `'^FAIL'` — EXIT=0.
+- [≈17:18:15Z] skip/ok listing on the full log (stdout; the 6 skips are pre-existing env-gated tests).
+- [17:18:25–17:18:32Z] lint — LOG `v7-golangci-lint.log`, EXIT=0.
+  ```
+  cd .../apps/backend
+  rtk proxy golangci-lint run ./...
+  ```
+  → `0 issues.`
+- [17:18:47–17:21:22Z] FE check — LOG `v7-fe-pnpm-check.log`, EXIT=0.
+  ```
+  cd .../apps/frontend
+  rtk proxy pnpm check
+  ```
+  → `Tests  922 passed | 12 skipped (934)`; `agent config OK: 17 skills, 3 scoped rules`.
+- [≈17:18:52Z] P3-F1 re-verification: `grep -n 'satisfied' internal/core/domain/matter/filing_preflight_test.go`
+  — EXIT=0 → helper declared at line 63, masked `_ = satisfied` at line 66, no invocations.
+- [17:21:37–17:21:44Z] FE build — LOG `v7-fe-pnpm-build.log`, EXIT=0.
+  ```
+  cd .../apps/frontend
+  rtk proxy pnpm build
+  ```
+  → all routes compiled incl. the filings route; `Compiled CSS verified: 1 assets …`.
+- [17:21:50–17:21:56Z] storybook — LOG `v7-fe-pnpm-build-storybook.log`, EXIT=0.
+  ```
+  cd .../apps/frontend
+  rtk proxy pnpm build-storybook
+  ```
+  → `Storybook build completed successfully` (rolldown "module level directive" warning: informational).
+- [17:22:03–17:22:06Z] bench — LOG `v7-bench-preflight.log`, EXIT=0.
+  ```
+  cd .../apps/backend
+  rtk proxy go test ./internal/core/domain/matter/ -run XXX -bench=BenchmarkPreflightOf100Criteria -benchmem
+  ```
+  → `BenchmarkPreflightOf100Criteria-10  3366  341047 ns/op  267266 B/op  644 allocs/op`
+  (author claim: 328 µs/op · 267 KB/op · 644 allocs/op — time Δ ≈ +4% single-run variance; bytes/allocs exact).
+
+## Part 4 — ≈17:26–17:31 UTC (V10/V11 grounding + artifact writing)
+
+- `grep -rn 'E-7'` over dispatch / design / return.md / task file — EXIT=0 (V10 source lines:
+  design "Scale … reopen nếu >200 dòng (E-7)", "E-7 >200 dòng → không paginate v1, log đo";
+  return.md:21/44/53 defer disclosures; dispatch V10 reviewer-call note).
+- `grep -n -i 'NOT RUN|not-run|NOT_RUN' docs/testing/preflight-impl-20261103-r1/return.md` — EXIT=0
+  (lines 25, 28, 52 — honest NOT_RUN disclosures).
+- tool versions (`go version`; `golangci-lint --version`; `node --version`; `pnpm --version`;
+  `docker --version`) — EXIT=0; values recorded in the Toolchain header above.
+- `grep -n 'DISPUTED' internal/core/domain/matter/filing_preflight_test.go` — EXIT=0 → line 270 subtest.
+- `grep -n 'Blocking' internal/core/domain/matter/filing_preflight.go` — EXIT=0 → lines 53/91/102/129/141/158
+  (formula at :158, BF-01 OUTCOME reset at :102).
+- `grep -n 'aria-label' ../apps/frontend/src/features/filings/components/preflight-panel.tsx`
+  (cwd `apps/backend`) — EXIT=2, `No such file or directory` (cwd/path artifact of the fallback chain).
+  Citation satisfied instead by a direct file read of the absolute path: preflight-panel.tsx:91
+  `aria-label={label.en}` confirmed via the read tool.
+- `read` tool (no shell): filing.go 263–302, contract_preflight.go 96–119, evidence.go 344–359,
+  preflight-panel.tsx 82–95 — line citations refreshed against pinned bytes.
+- This file — [`grep -E '^(START_UTC|END_UTC|EXIT)' $f` loop] over the 7 gate logs — EXIT=0;
+  log-embedded timestamps used above.
+
+Part-1-session command lines are recorded to the fidelity retained by the resumed session context;
+they are anchored by the byte pin (16:51:28Z) and re-verified at 17:10 UTC. No mutation occurred at
+any point; there is nothing to revert.

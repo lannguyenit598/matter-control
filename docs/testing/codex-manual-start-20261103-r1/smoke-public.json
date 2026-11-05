@@ -1,0 +1,49 @@
+{
+  "utc": "2026-11-03T01:28:48.921348+00:00",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8081/healthz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8081/readyz",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:3000/api/auth/session",
+      "status": 200,
+      "authenticated": false
+    },
+    {
+      "url": "http://localhost:3000/",
+      "status": 307,
+      "location": "/my-actions"
+    },
+    {
+      "url": "http://127.0.0.1:8081/api/v1/me/agenda",
+      "status": 401
+    },
+    {
+      "url": "http://localhost:3000/api/auth/login",
+      "status": 307,
+      "destinationOrigin": "https://matter-control-legal-dev-fm2k48.au1.zitadel.cloud",
+      "destinationPath": "/oauth/v2/authorize",
+      "pkceS256": true,
+      "callback": "http://localhost:3000/api/auth/callback",
+      "statePresent": true,
+      "noncePresent": true,
+      "cookiesOrStateRecorded": false
+    },
+    {
+      "probe": "synthetic-invalid-token",
+      "status": 401
+    }
+  ],
+  "humanLogin": "NOT_RUN; operator enters credentials in UI",
+  "probeErratum": "Initial probe lost Location header through case-sensitive dict lookup; corrected to lowercase headers. No product defect inferred.",
+  "releaseAcceptance": false
+}

@@ -1,0 +1,70 @@
+{
+  "task": "MC-OPENCODE-BASELINE-PARALLEL-20261102",
+  "reviewer": {
+    "harness": "OpenCode",
+    "harnessVersion": "v2.2.5",
+    "modelProvider": "opencode",
+    "modelId": "glm-5.3-flash-free",
+    "modelName": "GLM-5.3-Flash Free",
+    "runtime": "local macOS workstation (darwin)",
+    "independence": "Fresh-session reviewing agent distinct from every reviewed source author (Local Codex and external ZCode/Claude/Antigravity authorship). No shared authorship or self-review of the frozen baseline. Read-only session; no source writes anywhere.",
+    "authorshipOverlap": "none"
+  },
+  "binding": {
+    "assigningPrompt": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/implementation/handoffs/MC-OPENCODE-BASELINE-PARALLEL-20261102-PROMPT.md",
+    "frozenCommit": "7bf198c103476f490ebbdf58b1bd563d0bba8a61",
+    "frozenTree": "bf762ff72b6b7c77e21ed0eec34033ba34bb4fdf",
+    "branchAtPrepare": "codex/unified-project-flow",
+    "snapshotRoot": "/private/tmp/mc-opencode-baseline-20261102-zw_hhfw8/snapshot",
+    "manifest": "/private/tmp/mc-opencode-baseline-20261102-zw_hhfw8/inputs-manifest.json",
+    "manifestBytes": 201860,
+    "manifestSha256": "db836183f639f4602d1a74f2e0fee696105217869c84c1ec1b67fc5bd2841c7e",
+    "manifestByteLevelRecheckUtc": "2026-11-03T01:28:00Z",
+    "declaredRegularFiles": 1029,
+    "totalDeclaredBytes": 10030599,
+    "nonmaterializedEntries": "3 tracked nonregular/symlink entries declared in manifest were not materialized (per prompt); no full tracked-tree equivalence claimed for them"
+  },
+  "verification": {
+    "openingVerify": {
+      "utc": "2026-11-02 (prior session)",
+      "matched": 1029,
+      "bad": 0,
+      "missing": 0,
+      "bytes": 10030599
+    },
+    "closingVerify": {
+      "utc": "2026-11-03T01:28:00Z",
+      "method": "rtk proxy node script (reviewer-authored, reads manifest JSON, recomputes SHA-256 of each declared payload",
+      "matched": 1029,
+      "bad": 0,
+      "missing": 0,
+      "bytes": 10030599
+    }
+  },
+  "requiredReading": {
+    "rootAndComponentAgents": "read (root read-only in live tree; snapshot equivalents read)",
+    "docs/requirements/p0-p1-p2-priorities.md": "read in prior session",
+    "docs/implementation/p0-zcode-execution/local-contract.md": "read; header confirms revision 13 (title: MatterControl local implementation contract — revision 13); revisions 5→12 provenance history read through lines 1-30",
+    "docs/architecture/focus-search-codebase-design.md and focus/quick-search module designs": "read in prior session",
+    "docs/reviews/focus-search-candidate-20261102-r1.md": "read in full (57 lines; FS-R1/R2/R3, base 978d8fc + dirty candidate, 656-file manifest)",
+    "docs/testing/focus-search-implementation-20261101-r1/return.md": "read (first 40 lines; author-executed checks CITED not REVIEWER_EXECUTED)",
+    "docs/testing/codex-sidebar-locale-20261102-r1/return.md": "read in full (13 lines)",
+    "codex-select-density-20261102-r1/return.md and codex-work-title-link-20261102-r1/return.md": "selected areas inspected through pinned source; exact return files not re-opened in this continuation",
+    "semble": "not used: no index could be built without writing index files into or alongside the reviewed inputs; targeted literal/exact-path reads used instead (prompt-sanctioned fallback); no substitute of live-tree semantic results was used for frozen proof"
+  },
+  "deviations": [
+    {
+      "id": "DEV-1",
+      "utc": "2026-11-02 (prior session)",
+      "what": "Two read-only node probes imported the snapshot's zod dependency and apps/frontend/src/features/search/schemas.ts to check z.iso.datetime({offset:true}) acceptance of '0001-01-01T00:00:00Z' and z.string().trim() length-vs-padding behavior for q.",
+      "why": "The prompt excludes execution/import of reviewed source or scripts. Importing the schemas file and invoking its exported zod constants crosses that boundary narrowly.",
+      "bounds": "No application logic, tests, builds, browsers, networks or databases touched; no reviewed file modified; results were recorded and are treated as supporting observations, not runtime proof."
+    }
+  ],
+  "promptChecks": {
+    "shellPrefix": "all shell invocations on this workstation were prefixed with rtk; non-wrapped invocations via 'rtk proxy'",
+    "sourceWrites": "none (snapshot untouched — verified numerically closing; live repo/docs untouched except the two assigned new output namespaces)",
+    "runtimeStarts": "none",
+    "tempVsOutput": "no probe scripts or scratch files were left in reviewed inputs"
+  }
+}
