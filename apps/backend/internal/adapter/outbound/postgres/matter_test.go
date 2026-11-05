@@ -713,6 +713,14 @@ func TestMatterSuiteSavedViews_Postgres(t *testing.T) {
 	})
 }
 
+// TestMatterSuitePreflight_Postgres runs the MC-PREFLIGHT-01 read-model contracts against the real adapter.
+func TestMatterSuitePreflight_Postgres(t *testing.T) {
+	mattercontrol.SuitePreflight(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}
+
 // TestMatterSuiteAgenda_Postgres runs the RLF-03 My Agenda read-model contracts against the real adapter.
 func TestMatterSuiteAgenda_Postgres(t *testing.T) {
 	mattercontrol.SuiteAgenda(t, func(t *testing.T) mattercontrol.Bundle {

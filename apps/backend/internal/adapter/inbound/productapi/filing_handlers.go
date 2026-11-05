@@ -105,6 +105,19 @@ func (s *server) getFiling(c *echo.Context) error {
 	return s.detailResponse(c, http.StatusOK, d)
 }
 
+// getFilingPreflight serves the read-only proof-readiness model (MC-PREFLIGHT-01): same hidden
+// denial as every read, provenance headers from the one snapshot, no ETag (nothing is mutated
+// and no command is guarded by it).
+func (s *server) getFilingPreflight(c *echo.Context) error {
+	p, err := s.Filings.Preflight(c.Request().Context(), port.FilingQuery{ActorID: actorOf(c), MatterID: c.Param("id"), FilingID: c.Param("filingId")})
+	if err != nil {
+		return err
+	}
+	provenance(c, p.AsOf, p.Revision)
+	_, err = respond(c, http.StatusOK, filingPreflightDTO(p), false)
+	return err
+}
+
 func (s *server) advanceFiling(c *echo.Context) error {
 	var req advanceFilingRequest
 	if _, err := readJSON(c, &req); err != nil {

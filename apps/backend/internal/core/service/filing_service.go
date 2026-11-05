@@ -627,3 +627,25 @@ func (s *FilingService) GetFiling(ctx context.Context, q port.FilingQuery) (matt
 	})
 	return out, err
 }
+
+// Preflight returns the filing's proof-readiness read model from the same authorized snapshot
+// GetFiling reads: the hidden denial for non-members, ErrNotFound for a foreign or non-filing
+// item, and rows derived from the guard's own predicate (D-20) so Ready can never disagree
+// with the gate. Read-only: nothing is written, no receipt is recorded.
+func (s *FilingService) Preflight(ctx context.Context, q port.FilingQuery) (matter.FilingPreflight, error) {
+	var out matter.FilingPreflight
+	err := s.w.readGraph(ctx, q.ActorID, q.MatterID, func(g matter.WorkGraph, asOf time.Time, rev int64) error {
+		it, err := findItem(g, q.FilingID)
+		if err != nil {
+			return err
+		}
+		f, ok := g.Filing.Of(it.ID)
+		if !ok {
+			return port.ErrNotFound
+		}
+		out = matter.PreflightOf(f, it, g.Evidence, asOf)
+		out.Revision = rev
+		return nil
+	})
+	return out, err
+}

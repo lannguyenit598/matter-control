@@ -19,7 +19,7 @@ vi.mock('../actions', () => ({
   setSignatureApplicabilityAction: actions.signatures,
 }))
 
-import type { FilingDetail } from '../schemas'
+import type { FilingDetail, PreflightRow } from '../schemas'
 
 import {
   AdvanceForm,
@@ -28,6 +28,7 @@ import {
   SignatureApplicabilityForm,
 } from './filing-forms'
 import { FilingView } from './filing-view'
+import { PreflightPanel } from './preflight-panel'
 
 const detail = (over: Partial<FilingDetail> = {}): FilingDetail => ({
   item: {
@@ -608,5 +609,104 @@ describe('signature applicability (F03)', () => {
     expect(actions.signatures).toHaveBeenLastCalledWith(
       expect.objectContaining({ signatureNotRequired: 'no' }),
     )
+  })
+})
+
+// ---- Pre-flight panel (MC-PREFLIGHT-01): display-only, statuses carry causes (design §4.3) ----
+
+describe('PreflightPanel', () => {
+  const row = (over: Partial<PreflightRow>): PreflightRow => ({
+    kind: 'CRITERION',
+    purpose: 'PACKAGE',
+    mandatory: true,
+    state: 'UNSATISFIED',
+    blocking: false,
+    ...over,
+  })
+
+  it('groups rows by purpose, states carry causes, blocking rows link to the proof page', () => {
+    render(
+      <PreflightPanel
+        subjectHref="/matters/m1/work/f1"
+        preflight={{
+          filingId: 'f1',
+          subjectId: 'f1',
+          stage: 'SIGNATURE',
+          proofRequired: true,
+          signatureNotRequired: false,
+          ready: false,
+          asOf: '2026-11-03T09:00:00Z',
+          rows: [
+            row({ criterionId: 'c1', title: 'Package complete', blocking: true }),
+            row({
+              kind: 'SIGNATURE_REQUIREMENT',
+              purpose: 'SIGNATURE',
+              state: 'UNSATISFIED',
+              blocking: true,
+            }),
+            row({
+              kind: 'CRITERION',
+              purpose: 'OUTCOME',
+              criterionId: 'c2',
+              title: 'Clearance decision',
+              state: 'PENDING_ASSESSMENT',
+            }),
+          ],
+        }}
+      />,
+    )
+    expect(screen.getByRole('heading', { name: 'Package' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Signature' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Outcome' })).toBeInTheDocument()
+    // The header answers proof readiness with a count, never a bare "submittable" claim.
+    expect(screen.getByText(/Not ready/)).toBeInTheDocument()
+    expect(screen.getByText(/2 requirements missing/)).toBeInTheDocument()
+    expect(screen.getByText(/Readiness about the filing's proof only/)).toBeInTheDocument()
+    expect(screen.getByText(/Data as of/)).toBeInTheDocument()
+    // Every status speaks through its cause sentence; the outcome states it never blocks.
+    expect(screen.getAllByText('No accepted proof covers this requirement yet.').length).toBe(1)
+    expect(
+      screen.getByText('No SIGNATURE criterion is declared for the filing’s signatures.'),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('Proof was offered and is waiting for an independent assessment.'),
+    ).toBeInTheDocument()
+    // Blocking rows offer the way out; satisfied rows never link.
+    const links = screen.getAllByRole('link', { name: 'Open the proof details' })
+    expect(links).toHaveLength(2)
+    for (const l of links) expect(l).toHaveAttribute('href', '/matters/m1/work/f1')
+  })
+
+  it('shows the waiver rationale verbatim and a satisfied panel as ready', () => {
+    render(
+      <PreflightPanel
+        subjectHref="/matters/m1/work/f1"
+        preflight={{
+          filingId: 'f1',
+          subjectId: 'f1',
+          stage: 'SIGNATURE',
+          proofRequired: true,
+          signatureNotRequired: true,
+          ready: true,
+          asOf: '2026-11-03T09:00:00Z',
+          rows: [
+            row({ criterionId: 'c1', title: 'Package complete', state: 'SATISFIED' }),
+            row({
+              kind: 'SIGNATURE_REQUIREMENT',
+              purpose: 'SIGNATURE',
+              state: 'WAIVED',
+              waived: true,
+              waiverRationale: 'the authority requires none',
+            }),
+          ],
+        }}
+      />,
+    )
+    expect(screen.getByText(/Ready/)).toBeInTheDocument()
+    expect(screen.getByText('Waived')).toBeInTheDocument()
+    expect(screen.getByText('The owner decided signatures do not apply.')).toBeInTheDocument()
+    expect(screen.getByText(/Owner’s reason: /)).toBeInTheDocument()
+    expect(screen.getByText(/the authority requires none/)).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Open the proof details' })).not.toBeInTheDocument()
   })
 })

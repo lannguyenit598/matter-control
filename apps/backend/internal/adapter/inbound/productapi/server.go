@@ -205,6 +205,7 @@ func NewServer(d Deps) *echo.Echo {
 	v1.GET("/matters/:id/filings", s.listFilings)
 	v1.POST("/matters/:id/filings", s.createFiling)
 	v1.GET("/matters/:id/filings/:filingId", s.getFiling)
+	v1.GET("/matters/:id/filings/:filingId/preflight", s.getFilingPreflight)
 	v1.POST("/matters/:id/filings/:filingId/stage", s.advanceFiling)
 	v1.POST("/matters/:id/filings/:filingId/negative-outcome", s.recordNegative)
 	v1.POST("/matters/:id/filings/:filingId/closure", s.closeFiling)

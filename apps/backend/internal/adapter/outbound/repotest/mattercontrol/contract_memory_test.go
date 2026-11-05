@@ -195,6 +195,19 @@ func TestSuiteSavedViews_MemoryStore(t *testing.T) {
 	})
 }
 
+// The MC-PREFLIGHT-01 read-model contracts run against the same in-memory double.
+func TestSuitePreflight_MemoryStore(t *testing.T) {
+	mattercontrol.SuitePreflight(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}
+
 // The RLF-03 My Agenda read-model contracts run against the same in-memory double.
 func TestSuiteAgenda_MemoryStore(t *testing.T) {
 	mattercontrol.SuiteAgenda(t, func(t *testing.T) mattercontrol.Bundle {

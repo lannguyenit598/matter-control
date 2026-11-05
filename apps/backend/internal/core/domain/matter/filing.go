@@ -250,6 +250,61 @@ func unsatisfied(it WorkItem, set EvidenceSet, asOf time.Time) []string {
 	return out
 }
 
+// ProofGaps is the shared proof-sufficiency predicate of the StageSubmission/StageResponse guard
+// (design D-20): the facts a filing's proof must show before its submission can be accepted, in
+// the guard's evaluation order. The guard composes its refusal from these facts and the
+// pre-flight read model derives its rows from the same value, so the panel and the gate cannot
+// disagree. No other guard check (stage legality, references, submitted versions, terminal
+// state) belongs here.
+type ProofGaps struct {
+	PackageUndeclared bool     // a proof-required filing with no active PACKAGE criterion (Z-F-01)
+	PackageMissing    []string // "Title (reason)" of each mandatory unsatisfied PACKAGE criterion
+	SigUndeclared     bool     // a proof-required filing with no SIGNATURE criterion at all (Z-F-02)
+	SigMissing        []string // "Title (reason)" of each mandatory unsatisfied SIGNATURE criterion
+}
+
+// Empty reports the proof predicate satisfied: every declared mandatory criterion holds and the
+// filing's package and signature requirements are met.
+func (g ProofGaps) Empty() bool {
+	return !g.PackageUndeclared && len(g.PackageMissing) == 0 && !g.SigUndeclared && len(g.SigMissing) == 0
+}
+
+// ProofGapsOf evaluates the filing's proof gaps at asOf. All gaps are reported even when the
+// guard would refuse on the first one: the gate keeps its precedence by checking
+// PackageUndeclared first, while the read model shows every gap at once. A SIGNATURE criterion
+// retired with a recorded OWNER reason reads as the OWNER's waiver, exactly like the
+// no-signature applicability decision, so everDeclared with no active criterion is no gap.
+// Pure: nothing here persists, guards a command or reads a clock beyond the given instant.
+func ProofGapsOf(f Filing, it WorkItem, set EvidenceSet, asOf time.Time) ProofGaps {
+	res := EvaluateVerification(it, set, asOf)
+	var gaps ProofGaps
+	if it.ProofRequired && !res.Package.Declared() {
+		gaps.PackageUndeclared = true
+	}
+	if missing := unsatisfied(it, set, asOf); len(missing) > 0 {
+		gaps.PackageMissing = missing
+	}
+	if !f.SignatureNotRequired && it.ProofRequired {
+		everDeclared := false
+		for _, c := range set.Criteria {
+			if c.SubjectID == it.ID && c.EffectivePurpose() == PurposeSignature {
+				everDeclared = true
+			}
+		}
+		switch {
+		case everDeclared && res.Signature.Declared():
+			for _, c := range res.Criteria {
+				if c.Criterion.EffectivePurpose() == PurposeSignature && c.Criterion.Mandatory && !c.Satisfied {
+					gaps.SigMissing = append(gaps.SigMissing, fmt.Sprintf("%s (%s)", c.Criterion.Title, c.Reason))
+				}
+			}
+		case !everDeclared:
+			gaps.SigUndeclared = true
+		}
+	}
+	return gaps
+}
+
 func existingEvidence(set EvidenceSet, ids []EvidenceID, notBefore *time.Time) error {
 	if len(ids) == 0 {
 		return guardFailed("evidence-required", "name at least one piece of evidence that records this fact")
@@ -376,39 +431,25 @@ func DecideAdvance(f Filing, it WorkItem, set EvidenceSet, fs FilingSet, in Adva
 	case StageSubmission, StageResponse:
 		// Z-F-01 (D-9): an undeclared package is never a ready one, even for a filing that reached
 		// this stage without the package gate (in-flight legacy data).
-		res := EvaluateVerification(it, set, in.AsOf)
-		if it.ProofRequired && !res.Package.Declared() {
-			return out, guardFailed("package-criteria-required", "declare the package criteria first")
-		}
 		// F03: a no-proof filing has no signature criterion to retire, so it needs a signature
 		// observed on a submitted version or the OWNER's explicit no-signature decision. Z-F-02
 		// (D-9): a proof-required filing proves its signatures through SIGNATURE-purpose criteria —
 		// at least one declared and every mandatory one satisfied — unless the OWNER decided the
 		// authority requires none. Either way something must be shown: the editor's choice about
 		// outcome proof never waives the signature requirement. The refusal names exactly what is
-		// missing, package and signature alike (AC-145).
-		var refused []string
-		if missing := unsatisfied(it, set, in.AsOf); len(missing) > 0 {
-			refused = append(refused, "package criteria are not satisfied: "+strings.Join(missing, "; "))
-		}
-		if !f.SignatureNotRequired && it.ProofRequired {
-			everDeclared := false
-			for _, c := range set.Criteria {
-				if c.SubjectID == it.ID && c.EffectivePurpose() == PurposeSignature {
-					everDeclared = true
-				}
+		// missing, package and signature alike (AC-145). The predicate is shared with the
+		// pre-flight read model (D-20): the panel derives its rows from the same ProofGapsOf
+		// value, so the panel and this gate can never disagree.
+		gaps := ProofGapsOf(f, it, set, in.AsOf)
+		if !gaps.Empty() {
+			if gaps.PackageUndeclared {
+				return out, guardFailed("package-criteria-required", "declare the package criteria first")
 			}
-			if everDeclared && res.Signature.Declared() {
-				var missing []string
-				for _, c := range res.Criteria {
-					if c.Criterion.EffectivePurpose() == PurposeSignature && c.Criterion.Mandatory && !c.Satisfied {
-						missing = append(missing, fmt.Sprintf("%s (%s)", c.Criterion.Title, c.Reason))
-					}
-				}
-				if len(missing) > 0 {
-					refused = append(refused, "signature criteria are not satisfied: "+strings.Join(missing, "; "))
-				}
-			} else if !everDeclared {
+			var refused []string
+			if len(gaps.PackageMissing) > 0 {
+				refused = append(refused, "package criteria are not satisfied: "+strings.Join(gaps.PackageMissing, "; "))
+			}
+			if gaps.SigUndeclared {
 				// OV-F1-04a: the undeclared gap joins the same refusal — one message names both
 				// gaps, matching the OpenDesign guard copy ("requires supporting evidence and a
 				// valid signature"). Standalone (package fine), it keeps its own code so the UI
@@ -418,10 +459,9 @@ func DecideAdvance(f Filing, it WorkItem, set EvidenceSet, fs FilingSet, in Adva
 				}
 				refused = append(refused, "signature criteria are not declared: add a SIGNATURE-purpose criterion for the filing's signatures")
 			}
-			// A signature criterion retired with a recorded OWNER reason waives the requirement,
-			// exactly like the OWNER's no-signature applicability decision.
-		}
-		if len(refused) > 0 {
+			if len(gaps.SigMissing) > 0 {
+				refused = append(refused, "signature criteria are not satisfied: "+strings.Join(gaps.SigMissing, "; "))
+			}
 			return out, guardFailed("guard-failed", strings.Join(refused, "; "))
 		}
 		if !f.SignatureNotRequired && !it.ProofRequired {
