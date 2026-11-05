@@ -128,6 +128,36 @@ export const evidencePageSchema = pageOf(evidenceRowSchema)
 
 export const createdSchema = z.object({ id: z.string(), kind: z.string(), seq: z.number().int() })
 
+// Pre-flight read model (MC-PREFLIGHT-01): machine projections only; display copy is the
+// client's per-locale job. Recorded data (titles, waiver rationale) travels verbatim.
+export const preflightRowSchema = z.object({
+  kind: z.enum(['CRITERION', 'MISSING_PACKAGE', 'SIGNATURE_REQUIREMENT']),
+  criterionId: z.string().optional(),
+  purpose: z.enum(['PACKAGE', 'SIGNATURE', 'OUTCOME']),
+  title: z.string().optional(),
+  mandatory: z.boolean(),
+  state: z.enum(['SATISFIED', 'UNSATISFIED', 'WAIVED', 'DISPUTED', 'PENDING_ASSESSMENT']),
+  blocking: z.boolean(),
+  reason: z.string().optional(),
+  waived: z.boolean().optional(),
+  waiverRationale: z.string().optional(),
+  link: z.object({ kind: z.string(), id: z.string() }).optional(),
+})
+
+export const filingPreflightSchema = z.object({
+  filingId: z.string(),
+  subjectId: z.string(),
+  stage: z.string(),
+  proofRequired: z.boolean(),
+  signatureNotRequired: z.boolean(),
+  ready: z.boolean(),
+  rows: z.array(preflightRowSchema),
+  asOf: z.string(),
+})
+
+export type FilingPreflight = z.infer<typeof filingPreflightSchema>
+export type PreflightRow = z.infer<typeof preflightRowSchema>
+
 export type FilingDetail = z.infer<typeof filingDetailSchema>
 export type FilingSummary = z.infer<typeof filingSummarySchema>
 export type EvidenceRow = z.infer<typeof evidenceRowSchema>

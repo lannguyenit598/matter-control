@@ -229,3 +229,77 @@ func TestZFRepro_R2FilingF_OnD9Semantics_HTTP(t *testing.T) {
 		t.Fatalf("the outcome axis stays pending on the committed semantics: %s", submitted.Body)
 	}
 }
+
+// MC-PREFLIGHT-01: the proof-readiness read model over HTTP. One authorized read, the guard's
+// own predicate as the readiness answer, the hidden denial for unknown identities, and the
+// OWNER waiver rationale travelling verbatim (design §4/§6).
+func TestFilings_HTTPPreflight(t *testing.T) {
+	e := newEnv(t)
+	m, req := proofFixture(t, e)
+	base := "/api/v1/matters/" + m
+
+	party := e.do("POST", base+"/parties", "t-alice", nil, `{"name":"Competition authority","kind":"AUTHORITY"}`)
+	e.expect(party, 201, "")
+	pid := party.json()["id"].(string)
+	created := e.do("POST", base+"/filings", "t-alice", key(), `{"title":"Merger filing","outcome":"Clearance","requirementId":"`+req+`","authorityPartyId":"`+pid+`","ownerId":"`+e.bob+`","proofRequired":true}`)
+	e.expect(created, 201, "")
+	id := created.json()["id"].(string)
+
+	p := e.do("GET", base+"/filings/"+id+"/preflight", "t-alice", nil, "")
+	e.expect(p, 200, "")
+	pj := p.json()
+	if pj["ready"] != false || pj["asOf"] == "" {
+		t.Fatalf("an undeclared filing is not proof-ready: %s", p.Body)
+	}
+	kinds, blocking := map[string]bool{}, 0
+	for _, r := range pj["rows"].([]any) {
+		rb := r.(map[string]any)
+		if rb["blocking"].(bool) {
+			blocking++
+			kinds[rb["kind"].(string)] = true
+		}
+	}
+	if !kinds["MISSING_PACKAGE"] || !kinds["SIGNATURE_REQUIREMENT"] || blocking != 2 {
+		t.Fatalf("expected both proof gaps: %s", p.Body)
+	}
+	if p.Header().Get("MC-As-Of") == "" || p.Header().Get("MC-Source-Revision") == "" {
+		t.Fatalf("provenance headers are present: %v", p.Header())
+	}
+
+	// The viewer reads; an unknown identity is refused like every other read; a non-filing
+	// work item stays hidden.
+	e.expect(e.do("GET", base+"/filings/"+id+"/preflight", "t-carol", nil, ""), 200, "")
+	e.expect(e.do("GET", base+"/filings/"+id+"/preflight", "t-ghost", nil, ""), 403, "urn:mc:forbidden")
+	e.expect(e.do("GET", base+"/filings/"+req+"/preflight", "t-alice", nil, ""), 404, "urn:mc:not-found")
+
+	// Declare the package and have an independent verifier accept it (alice submits, bob verifies).
+	cr := e.do("POST", base+"/work-items/"+id+"/criteria", "t-alice", nil, `{"title":"Package complete","mandatory":true,"versionRule":"NONE"}`)
+	e.expect(cr, 201, "")
+	critID := cr.json()["criteria"].([]any)[0].(map[string]any)["id"].(string)
+	e.expect(e.do("POST", base+"/verifiers", "t-alice", nil, `{"userId":"`+e.bob+`"}`), 200, "")
+	ev := e.do("POST", base+"/evidence", "t-alice", key(), `{"reference":"synthetic-ref","claims":["`+critID+`"]}`)
+	e.expect(ev, 201, "")
+	proof := e.do("GET", base+"/work-items/"+id+"/proof", "t-carol", nil, "")
+	e.expect(proof, 200, "")
+	cl := proof.json()["criteria"].([]any)[0].(map[string]any)["claims"].([]any)[0].(map[string]any)["id"].(string)
+	e.expect(e.do("POST", base+"/claims/"+cl+"/assessments", "t-bob", nil, `{"verdict":"ACCEPTED","rationale":"checked","expectedSubjectEpoch":0,"expectedAssessmentId":""}`), 201, "")
+
+	// The OWNER no-signature decision waives the requirement and its rationale travels verbatim.
+	tag := e.do("GET", base+"/filings/"+id, "t-alice", nil, "").Header().Get("ETag")
+	e.expect(e.do("POST", base+"/filings/"+id+"/signature-applicability", "t-alice", map[string]string{"If-Match": tag}, `{"signatureNotRequired":true,"reason":"the authority requires none"}`), 200, "")
+	p2 := e.do("GET", base+"/filings/"+id+"/preflight", "t-carol", nil, "")
+	e.expect(p2, 200, "")
+	if p2.json()["ready"] != true {
+		t.Fatalf("a waived signature makes the filing proof-ready: %s", p2.Body)
+	}
+	waived := false
+	for _, r := range p2.json()["rows"].([]any) {
+		rb := r.(map[string]any)
+		if rb["kind"] == "SIGNATURE_REQUIREMENT" && rb["waived"] == true && rb["waiverRationale"] == "the authority requires none" {
+			waived = true
+		}
+	}
+	if !waived {
+		t.Fatalf("expected the verbatim waiver row: %s", p2.Body)
+	}
+}

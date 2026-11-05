@@ -106,6 +106,9 @@ type FilingService interface {
 
 	ListFilings(ctx context.Context, q MatterListQuery) ([]matter.FilingSummary, error)
 	GetFiling(ctx context.Context, q FilingQuery) (matter.FilingDetail, error)
+	// Preflight is the read-only proof-readiness model of one filing (MC-PREFLIGHT-01): the
+	// same hidden-denial authorization as every read, one snapshot, no receipt.
+	Preflight(ctx context.Context, q FilingQuery) (matter.FilingPreflight, error)
 }
 
 // FilingTx is implemented by the MatterTx of storage adapters. Observations and submissions are

@@ -39,3 +39,73 @@ export function userName(names: Record<string, string>, id: string | null | unde
   if (!id) return 'nobody'
   return names[id] ?? 'a former member'
 }
+
+// ---- Pre-flight panel (MC-PREFLIGHT-01) ----
+// Machine fields come from the read model; every sentence here is UI copy. Vietnamese labels
+// are DRAFT pending R10 ratification — check terminology-final.md before merging copy changes.
+
+export const PREFLIGHT_PURPOSE_LABEL: Record<string, { en: string; vi: string }> = {
+  PACKAGE: { en: 'Package', vi: 'Gói hồ sơ' },
+  SIGNATURE: { en: 'Signature', vi: 'Chữ ký' },
+  OUTCOME: { en: 'Outcome', vi: 'Kết quả' },
+}
+
+export const PREFLIGHT_STATE_LABEL: Record<string, { en: string; vi: string }> = {
+  SATISFIED: { en: 'Satisfied', vi: 'Đã đủ' },
+  UNSATISFIED: { en: 'Not satisfied', vi: 'Chưa đủ' },
+  WAIVED: { en: 'Waived', vi: 'Được miễn' },
+  DISPUTED: { en: 'Disputed', vi: 'Đang tranh chấp' },
+  PENDING_ASSESSMENT: { en: 'Awaiting assessment', vi: 'Đang chờ xác minh' },
+}
+
+/** Cause text per row identity: statuses never speak through a bare badge (brand commitment). */
+export function preflightCause(row: { kind: string; state: string; blocking: boolean }): {
+  en: string
+  vi: string
+} {
+  if (row.kind === 'MISSING_PACKAGE')
+    return {
+      en: 'No package criterion is declared; declare what the package must contain.',
+      vi: 'Chưa khai tiêu chí gói hồ sơ; cần khai gói cần có gì.',
+    }
+  if (row.kind === 'SIGNATURE_REQUIREMENT') {
+    if (row.state === 'WAIVED')
+      return {
+        en: 'The owner decided signatures do not apply.',
+        vi: 'Chủ hồ sơ quyết định không áp dụng chữ ký.',
+      }
+    if (row.blocking)
+      return {
+        en: 'No SIGNATURE criterion is declared for the filing’s signatures.',
+        vi: 'Chưa khai tiêu chí chữ ký cho hồ sơ khai này.',
+      }
+    return {
+      en: 'A signature on the submitted versions is checked at submission time.',
+      vi: 'Chữ ký trên phiên bản nộp sẽ được kiểm tra lúc nộp.',
+    }
+  }
+  switch (row.state) {
+    case 'SATISFIED':
+      return {
+        en: 'Accepted by an independent verifier.',
+        vi: 'Đã được người xác minh độc lập chấp nhận.',
+      }
+    case 'PENDING_ASSESSMENT':
+      return {
+        en: 'Proof was offered and is waiting for an independent assessment.',
+        vi: 'Bằng chứng đã được nộp, đang chờ người xác minh độc lập.',
+      }
+    case 'DISPUTED':
+      return {
+        en: 'An open dispute questions this proof; resolve it before counting it.',
+        vi: 'Bằng chứng đang bị tranh chấp; cần giải quyết trước khi tính.',
+      }
+    case 'WAIVED':
+      return { en: 'Waived by the owner.', vi: 'Được chủ hồ sơ miễn.' }
+    default:
+      return {
+        en: 'No accepted proof covers this requirement yet.',
+        vi: 'Chưa có bằng chứng được chấp nhận cho yêu cầu này.',
+      }
+  }
+}

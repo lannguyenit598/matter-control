@@ -2,7 +2,13 @@ import 'server-only'
 
 import { mcRequest, pathId } from '@/lib/mc/client'
 
-import { createdSchema, evidencePageSchema, filingDetailSchema, filingPageSchema } from './schemas'
+import {
+  createdSchema,
+  evidencePageSchema,
+  filingDetailSchema,
+  filingPageSchema,
+  filingPreflightSchema,
+} from './schemas'
 
 const m = (id: string) => `/matters/${pathId(id)}`
 const f = (matterId: string, filingId: string) => `${m(matterId)}/filings/${pathId(filingId)}`
@@ -56,4 +62,12 @@ export const filingRepository = {
       ifMatch,
       schema: filingDetailSchema,
     }),
+
+  /** Proof-readiness read model (MC-PREFLIGHT-01): the guard's own predicate, read-only. */
+  preflight: async (matterId: string, filingId: string) => {
+    const res = await mcRequest(`${f(matterId, filingId)}/preflight`, {
+      schema: filingPreflightSchema,
+    })
+    return { preflight: res.data, asOf: res.asOf }
+  },
 }

@@ -25,6 +25,7 @@ import {
   SignatureApplicabilityForm,
 } from '@/features/filings/components/filing-forms'
 import { FilingView } from '@/features/filings/components/filing-view'
+import { PreflightPanel } from '@/features/filings/components/preflight-panel'
 import { STAGE_LABEL } from '@/features/filings/labels'
 import { filingRepository } from '@/features/filings/repository'
 import { matterRepository } from '@/features/matters/repository'
@@ -55,19 +56,23 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
   const here = `/matters/${matterId}/filings/${filingId}`
   if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
   const read = await attempt(async () => {
-    const [{ detail }, matter, members, parties, docs, evidence] = await Promise.all([
-      filingRepository.get(matterId, filingId),
-      matterRepository.get(matterId),
-      matterRepository.members(matterId),
-      workRepository.parties(matterId),
-      proofRepository.documents(matterId),
-      filingRepository.evidence(matterId),
-    ])
+    const [{ detail }, { preflight }, matter, members, parties, docs, evidence] = await Promise.all(
+      [
+        filingRepository.get(matterId, filingId),
+        filingRepository.preflight(matterId, filingId),
+        matterRepository.get(matterId),
+        matterRepository.members(matterId),
+        workRepository.parties(matterId),
+        proofRepository.documents(matterId),
+        filingRepository.evidence(matterId),
+      ],
+    )
     const docDetails = await Promise.all(
       docs.items.map((d) => proofRepository.document(matterId, d.id)),
     )
     return {
       detail,
+      preflight,
       matter: matter.matter,
       members: members.items,
       parties: parties.items,
@@ -76,7 +81,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
     }
   })
   if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="filing" />
-  const { detail, matter, members, parties, docDetails, evidence } = read.value
+  const { detail, preflight, matter, members, parties, docDetails, evidence } = read.value
   const role = matter.callerRole
   const canEdit = role === 'OWNER' || role === 'EDITOR'
   const it = detail.item
@@ -126,6 +131,8 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
           evidence: Object.fromEntries(evidenceOpts.map((e) => [e.id, e.label])),
         }}
       />
+
+      <PreflightPanel preflight={preflight} subjectHref={`/matters/${matterId}/work/${it.id}`} />
 
       {(canEdit || role === 'OWNER') && (
         <Card>

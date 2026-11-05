@@ -135,3 +135,56 @@ func filingDetailDTO(d matter.FilingDetail) filingDetailBody {
 	}
 	return out
 }
+
+// Pre-flight read model (MC-PREFLIGHT-01). Rows are machine projections; display copy —
+// including the cause text — is the client's per-locale job (design §6-C3). Recorded data
+// (criterion titles, the OWNER waiver rationale) travels verbatim.
+type preflightLinkBody struct {
+	Kind string `json:"kind"`
+	ID   string `json:"id"`
+}
+
+type preflightRowBody struct {
+	Kind            string             `json:"kind"`
+	CriterionID     string             `json:"criterionId,omitempty"`
+	Purpose         string             `json:"purpose"`
+	Title           string             `json:"title,omitempty"`
+	Mandatory       bool               `json:"mandatory"`
+	State           string             `json:"state"`
+	Blocking        bool               `json:"blocking"`
+	Reason          string             `json:"reason,omitempty"`
+	Waived          bool               `json:"waived,omitempty"`
+	WaiverRationale string             `json:"waiverRationale,omitempty"`
+	Link            *preflightLinkBody `json:"link,omitempty"`
+}
+
+type filingPreflightBody struct {
+	FilingID             string             `json:"filingId"`
+	SubjectID            string             `json:"subjectId"`
+	Stage                string             `json:"stage"`
+	ProofRequired        bool               `json:"proofRequired"`
+	SignatureNotRequired bool               `json:"signatureNotRequired"`
+	Ready                bool               `json:"ready"`
+	Rows                 []preflightRowBody `json:"rows"`
+	AsOf                 string             `json:"asOf"`
+}
+
+func filingPreflightDTO(p matter.FilingPreflight) filingPreflightBody {
+	rows := make([]preflightRowBody, 0, len(p.Rows))
+	for _, r := range p.Rows {
+		row := preflightRowBody{
+			Kind: string(r.Kind), CriterionID: string(r.CriterionID), Purpose: string(r.Purpose),
+			Title: r.Title, Mandatory: r.Mandatory, State: string(r.State), Blocking: r.Blocking,
+			Reason: string(r.Reason), Waived: r.Waived, WaiverRationale: r.WaiverRationale,
+		}
+		if r.Link != nil {
+			row.Link = &preflightLinkBody{Kind: r.Link.Kind, ID: r.Link.ID}
+		}
+		rows = append(rows, row)
+	}
+	return filingPreflightBody{
+		FilingID: p.FilingID.String(), SubjectID: p.SubjectID.String(), Stage: string(p.Stage),
+		ProofRequired: p.ProofRequired, SignatureNotRequired: p.SignatureNotRequired,
+		Ready: p.Ready, Rows: rows, AsOf: ts(p.AsOf),
+	}
+}
