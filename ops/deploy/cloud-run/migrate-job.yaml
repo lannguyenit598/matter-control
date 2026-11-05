@@ -36,3 +36,15 @@ spec:
               valueFrom: { secretKeyRef: { name: '{{R2_ACCESS_KEY_ID_SECRET}}', key: latest } }
             - name: MC_R2_SECRET_ACCESS_KEY
               valueFrom: { secretKeyRef: { name: '{{R2_SECRET_ACCESS_KEY_SECRET}}', key: latest } }
+{{#DATABASE_CA_SECRET}}
+          volumeMounts:
+            # Same CA mount as the service (A3/plan): the migration DSN may reference the same
+            # sslrootcert path; rendered only when DATABASE_CA_SECRET is set.
+            - { name: dbca, mountPath: /secrets/dbca, readOnly: true }
+      volumes:
+        - name: dbca
+          secret:
+            secretName: '{{DATABASE_CA_SECRET}}'
+            items:
+              - { key: latest, path: ca.pem }
+{{/DATABASE_CA_SECRET}}

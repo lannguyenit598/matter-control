@@ -1,7 +1,13 @@
 # mcapi on Cloud Run (ADR-007 backend profile A). Render with `node ops/deploy/profiles.mjs cloud-run ...`;
 # apply only after authorization: gcloud run services replace service.yaml --region {{REGION}}.
-# Transport: public ingress + per-user ZITADEL bearer (application boundary). Cloud Run IAM is NOT
-# enabled: Workers cannot mint Google ID tokens without a stored credential; see ADR-007 before adding it.
+# Transport: public ingress + per-user ZITADEL bearer (application boundary). The invoker IAM check
+# is disabled declaratively below (official Cloud Run doc, 2026-11-04): requests need no
+# roles/run.invoker binding, so Workers cannot-mint-Google-token is irrelevant and no allUsers
+# grant is needed. Org restrictions: constraints/run.managed.requireInvokerIam (and the legacy
+# constraints/run.requireInvokerIam) can forbid this; if the deploy is refused, the supported
+# alternative is the allUsers -> roles/run.invoker binding (also blocked by domain-restricted
+# sharing) — whichever path applies is an explicit operator/PO step, never applied by this render.
+# See ADR-007 before adding platform IAM to this path.
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -10,6 +16,7 @@ metadata:
     cloud.googleapis.com/location: {{REGION}}
   annotations:
     run.googleapis.com/ingress: all
+    run.googleapis.com/invoker-iam-disabled: 'true'
 spec:
   template:
     metadata:
@@ -49,6 +56,13 @@ spec:
             # SIGTERM -> SIGKILL is 10 s on Cloud Run; it stops routing before SIGTERM, so no delay.
             - { name: MC_SHUTDOWN_DELAY, value: 0s }
             - { name: MC_SHUTDOWN_TIMEOUT, value: 8s }
+{{#MC_SEARCH_CURSOR_KEY}}
+            # Metadata Quick Search (A7/plan): rendered ONLY when MC_SEARCH_CURSOR_KEY names a
+            # Secret Manager secret. Absent -> the search capability stays honestly unavailable
+            # by design; never put the key value itself into this template.
+            - name: MC_SEARCH_CURSOR_KEY
+              valueFrom: { secretKeyRef: { name: '{{MC_SEARCH_CURSOR_KEY}}', key: latest } }
+{{/MC_SEARCH_CURSOR_KEY}}
             - name: MC_DATABASE_URL
               valueFrom: { secretKeyRef: { name: '{{DATABASE_URL_SECRET}}', key: latest } }
             - name: MC_R2_ACCESS_KEY_ID
@@ -65,9 +79,23 @@ spec:
             periodSeconds: 15
           volumeMounts:
             - { name: oidc-key, mountPath: /secrets/oidc, readOnly: true }
+{{#DATABASE_CA_SECRET}}
+            # Supabase pooler CA (A3/plan): rendered ONLY when DATABASE_CA_SECRET is set, so the
+            # pgx sslrootcert=/secrets/dbca/ca.pem path in the operator DSN exists. Unset -> the
+            # DSN must not reference /secrets/dbca (system roots are expected to verify; the
+            # laptop/openssl probe decides — see the runbook TLS matrix).
+            - { name: dbca, mountPath: /secrets/dbca, readOnly: true }
+{{/DATABASE_CA_SECRET}}
       volumes:
         - name: oidc-key
           secret:
             secretName: '{{OIDC_KEY_SECRET}}'
             items:
               - { key: latest, path: api-key.json }
+{{#DATABASE_CA_SECRET}}
+        - name: dbca
+          secret:
+            secretName: '{{DATABASE_CA_SECRET}}'
+            items:
+              - { key: latest, path: ca.pem }
+{{/DATABASE_CA_SECRET}}

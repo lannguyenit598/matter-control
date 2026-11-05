@@ -1,4 +1,5 @@
--- B1 least-privilege database role profile (ADR-006 zero-trust addendum) — operator deliverable.
+-- B1 least-privilege database role profile (ADR-006 zero-trust addendum) — operator deliverable,
+-- BOOTSTRAP part 1 of 2 (roles, schemas, default privileges; no per-table grants).
 --
 -- THIS FILE IS MIRRORED VERBATIM (after comment normalization) by the repeatable Go verification
 -- apps/backend/internal/adapter/outbound/postgres/b1_least_privilege_test.go: its sync subtest
@@ -9,18 +10,40 @@
 --   * NO passwords, NO DSNs: run as a database admin (Supabase project admin connection), then set
 --     each LOGIN role's password in a separate operator step (docs/deployment/pilot-deploy-runbook.md).
 --     A LOGIN role without a password cannot authenticate, so an unfilled role fails closed.
---   * Apply order on a fresh database: this file FIRST (roles exist before anything else logs in),
---     product migrations SECOND (as mc_migrator — the role GUC below makes every migration object
---     owned by mc_owner), this file AGAIN third (idempotent: the per-table grants, sequence USAGE
---     and function EXECUTE revoke land on the migrated objects), ops/adr006/bff-state.sql FOURTH
---     (as the database admin: its CREATE SCHEMA IF NOT EXISTS needs database-level CREATE even
---     when this file already made the schema; follow it with ALTER TABLE mc_bff.state OWNER TO
---     mc_owner), and ops/adr006/db/b1-bff-grants.sql FIFTH.
+--   * PostgreSQL 16+ required (the GRANT ... WITH SET TRUE syntax below and the
+--     createrole_self_grant GUC are 16+). Requires nothing beyond the documented admin rights
+--     (see the README): the GUC block below lets a non-superuser CREATEROLE admin keep the
+--     SET/INHERIT rights on the roles it creates here, which the later OWNER-to-owner and
+--     role-setting statements need. On a superuser connection the block is harmless.
+--   * No table or function grants here: on a fresh database the tables/functions only come into
+--     being with the product migrations. Per-table runtime grants, sequence USAGE, the function
+--     EXECUTE hardening and the Search EXECUTE grant live in b1-runtime-grants.sql (part 2),
+--     applied AFTER the migrations. This file has no unconditional dependency on migrated objects.
+--
+-- Apply order on a fresh database (each step by the documented identity, see the README):
+--   1. this file (bootstrap; roles exist before anything else logs in),
+--   2. safe role-password setup (operator step),
+--   3. product migrations as mc_migrator (the role GUC below makes every migration connection act
+--      as mc_owner, so migration objects — and goose_db_version — are owned by the NOLOGIN owner;
+--      the role-level search_path below resolves mcapp without a DSN parameter),
+--   4. ops/adr006/db/b1-runtime-grants.sql (per-table grants, sequences, function hardening),
+--   5. ops/adr006/bff-state.sql as the database admin (its CREATE SCHEMA IF NOT EXISTS needs
+--      database-level CREATE even when this file already made the schema; follow it with
+--      ALTER TABLE mc_bff.state OWNER TO mc_owner),
+--   6. ops/adr006/db/b1-bff-grants.sql,
+--   7. runtime/BFF probes.
+-- Every step is idempotent; re-running 1/4/5/6 after the migrations is the supported order.
 --
 -- Data API exposure: product tables live in the private schema `mcapp` (never `public`), so the
 -- Supabase Data API (which exposes `public` only) has nothing to serve, and nothing is granted to
 -- PUBLIC anywhere below. The operator Data-API negative test (publishable key against these
 -- schemas) remains a required provider step — see the pilot deploy runbook.
+
+-- PG16+ CREATEROLE semantics: a non-superuser role that creates roles receives ADMIN OPTION on
+-- them only. SET/INHERIT options (needed to SET ROLE into the owner, transfer ownership, set
+-- role-level GUCs and act as the owner's member) must be granted at creation time via this GUC
+-- (settable by CREATEROLE roles). Unknown on older servers: skipped there; PG16+ is required above.
+DO $do$ BEGIN PERFORM set_config('createrole_self_grant', 'SET, INHERIT', false); EXCEPTION WHEN undefined_object THEN NULL; END $do$;
 
 DO $do$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'mc_owner') THEN CREATE ROLE mc_owner NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE; END IF; END $do$;
 
@@ -43,18 +66,21 @@ ALTER SCHEMA mcapp OWNER TO mc_owner;
 
 -- Migrations act as the schema owner: the membership is SET-able, and the role-level GUC makes
 -- every migration connection assume mc_owner, so migration objects (and goose_db_version) are
--- owned by the NOLOGIN owner, never by a LOGIN role.
+-- owned by the NOLOGIN owner, never by a LOGIN role. The role-level search_path resolves mcapp
+-- on a fresh connection without a DSN parameter (server-side; the session pooler forwards nothing).
 GRANT mc_owner TO mc_migrator WITH SET TRUE;
 
 ALTER ROLE mc_migrator SET role = 'mc_owner';
 
+ALTER ROLE mc_migrator SET search_path = mcapp;
+
+ALTER ROLE mc_runtime SET search_path = mcapp;
+
 GRANT USAGE ON SCHEMA mcapp TO mc_runtime;
 
-REVOKE CREATE ON SCHEMA mcapp FROM mc_runtime;
-
 -- Future migration objects are born without PUBLIC rights, with only a read/append floor:
--- UPDATE (and DELETE) are always deliberate per-table grants below, so a future append-only
--- table can never silently inherit a blanket UPDATE default.
+-- UPDATE (and DELETE) are always deliberate per-table grants in b1-runtime-grants.sql, so a
+-- future append-only table can never silently inherit a blanket UPDATE default.
 ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp REVOKE ALL ON TABLES FROM PUBLIC;
 
 ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp REVOKE ALL ON FUNCTIONS FROM PUBLIC;
@@ -62,108 +88,6 @@ ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp REVOKE ALL ON FUNCTIO
 ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp GRANT SELECT, INSERT ON TABLES TO mc_runtime;
 
 ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp GRANT USAGE ON SEQUENCES TO mc_runtime;
-
--- Per-table runtime grants, exact by class (B1 method: the contract suites prove any missing
--- grant empirically; the every-table-has-a-grant-class test proves no table was missed).
--- Append-only legal history: read/append only — no UPDATE, no DELETE, ever.
-GRANT SELECT, INSERT ON mcapp.command_receipt_matters TO mc_runtime;
-
-GRANT SELECT, INSERT ON mcapp.command_receipts TO mc_runtime;
-
-GRANT SELECT, INSERT ON mcapp.domain_events TO mc_runtime;
-
-GRANT SELECT, INSERT ON mcapp.security_audit_events TO mc_runtime;
-
--- Replace-on-save tables: the only product tables whose contracts DELETE (rebuild row sets).
-GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.context_links TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.dependency_edges TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.milestone_prerequisites TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.review_grid_versions TO mc_runtime;
-
--- Standard tables: the runtime reads and writes current state; DELETE is never granted.
-GRANT SELECT, INSERT, UPDATE ON mcapp.actions TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.assessments TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.context_records TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.criteria TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.disputes TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.document_versions TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.documents TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.evidence TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.evidence_claims TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.guidance_documents TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.guidance_revisions TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.filing_cycles TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.filing_details TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.filing_observations TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.filing_submissions TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.goose_db_version TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.graph_nodes TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.intake_records TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.import_sources TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.matter_memberships TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.matters TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.milestones TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.parties TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.playbook_instances TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.playbook_revisions TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.playbooks TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.requirements TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.review_answers TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.review_grids TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.review_question_revisions TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.review_questions TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.saved_views TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.signature_observations TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.users TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.verifier_designations TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.workspace_memberships TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.workspaces TO mc_runtime;
-
-GRANT SELECT, INSERT, UPDATE ON mcapp.workstreams TO mc_runtime;
-
-GRANT USAGE ON ALL SEQUENCES IN SCHEMA mcapp TO mc_runtime;
-
--- Functions (trigger guards) stay executable by their trigger; PUBLIC loses direct EXECUTE.
-REVOKE ALL ON ALL FUNCTIONS IN SCHEMA mcapp FROM PUBLIC;
 
 -- BFF durable-state schema (the table itself comes from ops/adr006/bff-state.sql).
 CREATE SCHEMA IF NOT EXISTS mc_bff;

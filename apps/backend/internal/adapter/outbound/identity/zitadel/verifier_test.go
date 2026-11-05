@@ -147,6 +147,32 @@ func TestVerify_StringAudienceAccepted(t *testing.T) {
 	}
 }
 
+// The BFF requests urn:zitadel:iam:org:project:id:{projectId}:aud, so the resource PROJECT id is
+// the audience pin (distinct from the API application's client id, which only authenticates the
+// introspection call and is not guaranteed inside aud). Synthetic proof of both halves with a
+// distinct third-party id: aud carrying the project id (alongside any other client id) is
+// accepted; aud carrying only the other client id is refused — pinning the client id (the old
+// doc bug) would have refused every correctly-issued token.
+func TestVerify_ProjectAudienceAmongAudIsAccepted(t *testing.T) {
+	f := newFakeIdP(t)
+	f.respond = func(w http.ResponseWriter, _ string) {
+		activeBody(w, "user-1", []string{"999999999999999999", testAudience}, testIssuer, now.Add(time.Hour))
+	}
+	if _, err := f.verifier(t).Verify(context.Background(), "t"); err != nil {
+		t.Fatalf("project audience among aud must pass: %v", err)
+	}
+}
+
+func TestVerify_ClientIdOnlyAudienceIsRefused(t *testing.T) {
+	f := newFakeIdP(t)
+	f.respond = func(w http.ResponseWriter, _ string) {
+		activeBody(w, "user-1", []string{"999999999999999999"}, testIssuer, now.Add(time.Hour))
+	}
+	if _, err := f.verifier(t).Verify(context.Background(), "t"); !errors.Is(err, port.ErrUnauthenticated) {
+		t.Fatalf("aud without the pinned project audience must fail closed, got %v", err)
+	}
+}
+
 func TestVerify_RejectsAsUnauthenticated(t *testing.T) {
 	cases := map[string]func(w http.ResponseWriter){
 		"inactive": func(w http.ResponseWriter) { _, _ = w.Write([]byte(`{"active":false}`)) },

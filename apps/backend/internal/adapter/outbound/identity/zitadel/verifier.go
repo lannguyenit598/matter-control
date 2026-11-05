@@ -41,8 +41,11 @@ type Config struct {
 	// Issuer is the one canonical issuer: it is both the client-assertion audience and
 	// the exact value the introspected token must carry as iss.
 	Issuer string
-	// Audience is the MatterControl API audience (the API application's client id)
-	// that the introspected token must contain.
+	// Audience is the resource project audience the introspected token must contain. The BFF
+	// requests the scope urn:zitadel:iam:org:project:id:{projectId}:aud, so ZITADEL puts the
+	// PROJECT ID into aud (alongside the requesting client id); the API application's client id
+	// below is used only to AUTHENTICATE the introspection call and is NOT guaranteed to appear
+	// in aud. A wrong value fails closed as ErrUnauthenticated on every request.
 	Audience      string
 	ClientID      string
 	KeyID         string

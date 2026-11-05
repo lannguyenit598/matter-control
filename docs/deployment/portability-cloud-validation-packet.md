@@ -2,6 +2,12 @@
 
 Prepared by actual Claude Code, 2026-10-30. **Request for decision; nothing here has been executed.** Local evidence: `docs/testing/claude-deployment-portability-20261030-r1/return.md`. Default target remains Workers + Cloud Run.
 
+> Erratum 2026-11-04 (task `MC-ZCODE-PILOT-DEPLOY-READINESS-20261103`): this packet's D1–D7 are
+> the authoritative decision numbering (D3 = VM region, D4 = VM TLS ingress). The pilot deploy
+> runbook now carries a decision register that reuses these IDs accurately and adds pilot-only
+> PD-IDs alongside; documents that used D3/D4 as residency/rate-limit shorthand are superseded
+> on that naming point only. Decision status here is unchanged.
+
 ## Decisions needed from the PO (D1–D7)
 
 | # | Decision | Options | Recommendation |

@@ -3,11 +3,13 @@ package postgres
 // B1 (ADR-006 zero-trust addendum): least-privilege database role profile and its repeatable
 // verification. Inert unless MC_TEST_DATABASE_URL is set. On a fresh disposable schema this test
 //
-//  1. creates the profile roles, private schema, default privileges and exact per-table grants
-//     from the Go profile source below,
-//  2. enforces that the operator SQL files (ops/adr006/db/) are byte-equivalent (after comment
-//     normalization) to this Go source — the files are the operator deliverable and this test is
-//     their repeatable verification, so the two can never drift apart,
+//  1. creates the profile roles, private schema, default privileges from the Go bootstrap source
+//     below, and the exact per-table grants from the Go runtime-grants source,
+//  2. enforces that the operator SQL files (ops/adr006/db/ + ops/adr006/bff-state.sql) are
+//     byte-equivalent (after comment normalization) to this Go source — the files are the
+//     operator deliverable and this test is their repeatable verification, so the two can never
+//     drift apart; b1_operator_sequence_test.go additionally EXECUTES the actual files in the
+//     documented order, including as a constrained non-superuser bootstrap admin,
 //  3. sets synthetic role passwords (the operator step the SQL files deliberately omit),
 //  4. runs the product migrations AS the migrator role, which the profile's role GUC makes act as
 //     the schema owner, into a dedicated private schema outside the Supabase Data API,
@@ -43,6 +45,7 @@ import (
 
 	"leonx.me/matter-control/internal/adapter/outbound/postgres/pgtest"
 	"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol"
+	"leonx.me/matter-control/internal/core/port"
 )
 
 const (
@@ -63,13 +66,19 @@ func b1Password(t *testing.T) string {
 	return "mc" + hex.EncodeToString(b)
 }
 
-// b1ProfileSQL is the role/schema profile DDL — the Go source of truth mirrored verbatim in
+// b1ProfileSQL is the role/schema BOOTSTRAP DDL — the Go source of truth mirrored verbatim in
 // ops/adr006/db/b1-roles.sql (the operator deliverable; the sync subtest enforces equality after
-// comment normalization). No passwords: connecting fails until the operator sets them.
+// comment normalization). No passwords: connecting fails until the operator sets them. No
+// per-table/function grants: on a fresh database those objects only exist after the migrations —
+// they live in b1RuntimeGrants, mirrored in ops/adr006/db/b1-runtime-grants.sql.
 func b1ProfileSQL() []string {
 	return []string{
-		// Dedicated private schema; nothing is granted to PUBLIC (Supabase anon/authenticated
-		// roles and the Data API therefore have no access by construction).
+		// PG16+ CREATEROLE semantics: a non-superuser role that creates roles receives ADMIN
+		// OPTION on them only. SET/INHERIT options (needed to SET ROLE into the owner, transfer
+		// ownership, set role-level GUCs and act as the owner's member) must be granted at
+		// creation time via this GUC (settable by CREATEROLE roles). Unknown on older servers:
+		// skipped there; PG16+ is required by the operator file. Harmless under a superuser.
+		"DO $do$ BEGIN PERFORM set_config('createrole_self_grant', 'SET, INHERIT', false); EXCEPTION WHEN undefined_object THEN NULL; END $do$;",
 		"DO $do$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'mc_owner') THEN CREATE ROLE mc_owner NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE; END IF; END $do$;",
 		"DO $do$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'mc_migrator') THEN CREATE ROLE mc_migrator LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT; END IF; END $do$;",
 		"DO $do$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'mc_runtime') THEN CREATE ROLE mc_runtime LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT; END IF; END $do$;",
@@ -81,14 +90,17 @@ func b1ProfileSQL() []string {
 		"ALTER SCHEMA mcapp OWNER TO mc_owner;",
 		// Migrations act as the schema owner: the membership is SET-able, and the role-level GUC
 		// makes every migration connection assume mc_owner, so migration objects (and
-		// goose_db_version) are owned by the NOLOGIN owner, never by a LOGIN role.
+		// goose_db_version) are owned by the NOLOGIN owner, never by a LOGIN role. The role-level
+		// search_path resolves mcapp on a fresh connection without a DSN parameter
+		// (server-side; the session pooler forwards nothing).
 		"GRANT mc_owner TO mc_migrator WITH SET TRUE;",
 		"ALTER ROLE mc_migrator SET role = 'mc_owner';",
+		"ALTER ROLE mc_migrator SET search_path = mcapp;",
+		"ALTER ROLE mc_runtime SET search_path = mcapp;",
 		"GRANT USAGE ON SCHEMA mcapp TO mc_runtime;",
-		"REVOKE CREATE ON SCHEMA mcapp FROM mc_runtime;",
 		// Future migration objects are born without PUBLIC rights, with only a read/append floor:
-		// UPDATE (and DELETE) are always deliberate per-table grants below, so a future
-		// append-only table can never silently inherit a blanket UPDATE default.
+		// UPDATE (and DELETE) are always deliberate per-table grants in b1RuntimeGrants, so a
+		// future append-only table can never silently inherit a blanket UPDATE default.
 		"ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp REVOKE ALL ON TABLES FROM PUBLIC;",
 		"ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp REVOKE ALL ON FUNCTIONS FROM PUBLIC;",
 		"ALTER DEFAULT PRIVILEGES FOR ROLE mc_owner IN SCHEMA mcapp GRANT SELECT, INSERT ON TABLES TO mc_runtime;",
@@ -131,11 +143,13 @@ func b1RuntimeGrants(schema string, tables []string) []string {
 	}
 	return append(out,
 		fmt.Sprintf("GRANT USAGE ON ALL SEQUENCES IN SCHEMA %s TO mc_runtime;", schema),
-		fmt.Sprintf("REVOKE CREATE ON SCHEMA %s FROM mc_runtime;", schema),
 		// Post-migration hardening: trigger-guard functions created by the migrations lose
-		// the default PUBLIC EXECUTE (firing via their triggers still works). On the operator
-		// side this is the idempotent re-run of b1-roles.sql after the migrations.
+		// the default PUBLIC EXECUTE (firing via their triggers still works).
 		fmt.Sprintf("REVOKE ALL ON ALL FUNCTIONS IN SCHEMA %s FROM PUBLIC;", schema),
+		// Metadata Quick Search (migration 0012): the search queries call mc_search_key_v1(text)
+		// at runtime, so the restricted runtime role needs exactly this one EXECUTE grant.
+		fmt.Sprintf("GRANT EXECUTE ON FUNCTION %s.mc_search_key_v1(text) TO mc_runtime;", schema),
+		fmt.Sprintf("REVOKE CREATE ON SCHEMA %s FROM mc_runtime;", schema),
 	)
 }
 
@@ -213,13 +227,14 @@ func b1TestSyncGuard(t *testing.T, tables []string) {
 	// The runtime grants are schema-qualified from the same table list the migrated schema
 	// produced, so the guard also proves the file's per-table grant CLASSES (including exactly
 	// which tables carry DELETE) never drift from the Go class map.
-	profile := append(b1ProfileSQL(), b1RuntimeGrants(b1Schema, tables)...)
+	profile := b1ProfileSQL()
 	cases := []struct {
 		file  string
 		goSQL []string
 	}{
 		{"ops/adr006/bff-state.sql", b1BFFStateSQL()},
 		{"ops/adr006/db/b1-roles.sql", profile},
+		{"ops/adr006/db/b1-runtime-grants.sql", b1RuntimeGrants(b1Schema, tables)},
 		{"ops/adr006/db/b1-bff-grants.sql", b1BFFGrants()},
 	}
 	for _, tc := range cases {
@@ -376,8 +391,9 @@ func TestB1LeastPrivilegeProfile(t *testing.T) {
 	if len(tables) < 20 {
 		t.Fatalf("unexpectedly few tables: %v", tables)
 	}
-	// Post-migration grants and hardening — the operator side is the idempotent re-run of
-	// b1-roles.sql after the migrations (per-table grants, sequences, function EXECUTE revoke).
+	// Post-migration grants and hardening — the operator side is ops/adr006/db/b1-runtime-grants.sql
+	// (per-table grants, sequences, function EXECUTE hardening, the Search EXECUTE grant), applied
+	// after the migrations. b1_operator_sequence_test.go executes that actual file in order.
 	for _, sql := range b1RuntimeGrants(b1Schema, tables) {
 		if _, err := admin.Exec(ctx, sql); err != nil {
 			t.Fatalf("post-migration grants: %v: %v", sql, err)
@@ -606,11 +622,15 @@ func TestB1LeastPrivilegeProfile(t *testing.T) {
 			world := &pgWorld{pool: pool, tb: t, dsn: mSchemaDSN(b1Run, runPass)}
 			return mattercontrol.Bundle{Store: fs, World: world}
 		}
-		// Breadth across the spine, administration, work graph, filings and the review matrix —
-		// every legitimate INSERT/UPDATE/SELECT, RETURNING, advisory lock and trigger read.
+		// Breadth across the spine, administration, work graph, filings, the review matrix and
+		// metadata Quick Search (WP3: the search queries run AS mc_runtime, so the runtime grants
+		// must include the mc_search_key_v1 EXECUTE grant — proven here, not assumed).
 		mattercontrol.Suite(t, newRuntimeBundle)
 		mattercontrol.SuiteW4(t, newRuntimeBundle)
 		mattercontrol.SuiteReview(t, newRuntimeBundle)
+		mattercontrol.SuiteSearch(t, newRuntimeBundle, func(b mattercontrol.Bundle) port.SearchStore {
+			return b.Store.(*faultCapableStore).inner
+		})
 	})
 
 	t.Run("bff role is scoped to mc_bff.state", func(t *testing.T) {
