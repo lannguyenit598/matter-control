@@ -1,0 +1,12 @@
+# MC-ZCODE-TERMSHEET-01 — Contract Term-Sheet Grid v1 (deterministic)
+
+- Owner/reviewer: ZCode owns implementation; independent non-author reviewer required before any DONE (OpenCode or other, TBD at review dispatch).
+- Priority: P1. Status: READY (implementation may start; landing on main after review).
+- Requirements: PO-selected feature pair 2026-11-05; design `docs/implementation/plans/MC-ZCODE-CERTIFICATE-TERMSHEET-DESIGN-20261105.md` §2 (DESIGN_APPROVED_IN_DIALOG); PRODUCT.md Principle 3 (deterministic) and Principle 4 (no generic metadata blob); import content-hash replay pattern (0006); permission matrix; WCAG 2.2 AA + vi/EN parity.
+- Authorization: PO instruction 2026-11-05 ("apply" the two selected features); local implementation authority per latest PO owner amendment; no push/deploy/release approval.
+- Base: `fcc7ee1aaf024e5d2007a278a29f3961259240c8` (main), branch `zcode/cert-termsheet-20261105`.
+- Scope: goose migration `0015_contract_term_lines.sql` (long-format closed enum, data-safe Down); term-lines store/service/API (`GET /matters/:id/term-lines`, `POST .../term-lines/:id/promotion` with fixed field mapping PARTY→Entity record, dates→Milestone, NOTICE_PERIOD→Action draft, VALUE_*/GOVERNING_LAW/NOTE→Requirement draft); import bundle type `contract-term-sheet` (hash replay idempotent, replace-per-document-version); FE matter-nav "Term Sheet" view on Operational Grid patterns with source chips (version + hash) and promote dialog. Excludes: AI extraction, clause taxonomy, diff/redline, the Certificate (separate task), any new aggregate.
+- Inputs: design doc §2 (approach A — explicit TermLine); pre-implementation verification of the import registry shape; terminology table (vi labels via R10, EN keys interim).
+- Acceptance/tests: `make check` with PG fixture + race; migration up/down on fixture; import replay idempotency tests (same hash no-op; changed hash replace + report); promotion guard tests (idempotent link, deleted-target error, enum rejection); FE vitest + build + storybook + a11y; explicit NOT_RUN list in the return.
+- Outputs/evidence: source on `zcode/cert-termsheet-20261105`, task/return record + evidence directory under `docs/testing/`, updated workboard/notes.
+- Dependencies: none blocking. Certificate (MC-ZCODE-CERT-01) is separate and gated on the pre-flight independent review; the AI workbench phase remains later-phase (PO 2026-10-29) — this task builds its rails only.

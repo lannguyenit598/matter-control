@@ -1,0 +1,12 @@
+# MC-ZCODE-CERT-01 — Closing Readiness Certificate v1
+
+- Owner/reviewer: ZCode owns implementation; independent non-author reviewer required before any DONE (OpenCode or other, TBD at review dispatch).
+- Priority: P1. Status: BACKLOG — implementation gated on the MC-PREFLIGHT-01 independent review returning PASS (preflight is ZCode-authored; non-author review mandatory; review dispatch is still PROPOSED_DISPATCH, not sent).
+- Requirements: PO-selected feature pair 2026-11-05; design `docs/implementation/plans/MC-ZCODE-CERTIFICATE-TERMSHEET-DESIGN-20261105.md` §1 (DESIGN_APPROVED_IN_DIALOG); r3.1 seam fixes S1–S4 binding (ControlState verbatim, no 5-axis claim, document-version storage, terminology); PRODUCT.md Principle 3; disclaimer "tài liệu vận hành — không phải ý kiến pháp lý" on the artifact; WCAG 2.2 AA + vi/EN parity.
+- Authorization: PO instruction 2026-11-05 ("apply"); local implementation authority per latest PO owner amendment; no push/deploy/release approval.
+- Base: `fcc7ee1aaf024e5d2007a278a29f3961259240c8` (main), branch `zcode/cert-termsheet-20261105`.
+- Scope: zero-migration backend composition — `ReadinessCertificate(ctx, matterID)` in `DataOpsService` reusing the Brief snapshot read boundary (single consistent AsOf/Revision; ControlState + Gaps + Blockers + BriefOutstanding + PreflightOf per open filing); `GET /matters/:id/readiness-certificate` membership read; FE `features/readiness/certificate-view.tsx` deterministic renderer with provenance + template-version + disclaimer footer; entry points from Control Room and PreflightPanel; issuance = confirm dialog → create document + upload HTML version via the existing client-streamed pipeline. Excludes: server-side PDF, digital signatures, compliance attestation, as-of past, new event types, new aggregates.
+- Inputs: MC-PREFLIGHT-01 read model (gated), Brief replay service, document upload handlers, terminology table.
+- Acceptance/tests: contract fixture `contract_readiness.go`; deterministic service tests on event fixtures; composition perf test (pattern: preflight perf); FE vitest + storybook + a11y; vi/EN parity; explicit NOT_RUN list in the return.
+- Outputs/evidence: source on `zcode/cert-termsheet-20261105` (after the gate), task/return record + evidence directory under `docs/testing/`.
+- Dependencies: **MC-PREFLIGHT-01 independent review PASS** (blocking); vi labels via R10 (EN interim, non-blocking). Certificate mounts preflight data — no landing before the gate even if code is drafted earlier.
