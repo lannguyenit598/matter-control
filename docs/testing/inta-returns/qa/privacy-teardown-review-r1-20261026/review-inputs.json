@@ -1,0 +1,98 @@
+{
+  "task": "MC-INTA-PRIVACY-QA-R1",
+  "title": "INT-A independent privacy/teardown QA R1",
+  "requirements": ["INT-PRIV-01", "INT-ISO-03", "source/ledger preservation"],
+  "reviewer_identity": {
+    "actual_owner": "Actual OpenCode (OpenCode harness), independent nonauthor",
+    "cli_version": "opencode v2.1.4 (captured via 'rtk opencode --version' 2026-10-26T10:09:02Z)",
+    "model": "opencode/glm-5.3-flash-free",
+    "provider": "opencode",
+    "independence": "This session authored none of the reviewed artifacts; all reviewed evidence was produced by Local Codex (privacy/teardown and supplement packets) or other named owners. No author self-check is inherited: author checks are recorded as author claims and were re-verified from retained bytes where possible. No prior session of this reviewer authored any pinned input.",
+    "dispatch": "Human delivery assigned this task in chat; prepared prompt file docs/implementation/handoffs/MC-INTA-PRIVACY-QA-R1-OPENCODE-PROMPT.md (pinned) documents the same assignment. Preparation alone was not treated as dispatch."
+  },
+  "workspace": {
+    "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head_verified": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "head_unchanged_through_review": true,
+    "other_owners_edits": "Present and preserved; no reset/stash/stage/commit/merge/push or shared status/task edit performed by this review."
+  },
+  "observation_mode": "READ_HASH_STATIC_ONLY",
+  "prohibited_and_not_done": [
+    "No execution/import of reviewed code, scanners, reference models or suites (privacy_scan.py, supplement_scan.py, final_export.py, stop_owned_pg.py, resource_metadata.py inspected statically only)",
+    "No private credential read: backend.env never opened; no secret reconstruction",
+    "No process signals/probes, HTTP/SQL/DB/Docker/lifecycle, build/install/download",
+    "No provider calls and no messaging of other agents",
+    "No shared status/task edits; inputs read-only"
+  ],
+  "allowed_utilities_used": "Small personal read/hash/JSON/static scripts under /private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/mc-privacy-qa/ (hashing, JSON summaries, inventory rechecks, coverage walks, counts-only pattern grep). None imported reviewed code.",
+  "local_rules": {
+    "rtk": "Used as prefix for all shell commands (rtk 1.0.1 present; also recorded in reviewed execution-metadata.json).",
+    "semble": "Available at /Users/nguyenvanlan/.local/bin/semble. Semble search executed before exploration: query 'privacy teardown manifest evidence scan files matches'; it located privacy_scan.py/final_export.py/supplement_scan.py. Search index also returned unrelated step-03a chunks; those were NOT read (outside pinned set)."
+  },
+  "session_window_utc": {
+    "start_approx": "2026-10-26T09:50Z (first environment-verification commands; exact wall time not captured)",
+    "utility_script_creation_times_utc": {
+      "stopsignal-check.py": "2026-10-26T09:59:18Z",
+      "inventory-summary.py": "2026-10-26T10:01:05Z",
+      "original-summary.py": "2026-10-26T10:01:33Z",
+      "overlap-check.py": "2026-10-26T10:02:16Z",
+      "narratives-coverage.py": "2026-10-26T10:03:58Z",
+      "tree-coverage.py": "2026-10-26T10:04:34Z",
+      "inscope-coverage.py": "2026-10-26T10:06:33Z"
+    },
+    "captured_clock_reads_utc": [
+      "2026-10-26T10:09:02Z (during pattern re-scan / opencode version capture)",
+      "2026-10-26T10:11:09Z (timestamp capture)",
+      "2026-10-26T10:13:43Z (post-boundary mtime capture)"
+    ],
+    "end_approx": "2026-10-26T14:16Z (output writing completed after response-transport interruptions; analysis steps per listed utility-script times)"
+  },
+  "direct_inputs": [
+    {"path": "AGENTS.md", "bytes": 8886, "sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb", "verified_before": true, "verified_after": true},
+    {"path": "docs/reviews/inta-codex-privacy-teardown-return.md", "bytes": 7975, "sha256": "f2829ec4bffedad3ebe2dbccde715f204cf9ccdf0aebbbbe72278eac78f007c5", "verified_before": true, "verified_after": true},
+    {"path": "docs/reviews/inta-codex-privacy-supplement-return.md", "bytes": 3028, "sha256": "77b8226e6ce55f3c4a731025f06a5caa11e92dceabe84360f95896ee7f9943d6", "verified_before": true, "verified_after": true},
+    {"path": "docs/testing/inta-returns/environment/privacy-teardown-20261026/manifest.json", "bytes": 4912, "sha256": "bc5461ad63a1f2a24866471acfcb4cc87cba9fd500013e70c66fe2f5fcad375c", "verified_before": true, "verified_after": true},
+    {"path": "docs/testing/inta-returns/environment/privacy-supplement-20261026/manifest.json", "bytes": 1278, "sha256": "d3c3189f7e28e9110f90808ae5f8b418fdb975f8131c45115ff38b8979165d26", "verified_before": true, "verified_after": true},
+    {"path": "docs/implementation/handoffs/MC-INTA-PRIVACY-QA-R1-OPENCODE-PROMPT.md", "bytes": 5582, "sha256": "2c15f86186039514acc477391179c9e4ee24bb28d61a826ee8273a8f16f0196b", "verified_before": true, "verified_after": true},
+    {"path": "docs/implementation/handoffs/MC-002-INTA-CODEX-PRIVACY-TEARDOWN-PROMPT.md", "bytes": 7340, "sha256": "c10255cd3d8a586abefa1f5a5fb6354ded76d0aa3b52ccc275057a7f2bf0ee77", "verified_before": true, "verified_after": true},
+    {"path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-CLOSEOUT-REVIEW-PROMPT.md", "bytes": 9425, "sha256": "ca2c65bbbcabf0433472621141c0f66f8fbbcaa6e34d936107f3440b58478cb1", "verified_before": true, "verified_after": true},
+    {"path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-R1-ADDENDUM-PROMPT.md", "bytes": 2069, "sha256": "765ed66e1188e36fd174f697743a6fa9e435573972e82e770f2cfdc44722da5e", "verified_before": true, "verified_after": true},
+    {"path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R2-SOURCE-REVIEW-PROMPT.md", "bytes": 5196, "sha256": "0b364a17693d89aac452a4506ca6543e347585aa2a71aeaf21e0588299c3c5f5", "verified_before": true, "verified_after": true},
+    {"path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R3-SOURCE-REVIEW-PROMPT.md", "bytes": 7179, "sha256": "8305219ab5c4fbf32520efbf68a61296dcf59305f5f8b68eb39e7ffb3caf7374", "verified_before": true, "verified_after": true},
+    {"path": "docs/testing/inta-returns/qa/closeout-review-r1/outputs-manifest.json", "bytes": 11916, "sha256": "3a74ebf262663f1e7b94659182dbd5be32f36095b4a31b498f27ea6879f0d2d6", "verified_before": true, "verified_after": true},
+    {"path": "docs/testing/inta-returns/qa/fe-validation-r2-source-review-20261026/review-inputs.json", "bytes": 9195, "sha256": "cd6ed1f5525e1914a32fc7ea685df64f910d2e7efd3595bb87bddeada32786f4", "verified_before": true, "verified_after": true},
+    {"path": "docs/testing/inta-returns/qa/r4-source/zcode/review-meta.json", "bytes": 2829, "sha256": "ed18d4e65fcc3c481efb15ab2196aec3ab7724ce20fa055981444a58cfc943d3", "verified_before": true, "verified_after": true}
+  ],
+  "manifest_payload_verification": {
+    "privacy-teardown-20261026/manifest.json": {"declared_payloads": 26, "all_hash_and_bytes_match": true, "verified_before": true, "verified_after": true, "declared_payload_bytes_total": 590293, "independently_recomputed_total": 590293},
+    "privacy-supplement-20261026/manifest.json": {"declared_payloads": 5, "all_hash_and_bytes_match": true, "verified_before": true, "verified_after": true, "independently_recomputed_total_bytes": 349684}
+  },
+  "raw_export_byte_equality": {
+    "method": "Personal SHA-256 comparison of every file pair; no producer assertion trusted",
+    "privacy-teardown-20261026": {"raw_dir": "/tmp/mc002-inta-evidence/environment/privacy-teardown-20261026", "files_compared": 27, "result": "ALL EQUAL", "includes_manifest": true},
+    "privacy-supplement-20261026": {"raw_dir": "/tmp/mc002-inta-evidence/environment/privacy-supplement-20261026", "files_compared": 6, "result": "ALL EQUAL", "includes_manifest": true},
+    "note": "The supplement packet has no producer delivery-checks receipt; this review's own equality check supplies that assurance."
+  },
+  "inventory_rechecks_during_review": {
+    "original_scan_inventory": {"file": "docs/testing/inta-returns/environment/privacy-teardown-20261026/scan-inventory.json", "entries": 1153, "entries_missing_or_drifted_today": 0},
+    "supplement_inventory": {"file": "docs/testing/inta-returns/environment/privacy-supplement-20261026/inventory.json", "entries": 123, "entries_missing_or_drifted_today": 0}
+  },
+  "transitive_manifests": [
+    "docs/testing/inta-returns/environment/privacy-teardown-20261026/manifest.json",
+    "docs/testing/inta-returns/environment/privacy-supplement-20261026/manifest.json"
+  ],
+  "outputs_by_this_review": [
+    "docs/reviews/inta-opencode-privacy-teardown-review-r1.md",
+    "docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/review-inputs.json",
+    "docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/checks-log.json",
+    "docs/testing/inta-returns/qa/privacy-teardown-review-r1-20261026/coverage-disposition.json"
+  ],
+  "output_absence_checked_before_write": true,
+  "self_exclusion": "This manifest excludes nothing from itself because it pins only inputs; the review narrative cannot pin its own bytes (self-referential impossibility); its hash is returned in chat only.",
+  "scope_limits": [
+    "Evidence coverage adjudicated only against pinned producer contracts in this task's input set; other producer contracts outside the pinned set were not consulted",
+    "Raw roots other than the two named privacy-* directories were not traversed (task prohibition); raw-root coverage beyond them rests on retained pins plus the author's preservation check",
+    "No claim that measured-scope zero matches prove absence of all credentials anywhere"
+  ]
+}

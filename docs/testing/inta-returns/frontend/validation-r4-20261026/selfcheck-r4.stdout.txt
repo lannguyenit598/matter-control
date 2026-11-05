@@ -1,0 +1,80 @@
+Refusing execution: attempt directory already exists: /var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/mc002-inta-selfcheck-r4-x_ta92my/existing_attempt_dir
+================================================================
+MC-002-INTA-FE-VALIDATION-R4: Comprehensive Deterministic Self-Check
+Start UTC: 2026-10-26T09:36:08.247577+00:00
+Scratch Directory: /var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/mc002-inta-selfcheck-r4-x_ta92my
+================================================================
+
+--- Group 1: Baseline Cases & Evaluator Schema ---
+[PASS] 1. missingcounter: Observer file does not exist
+[PASS] 2. malformedcounter: Observer JSON malformed
+[PASS] 3. positivecounter: Observer recorded >0 HTTP requests
+[PASS] 4. observererror: Observer startup or runtime error
+[PASS] 5. transientlistener: Port 18085 listener observed during run
+[PASS] 6. probeerror: Port probe execution error
+[PASS] 7. timeout: Child hung or timed out
+[PASS] 8. wrongrefusal: Child exited without exact refusal phrase
+[PASS] 9. validcompleteinput: Fully compliant refusal and zero upstream calls
+
+--- Group 2: OpenCode / Codex Regression Probes (R1-C02) ---
+[PASS] 10. unknown_listener_observation: listener_during=None and listener_after=None
+[PASS] 11. boolean_counter_false: requestCount=False (bool subclass of int)
+[PASS] 12. truthy_unclean_string: cleanShutdown='false' (non-empty string)
+
+--- Group 3: Evidence Completeness & Evaluator Strictness (R2-I04, R3-N04, NF-6) ---
+[PASS] 13. fast_exit_zero_samples: Child exited before any during-sample taken
+[PASS] 14. missing_isfinal_flag: Observer state has isFinal=False
+[PASS] 15. observer_exit_nonzero: Observer process exited with code 2
+[PASS] 16. falsy_empty_error_field_rejected: Observer error field is empty string
+[PASS] 17. null_error_field_rejected: Observer error field is present with None value
+[PASS] 18. omitted_sample_count_fails_closed: during_sample_count omitted/None
+[PASS] 19. preflight_bound_port_notes_wording: Pre-flight listener notes state port already occupied
+
+--- Group 4: Actual Probe Classification & Error Handling (R2-I04, R2-I06, R3-N06) ---
+[PASS] 20. actual_probe_rc0_listener: lsof rc=0 is active listener
+[PASS] 21. actual_probe_rc1_clean_nomatch: lsof rc=1 with empty stderr is clean absence
+[PASS] 22. actual_probe_rc1_enoent_error: lsof rc=1 with ENOENT stderr is PROBE_ERROR
+[PASS] 23. actual_probe_rc_greater_1_error: lsof rc>1 is PROBE_ERROR
+[PASS] 24. actual_probe_timeout_expired: lsof timeout produces PROBE_ERROR
+[PASS] 25. actual_probe_execution_exception: lsof exception produces PROBE_ERROR
+
+--- Group 5: Ownership & Lifecycle Verification (R2-I03, R3-N01, R3-N03) ---
+[PASS] 26. verify_pid_identity_ps_failure: ps query error must fail closed
+[PASS] 27. bounded_terminate_refuses_unverified: Refuses signal if identity fails
+[PASS] 28. bounded_terminate_reaps_via_process_handle: Reaps child process via handle.wait()
+[PASS] 29. bounded_terminate_already_exited_no_signal: Already exited process sends no signals
+[PASS] 30. bounded_terminate_handle_timeout_escalation: Handle wait timeout reports failure
+[PASS] 31. bounded_terminate_pid_mismatch_denied: Process handle PID mismatch is denied
+
+--- Group 6: Atomic Writer Failure Propagation & Directory Durability (R2-I06, R3-N06) ---
+[PASS] 32. atomic_writer_failure_propagation: Write error propagates exception
+[PASS] 33. atomic_writer_replace_exception_propagation: os.replace error propagates exception
+
+--- Group 7: Coordinator Execution & Abort Sites (R2-I02, R2-I03, R3-N01, R3-N06) ---
+[PASS] 34. coordinator_successful_variant_pass: Successful variant run passes all gates
+[PASS] 35. coordinator_preprobe_error_abort: Pre-flight probe error halts execution
+[PASS] 36. coordinator_preprobe_bound_abort: Port already bound halts execution
+[PASS] 37. coordinator_observer_startup_fail_cleanup: Observer bind failure cleans up observer
+[PASS] 38. child_spawn_fail_cleanup: Child spawn failure cleanly terminates observer
+[PASS] 39. coordinator_listener_during_abort_cleans_up: Site 1 abort on listener acquisition reaps child
+[PASS] 40. coordinator_positive_counter_abort_cleans_up: Site 2 abort on positive counter reaps child
+
+--- Group 8: Wrapper & Plan Dispatch (R2-I01, R3-N05, R3-N06, NF-2) ---
+[PASS] 41. run_plan_refuses_existing_dir: Collision check refuses existing directory (even empty)
+Starting execution of 2 variants in /var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/mc002-inta-selfcheck-r4-x_ta92my/fail_halt_attempt...
+[1/2] Running API_TOKEN_nonempty...
+  Result: FAIL (PROBE_ERROR) - Port listener probe error: Pre-flight probe error on port 18085: lsof probe failed with rc=2: Preprobe error
+HALTING: Variant API_TOKEN_nonempty failed with PROBE_ERROR. Stopping execution.
+[PASS] 42. run_plan_halts_on_failure: Halt on first variant failure without running second
+[PASS] 43. shell_wrapper_dispatches_via_stub: Thin wrapper dispatches coordinator faithfully
+[PASS] 44. shell_wrapper_refuses_existing_dir: Wrapper refuses existing attempt directory
+
+--- Group 9: Option A Launcher & Node 24 Type Stripping (R1-C04, R2-I05, NF-3) ---
+[PASS] 45. ts_guard_import_via_strip_types: Node 24 native type stripping loads guards.ts
+[PASS] 46. launcher_mock_test_suite: harness-dev.mjs mock test suite (13 cases)
+
+================================================================
+SUMMARY: 46 PASS / 0 FAIL out of 46 cases
+End UTC: 2026-10-26T09:36:10.778187+00:00
+================================================================
+Results saved to /tmp/mc002-inta-fe-validation-r4-20261026/runner/selfcheck-r4-results.json

@@ -1,0 +1,29 @@
+=== MC-002-INTA-FE-R2 Unit Tests ===
+UTC Started: 2026-10-25T07:07:13Z
+Command: rtk pnpm test
+Working Directory: /tmp/mc002-inta-harness
+Git Branch: codex/mc-002-inta-harness-r2
+Git Commit: 79322fcb2c72bb3db20d55f3f3fc860e7e7ee2dc
+======================================
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/mc002-inta-harness
+
+ ✓ tests/fixtures.test.ts (2 tests) 2ms
+ ✓ tests/envelope.test.ts (6 tests) 3ms
+ ✓ tests/guards.test.ts (34 tests) 8ms
+ ✓ tests/request-id.test.ts (6 tests) 10ms
+ ✓ tests/schemas.test.ts (11 tests) 5ms
+ ✓ tests/executor.test.ts (8 tests) 113ms
+ ✓ tests/driver.test.ts (13 tests) 2181ms
+   ✓ HarnessDriver (INTA-FE-R02) (13)
+     ✓ records Checkpoint A from valid T1 envelope and verifies RFC 3339 UTC timestamps (R01, R02) 1950ms
+
+ Test Files  7 passed (7)
+      Tests  80 passed (80)
+   Start at  14:07:13
+   Duration  2.34s (tests 91%, import 6%, transform 3%, worker 1%)
+
+======================================
+Exit Code: 0
+UTC Completed: 2026-10-25T07:07:15Z

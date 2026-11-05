@@ -1,0 +1,118 @@
+{
+  "info": {
+    "id": "ses_e910ec74dffeb6Jd3O61bc7fTc",
+    "projectID": "56512bc17ede1f94831e6c5716d9c01aa1a12b0d",
+    "agent": "plan",
+    "cost": 0,
+    "tokens": {
+      "input": 72932,
+      "output": 2476,
+      "reasoning": 17483,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1792862665026,
+      "updated": 1792862759070,
+      "idle": 1792862759074
+    },
+    "title": "[redacted:session-title:ses_e910ec74dffeb6Jd3O61bc7fTc]",
+    "location": {
+      "directory": "/[redacted:session-directory:ses_e910ec74dffeb6Jd3O61bc7fTc]"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_16ef13948001SNPRVHfZWqdf5N",
+      "time": {
+        "created": 1792862665032
+      },
+      "type": "agent-switched",
+      "agent": "plan",
+      "previous": "plan"
+    },
+    {
+      "id": "msg_16ef139440013Da3dHjFBudt5S",
+      "time": {
+        "created": 1792862665162
+      },
+      "text": "[redacted:synthetic:msg_16ef139440013Da3dHjFBudt5S]",
+      "type": "synthetic"
+    },
+    {
+      "id": "msg_16ef139470018KZ3HO8iICULQ9",
+      "time": {
+        "created": 1792862665163
+      },
+      "text": "[redacted:text:msg_16ef139470018KZ3HO8iICULQ9]",
+      "files": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_16ef139cf001ZVbx5ZRs8ItqWq",
+      "time": {
+        "created": 1792862665171,
+        "streamed": 1792862758939,
+        "completed": 1792862759070
+      },
+      "type": "assistant",
+      "agent": "plan",
+      "model": {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "[redacted:reasoning:msg_16ef139cf001ZVbx5ZRs8ItqWq]",
+          "native": {
+            "redacted": "reasoning-native:msg_16ef139cf001ZVbx5ZRs8ItqWq"
+          },
+          "time": {
+            "created": 1792862669242,
+            "completed": 1792862758927
+          }
+        },
+        {
+          "type": "text",
+          "text": "[redacted:text:msg_16ef139cf001ZVbx5ZRs8ItqWq]"
+        }
+      ],
+      "snapshot": {
+        "start": "a9994de8bff3a4e1359089a1b1eace5d4fdde942",
+        "end": "23636e52f92fa1bfdf093a3944fc9a9f9b7879d6",
+        "files": [
+          "docs/reviews/step-02-c01-claude-probe-disposition.md",
+          "docs/testing/step-02-c01-intake/claude-m1-execution.json",
+          "docs/testing/step-02-c01-intake/claude-m1-input-manifest.json",
+          "docs/testing/step-02-c01-intake/claude-m1-input.txt.gz",
+          "docs/testing/step-02-c01-intake/claude-m1.stderr.log",
+          "docs/testing/step-02-c01-intake/claude-m1.stdout.json"
+        ]
+      },
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 72932,
+        "output": 2476,
+        "reasoning": 17483,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_16ef2a8a2001Uoy4mMp8ZYAT7l",
+      "time": {
+        "created": 1792862759074
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+exec(compile(open('/private/tmp/review-pg.py').read().split('mode=sys.argv[1]')[0],'/private/tmp/review-pg.py','exec'))
+work=pathlib.Path('/private/tmp/mc-review-verifier-20261029-r1/backend')
+cases=[('single-successor','internal/adapter/outbound/repotest/mattercontrol/memory_review.go','if other.SupersedesID == a.SupersedesID {','if false && other.SupersedesID == a.SupersedesID {'),('question-revision','internal/core/service/review_service.go','if cmd.ExpectedQuestionRevision != q.Revision {','if false && cmd.ExpectedQuestionRevision != q.Revision {')]
+for label,rel,old,new in cases:
+ p=work/rel;original=p.read_bytes(); assert old in original.decode()
+ try:
+  p.write_text(original.decode().replace(old,new,1))
+  code,raw,event=run(['go','test','./internal/adapter/outbound/repotest/mattercontrol','-run','TestSuiteReview_MemoryStore','-count=1','-race','-v'],cwd=work)
+  event['mutation']={'file':rel,'before':old,'after':new,'expected_nonzero':True}
+  (OUT/('mutation-'+label+'.log')).write_bytes(raw);(OUT/('mutation-'+label+'.json')).write_text(json.dumps(event,indent=2)+'\n')
+  print(label,'exit',code,'detected',code!=0)
+ finally:p.write_bytes(original)

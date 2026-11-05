@@ -1,0 +1,56 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl C01 implementation review fd747ae",
+    "--file",
+    "/tmp/mc002-c01-opencode-source-input.txt",
+    "Review actual C01 fd747ae source and evidence packet independently; no tools/runtime. Return precise findings and scoped verdict."
+  ],
+  "exit": 0,
+  "start_utc": "2026-10-24T17:20:27.380686+00:00",
+  "end_utc": "2026-10-24T17:24:13.244600+00:00",
+  "elapsed_seconds": 225.86350741700153,
+  "session_id": "ses_e9112661bffe00EBWQOXGOITu9",
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "scope": "code/evidence review of fd747ae, no runtime replay",
+  "runtime_replay": false,
+  "stdout_sha256": "6f9d471a295d1630ce33e7b9751f2b96e60d2f9f6388e7a0d4a26408da7b85d5",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e9112661bffe00EBWQOXGOITu9"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "event_types": [
+    "step_start",
+    "text"
+  ],
+  "verdict": "CHANGES_REQUIRED / F1 F5 F6",
+  "native_accepted": false
+}

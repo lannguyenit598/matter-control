@@ -1,0 +1,456 @@
+{
+  "task": "MC-003A.8A / F-01..F-10",
+  "status": "PREPARED_NOT_AUTHORIZED_NOT_DISPATCHED",
+  "repository_head": "e8eaea71099c575360e12ba81f462d8732843b6a",
+  "contract_baseline": "97356ce45c2b10070e9303f7c2ab39a425fad7a5",
+  "destination_proposed": "Existing human-operated Claude Code interactive session / Anthropic",
+  "model_proposed": "claude-opus-5-5; recipient must confirm actual identity; previous version/model is self-report, not current independent verification",
+  "cost_limit_proposed": "Current interactive session and existing included quota only; no separate API job, paid retry, credits purchase, overage enablement or provider/model change. Actual marginal cost UNKNOWN; stop if paid execution is required.",
+  "execution_proposed": "Read this manifest and these snapshots only; local read-only hash/metadata verification permitted; no repository search, no extra source, no write/commit/runtime/build/MCP/external-agent dispatch. Respond with Markdown/JSON proposals in chat only.",
+  "snapshots": [
+    {
+      "snapshot": "00-focused-handoff.md",
+      "source": "docs/design/step-03a/handoff/step-03a-8a/MC-003A-8A-CLAUDE-PROMPT.md",
+      "selection": "complete named file",
+      "source_bytes": 20268,
+      "source_sha256": "827094a44d2c2d020146773c84ed7f1d1f8bb0a0bc4526747632e19d01b3b195",
+      "bytes": 20268,
+      "sha256": "827094a44d2c2d020146773c84ed7f1d1f8bb0a0bc4526747632e19d01b3b195"
+    },
+    {
+      "snapshot": "01-read-set-index.json",
+      "source": "docs/design/step-03a/handoff/step-03a-7/current-reviewed-read-set.json",
+      "selection": "complete named file",
+      "source_bytes": 4892,
+      "source_sha256": "da50b8557eaef4fff5655bf67e180c14be2a2d3ffd75da07dd6b8887db633ee7",
+      "bytes": 4892,
+      "sha256": "da50b8557eaef4fff5655bf67e180c14be2a2d3ffd75da07dd6b8887db633ee7"
+    },
+    {
+      "snapshot": "02-read-contract-excerpts.json",
+      "source": "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json",
+      "selection": {
+        "top_level_keys": [
+          "task",
+          "reviewer",
+          "review_type",
+          "verdict",
+          "contract_authority",
+          "self_review_disclosure",
+          "po_decisions_required_now",
+          "adr",
+          "control_room",
+          "reference",
+          "read_common_rules"
+        ],
+        "detail_read_catalogue_ids": [
+          "DR-06",
+          "DR-07",
+          "DR-08",
+          "DR-09",
+          "DR-10",
+          "DR-11",
+          "DR-12",
+          "DR-14",
+          "DR-15"
+        ],
+        "testability_review_ids": [
+          "CT-05",
+          "CT-06",
+          "CT-09",
+          "CT-11",
+          "CT-13",
+          "CT-14",
+          "CT-16",
+          "CT-17",
+          "CT-18",
+          "CT-19",
+          "CT-21"
+        ],
+        "technical_question_ids": [
+          "TQ-03",
+          "TQ-04",
+          "TQ-05"
+        ],
+        "serialization": "selected original values rendered UTF-8 JSON, indent=2"
+      },
+      "source_bytes": 77882,
+      "source_sha256": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5",
+      "bytes": 40739,
+      "sha256": "95b8d7eb1fe8114fe5b9287e18479f6f78a2628beb8b65eba25194740dac6570"
+    },
+    {
+      "snapshot": "03-reference-delta.json",
+      "source": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-delta.json",
+      "selection": "complete named file",
+      "source_bytes": 14094,
+      "source_sha256": "fdd1f39373bea80665d1d54fff9c17449c34a7eb7eceaa9bf553da033bb251ce",
+      "bytes": 14094,
+      "sha256": "fdd1f39373bea80665d1d54fff9c17449c34a7eb7eceaa9bf553da033bb251ce"
+    },
+    {
+      "snapshot": "04-reference-addendum.md",
+      "source": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-addendum.md",
+      "selection": "complete named file",
+      "source_bytes": 10706,
+      "source_sha256": "cd7923f2e57bb9434b84222bc5e535a518519a80a575a43eecbc0c537744556f",
+      "bytes": 10706,
+      "sha256": "cd7923f2e57bb9434b84222bc5e535a518519a80a575a43eecbc0c537744556f"
+    },
+    {
+      "snapshot": "05-business-rules.md",
+      "source": "docs/requirements/business-rules.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            8
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            11,
+            11
+          ],
+          [
+            13,
+            13
+          ],
+          [
+            14,
+            14
+          ],
+          [
+            16,
+            16
+          ],
+          [
+            18,
+            18
+          ],
+          [
+            19,
+            19
+          ],
+          [
+            20,
+            20
+          ],
+          [
+            24,
+            24
+          ],
+          [
+            25,
+            25
+          ],
+          [
+            26,
+            26
+          ],
+          [
+            27,
+            27
+          ],
+          [
+            28,
+            28
+          ],
+          [
+            29,
+            29
+          ]
+        ]
+      },
+      "source_bytes": 11783,
+      "source_sha256": "96be507d3b0d70f0b9ad1c2b27b3152fd5e2700f13e8a647920c60c220f2aa81",
+      "bytes": 8880,
+      "sha256": "3b6cf5d06b8983bdcba12a74206323829567979f8698d736070f29195d9ebaf0"
+    },
+    {
+      "snapshot": "06-state-semantics.md",
+      "source": "docs/requirements/state-semantics.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            60
+          ]
+        ],
+        "snapshot_formatting": "Source span statements preserved with excerpt markers; final blank separator lines removed for Git whitespace checks."
+      },
+      "source_bytes": 11469,
+      "source_sha256": "156ca1dd2f75a7374a59d2aa4af4a9815ce62a2f11c03f84977bad2860a2ad51",
+      "bytes": 8480,
+      "sha256": "bfbb1dad0fb7d31dd45f865cb58906696bcf08d90836c4654dd0e2dfb28a08a3"
+    },
+    {
+      "snapshot": "07-srs.md",
+      "source": "docs/requirements/srs.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            14
+          ],
+          [
+            15,
+            33
+          ],
+          [
+            53,
+            71
+          ],
+          [
+            91,
+            109
+          ],
+          [
+            129,
+            147
+          ],
+          [
+            148,
+            166
+          ],
+          [
+            167,
+            185
+          ],
+          [
+            186,
+            204
+          ],
+          [
+            281,
+            299
+          ],
+          [
+            300,
+            318
+          ],
+          [
+            319,
+            337
+          ],
+          [
+            338,
+            356
+          ],
+          [
+            357,
+            375
+          ]
+        ],
+        "snapshot_formatting": "Source span statements preserved with excerpt markers; final blank separator lines removed for Git whitespace checks."
+      },
+      "source_bytes": 30678,
+      "source_sha256": "9b813badd88a196c938d9e0503d904ad767f3090ff7522dcc6fae3eb689869f8",
+      "bytes": 17280,
+      "sha256": "1827877168ef3b8b03cc4f29a5f9f6964e3051258c6154353ccd60848bd17929"
+    },
+    {
+      "snapshot": "08-acceptance-criteria.md",
+      "source": "docs/requirements/acceptance-criteria.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            6
+          ],
+          [
+            7,
+            15
+          ],
+          [
+            25,
+            33
+          ],
+          [
+            43,
+            51
+          ],
+          [
+            61,
+            69
+          ],
+          [
+            70,
+            78
+          ],
+          [
+            79,
+            87
+          ],
+          [
+            133,
+            141
+          ],
+          [
+            142,
+            150
+          ],
+          [
+            151,
+            159
+          ],
+          [
+            160,
+            168
+          ],
+          [
+            196,
+            204
+          ],
+          [
+            205,
+            213
+          ],
+          [
+            214,
+            222
+          ],
+          [
+            223,
+            231
+          ],
+          [
+            232,
+            240
+          ],
+          [
+            241,
+            249
+          ],
+          [
+            250,
+            258
+          ],
+          [
+            259,
+            267
+          ],
+          [
+            268,
+            276
+          ],
+          [
+            304,
+            312
+          ],
+          [
+            313,
+            321
+          ],
+          [
+            322,
+            330
+          ],
+          [
+            340,
+            354
+          ],
+          [
+            364,
+            372
+          ],
+          [
+            400,
+            408
+          ],
+          [
+            409,
+            423
+          ],
+          [
+            424,
+            432
+          ],
+          [
+            433,
+            441
+          ],
+          [
+            451,
+            459
+          ],
+          [
+            487,
+            495
+          ],
+          [
+            514,
+            522
+          ],
+          [
+            541,
+            549
+          ]
+        ],
+        "snapshot_formatting": "Source span statements preserved with excerpt markers; final blank separator lines removed for Git whitespace checks."
+      },
+      "source_bytes": 39092,
+      "source_sha256": "809c206e576e6d4cc0f3642caeec4ee6997b465ffe2f0b316368f7e106e97fa7",
+      "bytes": 23320,
+      "sha256": "1f97c0f1b0c5a7535f966275cf13d588a3baac2d4cccc25ffe0fb9309bf2c269"
+    },
+    {
+      "snapshot": "09-permission-matrix.md",
+      "source": "docs/requirements/permission-matrix.md",
+      "selection": "complete named file",
+      "source_bytes": 5238,
+      "source_sha256": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276",
+      "bytes": 5238,
+      "sha256": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276"
+    },
+    {
+      "snapshot": "10-candidate-api.md",
+      "source": "docs/architecture/api-contracts.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            48
+          ],
+          [
+            165,
+            191
+          ]
+        ],
+        "snapshot_formatting": "Source span statements preserved with excerpt markers; final blank separator lines removed for Git whitespace checks."
+      },
+      "source_bytes": 25038,
+      "source_sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "bytes": 8488,
+      "sha256": "266488cc4ff5ac0a7c8fd4c644b9643ed89321741fac04d963e11864ea45cf50"
+    },
+    {
+      "snapshot": "11-candidate-adr-002.md",
+      "source": "docs/architecture/adr/ADR-002-transaction-and-concurrency.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            16
+          ]
+        ],
+        "snapshot_formatting": "Source span statements preserved with excerpt markers; final blank separator lines removed for Git whitespace checks."
+      },
+      "source_bytes": 7455,
+      "source_sha256": "812e225fe1afc7d1d10ab9368dbd19e63c278591fce8c1a0a1cbb4c57e371a63",
+      "bytes": 1752,
+      "sha256": "a597cd107ef502a252adeb98de6fc1ddfc1097ed485cbdb146626ce2741e5bf4"
+    }
+  ],
+  "snapshot_count": 12,
+  "payload_bytes": 164137,
+  "excluded": [
+    "dependency-engine.md",
+    "extra-scope grep results",
+    "original ZCode full report",
+    "F-11 fixture",
+    "all unlisted source paths"
+  ]
+}

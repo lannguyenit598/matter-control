@@ -1,0 +1,223 @@
+{
+  "task": "MC-003A-VALIDATION-RECOVERY",
+  "actual_actor": "Local Codex",
+  "base_commit": "24103d17b5c9ca5cd23ed7f9695cb623517c76fe",
+  "timestamp_utc": "2026-10-25T06:35:01.480035+00:00",
+  "execution_method": "rtk proxy python3 inline assertion validator; no concept JavaScript executed",
+  "checks": [
+    {
+      "name": "Correct branch",
+      "result": "PASS"
+    },
+    {
+      "name": "Pinned starting head",
+      "result": "PASS"
+    },
+    {
+      "name": "All20FR and parent IDs exactly covered",
+      "result": "PASS"
+    },
+    {
+      "name": "All16architecture dependencies covered",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-001complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-002complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-003complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-004complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-005complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-006complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-007complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-008complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-009complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-010complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-011complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-012complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-013complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-014complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-015complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-016complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-017complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-018complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-019complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-020complete behavior/API/unverified/acceptance/readiness",
+      "result": "PASS"
+    },
+    {
+      "name": "Requested finding roots and explicitUI-T04alias covered",
+      "result": "PASS"
+    },
+    {
+      "name": "Classification values exact and nonempty",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozen r3 output-manifest.json unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozen r3 qa-input-manifest.json unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Read-only frontend source identity package.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Read-only frontend source identity data-table.tsx",
+      "result": "PASS"
+    },
+    {
+      "name": "Read-only frontend source identity dialog.tsx",
+      "result": "PASS"
+    },
+    {
+      "name": "Read-only frontend source identity mobile-nav.tsx",
+      "result": "PASS"
+    },
+    {
+      "name": "Read-only frontend source identity types.ts",
+      "result": "PASS"
+    },
+    {
+      "name": "Current handoff link handoff/step-03a-5/request.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Current handoff link handoff/step-03a-5/design-to-code.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Current handoff link ../../implementation/handoffs/MC-003A-ANTIGRAVITY-FEASIBILITY-PROMPT.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Allsixgates explicit",
+      "result": "PASS"
+    },
+    {
+      "name": "Existing independent QA packet retained without author dispatch",
+      "result": "PASS"
+    },
+    {
+      "name": "Current r3 tracked baseline unchanged",
+      "result": "PASS"
+    }
+  ],
+  "check_count": 39,
+  "git_fsck": {
+    "command": "rtk proxy git fsck --connectivity-only --no-dangling",
+    "exit": 0
+  },
+  "frozen_manifests": [
+    {
+      "path": "docs/design/step-03a/revised/local-r3/output-manifest.json",
+      "bytes": 4389,
+      "sha256": "dcb5f0f55687cf4c9d7baa8cdffab4b759c2348b44ef2f855def6eec3429b057"
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/qa-input-manifest.json",
+      "bytes": 17051,
+      "sha256": "de0f5cfb3b5098eee3e5e75c5a4bbe9f950c37a31e2a173a038056bea399f703"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/design/step-03a/controlled-handoff.md",
+      "bytes": 16315,
+      "sha256": "3ff6d079f9994c75180fb5f8f2f6d856f359de6e5a17af88f0e3418c2b0f29db"
+    },
+    {
+      "path": "docs/implementation/tasks/MC-003A-VALIDATION-RECOVERY.md",
+      "bytes": 2174,
+      "sha256": "0d25a6284e0ef08ff50f04def076fac1d90d2cee206937735a69307de5021a46"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-003A-ANTIGRAVITY-FEASIBILITY-PROMPT.md",
+      "bytes": 4488,
+      "sha256": "48632b88662eb289409d33ce4efd2ebb6a555c11e1a38a5b3556303f4072a907"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-5/request.md",
+      "bytes": 10621,
+      "sha256": "e009b01730512b1a844a5959b6be0f00576cc2e25e695ba857796c16a81dda6a"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-5/design-to-code.json",
+      "bytes": 55702,
+      "sha256": "3a3ddf9b7bdda3ada9bd9ee1467499a73172f7a0f7559411d0b6146687e38aaa"
+    }
+  ],
+  "rendered": "RENDERED_VALIDATION_BLOCKED_BY_TOOLING",
+  "independent_qa": "PENDING",
+  "antigravity": "NOT_DISPATCHED",
+  "not_run": [
+    "Historical162source assertions",
+    "HistoricalVM/native template suites",
+    "Browser/render/keyboard/focus/touch/zoom",
+    "Independent QA provider invocation",
+    "Antigravity feasibility invocation"
+  ],
+  "capability_discovery": "Tool metadata only; no admitted replacement target, direct Antigravity dispatcher or current-payload independent QA authorization established. Existing executables looked up read-only; no login/provider/config/model action.",
+  "no_network_payload_transferred": true,
+  "no_product_source_modified": true,
+  "review_status": "IN_REVIEW; mandatory acceptance outstanding"
+}

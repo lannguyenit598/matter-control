@@ -1,0 +1,144 @@
+{
+  "task": "MC-P0-CODEX-BE-PATCH-20261028",
+  "agent": "actual Local Codex /root (resume; author-side verification)",
+  "started_utc": "2026-10-28T03:42:02.730108+00:00",
+  "finished_utc": "2026-10-28T03:42:02.867505+00:00",
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "product_cwd": "/private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/backend/apps/backend",
+  "command": [
+    "rtk",
+    "proxy",
+    "python3",
+    "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/p0-codex-implementation-20261028/backend/evidence/resume-20261028T034118Z/verify.py"
+  ],
+  "exit": 0,
+  "script_sha256": "d6caaed597e0eb07dd9a4ea7e979a0d302f9ca56af54f9f854337d8881032824",
+  "python": "3.14.4",
+  "tools": {
+    "rtk --version": "rtk 1.1.0",
+    "rtk proxy env GOTOOLCHAIN=local go version": "go version go1.27.3 darwin/arm64"
+  },
+  "branch": "codex/unified-project-flow",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "new_product_commit": null,
+  "all_baseline_pins_verified": 819,
+  "backend_file_count": 230,
+  "seven_path_hashes": [
+    {
+      "path": "apps/backend/api.http",
+      "baseline": "4eb760d866acf382c027e2b8d2ff6f576bef4e8596066b0604833a5671be3ae9",
+      "before": "4eb760d866acf382c027e2b8d2ff6f576bef4e8596066b0604833a5671be3ae9",
+      "after": "5b67be6f51074e68b8b6d809b8c164d68492e777575b4556240e9aa521b5231c",
+      "isolated": "5b67be6f51074e68b8b6d809b8c164d68492e777575b4556240e9aa521b5231c"
+    },
+    {
+      "path": "apps/backend/docs/api.md",
+      "baseline": "c627332527c5c0b4797306f671388f98e414b633502b674fa2139877bc1b54f8",
+      "before": "c627332527c5c0b4797306f671388f98e414b633502b674fa2139877bc1b54f8",
+      "after": "c660257735185765165cfae1e268d7c268eaf79f21aaae7e6a10c8d4414075a3",
+      "isolated": "c660257735185765165cfae1e268d7c268eaf79f21aaae7e6a10c8d4414075a3"
+    },
+    {
+      "path": "apps/backend/internal/adapter/inbound/productapi/data_server_test.go",
+      "baseline": "22ebd21e9523ac0569e9f12e4091d0c30875c50231992e06634164ed06997471",
+      "before": "22ebd21e9523ac0569e9f12e4091d0c30875c50231992e06634164ed06997471",
+      "after": "90250c29280ed305d45a8efac69583e1cbbdcd5dfb31cc02aa9c64b646abe692",
+      "isolated": "90250c29280ed305d45a8efac69583e1cbbdcd5dfb31cc02aa9c64b646abe692"
+    },
+    {
+      "path": "apps/backend/internal/adapter/inbound/productapi/problems.go",
+      "baseline": "190491a07013ef35ba2cb79d62345617bb05097d2c5487e281facc631c830bca",
+      "before": "190491a07013ef35ba2cb79d62345617bb05097d2c5487e281facc631c830bca",
+      "after": "cc36818d083d2afbd63ed1c4bfe2032faa23dbdb32f0bddd5cac682e00caa0bd",
+      "isolated": "cc36818d083d2afbd63ed1c4bfe2032faa23dbdb32f0bddd5cac682e00caa0bd"
+    },
+    {
+      "path": "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go",
+      "baseline": "a193ba04e8f06b8efa041db54e6957e6583e02e573ed2dfa05df625f47131d5f",
+      "before": "a193ba04e8f06b8efa041db54e6957e6583e02e573ed2dfa05df625f47131d5f",
+      "after": "1d33f1b1bba2f7e208acde784be6878bb2f6a7011811bf7c65834ef667029d09",
+      "isolated": "1d33f1b1bba2f7e208acde784be6878bb2f6a7011811bf7c65834ef667029d09"
+    },
+    {
+      "path": "apps/backend/internal/core/service/dataops_service.go",
+      "baseline": "4b218657c96d6092e608c756ac530dc0dc20a04874cba029a7eb236e73b6881b",
+      "before": "4b218657c96d6092e608c756ac530dc0dc20a04874cba029a7eb236e73b6881b",
+      "after": "5e911a2bbe90d27c06d27931cf380cde515a299aaa6a27c468752725a5efad5a",
+      "isolated": "5e911a2bbe90d27c06d27931cf380cde515a299aaa6a27c468752725a5efad5a"
+    },
+    {
+      "path": "apps/backend/internal/core/service/matter_service.go",
+      "baseline": "e08971bc1913fa3c7088ae6d7a18d47e1b75eb2b0bdef94897300948d163ea7d",
+      "before": "e08971bc1913fa3c7088ae6d7a18d47e1b75eb2b0bdef94897300948d163ea7d",
+      "after": "55d7aca4ef0e5c0f99bfc7582fc9c23d5669816a24aea2d7cfef0dc58ccf4895",
+      "isolated": "55d7aca4ef0e5c0f99bfc7582fc9c23d5669816a24aea2d7cfef0dc58ccf4895"
+    }
+  ],
+  "patch_sha256": "b77279d71fccf73170313a2b77b96120c0baddb06583d26452d1b4f73aa936d7",
+  "patch_remains_valid": true,
+  "command_metadata": [
+    {
+      "path": "backend/evidence/green-expanded-command.json",
+      "sha256": "aa656bf3ed4334e73d1f21de9a824e9e46a194a67b30304650277c28d512f3bf",
+      "exit": 0,
+      "home_override": false
+    },
+    {
+      "path": "backend/evidence/green-final-command.json",
+      "sha256": "f6cc329bc369c372e823d0707bb81b7ce64578da0294a9a67b592e8e1a7f9ea8",
+      "exit": 0,
+      "home_override": false
+    },
+    {
+      "path": "backend/evidence/green-frozen-command.json",
+      "sha256": "27cedd9e347f61cc9caa5534d183793d3a3bf435f0b93ea97d117625f5c38c7a",
+      "exit": 0,
+      "home_override": false
+    },
+    {
+      "path": "backend/evidence/green-initial-command.json",
+      "sha256": "06733d30f580c585be9c35cb0baed77f4a25086435b47b899c637d4d391784eb",
+      "exit": 0,
+      "home_override": false
+    },
+    {
+      "path": "backend/evidence/red-command.json",
+      "sha256": "3fbb73c9c47c491a76f09e7da5822a73404966467337533c1e4614240fe5f7b8",
+      "exit": 1,
+      "home_override": false
+    },
+    {
+      "path": "backend/evidence/red-import-fingerprint-command.json",
+      "sha256": "8c68db28192ae95368919ec17fb81a26d088e0f39b729554d66e1462fc61f155",
+      "exit": 1,
+      "home_override": false
+    }
+  ],
+  "retained_evidence_sha256": {
+    "backend/evidence/green-frozen-command.json": "27cedd9e347f61cc9caa5534d183793d3a3bf435f0b93ea97d117625f5c38c7a",
+    "backend/evidence/changed-files.json": "34a6ea31ea5b6e728670256e29a5a079ebb38445a54da990a8cfda9b4afaf7e4",
+    "backend/evidence/red.log": "3ea05e9e4875d17eb55781a4637bd6a08eb7b9da0743012a5848683951c26e4a",
+    "backend/evidence/green-frozen.log": "9299fabb5124b71ea9792e6669cb73b1a8978e7ba55373004337fe8148604c9d",
+    "backend/evidence/green-final.log": "07d656b26cf8d08ac141e0e83e77ca107bb8935c8ce4bd0846419b5042344ef9",
+    "backend/evidence/red-import-fingerprint.log": "aec7500852612e7d589715a09c46be27198f5fa03fbd57a079c712bc6faf2405",
+    "backend/evidence/green-initial-command.json": "06733d30f580c585be9c35cb0baed77f4a25086435b47b899c637d4d391784eb",
+    "backend/evidence/red-import-fingerprint-command.json": "8c68db28192ae95368919ec17fb81a26d088e0f39b729554d66e1462fc61f155",
+    "backend/evidence/green-expanded-command.json": "aa656bf3ed4334e73d1f21de9a824e9e46a194a67b30304650277c28d512f3bf",
+    "backend/evidence/green-expanded.log": "201d349b7598d7787f1b60048e0fc89f45d73245f0a18805f26886d3373e2d58",
+    "backend/evidence/green-final-command.json": "f6cc329bc369c372e823d0707bb81b7ce64578da0294a9a67b592e8e1a7f9ea8",
+    "backend/evidence/red-command.json": "3fbb73c9c47c491a76f09e7da5822a73404966467337533c1e4614240fe5f7b8",
+    "backend/evidence/green-initial.log": "4ea1af9fa2cef812061034f59be25c0a7c616e2503bd8e94bae99df4c0cc8c90"
+  },
+  "frozen_log_sha256": "9299fabb5124b71ea9792e6669cb73b1a8978e7ba55373004337fe8148604c9d",
+  "retained_pass_nodes": 98,
+  "tests_rerun": false,
+  "reason_not_rerun": "Exact frozen bytes and compliant final environment; required cases present in frozen log and source; no new reviewer finding returned.",
+  "independent_review": "PENDING; no review result in packet/review at resume",
+  "not_run": [
+    "PostgreSQL",
+    "make check",
+    "integrated product",
+    "live HTTP",
+    "deployment"
+  ]
+}

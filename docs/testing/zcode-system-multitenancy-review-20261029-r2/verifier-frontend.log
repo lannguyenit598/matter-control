@@ -1,0 +1,14 @@
+=== Isolated frontend copy: review feature + upload-attempt (vitest 5.0.5, Node 24.22.1) ===
+command: node node_modules/vitest/dist/cli.js run src/features/review src/features/proof/components/upload-attempt.test.tsx
+ ✓ src/features/review/components/answer-form.test.tsx (4 tests) 800ms
+   ✓ after a reload the stored attempt replays the original key and CAS, not the refreshed props 439ms
+ ✓ src/features/review/components/cell-detail.test.tsx (8 tests) 889ms
+ ✓ src/features/proof/components/upload-attempt.test.tsx (4 tests) 651ms
+   ✓ an upload whose answer was lost survives a reload (4)
+     ✓ retries with the original key when the same file is chosen again 557ms
+
+ Test Files  7 passed (7)
+      Tests  42 passed (42)
+   Start at  23:45:04
+   Duration  2.06s (environment 39%, tests 36%, import 10%, setup 10%, transform 4%)
+

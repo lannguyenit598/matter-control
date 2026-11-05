@@ -1,0 +1,344 @@
+{
+  "task": "MC-003A-ARCH-COMPAT-INTAKE",
+  "owner": "Local Codex orchestration",
+  "status": "IN_REVIEW",
+  "timestamp_utc": "2026-10-25T07:34:03.426940+00:00",
+  "base_commit": "6530858c6b64873fd416c5933083c35ecf5d71e7",
+  "reviewer_identity": "Human-supplied actual Claude Code return; self-reported2.1.310 / claude-opus-5-5 / interactive",
+  "identity_limit": "Artifacts and human-supplied output establish review return received. No machine session trace/effective provider/destination/model attestation supplied; no claim of zero egress or charges independently verified. Version drift2.1.309→2.1.310 is recorded, not a model/provider change by Codex.",
+  "returned_verdict": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+  "intake_disposition": "ACCEPT_SCOPED_DOCUMENT_COMPATIBILITY_WITH_RECORDED_CONSTRAINTS_AND_CI_NOTES; no policy approval or formal independent QA",
+  "self_review_disclosure": "Candidate architecture documents were authored by Claude Code claude-opus-5-5 in MC-002-ARCH; this review is not independent of them and cannot approve them.",
+  "reviewed_outputs": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-6/claude-review.md",
+      "bytes": 18328,
+      "sha256": "1b0241688e3c4e38c36b6de61586cf37c7281532d8cfb54aaacfe4d857c7bb70"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-6/architecture-compatibility-matrix.json",
+      "bytes": 56306,
+      "sha256": "baaccb703dc34726f679be19966a105bd42756e4b0be45b812ab93d3c63ee21b"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-6/api-auth-dependency-matrix.md",
+      "bytes": 11665,
+      "sha256": "300e41a5dd4945cac9de4dc22983c030de594b30a1be8cd26ceb877d508dda9d"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-6/antigravity-implementation-constraints.md",
+      "bytes": 13610,
+      "sha256": "70a41a0687b8897ab85c01286baf6460e963d6f3658d0d424ae3ec434bd3ea73"
+    }
+  ],
+  "human_summary": {
+    "path": "docs/design/step-03a/handoff/step-03a-6/claude-return-summary.txt",
+    "bytes": 9514,
+    "sha256": "983809276b9cb48c876230e0f5738937dbbd5db404a0e23b0f269cf9b50a014d"
+  },
+  "actual_checks": [
+    {
+      "name": "Reviewed head matches actual starting head",
+      "result": "PASS"
+    },
+    {
+      "name": "Correct isolated branch",
+      "result": "PASS"
+    },
+    {
+      "name": "Returned review head directly follows intake base",
+      "result": "PASS"
+    },
+    {
+      "name": "Received artifact prefix claude-review.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Received artifact prefix architecture-compatibility-matrix.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Received artifact prefix api-auth-dependency-matrix.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Received artifact prefix antigravity-implementation-constraints.md",
+      "result": "PASS"
+    },
+    {
+      "name": "41review input files exactly preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "Seven source snapshots match pinned primary Git blobs",
+      "result": "PASS"
+    },
+    {
+      "name": "All20FR unique",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-001 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-002 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-003 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-004 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-005 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-006 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-007 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-008 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-009 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-010 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-011 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-012 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-013 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-014 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-015 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-016 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-017 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-018 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-019 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR-020 matrix fields/status/ACtrace",
+      "result": "PASS"
+    },
+    {
+      "name": "FR counts match returned summary",
+      "result": "PASS"
+    },
+    {
+      "name": "A01..16complete",
+      "result": "PASS"
+    },
+    {
+      "name": "Five architecture-dependent roots",
+      "result": "PASS"
+    },
+    {
+      "name": "12crosscuttingrows and8questions",
+      "result": "PASS"
+    },
+    {
+      "name": "Scoped document-only verdict",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozen r3 output-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Frozen r3 qa-input-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "name": "/tmp/mattercontrol-step02-frontend still pinned/clean",
+      "result": "PASS"
+    },
+    {
+      "name": "/tmp/mattercontrol-step021-frontend still pinned/clean",
+      "result": "PASS"
+    },
+    {
+      "name": "Returned artifact link antigravity-implementation-constraints.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Returned artifact link api-auth-dependency-matrix.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Returned artifact link api-auth-dependency-matrix.md",
+      "result": "PASS"
+    },
+    {
+      "name": "Returned artifact link architecture-compatibility-matrix.json",
+      "result": "PASS"
+    },
+    {
+      "name": "Eight technical questions tracked without rewriting them",
+      "result": "PASS"
+    }
+  ],
+  "actual_check_count": 44,
+  "fr_status_counts": {
+    "COMPATIBLE_WITH_CONSTRAINTS": 16,
+    "COMPATIBLE": 1,
+    "UNKNOWN / NEEDS_EVIDENCE": 1,
+    "CANDIDATE_NOT_YET_APPROVED": 2
+  },
+  "intake_notes": [
+    {
+      "id": "CI-01",
+      "location": "architecture-compatibility-matrix.json features.FR-001.recommended_action",
+      "severity": "MEDIUM",
+      "disposition": "Do not read no-mark-Requirement-done as a blanket prohibition. Approved state-semantics execution table permits explicit guarded Requirement completion by EDITOR/OWNER. It must not follow implicitly from Action completion or produce automatic VERIFIED. Binding approved-policy interpretation; no architecture change."
+    },
+    {
+      "id": "CI-02",
+      "location": "claude-review.md §5 product412 row",
+      "severity": "MEDIUM",
+      "disposition": "Qualify client must always send If-Match: candidate §1.1 requires it iff a CAS target is named, and rejects it for scope-none endpoints. C-REV-1 and API/Auth matrix already give the scoped rule. Do not promote a candidate header rule to policy or send If-Match universally."
+    },
+    {
+      "id": "CI-03",
+      "location": "C-IDEM-2 / C-BULK-4 / C-AUTH-7 / C-GRID-1",
+      "severity": "LOW",
+      "disposition": "Constraints apply within then-approved product contracts. Known pre-dispatch validation/cancel/denial is distinct from unknown post-dispatch write outcome; do not universally assume a failed Server Action reached the server. Separate transport success from batch business outcome without mandating wrapper ok-field shape. Exact row-props API/action eligibility presentation are proposed implementation choices, not installed APIs or new product scope."
+    }
+  ],
+  "K-2": {
+    "status": "SOURCE_CONTRACT_CLARIFIED_BY_CODEX_UNDER_EXISTING_UX_DELEGATION; independent acceptance pending",
+    "binding_clarification": "Import Draft/structured draft is the pre-confirm mapping/validation preview. It does not add a persistent operational record state or change any execution/verification vocabulary. Preview is non-mutating for domain records; on confirmation only approved typed records are created through approved validation/permission/history rules. This does not select internal preview storage/lifetime or authorize implementation.",
+    "references": [
+      "local-r3 specifications §4.6 / §5.12",
+      "interaction-guidance I-10",
+      "claude-review.md K-2",
+      "business-rules RULE-014/015",
+      "controlled-handoff.md"
+    ]
+  },
+  "technical_questions": [
+    {
+      "id": "TQ-01",
+      "question": "Reopen/promote impact before confirm (r3 I-11; permission-matrix \"impact summary\")",
+      "proposed_resolution": "Read-only server dry-run, or UI labels a pre-confirm preview as non-authoritative as-of and shows the server `derivedChanges`/`impact` after commit",
+      "owner": "Claude (contract), Codex/OpenDesign (copy)",
+      "blocks": "Reopen/promote slice UX copy only",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    },
+    {
+      "id": "TQ-02",
+      "question": "`GET /control-room` response shape and per-region availability",
+      "proposed_resolution": "Specify sections each with status/asOf/items/reasons, or compose from section endpoints",
+      "owner": "Claude, ZCode",
+      "blocks": "Control Room integration",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    },
+    {
+      "id": "TQ-03",
+      "question": "Client hint for verify eligibility and role-aware affordances",
+      "proposed_resolution": "Add per-object `viewerCapabilities`/eligibility hint to read shapes (advisory only)",
+      "owner": "Claude",
+      "blocks": "Evidence review UX polish (server 403 remains authoritative)",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    },
+    {
+      "id": "TQ-04",
+      "question": "Product error/retry conventions (retryAfter, Retry-After, command 503 as unknown)",
+      "proposed_resolution": "INT-D09 proposal with first product endpoint, then PO decision",
+      "owner": "Claude → PO",
+      "blocks": "Unavailable/unknown UX copy",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    },
+    {
+      "id": "TQ-05",
+      "question": "\"Changes since T-1 09:00\" with seq-keyed events",
+      "proposed_resolution": "Use status-brief window (RECORDED_TIME), or add `recordedAfter` to events",
+      "owner": "Claude",
+      "blocks": "I-08 only",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    },
+    {
+      "id": "TQ-06",
+      "question": "Waiting-since / aging field naming",
+      "proposed_resolution": "Name the field in read shapes, sourced from the waiting event time",
+      "owner": "Claude",
+      "blocks": "I-07 aging display",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    },
+    {
+      "id": "TQ-07",
+      "question": "Bulk preview expiry and import size/row limits",
+      "proposed_resolution": "TB-06 / workload decision",
+      "owner": "PO (values), Claude",
+      "blocks": "Bulk/import UX timers and messages",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    },
+    {
+      "id": "TQ-08",
+      "question": "Detail read routes are not enumerated in candidate §2. Its only GETs are control-room, grid, me/actions, next-actions, milestone readiness, version content, imports/{id}, exports content, events and operations. Missing: node detail, dependency edges/graph (Dependency View, impact rail), evidence/claims/assessments, document version ledger, filing cycles/submissions, waits, external parties and milestone list",
+      "proposed_resolution": "Enumerate read routes and shapes in the candidate catalogue with the first slice, each carrying revision/asOf/sourceRevision and uniform 404",
+      "owner": "Claude, ZCode",
+      "blocks": "Integration of drawers/tabs for FR-001/004/005/006/007/015/016/017; writes and aggregate reads unaffected",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E"
+    }
+  ],
+  "gates": {
+    "G1": "PASS delegated preserved",
+    "G2": "Author-corrective scope preserved; K-2 binding clarification recorded, not independent QA closure",
+    "G3": "RENDERED_VALIDATION_BLOCKED_BY_TOOLING / NOT_TESTED",
+    "G4": "INDEPENDENT_QA_PENDING; Claude review is not independent of candidate architecture",
+    "G5": "ACTUAL_CLAUDE_DOCUMENT_COMPATIBILITY_RETURN_RECEIVED_WITH_CONSTRAINTS; per-slice API/Auth/TQs and overall architecture approval OPEN",
+    "G6": "PENDING; MC-003A REWORK_REQUIRED, full03B/product NOT_AUTHORIZED"
+  },
+  "review_limitations": [
+    "Read-depth disclosure preserved; unread Atlas full dataset and selected files are not claimed reviewed",
+    "Partial frontend/HTML bulk-dialog source only; no backend source review",
+    "No runtime/render/keyboard/focus/contrast/security tests",
+    "React reference documentation is not installed-version behavior evidence"
+  ],
+  "next_action": "Carry K-2 and CI-01..03 as current intake constraints; trackTQ01..08 by actual affected slice, prioritize TQ02/08forControlRoom/drawers before integration. No repeat full architecture review or Step02.3clarification; targeted owner addendum only if a material disagreement arises. Actual permitted render and independent QA remain separate unblock events."
+}

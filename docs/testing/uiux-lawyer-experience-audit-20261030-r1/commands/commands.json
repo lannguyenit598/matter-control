@@ -1,0 +1,16 @@
+{
+  "note": "Lệnh shell chính đã chạy (reconstructed log — stdout đầy đủ nằm trong transcript phiên; timestamp UTC xấp xỉ theo worklog). Mọi lệnh prefix rtk theo AGENTS.md. Browser captures chạy qua node_repl (browser-use), không phải shell.",
+  "commands": [
+    { "argv": "rtk git rev-parse HEAD; rtk git log -1 --format='%H | %cI | %s'; rtk git status --porcelain | wc -l; date -u", "cwd": "repo root", "utc": "2026-10-30T16:26:26Z", "exit": 0, "purpose": "pin HEAD + dirty count" },
+    { "argv": "rtk semble search \"...\" apps/frontend", "cwd": "repo root", "utc": "2026-10-30 ~16:30Z", "exit": [0, 2], "purpose": "semantic search (attempt 1 sai cú pháp exit 2, attempt 2 đúng: 'semble search <query> <path>')" },
+    { "argv": "pnpm --dir apps/frontend exec next dev --webpack --port 3100 --hostname 127.0.0.1", "utc": "2026-10-30 ~16:35Z", "exit": 0 (killed later), "purpose": "runtime cô lập lần 1 — nhận thấy REST mode do .env.local" },
+    { "argv": "env API_MODE=demo pnpm --dir apps/frontend exec next dev --webpack --port 3100 --hostname 127.0.0.1", "utc": "2026-10-30 ~16:45Z", "exit": 0 (killed sau khi degraded), "purpose": "runtime demo — dùng cho toàn bộ capture" },
+    { "argv": "env API_MODE=demo pnpm --dir apps/frontend exec next build --webpack", "utc": "2026-10-30 ~17:20Z", "exit": 0, "purpose": "production build (thử capture prod)" },
+    { "argv": "env API_MODE=demo pnpm --dir apps/frontend exec next start -p 3100 -H 127.0.0.1", "utc": "2026-10-30 ~17:30Z", "exit": 1, "purpose": "prod demo BỊ TỪ CHỐI bởi TB-12 guard (bằng chứng UX-L-03/điểm mạnh)" },
+    { "argv": "pnpm --dir apps/frontend exec storybook dev -p 6007 --ci --quiet", "utc": "2026-10-30 ~17:35Z", "exit": [0, 1 (port conflict khi khởi động lặp)], "purpose": "component gallery; serving OK trên 6007, 58 stories" },
+    { "argv": "node docs/testing/uiux-lawyer-experience-audit-20261030-r1/tools/contrast.js", "utc": "2026-10-30 ~17:00Z", "exit": 0, "purpose": "WCAG ratios từ tokens-computed.json" },
+    { "argv": "shasum -a 256 <key files>", "utc": "2026-10-30T17:51:12Z", "exit": 0, "purpose": "source-manifest hashes" },
+    { "argv": "grep -rn AUTH_ALLOW_ANONYMOUS src/ | head; grep title workspaces|my-reviews|login page.tsx", "utc": "2026-10-30 ~16:55Z", "exit": 0, "purpose": "literal known-path checks (sau semble)" }
+  ],
+  "browserRuntime": { "backend": "ZCode IAB (Chromium)", "viewports": ["1440x900", "390x844"], "actions": "goto/screenshot/selectOption/cua.click/evaluate probes; screenshots emitted + saved to screens/" }
+}

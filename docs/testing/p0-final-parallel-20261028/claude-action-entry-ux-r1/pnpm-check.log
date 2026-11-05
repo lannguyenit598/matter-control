@@ -1,0 +1,49 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+
+/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/src/app/(app)/matters/[matterId]/work/page.tsx
+  6:10  warning  'buttonVariants' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (0 errors, 1 warning)
+
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+ ❯ src/features/proof/components/upload-attempt.test.tsx (4 tests | 1 failed) 5189ms
+   ❯ an upload whose answer was lost survives a reload (4)
+     × a different file is a different intent and gets a new key 5006ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/proof/components/upload-attempt.test.tsx > an upload whose answer was lost survives a reload > a different file is a different intent and gets a new key
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/proof/components/upload-attempt.test.tsx:68:3
+     66|   })
+     67|
+     68|   it('a different file is a different intent and gets a new key', asyn…
+       |   ^
+     69|     const first = await firstAttempt()
+     70|     first.unmount()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 63 passed (64)
+      Tests  1 failed | 604 passed (605)
+   Start at  11:48:04
+   Duration  6.91s (environment 38%, tests 37%, setup 11%, import 10%, transform 3%)
+
+Environment  jsdom was created 64 times · 21.16s total, 38% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

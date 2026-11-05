@@ -1,0 +1,24 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+
+ Test Files  83 passed | 1 skipped (84)
+      Tests  726 passed | 12 skipped (738)
+   Start at  09:55:40
+   Duration  10.50s (environment 45%, tests 27%, setup 14%, import 11%, transform 3%)
+
+Environment  jsdom was created 84 times · 37.82s total, 45% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+$ node scripts/sync-agent-config.mjs --check
+agent config OK: 17 skills, 3 scoped rules

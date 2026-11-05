@@ -1,0 +1,36 @@
+[
+  {
+    "profile": "cloud-run",
+    "file": "migrate",
+    "substitutions": [
+      "image->local tag",
+      "issuer/R2 https->loopback fixture",
+      "secretKeyRef->synthetic env file",
+      "secret volume->bind of synthetic key (0400)",
+      "platform env K_SERVICE/PORT (or CLOUD_RUN_JOB) added as Cloud Run injects them"
+    ]
+  },
+  {
+    "profile": "cloud-run",
+    "file": "cloud-run",
+    "substitutions": [
+      "image->local tag",
+      "issuer/R2 https->loopback fixture",
+      "secretKeyRef->synthetic env file",
+      "secret volume->bind of synthetic key (0400)",
+      "platform env K_SERVICE/PORT (or CLOUD_RUN_JOB) added as Cloud Run injects them"
+    ]
+  },
+  {
+    "profile": "compute-engine",
+    "exec_start": "/usr/bin/docker run --name mcapi --rm --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --cap-drop ALL --security-opt no-new-privileges --memory 512m --pids-limit 256 --log-driver journald -p 127.0.0.1:8081:8081 --env-file /etc/mattercontrol/mcapi.env --env-file /run/mattercontrol/mcapi-secrets.env --mount type=bind,src=/run/mattercontrol/oidc,dst=/run/secrets/oidc,readonly asia-southeast1-docker.pkg.dev/mc-synthetic/mattercontrol/mcapi@sha256:754a9cd04348b2c2f45fe8c24f5f79ccbcc0a9c4c1b30b2cf96fa5d92bd3b43f",
+    "substitutions": [
+      "/usr/bin/docker->docker",
+      "--log-driver journald removed",
+      "-p 127.0.0.1:8081:8081 -> --network shared fixture namespace (published 127.0.0.1:47881)",
+      "env-file/mount paths->synthetic private files (key 0400)",
+      "image->local tag",
+      "--rm -> detached (-d), container kept for logs; --name mcapi -> mc-claude-portability-be-vm"
+    ]
+  }
+]

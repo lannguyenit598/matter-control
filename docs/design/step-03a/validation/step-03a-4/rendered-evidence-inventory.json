@@ -1,0 +1,57 @@
+{
+  "task": "MC-003A-EVIDENCE-INTAKE",
+  "timestamp_utc": "2026-10-25T03:20:36.316742+00:00",
+  "actor": "Local Codex PM/BA, artifact co-author; not independent QA",
+  "branch": "task/MC-003A-remediation",
+  "base_head": "84e620e90523cc3c9a7429e7ebe3f75056ed6461",
+  "design_revision": "local-r2",
+  "verified_manifests": [
+    {
+      "manifest": "docs/design/step-03a/revised/local-r2/output-manifest.json",
+      "files": 15,
+      "sha256": "f64e65ce5d66262bd5f2ed3daea56b9b2f1b46ba901eda85640ab92799349549",
+      "result": "PASS size/hash; no source suite replay"
+    },
+    {
+      "manifest": "docs/design/step-03a/revised/local-r2/qa-input-manifest.json",
+      "files": 61,
+      "sha256": "166933078490af7d98f5d8a28567c10873971f62b45ceacfa57c0e348576ace9",
+      "result": "PASS size/hash; no source suite replay"
+    }
+  ],
+  "received_documents": [
+    {
+      "type": "STEP03A.4 instruction, not rendered evidence",
+      "path": "/Users/nguyenvanlan/.codex/attachments/323881c4-5e6e-44c7-916e-0c9f4864f9a1/Pasted text.txt",
+      "bytes": 5989,
+      "sha256": "7f1976eb93e62baa0da98e2f1b0aa5abf211d9403a5fb335c323ddc31759280c"
+    }
+  ],
+  "received_screenshots": [],
+  "received_recordings": [],
+  "received_manual_observations": [],
+  "accepted_rendered_evidence": [],
+  "provided_browser_version": null,
+  "provided_viewport": null,
+  "provided_zoom": null,
+  "provided_interaction_results": null,
+  "inventory_scope": [
+    "Files actually supplied in the current user message",
+    "Current request attachment directory: only Pasted text.txt",
+    "docs/design/step-03a media files (.png/.jpg/.jpeg/.webp/.heic/.mp4/.mov): no matches"
+  ],
+  "ambient_browser_url": "file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/revised/local-r2/mattercontrol-step-03a-ux-concept-review.html",
+  "ambient_context_accepted_as_test_evidence": false,
+  "ambient_limit": "Tab URL is not a screenshot, user observation, viewport, zoom, keyboard test or approval.",
+  "rendered_acceptance": "NOT_TESTED",
+  "rendered_status": "RENDERED_VALIDATION_PENDING_MANUAL_CAPTURE",
+  "rendered_evaluation_stopped": true,
+  "independent_qa": "PENDING_INDEPENDENT_QA",
+  "po_decisions": {
+    "D-UX01": "PENDING",
+    "D-UX02": "PENDING",
+    "D-UX03": "PENDING",
+    "D-UX04": "PENDING"
+  },
+  "no_browser_actions_or_external_dispatch": true
+}

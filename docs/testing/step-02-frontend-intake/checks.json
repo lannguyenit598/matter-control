@@ -1,0 +1,137 @@
+{
+  "task": "MC-002-FE-INTAKE",
+  "collector": "Codex, not Antigravity runtime executor",
+  "checked_at_utc": "2026-10-24T15:05:44.718160+00:00",
+  "base": "4a6b8f9c0b50a81930cb2edc0806c57dbda8cd99",
+  "hash_checks": [
+    {
+      "file": "01-pnpm-install.log",
+      "bytes": 1582,
+      "sha256": "28e686f3fe48e2f01bd89b37827eabbbfae698866c12f8117b565fda27bec893",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "02-typecheck.log",
+      "bytes": 90,
+      "sha256": "99d7c2179cdd316467c51f37901025a0753453664d741214ba56fc631fa6c0bc",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "03-lint.log",
+      "bytes": 11,
+      "sha256": "050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "04-format-check.log",
+      "bytes": 87,
+      "sha256": "1d66faad74f5e8709353f7288592866bd3a9095da1174a916e7aa632949971e2",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "05-test.log",
+      "bytes": 1819,
+      "sha256": "9ff92dd7720a3c5ef17681d9227ffb22bb0172536c979f45359eee43ff6df8f2",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "06-agents-check.log",
+      "bytes": 88,
+      "sha256": "491f4a4bdb8b7c87f65de72867b64bd78362251e44fd47fd1a1b8693e757950c",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "07-build.log",
+      "bytes": 832,
+      "sha256": "44054c0d7c514e2a12e58262cb0dc8e4a54bf767eb5ddc7aa5c0594d3fc534d6",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "08-build-storybook.log",
+      "bytes": 16892,
+      "sha256": "d32d63a9631e830cc227b0cbcafaddd0b519554fdcf280c55ef1d442e54392a8",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "09-production-start.log",
+      "bytes": 204349,
+      "sha256": "acf6b215d2210489f247f060852a0c71ec110930d433f9ae1911e39e8aac0396",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": true,
+      "exit_marker_in_raw_log": true,
+      "reported_exit": 0
+    },
+    {
+      "file": "10-playwright.log",
+      "bytes": 323,
+      "sha256": "73f53f4f97065e661c8f8c79ca33746a9cdccce174ecfbdceb7ee1941d32692c",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": false,
+      "exit_marker_in_raw_log": false,
+      "reported_exit": 0
+    },
+    {
+      "file": "11-rest-negative.log",
+      "bytes": 72027,
+      "sha256": "3bb6a567efb66b4ec2d8f7d6ec7d33bb9584707a3e763de59267529cf40cb23b",
+      "manifest_hash_matches": true,
+      "utc_in_raw_log": true,
+      "exit_marker_in_raw_log": true,
+      "reported_exit": 0
+    }
+  ],
+  "sources": [
+    {
+      "path": "/tmp/mattercontrol-step02-frontend",
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "branch": "main",
+      "status": "",
+      "origin": "https://github.com/lannguyenit598/nextjs-atomic-starter"
+    },
+    {
+      "path": "/tmp/mattercontrol-step021-frontend",
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "branch": "task/MC-002-fe-poc",
+      "status": "",
+      "origin": "https://github.com/lannguyenit598/nextjs-atomic-starter"
+    }
+  ],
+  "protected_requirements_unchanged": 25,
+  "reviewed_architecture_hashes_unchanged": 15,
+  "observations": [
+    "09 log has warnings ports3088/3089 still occupied after kill; report says released",
+    "11 log has warning port3096 still occupied after kill; report says released",
+    "Host listener check at15:05UTC has no listener on3088/3089/3095/3096; later state does not prove historical graceful stop",
+    "11 server output advertises LAN192.168.1.59; launch command has no loopback hostname",
+    "Raw logs01..08 and10 omit wrapper timestamps/exit markers; UTC/exit are owner manifest assertions",
+    "Runtime zero outbound/leakage claim lacks spy/request count; unit backend.test.ts asserts mocked fetch not called",
+    "Standalone wrappers unconditionally end exit0 and print NOT FOUND on failed content grep; do not assert all smoke criteria",
+    "Raw09 start14:55:08 differs manifest14:55:09; raw11 start14:57:56 differs manifest14:57:53"
+  ],
+  "codex_replayed_build_or_tests": false,
+  "proposed_status": "IN_REVIEW; findings pending independent OpenCode review"
+}

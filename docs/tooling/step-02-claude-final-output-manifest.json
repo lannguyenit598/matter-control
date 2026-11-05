@@ -1,0 +1,111 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "session_id": "d3d1d13e-3e7e-4dad-a366-0aea84af9f37",
+  "duration_ms": 200456,
+  "num_turns": 2,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 23868,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 93756,
+      "webSearchRequests": 0,
+      "costUSD": 1.227416,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 15675,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "task_id": "MC-002-ARCH-FINAL-CORRECTIONS",
+  "status": "AMENDMENTS_PROPOSED / NOT_IMPLEMENTED / WAITING_TARGETED_INDEPENDENT_REREVIEW",
+  "summary": "29 targeted edits close R2-1..R2-3 and C02-R2-P01..P03 at document level:\n- assessed-version guard with DB triggers and negative tests;\n- CASE\u2026ELSE false style for evidence kind and history actor;\n- removed the stray comment;\n- withdrew the idempotency final-absence promise in favour of a key-age check at t_cmd plus a purge margin;\n- receipts re-authorize every represented Matter;\n- terminal filtering limited to due boundaries, so expiry still invalidates completed subjects.\nAll tests NOT_RUN; independent re-review required.",
+  "authority": "DEC-022 bounded Step02 correction/review loop",
+  "input_manifest": "docs/tooling/step-02-claude-final-input-manifest.json",
+  "previous_architecture_commit": "3a86ca8",
+  "raw_response_sha256": "8d322f0365b2aaba356583a0ea19dd1c327099c66c41ba16440a29c0000aaaa0",
+  "edits_applied": 30,
+  "formatting": "Trailing whitespace/final newline only; every old string matched exactly once. Claude owns design amendments.",
+  "outputs": {
+    "docs/architecture/system-architecture.md": {
+      "previous_sha256": "1babdefea40bc29c8e9e7e87f46202ab23fba81920b7c4e4d830d170eb6f0956",
+      "stored_sha256": "8e3e600182f03d2bdc2f5068e4bbcb6bd039e8d28cea317c9902bcebdede4d83",
+      "edits": 1
+    },
+    "docs/architecture/domain-model.md": {
+      "previous_sha256": "6b1f7fa53723e427d3ff0255e303bf27f2c455fb65da97f642f16922cc9cef60",
+      "stored_sha256": "6b1f7fa53723e427d3ff0255e303bf27f2c455fb65da97f642f16922cc9cef60",
+      "edits": 0
+    },
+    "docs/architecture/state-machine.md": {
+      "previous_sha256": "652273cb442c73ffc3ffc869fdbd3ac3188c7ef053e8dcd10cd0f7fbb336bca7",
+      "stored_sha256": "599c6831c3a07e4f579ec9f8aa666ee2978c4a19e3701e5b91af9e1bdc270127",
+      "edits": 3
+    },
+    "docs/architecture/dependency-engine.md": {
+      "previous_sha256": "44ff0e3ae53b06d87a45a09ed511aff4e2034eb236bb58cb9bd3e991c07891b2",
+      "stored_sha256": "44ff0e3ae53b06d87a45a09ed511aff4e2034eb236bb58cb9bd3e991c07891b2",
+      "edits": 0
+    },
+    "docs/architecture/evidence-model.md": {
+      "previous_sha256": "73ebd112b9aeae30308195b0f8632395d66dcdde3529b46435f63cf5b7190fae",
+      "stored_sha256": "38fa1508a35a7ec53313e5c8f9b353c6c345373f656c814022494101876ea919",
+      "edits": 4
+    },
+    "docs/architecture/document-lineage.md": {
+      "previous_sha256": "33b62940a6099e059f74a3f8bac09b9ebad2775599702fc1fe9a276b7787b4b4",
+      "stored_sha256": "33b62940a6099e059f74a3f8bac09b9ebad2775599702fc1fe9a276b7787b4b4",
+      "edits": 0
+    },
+    "docs/architecture/filing-model.md": {
+      "previous_sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "stored_sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "edits": 0
+    },
+    "docs/architecture/api-contracts.md": {
+      "previous_sha256": "1db6b8d987b8c60c365c76c4f3d0e9c7d0afcfb3f69a71f1f269ae8409012da9",
+      "stored_sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "edits": 8
+    },
+    "docs/architecture/data-model.md": {
+      "previous_sha256": "607a6b3fabaf30ebe79f181a40f7911f963d14f6319bb9263a4ea448e06e32a1",
+      "stored_sha256": "873a23b4791a1656a0e54edda5fccf28628c65d432151b5e5ba7faa058badf6f",
+      "edits": 9
+    },
+    "docs/architecture/security-architecture.md": {
+      "previous_sha256": "519af1539f30ef4d7e93f60e6063d677246959fd4a54eb3ae1bce780c356b465",
+      "stored_sha256": "08efcaad3e53aef33352b49e0665b6e03d82b7ed303a194833e27ca3e57b9306",
+      "edits": 3
+    },
+    "docs/architecture/technical-blockers.md": {
+      "previous_sha256": "0b8f667433142e29fb35af14e7fdd2cfb8eee1784e799925509dea4c3ce7e566",
+      "stored_sha256": "84d07f37948698916fc8b52d8a63a170c9e8f4561977b13e4dbaa8a4d8cdce7b",
+      "edits": 1
+    },
+    "docs/architecture/adr/ADR-001-runtime-and-hosting.md": {
+      "previous_sha256": "e3fb634cea2e67aaa12230d6edccefcd333e974ef45f542ed255a438cc636eb2",
+      "stored_sha256": "e3fb634cea2e67aaa12230d6edccefcd333e974ef45f542ed255a438cc636eb2",
+      "edits": 0
+    },
+    "docs/architecture/adr/ADR-002-transaction-and-concurrency.md": {
+      "previous_sha256": "656dbf1041f5ded59366d3c1d424bad57f8fbf03974d40e67190a58da9d23d0d",
+      "stored_sha256": "812e225fe1afc7d1d10ab9368dbd19e63c278591fce8c1a0a1cbb4c57e371a63",
+      "edits": 1
+    },
+    "docs/architecture/adr/ADR-003-frontend-runtime.md": {
+      "previous_sha256": "bfbdc5a78aa2ffe57988de777ee07893d29dd9bb8b7d7fd4758798fea10999bb",
+      "stored_sha256": "bfbdc5a78aa2ffe57988de777ee07893d29dd9bb8b7d7fd4758798fea10999bb",
+      "edits": 0
+    },
+    "docs/reviews/step-02-claude-architecture-result.md": {
+      "previous_sha256": "5cc70ba06b180f0a9baf1f91840ddc3519d10d9754d3e02c94a546bf2361bf55",
+      "stored_sha256": "5cc70ba06b180f0a9baf1f91840ddc3519d10d9754d3e02c94a546bf2361bf55",
+      "edits": 0
+    }
+  }
+}

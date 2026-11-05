@@ -1,0 +1,2086 @@
+{
+  "task": "MC-003A-TQ02-TQ08",
+  "author": "Local Codex PM/BA; proposal only",
+  "status": "WAITING_MANUAL_DISPATCH",
+  "architecture_owner": "Actual Claude Code",
+  "base_commit": "1ec02fde274ef7469646830378c024d2f73bab4d",
+  "TQ-02": "CANDIDATE_RESPONSE_PREPARED; NOT_CLOSED",
+  "TQ-08": "CANDIDATE_CATALOGUE_PREPARED; NOT_CLOSED",
+  "wire_status": "All response/header/query/path names below are CANDIDATE_FIELD or candidate operation, including reused product candidate names. No EXISTING_APPROVED product wirecontract established. Approved requirements define semantics, not these spellings.",
+  "information_groups": [
+    {
+      "id": "CRI-01",
+      "candidate_section": "condition",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Understand current visible condition without a new aggregate legal state",
+      "requirement_ids": [
+        "FR-009",
+        "FR-020"
+      ],
+      "visible_behavior": "Display matter/context, as-of and named exceptions; no readiness percentage",
+      "domain_entities": "Matter plus typed state/reason summaries",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Matter/Workstream/Milestone",
+      "catalogue_refs": "DR-01",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-02",
+      "candidate_section": "blockers",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Explain critical causes and downstream exposure",
+      "requirement_ids": [
+        "FR-005",
+        "FR-009"
+      ],
+      "visible_behavior": "Show root/target type, failed gate ID/reason, source revisions and owner; do not conflate WAITING with BLOCKED",
+      "domain_entities": "Requirement/Action, dependency edge, failed gate, impact references",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Requirement/Action/Dependency",
+      "catalogue_refs": "DR-04,DR-05,DR-06",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-03",
+      "candidate_section": "nextActions",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Identify eligible work and accountable owner",
+      "requirement_ids": [
+        "FR-003",
+        "FR-009"
+      ],
+      "visible_behavior": "Backend RULE-021 candidates, reasons/order; AtlasT0 zero eligible Actions with explanation",
+      "domain_entities": "Action, active internal assignee",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Action",
+      "catalogue_refs": "DR-05",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-04",
+      "candidate_section": "waitingOn",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Identify who/what is awaited and internal follow-up",
+      "requirement_ids": [
+        "FR-004",
+        "FR-017"
+      ],
+      "visible_behavior": "Reason/party/owner/follow-up due; unknown waiting-since stays unknown (TQ-06)",
+      "domain_entities": "Waiting relation, Requirement/Action/Filing, external party",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Waiting/ExternalParty/subject",
+      "catalogue_refs": "DR-16,DR-13",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-05",
+      "candidate_section": "milestones",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Expose upcoming deadline and readiness uncertainty",
+      "requirement_ids": [
+        "FR-002",
+        "FR-009"
+      ],
+      "visible_behavior": "Due/timezone and backend readiness/reasons; no required set gives UNASSESSED, not vacuous ready",
+      "domain_entities": "Milestone and explicit required Requirements",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Milestone",
+      "catalogue_refs": "DR-03",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-06",
+      "candidate_section": "evidenceGaps",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Show missing/invalid proof independently from execution",
+      "requirement_ids": [
+        "FR-006",
+        "FR-007",
+        "FR-009"
+      ],
+      "visible_behavior": "Criteria/subject refs and missing/expired/disputed reason; never invent Evidence for a gap",
+      "domain_entities": "Evidence Requirement, criterion revision, supplied Evidence",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "EvidenceRequirement/Evidence",
+      "catalogue_refs": "DR-07,DR-08,DR-09",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-07",
+      "candidate_section": "decisions",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Expose unresolved basic decisions without override",
+      "requirement_ids": [
+        "FR-001",
+        "FR-009"
+      ],
+      "visible_behavior": "Question and canonical decision lifecycle, owner only if actually assigned; DEC-AT-01/02 remain OPEN",
+      "domain_entities": "Basic Decision plus related resources",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Decision",
+      "catalogue_refs": "DR-14",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-08",
+      "candidate_section": "recentChanges",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Show attributable changes distinct from outstanding issues",
+      "requirement_ids": [
+        "FR-008",
+        "FR-019"
+      ],
+      "visible_behavior": "Event/time/actor/action/target references; no new-change claim for an old unresolved blocker; TQ-05 time-window mapping pending",
+      "domain_entities": "Authorized Event History",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Event",
+      "catalogue_refs": "DR-15",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-09",
+      "candidate_section": "actionability",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Explain permitted next step or why none",
+      "requirement_ids": [
+        "FR-003",
+        "FR-018",
+        "FR-020"
+      ],
+      "visible_behavior": "Source current backend guards/capabilities, not client legal evaluation; missing hint is unknown, not allowed",
+      "domain_entities": "Advisory available commands on authorized target",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "Action/Requirement plus actor",
+      "catalogue_refs": "DR-04,DR-05",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    },
+    {
+      "id": "CRI-10",
+      "candidate_section": "navigation",
+      "field_status": "CANDIDATE_FIELD",
+      "business_purpose": "Reach exact detail without context loss",
+      "requirement_ids": [
+        "FR-001",
+        "FR-009",
+        "FR-011"
+      ],
+      "visible_behavior": "Stable target type/id/matter scope; resolve in app; no arbitrary external href or harness refId",
+      "domain_entities": "Typed resource references across panels and Grid",
+      "authorization_scope": "Active Workspace AND explicit Matter membership AND read role. Filter all rows, references, counts and reasons before serialization; no inferred Matter access for Workspace OWNER.",
+      "freshness": "Current server-captured asOf/sourceRevision; same-snapshot comparisons where available. If stale/unavailable, disclose per section and do not claim global readiness.",
+      "empty_error": "AVAILABLE+items=[] only after a successful current scoped read with no matches; UNAVAILABLE/STALE has explicit state and no zero/ready substitute. No inaccessible titles/counts in errors.",
+      "navigation_reference": "All P0 contextual resources",
+      "catalogue_refs": "DR-01..17",
+      "scope": "MANDATORY_P0; presentation grouping/field names candidate; no new domain entity"
+    }
+  ],
+  "field_registry": [
+    {
+      "path": "matterRef",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Typed Matter identity; reuse candidate UUID resource identity, no new global alias",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "object"
+    },
+    {
+      "path": "meta",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Read-envelope provenance container",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "object"
+    },
+    {
+      "path": "meta.asOf",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Reuse candidate api-contracts §1 server-captured RFC3339 instant with offset; no client asOf for current view",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "RFC3339 instant with offset | null"
+    },
+    {
+      "path": "meta.sourceRevision",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Reuse candidate matter event sequence visible to the read; not proof all sections current",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "integer or opaque revision token | null, Claude to align with candidate types"
+    },
+    {
+      "path": "meta.historyMaterializedThrough",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Reuse candidate provenance; explicitly disclose materialization lag, not fake complete history",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "integer or opaque revision token | null, Claude to align with candidate types"
+    },
+    {
+      "path": "meta.displayTimezone",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Proposed display zone for due/date presentation; offsets on instants retained. No new due-date inference",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "string | null"
+    },
+    {
+      "path": "meta.requestId",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Proposed opaque correlation identifier; no tokens, titles or legal payload embedded",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "string | null"
+    },
+    {
+      "path": "sections",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Display-only named regions; no domain state or persisted ControlRoom entity",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "object"
+    },
+    {
+      "path": "sections.<group>",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "One of the10CRI groups; actionability/navigation may be embedded in cards rather than standalone panels",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "object"
+    },
+    {
+      "path": "sections.<group>.availability",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Proposed AVAILABLE/STALE/UNAVAILABLE retrieval state, not a sixth workflow axis",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "closed enum"
+    },
+    {
+      "path": "sections.<group>.asOf",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Actual boundary of that section; if different from meta.asOf label stale/noncoherent explicitly",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "RFC3339 instant with offset | null"
+    },
+    {
+      "path": "sections.<group>.sourceRevision",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Actual source for that section; never invent a revision on failed retrieval",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "integer or opaque revision token | null, Claude to align with candidate types"
+    },
+    {
+      "path": "sections.<group>.items",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Small projected cards/references for successfully read data; null when unavailable, [] for successful zero only",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "array of typed cards | null"
+    },
+    {
+      "path": "sections.<group>.reason",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Scoped non-sensitive retrieval/empty/exclusion explanation; backend gate reasons only for authorized records",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "string | null"
+    },
+    {
+      "path": "sections.<group>.nextCursor",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Opaque cursor when this visible authorized collection has more; no total hidden-data count",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "opaque string | null"
+    },
+    {
+      "path": "items[].resourceRef",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Typed target reference; relationship scope verified on every read",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "typed reference | null"
+    },
+    {
+      "path": "resourceRef.kind",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Proposed closed kind vocabulary matching approved domain resources; Requirement and Action distinct",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "closed enum"
+    },
+    {
+      "path": "resourceRef.id",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Stable backend resource UUID from candidate contract, not Atlas display key or INT-A refId transport control",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "string | null"
+    },
+    {
+      "path": "resourceRef.matterId",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Server-resolved Matter scope; validate against requested context",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "string | null"
+    },
+    {
+      "path": "items[].label",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Short authorized title/context; do not duplicate full domain payload or silently truncate critical reason",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "string | null"
+    },
+    {
+      "path": "items[].stateProjection",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Named backend axis values/reasons only; object-specific applicability preserved",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "object"
+    },
+    {
+      "path": "items[].ownerRef",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Actual assigned internal owner, null/unknown if missing; do not invent decision/filing owners",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "typed reference | null"
+    },
+    {
+      "path": "items[].relatedRefs",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Only authorized linked resource refs; exact criterion/documentVersion/evidence IDs when relevant",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "array of typed references"
+    },
+    {
+      "path": "items[].dueAt",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Reuse candidate instant/timezone semantics; no due represented as unassessed schedule",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "RFC3339 instant with offset | null"
+    },
+    {
+      "path": "items[].permittedActions",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Optional advisory current capability identifiers/reasons, subject to TQ-03/Claude choice; never enforcement",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "array of advisory command descriptors | null"
+    },
+    {
+      "path": "items[].eventRef",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Stable Event History reference, actual actor/recorded/effective time when applicable",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "typed reference | null"
+    },
+    {
+      "path": "items[].contentCompleteness",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Proposed explicit card-label truncation signal if any; not a new16KiBproduct cap. Detail fetch mandatory before proof/decision",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "string | null"
+    },
+    {
+      "path": "items[].revision",
+      "status": "CANDIDATE_FIELD",
+      "meaning": "Candidate resource revision of displayed card; do not apply read-projection revision to unrelated writes",
+      "approval": "Wire spelling/shape not approved; existing candidate reuse remains candidate",
+      "type_proposal": "integer or opaque revision token | null, Claude to align with candidate types"
+    },
+    {
+      "path": "items[].reason",
+      "status": "CANDIDATE_FIELD",
+      "type_proposal": "scoped string or structured reason list",
+      "meaning": "Failed gate/empty/exclusion/domainreason; retainfullcriticalreason or explicitdetailroute without changing truth",
+      "approval": "Wire spelling/shape not approved"
+    },
+    {
+      "path": "relatedRefs[].relation",
+      "status": "CANDIDATE_FIELD",
+      "type_proposal": "closed relationship role enum",
+      "meaning": "Proposed subject/upstream/target/criterionRevision/proof/version/cycle/party role; exactlexicon Claude-owned",
+      "approval": "Wire spelling/shape not approved"
+    },
+    {
+      "path": "items[].eventRecordedAt",
+      "status": "CANDIDATE_FIELD",
+      "type_proposal": "RFC3339 with offset",
+      "meaning": "Actualrecordedtime; effective time separate if supplied",
+      "approval": "Wire spelling/shape not approved"
+    },
+    {
+      "path": "items[].eventEffectiveAt",
+      "status": "CANDIDATE_FIELD",
+      "type_proposal": "RFC3339 with offset | null",
+      "meaning": "Effectivechange time when defined, not substituted for recordedtime",
+      "approval": "Wire spelling/shape not approved"
+    },
+    {
+      "path": "items[].resourceLifecycle",
+      "status": "CANDIDATE_FIELD",
+      "type_proposal": "existingresource-specific lifecycle enum | null",
+      "meaning": "BasicDecision/Finding/Risk lifecycle separate from fiveoperationalaxes",
+      "approval": "Wire spelling/shape not approved"
+    },
+    {
+      "path": "items[].milestoneReadiness",
+      "status": "CANDIDATE_FIELD",
+      "type_proposal": "backendreadinessprojection | null",
+      "meaning": "Required-set assessment with UNASSESSED; no formula invented here",
+      "approval": "Wire spelling/shape not approved"
+    }
+  ],
+  "read_catalogue": [
+    {
+      "id": "DR-01",
+      "requirement_ids": [
+        "FR-009",
+        "FR-018"
+      ],
+      "ux_interaction": "ControlRoom header/Matter context",
+      "domain_resource": "Matter",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "No dedicated Matter detail GET in candidate §2; control-room aggregate exists"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/matters/{matterId}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "matterId",
+      "required_response_information": "Name/context, authorized membership role, asOf, links/workstreams; never aggregate legal verdict",
+      "relationships": "Workspace/Workstreams/typed resources",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-109",
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-137",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-02",
+      "requirement_ids": [
+        "FR-001",
+        "FR-009"
+      ],
+      "ux_interaction": "Workstream filter and context label",
+      "domain_resource": "Workstream",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "No read enumerated; workstreams are approved grouping context"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/matters/{matterId}/workstreams",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        },
+        {
+          "method_path": "GET /api/v1/workstreams/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "workstreamId + server-resolved matterId",
+      "required_response_information": "Label/ordering, scoped linked nodes and milestones; no invented owner/readiness",
+      "relationships": "Matter/Requirement/Action/Milestone",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-101",
+        "AC-109",
+        "AC-121",
+        "AC-137",
+        "AC-159"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-03",
+      "requirement_ids": [
+        "FR-002",
+        "FR-009"
+      ],
+      "ux_interaction": "ControlRoom milestone→prerequisite context",
+      "domain_resource": "Milestone",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "GET /milestones/{id}/readiness exists as candidate; list/detail shape missing"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/matters/{matterId}/milestones",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        },
+        {
+          "method_path": "GET /api/v1/milestones/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "milestoneId",
+      "required_response_information": "Due/timezone, explicit required set or UNASSESSED, backend readiness/failed reasons and source IDs",
+      "relationships": "Required Requirements/dependencies",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "EXISTING_WITH_GAP",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-102",
+        "AC-109",
+        "AC-137",
+        "AC-141"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-04",
+      "requirement_ids": [
+        "FR-001",
+        "FR-006"
+      ],
+      "ux_interaction": "Blocker→Requirement drawer",
+      "domain_resource": "Requirement",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Create/PATCH/transitions exist as candidates; detail GET missing"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/requirements/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "requirementId",
+      "required_response_information": "Outcome/title/owner/due,5axes with reasons/asOf, associated Actions/criteria and revision",
+      "relationships": "Actions/ER/Workstream/dependency/event",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-101",
+        "AC-106",
+        "AC-121",
+        "AC-127",
+        "AC-159"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-05",
+      "requirement_ids": [
+        "FR-001",
+        "FR-003",
+        "FR-011"
+      ],
+      "ux_interaction": "Grid/NextAction→Action drawer",
+      "domain_resource": "Action",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Grid/next-actions are candidate aggregate reads, no Action detail"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/actions/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "actionId",
+      "required_response_information": "Work/title/owner/due,execution and other applicable axes,waiting/dependency/Requirement links",
+      "relationships": "Requirement/Waiting/dependency/history",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-101",
+        "AC-103",
+        "AC-111",
+        "AC-121",
+        "AC-139",
+        "AC-144",
+        "AC-150",
+        "AC-159"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-06",
+      "requirement_ids": [
+        "FR-005",
+        "FR-009"
+      ],
+      "ux_interaction": "Impact rail/failed gate context",
+      "domain_resource": "Dependency/blocker",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Edge writes enumerated; read graph/explanation absent"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/nodes/{id}/dependencies",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "typed nodeId; stable dependencyEdgeId per edge",
+      "required_response_information": "Directional upstream/target/type/gate,satisfaction/backend reasons,source revisions,bounded downstream references",
+      "relationships": "Requirement/Action/dependency edges",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-105",
+        "AC-109",
+        "AC-122",
+        "AC-123",
+        "AC-124",
+        "AC-125",
+        "AC-137",
+        "AC-146"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-07",
+      "requirement_ids": [
+        "FR-006",
+        "FR-007"
+      ],
+      "ux_interaction": "Requirement→criterion",
+      "domain_resource": "Evidence Requirement",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Criterion revision writes candidate; no detail read"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/evidence-requirements/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "evidenceRequirementId + criterionRevisionId",
+      "required_response_information": "Subject,mandatory criteria/components,applicability rationale,proof type/current-fixed rule/validity,gaps",
+      "relationships": "Subject/claims/Evidence/exact criterion revision",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08",
+        "A-11",
+        "A-12"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-106",
+        "AC-107",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-140"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-08",
+      "requirement_ids": [
+        "FR-006",
+        "FR-007"
+      ],
+      "ux_interaction": "Criterion→actual Evidence",
+      "domain_resource": "Evidence",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Submission/claim writes candidate; detail and claim-list reads missing"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/evidence/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        },
+        {
+          "method_path": "GET /api/v1/evidence/{id}/claims",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "evidenceId; claimId for each criterion relation",
+      "required_response_information": "Submitter/source,non-file reference or exact version,validity,claims/review references; no fabricated attachment",
+      "relationships": "ER/claims/DocumentVersion/assessments",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08",
+        "A-11",
+        "A-12"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-106",
+        "AC-107",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-140"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-09",
+      "requirement_ids": [
+        "FR-007",
+        "FR-008"
+      ],
+      "ux_interaction": "Evidence→verification history",
+      "domain_resource": "Verification history",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Assessment/dispute commands candidate; historical read absent"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/evidence-claims/{id}/assessments",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "claimId + assessmentId/criterionRevisionId",
+      "required_response_information": "Attributable verdict/rationale/reviewer/time,revocation/dispute chain; current aggregate separately backend-derived",
+      "relationships": "Evidence/criterion revision/dispute/event",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08",
+        "A-11",
+        "A-12"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-107",
+        "AC-108",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-136",
+        "AC-140",
+        "AC-149",
+        "AC-153"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-10",
+      "requirement_ids": [
+        "FR-015"
+      ],
+      "ux_interaction": "Document inspector/version ledger",
+      "domain_resource": "Document",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Upload/promote and version-content candidate; document metadata/version ledger absent"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/documents/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        },
+        {
+          "method_path": "GET /api/v1/documents/{id}/versions",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "documentId + exact documentVersionId refs",
+      "required_response_information": "Document identity,current pointer,immutable version ledger,promotion lineage and signature observations separately",
+      "relationships": "Versions/Evidence/Filing/history",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08",
+        "A-11",
+        "A-12"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-115",
+        "AC-128"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-11",
+      "requirement_ids": [
+        "FR-015",
+        "FR-016"
+      ],
+      "ux_interaction": "Filing/Evidence→submitted version",
+      "domain_resource": "Document Version",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "GET /document-versions/{id}/content exists as candidate; metadata detail missing"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/document-versions/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "documentVersionId (never substitute current pointer)",
+      "required_response_information": "Exact immutable version/document ID,current/superseded observation,signature completeness; protected content retrieval rechecks auth",
+      "relationships": "Document/Evidence/Filing cycles",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08",
+        "A-11",
+        "A-12"
+      ],
+      "contract_status": "EXISTING_WITH_GAP",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-115",
+        "AC-116",
+        "AC-128",
+        "AC-129",
+        "AC-145"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-12",
+      "requirement_ids": [
+        "FR-016",
+        "FR-004"
+      ],
+      "ux_interaction": "Filing detail/lifecycle→supplement",
+      "domain_resource": "Filing",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Observation/correction/cancel/reopen writes candidate; detail/cycle reads absent"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/filings/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        },
+        {
+          "method_path": "GET /api/v1/filings/{id}/cycles",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "filingId + cycleId or candidate cycleNo (Claude chooses)",
+      "required_response_information": "Stage distinct from execution/verification,package/version refs,submission/receipt/outcome,repeat supplements,response/waiting,negative history",
+      "relationships": "Requirement/versions/Evidence/Waiting/ExternalParty",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08",
+        "A-11",
+        "A-12"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-104",
+        "AC-116",
+        "AC-129",
+        "AC-130",
+        "AC-145"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-13",
+      "requirement_ids": [
+        "FR-017",
+        "FR-004"
+      ],
+      "ux_interaction": "WaitingOn→party context",
+      "domain_resource": "External Party",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Party writes candidate; reads absent"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/matters/{matterId}/external-parties",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        },
+        {
+          "method_path": "GET /api/v1/external-parties/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "externalPartyId",
+      "required_response_information": "Synthetic/authorized label and context;internal accountable contact/wait refs where recorded; no system membership implied",
+      "relationships": "Waiting/Filing/subject",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-104",
+        "AC-117",
+        "AC-130"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-14",
+      "requirement_ids": [
+        "FR-001",
+        "FR-009"
+      ],
+      "ux_interaction": "Decision queue→basic decision",
+      "domain_resource": "Decision",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Basic decision writes candidate; detail read absent"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/decisions/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "decisionId (DEC-AT display namespace only in fixture)",
+      "required_response_information": "Question,existing lifecycle/actual owner,related refs and history;no dependency override/waiver",
+      "relationships": "Requirement/Action/Milestone/Event",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-101",
+        "AC-109",
+        "AC-121",
+        "AC-137",
+        "AC-159"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-15",
+      "requirement_ids": [
+        "FR-008",
+        "FR-019"
+      ],
+      "ux_interaction": "RecentChange→history/context",
+      "domain_resource": "Event History",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Candidate GET /matters/{m}/events exists; per-resource filtering/asOf and window reconciliation need detail"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/matters/{matterId}/events",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "matterId + eventSeq/eventId; candidate scoped target filter",
+      "required_response_information": "Ordered actor/change,before-after where authorized,recorded/effective time,correction/target/correlation references",
+      "relationships": "All affected resources;no security audit data",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "EXISTING_WITH_GAP",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-108",
+        "AC-119",
+        "AC-136",
+        "AC-138",
+        "AC-149",
+        "AC-153"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-16",
+      "requirement_ids": [
+        "FR-004",
+        "FR-017"
+      ],
+      "ux_interaction": "WaitingOn→wait→subject",
+      "domain_resource": "Waiting relation",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "Resolve write candidate; read absent"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/waits/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "waitId + typed subject reference",
+      "required_response_information": "Reason,internal accountable owner,party/condition,follow-up due,response/resolution history;waiting-since TQ-06",
+      "relationships": "Subject/ExternalParty/Filing/Event",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-104",
+        "AC-117",
+        "AC-130"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    },
+    {
+      "id": "DR-17",
+      "requirement_ids": [
+        "FR-001",
+        "FR-009"
+      ],
+      "ux_interaction": "FD-01/RISK-AT-01context only",
+      "domain_resource": "Basic Finding/Risk context",
+      "existing_api_contract": {
+        "source": "docs/architecture/api-contracts.md §2 (CANDIDATE, not PO-approved productAPI)",
+        "coverage": "RULE-020P0basic context and candidate writes, no detail reads; advancedP1deferred"
+      },
+      "candidate_operations": [
+        {
+          "method_path": "GET /api/v1/findings/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        },
+        {
+          "method_path": "GET /api/v1/risks/{id}",
+          "status": "CANDIDATE",
+          "field_names": "CANDIDATE_FIELD"
+        }
+      ],
+      "resource_identifier": "findingId or riskId",
+      "required_response_information": "Basic title/state/context,related record/follow-up/resolution references;no scoring engine/entity graph/legal authorities",
+      "relationships": "Subject/Action/Evidence/Event",
+      "authorization_boundary": "Active Workspace AND explicit Matter membership AND role; all O/E/V read inherited Matter scope, nested reference/linked resource reauthorized; WorkspaceOWNER has no implicit access.",
+      "not_found_forbidden": "Approved confidentiality: nonexistent/inaccessible indistinguishable, no names/counts; exact404/401/403 HTTPmapping remains candidate. Do not expose role-denial context to inaccessible callers.",
+      "loading_empty_error": "Initial shell/context retained; successful empty collection explicit; missing singleton not empty record; failed detail shows not available or scoped error, no false completion/verification; retained stale data labeled.",
+      "pagination_version": "Candidate keyset after/limit<=200 for collections, no fake totals; singletons use exact resource version/revision; stable sort/cursor/snapshot policy needs Claude decision. Immutable proof versions never rewritten.",
+      "concurrency_cache": "GETdoes not mutate/domain-audit; current read asOf/sourceRevision, object revision where defined; no If-Match on these read proposals. Reads never skip reauthorization or share cached legal data across users; exact cache strategy candidate.",
+      "architecture_dependencies": [
+        "A-01",
+        "A-02",
+        "A-03",
+        "A-04",
+        "A-08"
+      ],
+      "contract_status": "CANDIDATE",
+      "wire_field_status": "CANDIDATE_FIELD",
+      "acceptance_ids": [
+        "AC-101",
+        "AC-109",
+        "AC-121",
+        "AC-137",
+        "AC-159"
+      ],
+      "acceptance": "Authorized exact-context/detail and links agree with same boundary; denied/nonexistent leak no identity; current state is backend-owned; collection continuation reaches every matching authorized row. Scenario IDs in acceptance matrix.",
+      "implementation_owner": "ZCode API; Antigravity consumes; actual Claude owns architecture decision; OpenCode independent tests"
+    }
+  ],
+  "navigation": [
+    {
+      "id": "NAV-01",
+      "from": "ControlRoom blocker",
+      "to": "Requirement detail",
+      "catalogue_refs": [
+        "DR-04"
+      ],
+      "initial_data": "Typed Requirement ID,owner,displayed backend state/reason/source boundary",
+      "detail_data": "Outcome,linked Actions,criteria,history and guards",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-02",
+      "from": "Requirement detail",
+      "to": "Evidence Requirement",
+      "catalogue_refs": [
+        "DR-07"
+      ],
+      "initial_data": "Exact criterion ID/revision and gap reason; missingEvidence has no fake evidenceId",
+      "detail_data": "Criteria/components/applicability and exact proof refs",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-03",
+      "from": "Evidence Requirement",
+      "to": "Actual Evidence",
+      "catalogue_refs": [
+        "DR-08"
+      ],
+      "initial_data": "Actual evidenceId/claimId only if supplied; otherwise honest gap",
+      "detail_data": "Source/non-file/exact version,submitter/validity and claims",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-04",
+      "from": "Actual Evidence",
+      "to": "Verification history",
+      "catalogue_refs": [
+        "DR-09"
+      ],
+      "initial_data": "Claim/assessment refs and current backend verification projection",
+      "detail_data": "Attributed assessments,revocation/disputes;no self-verification shortcut",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-05",
+      "from": "OperationalGrid selected Requirement",
+      "to": "Contextual inspector",
+      "catalogue_refs": [
+        "DR-04"
+      ],
+      "initial_data": "Typed row ID/revision and same matter scope",
+      "detail_data": "Requirement detail without losing selection/filter/sort/scroll",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-06",
+      "from": "OperationalGrid selected Action",
+      "to": "Contextual inspector",
+      "catalogue_refs": [
+        "DR-05"
+      ],
+      "initial_data": "Typed Action ID/revision,owner and row boundary",
+      "detail_data": "Action work,Requirement/waiting/dependency context",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-07",
+      "from": "Filing",
+      "to": "Document/version",
+      "catalogue_refs": [
+        "DR-10",
+        "DR-11"
+      ],
+      "initial_data": "Filing cycle and exact submitted versionId, not just document.current",
+      "detail_data": "Immutable metadata/lineage/signature observations;content separately authorized",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-08",
+      "from": "Filing lifecycle",
+      "to": "WaitingOn/supplement",
+      "catalogue_refs": [
+        "DR-12",
+        "DR-16"
+      ],
+      "initial_data": "Filing+cycle/wait IDs,stage/reason/current versions",
+      "detail_data": "Request/response/receipt/outcome refs and repeat cycle history",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-09",
+      "from": "Blocker/inspector",
+      "to": "Dependency explanation",
+      "catalogue_refs": [
+        "DR-06"
+      ],
+      "initial_data": "Failed edge/typed upstream/target refs and gate reason",
+      "detail_data": "Bounded authorized graph,exact gate/source revisions",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    },
+    {
+      "id": "NAV-10",
+      "from": "Recent change/decision",
+      "to": "Event/decision context",
+      "catalogue_refs": [
+        "DR-14",
+        "DR-15"
+      ],
+      "initial_data": "Authorized decision/event,target reference and recorded time",
+      "detail_data": "Basic decision/history/corrections;no new waiver",
+      "reference_rule": "Stable backend typed IDs; exact criterion/version/claim/cycle where named. No arbitrary href or INT-ArefId reuse.",
+      "authorization": "Recheck on fetch/retrieval; revoked access clears sensitive detail and forbids cached reopen;uniform unavailable for missing/inaccessible.",
+      "visible_loading_error": "Labeled loading shell at target; safe error/retry if read fails, no synthetic empty proof or silent current-version substitution.",
+      "context_preservation": "Retain origin/view/tab,filter,sort,selection,scroll,draft and focus trigger; close restores trigger or labeled fallback. Runtime NOT_TESTED."
+    }
+  ],
+  "acceptance_scenarios": [
+    {
+      "id": "CT-01",
+      "scenario": "Authorized Matter read",
+      "requirement_ids": [
+        "FR-009",
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-109",
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-137",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "expected": "O/E/Vactive scoped member receives only authorized sections/references with server boundary; read produces no domain mutation.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-02",
+      "scenario": "Unauthorized Matter read",
+      "requirement_ids": [
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "expected": "Inaccessible Matter same external body/status as nonexistent; no title/party/count/cursor/evaluator reason leaks.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-03",
+      "scenario": "Resource not found",
+      "requirement_ids": [
+        "FR-001",
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-101",
+        "AC-118",
+        "AC-121",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-147",
+        "AC-149",
+        "AC-159"
+      ],
+      "expected": "Missing detail and inaccessible detail indistinguishable; no fabricated resource shell with sensitive metadata.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-04",
+      "scenario": "Cross-workspace reference",
+      "requirement_ids": [
+        "FR-005",
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-105",
+        "AC-118",
+        "AC-122",
+        "AC-123",
+        "AC-124",
+        "AC-125",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-146",
+        "AC-147",
+        "AC-149"
+      ],
+      "expected": "Reject/withhold wrongMatter/resource relationship; scoped error path never returns foreign references, titles or counts.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-05",
+      "scenario": "Missing/invalid reference",
+      "requirement_ids": [
+        "FR-001"
+      ],
+      "acceptance_ids": [
+        "AC-101",
+        "AC-121",
+        "AC-159"
+      ],
+      "expected": "Malformed/missing typed ID handled safely under chosen contract; mismatched kind/ID or wrong parent never resolves to another kind.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-06",
+      "scenario": "Empty sections",
+      "requirement_ids": [
+        "FR-009"
+      ],
+      "acceptance_ids": [
+        "AC-109",
+        "AC-137"
+      ],
+      "expected": "Successful authorized zero ->AVAILABLE+[] with context; unknown/unavailable never same as empty.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-07",
+      "scenario": "Multiple blockers",
+      "requirement_ids": [
+        "FR-005",
+        "FR-009"
+      ],
+      "acceptance_ids": [
+        "AC-105",
+        "AC-109",
+        "AC-122",
+        "AC-123",
+        "AC-124",
+        "AC-125",
+        "AC-137",
+        "AC-146"
+      ],
+      "expected": "Return each authorizedfailedgate and bounded downstream continuation without truncating away critical cause or claiming full chain when partial.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-08",
+      "scenario": "Completed but unverified",
+      "requirement_ids": [
+        "FR-001",
+        "FR-007",
+        "FR-020"
+      ],
+      "acceptance_ids": [
+        "AC-101",
+        "AC-107",
+        "AC-120",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-139",
+        "AC-140",
+        "AC-142",
+        "AC-143",
+        "AC-159",
+        "AC-160"
+      ],
+      "expected": "AtlasRQ02COMPLETED/UNVERIFIED preserved; no green-verification from completion.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-09",
+      "scenario": "Waiting on party",
+      "requirement_ids": [
+        "FR-004",
+        "FR-017"
+      ],
+      "acceptance_ids": [
+        "AC-104",
+        "AC-117",
+        "AC-130"
+      ],
+      "expected": "RQ04/AC04→EP01 and internal owners distinct; WAITING and dependencyREADY/BLOCKED independent; no inferred external login.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-10",
+      "scenario": "Detail permission filtering/revocation",
+      "requirement_ids": [
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "expected": "Revoke membership between card and detail fetch; deny uniformly, clear protected cached content, no stalegrant reuse.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-11",
+      "scenario": "Missing Evidence",
+      "requirement_ids": [
+        "FR-006"
+      ],
+      "acceptance_ids": [
+        "AC-106",
+        "AC-127"
+      ],
+      "expected": "ER02/04 gaps visible, zero fabricated Evidence IDs/attachments; missing proof is not an empty successful verification.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-12",
+      "scenario": "Superseded/version proof",
+      "requirement_ids": [
+        "FR-007",
+        "FR-015"
+      ],
+      "acceptance_ids": [
+        "AC-107",
+        "AC-115",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-128",
+        "AC-140"
+      ],
+      "expected": "Exact original version/criterion and history retained; current-pointer changes do not silently substitute proof or auto-invalidate every fixed-version criterion.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-13",
+      "scenario": "Filing/document references",
+      "requirement_ids": [
+        "FR-015",
+        "FR-016"
+      ],
+      "acceptance_ids": [
+        "AC-115",
+        "AC-116",
+        "AC-128",
+        "AC-129",
+        "AC-145"
+      ],
+      "expected": "FIL02receipt EV10 and DOC05v2 retain exact version; WAITING/PARTIALLY_VERIFIED is not approval;repeat cyclesdistinct.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-14",
+      "scenario": "Partial/unavailable section",
+      "requirement_ids": [
+        "FR-009"
+      ],
+      "acceptance_ids": [
+        "AC-109",
+        "AC-137"
+      ],
+      "expected": "Under explicitly supported partial architecture, failedregionUNAVAILABLE+null,nozero/READY. Healthyregions show actual boundary; do not claim wholeviewcoherent/fresh.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-15",
+      "scenario": "Freshness/mixed snapshots",
+      "requirement_ids": [
+        "FR-009",
+        "FR-020"
+      ],
+      "acceptance_ids": [
+        "AC-109",
+        "AC-120",
+        "AC-121",
+        "AC-137",
+        "AC-139",
+        "AC-142",
+        "AC-143",
+        "AC-160"
+      ],
+      "expected": "Either coherentsnapshot or explicitly labeled sectionboundaries; never compute clientlegalreadiness or compare stale/current as one truth.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-16",
+      "scenario": "Collection bounds/cursor",
+      "requirement_ids": [
+        "FR-011",
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-111",
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-139",
+        "AC-140",
+        "AC-147",
+        "AC-149",
+        "AC-150"
+      ],
+      "expected": "Allmatchingauthorizedrowsreachable; stableafter/limit/order/authcontext; cursorcannotcrossscope/revive access;no hidden total.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-17",
+      "scenario": "Golden connected navigation",
+      "requirement_ids": [
+        "FR-001",
+        "FR-007",
+        "FR-011",
+        "FR-016"
+      ],
+      "acceptance_ids": [
+        "AC-101",
+        "AC-107",
+        "AC-111",
+        "AC-116",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-129",
+        "AC-139",
+        "AC-140",
+        "AC-145",
+        "AC-150",
+        "AC-159"
+      ],
+      "expected": "All10NAVtransitions fetch exacttypedtargets with preserved context and safeerror; independent keyboard/focus/render evidence separate.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-18",
+      "scenario": "Decision namespaces/lifecycle",
+      "requirement_ids": [
+        "FR-001",
+        "FR-009"
+      ],
+      "acceptance_ids": [
+        "AC-101",
+        "AC-109",
+        "AC-121",
+        "AC-137",
+        "AC-159"
+      ],
+      "expected": "DEC-AT01/02OPEN and unassignedownerstayexplicit; no governanceDEC-IDcollision, waiver or READYoverride.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-19",
+      "scenario": "Recent changes versus outstanding",
+      "requirement_ids": [
+        "FR-008",
+        "FR-019"
+      ],
+      "acceptance_ids": [
+        "AC-108",
+        "AC-119",
+        "AC-136",
+        "AC-138",
+        "AC-149",
+        "AC-153"
+      ],
+      "expected": "TQ05chosenwindow uses attributedeventtime/seq;RQ04oldunresolvedblocker not a newlycreatedchange. No invented events from reads.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-20",
+      "scenario": "Document content retrieval",
+      "requirement_ids": [
+        "FR-015",
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-115",
+        "AC-118",
+        "AC-128",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "expected": "Exactversioncontent read rechecks scope;no unprotected URL/presigned bypass or filename leak on denial under selected contract.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-21",
+      "scenario": "Actionability and no candidate",
+      "requirement_ids": [
+        "FR-003",
+        "FR-018"
+      ],
+      "acceptance_ids": [
+        "AC-103",
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-144",
+        "AC-147",
+        "AC-149"
+      ],
+      "expected": "AtAtlasT0noeligibleAction; explainexcludedwaiting/blocked/unassigned using authorized truth, not treat RQ06 asAction; advisory hint grants no permission.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    },
+    {
+      "id": "CT-22",
+      "scenario": "Correlation/privacy/no mutation",
+      "requirement_ids": [
+        "FR-008",
+        "FR-009"
+      ],
+      "acceptance_ids": [
+        "AC-108",
+        "AC-109",
+        "AC-136",
+        "AC-137",
+        "AC-149",
+        "AC-153"
+      ],
+      "expected": "Opaque requestcorrelation ties readobservations without tokens/legalpayload in logs;GETcreates no businesschange/history/verification.",
+      "evidence_required": "When authorized execution exists: scoped request/response,actor context,source boundary/revisions, before-after/no-mutation proof and exactcommand/time/exit; security negatives compared with nonexistent baseline. Native UI evidence only for claimed interaction.",
+      "status": "NOT_RUN",
+      "owner": "OpenCode independent testability/execution when authorized; engineers implement later",
+      "candidate_dependency": "Exact response fields/status/partial support await Claude targetedreview; no current runtime claim"
+    }
+  ],
+  "out_of_scope": [
+    {
+      "scope": "AdvancedP1legal authorities/entitygraphs/risk scoring/advancedfindingmanagement",
+      "status": "DEFERRED",
+      "reason": "Basic typed Decision/Finding/Risk context only underFR001/RULE020; no newP1requirement."
+    }
+  ],
+  "technical_questions": [
+    {
+      "id": "TQ-01",
+      "question": "Reopen/promote impact before confirm (r3 I-11; permission-matrix \"impact summary\")",
+      "proposed_resolution": "Read-only server dry-run, or UI labels a pre-confirm preview as non-authoritative as-of and shows the server `derivedChanges`/`impact` after commit",
+      "owner": "Claude (contract), Codex/OpenDesign (copy)",
+      "blocks": "Reopen/promote slice UX copy only",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "OPEN_PRESERVED; only material readdependency referenced"
+    },
+    {
+      "id": "TQ-02",
+      "question": "`GET /control-room` response shape and per-region availability",
+      "proposed_resolution": "Specify sections each with status/asOf/items/reasons, or compose from section endpoints",
+      "owner": "Claude, ZCode",
+      "blocks": "Control Room integration",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "TARGETED_CANDIDATE_PREPARED_NOT_RESOLVED"
+    },
+    {
+      "id": "TQ-03",
+      "question": "Client hint for verify eligibility and role-aware affordances",
+      "proposed_resolution": "Add per-object `viewerCapabilities`/eligibility hint to read shapes (advisory only)",
+      "owner": "Claude",
+      "blocks": "Evidence review UX polish (server 403 remains authoritative)",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "OPEN_PRESERVED; only material readdependency referenced"
+    },
+    {
+      "id": "TQ-04",
+      "question": "Product error/retry conventions (retryAfter, Retry-After, command 503 as unknown)",
+      "proposed_resolution": "INT-D09 proposal with first product endpoint, then PO decision",
+      "owner": "Claude → PO",
+      "blocks": "Unavailable/unknown UX copy",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "OPEN_PRESERVED; only material readdependency referenced"
+    },
+    {
+      "id": "TQ-05",
+      "question": "\"Changes since T-1 09:00\" with seq-keyed events",
+      "proposed_resolution": "Use status-brief window (RECORDED_TIME), or add `recordedAfter` to events",
+      "owner": "Claude",
+      "blocks": "I-08 only",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "OPEN_PRESERVED; only material readdependency referenced"
+    },
+    {
+      "id": "TQ-06",
+      "question": "Waiting-since / aging field naming",
+      "proposed_resolution": "Name the field in read shapes, sourced from the waiting event time",
+      "owner": "Claude",
+      "blocks": "I-07 aging display",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "OPEN_PRESERVED; only material readdependency referenced"
+    },
+    {
+      "id": "TQ-07",
+      "question": "Bulk preview expiry and import size/row limits",
+      "proposed_resolution": "TB-06 / workload decision",
+      "owner": "PO (values), Claude",
+      "blocks": "Bulk/import UX timers and messages",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "OPEN_PRESERVED; only material readdependency referenced"
+    },
+    {
+      "id": "TQ-08",
+      "question": "Detail read routes are not enumerated in candidate §2. Its only GETs are control-room, grid, me/actions, next-actions, milestone readiness, version content, imports/{id}, exports content, events and operations. Missing: node detail, dependency edges/graph (Dependency View, impact rail), evidence/claims/assessments, document version ledger, filing cycles/submissions, waits, external parties and milestone list",
+      "proposed_resolution": "Enumerate read routes and shapes in the candidate catalogue with the first slice, each carrying revision/asOf/sourceRevision and uniform 404",
+      "owner": "Claude, ZCode",
+      "blocks": "Integration of drawers/tabs for FR-001/004/005/006/007/015/016/017; writes and aggregate reads unaffected",
+      "status": "OPEN; not a new approved decision",
+      "source": "api-auth-dependency-matrix.md §E",
+      "task_disposition": "TARGETED_CANDIDATE_PREPARED_NOT_RESOLVED"
+    }
+  ],
+  "architecture_choices": [
+    {
+      "id": "READ-01",
+      "question": "Dedicated aggregate endpoint projection versus composition of candidate resources",
+      "codex_proposal": "Prefer existing candidate GET /matters/{m}/control-room as a bounded displayprojection assembled server-side for a coherent current view; do not create new authoritativeentity/storage. Composition is viable if boundaries/errors/order remain explicit.",
+      "owner": "Claude",
+      "status": "NEEDS_ARCHITECTURE_DECISION"
+    },
+    {
+      "id": "READ-02",
+      "question": "Section availability/coherent snapshot and collectioncontinuation",
+      "codex_proposal": "Explicit AVAILABLE/STALE/UNAVAILABLE plus actual source provenance, null vs [] and scoped opaque continuation. No maxage/sectionnumericlimits chosen; reuse candidatekeysetcap only as candidate.",
+      "owner": "Claude",
+      "status": "NEEDS_ARCHITECTURE_DECISION"
+    },
+    {
+      "id": "READ-03",
+      "question": "Read route placement, fieldspelling,refs/capabilities and errors",
+      "codex_proposal": "Small typed references plus short cards, fetch detail lazily. Reuse candidateidentity/provenance conventions without copyingINTArefId/value/16KiB envelope.",
+      "owner": "Claude",
+      "status": "NEEDS_ARCHITECTURE_DECISION"
+    }
+  ],
+  "preserved": [
+    "D-UX01..04",
+    "K-2ImportDraft=pre-confirm preview, no newdomainstate",
+    "GuardedRequirementcompletionallowed; Actioncompletionneverimplicitverification",
+    "If-MatchonlyselectedCASscope, no universalGETprecondition",
+    "Product412/bulk200remaincandidate",
+    "INTAnative412transportonly; closedrefId/value/truncationnotreopened"
+  ],
+  "section_card_variants": {
+    "condition": [
+      "matterRef",
+      "label",
+      "stateProjection",
+      "relatedRefs"
+    ],
+    "blockers": [
+      "resourceRef",
+      "label",
+      "stateProjection",
+      "ownerRef",
+      "relatedRefs:typedfailededge/upstream/target",
+      "reason"
+    ],
+    "nextActions": [
+      "resourceRef:ACTION",
+      "label",
+      "ownerRef",
+      "dueAt",
+      "stateProjection",
+      "permittedActions"
+    ],
+    "waitingOn": [
+      "resourceRef:WAITING",
+      "label",
+      "ownerRef",
+      "relatedRefs:subject/party",
+      "dueAt",
+      "reason"
+    ],
+    "milestones": [
+      "resourceRef:MILESTONE",
+      "label",
+      "dueAt",
+      "relatedRefs:requiredRequirements",
+      "reason:serverreadinessorUNASSESSED",
+      "milestoneReadiness"
+    ],
+    "evidenceGaps": [
+      "resourceRef:EVIDENCE_REQUIREMENT",
+      "label",
+      "relatedRefs:subject/exactcriterionrevision/actualevidenceifany",
+      "reason"
+    ],
+    "decisions": [
+      "resourceRef:DECISION",
+      "label",
+      "ownerRef",
+      "relatedRefs",
+      "resourceLifecycle"
+    ],
+    "recentChanges": [
+      "eventRef",
+      "label",
+      "relatedRefs",
+      "reason:actualchangecontext",
+      "eventRecordedAt",
+      "eventEffectiveAt"
+    ],
+    "actionability": [
+      "resourceRef",
+      "permittedActions",
+      "reason:exclusionorunknown"
+    ],
+    "navigation": [
+      "resourceRef",
+      "relatedRefs"
+    ]
+  }
+}

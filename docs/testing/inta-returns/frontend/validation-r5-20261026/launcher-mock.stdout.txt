@@ -1,0 +1,42 @@
+================================================================
+MC-002-INTA-FE-VALIDATION-R5: Pre-Listen Launcher Mock Tests
+================================================================
+Harness startup refused: product auth/secret env vars present (API_TOKEN)
+[PASS] forbidden_api_token_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_TOKEN)
+[PASS] forbidden_api_token_empty_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_MODE)
+[PASS] api_mode_nonempty_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_MODE)
+[PASS] api_mode_empty_refuses_without_spawn
+Harness startup refused: NODE_ENV cannot be production
+[PASS] forbidden_node_env_production_refuses_without_spawn
+Harness startup refused: product auth/secret env vars present (API_MODE)
+Harness startup refused: product auth/secret env vars present (API_TOKEN)
+Harness startup refused: product auth/secret env vars present (API_BASE_URL)
+Harness startup refused: product auth/secret env vars present (AUTH_ALLOW_ANONYMOUS)
+Harness startup refused: product auth/secret env vars present (API_TIMEOUT_MS)
+Harness startup refused: product auth/secret env vars present (AUTH_SECRET)
+Harness startup refused: product auth/secret env vars present (NEXTAUTH_SECRET)
+Harness startup refused: product auth/secret env vars present (CLERK_SECRET_KEY)
+Harness startup refused: product auth/secret env vars present (SESSION_SECRET)
+Harness startup refused: product auth/secret env vars present (COOKIE_SECRET)
+Harness startup refused: product auth/secret env vars present (DATABASE_URL)
+Harness startup refused: product auth/secret env vars present (JWT_SECRET)
+[PASS] all_audited_secret_keys_refuse_without_spawn
+[PASS] valid_environment_spawns_child_with_bounded_env_and_state_dir
+[PASS] bounded_environment_strict_allowlist_includes_state_dir
+[PASS] is_cli_entry_detection_relative_and_absolute
+[PASS] attach_child_lifecycle_events_and_signals
+[PASS] guard_integrity_verification
+[PASS] signal_forwarding_surfaces_failures
+[PASS] launch_harness_explicit_bindings
+Spawn failure: EACCES: permission denied
+[PASS] synchronous_spawn_exception_handling
+[PASS] signal_delivery_exception_logging
+[BINDING_ERROR/NOT_READY] Guard integrity mismatch at /tmp/mc002-inta-harness/src/guards.ts: expected SHA-256 badsha0000000000000000000000000000000000000000000000000000000000, got 0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928
+[PASS] guard_hash_failure_fails_closed_as_binding_error
+[PASS] launcher_execution_record_persisted_to_state_dir
+================================================================
+SUMMARY: 17 PASS / 0 FAIL out of 17 cases
+================================================================

@@ -1,0 +1,140 @@
+{
+  "utc": "2026-11-01T08:51:00.000000+00:00",
+  "reviewer": "actual OpenCode (independent QA, non-author)",
+  "branch": "codex/unified-project-flow",
+  "base": "64b9e0315e210953d7a7eaeacc0643b269a14ad9",
+  "head": "978d8fc694a47e9beee528076bcf1af9473997e3",
+  "commitNote": "Operator Lan Nguyen committed candidate-source.patch at 2026-11-01T15:35:13+07:00 as commit 978d8fc on top of base 64b9e03; diff sha256 matches candidate-source.patch exactly (60f018eb3dcf7cc25bf2e6921ef319f9d69fec7c85e9a5ee6ed62433f8a6fd01).",
+  "sourceSets": {
+    "setA": "Current combined primary candidate with working tree unstaged Pane/bottom-nav/control/list/search UI edits",
+    "setB": "Base HEAD 64b9e03 plus 16-path staged Wave2-only patch, committed as 978d8fc; layout.tsx contains only ActionAnnouncer import/wrapper"
+  },
+  "inputs": [
+    {
+      "path": "docs/implementation/tasks/MC-ZCODE-P1-FIX-WAVE-2-20261101.md",
+      "bytes": 2994,
+      "sha256": "2e47fb41c854168be36654b9fc9d191389eabc1646f2269ca38e5a01043028ff"
+    },
+    {
+      "path": "docs/testing/mc-p1-fix-wave-2-20261101-r1/return.md",
+      "bytes": 10250,
+      "sha256": "c32c2d1b4534ea7795cf8e12d858fb6cba50b9206a11e779111b62acfcb6d816"
+    },
+    {
+      "path": "docs/testing/mc-p1-fix-wave-2-20261101-r1/findings-update.md",
+      "bytes": 2153,
+      "sha256": "a24f6d38a06d9b68d7b9593845ae8757b6777897cb47e4297065f4ff52567b85"
+    },
+    {
+      "path": "docs/testing/mc-p1-fix-wave-2-20261101-r1/codex-takeover/staged-candidate.json",
+      "bytes": 4169,
+      "sha256": "600c78449cedd41a926c85caf8f1f32432285b2d412dee4437685e61124cb850"
+    },
+    {
+      "path": "docs/testing/mc-p1-fix-wave-2-20261101-r1/codex-takeover/candidate-source.patch",
+      "bytes": 38271,
+      "sha256": "60f018eb3dcf7cc25bf2e6921ef319f9d69fec7c85e9a5ee6ed62433f8a6fd01"
+    },
+    {
+      "path": "docs/testing/opencode-verify-wave-20261031-r1/return.md",
+      "bytes": 7626,
+      "sha256": "9dbaa4e8b716039f6fea068c76dc340daca602a20d83d1e3a336ca2544ecf5ce"
+    },
+    {
+      "path": "docs/testing/opendesign-ux-plan-review-20261101-r1/ux-copy-for-guards.md",
+      "bytes": 3994,
+      "sha256": "c5a1ec928110dc27089ca0ec22a6ebf0ae305351eae15182baecd53b0cb9b4f5"
+    },
+    {
+      "path": "apps/backend/internal/core/service/brief_proof.go",
+      "bytes": 9338,
+      "sha256": "d2db17fd5bcdc5d36470801790b13ca3b757e9f53ed1c79a513afd5449050cf3"
+    },
+    {
+      "path": "apps/backend/internal/core/service/brief_replay_test.go",
+      "bytes": 12763,
+      "sha256": "6e0db5eb6e52d1b5d88cbb4b6d0c3166789e96dfefd85cc2032461d425979043"
+    },
+    {
+      "path": "apps/frontend/scripts/release-preflight-integration.test.mjs",
+      "bytes": 5041,
+      "sha256": "f48820d59722d7e521d129541f0502c73adc9c7494456472d42aa941a20eef4c"
+    },
+    {
+      "path": "apps/frontend/scripts/release-preflight.mjs",
+      "bytes": 6070,
+      "sha256": "018bdf03cb247bbbdd95ceb69fc0903d4b38e69356a94b30cd0613ada62e1012"
+    },
+    {
+      "path": "apps/frontend/scripts/release-preflight.test.mjs",
+      "bytes": 3937,
+      "sha256": "0e84fe2c0b7a74a0c3dfed60f7bd0afc1f2b81844aaf1ea817fb4de0a9a5848b"
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/layout.tsx",
+      "bytes": 4067,
+      "sha256": "0fb4576e900de1f251e6e462f781160fc44c87ac8b205abc358373be41365d45",
+      "note": "Working tree contains Set A. Set B in 978d8fc is 3603 bytes, sha256 a5086b5382e118116b84551119c7316e35b757eed0092340b4d5f6b420168c44"
+    },
+    {
+      "path": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.test.tsx",
+      "bytes": 8627,
+      "sha256": "a8c06567e344e6dc0cdab50949fcb6bf0d7bc02efb0ced1af897ded322c2adb8"
+    },
+    {
+      "path": "apps/frontend/src/components/molecules/alert.tsx",
+      "bytes": 1420,
+      "sha256": "d896dac855f767fe19b89851b9d84509ef22cc1cf692e049226a98695c074a43"
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/action-announcer.stories.tsx",
+      "bytes": 1231,
+      "sha256": "b6c2ffdb6602ef9d2546d0909b5de619614495064c47c26843d33cb88e5df346"
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/action-announcer.test.tsx",
+      "bytes": 5478,
+      "sha256": "372332423b81035558a4c2a3b2cdef9ef198bbc25b4b2a75472a315235b4c566"
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/action-announcer.tsx",
+      "bytes": 5003,
+      "sha256": "7f76ec0c74522c8d860a435a82dedfb7e1f74f74605ae5166d4698ac5580ca36"
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/confirm-action-button.tsx",
+      "bytes": 3502,
+      "sha256": "18f12fddd0b619d1f96ba2f38906b83e19970848ba1f7dd08234495e5dc21329"
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/form-dialog.tsx",
+      "bytes": 2731,
+      "sha256": "ab23cf4e106a300701df5009a7b2d95c2927e01d380f88163cbd7ded15f70ac7"
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/inline-edit.tsx",
+      "bytes": 4010,
+      "sha256": "5cae29bf949a78c741d6d9cae77f74fa07ccf36739e0d4ec58972a02917114ea"
+    },
+    {
+      "path": "apps/frontend/src/components/organisms/intent-form.tsx",
+      "bytes": 14015,
+      "sha256": "bba16771839e4694031fc2d108693f190b525b1cd57fe7bd855cf6714b2be582"
+    },
+    {
+      "path": "apps/frontend/src/features/filings/components/filing-guard-copy.test.tsx",
+      "bytes": 2448,
+      "sha256": "fe1149d7fa70c12a54a4b1df423070387e483170db8cf9a68f06837c32e6524f"
+    },
+    {
+      "path": "apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0011_criterion_purpose_signature.sql",
+      "bytes": 1132,
+      "sha256": "96dd28dd375b69ef39dbab17125923d138c83acbc768cf5a98d6542c3971b85b"
+    },
+    {
+      "path": "ops/backup/scheduled-dump.sh",
+      "bytes": 3389,
+      "sha256": "5f9553e84af09242b7f379a76831010cc373d195b472c3253bf549b8ce3154d3"
+    }
+  ]
+}

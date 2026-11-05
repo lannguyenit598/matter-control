@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/core/domain/matter",
+    "-run",
+    "^TestIntakeMissingOutcomeCannotBeFinalVerified$"
+  ],
+  "cwd": "/private/tmp/mc-bf-outcome-probe-oyd52d1c",
+  "start_utc": "2026-10-30T07:59:57.202002+00:00",
+  "end_utc": "2026-10-30T07:59:57.267952+00:00",
+  "exit": 1,
+  "interpretation": "Proposed safe final-outcome assertion; failure is the explicitly retained D-BF1 case, not an unexpected failure of the existing aggregate contract"
+}

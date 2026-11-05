@@ -1,0 +1,231 @@
+{
+  "identity": "Actual OpenCode independent QA (provider opencode, model glm-5.3-flash-free, OpenCode harness). No impersonation of Claude Code, Codex, ZCode or Antigravity.",
+  "task": "MC-OPENCODE-ADR006-INDEPENDENT-TESTING-20261030",
+  "addendum": "MC-OPENCODE-ADR006-PORTABILITY-RETURN-ADDENDUM-20261030",
+  "candidate": {
+    "repo": "codex/unified-project-flow",
+    "head": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+    "author_base": "20feedbf06c859a9806055d609f5b132fe8bb086",
+    "identity_rule": "Case evidence below is pinned to HEAD blobs and to reviewer renders produced from those blobs on 2026-10-30T04:10-04:15Z. A concurrent primary writer changed ops/deploy and backend config in the worktree on 2026-10-31T15:17-15:29Z; those bytes are NOT the candidate under test and receive no verdict here (see drift-concurrent-writer.json).",
+    "input_repins": "portability-intake/input-repins.json (29/29 declared source entries re-pinned by this reviewer; 4 extra author receipts pinned by own hash only)"
+  },
+  "executed_counts": {
+    "port_cases_total": 12,
+    "executed": 6,
+    "not_run_scoped": 6,
+    "executed_ids": ["PORT-01", "PORT-06", "PORT-07", "PORT-08", "PORT-09", "PORT-12"],
+    "not_run_ids": ["PORT-02", "PORT-03", "PORT-04", "PORT-05", "PORT-10", "PORT-11"],
+    "prior_82_case_master_unchanged": true,
+    "note": "Executed means an independent reviewer run or a reproducible static extraction with retained argv/cwd/UTC/exit. Author receipts are cited as AUTHOR_EVIDENCE_CITED or recounted, never counted as my execution."
+  },
+  "cases": [
+    {
+      "case_id": "PORT-01",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "argv": [
+        "node --test ops/deploy/profiles.test.mjs",
+        "node node_modules/vitest/vitest.mjs run src/lib/mc/deploy-profiles.test.ts src/lib/mc/entry-route.test.ts --reporter=json"
+      ],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control and .../apps/frontend",
+      "utc": "2026-10-30T04:12:02Z (both runs)",
+      "exit": "0 (both runs)",
+      "fixture": "none needed; local renderer tests and mocked Next config module; no provider",
+      "assertion": "Renderer suite 5/5 pass. App Hosting invariants 4/4 pass (durable/fail-closed/RUNTIME-only secrets, unsafe variants rejected, local secret files ignored, Worker profile durable and secret-var free). Entry-route 2/2 pass (root redirect; Node cache features and Worker-only dynamic SSR profile). Static review of the changed import: adapter's CommonJS wrapper produced TS1192/TS2339 before the namespace-import fix and a clean TypeScript pass after (author r1/r2 logs cited), while the assertions still exercise the real next.config exports.",
+      "observed": "5/5, 4/4, 2/2 all pass with exit 0 on final candidate bytes; no skipped tests in these files.",
+      "execution_ref": "commands/portability-port01-renderer/{stdout.final,meta.json}; commands/portability-port01-fe-profile-tests/{stdout.final,json.copy.json,meta.json}",
+      "author_evidence_cited": "docs/testing/claude-deployment-portability-20261030-r1/receipts/apphosting-adapter-build.log (TS1192 pre-fix) and apphosting-adapter-build-r2.log (clean TypeScript post-fix)",
+      "source_pin": "HEAD:ops/deploy/profiles.test.mjs; HEAD:apps/frontend/src/lib/mc/deploy-profiles.test.ts; HEAD:apps/frontend/src/lib/mc/entry-route.test.ts; HEAD:apps/frontend/next.config.ts"
+    },
+    {
+      "case_id": "PORT-02",
+      "status": "NOT_RUN",
+      "evidence_class": "NOT_RUN",
+      "assertion": "Four end-to-end profile combinations (Worker+CloudRun-shaped, Worker+VM-shaped, AppHosting-adapter/Node+CloudRun-shaped, Node+VM-shaped) with pinned artifacts and the same Go image were not independently re-executed.",
+      "observed": "Partial coverage only: both backend profiles were rendered and parsed (PORT-06/PORT-08) and the author's four smoke receipts were recounted, not rerun (PORT-12). Recounting author assertions is not a substitute for this case.",
+      "execution_ref": "coverage links: PORT-06, PORT-08, PORT-12",
+      "skipped_reason": "Heavy multi-runtime harness; the live worktree became a moving target during the session (concurrent remediation), so running it now would test an unpinned candidate rather than the Claude delta."
+    },
+    {
+      "case_id": "PORT-03",
+      "status": "NOT_RUN",
+      "evidence_class": "NOT_RUN",
+      "assertion": "Same-origin host swap with the same DB/keyring keeps the session; changed origin/issuer/client refuses the old namespace; cross-user cache/data negative; a new process (not merely a new JS object) is exercised.",
+      "observed": "Not executed by this reviewer. Author smoke receipts include restart/second-instance checks, but those are AUTHOR_EVIDENCE_CITED and were not rerun.",
+      "execution_ref": "author evidence only: docs/testing/claude-deployment-portability-20261030-r1/receipts/smoke-*.json",
+      "skipped_reason": "Requires a multi-instance FE harness; not started because the candidate bytes drifted mid-session."
+    },
+    {
+      "case_id": "PORT-04",
+      "status": "NOT_RUN",
+      "evidence_class": "NOT_RUN",
+      "assertion": "A stale old-build Server Action submitted to the new build is refused without a write; actual error/UI recovery observed without assuming a universal 409.",
+      "observed": "Not executed. Author smoke receipts include foreign-origin and same-origin Server Action checks, but not a stale old-build action against a new build.",
+      "execution_ref": "none",
+      "skipped_reason": "Requires two FE builds and a browser/HTTP driver; not available in the permitted local stage."
+    },
+    {
+      "case_id": "PORT-05",
+      "status": "NOT_RUN",
+      "evidence_class": "NOT_RUN",
+      "assertion": "Synthetic sentinels in a tracked-forbidden file, an ignored app-root file and builder/runtime env; inspect the complete App Hosting standalone/server/client artifacts and the git source inventory; confirm a release guard refuses forbidden inputs.",
+      "observed": "Not executed independently. Author evidence does show one real copy: .next/standalone/.dev.vars in the App Hosting adapter build (aba-markers.json), no sentinel hits in .open-next, and a Worker build guard refusing a runtime secret in .env.local. Those are author-run and do not prove the complete deployable artifact is clean. A new untracked scripts/release-preflight.mjs appeared in the live worktree at 2026-10-31T15:28Z during this session; it is unreviewed and untested here, and is outside the candidate identity.",
+      "execution_ref": "author evidence cited: receipts/aba-markers.json, receipts/aba-a0-worker-guard.log, return.md sections 27/56",
+      "skipped_reason": "A full App Hosting standalone artifact and git inventory sentinel scan was not run; PI-03 therefore remains open, not closed by this refusal to infer."
+    },
+    {
+      "case_id": "PORT-06",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "argv": [
+        "node ops/deploy/profiles.mjs cloud-run <own synthetic values sa1> <owned render dir>",
+        "node ops/deploy/profiles.mjs cloud-run <own synthetic values sa2> <owned render dir>",
+        "node ops/deploy/profiles.mjs compute-engine <own synthetic values> <owned render dir>",
+        "PyYAML safe_load over rendered service.yaml, migrate-job.yaml, cloud-init.yaml"
+      ],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+      "utc": "2026-10-30T04:14:35Z-04:14:36Z",
+      "exit": "0 (all three renders); parser block exit 0",
+      "fixture": "reviewer-owned qa-values with .invalid hostnames, synthetic secret NAMES only, pinned synthetic digest; no provider calls, no real credentials",
+      "assertion": "Trace serving vs migration identity and migration-secret references; reproduce the source gap where one SERVICE_ACCOUNT drives both resources; confirm the serving container is not configured with MC_MIGRATE_DATABASE_URL by default.",
+      "observed": "Two cloud-run renders from two different SERVICE_ACCOUNT values each produced service.serviceAccountName == job.serviceAccountName (equal:true per render): the template exposes exactly one identity key, so a render cannot express separate serving/migrator identities. The job's env includes MC_MIGRATE_DATABASE_URL (secret ref); the serving container's env set does not. The rendered migrate-job also lacks a listener and uses args [migrate]. This confirms PI-02 structurally. Real IAM permission negatives remain NOT_RUN.",
+      "execution_ref": "commands/portability-port06-08-render/{stdout.final,meta.json}; portability-intake/renders/{cloud-run-sa1,cloud-run-sa2,compute-engine}/; portability-intake/port06-08-render-matrix.py",
+      "source_pin": "HEAD:ops/deploy/cloud-run/{service.yaml,migrate-job.yaml}; HEAD:ops/deploy/profiles.mjs; HEAD:ops/deploy/compute-engine/cloud-init.yaml",
+      "finding": "PI-02 CONFIRMED (structural identity/secret-boundary gap, P2)."
+    },
+    {
+      "case_id": "PORT-07",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "argv": ["bash docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/port07-secrets-probe.sh"],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+      "utc": "2026-10-31T15:25:51Z-15:25:52Z",
+      "exit": "0 (case runner); inner branches: fail_mid exit 1, empty_value exit 0, stale_ok exit 0, stale_fail exit 1",
+      "fixture": "actual rendered fetch-secrets.sh extracted into /private/tmp/mc-opencode-adr006-qa-secrets-20261030; /run paths redirected to owned scratch; /usr/bin/docker replaced by a stub that emits synthetic values or fails/empties at a chosen call; no metadata server, no Secret Manager, no root-path writes",
+      "assertion": "Fail-closed on a mid-fetch failure with no partial secret files; behavior on an empty-success fetch; previous files survive a later failed fetch; restrictive modes; no secret values in stdout/stderr.",
+      "observed": "fail_mid: exit 1, mcapi-secrets.env and api-key.json absent, dir 0700, no secret in output. empty_value: exit 0, env file written with MC_R2_SECRET_ACCESS_KEY= (empty), key file 0400, dir 0700; the app refuses an empty R2 value at startup (static check product.go:149-155), so this fails closed at config load rather than at fetch. stale_ok then stale_fail: previous env file survives unchanged after the failed run (same sanitized content), key file remains 0400. Scan: 11 files, no known synthetic secret outside the three intended private artifacts (mcapi-secrets.env, migrate-secrets.env, api-key.json).",
+      "adaptations_recorded": [
+        "/run/mattercontrol -> owned scratch",
+        "/usr/bin/docker -> stub (supported fetch boundary)",
+        "install -o 65532 -g 65532 dropped (no uid 65532 on macOS); key dir 0500 -> 0700 to reproduce root's write capability",
+        "chown 65532:65532 -> no-op",
+        "fresh run dir before the stale scenario because a non-root rerun cannot overwrite its own 0400 key file (COS runs as root)"
+      ],
+      "execution_ref": "commands/portability-port07-secrets/{stdout.final,stderr.final,meta.json}; portability-intake/port07-secrets-probe.sh",
+      "source_pin": "HEAD:ops/deploy/compute-engine/cloud-init.yaml (rendered copy pinned at renders/compute-engine/cloud-init.yaml)",
+      "finding": "No fail-open found at the fetch layer. Stub test only: not COS, metadata-server, Secret Manager IAM or root-ownership proof."
+    },
+    {
+      "case_id": "PORT-08",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "argv": [
+        "PyYAML safe_load over rendered service.yaml, migrate-job.yaml, cloud-init.yaml and apps/frontend/apphosting.yaml",
+        "docker run --rm --network none -v <owned Caddyfile>:/etc/caddy/Caddyfile:ro caddy@sha256:eb4d35b7... caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile"
+      ],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+      "utc": "2026-10-30T04:14:35Z (parse); 2026-10-31T15:23:58Z-15:24:04Z (caddy validate)",
+      "exit": "0 (parse and validate)",
+      "fixture": "rendered files from reviewer-owned synthetic values; local digest-cached public caddy image; --network none; no retained container state",
+      "assertion": "Real parser accepts every rendered YAML and the checked App Hosting YAML; Caddy configuration validates with networking disabled; parsing/validation is separated from certificate issuance, firewall, systemd, COS reboot and journald.",
+      "observed": "All four YAML files parse (top-level keys present). Rendered cloud-init starts with #cloud-config. Caddy validate: exit 0, stdout 'Valid configuration' (only a cosmetic 'not formatted' warning). The retained author receipt says caddy_validate 'Valid configuration', so the return's NOT_RUN prose 'caddy validate not run' is the inaccurate clause (PI-04 erratum).",
+      "execution_ref": "commands/portability-port06-08-render/{stdout.final,meta.json}; commands/portability-port08-caddy-validate/{stdout.final,meta.json}; portability-intake/port08-caddy-validate.py",
+      "not_run_sublegs": ["TLS certificate issuance/renewal", "VM firewall", "systemd supervision/restart", "COS reboot/update", "journald/log retention", "cloud-init execution on a real VM"],
+      "finding": "PI-04 ERRATUM CONFIRMED: validate did run and passed; keep TLS/systemd/COS NOT_RUN."
+    },
+    {
+      "case_id": "PORT-09",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_STATIC_CHECK",
+      "argv": ["python3 docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/port09-ttl-compare.py"],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+      "utc": "2026-10-31T15:29:31Z",
+      "exit": "0",
+      "fixture": "git HEAD blobs and reviewer-pinned renders; no worktree reads for source values, no provider",
+      "assertion": "Compare the 15s source/template value with the 30s approved setting and state the auth-cache delay accurately, distinct from Matter-membership reauthorization and JWKS.",
+      "observed": "ADR-004 row 4 approves MC_OIDC_CACHE_TTL=30s (line 16). Candidate HEAD: Go default 15s (product.go:104), config test asserts 15s (product_test.go:28), cloud-run service template 15s, cloud-init 15s, both reviewer renders 15s. all_equal=false; approved != candidate. The candidate's 15s is shorter than approved (not a weaker revocation window, but an approval/configuration mismatch, P2). Final regression must exercise the corrected profile at 30s. Semantics: the cache bounds IdP-revoked token acceptance; Matter-membership checks are a separate PostgreSQL authorization path, and JWKS rotation is separate again.",
+      "execution_ref": "commands/portability-port09-ttl/{stdout.final,meta.json}; portability-intake/port09-ttl-compare.py",
+      "source_pin": "HEAD:apps/backend/internal/config/{product.go,product_test.go}; HEAD:ops/deploy/cloud-run/service.yaml; HEAD:ops/deploy/compute-engine/cloud-init.yaml; docs/architecture/adr/ADR-004-...md line 16",
+      "finding": "PI-01 CONFIRMED for the candidate under test (P2). Post-session drift observation: the live worktree now shows 30s in product.go/product_test.go and both templates, i.e. an in-progress remediation by another owner, not reviewed or approved here."
+    },
+    {
+      "case_id": "PORT-10",
+      "status": "NOT_RUN",
+      "evidence_class": "NOT_RUN",
+      "assertion": "Loaded SIGTERM and bounded client abort through both BE profiles with byte/hash/row counts and no extra version; slow-consumer/backpressure timeout probe.",
+      "observed": "Not executed by this reviewer. Author drain receipts exist (Cloud Run-profile 201, stop 3.3s; VM-profile graceful), but they are AUTHOR_EVIDENCE_CITED and were not rerun; Docker graceful-stop would not prove Cloud Run scale-in or systemd supervision either.",
+      "execution_ref": "author evidence only: receipts/drain-cloudrun.json, receipts/drain-vm.json, receipts/measure-worker-cloudrun-r1.json",
+      "skipped_reason": "Requires building/running both backend profiles with owned fixtures; deferred because the live worktree became a moving target mid-session."
+    },
+    {
+      "case_id": "PORT-11",
+      "status": "NOT_RUN",
+      "evidence_class": "NOT_RUN",
+      "assertion": "Aggregate connection bounds for Go and BFF plus rolling instances; memory under concurrent near-25MiB requests and large pending imports.",
+      "observed": "No independent measurement was executed. Static source facts only: Go sets pgx MaxConns=10 (apps/backend/internal/app/product.go:88) and the cloud-run example uses MAX_INSTANCES=3, i.e. an intended 30-connection aggregate bound before rolling overlap; containerConcurrency=10 and memory=512Mi; the served upload path buffers up to 25MiB, so 10 x 25MiB = 250MiB plus runtime overhead is the stated local bound. The BFF durable state uses a pg Client (one short connection per transaction), not a pool, with App Hosting maxInstances=2. None of these numbers were measured under load; rolling-instance overlap is unbounded in the templates beyond maxScale. The return's RSS/wall-time figures are author measurements and, as the author notes, Wrangler/workerd parent RSS is not isolate memory and wall time is not billed CPU. D7 numeric workload/retention/RPO/RTO remain proposed and are not approved as QA.",
+      "execution_ref": "author evidence only: receipts/measure-worker-cloudrun-r1.json",
+      "skipped_reason": "Requires a load/concurrency harness against pinned instances; not run on the drifting worktree."
+    },
+    {
+      "case_id": "PORT-12",
+      "status": "PASS",
+      "evidence_class": "INDEPENDENT_EXECUTION",
+      "argv": [
+        "python3 .../portability-intake/port12-recount.py",
+        "node node_modules/vitest/vitest.mjs run src/lib/oidc src/features/data-transfer/durable-attempts.test.ts src/test --reporter=json --outputFile=.../json.copy.json"
+      ],
+      "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control and .../apps/frontend",
+      "utc": "2026-10-30T04:10:53Z (recount); 2026-10-30T04:11:11Z-04:11:19Z (composition)",
+      "exit": "0 (both)",
+      "fixture": "author receipts read as data; reviewer composition run with owned PostgreSQL DSN via dsn.env (PG fixture container, synthetic)",
+      "assertion": "Recount author checks/tests by actual identities; show that 174 in 13 files is a mixed suite with PG enabled, not 174 SQL integration tests; preserve failed/overwritten receipt disclosures; map substitutions; re-pin new reviewer probes/output.",
+      "observed": "Four declared smokes recount exactly: 23/0, 21/0, 22/0, 22/0 (88 assertions across 4 executions, distinct harness runs, not 88 unique requirements). Durable suite: 174 passed / 13 files; my own composition reproduced exactly 174 in 13 files: src/test 91 (9 files), src/lib/oidc 78 (3 files), durable-attempts 5. PG-gated subset: durable-state.test.ts 9 + durable-attempts describe.skipIf 3 = 12 tests; without MC_BFF_TEST_DATABASE_URL those 12 would not run. Failed/overwritten receipts inventoried: 7 failed smoke JSON + 1 note under receipts/failed/, including the disclosed be-cloudrun-start rewrite and profile-substitutions-run1.json. Substitutions recorded for cloud-run/VM smoke shapes.",
+      "execution_ref": "commands/portability-port12-recount/{stdout.final,meta.json}; commands/portability-port12-durable-composition/{stdout.final,json.copy.json,meta.json}; portability-intake/port12-recount.py",
+      "source_pin": "docs/testing/claude-deployment-portability-20261030-r1/receipts/ (read-only, hashed in portability-intake/input-repins.json)"
+    }
+  ],
+  "pi_adjudications": [
+    {
+      "id": "PI-01",
+      "verdict": "CONFIRMED",
+      "priority": "P2",
+      "basis": "Independent HEAD-blob extraction: ADR-004 approves 30s; Go default 15s; config test asserts 15s; both deployment templates 15s; both reviewer renders 15s. commands/portability-port09-ttl.",
+      "closure_required": "Restore 30s consistently (code default, test, both templates) and run final regression at the corrected profile. A new pin and rerun are required for any corrected source; no approval is implied by a live worktree edit.",
+      "next_owner": "Backend/FE primary implementation owner (per latest PO amendment) + Codex intake for re-pin; independent QA rerun after the corrected source is pinned."
+    },
+    {
+      "id": "PI-02",
+      "verdict": "CONFIRMED",
+      "priority": "P2",
+      "basis": "Independent render from one values file: service and migrate job share the same SERVICE_ACCOUNT placeholder (equal:true), and the renderer exposes only one identity key. The job holds MC_MIGRATE_DATABASE_URL; the serving container does not. Omitting the env var from serving is not an IAM/secret-permission boundary. Real IAM negatives NOT_RUN.",
+      "closure_required": "Provide a separately scoped migrator identity (distinct service account), a secret policy that only that identity can read the migration secret, and a negative verification plan to run under provider authorization. Quote the exact IAM test commands/results when authorized.",
+      "next_owner": "Backend/DevOps (Cloud) owner; provider-negative execution remains blocked on PO authorization."
+    },
+    {
+      "id": "PI-03",
+      "verdict": "OPEN / PARTIALLY CONFIRMED",
+      "priority": "P1 acceptance risk",
+      "basis": "Author sentinel evidence (aba-markers.json) shows .next/standalone/.dev.vars copied into the App Hosting standalone bundle in one build, no .open-next hits, and a Worker build guard refusing a runtime secret in .env.local. That is author-run and partial: it does not inspect a complete final server/client artifact plus git inventory with independent synthetic sentinels, and at candidate time no release preflight rejected forbidden inputs. I did not run PORT-05, so the risk stays open rather than being closed or overstated as a live leak.",
+      "closure_required": "Build an App Hosting standalone artifact with synthetic sentinels in (a) a tracked-forbidden file, (b) an ignored app-root file, (c) builder/runtime env; scan the complete artifact and git inventory; require a release preflight that fails on forbidden inputs (and --require-artifacts in CI). The untracked release-preflight.mjs observed at 15:28Z is a candidate remediation only; it must be reviewed, pinned and independently exercised.",
+      "next_owner": "FE primary implementation owner + Codex intake; independent QA rerun of PORT-05 after the guard is committed and pinned."
+    },
+    {
+      "id": "PI-04",
+      "verdict": "ERRATUM CONFIRMED (author receipt supports validate PASS)",
+      "priority": "P3",
+      "basis": "Retained receipts/yaml-caddy-validate.out records caddy_validate 'Valid configuration'; my own --network none validate against the rendered Caddyfile exits 0 with 'Valid configuration'. The return's checks table is right; its NOT_RUN prose clause 'caddy validate not run' is the inaccurate statement. Add an erratum; do not rewrite historical receipts. TLS issuance, firewall, systemd/COS runtime and journald remain NOT_RUN.",
+      "closure_required": "Documentation erratum only; no product change. Keep the provider/runtime legs explicitly NOT_RUN.",
+      "next_owner": "Author (Claude Code) for erratum text; Codex intake to record it."
+    }
+  ],
+  "coverage_links": [
+    "PORT-01 renderer/type invariants do not duplicate any of the 82 master cases; no counts promoted.",
+    "PORT-06 render/parse legs share the rendered artifacts with PORT-08 but assert different properties (identity/secret paths vs parser/Caddy validity); not double-counted.",
+    "PORT-12 recount does not promote the four author smoke executions into independent runtime PASS; it only validates accounting.",
+    "No FINAL readiness case is promoted; the 24 FINAL cases and 6 PROVIDER cases retain their prior status."
+  ],
+  "drift": {
+    "record": "portability-intake/drift-concurrent-writer.json",
+    "summary": "During this session a concurrent primary writer modified ops/deploy/{profiles.mjs,profiles.test.mjs,cloud-run/service.yaml,cloud-run/migrate-job.yaml,compute-engine/cloud-init.yaml,cloud-run.values.example.json}, apps/backend/internal/config/{product.go,product_test.go}, added an untracked apps/frontend/scripts/release-preflight.mjs, and modified many unrelated P0 backend/frontend files. Latest observed mtimes 2026-10-31T15:17-15:29Z. The changes appear to remediate PI-01 (30s), PI-02 (MIGRATOR_SERVICE_ACCOUNT + split fetch script) and PI-03 (release preflight). They are uncommitted, unreviewed and untested by me; no verdict is issued on them. My case evidence remains pinned to HEAD 0de3e5d and the 2026-10-30 renders."
+  }
+}

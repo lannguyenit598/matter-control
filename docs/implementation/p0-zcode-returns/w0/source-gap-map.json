@@ -1,0 +1,123 @@
+{
+  "task": "MC-P0-ZCODE-DELIVERY",
+  "version": "W0-V2",
+  "generated_utc": "2026-10-26T17:20Z",
+  "mapping_basis": {
+    "coverage_source": "docs/testing/p0-zcode-plan-20261026/coverage.json (d3bd6927…, hash-verified)",
+    "source_state": {
+      "apps_backend": {
+        "provenance": "import of /private/tmp/mattercontrol-backend-be01, branch codex/mc-be-01 HEAD 136eae6ad403ae3ede797faf6a0d6179c3b95685 + reviewed staged R1 patch 33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e; 137 files; uncommitted import",
+        "accepted_status": "source review PASS_WITH_LIMITATIONS for the exact snapshot; NO accepted corrected commit exists; Mimosa blocks normal commit (BLOCKED_NO_DISPOSITION_INTERFACE, maintainer resolution pending)"
+      },
+      "apps_frontend": {
+        "provenance": "import of /private/tmp/mc002-inta-fe, clean codex/mc-002-inta-fe at 3e5a642479acb789eb210e73fba956f3e85082e3; 323 files; uncommitted import",
+        "accepted_status": "Task/demo template baseline; no completed MatterControl product UI inferred"
+      },
+      "tools_inta_harness": "48cc03e949d66fc47a7d304413621eb79804e6c1; 25 files; temporary transport harness, excluded from product output"
+    },
+    "read_method": "hash-verified declared pins; one Semble query on apps/backend returning symbol chunks with exact paths/lines; directory listings; pinned architecture receipts (backend-http-preparation.md BG-01..08 citations); no code execution",
+    "status_vocabulary": {
+      "PARTIAL_SOURCE": "some supporting source exists in apps/backend (BE01 spine) but capability is not complete",
+      "ABSENT": "no supporting product source exists in apps/backend or apps/frontend",
+      "TEMPLATE_ONLY": "only reusable template/demo code exists in apps/frontend"
+    }
+  },
+  "cross_cutting_existing": {
+    "backend": [
+      "internal/core/domain/matter/access.go — workspace/matter membership and role checks used inside command transactions and read snapshots (per BE01 review; zero key-age policy seam at access.go:152-162 is a disclosed BE01 test seam, not a product default)",
+      "internal/core/domain/matter/identity.go — typed ids (MatterID, RequirementID, ActorID, IdempotencyKey, RequestHash)",
+      "internal/core/domain/matter/requirement.go — Requirement with five state axes (execution, dependency, verification, verificationApplicability, proofEpoch, revision), RequirementCreatedEvent/Result/Read types (:144-175)",
+      "internal/core/port/matter.go — CreateRequirementCmd/GetRequirementQuery, MatterService (CreateRequirement/GetRequirement only), RecordIDGenerator (:1-42); ActorID is a trusted calling identity — 'this slice proves membership/role enforcement, not authentication'",
+      "internal/core/service/matter_service.go — CreateRequirement transactional spine (append event, store receipt, complete matter; :178-221) and authorized REPEATABLE READ READ ONLY snapshot read",
+      "internal/core/policy/policy.go — retention/key-age policy types",
+      "internal/adapter/outbound/postgres/{mcsqlc matter.sql.go, matter_dto.go (:103-138 receipt snapshot codec), queries_mattercontrol/matter.sql, migrations_mattercontrol/0001_mattercontrol_core.sql (product users issuer+subject :9-14)}",
+      "internal/adapter/outbound/repotest/mattercontrol/{contract.go, memory.go (:74-117 in-memory store with FailAt/CommitRollback/CommitUnknown fault injection)}",
+      "internal/adapter/inbound/httpapi — native User REST only (user_handler.go, huma_adapter.go, openapi.go); NO matter/product routes registered (server.go:35,48,90 per backend-http-preparation BG-01)",
+      "internal/app + cmd/userapi — native composition; product matter_migrate.go has separate entry points (app.go:125,201-220; BG-03)"
+    ],
+    "frontend": [
+      "src/lib/auth.ts + auth-provider.ts — session seam scaffolding (REST mode fail-closed: resolveSession defaults null)",
+      "src/lib/api/backend.ts + http-client.ts — backend request client with unavailable-problem handling scaffold",
+      "src/lib/action-result.ts — ActionResult contract for server actions",
+      "src/features/tasks/** — Task demo feature (actions.ts server actions with requireSession + Zod pattern, schemas.ts, services/, components/)",
+      "src/app/(app)/{dashboard,tasks} — demo pages; src/components/** Atomic design system; src/config/navigation.tsx"
+    ],
+    "excluded": "tools/inta-harness/** is transport-harness evidence only and is never product source"
+  },
+  "requirements": [
+    { "id": "FR-001", "title": "Requirement vs Action", "wave": "P0-W2", "ac": ["AC-101", "AC-121", "AC-159"], "backend_status": "PARTIAL_SOURCE", "frontend_status": "TEMPLATE_ONLY",
+      "backend_existing": ["domain/matter/requirement.go typed Requirement with kind semantics", "service CreateRequirement/GetRequirement (matter_service.go:178-221)"],
+      "backend_missing": ["Action record type + create/edit/assign/execution transitions (start/wait/complete) with state guards", "Requirement metadata/workstream fields", "actions table + queries", "kind-mismatched access rejection on all new routes", "HTTP endpoints (none exist)"],
+      "frontend_missing": ["Requirement/Action create/edit/detail surfaces", "distinct visual Requirement≠Action semantics"],
+      "note": "BE01 proves create/read of one Requirement kind only; per plan 'FR-001 partial' is scheduled at W1 (one create/read path) and completed at W2." },
+    { "id": "FR-002", "title": "Milestones", "wave": "P0-W2", "ac": ["AC-102", "AC-141"], "backend_status": "PARTIAL_SOURCE", "frontend_status": "TEMPLATE_ONLY",
+      "backend_existing": ["matter header with boundary due semantics: ErrBoundaryDue exists (service refuses after authorization per BE01 R1 fix)"],
+      "backend_missing": ["milestone designation (OWNER-only) + required-prerequisite edges", "milestone listing/read", "BoundaryDue policy composition beyond the single boundary command"],
+      "frontend_missing": ["milestone views/controls"] },
+    { "id": "FR-003", "title": "Next Action", "wave": "P0-W2", "ac": ["AC-103", "AC-144"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["deterministic Next Action computation (causal blocker → permitted next step), read endpoint"],
+      "frontend_missing": ["Next Actions queue UI (design concept exists in MC-003A artifacts, no implementation)"] },
+    { "id": "FR-004", "title": "Waiting On", "wave": "P0-W2", "ac": ["AC-104", "AC-130"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["wait states with external-party attribution, distinct from blocked", "read endpoint"],
+      "frontend_missing": ["Waiting On view with internal follow-up owner without access grant"] },
+    { "id": "FR-005", "title": "Dependencies and Blocker Logic", "wave": "P0-W2", "ac": ["AC-105", "AC-122", "AC-123", "AC-124", "AC-125", "AC-146"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_existing": ["dependency axis field exists on Requirement domain type (BE01 initial state READY)"],
+      "backend_missing": ["dependency edge add/remove with graph/gate validation, cycle prevention, cross-Matter rejection", "reblocking preserves execution/history", "ordinary-edge vs milestone-prerequisite distinction"],
+      "frontend_missing": ["causal blocker navigation"] },
+    { "id": "FR-006", "title": "Evidence Requirements", "wave": "P0-W3", "ac": ["AC-106", "AC-127"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["typed criteria on versions, claims/assessment/dispute/expiry/reversal model"],
+      "frontend_missing": ["evidence review UI"] },
+    { "id": "FR-007", "title": "Evidence Verification", "wave": "P0-W3", "ac": ["AC-107", "AC-121", "AC-126", "AC-127", "AC-140"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["independent verifier flow (designated verifier, not submitter), verify/reject/dispute/challenge commands", "submitter-cannot-self-verify enforcement"],
+      "frontend_missing": ["verification surfaces"] },
+    { "id": "FR-008", "title": "Event History", "wave": "P0-W1", "ac": ["AC-108", "AC-136", "AC-149", "AC-153"], "backend_status": "PARTIAL_SOURCE", "frontend_status": "TEMPLATE_ONLY",
+      "backend_existing": ["RequirementCreatedEvent appended in every create tx (obligatory history, matter_service.go:178-221)"],
+      "backend_missing": ["event read API (append-only, scoped, paginated — F-10 B3 binding candidates pending adoption)", "events for membership/admin actions", "security-log separation"],
+      "frontend_missing": ["history view with provenance"] },
+    { "id": "FR-009", "title": "Matter Control Room", "wave": "P0-W5", "ac": ["AC-109", "AC-137"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["scoped consistent snapshot/overview/readiness/gaps/causal reasons/change feeds (F-08 gap-grain classifier candidates pending adoption)"],
+      "frontend_missing": ["Control Room per selected D-UX01..04 system (concept-only today)", "unavailable-never-zero/ready states"] },
+    { "id": "FR-010", "title": "My Actions", "wave": "P0-W2", "ac": ["AC-110", "AC-144", "AC-147"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["assignee-scoped action queries across matters with current-rights recheck"],
+      "frontend_missing": ["My Actions view"] },
+    { "id": "FR-011", "title": "Operational Grid", "wave": "P0-W2", "ac": ["AC-111", "AC-139", "AC-150"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["grid query contract (filter/sort/pagination, five-state axes in rows)"],
+      "frontend_missing": ["keyboard-editable grid per selected design (comfortable/compact), 200% zoom, unsaved-draft negatives"] },
+    { "id": "FR-012", "title": "Bulk Editing", "wave": "P0-W6", "ac": ["AC-112", "AC-133", "AC-139"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["validated partial bulk with per-row permission/revision and idempotent batches/unknown-outcome recovery"],
+      "frontend_missing": ["per-row bulk results/reconciliation UI"] },
+    { "id": "FR-013", "title": "Excel/CSV Import", "wave": "P0-W6", "ac": ["AC-113", "AC-131", "AC-132", "AC-148"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["preview/mapping/confirm import, formula-injection resistance, bounds decisions (D-object/budget)"],
+      "frontend_missing": ["import wizard"] },
+    { "id": "FR-014", "title": "Excel Export", "wave": "P0-W6", "ac": ["AC-114", "AC-148", "AC-147"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["meaningful Excel export with rights recheck at retrieval, no hidden fields"],
+      "frontend_missing": ["export triggers/download"] },
+    { "id": "FR-015", "title": "Document Versions", "wave": "P0-W3", "ac": ["AC-115", "AC-128"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["document/version model, upload/download, current/superseded, promote-authoritative (OWNER), local object seam (production provider separate)"],
+      "frontend_missing": ["document review with exact-version provenance"] },
+    { "id": "FR-016", "title": "Regulatory Filing Lifecycle", "wave": "P0-W4", "ac": ["AC-116", "AC-129", "AC-145"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["filing package/cycle model (creation, supplements n+1, submission/receipt/authority-wait/response/outcome/reopen), F-10 nested-read/pagination binding adoption"],
+      "frontend_missing": ["filing timeline/package/cycle navigation"] },
+    { "id": "FR-017", "title": "External Parties", "wave": "P0-W2", "ac": ["AC-117", "AC-130"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["external party labels/contexts on matters/waits (reference labels per MVP boundary, no portal)"],
+      "frontend_missing": ["party views in wait/waiting-on contexts"] },
+    { "id": "FR-018", "title": "Simple Roles and Ownership", "wave": "P0-W1", "ac": ["AC-118", "AC-134", "AC-135", "AC-140", "AC-147", "AC-149"], "backend_status": "PARTIAL_SOURCE", "frontend_status": "TEMPLATE_ONLY",
+      "backend_existing": ["OWNER/EDITOR/VIEWER membership checks enforced inside command transactions and read snapshots (access.go; approved matrix docs/requirements/permission-matrix.md)", "product users table with issuer+subject (migrations 0001:9-14)"],
+      "backend_missing": ["verified identity resolution (no resolver exists — BG-01)", "workspace/matter administration endpoints (create matter, grant/revoke membership, verifier designation, last-owner protection)", "revocation recheck on every retrieval path", "sensitive uniform-denial responses + security audit trail exposure"],
+      "frontend_missing": ["real login/session against chosen IdP seam, scoped matter navigation, explicit denied/stale/unavailable states"] },
+    { "id": "FR-019", "title": "Delta-Based Status Brief", "wave": "P0-W6", "ac": ["AC-119", "AC-138"], "backend_status": "ABSENT", "frontend_status": "TEMPLATE_ONLY",
+      "backend_missing": ["deterministic delta draft vs explicit baseline/as-of with provenance"],
+      "frontend_missing": ["brief render/download"] },
+    { "id": "FR-020", "title": "Separate State Dimensions", "wave": "P0-W2", "ac": ["AC-120", "AC-121", "AC-139", "AC-142", "AC-143", "AC-160"], "backend_status": "PARTIAL_SOURCE", "frontend_status": "TEMPLATE_ONLY",
+      "backend_existing": ["five explicit axes on the Requirement type (execution/dependency/verification/verificationApplicability/proofEpoch+revision) preserved in BE01 domain"],
+      "backend_missing": ["state engines driving all axes (execution transitions, dependency propagation, proof epoch on reopen) — BE01 implements initial states only", "no derived-state invention without temporal evaluator (BG-06)"],
+      "frontend_missing": ["axis-distinct rendering (COMPLETED≠VERIFIED, WAITING≠BLOCKED) per selected design tokens"] }
+  ],
+  "golden_workflows": [
+    { "id": "GW-01", "ac": "AC-161", "wave": "P0-W7", "status": "NOT_RUN", "note": "transaction/restructuring chain; requires W1..W6 slices" },
+    { "id": "GW-02", "ac": "AC-162", "wave": "P0-W7", "status": "NOT_RUN", "note": "due diligence chain; requires W1..W6 slices" },
+    { "id": "GW-03", "ac": "AC-163", "wave": "P0-W7", "status": "NOT_RUN", "note": "regulatory filing chain; requires W1..W6 slices" }
+  ],
+  "nfr": { "ids": "NFR-001..014", "status": "NOT_RUN; NFR-002 (transport) has retained harness evidence only — never product evidence; security/reliability targets bind W1, performance AC-137 binds W5" },
+  "honest_summary": "20/20 mapped. Existing reusable backend = one typed Requirement create/read transactional spine with membership enforcement, receipt/idempotency, event append and fault-injectable repositories (strong W1 foundation). Existing frontend = clean template baseline with correct security posture but zero product features. Every FR needs HTTP endpoints; 14 of 20 FRs have no supporting backend logic beyond the domain types. No accepted corrected source commit exists; import is uncommitted; Mimosa maintainer resolution is the first unblocker."
+}

@@ -1,0 +1,79 @@
+# MatterControl P0 delivery plan — ZCode backend and frontend
+
+Prepared Local Codex on2026-10-26 for direct PO request and clarified scope: “Toàn bộ sản phẩm P0: lập roadmap backend + FE, triển khai từng đợt sau khi chốt các quyết định và thiết kế còn thiếu.” Coordination base/head a62d838791ba188838c4ff00b7b6e265ac775056, branch codex/unified-project-flow. Parent task MC-P0-ZCODE-DELIVERY; priority P0. Status **PLAN_PREPARED / W0_READY_NOT_DISPATCHED / FEATURE_WAVES_CONDITIONAL**. This is a delivery roadmap and bounded W0 assignment, not a claim that the existing Architecture/Design/STEP03B gates have passed.
+
+## Approach and scope
+
+Deliver all20approved P0 capabilities and all3Golden Workflows through integrated UI→REST→Go→PostgreSQL slices. ZCode is the intended implementation owner for backend and future product FE; Codex coordinates work, source/evidence and DevOps. Reuse BE01, approved requirements and selected design direction; do not rebuild those from scratch. Local acceptance and production release are separate milestones. Preserve14P1/7P2 as deferred; no P0 scope cut or stack replacement.
+
+In: typed Requirement/Action, explicit five-axis state, proof/version/filing/history, authorized operational views, grid/bulk/import/export and deterministic draft briefs. Out: external legal advice, automated signature/payment/transfer/e-filing, advanced P1/P2, unapproved cloud/paid services, automatic merge/push/deploy.
+
+Source destinations after accepted primary import base: apps/backend and apps/frontend; tools/inta-harness stays temporary and excluded from product output. Historical BE01/INT-A checkouts, A/B/X state and raw packets remain immutable. Current source import is uncommitted; no implementation can pretend governanceHEAD alone contains that source.
+
+## Current facts and reuse
+
+| Area | Existing evidence | Required next fact |
+|---|---|---|
+| Product scope | Approved20P0/FR-001..020, rules, permissions andAC-101..163; all3workflows retained | Revision-bound coverage ledger; never replace product evidence with harness evidence |
+| BE01 | Service-layer Requirement create/get, transactions/access/receipt/history, source review PASS_WITH_LIMITATIONS for136eae6+patch33297560 | Supported Mimosa disposition/rule correction and normal accepted corrected source/import base; no repeat commit/scan or evidence rewrite |
+| BE02/N1 | Document verdict retained; routing refresh confirmed | Adopt fixed representation shape/producers, error boundaries, canonical path/header policy, envelope, validator and one normative N1home |
+| FE | Next/React/Atomic template and selected UXdirection; no completed product UI | Scope-specific accepted design states/flows, typed product API and verified user session; never alias Task/User to legal records |
+| INT-A R5 | Antigravity author packet; ZCode source review prepared; actual stage preflight BLOCKED_CONTRACT_NOT_BINDING | Receive review, one precise correction assignment, then actual private stage and separate runtime cue; preserve51formal results |
+| Independent QA | OpenCode quota exhausted per PO; latest scoped R5review assigned ZCode | Reviewer must be nonauthor of exact changed source; future ZCode changes require another reviewer |
+| Direct delivery | No verified Codex→ZCode engineering route available; PATH zcode absent, historical bundled route failed | Manual full prompt delivery and actual acknowledgement; no DISPATCHED/EXECUTED claim from preparation |
+
+## Ownership and one-writer rules
+
+- ZCode owns future approved P0backend and product FE implementation, tests and repair returns. No product FE code is activated by this plan before its design/contract/readiness gates.
+- Preserve the current Antigravity R5task and author packet through intake; no competing FE rewrite while its review is outstanding. After exact return is accepted, Codex records the handoff cut and routes later feature/correction work once. Antigravity can independently review future ZCode FE changes only if it did not contribute to them.
+- ZCode may finish the already assigned independent review of Antigravity R5only while nonauthor. If it starts editing those assets, it stops acting as their independent reviewer and a different reviewer is assigned before acceptance.
+- Codex handles PM/BA, task activation, source base, synthetic fixtures, privacy, dependency stage, release evidence and nonauthor code review where competent and not source author. Actual Claude retains architecture contract authority; Human retains material rule/provider/cost/release decisions. OpenDesign direction/handoff and required design acceptance remain.
+- OpenCode may resume QA when quota actually permits; no automatic paid fallback or retry. Independent Codex/Claude/Antigravity can be assigned exact nonconflicted scope explicitly. If no qualified nonauthor is available, that gate stays REVIEW_BLOCKED; implementation report is not DONE.
+
+## Delivery waves
+
+Each wave is a contract, not a blanket executable instruction. Exact file lists, accepted base/hash, fixture/resource scope and reviewer are pinned at activation. Requirement/ACmapping is in [coverage](../testing/p0-zcode-plan-20261026/coverage.json). No early-slice or alpha badge means full MVP.
+
+| Wave | Concrete backend + FE deliverable | Dependencies / initial state | Acceptance and review |
+|---|---|---|---|
+| P0-W0 — readiness | Inventory actual BE/FEsource and completed returns; produce ONE source-gap map, ONE architecture/design decision matrix and ONE runnable W1contract with named paths/tests/reviewer | READY_NOT_DISPATCHED; read/hash/static/docs only; inputs available |20/20P0 mapped, blockers have authority/impact/options/recommendation, exact base status honest. Codex intake; architecture/PO decide actual trade-offs. No implementation/runtime inW0 |
+| P0-W1 — authenticated foundation | Reuse/complete BE01, product API/session/token seam, Workspace/Matter administration, roles, current authorization/history/receipt and one Requirement create/read path. FE login/session/scoped Matter navigation/create/detail/history; explicit denied/stale/unavailable states | Accepted corrected/import base; G2/INT-D02/03/09 and BE02wire contract adopted; relevant G3design; exact W1task READY. Currently BLOCKED_ON_GATES | FR-001partial/008/018 + NFRsecurity/reliability; real two-user/two-Matter revocation/foreign-scope/read/replay tests, no anonymous/shared token; resource bytes/ETag/idempotency negatives; independent review by nonauthor |
+| P0-W2 — daily operations | Typed Actions/Requirement metadata/workstreams, owner/due, dependencies/reopen, five states, milestones, parties/waits and deterministic Next Action/My Actions. FE operational Grid/detail with keyboard edit, filters, causal blocker navigation and history | W1accepted; state propagation/clock/concurrency contracts and operational-grid design accepted | FR-001/002/003/004/005/010/011/017/020; no cycle/cross-Matter/lost update; reblocking preserves execution/history; waiting≠blocked, completion≠verification; keyboard/200%zoom/unsaved-draft negatives |
+| P0-W3 — documents and proof | Version upload/download/current/superseded, version-scoped criteria, claims/assessment/dispute/expiry/reversal and independent verifier. FE document/evidence review with provenance and exact version | W2core accepted; selected local object boundary/production provider decisions separate; accepted criteria/gap classifier; secure file policy and design | FR-006/007/015 + FR-018; submitter cannot self-verify, forged version and revoked access denied, bytes/metadata/exports scoped, object failure compensated or explicitly unknown; no current-version substitution |
+| P0-W4 — filing | Manual filing package/signature observations/submission/receipt/authority wait/supplement/response/outcome/reopen with exact cycle/version links. FE timeline/package/cycle relation navigation | W3proof/version accepted; F10binding/nested-read/pagination/limits adopted; filing design accepted | FR-016 + waits/history; two supplement cycles/no-supplement/reject/withdraw/reopen, receipt≠approval and post-reopen proof epoch; complete authorized relation paging |
+| P0-W5 — Control Room and contexts | Scoped consistent snapshot/overview/readiness/gaps/causal reasons/changes plus basic Decision/Finding/Risk and contextual references. FE selected Enterprise Precision system, comfortable/compact, manager/triage/mobile/detail states | W2/W3/W4read contracts and F08gap grain accepted; selected design evidence accepted for scope | FR-009 plus integrated FR-001/002/003/004/005/006/007/008/010/011/016/017/020; unavailable never zero/ready; ≥4/5manager users answer approved task within10seconds underAC-137protocol; no static/mock substitute |
+| P0-W6 — efficient data and brief | Validated partial bulk, preview/mapping Excel/CSVimport, meaningful Excel export and deterministic draft delta. FE per-row results/reconciliation/provenance/download | W2edit contract/W5read boundary accepted; numeric import/export/admission/retention choices approved before claiming capacity; relevant design | FR-012/013/014/019; no macro/formula/link execution, formula injection resistance, revoked-rights access, idempotent batches/unknown-outcome recovery; source/criteria/version/provenance preserved |
+| P0-W7 — full local MVP acceptance | Integrated3Golden Workflows, regression/security/a11y/performance, actual full-product recovery and handover with exact commit manifest | W1..6reviewed and integrated; workload/latency/recovery acceptance budgets accepted; reviewer availability | AC-101..163coverage, AC-161/162/163end-to-end with checkpoint ledger, NFR-001..014actual evidence, all20P0 satisfied. Independent QA; critical/high findings resolved; accepted source commits. Production release remains G8/POseparate |
+
+Dependency graph: W0→W1→W2→W3→W4; W2+W3+W4→W5; W2+W5→W6; W1..W6→W7. Within an activated wave ZCode may prepare tests/DTO consumers against its adopted contract sequentially, without another permission question for every file. No parallel source writer shares its paths; review can inspect a frozen completed packet while author works on an independent activated slice.
+
+## Decisions to close once, by dependency
+
+| Gate | Must resolve concretely | Owner / blocks |
+|---|---|---|
+| Security/source | Actual supported Mimosa rule/interface change with receipt; normal commit conditions; accepted corrected BE01 + permitted imported primary source commit. No context switch or rewritten evidence | Maintainer/operator, Codex verifies; W1source base |
+| Product auth/wire | Actual identity/token/session boundary, authoritative issuer/subject mapping; fixed DTO presence/producer/null policy, public owner naming, 400/415/422mapping, command envelope, validator/provenance headers, path and create headers, N1normative home, retry/receipt policy | Claude prepares technical adoption; Human decides material choices; W1 |
+| UX | Selected direction already decided: no repeat visual alternatives. Finish scoped flow/component/state/keyboard/mobile/density/empty/error/permission design and independent acceptance; evidence gaps remain explicit | OpenDesign/design authority + Human material approval + nonauthor review; each FEwave |
+| State/filing/proof | Approved business rules stay; resolve remaining implementation grain/classifier/cycle binding/temporal fence and full authorized paging without new business limits | Architecture adoption/non-author QA; W2..5 |
+| File/data budgets | Local synthetic object seam; production object/provider separate; upload/read controls, import/export bounds and retention/deletion/legal-hold numbers before release commitments | Claude+Human, Codex feasibility; W3/W6/W7 |
+| Release feasibility | Actual production topology/adapter/Go+PostgreSQL compatibility/Cloudflare/$0cost evidence, workload/sizing/full backup restore/support | Claude+Codex+Human; blocks G8production, not every unrelated local task |
+
+W0 must consolidate these into one decision matrix with: exact source, approved/proposed/missing distinction, alternatives, recommended minimal option, compatibility/security/cost impact, decider, affected wave and receipt to unblock. Do not re-ask approved P0, OBD02..08/10/11, H5/W1local inputs, ARCH-Q3/Q5 or routine UXdirection decisions. Do not invent provider choice or numeric commitments.
+
+## Execution protocol and validation
+
+1. Preserve existing source/returns; pin actual task inputs. Distinguish new harmless dashboard drift from changed contract/source. Never modify instructions while an exact review is running merely to relabel a role; use this task-scoped authority supplement and retain old pins.
+2. W0 is immediately assigned read/hash/static preparation on manual delivery; output only its new planning directory. Runtime/feature waves remain conditional. Missing facts are bounded read tasks, not assumptions or a reason to restart all previous reviews.
+3. Activate W1..7only when an activation record names the gate receipts, accepted source SHA+manifest, owned paths, fixtures/commands, reviewer and acceptance subset. The PO has requested staged P0delivery; do not request approval for routine compatible implementation again once those conditions exist. Critical policy/provider/cost/design trade-offs and release still need their actual authorities.
+4. Implement the smallest complete slice with tests and affected docs together. Read component rules/skills; backend remains hexagonal Go/pgx/sqlc, frontend Atomic/features/strict session. No dependency upgrade/new architecture without a demonstrated need. Read installed library docs/Context7at implementation time.
+5. Run backend make check/race+JSON with separately verified synthetic PostgreSQLfixtures; enumerate actual test skips/no-test packages. Run FE pnpm check, then build/component/E2E/accessibility as change requires. Broad mocks cannot satisfy integrated persistence/auth/independent proof acceptance. Measure error/unavailable/revocation/restart/unknown writes and recovery with exact revisions.
+6. Return one compact immutable packet per completed wave: diff, named tests/ACresults, commands/cwd/UTC/exits/stdout/stderr/hashes, resource preservation/cleanup, traceability/known gaps. Independent reviewer returns findings once; author repairs exact findings. Re-review only changed/affected invariants, not a full historical reread loop.
+7. Stop only affected paths at unresolved gates; continue ready independent permitted work. Log WAITING_DECISION/REVIEW_BLOCKED/OUTCOME_UNKNOWN honestly. No automatic MC002DONE/Step03Bpass/P0complete from a report or mock count.
+
+Definition of full local P0complete: all20capabilities and3workflow contracts satisfied through real product UI/API/storage with current scoped rights, all required AC/NFRresults accepted, applicable UX/security/recovery evidence, no unresolved critical/high defect, revisioned code/evidence locatable and required normal commits accepted. Production-ready adds verified infrastructure/cost/adapter/recovery and explicit POrelease. No calendar estimate is fabricated; W0provides a range per wave with blockers/assumptions after source inventory, never a promised date.
+
+## Immediate action
+
+Deliver [the full ZCode prompt](handoffs/MC-P0-ZCODE-DELIVERY-PROMPT.md). ZCode acknowledges identity/current task and completes W0in one pass, including the W1activation contract and decision matrix; no product implementation until gates ready. Retain the already assigned R5review as a separate nonauthor task and do not duplicate it. Codex intakes W0and routes one concrete decision package. No direct ZCode route is verified here; this plan is READY_NOT_DISPATCHED.
+
+Skipped implementation/runtime/credentials/agent invocation/commits. Risk: unresolved source enforcement, auth/API/design and independent-review capacity affect actual completion; the roadmap does not waive them.

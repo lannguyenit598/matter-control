@@ -1,0 +1,44 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R5-SOURCE-REVIEW-ZCODE",
+  "parent_task": "MC-002-INTA-FE-VALIDATION-R5-SOURCE-REVIEW",
+  "actor": "Local Codex",
+  "prepared_at_utc": "2026-10-26T16:27:50.535714+00:00",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "authority": "Direct human: opencode đang hết quota. chuyển qua cho zcode review",
+  "quota_evidence": "PO_REPORTED; no quota probe or retry",
+  "review_owner": "actual ZCode, subject to nonauthor declaration for exact R4/R5 frontend changes",
+  "frontend_execution_owner": "actual Antigravity",
+  "backend_execution_owner": "actual ZCode (separate tasks; no self-review of authored backend)",
+  "coordination_stage_owner": "Local Codex",
+  "status": "READY_NOT_DISPATCHED",
+  "scope": "Unchanged read/hash/static R5frontend+actual blocked staging preflight; no runtime readiness or architecture/product gate approval",
+  "prior_assignment": "OpenCode R5 manual dispatch superseded prospectively; original prompt/manifest preserved",
+  "prior_manifest": {
+    "path": "docs/testing/inta-fe-validation-r5-intake/review-inputs.json",
+    "bytes": 6258,
+    "sha256": "45926a408a72773aa8043d8ef9667e0c4a59b338ec95f441604f25c580ebcd54"
+  },
+  "prior_prompt": {
+    "path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R5-SOURCE-REVIEW-PROMPT.md",
+    "bytes": 5639,
+    "sha256": "f2b909a17644eb280de4314f93bca0b105ab5450d55e2ef0099d24cada391338"
+  },
+  "prior_output_observation": [
+    {
+      "path": "docs/reviews/inta-opencode-fe-r5-source-review.md",
+      "exists": false
+    },
+    {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r5-source-review-20261026",
+      "exists": false
+    }
+  ],
+  "no_external_dispatch": true,
+  "no_runtime": true,
+  "no_model_or_provider_change": true,
+  "new_outputs": [
+    "docs/reviews/inta-zcode-fe-r5-source-review.md",
+    "docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/review-inputs.json",
+    "docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/checks-log.json"
+  ]
+}

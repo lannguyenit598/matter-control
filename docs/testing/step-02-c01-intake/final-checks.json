@@ -1,0 +1,41 @@
+{
+  "timestamp_utc": "2026-10-24T17:29:59.774697+00:00",
+  "json_files_checked": 26,
+  "review_packet_hashes_checked": 6,
+  "successful_review_executions": 5,
+  "failed_large_review_attempts": 1,
+  "export_list_hashes_checked": 18,
+  "links_checked": 103,
+  "common_secret_pattern_hits": [],
+  "C01_native_accepted": false,
+  "required_owner_changes": [
+    "F1test",
+    "F5doc499",
+    "F6rule57014"
+  ],
+  "E01_E02_E04": "CLOSED",
+  "E03": "PENDING corrected head/checks/review",
+  "M1": "NOT_REACHABLE_ON_CURRENT_ROUTES",
+  "runtime_DB_replay": false,
+  "codex_focused_named_passes": 66,
+  "owner_named_passes": 278,
+  "protected_files_unchanged": 59,
+  "source_head": "fd747ae11aad05bd98737bc91f6bd19894fd72e7",
+  "handoff": "PREPARED / WAITING_MANUAL_DISPATCH",
+  "privacy_limit": "patterns/sample-only; exact fixture-secret scan owner-asserted",
+  "whitespace_check": {
+    "full_staged_diff_check_exit": 2,
+    "warning_paths": [
+      "docs/testing/step-02-c01-intake/backend-fd747ae.diff",
+      "docs/testing/step-02-c01-intake/supplemental-owner-evidence/45-reqA.out",
+      "docs/testing/step-02-c01-intake/supplemental-owner-evidence/45-reqB.out",
+      "docs/testing/step-02-c01/21-fixture-manifest.log",
+      "docs/testing/step-02-c01/41-normal-ops.log",
+      "docs/testing/step-02-c01/42-outage.log",
+      "docs/testing/step-02-c01/45-pool-exhaustion.log"
+    ],
+    "qualification": "Verbatim raw evidence only: HTTP CRLF, original fixture network trailing space, unified-diff context indentation. No normalization of evidence bytes.",
+    "documentation_json_text_check_exit": 0,
+    "raw_artifacts_preserved": true
+  }
+}

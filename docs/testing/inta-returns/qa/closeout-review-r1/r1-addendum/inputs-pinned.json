@@ -1,0 +1,81 @@
+{
+  "task": "MC-002-INTA-QA-CLOSEOUT-R1",
+  "purpose": "New review input addendum for the OpenCode R1-addendum review of the actual Antigravity R1 return. Created in a NEW subdirectory because docs/testing/inta-returns/qa/closeout-review-r1/ was already occupied by a prior incomplete OpenCode attempt (review-inputs-addendum.json, pinned_at_utc 2026-10-26T07:45:00Z, author 'Actual OpenCode'). That prior file is preserved unmodified; nothing in this review overwrites it.",
+  "author": "Actual OpenCode (independent nonauthor reviewer), session 2026-10-26 R1-addendum",
+  "review_prompt_inputs": {
+    "addendum_prompt": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-R1-ADDENDUM-PROMPT.md",
+    "base_prompt": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-CLOSEOUT-REVIEW-PROMPT.md",
+    "codex_r1_addendum": {
+      "path": "docs/testing/inta-closeout-continuation/r1-review-addendum.json",
+      "sha256_computed": "e972eee9a3017b0dfd8ebc66c5d136702a861d382a0b5d5ae3018491a435c9b6",
+      "files_listed": 7
+    }
+  },
+  "base_repo": {
+    "branch": "codex/unified-project-flow",
+    "head_verified": "a62d838791ba188838c4ff00b7b6e265ac775056"
+  },
+  "pinned_hases_verified": [
+    {"path": "docs/reviews/inta-fe-validation-r1-antigravity-return.md", "sha256": "27a2a7e3a2de9f332c0562c95a3301ab67452d09925782f3813923da0755a555", "bytes": 14075, "status": "MATCH_PINNED_CODEX_ADDENDUM"},
+    {"path": "docs/reviews/inta-fe-validation-r1-intake.md", "sha256": "b3a677cda465a6631faff16b79f39d2f69f9217faaf93b70dac54d4060be238b", "bytes": 7780, "status": "MATCH"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/manifest.json", "sha256": "677cd24f61bae83ace965aa24c7d4783ec53d38b67a8d0af8309b592f043a2bb", "bytes": 14502, "status": "MATCH"},
+    {"path": "docs/testing/inta-fe-validation-r1-intake/checks.json", "sha256": "fed373b858ffbab6de4c384655731a957e284a253fedac87fca8a26f87be5545", "bytes": 27157, "status": "MATCH"},
+    {"path": "docs/testing/inta-fe-validation-r1-intake/execution.json", "sha256": "7e8ca27bc9e1ec1672fe2afc75e1d8446ca508d857923e8161b285c8cc8fcc89", "bytes": 1090, "status": "MATCH"},
+    {"path": "docs/testing/inta-fe-validation-r1-intake/additional-failclosed-probes.json", "sha256": "82a23090ff60720a34c8a998e0a7f4e81e899d20c3120c998f03642479f439f5", "bytes": 2702, "status": "MATCH"},
+    {"path": "docs/testing/inta-fe-validation-r1-intake/runner-language-probes.json", "sha256": "55989161185d7c736130b7d9217570f44356c1f67f6a30eaadde115e657e6d72", "bytes": 776, "status": "MATCH"}
+  ],
+  "frozen_original_22_input_manifest_check": {
+    "manifest_path": "docs/testing/inta-closeout-continuation/review-inputs.json",
+    "original_manifest_file_untouched": true,
+    "files_matching": 21,
+    "files_divergent": 1,
+    "divergent_file": {
+      "path": "docs/implementation/tasks/MC-002-INTA-QA-CLOSEOUT-R1.md",
+      "original_pin": "a58d400fc3b95bce6bacb0d7ab61cf493ad589f32ac1a9568ea60e163330490b",
+      "supersession_file": "docs/testing/inta-closeout-continuation/r1-current-context-supersession.json",
+      "supersession_previous_sha256": "a58d400fc3b95bce6bacb0d7ab61cf493ad589f32ac1a9568ea60e163330490b",
+      "supersession_current_sha256": "20f0ae7e15ac0f7fc05512a80a985c3b79c94d7623374d6898fd68de8c83acd7",
+      "actual_current_sha256": "20f0ae7e15ac0f7fc05512a80a985c3b79c94d7623374d6898fd68de8c83acd7",
+      "actual_current_bytes": 3284,
+      "disposition": "AUTHORIZED_DOCUMENTED_MUTABLE_CONTEXT_UPDATE (not silent drift); supersession pin verified against live bytes"
+    }
+  },
+  "r1_packet_verification": {
+    "manifest_claims": {"totalPayloads": 75, "totalPayloadBytes": 98873},
+    "verified": {"payloadCount": 75, "sumPayloadBytes": 98873, "missing": 0, "sizeMismatch": 0, "shaMismatch": 0}
+  },
+  "r1_runner_source_pins": [
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/guard-validator-r1.sh", "sha256": "104abf3fd2317095d69205ec63501f9e02f5040cf32d23a55bca60a491b9e55e", "bytes": 10823, "status": "RECOMPUTED_MATCH (prior-attempt pin, Codex checks.json owner/raw pins, and live bytes all equal)"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/guard_evaluator.py", "sha256": "d018f68f969ee08468c224c695fa37a5b9d646d24add114c7dd5636643a5737b", "bytes": 6711, "status": "RECOMPUTED_MATCH (prior-attempt pin, Codex execution.json input_evaluator pin, and live bytes all equal)"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/selfcheck-r1.py", "sha256": "f9432142802927fa3fd9f8a9b7268e6a047980b28ad38c879343dc2c52244827", "bytes": 10565, "status": "RECOMPUTED_MATCH"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/selfcheck-r1-results.json", "sha256": "be070bfcfe516a837308a682837e940def0a743b2d3533a42ea8fd07cda64599", "bytes": 7348, "status": "RECOMPUTED_MATCH"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/pre-listen-launcher-proposal.md", "sha256": "0a206d286aabe72851f353c9440893e37760745206254b0bc018b5f41c67f495", "bytes": 5703, "status": "RECOMPUTED_MATCH"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/dependency-isolation-plan.md", "sha256": "0c57caf669c109dcbbc14857a8804cd772bde5467984879dde64bb2b34a2983b", "bytes": 3896, "status": "RECOMPUTED_MATCH"},
+    {"path": "docs/testing/inta-closeout-continuation/r1-review-addendum.json", "sha256": "e972eee9a3017b0dfd8ebc66c5d136702a861d382a0b5d5ae3018491a435c9b6", "bytes": 2518, "status": "RECOMPUTED (Codex addendum itself; 7 listed file pins all independently verified)"}
+  ],
+  "prior_opencode_attempt_discrepancies_preserved": {
+    "review_inputs_addendum_json_path": "docs/testing/inta-returns/qa/closeout-review-r1/review-inputs-addendum.json",
+    "pinned_at_utc": "2026-10-26T07:45:00Z",
+    "r1_return_doc_shadow_recorded": "63d12ea9a45ff62950c3d3bda3c44d3c15084627194f0e59c9970d42c8db514f",
+    "live_bytes_sha256": "27a2a7e3a2de9f332c0562c95a3301ab67452d09925782f3813923da0755a555",
+    "live_bytes_match_codex_addendum_pin_20261026T063644Z": true,
+    "credential_pattern_scan_pin_malformed": {
+      "prior_recorded": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df5e282d6d661b26b",
+      "prior_recorded_length": 62,
+      "live_recomputed_sha256": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df8f5e282d6d661b26b",
+      "live_matches_r1_manifest_pin": true,
+      "note": "prior attempt's 62-hex string cannot be a valid sha256; byte-level live value independently recomputed here and matches the R1 packet manifest"
+    },
+    "referenced_pin_log": "NOT_PRESENT in docs/testing/inta-returns/qa/closeout-review-r1/ (the prior attempt's note cites a pin-log that does not exist there)",
+    "disposition": "Prior attempt recorded a different hash for the R1 return doc before its review stopped without other outputs. Current bytes equal the Codex-addendum pin, so this review relies on the Codex-pinned+independently-recomputed bytes and retains the prior discrepancy as unresolved provenance history, not as authority for any content claim."
+  },
+  "variant_evidence_identity": [
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/retained-variant-evidence/API_TOKEN_nonempty/stderr.log", "sha256": "12853f7e8196f6f79dc2d7430e55c11e16064e786480d1f4c9832b28494e7b15", "status": "MATCH guard-startup-subchecks-r1.json pin AND intake packet manifest pin (retained copy of prior execution artifact)"},
+    {"path": "docs/testing/inta-returns/frontend/validation-r1-20261026/retained-variant-evidence/API_TOKEN_nonempty/stdout.log", "sha256": "95c5943cb72adc76e3928fddb3fc9ecaa9e4e041f41158bb13c21a79679cc7ac", "status": "MATCH"},
+    {"path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_nonempty/stderr.log", "sha256_prefix_verified": "12853f7e8196f6f7", "status": "ORIGINAL ON-DISK /tmp COPY BYTE-IDENTICAL TO RETAINED COPY"},
+    {"path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_nonempty/stdout.log", "sha256_prefix_verified": "95c5943cb72adc76", "status": "ORIGINAL ON-DISK /tmp COPY BYTE-IDENTICAL"},
+    {"retained_variant_dirs": 22, "retained_variant_files": 66, "status": "22x{meta.json,stdout.log,stderr.log}; no observer.json in any variant dir (consistent with corrected 'all 22 observer files missing')"}
+  ],
+  "boundaries": "Read/hash/static inspection only. No owner/selfcheck/evaluator/runner script was executed by OpenCode in this review; no runtime, no source/config/dependency mutation, no commit, no provider/account/private-env access. Outputs confined to this new subdirectory and the NEW review markdown.",
+  "self_manifest_note": "This manifest excludes itself and the other r1-addendum outputs from its own hash list."
+}

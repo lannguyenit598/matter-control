@@ -1,0 +1,127 @@
+{
+  "task": "MC-003A.8A",
+  "utc": "2026-10-25T10:05:51.997615+00:00",
+  "check_type": "STATIC_DOCUMENT_AND_PROPOSED_FIXTURE_INTEGRITY_ONLY",
+  "status": "PASS",
+  "checks_passed": 53,
+  "checks": [
+    "branch and frozen contract baseline",
+    "no existing tracked source or contract changed",
+    "frozen input SHA/size docs/design/step-03a/handoff/step-03a-7/current-reviewed-read-set.json",
+    "frozen input SHA/size docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json",
+    "frozen input SHA/size docs/design/step-03a/handoff/step-03a-7/reference-resolution-delta.json",
+    "frozen input SHA/size docs/design/step-03a/handoff/step-03a-7/targeted-claude-review.md",
+    "frozen input SHA/size docs/design/step-03a/handoff/step-03a-7/reference-resolution-addendum.md",
+    "frozen input SHA/size docs/design/step-03a/handoff/step-03a-7/reference-resolution-intake.md",
+    "frozen input SHA/size docs/requirements/prd.md",
+    "frozen input SHA/size docs/requirements/srs.md",
+    "frozen input SHA/size docs/requirements/business-rules.md",
+    "frozen input SHA/size docs/requirements/state-semantics.md",
+    "frozen input SHA/size docs/requirements/permission-matrix.md",
+    "frozen input SHA/size docs/requirements/acceptance-criteria.md",
+    "frozen input SHA/size docs/requirements/golden-workflow-acceptance.md",
+    "frozen input SHA/size docs/product/project-atlas-dataset.md",
+    "frozen input SHA/size docs/design/step-03a/design-decisions.json",
+    "frozen input SHA/size docs/design/step-03a/controlled-handoff.md",
+    "frozen input SHA/size docs/architecture/api-contracts.md",
+    "frozen input SHA/size docs/architecture/adr/ADR-002-transaction-and-concurrency.md",
+    "32-operation index preserved",
+    "indexed snapshot docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json",
+    "indexed snapshot docs/design/step-03a/handoff/step-03a-7/reference-resolution-delta.json",
+    "indexed snapshot docs/design/step-03a/handoff/step-03a-7/reference-resolution-addendum.md",
+    "original reviewer bytes preserved",
+    "request bytes preserved",
+    "finding IDs and severity",
+    "ten focused owner contracts complete",
+    "all eleven findings still OPEN",
+    "22 unchanged CT IDs",
+    "16/4/1/1 classification",
+    "all scenario and QA runtime NOT_RUN",
+    "eight QA IDs retained",
+    "conditional QA retained",
+    "no dispatch or runtime",
+    "no scope approval inferred",
+    "gates retained",
+    "24 nodes 7 edges",
+    "canonical UUIDv7 map unique",
+    "typed refs match canonical mapping",
+    "exact seven source edges",
+    "DAG all 24 nodes",
+    "RQ04 reaches AC08/AC09 not RQ08",
+    "only DEP05 satisfied",
+    "six blocked targets match",
+    "cause cards and roots",
+    "neutral critical inputs explicit",
+    "neutral expected order",
+    "paired fixture has legal Requirement prerequisite",
+    "paired only critical input differs",
+    "paired baseline order",
+    "paired critical-prerequisite order",
+    "fixture remains unadopted and unreviewed"
+  ],
+  "branch": "task/MC-003A-remediation",
+  "base": "97356ce45c2b10070e9303f7c2ab39a425fad7a5",
+  "runtime": "NOT_RUN",
+  "review_findings_closed": 0,
+  "fixture_adopted": false,
+  "claude_dispatch": "NOT_DISPATCHED",
+  "command_evidence": {
+    "tool": "exec_command",
+    "command": "rtk proxy python3 - <<'PY' (inline read-only static document/fixture assertions)",
+    "full_command_location": "Original Codex tool-call record for this check; not a persisted product test runner",
+    "exit_code": 0
+  },
+  "artifact_hashes": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/MC-003A-8A-CLAUDE-PROMPT.md",
+      "bytes": 20268,
+      "sha256": "827094a44d2c2d020146773c84ed7f1d1f8bb0a0bc4526747632e19d01b3b195"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/execution.json",
+      "bytes": 2990,
+      "sha256": "0b5ce798531cca56e795455021be7352856e45d64b2f24224633dfaf34bd7f64"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/f11-fixture-disposition.md",
+      "bytes": 5398,
+      "sha256": "3d75ef1ad52f19c74038e093e6280bbfcbba365783543189333bc5fe0dc69a3a"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/f11-fixture-proposal.json",
+      "bytes": 16425,
+      "sha256": "065fc91208b62ef67ba4f960e745bfb7b144ee94b87105bd2fb922268fd0752c"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/input-manifest.json",
+      "bytes": 5387,
+      "sha256": "01cdc503caa00816a2835d66cf801da988ffb8b0cb20f3a45bed55a68615feea"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/intake.json",
+      "bytes": 43033,
+      "sha256": "d08a0658cb703192c85d58d2b436fb46dbda25a4cc3eed9f7f42a21f0f6aea29"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/intake.md",
+      "bytes": 6172,
+      "sha256": "70ad24301e58be822f30a049aa5d03cda1d7c6e7e2646202d28dce31535e8253"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/request.md",
+      "bytes": 11900,
+      "sha256": "39dcf8de9d236afb8ce0135f2a6f6ff9ed5c2d023e65a36be3d79dd25b19749e"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-8a/zcode-review-original.txt",
+      "bytes": 44884,
+      "sha256": "0463ebfa59e3932d4013060c40806d136874de09ad0ed3c2f1de84c49ef45162"
+    },
+    {
+      "path": "docs/implementation/tasks/MC-003A-8A.md",
+      "bytes": 2300,
+      "sha256": "0611fc802b2a4f64536c5b3d8fffa806738c0dad62b63e11edabaccd1072a8da"
+    }
+  ],
+  "sensitive_pattern_scan": "NO_MATCHES_FOR_PRIVATE_KEY_ANTHROPIC_API_KEY_AWS_ACCESS_KEY_PATTERNS; NOT_AN_EGRESS_ATTESTATION"
+}

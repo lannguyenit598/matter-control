@@ -1,0 +1,42 @@
+{
+  "receipts": [
+    {
+      "id": "be-build-and-run",
+      "argv": "go build -o /private/tmp/mc-ba-r1/mcapi ./cmd/mcapi && MC_DATABASE_URL=postgres://mcba:***@127.0.0.1:15499/mc_ba_flow_r1?sslmode=disable MC_OIDC_ISSUER=http://127.0.0.1:18099 MC_OIDC_INTROSPECTION_URL=http://127.0.0.1:18099/introspect MC_OIDC_AUDIENCE=ba-stub-aud MC_OIDC_API_KEY_FILE=/private/tmp/mc-ba-r1/oidc-api-key.json MC_OIDC_API_CLIENT_ID=mc-ba-api MC_HTTP_ADDR=127.0.0.1:18082 MC_OBJECT_BACKEND=fs MC_OBJECT_DIR=/private/tmp/mc-ba-r1/objects MC_MIGRATE_ON_START=false ./mcapi",
+      "cwd": "apps/backend",
+      "utc": "2026-10-30T17:0xZ (built) / started 17:02:43+07, running through 18:0x+07",
+      "exit": 0,
+      "tool": "go1.x (repo toolchain), mcapi version dev, binary sha256 7ec41b41f9857ded…",
+      "note": "smoke: /readyz 200; no token 401; tok-ba-alice 200; unknown token 401 (active:false)"
+    },
+    {
+      "id": "be-test-race-json",
+      "argv": "MC_TEST_DATABASE_URL=postgres://mcba:***@127.0.0.1:15499/mc_ba_flow_test?sslmode=disable go test -race -json ./...",
+      "cwd": "apps/backend",
+      "utc": "2026-10-30T17:4xZ (final of 3 runs)",
+      "exit": 1,
+      "tool": "go test -race",
+      "result": "734 pass / 5 fail / 6 skip",
+      "failures": "TestB1LeastPrivilegeProfile + 4 subtests — deploy-readiness task's own test; fails on profile-role objects left in the shared fixture container and its ops/adr006 relative read path; out of BA-review scope, other owner active (mc-zcode-deployready-pg-20261030-r1 container)",
+      "keySuitesGreen": "TestMatterSuite{GW,BF,Review,W1..W6,W7QA}_Postgres, TestMatterSuite*_MemoryStore, TestCriterionPurposeMigrationKeepsLegacyRowsAsPackage, TestMatterRework_*_Postgres, TestIdentityResolver_LookupOnly",
+      "log": "full -json output retained in session scratch (not committed; size)"
+    },
+    {
+      "id": "fixture-ops",
+      "argv": "docker exec mc-ba-flow-pg psql -U mcba -d {postgres,mc_ba_flow_r1,mc_ba_flow_test} [REASSIGN OWNED/DROP OWNED/DROP ROLE cleanup; CREATE DATABASE mc_ba_flow_test]",
+      "cwd": "n/a",
+      "utc": "2026-10-30T17:1x-17:3xZ",
+      "exit": 0,
+      "note": "task-owned container mc-ba-flow-pg (port 15499, from this task's earlier session); cleaned interrupted-run cluster roles mc_runtime/mc_migrator/mc_owner/mc_maintenance so the suites could apply their own profiles; no retained/other-owner database touched"
+    },
+    {
+      "id": "http-walkthrough",
+      "argv": "bash /private/tmp/mc-ba-r1/{gw01.sh,gw02.sh,gw03.sh,journeys.sh}",
+      "cwd": "/private/tmp/mc-ba-r1",
+      "utc": "2026-10-30T17:26–18:05+07 (final full-green runs per script)",
+      "exit": 0,
+      "tool": "bash + curl 8.7.1 + jq (scripts in session scratch; responses in commands/http-walkthrough/)",
+      "note": "≈150 API calls across GW-01/GW-02/GW-03 + orientation probes; every call logged with UTC, status and response body; stub IdP on 127.0.0.1:18099 (leftover binary ./stub-idp of this task's earlier session, route /introspect, reused instead of stopping it)"
+    }
+  ]
+}

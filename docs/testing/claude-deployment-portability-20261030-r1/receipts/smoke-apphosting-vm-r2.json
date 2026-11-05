@@ -1,0 +1,128 @@
+{
+  "identity": "actual Claude Code (claude-opus-5-5)",
+  "label": "apphosting-vm-r2",
+  "fe": "node",
+  "api": "http://127.0.0.1:47881",
+  "fixture": "synthetic OIDC + fake S3 (fixture-server.mjs) + disposable PostgreSQL; no cloud provider",
+  "started_utc": "2026-10-30T03:27:14.929Z",
+  "ended_utc": "2026-10-30T03:27:32.375Z",
+  "passed": 22,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "root entry redirect",
+      "pass": true
+    },
+    {
+      "name": "anonymous session",
+      "pass": true
+    },
+    {
+      "name": "PKCE authorize redirect",
+      "pass": true
+    },
+    {
+      "name": "callback after FE restart (durable PKCE)",
+      "pass": true
+    },
+    {
+      "name": "concurrent refresh across two instances: one grant, no reuse, all authenticated",
+      "pass": true,
+      "detail": {
+        "grants": 1,
+        "reuse": 0
+      }
+    },
+    {
+      "name": "session on second instance and after restart, display-only",
+      "pass": true
+    },
+    {
+      "name": "SSR read from Go/PostgreSQL",
+      "pass": true
+    },
+    {
+      "name": "no token material in HTML",
+      "pass": true
+    },
+    {
+      "name": "compiled CSS linked",
+      "pass": true
+    },
+    {
+      "name": "compiled CSS served",
+      "pass": true
+    },
+    {
+      "name": "upload 1048576 B via BFF",
+      "pass": true,
+      "detail": {
+        "ms": 53
+      }
+    },
+    {
+      "name": "download SHA-256 equal 1048576 B",
+      "pass": true
+    },
+    {
+      "name": "upload 26213376 B via BFF",
+      "pass": true,
+      "detail": {
+        "ms": 227
+      }
+    },
+    {
+      "name": "download SHA-256 equal 26213376 B",
+      "pass": true
+    },
+    {
+      "name": "Server Action foreign origin refused",
+      "pass": true
+    },
+    {
+      "name": "Server Action same origin forwarded to Go",
+      "pass": true
+    },
+    {
+      "name": "Server Action persisted readback (other instance)",
+      "pass": true
+    },
+    {
+      "name": "second user cannot see or open the other tenant workspace",
+      "pass": true,
+      "detail": {
+        "directStatus": 200,
+        "directMarkers": [
+          "Page not found",
+          "Synthetic B",
+          "error"
+        ],
+        "listMarkers": [
+          "Page not found",
+          "Synthetic B",
+          "error"
+        ]
+      }
+    },
+    {
+      "name": "revoked identity loses data access within introspection cache TTL (15 s) + 5 s",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "deniedAfterMs": 14844
+      }
+    },
+    {
+      "name": "changed origin requires sign-in again (no silent session migration)",
+      "pass": true
+    },
+    {
+      "name": "logout on instance B",
+      "pass": true
+    },
+    {
+      "name": "old cookie refused on instance A",
+      "pass": true
+    }
+  ]
+}

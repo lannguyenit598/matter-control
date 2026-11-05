@@ -1,0 +1,125 @@
+saved_views list (owner+matter index)
+Incremental Sort  (cost=8.31..8.35 rows=2 width=136) (actual time=0.037..0.376 rows=2000 loops=1)
+  Sort Key: name, id
+  Presorted Key: name
+  Full-sort Groups: 63  Sort Method: quicksort  Average Memory: 28kB  Peak Memory: 28kB
+  Buffers: shared hit=467
+  ->  Index Scan using saved_views_matter_id_owner_id_name_key on saved_views  (cost=0.28..8.30 rows=1 width=136) (actual time=0.005..0.183 rows=2000 loops=1)
+        Index Cond: ((matter_id = '4449a811-bbb6-4369-9ada-b1901e87ce09'::uuid) AND (owner_id = 'd55b0370-aa5e-44cd-910f-a8fa6b183f84'::uuid))
+        Buffers: shared hit=458
+Planning:
+  Buffers: shared hit=35
+Planning Time: 0.086 ms
+Execution Time: 0.416 ms
+
+---
+saved_views uniqueness probe (name conflict check)
+Limit  (cost=0.28..8.30 rows=1 width=4) (actual time=0.105..0.105 rows=0 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using saved_views_owner_idx on saved_views  (cost=0.28..8.30 rows=1 width=4) (actual time=0.104..0.104 rows=0 loops=1)
+        Index Cond: ((owner_id = 'd55b0370-aa5e-44cd-910f-a8fa6b183f84'::uuid) AND (matter_id = '4449a811-bbb6-4369-9ada-b1901e87ce09'::uuid))
+        Filter: (name = 'view 3'::text)
+        Rows Removed by Filter: 2000
+        Buffers: shared hit=61
+Planning Time: 0.013 ms
+Execution Time: 0.109 ms
+
+---
+saved_views list (owner+matter index)
+Incremental Sort  (cost=8.31..8.35 rows=2 width=136) (actual time=0.037..0.370 rows=2000 loops=1)
+  Sort Key: name, id
+  Presorted Key: name
+  Full-sort Groups: 63  Sort Method: quicksort  Average Memory: 28kB  Peak Memory: 28kB
+  Buffers: shared hit=467
+  ->  Index Scan using saved_views_matter_id_owner_id_name_key on saved_views  (cost=0.28..8.30 rows=1 width=136) (actual time=0.005..0.178 rows=2000 loops=1)
+        Index Cond: ((matter_id = 'fe950f83-17a2-4e7a-949a-865ac839431d'::uuid) AND (owner_id = '0bbe7e25-5e40-4fab-a36e-c545a2b514cb'::uuid))
+        Buffers: shared hit=458
+Planning:
+  Buffers: shared hit=35
+Planning Time: 0.087 ms
+Execution Time: 0.423 ms
+
+---
+saved_views uniqueness probe (name conflict check)
+Limit  (cost=0.28..8.30 rows=1 width=4) (actual time=0.102..0.102 rows=0 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using saved_views_owner_idx on saved_views  (cost=0.28..8.30 rows=1 width=4) (actual time=0.102..0.102 rows=0 loops=1)
+        Index Cond: ((owner_id = '0bbe7e25-5e40-4fab-a36e-c545a2b514cb'::uuid) AND (matter_id = 'fe950f83-17a2-4e7a-949a-865ac839431d'::uuid))
+        Filter: (name = 'view 3'::text)
+        Rows Removed by Filter: 2000
+        Buffers: shared hit=61
+Planning Time: 0.014 ms
+Execution Time: 0.106 ms
+
+---
+saved_views list (owner+matter index)
+Incremental Sort  (cost=8.31..8.35 rows=2 width=136) (actual time=0.050..0.460 rows=2000 loops=1)
+  Sort Key: name, id
+  Presorted Key: name
+  Full-sort Groups: 63  Sort Method: quicksort  Average Memory: 28kB  Peak Memory: 28kB
+  Buffers: shared hit=467
+  ->  Index Scan using saved_views_matter_id_owner_id_name_key on saved_views  (cost=0.28..8.30 rows=1 width=136) (actual time=0.007..0.253 rows=2000 loops=1)
+        Index Cond: ((matter_id = '53dc6719-ca45-41c2-bf6b-ba433e834e78'::uuid) AND (owner_id = 'c1da45f8-a75d-4b9f-870c-c38968c2430e'::uuid))
+        Buffers: shared hit=458
+Planning:
+  Buffers: shared hit=35
+Planning Time: 0.113 ms
+Execution Time: 0.510 ms
+
+---
+saved_views uniqueness probe (name conflict check)
+Limit  (cost=0.28..8.30 rows=1 width=4) (actual time=0.157..0.157 rows=0 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using saved_views_owner_idx on saved_views  (cost=0.28..8.30 rows=1 width=4) (actual time=0.156..0.156 rows=0 loops=1)
+        Index Cond: ((owner_id = 'c1da45f8-a75d-4b9f-870c-c38968c2430e'::uuid) AND (matter_id = '53dc6719-ca45-41c2-bf6b-ba433e834e78'::uuid))
+        Filter: (name = 'view 3'::text)
+        Rows Removed by Filter: 2000
+        Buffers: shared hit=61
+Planning Time: 0.022 ms
+Execution Time: 0.161 ms
+
+---
+intake list (matter+status index)
+Sort  (cost=8.17..8.18 rows=1 width=88) (actual time=0.089..0.096 rows=300 loops=1)
+  Sort Key: created_at DESC, id
+  Sort Method: quicksort  Memory: 43kB
+  Buffers: shared hit=10
+  ->  Index Scan using intake_records_matter_idx on intake_records  (cost=0.14..8.16 rows=1 width=88) (actual time=0.006..0.034 rows=300 loops=1)
+        Index Cond: (matter_id = '53dc6719-ca45-41c2-bf6b-ba433e834e78'::uuid)
+        Buffers: shared hit=7
+Planning:
+  Buffers: shared hit=43
+Planning Time: 0.124 ms
+Execution Time: 0.113 ms
+
+---
+guidance docs list
+Sort  (cost=11.31..11.31 rows=3 width=56) (actual time=0.020..0.022 rows=60 loops=1)
+  Sort Key: created_at DESC, id
+  Sort Method: quicksort  Memory: 28kB
+  Buffers: shared hit=2
+  ->  Bitmap Heap Scan on guidance_documents  (cost=4.17..11.28 rows=3 width=56) (actual time=0.007..0.009 rows=60 loops=1)
+        Recheck Cond: (matter_id = '53dc6719-ca45-41c2-bf6b-ba433e834e78'::uuid)
+        Heap Blocks: exact=1
+        Buffers: shared hit=2
+        ->  Bitmap Index Scan on guidance_documents_matter_idx  (cost=0.00..4.17 rows=3 width=0) (actual time=0.003..0.003 rows=60 loops=1)
+              Index Cond: (matter_id = '53dc6719-ca45-41c2-bf6b-ba433e834e78'::uuid)
+              Buffers: shared hit=1
+Planning Time: 0.019 ms
+Execution Time: 0.034 ms
+
+---
+guidance revisions of matter (doc+no index)
+Sort  (cost=14.38..14.39 rows=2 width=72) (actual time=0.024..0.026 rows=60 loops=1)
+  Sort Key: document_id, no
+  Sort Method: quicksort  Memory: 29kB
+  Buffers: shared hit=5
+  ->  Seq Scan on guidance_revisions  (cost=0.00..14.38 rows=2 width=72) (actual time=0.004..0.008 rows=60 loops=1)
+        Filter: (matter_id = '53dc6719-ca45-41c2-bf6b-ba433e834e78'::uuid)
+        Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=35
+Planning Time: 0.089 ms
+Execution Time: 0.031 ms
+
+---

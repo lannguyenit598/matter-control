@@ -1,0 +1,15 @@
+# INT-A — targeted privacy coverage supplement
+
+Task MC-002-INTA-PRIVACY-SUPPLEMENT. Actual executor Local Codex under the existing human-assigned Part P scope and current instruction to progress independent work in parallel. Branch codex/unified-project-flow; base/head a62d838791ba188838c4ff00b7b6e265ac775056. **SUPPLEMENT_EXECUTED / IN_REVIEW / OVERALL_PRIVACY_PARTIAL_PENDING_INDEPENDENT_QA**.
+
+The original inventory omitted four QA narrative outputs declared by producer records under docs/reviews. That was an inventory coverage error; it is corrected additively here. The original sealed privacy/teardown packet and its PARTIAL result remain unchanged.
+
+The expanded catalog compared current retained INT-A artifacts/intake copies and `docs/reviews/inta-*.md` against original measured hashes. All original 1,153 files remain unchanged. **123 omitted/new/changed evidence files, 1,838,578 bytes**, including the four narratives and later R3 review/intake/teardown artifacts, were matched against the actual fixture DSN/password forms in memory: **0 matches, scan exit 0**. Four synthetic matcher checks ran first; the parser/matcher is reused from the sealed scanner after verifying its hash. No new credential source, values, private file digest or matched context was exported; private metadata remained unchanged. No new archive required member coverage in this delta; the original 315 streamed archive entries retain their original pins.
+
+Relevant QA producer prompts/manifests declare direct governance outputs; no required producer raw original under `/tmp/mc002-inta-evidence/qa` has been identified. This is evidence for independent scope adjudication, not a self-awarded N/A/waiver or full privacy PASS. No synthetic raw QA directory/copy was created. The catalog and producer evidence let OpenCode distinguish the absent root placeholder from genuinely unscanned expected files.
+
+Raw `/tmp/mc002-inta-evidence/environment/privacy-supplement-20261026`; [export manifest](../testing/inta-returns/environment/privacy-supplement-20261026/manifest.json) pins inventory, scanner, exact result/command and producer-scope evidence. New output directories are disjoint from Antigravity R4 and all prior packets. Evidence arriving after this scan needs its own supplemental coverage. Later R4 outputs are not presumed covered.
+
+Exact original PostgreSQL remains stopped according to the retained teardown observation; no fresh resource check, lifecycle, SQL/HTTP/Go/Next/driver execution, provider call or commit occurred. All 51 formal results and product/security/architecture/release gates remain unchanged. Independent OpenCode privacy/teardown QA can review these frozen packets while another session reviews BE02/N1 and Antigravity works on R4.
+
+Skipped: live resources, unrelated credentials and final independent acceptance. Risk: known-fixture value matching does not prove absence of every credential or future evidence; overall privacy remains PARTIAL until producer coverage is independently adjudicated.

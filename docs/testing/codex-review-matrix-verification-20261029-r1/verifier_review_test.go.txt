@@ -1,0 +1,19 @@
+package productapi
+import("testing";"strings";"leonx.me/matter-control/internal/core/domain/matter")
+func TestVerifierReviewHTTPHidden(t *testing.T){
+ for _,revoked:=range []bool{false,true}{t.Run(map[bool]string{false:"nonmember",true:"revoked"}[revoked],func(t *testing.T){
+ e:=newEnv(t);base,v,g,tag:=reviewFixture(t,e);path:=base+"/review-grids/"+g
+ q:=e.do("POST",path+"/questions","t-bob",ifMatch(tag),`{"text":"Q?"}`);e.expect(q,200,"");qid:=q.json()["questions"].([]any)[0].(map[string]any)["id"].(string)
+ token:="t-alice";actor:=e.alice;if revoked{token="t-carol";actor=e.carol};status:=matter.StatusRevoked
+ if !revoked {status = matter.MembershipStatus("")}
+ mid:=strings.TrimPrefix(base,"/api/v1/matters/");e.world.SetMatterMembership(matter.MatterID(mid),matter.ActorID(actor),matter.MatterRoleViewer,status)
+ for _,p:=range []string{path,base+"/review-grids",path+"/cells/"+v+"/"+qid+"/history"}{e.expect(e.do("GET",p,token,nil,""),404,"urn:mc:not-found")}
+ body:=`{"versionId":"`+v+`","questionId":"`+qid+`","expectedAnswerId":"","questionRevision":1,"state":"ABSENT"}`;e.expect(e.do("POST",path+"/answers",token,key(),body),404,"urn:mc:not-found")
+ })}
+}
+func TestVerifierReviewHTTPMissingExpectation(t *testing.T){e:=newEnv(t);base,v,g,tag:=reviewFixture(t,e);p:=base+"/review-grids/"+g
+ q:=e.do("POST",p+"/questions","t-bob",ifMatch(tag),`{"text":"Q?"}`);e.expect(q,200,"");qid:=q.json()["questions"].([]any)[0].(map[string]any)["id"].(string)
+ add:=e.do("POST",p+"/versions","t-bob",ifMatch(q.Header().Get("ETag")),`{"versionId":"`+v+`"}`);e.expect(add,200,"")
+ body:=`{"versionId":"`+v+`","questionId":"`+qid+`","questionRevision":1,"state":"ABSENT"}`
+ e.expect(e.do("POST",p+"/answers","t-bob",key(),body),428,"urn:mc:precondition-required")
+}

@@ -1,0 +1,42 @@
+
+ RUN  v5.0.5 /private/tmp/mc-review-verifier-20261029-r1/frontend
+
+ ❯ src/features/review/verifier-review-ui.test.tsx (2 tests | 1 failed) 245ms
+   × UNKNOWN retry retains the exact answer expectation even after a refreshed view changes props 241ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/review/verifier-review-ui.test.tsx > UNKNOWN retry retains the exact answer expectation even after a refreshed view changes props
+AssertionError: expected { …(11) } to deeply equal { …(11) }
+
+- Expected
++ Received
+
+@@ -1,8 +1,8 @@
+  {
+-   "expectedAnswerId": "",
+-   "expectedQuestionRevision": 1,
++   "expectedAnswerId": "0192b1c4-0000-7000-8000-000000000001",
++   "expectedQuestionRevision": 2,
+    "gridId": "0192b1c4-0000-7000-8000-000000000001",
+    "idempotencyKey": "01a187aa-d917-706e-94b8-e31318c9bb2e",
+    "matterId": "0192b1c4-0000-7000-8000-000000000001",
+    "pageRef": "",
+    "questionId": "0192b1c4-0000-7000-8000-000000000001",
+
+ ❯ src/features/review/verifier-review-ui.test.tsx:23:43
+     21|  fireEvent.click(screen.getByRole('button',{name:/Retry the same reque…
+     22|  await waitFor(()=>expect(actions.record).toHaveBeenCalledTimes(2))
+     23|  expect(actions.record.mock.calls[1]![0]).toEqual(first)
+       |                                           ^
+     24| })
+     25| it('Vietnamese text at every client limit is accepted; one more is ref…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  19:38:01
+   Duration  1.59s (environment 35%, import 22%, transform 18%, tests 16%, setup 9%)
+

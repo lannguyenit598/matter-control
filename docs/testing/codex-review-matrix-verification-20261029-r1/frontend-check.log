@@ -1,0 +1,53 @@
+[WARN] The store at /Users/nguyenvanlan/Library/pnpm/store/v11 is not used because packages cannot be hard linked from it into this project. Using the store at /private/tmp/.pnpm-store/v11 instead. Set storeDir to choose the store.
+✓ Lockfile passes supply-chain policies (verified 20h ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "/private/tmp/mc-review-verifier-20261029-
+      r1/frontend/node_modules": workspace hoist directory is not a real
+      directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/mc-review-verifier-20261029-r1/frontend
+
+ ❯ src/features/proof/components/upload-attempt.test.tsx (4 tests | 1 failed) 5423ms
+   ❯ an upload whose answer was lost survives a reload (4)
+     × a different file is a different intent and gets a new key 5055ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/proof/components/upload-attempt.test.tsx > an upload whose answer was lost survives a reload > a different file is a different intent and gets a new key
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/proof/components/upload-attempt.test.tsx:68:3
+     66|   })
+     67|
+     68|   it('a different file is a different intent and gets a new key', asyn…
+       |   ^
+     69|     const first = await firstAttempt()
+     70|     first.unmount()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 75 passed (76)
+      Tests  1 failed | 691 passed (692)
+   Start at  19:34:53
+   Duration  15.21s (environment 44%, tests 31%, setup 11%, import 10%, transform 4%)
+
+Environment  jsdom was created 76 times · 55.14s total, 44% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

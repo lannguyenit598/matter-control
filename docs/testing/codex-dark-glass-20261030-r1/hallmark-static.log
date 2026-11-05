@@ -1,0 +1,53 @@
+src/app/globals.css
+  FAIL 48 :456 colour literal #fafbfc outside tokens (--background on .app-shell) | fix: Lift the value into the token block
+  FAIL 48 :457 colour literal #f5f7f9 outside tokens (--muted on .app-shell)
+  FAIL 48 :458 colour literal #606b7f outside tokens (--muted-foreground on .app-shell)
+  FAIL 48 :459 colour literal #dfe3e9 outside tokens (--border on .app-shell)
+  FAIL 48 :460 colour literal #e8f0ff outside tokens (--selected on .app-shell)
+  FAIL 48 :461 colour literal #0754e8 outside tokens (--navigation on .app-shell)
+  FAIL 48 :471 oklch literal oklch(0.16 0.005 285.8) outside tokens (--background on [data-theme='dark'] .app-shell)
+  FAIL 48 :472 oklch literal oklch(0.24 0.006 286) outside tokens (--muted on [data-theme='dark'] .app-shell)
+  FAIL 48 :473 oklch literal oklch(0.76 0.013 286) outside tokens (--muted-foreground on [data-theme='dark'] .app-shell)
+  FAIL 48 :474 oklch literal oklch(0.3 0.008 286) outside tokens (--border on [data-theme='dark'] .app-shell)
+  FAIL 48 :475 oklch literal oklch(0.3 0.06 262) outside tokens (--selected on [data-theme='dark'] .app-shell)
+  FAIL 48 :476 oklch literal oklch(0.78 0.12 262) outside tokens (--navigation on [data-theme='dark'] .app-shell)
+  WARN 29 :284 glass panel: backdrop-filter blur over a translucent black on [data-slot='card'], [data-slot='rec… | fix: Solid or grained surface; elevation by lightness
+  WARN 41 :250 dark surface (L 20%) on [data-slot='dialog-panel'][open] sets no text colour | fix: Swap text to paper in the same rule
+  WARN 41 :1036 dark surface (L 20%) on :is( [data-slot='card'], [data-slot='record-table'], [data-slot='stat-card'], [data-slot='matte…
+  WARN 41 :1055 dark surface (L 20%) on :is( [data-slot='card'], [data-slot='record-table'], [data-slot='stat-card'], [data-slot='matte…
+  WARN F3 :319 no text-wrap: balance on any display head (4 head rule(s), e.g. .control-room-section h2) | fix: Add text-wrap: balance to h1/h2-level heads
+  WARN F7 :276 same container recipe on 7 selectors ([data-slot='card'], [data-slot='record-table'],…...) | fix: Vary weight, radius, or fill by role; not every box is the same box
+  NOTE 24b :320 margin-bottom: 6px (off the 4px scale) on .control-room-section h2 | fix: Use the 4px spacing scale
+  NOTE 24b :326 padding: 10px 12px (off the 4px scale) on .control-room-section :is(ul, ol):not(ul ul):not(ol ul) > li
+  NOTE 24b :385 padding: 5px (off the 4px scale) on [data-slot='matter-tabs']
+  NOTE 24b :388 gap: 3px (off the 4px scale) on [data-slot='matter-tabs']
+  NOTE 24b :490 padding: 20px 14px (off the 4px scale) on .app-sidebar
+  NOTE 24b :522 gap: 7px (off the 4px scale) on .app-navigation ul
+  NOTE 24b :527 padding: 11px 14px (off the 4px scale) on .app-navigation .app-nav-link
+  NOTE 24b :585 column-gap: 18px (off the 4px scale) on .work-queues
+  NOTE 24b :595 padding: 0 10px 12px (off the 4px scale) on .work-queues > a
+  NOTE 24b :617 padding: 10px 14px (off the 4px scale) on .work-sequence
+  NOTE 24b :623 padding: 3px 0 (off the 4px scale) on .work-sequence .control-target
+  NOTE 24b :624 gap: 10px (off the 4px scale) on .work-sequence .control-target
+  NOTE 24b :659 gap: 14px (off the 4px scale) on .work-actions
+  NOTE 24b :660 margin: 18px 4px 24px (off the 4px scale) on .work-actions
+  NOTE 24b :666 padding: 10px 16px (off the 4px scale) on .work-actions .work-primary
+  NOTE 24b :677 margin-top: 14px (off the 4px scale) on .work-needs dl
+  NOTE 24b :681 padding: 18px 4px (off the 4px scale) on .work-disclosure > summary
+  NOTE 24b :716 padding: 26px 23px (off the 4px scale) on .app-main
+  NOTE 24b :728 column-gap: 14px (off the 4px scale) on .work-queues
+  NOTE 24b :731 padding-inline: 7px (off the 4px scale) on .work-queues > a
+  NOTE 24b :732 gap: 7px (off the 4px scale) on .work-queues > a
+  NOTE 24b :750 padding: 24px 18px (off the 4px scale) on .app-main
+  NOTE 24b :769 padding: 0 6px 14px (off the 4px scale) on .work-queues > a
+  NOTE 24b :770 gap: 7px (off the 4px scale) on .work-queues > a
+  NOTE 24b :794 padding-top: 26px (off the 4px scale) on .work-why
+  NOTE 24b :804 padding: 10px (off the 4px scale) on .work-sequence
+  NOTE 24b :812 padding: 25px 0 (off the 4px scale) on .work-needs
+  NOTE 24b :816 gap: 5px (off the 4px scale) on .work-needs dl
+  NOTE 24b :821 margin-top: 22px (off the 4px scale) on .work-up-next
+  NOTE 24b :822 padding: 22px 0 0 (off the 4px scale) on .work-up-next
+  NOTE 24b :825 padding-block: 15px (off the 4px scale) on .work-up-next-link
+  NOTE 24b :836 padding-inline: 5px (off the 4px scale) on .work-queues > a
+  NOTE 24b :837 gap: 6px (off the 4px scale) on .work-queues > a
+sloplint: 12 FAIL, 6 WARN, 33 NOTE across 1 file(s).

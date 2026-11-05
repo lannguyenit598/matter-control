@@ -1,0 +1,322 @@
+{
+  "checks": [
+    {
+      "id": "B1",
+      "what": "make sqlc-check",
+      "argv": [
+        "rtk",
+        "proxy",
+        "make",
+        "sqlc-check"
+      ],
+      "cwd": "apps/backend",
+      "start_utc": "2026-10-28T09:52:48.303317+00:00",
+      "end_utc": "2026-10-28T09:52:53.470466+00:00",
+      "exit": 0
+    },
+    {
+      "id": "B2",
+      "what": "gofmt -l (empty = formatted)",
+      "argv": [
+        "sh",
+        "-c",
+        "test -z \"$(gofmt -l .)\" || (gofmt -l .; exit 1)"
+      ],
+      "cwd": "apps/backend",
+      "start_utc": "2026-10-28T09:52:53.498445+00:00",
+      "end_utc": "2026-10-28T09:52:53.556468+00:00",
+      "exit": 0
+    },
+    {
+      "id": "B3",
+      "what": "go mod tidy -diff",
+      "argv": [
+        "go",
+        "mod",
+        "tidy",
+        "-diff"
+      ],
+      "cwd": "apps/backend",
+      "start_utc": "2026-10-28T09:52:53.581709+00:00",
+      "end_utc": "2026-10-28T09:52:53.631789+00:00",
+      "exit": 0
+    },
+    {
+      "id": "B4",
+      "what": "golangci-lint run ./... (v2.14.0)",
+      "argv": [
+        "golangci-lint",
+        "run",
+        "./..."
+      ],
+      "cwd": "apps/backend",
+      "start_utc": "2026-10-28T09:52:53.656017+00:00",
+      "end_utc": "2026-10-28T09:52:57.779108+00:00",
+      "exit": 0
+    },
+    {
+      "id": "B5",
+      "what": "go test -race -count=1 ./... with NO database env",
+      "argv": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./..."
+      ],
+      "cwd": "apps/backend",
+      "start_utc": "2026-10-28T09:52:57.804989+00:00",
+      "end_utc": "2026-10-28T09:53:10.289367+00:00",
+      "exit": 0,
+      "counts": "19 packages ok, 6 without tests; 586 pass / 144 skip (PostgreSQL suites skipped) / 0 fail (counts from a second -json run)"
+    },
+    {
+      "id": "B6",
+      "what": "go test -race -count=1 -json ./... against isolated test DBs",
+      "argv": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "cwd": "apps/backend",
+      "start_utc": "2026-10-28T09:54:25.564778+00:00",
+      "end_utc": "2026-10-28T09:55:24.595577+00:00",
+      "exit": 0,
+      "counts": "765 pass / 4 skip / 0 fail; the 4 named skips are TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip, TestMatterSuiteW6_Postgres rollback case, TestPerf_LocalWorkloads, TestRestoreRehearsal",
+      "note": "env vars set (values never recorded): TEST_DATABASE_URL, MC_TEST_DATABASE_URL"
+    },
+    {
+      "id": "F1",
+      "what": "pnpm check (first try, after the seam test was added)",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "check"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T10:02:52.287043+00:00",
+      "end_utc": "2026-10-28T10:02:54.171799+00:00",
+      "exit": 2,
+      "note": "FAILED exit 2: TS2339 in my own new test (union not narrowed). Fixed in the test; not a product failure."
+    },
+    {
+      "id": "F2",
+      "what": "pnpm build (first try)",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "build"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T10:02:54.195736+00:00",
+      "end_utc": "2026-10-28T10:02:56.326764+00:00",
+      "exit": 1,
+      "note": "FAILED exit 1: same TS2339 type error as F1."
+    },
+    {
+      "id": "F3",
+      "what": "pnpm build-storybook (first try)",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "build-storybook"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T10:02:56.350874+00:00",
+      "end_utc": "2026-10-28T10:02:58.969932+00:00",
+      "exit": 0,
+      "note": "exit 0, but on bytes that were then edited; superseded by F6."
+    },
+    {
+      "id": "F4",
+      "what": "pnpm check",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "check"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T10:03:16.904633+00:00",
+      "end_utc": "2026-10-28T10:04:04.064831+00:00",
+      "exit": 0,
+      "counts": "48 files, 465/465 passed"
+    },
+    {
+      "id": "F5",
+      "what": "pnpm build (Next.js 16.4.2 Turbopack)",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "build"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T10:04:04.097682+00:00",
+      "end_utc": "2026-10-28T10:04:07.520064+00:00",
+      "exit": 0,
+      "note": "Compiled successfully"
+    },
+    {
+      "id": "F6",
+      "what": "pnpm build-storybook",
+      "argv": [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "build-storybook"
+      ],
+      "cwd": "apps/frontend",
+      "start_utc": "2026-10-28T10:04:07.559064+00:00",
+      "end_utc": "2026-10-28T10:04:10.049943+00:00",
+      "exit": 0,
+      "note": "Storybook build completed successfully"
+    },
+    {
+      "id": "T1",
+      "what": "seam test red before the fix",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "src/test/data-transfer-seam.test.ts"
+      ],
+      "cwd": "apps/frontend",
+      "result": "1 failed / 10 passed: kind was \"error\", expected \"validation\"",
+      "exit": 1,
+      "start_utc": null,
+      "end_utc": null,
+      "note": "times not captured"
+    },
+    {
+      "id": "T2",
+      "what": "seam test green after the fix",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "src/test/data-transfer-seam.test.ts"
+      ],
+      "cwd": "apps/frontend",
+      "result": "11/11 passed",
+      "exit": 0,
+      "start_utc": null,
+      "end_utc": null,
+      "note": "times not captured"
+    },
+    {
+      "id": "T3",
+      "what": "redirect-safety tests with two added dot-segment cases",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "src/lib/mc/paths.test.ts",
+        "src/lib/oidc/flow.test.ts"
+      ],
+      "cwd": "apps/frontend",
+      "result": "2 files, 73/73 passed (new cases passed on first run: coverage only, no source defect)",
+      "exit": 0,
+      "start_utc": null,
+      "end_utc": null
+    },
+    {
+      "id": "T4",
+      "what": "backend named regression for prior F1",
+      "argv": [
+        "go",
+        "test",
+        "./internal/core/service",
+        "-run",
+        "TestReplayBrief_LegacyFilingRevisionUnavailable",
+        "-count=1",
+        "-v"
+      ],
+      "cwd": "apps/backend",
+      "result": "1 passed",
+      "exit": 0,
+      "start_utc": null,
+      "end_utc": null
+    },
+    {
+      "id": "R1",
+      "what": "restore checker unit tests",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "-v",
+        "test_verify"
+      ],
+      "cwd": "ops/p0-local/restore-rehearsal",
+      "start_utc": "2026-10-28T10:02:07Z",
+      "end_utc": "2026-10-28T10:02:08Z",
+      "exit": 0,
+      "result": "9 tests OK",
+      "note": "a first attempt with python3 -I failed to import the module (isolated mode drops the cwd from sys.path): harness error, not a product failure"
+    },
+    {
+      "id": "R2",
+      "what": "restore runner syntax",
+      "argv": [
+        "bash",
+        "-n",
+        "run.sh"
+      ],
+      "cwd": "ops/p0-local/restore-rehearsal",
+      "exit": 0,
+      "result": "ok",
+      "start_utc": null,
+      "end_utc": null
+    },
+    {
+      "id": "P1",
+      "what": "params decoding probe on a short-lived loopback dev server (127.0.0.1:3101, stopped afterwards)",
+      "argv": [
+        "pnpm",
+        "exec",
+        "next",
+        "dev",
+        "-p",
+        "3101",
+        "-H",
+        "127.0.0.1"
+      ],
+      "cwd": "apps/frontend",
+      "result": "GET /matters/a%2Fb/history rendered returnTo=%2Fmatters%2Fa%25252Fb: params arrive percent-encoded (not decoded)",
+      "exit": 0,
+      "start_utc": null,
+      "end_utc": null
+    },
+    {
+      "id": "M1",
+      "what": "source manifests before and after the pass",
+      "result": "719 entries before, 719 after, 4 modified, 0 added, 0 removed",
+      "note": "selection: git ls-files -co --exclude-standard under apps/backend and apps/frontend, minus node_modules, .next, storybook-static, *.tsbuildinfo, next-env.d.ts, .env.local"
+    }
+  ],
+  "fixture_disposition": {
+    "database_host": "mc-p0-claude-pg (Docker, 127.0.0.1:55440). Existing container and volume; nothing created or deleted.",
+    "databases_used": [
+      "mc_p0_native_test",
+      "mc_p0_product_test"
+    ],
+    "databases_not_used": [
+      "mc_p0_run",
+      "the zcode-labelled fixtures"
+    ],
+    "isolation": "pgtest creates a unique t_<unixnano> schema per test and drops it on cleanup. After the run 0 t_* schemas remained in either database.",
+    "ownership_revalidation": "Container label mc.task=MC-P0-CLAUDE-TAKEOVER; no mc.role label; database names end in _test. The zcode-labelled containers (mc.role=native-test/product-test) were NOT used because their credentials were not available to this session.",
+    "credential_handling": "DSNs were assembled by a launcher script outside the repo from the existing local secret file, under the earlier user authorization for this container. Values were never printed; stdout/stderr were scanned for the password and its URL-encoded form (leak_check_found_secret=false).",
+    "lifecycle": "The container had been stopped when the user asked to pause services; it was started for this pass only and stopped again afterwards. No FE/BE/IdP service was started for tests; the only transient server was the loopback probe P1."
+  }
+}

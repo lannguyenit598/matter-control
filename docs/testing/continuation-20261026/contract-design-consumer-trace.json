@@ -1,0 +1,462 @@
+{
+  "task": "MC-CONT-01",
+  "source_candidate": "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/candidate-read-set.json",
+  "operation_count": 32,
+  "mappings": [
+    {
+      "area": "Control Room partial sections and own-axis counts",
+      "contract_layer": "F-02/F-06/F-08 accepted subclauses",
+      "design_artifact": "local-r3 HTML Control Room + interaction-guidance.md",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-06",
+          "requirement_ids": [
+            "FR-009"
+          ],
+          "acceptance_ids": [
+            "AC-109",
+            "AC-137"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-14",
+          "requirement_ids": [
+            "FR-009"
+          ],
+          "acceptance_ids": [
+            "AC-109",
+            "AC-137"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-15",
+          "requirement_ids": [
+            "FR-009",
+            "FR-020"
+          ],
+          "acceptance_ids": [
+            "AC-109",
+            "AC-120",
+            "AC-121",
+            "AC-137",
+            "AC-139",
+            "AC-142",
+            "AC-143",
+            "AC-160"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "Render null as unavailable, preserve independent DISPUTED/WAITING/BLOCKED evaluator counts, label per-page snapshots; row unit remains pending F08.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    },
+    {
+      "area": "Grid caller-scoped actionability",
+      "contract_layer": "F-03",
+      "design_artifact": "local-r3 Grid/Control Room + specifications",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-08",
+          "requirement_ids": [
+            "FR-001",
+            "FR-007",
+            "FR-020"
+          ],
+          "acceptance_ids": [
+            "AC-101",
+            "AC-107",
+            "AC-120",
+            "AC-121",
+            "AC-126",
+            "AC-127",
+            "AC-139",
+            "AC-140",
+            "AC-142",
+            "AC-143",
+            "AC-159",
+            "AC-160"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-21",
+          "requirement_ids": [
+            "FR-003",
+            "FR-018"
+          ],
+          "acceptance_ids": [
+            "AC-103",
+            "AC-118",
+            "AC-134",
+            "AC-135",
+            "AC-140",
+            "AC-144",
+            "AC-147",
+            "AC-149"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "Candidates only assigned-to-caller active Actions with permitted states; exclusions carry reasons; COMPLETED never implies VERIFIED.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    },
+    {
+      "area": "Dependency detail and return context",
+      "contract_layer": "F-01/F-11 document fixture",
+      "design_artifact": "local-r3 connected detail + interaction-guidance.md",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-07",
+          "requirement_ids": [
+            "FR-005",
+            "FR-009"
+          ],
+          "acceptance_ids": [
+            "AC-105",
+            "AC-109",
+            "AC-122",
+            "AC-123",
+            "AC-124",
+            "AC-125",
+            "AC-137",
+            "AC-146"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-16",
+          "requirement_ids": [
+            "FR-011",
+            "FR-018"
+          ],
+          "acceptance_ids": [
+            "AC-111",
+            "AC-118",
+            "AC-134",
+            "AC-135",
+            "AC-139",
+            "AC-140",
+            "AC-147",
+            "AC-149",
+            "AC-150"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-17",
+          "requirement_ids": [
+            "FR-001",
+            "FR-007",
+            "FR-011",
+            "FR-016"
+          ],
+          "acceptance_ids": [
+            "AC-101",
+            "AC-107",
+            "AC-111",
+            "AC-116",
+            "AC-121",
+            "AC-126",
+            "AC-127",
+            "AC-129",
+            "AC-139",
+            "AC-140",
+            "AC-145",
+            "AC-150",
+            "AC-159"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "Incoming/downstream continuation, pinned order/min-distance dedup, explicit missing paths; preserve Grid filter/selection/scroll/focus on return.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    },
+    {
+      "area": "Uniform inaccessible/malformed refs",
+      "contract_layer": "F-05/F-06",
+      "design_artifact": "local-r3 error/recovery guidance",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-04",
+          "requirement_ids": [
+            "FR-005",
+            "FR-018"
+          ],
+          "acceptance_ids": [
+            "AC-105",
+            "AC-118",
+            "AC-122",
+            "AC-123",
+            "AC-124",
+            "AC-125",
+            "AC-134",
+            "AC-135",
+            "AC-140",
+            "AC-146",
+            "AC-147",
+            "AC-149"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-05",
+          "requirement_ids": [
+            "FR-001"
+          ],
+          "acceptance_ids": [
+            "AC-101",
+            "AC-121",
+            "AC-159"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-10",
+          "requirement_ids": [
+            "FR-018"
+          ],
+          "acceptance_ids": [
+            "AC-118",
+            "AC-134",
+            "AC-135",
+            "AC-140",
+            "AC-147",
+            "AC-149"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-20",
+          "requirement_ids": [
+            "FR-015",
+            "FR-018"
+          ],
+          "acceptance_ids": [
+            "AC-115",
+            "AC-118",
+            "AC-128",
+            "AC-134",
+            "AC-135",
+            "AC-140",
+            "AC-147",
+            "AC-149"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "401 first then uniform404 reads; query/cursor422 after authorization; purge unavailable retained details, no labels/content leakage.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    },
+    {
+      "area": "Evidence Requirement and Evidence detail",
+      "contract_layer": "F-07 / accepted F08 null-source only",
+      "design_artifact": "local-r3 Evidence detail + specifications",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-11",
+          "requirement_ids": [
+            "FR-006"
+          ],
+          "acceptance_ids": [
+            "AC-106",
+            "AC-127"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-12",
+          "requirement_ids": [
+            "FR-007",
+            "FR-015"
+          ],
+          "acceptance_ids": [
+            "AC-107",
+            "AC-115",
+            "AC-121",
+            "AC-126",
+            "AC-127",
+            "AC-128",
+            "AC-140"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-14",
+          "requirement_ids": [
+            "FR-009"
+          ],
+          "acceptance_ids": [
+            "AC-109",
+            "AC-137"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "Use assessment/dispute refs and failed vector; no claim.status shortcut or invented proof. Do not adopt pending gap grain/mapping.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    },
+    {
+      "area": "Decision queue",
+      "contract_layer": "F-04",
+      "design_artifact": "local-r3 Control Room decision panel",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-18",
+          "requirement_ids": [
+            "FR-001",
+            "FR-009"
+          ],
+          "acceptance_ids": [
+            "AC-101",
+            "AC-109",
+            "AC-121",
+            "AC-137",
+            "AC-159"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "dueAt null-last,createdAt,id; null owner stays unassigned; open DEC-AT identities retained.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    },
+    {
+      "area": "Filing and exact versions",
+      "contract_layer": "F-10 outer pages accepted; nested proposal pending",
+      "design_artifact": "local-r3 Filing Detail specified-only + handoff",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-13",
+          "requirement_ids": [
+            "FR-015",
+            "FR-016"
+          ],
+          "acceptance_ids": [
+            "AC-115",
+            "AC-116",
+            "AC-128",
+            "AC-129",
+            "AC-145"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-16",
+          "requirement_ids": [
+            "FR-011",
+            "FR-018"
+          ],
+          "acceptance_ids": [
+            "AC-111",
+            "AC-118",
+            "AC-134",
+            "AC-135",
+            "AC-139",
+            "AC-140",
+            "AC-147",
+            "AC-149",
+            "AC-150"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-17",
+          "requirement_ids": [
+            "FR-001",
+            "FR-007",
+            "FR-011",
+            "FR-016"
+          ],
+          "acceptance_ids": [
+            "AC-101",
+            "AC-107",
+            "AC-111",
+            "AC-116",
+            "AC-121",
+            "AC-126",
+            "AC-127",
+            "AC-129",
+            "AC-139",
+            "AC-140",
+            "AC-145",
+            "AC-150",
+            "AC-159"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "Exact submitted versions remain reachable; receipt is not approval. Do not emit A33/B35 routes until contract/PO decision.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    },
+    {
+      "area": "Recent changes",
+      "contract_layer": "F-09",
+      "design_artifact": "local-r3 change panel + status-brief guidance",
+      "consumer_owner": "Antigravity for frontend source; design owner for UX remediation",
+      "acceptance_cases": [
+        {
+          "id": "CT-15",
+          "requirement_ids": [
+            "FR-009",
+            "FR-020"
+          ],
+          "acceptance_ids": [
+            "AC-109",
+            "AC-120",
+            "AC-121",
+            "AC-137",
+            "AC-139",
+            "AC-142",
+            "AC-143",
+            "AC-160"
+          ],
+          "runtime": "NOT_RUN"
+        },
+        {
+          "id": "CT-19",
+          "requirement_ids": [
+            "FR-008",
+            "FR-019"
+          ],
+          "acceptance_ids": [
+            "AC-108",
+            "AC-119",
+            "AC-136",
+            "AC-138",
+            "AC-149",
+            "AC-153"
+          ],
+          "runtime": "NOT_RUN"
+        }
+      ],
+      "obligation": "Seq continuation uses explicit exclusive bounds; do not merge snapshots. TQ05 time-window acceptance still open.",
+      "applied": "DOCUMENTARY_MAPPING_ONLY / NO_UI_OR_PRODUCT_SOURCE_EDIT",
+      "rendered": "NOT_RUN",
+      "independent_QA": "PENDING"
+    }
+  ],
+  "pending_F08_F10": "No new return assumed; human explicitly asks to wait; no reassignment",
+  "bulk_constraint": "RULE013 allowlist only: title/description/internal owner/due; partial success/revision/permission/recovery preserved in local-r3 spec; browser/product enforcement NOT_RUN"
+}

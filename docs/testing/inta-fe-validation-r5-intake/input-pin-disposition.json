@@ -1,0 +1,32 @@
+{
+  "original_manifest": {
+    "path": "docs/testing/parallel-review-intake-20261026/r5-inputs.json",
+    "bytes": 2841,
+    "sha256": "0631e629164b5bc53bcb3a6771bcb88c0b7cfb3e152a9f965cb6a04e39bba687"
+  },
+  "matching_non_AGENTS_count": 11,
+  "drift": [
+    {
+      "expected": {
+        "path": "AGENTS.md",
+        "bytes": 8886,
+        "sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb"
+      },
+      "current": {
+        "path": "AGENTS.md",
+        "bytes": 9171,
+        "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318"
+      }
+    }
+  ],
+  "current_AGENTS": {
+    "path": "AGENTS.md",
+    "bytes": 9171,
+    "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318"
+  },
+  "scope": "Known PO backend routing and later F1 editorial repair only; R5 technical payload inputs/R4 remain unchanged. Owner transcript shows failed pin commands then continuation without retained explicit refresh receipt. Provenance limit is recorded, not retroactively claimed resolved by author. Current independent review uses fresh pins; no duplicate routing review is needed.",
+  "supporting_ownership_receipts": [
+    "docs/reviews/be02-n1-routing-reconfirm-intake.md",
+    "docs/testing/be02-n1-routing-reconfirm-intake/current-agents-pin.json"
+  ]
+}

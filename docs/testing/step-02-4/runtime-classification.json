@@ -1,0 +1,1288 @@
+{
+  "task": "MC-002-INT-PLAN-024",
+  "base": "a7e99929e842105c7941b469422f4bfb7778bf82",
+  "selected_scope": null,
+  "canonical_matrix": "docs/testing/integration-acceptance-matrix.md",
+  "canonical_sha256": "71578d6f36c0e45f5ee012c7909cad98d4b3059fa77756a67e7e6d356253abe1",
+  "counts_now": {
+    "NEEDS_SCOPE_DECISION": 36,
+    "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION": 14,
+    "BLOCKED_BY_EXTERNAL_FEASIBILITY": 1,
+    "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE": 0
+  },
+  "counts_if_INT_A_selected_and_frozen": {
+    "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE": 36,
+    "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION": 14,
+    "BLOCKED_BY_EXTERNAL_FEASIBILITY": 1,
+    "NEEDS_SCOPE_DECISION": 0
+  },
+  "runtime_results": {
+    "NOT_RUN": 51
+  },
+  "rows": [
+    {
+      "id": "INT-ENV-01",
+      "source_line": 25,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ENV-01",
+        "Object": "Disposable PostgreSQL",
+        "Trace": "NFR-002; DEC-023 H5",
+        "Fixture/preconditions": "name availability pre-checked",
+        "Exact action": "create a new owned, labelled, capped PostgreSQL container, loopback only; storage is its own writable layer or a new dedicated named volume (choice documented); verify names unused and DB empty",
+        "Expected assertion and evidence": "recorded command/exit/UTC; no reuse, overwrite or prune of any existing resource",
+        "Owner": "Codex",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then name availability pre-checked",
+        "owner": "Codex",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "create a new owned, labelled, capped PostgreSQL container, loopback only; storage is its own writable layer or a new dedicated named volume (choice documented); verify names unused and DB empty",
+        "expected": "recorded command/exit/UTC; no reuse, overwrite or prune of any existing resource",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ENV-02",
+      "source_line": 26,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ENV-02",
+        "Object": "Schema migration",
+        "Trace": "NFR-002; NFR-012",
+        "Fixture/preconditions": "INT-ENV-01 done",
+        "Exact action": "run native `migrate` at `52b60a4` against the owned DB only",
+        "Expected assertion and evidence": "exit 0; schema applied; no other artifact changed; argv/exit/UTC recorded",
+        "Owner": "Codex, ZCode (operate)",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then INT-ENV-01 done",
+        "owner": "Codex, ZCode (operate)",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "run native `migrate` at `52b60a4` against the owned DB only",
+        "expected": "exit 0; schema applied; no other artifact changed; argv/exit/UTC recorded",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ENV-03",
+      "source_line": 27,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ENV-03",
+        "Object": "Go server operated",
+        "Trace": "C01-NATIVE at `52b60a4`; NFR-003",
+        "Fixture/preconditions": "clean backend checkout, head `52b60a4`",
+        "Exact action": "start loopback; API docs routes disabled; no trusted proxies; record start/stop",
+        "Expected assertion and evidence": "`git diff` vs `52b60a4` empty; running process is the committed head; zero backend change",
+        "Owner": "ZCode",
+        "Reviewer": "OpenCode; Claude (conformance)",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then clean backend checkout, head `52b60a4`",
+        "owner": "ZCode",
+        "reviewer": "OpenCode; Claude (conformance)",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "start loopback; API docs routes disabled; no trusted proxies; record start/stop",
+        "expected": "`git diff` vs `52b60a4` empty; running process is the committed head; zero backend change",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ENV-04",
+      "source_line": 28,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ENV-04",
+        "Object": "Harness root and endpoint",
+        "Trace": "NFR-002; proposal \u00a75",
+        "Fixture/preconditions": "frontend branch from `3e5a642`, pinned deps only, no lockfile change",
+        "Exact action": "build `integration/next-harness/` (name confirmed by Antigravity): one harness-only POST Route Handler; Zod allowlist (runId/caseId/refId); loopback-literal Go base URL re-checked every call; method allowlist; harness envelope `Cache-Control: no-store`; client calls pass `cache: 'no-store'`",
+        "Expected assertion and evidence": "other methods and unknown caseIds rejected; caller-supplied input is limited to the Zod-validated `refId`, used exclusively as a fixed path parameter of the fixed route template (only for cases that require a record); no other caller-supplied value becomes method/URL/path/header/body (not a proxy); dependencies unchanged",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then frontend branch from `3e5a642`, pinned deps only, no lockfile change",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "build `integration/next-harness/` (name confirmed by Antigravity): one harness-only POST Route Handler; Zod allowlist (runId/caseId/refId); loopback-literal Go base URL re-checked every call; method allowlist; harness envelope `Cache-Control: no-store`; client calls pass `cache: 'no-store'`",
+        "expected": "other methods and unknown caseIds rejected; caller-supplied input is limited to the Zod-validated `refId`, used exclusively as a fixed path parameter of the fixed route template (only for cases that require a record); no other caller-supplied value becomes method/URL/path/header/body (not a proxy); dependencies unchanged",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ENV-05",
+      "source_line": 29,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ENV-05",
+        "Object": "Harness refusal, default-off",
+        "Trace": "NFR-002; proposal \u00a711",
+        "Fixture/preconditions": "local env control",
+        "Exact action": "(a) call endpoint with opt-in flag absent; (b) attempt run with `NODE_ENV=production`; (c) attempt run with each listed product auth/bypass variable set (`API_MODE`, `AUTH_ALLOW_ANONYMOUS`, `API_TOKEN` and the Antigravity-confirmed list)",
+        "Expected assertion and evidence": "(a) returns 404 with no outbound call; (b)/(c) refuses to run; harness absent from product build, default tests and CI; not importable from `src/`; per-attempt evidence recorded",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then local env control",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "(a) call endpoint with opt-in flag absent; (b) attempt run with `NODE_ENV=production`; (c) attempt run with each listed product auth/bypass variable set (`API_MODE`, `AUTH_ALLOW_ANONYMOUS`, `API_TOKEN` and the Antigravity-confirmed list)",
+        "expected": "(a) returns 404 with no outbound call; (b)/(c) refuses to run; harness absent from product build, default tests and CI; not importable from `src/`; per-attempt evidence recorded",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1+C2"
+      }
+    },
+    {
+      "id": "INT-ENV-06",
+      "source_line": 30,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ENV-06",
+        "Object": "Driver",
+        "Trace": "proposal \u00a75.3/\u00a75.4",
+        "Fixture/preconditions": "harness ready",
+        "Exact action": "run driver: fixed case table only; one upstream request per case; store bounded envelopes",
+        "Expected assertion and evidence": "no caller-defined routing; envelope set complete for executed cases; exactly one request per case ID (no silent retry)",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then harness ready",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "run driver: fixed case table only; one upstream request per case; store bounded envelopes",
+        "expected": "no caller-defined routing; envelope set complete for executed cases; exactly one request per case ID (no silent retry)",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ENV-07",
+      "source_line": 31,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ENV-07",
+        "Object": "Next runtime checks",
+        "Trace": "proposal \u00a75.6",
+        "Fixture/preconditions": "pinned Next development server",
+        "Exact action": "confirm: cross-root import compiles under harness-only config; documented loopback binding; product TS/lint/test glob pickup; handler dynamic; no fetch result caching/reuse",
+        "Expected assertion and evidence": "compliance or reported deviation (never worked around); `nextVersion` present in envelope",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then pinned Next development server",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "confirm: cross-root import compiles under harness-only config; documented loopback binding; product TS/lint/test glob pickup; handler dynamic; no fetch result caching/reuse",
+        "expected": "compliance or reported deviation (never worked around); `nextVersion` present in envelope",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T1",
+      "source_line": 39,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T1",
+        "Trace": "native POST /users; NFR-003",
+        "Fixture/preconditions": "FIX-SET; user A",
+        "Exact action": "POST create A via harness client path",
+        "Expected assertion and evidence": "outcome `value`; schema-passing body: lowercase UUIDv7 `id`, normalized email/name, `version` 1, RFC 3339 UTC times with 0\u20136 fraction digits; classification `success`; no ApiError; envelope(requestId, startedAt, latencyMs)",
+        "Owner": "Antigravity + ZCode",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then FIX-SET; user A",
+        "owner": "Antigravity + ZCode",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "POST create A via harness client path",
+        "expected": "outcome `value`; schema-passing body: lowercase UUIDv7 `id`, normalized email/name, `version` 1, RFC 3339 UTC times with 0\u20136 fraction digits; classification `success`; no ApiError; envelope(requestId, startedAt, latencyMs)",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T2",
+      "source_line": 40,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T2",
+        "Trace": "native GET /users/{id}",
+        "Fixture/preconditions": "T1 done",
+        "Exact action": "GET A via client path",
+        "Expected assertion and evidence": "body equals T1 body field-for-field; classification `success`",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T1 done",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "GET A via client path",
+        "expected": "body equals T1 body field-for-field; classification `success`",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T3",
+      "source_line": 41,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T3",
+        "Trace": "native 404; NFR-002",
+        "Fixture/preconditions": "FIX-SET",
+        "Exact action": "GET valid, never-created UUIDv7",
+        "Expected assertion and evidence": "`ApiError` 404, code `NOT_FOUND`, RFC 9457 body in `details`; details contain no other record's data",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then FIX-SET",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "GET valid, never-created UUIDv7",
+        "expected": "`ApiError` 404, code `NOT_FOUND`, RFC 9457 body in `details`; details contain no other record's data",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T4",
+      "source_line": 42,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T4",
+        "Trace": "native ID canonicalization",
+        "Fixture/preconditions": "fixed malformed and uppercase literal IDs pinned at ARCH-FINAL",
+        "Exact action": "GET those IDs",
+        "Expected assertion and evidence": "404, code `NOT_FOUND`",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then fixed malformed and uppercase literal IDs pinned at ARCH-FINAL",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "GET those IDs",
+        "expected": "404, code `NOT_FOUND`",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T5",
+      "source_line": 43,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T5",
+        "Trace": "native validation",
+        "Fixture/preconditions": "FIX-SET",
+        "Exact action": "POST with empty `name`",
+        "Expected assertion and evidence": "422, code `VALIDATION_ERROR`, details present; subsequent GET A unchanged (`version` 1)",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then FIX-SET",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "POST with empty `name`",
+        "expected": "422, code `VALIDATION_ERROR`, details present; subsequent GET A unchanged (`version` 1)",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T8",
+      "source_line": 44,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T8",
+        "Trace": "native duplicate email",
+        "Fixture/preconditions": "T1 done",
+        "Exact action": "POST with A's email and a different name",
+        "Expected assertion and evidence": "409, code `HTTP_ERROR` (per client status mapping), details body present; afterwards GET A shows unchanged `version`",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T1 done",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "POST with A's email and a different name",
+        "expected": "409, code `HTTP_ERROR` (per client status mapping), details body present; afterwards GET A shows unchanged `version`",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T9",
+      "source_line": 45,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T9",
+        "Trace": "native PATCH + If-Match",
+        "Fixture/preconditions": "T1 done",
+        "Exact action": "PATCH A, `If-Match: \"1\"`, fresh name different from current",
+        "Expected assertion and evidence": "200; body `version` 2; name applied; classification `success`",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T1 done",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "PATCH A, `If-Match: \"1\"`, fresh name different from current",
+        "expected": "200; body `version` 2; name applied; classification `success`",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T10",
+      "source_line": 46,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T10",
+        "Trace": "native 412, no partial write",
+        "Fixture/preconditions": "T9 done",
+        "Exact action": "PATCH A, stale `If-Match: \"1\"`, another different name",
+        "Expected assertion and evidence": "412; then client GET A shows `version` 2 and the T9 name; no partial write, state unchanged",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T9 done",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "PATCH A, stale `If-Match: \"1\"`, another different name",
+        "expected": "412; then client GET A shows `version` 2 and the T9 name; no partial write, state unchanged",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T11a",
+      "source_line": 47,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T11a",
+        "Trace": "C01 503 unavailable during DB outage",
+        "Fixture/preconditions": "PG stopped (same container stop, identity recorded by Codex)",
+        "Exact action": "client GET A",
+        "Expected assertion and evidence": "`ApiError` 503, client `code` `HTTP_ERROR`, harness `classification` `unavailable` per proposal \u00a75.5; `details.type` = `/problems/unavailable`; `details.retryAfter` = 1; `details.detail` equals the C01-golden 503 detail pinned at ARCH-FINAL (INT-QA-01); no invented text",
+        "Owner": "Antigravity, Codex",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then PG stopped (same container stop, identity recorded by Codex)",
+        "owner": "Antigravity, Codex",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "client GET A",
+        "expected": "`ApiError` 503, client `code` `HTTP_ERROR`, harness `classification` `unavailable` per proposal \u00a75.5; `details.type` = `/problems/unavailable`; `details.retryAfter` = 1; `details.detail` equals the C01-golden 503 detail pinned at ARCH-FINAL (INT-QA-01); no invented text",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "T11b",
+      "source_line": 48,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T11b",
+        "Trace": "C01 503 on write",
+        "Fixture/preconditions": "same outage state",
+        "Exact action": "client PATCH A with current `If-Match` and a different name",
+        "Expected assertion and evidence": "`ApiError` 503, same unavailable assertions; no committed and no not-committed outcome is inferred from the 503 alone (native unknown-write rule); after-recovery reconciliation is read-only via INT-PERS-04 and records the actual state; a strict no-change assertion is permitted only if the selected fixture causally verifies the DB was stopped before the write",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then same outage state",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "client PATCH A with current `If-Match` and a different name",
+        "expected": "`ApiError` 503, same unavailable assertions; no committed and no not-committed outcome is inferred from the 503 alone (native unknown-write rule); after-recovery reconciliation is read-only via INT-PERS-04 and records the actual state; a strict no-change assertion is permitted only if the selected fixture causally verifies the DB was stopped before the write",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "T11c",
+      "source_line": 49,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T11c",
+        "Trace": "C01 503 on create",
+        "Fixture/preconditions": "same outage state",
+        "Exact action": "client POST new run-unique user X",
+        "Expected assertion and evidence": "`ApiError` 503 unavailable, same assertions; outcome recorded OUTCOME_UNKNOWN pending INT-PERS-04",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then same outage state",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "client POST new run-unique user X",
+        "expected": "`ApiError` 503 unavailable, same assertions; outcome recorded OUTCOME_UNKNOWN pending INT-PERS-04",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "T12",
+      "source_line": 50,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T12",
+        "Trace": "client transport failure",
+        "Fixture/preconditions": "Go stopped",
+        "Exact action": "client GET A",
+        "Expected assertion and evidence": "`ApiError` code `NETWORK_ERROR`, status 0; classification unavailable; never success or empty; no driver retry",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then Go stopped",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "client GET A",
+        "expected": "`ApiError` code `NETWORK_ERROR`, status 0; classification unavailable; never success or empty; no driver retry",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1+C4"
+      }
+    },
+    {
+      "id": "W1",
+      "source_line": 58,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "W1",
+        "Trace": "native POST headers; NFR-002",
+        "Fixture/preconditions": "FIX-SET; user B created only here",
+        "Exact action": "wire POST user B (distinct email/name; own request ID)",
+        "Expected assertion and evidence": "201; allowlisted headers: `content-type` JSON, `Location: /api/v1/users/<B id>`, `ETag: \"1\"`, `x-request-id` echo; body parsed; evidence applies to B only",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then FIX-SET; user B created only here",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "wire POST user B (distinct email/name; own request ID)",
+        "expected": "201; allowlisted headers: `content-type` JSON, `Location: /api/v1/users/<B id>`, `ETag: \"1\"`, `x-request-id` echo; body parsed; evidence applies to B only",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "W2",
+      "source_line": 59,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "W2",
+        "Trace": "native Opt header",
+        "Fixture/preconditions": "T1 done",
+        "Exact action": "wire GET A",
+        "Expected assertion and evidence": "`ETag` equals `\"<current version>\"`; request-ID echo",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T1 done",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "wire GET A",
+        "expected": "`ETag` equals `\"<current version>\"`; request-ID echo",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "W3",
+      "source_line": 60,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "W3",
+        "Trace": "native problem media type",
+        "Fixture/preconditions": "never-created UUIDv7",
+        "Exact action": "wire GET that id",
+        "Expected assertion and evidence": "404; `application/problem+json`; request-ID echo; no other record's data",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then never-created UUIDv7",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "wire GET that id",
+        "expected": "404; `application/problem+json`; request-ID echo; no other record's data",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T6-W",
+      "source_line": 61,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T6-W",
+        "Trace": "native 400",
+        "Fixture/preconditions": "FIX-SET",
+        "Exact action": "wire POST malformed JSON bytes with JSON Content-Type",
+        "Expected assertion and evidence": "400; `application/problem+json`; request-ID echo",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then FIX-SET",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "wire POST malformed JSON bytes with JSON Content-Type",
+        "expected": "400; `application/problem+json`; request-ID echo",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "T7-W",
+      "source_line": 62,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "T7-W",
+        "Trace": "native 415; Fetch-standard content-type gap",
+        "Fixture/preconditions": "FIX-SET",
+        "Exact action": "wire POST valid JSON bytes as `Uint8Array` body without Content-Type",
+        "Expected assertion and evidence": "415; `application/problem+json`; sent headers recorded as constructed; any non-415 is recorded as a finding, never worked around",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then FIX-SET",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "wire POST valid JSON bytes as `Uint8Array` body without Content-Type",
+        "expected": "415; `application/problem+json`; sent headers recorded as constructed; any non-415 is recorded as a finding, never worked around",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "W9",
+      "source_line": 63,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "W9",
+        "Trace": "native ETag after update",
+        "Fixture/preconditions": "T9 done",
+        "Exact action": "wire GET A",
+        "Expected assertion and evidence": "`ETag: \"2\"`; request-ID echo",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T9 done",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "wire GET A",
+        "expected": "`ETag: \"2\"`; request-ID echo",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "W11",
+      "source_line": 64,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "W11",
+        "Trace": "C01 503 wire shape",
+        "Fixture/preconditions": "PG stopped",
+        "Exact action": "wire GET A",
+        "Expected assertion and evidence": "503; `application/problem+json`; request-ID echo; a `Retry-After` header is NOT asserted (product convention deferred to D-11)",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then PG stopped",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "wire GET A",
+        "expected": "503; `application/problem+json`; request-ID echo; a `Retry-After` header is NOT asserted (product convention deferred to D-11)",
+        "evidence_profile": "E2",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "INT-PERS-01",
+      "source_line": 70,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-PERS-01",
+        "Trace": "NFR-003; proposal \u00a76",
+        "Fixture/preconditions": "T1/T2 done and executed before T9/T10 mutate A; no mutation of A between the last recorded T1/T2 state and this restart (immediate pre-restart checkpoint)",
+        "Exact action": "restart Go against the same DB; client GET A",
+        "Expected assertion and evidence": "200 with identical `id`, `version` and timestamps as the checkpointed T1/T2 state; a post-T9 `version` 2 is never compared against `version` 1; envelope evidence",
+        "Owner": "Codex, Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T1/T2 done and executed before T9/T10 mutate A; no mutation of A between the last recorded T1/T2 state and this restart (immediate pre-restart checkpoint)",
+        "owner": "Codex, Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "restart Go against the same DB; client GET A",
+        "expected": "200 with identical `id`, `version` and timestamps as the checkpointed T1/T2 state; a post-T9 `version` 2 is never compared against `version` 1; envelope evidence",
+        "evidence_profile": "E2+E3",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "INT-PERS-02",
+      "source_line": 71,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-PERS-02",
+        "Trace": "NFR-003; NFR-014 (local)",
+        "Fixture/preconditions": "INT-PERS-01 done, still before any mutation of A; no mutation between the checkpoint and the stop/start",
+        "Exact action": "stop then start the SAME PostgreSQL container, no remove, no recreate; Codex records container ID and storage identity before/after",
+        "Expected assertion and evidence": "GET A again unchanged against the same checkpointed state; identity equality recorded; any data loss is FAIL",
+        "Owner": "Codex, Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then INT-PERS-01 done, still before any mutation of A; no mutation between the checkpoint and the stop/start",
+        "owner": "Codex, Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "stop then start the SAME PostgreSQL container, no remove, no recreate; Codex records container ID and storage identity before/after",
+        "expected": "GET A again unchanged against the same checkpointed state; identity equality recorded; any data loss is FAIL",
+        "evidence_profile": "E2+E3",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "INT-PERS-03",
+      "source_line": 72,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-PERS-03",
+        "Trace": "C01 recovery behavior",
+        "Fixture/preconditions": "T11a/W11 state; then PG restarted",
+        "Exact action": "client GET A without any Go restart",
+        "Expected assertion and evidence": "200 (recovery); no Go restart occurred; classification `success`",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T11a/W11 state; then PG restarted",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "client GET A without any Go restart",
+        "expected": "200 (recovery); no Go restart occurred; classification `success`",
+        "evidence_profile": "E2+E3",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "INT-PERS-04",
+      "source_line": 73,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-PERS-04",
+        "Trace": "NFR-009; proposal \u00a77 unknown-write rule",
+        "Fixture/preconditions": "T11b/T11c OUTCOME_UNKNOWN open; recovery done",
+        "Exact action": "reconcile by read-only GET of A only; no re-POST, no retry, no new key, no list or SQL scope expansion of user X",
+        "Expected assertion and evidence": "actual committed state of A recorded (reconciling the T11b PATCH outcome); the T11c POST of user X stays OUTCOME_UNKNOWN and unresolved (a 503 on a non-GET implies nothing about commit; a 201 or 409 on any re-post would never prove behavior); the driver/UI records no failed and no success outcome for the unknown write; product receipt-based reconciliation deferred to D-09 (G-3)",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T11b/T11c OUTCOME_UNKNOWN open; recovery done",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "reconcile by read-only GET of A only; no re-POST, no retry, no new key, no list or SQL scope expansion of user X",
+        "expected": "actual committed state of A recorded (reconciling the T11b PATCH outcome); the T11c POST of user X stays OUTCOME_UNKNOWN and unresolved (a 503 on a non-GET implies nothing about commit; a 201 or 409 on any re-post would never prove behavior); the driver/UI records no failed and no success outcome for the unknown write; product receipt-based reconciliation deferred to D-09 (G-3)",
+        "evidence_profile": "E2+E3",
+        "cleanup_profile": "C1+C3"
+      }
+    },
+    {
+      "id": "INT-COR-01",
+      "source_line": 79,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-COR-01",
+        "Trace": "native X-Request-Id; NFR-008 observability",
+        "Fixture/preconditions": "T1/T2/T8/T9 executed",
+        "Exact action": "locate retained Go access-log lines carrying those case request IDs (path-only logs)",
+        "Expected assertion and evidence": "each ID found in one Go log line; if the pinned template does not log the ID, record NOT-OBSERVABLE as a limitation \u2014 this does not block transport acceptance but is reported",
+        "Owner": "Antigravity, Codex",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then T1/T2/T8/T9 executed",
+        "owner": "Antigravity, Codex",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "locate retained Go access-log lines carrying those case request IDs (path-only logs)",
+        "expected": "each ID found in one Go log line; if the pinned template does not log the ID, record NOT-OBSERVABLE as a limitation \u2014 this does not block transport acceptance but is reported",
+        "evidence_profile": "E4",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-PRIV-01",
+      "source_line": 80,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-PRIV-01",
+        "Trace": "NFR-002; proposal \u00a78",
+        "Fixture/preconditions": "envelopes and logs retained",
+        "Exact action": "scan retained Go and Next application logs only for T1/W1/T8/T9/T11c synthetic emails/names; scan every retained artifact including envelopes for credential/DSN/password/token values",
+        "Expected assertion and evidence": "synthetic body markers absent from Go and Next application logs only (bounded synthetic response bodies retained inside envelopes are permitted); credential/DSN/password/token values absent from every artifact including envelopes; envelope bodies \u226416 KiB with truncation flagged and a truncated body cannot satisfy any body assertion; synthetic data only; scoped evidence only, no general privacy guarantee claimed",
+        "Owner": "Codex",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then envelopes and logs retained",
+        "owner": "Codex",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "scan retained Go and Next application logs only for T1/W1/T8/T9/T11c synthetic emails/names; scan every retained artifact including envelopes for credential/DSN/password/token values",
+        "expected": "synthetic body markers absent from Go and Next application logs only (bounded synthetic response bodies retained inside envelopes are permitted); credential/DSN/password/token values absent from every artifact including envelopes; envelope bodies \u226416 KiB with truncation flagged and a truncated body cannot satisfy any body assertion; synthetic data only; scoped evidence only, no general privacy guarantee claimed",
+        "evidence_profile": "E4",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ISO-01",
+      "source_line": 81,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ISO-01",
+        "Trace": "C01 preservation; NFR-002",
+        "Fixture/preconditions": "sections A\u2013D executed",
+        "Exact action": "compute diffs: backend vs `52b60a4`; `src/` vs `3e5a642`; shared client; dependencies/lockfile",
+        "Expected assertion and evidence": "all diffs empty; additionally Go holds no CORS configuration (server-to-server scope, no browser)",
+        "Owner": "ZCode, Antigravity",
+        "Reviewer": "OpenCode; Claude (conformance)",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then sections A\u2013D executed",
+        "owner": "ZCode, Antigravity",
+        "reviewer": "OpenCode; Claude (conformance)",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "compute diffs: backend vs `52b60a4`; `src/` vs `3e5a642`; shared client; dependencies/lockfile",
+        "expected": "all diffs empty; additionally Go holds no CORS configuration (server-to-server scope, no browser)",
+        "evidence_profile": "E5",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ISO-02",
+      "source_line": 82,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ISO-02",
+        "Trace": "proposal \u00a711 production exclusion",
+        "Fixture/preconditions": "product build runnable locally",
+        "Exact action": "inspect product build/test/CI output for harness modules; confirm harness not importable from `src/` and not in product globs (cross-checked with INT-ENV-07 result)",
+        "Expected assertion and evidence": "no harness module in product artifacts; deviations reported, not silently fixed",
+        "Owner": "Antigravity",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then product build runnable locally",
+        "owner": "Antigravity",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "inspect product build/test/CI output for harness modules; confirm harness not importable from `src/` and not in product globs (cross-checked with INT-ENV-07 result)",
+        "expected": "no harness module in product artifacts; deviations reported, not silently fixed",
+        "evidence_profile": "E5",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-ISO-03",
+      "source_line": 83,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-ISO-03",
+        "Trace": "proposal \u00a76/\u00a711 teardown",
+        "Fixture/preconditions": "all owned resources running",
+        "Exact action": "stop only owned processes/containers (Next harness, Go, PostgreSQL); verify no owned listeners remain; no deletion or prune of others' resources; retain evidence (argv, exits, UTC, redacted configs, owned-resource list, DB/storage identity)",
+        "Expected assertion and evidence": "zero owned listeners; evidence retained; retention-vs-removal follows Codex governance after this milestone",
+        "Owner": "Codex",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then all owned resources running",
+        "owner": "Codex",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "stop only owned processes/containers (Next harness, Go, PostgreSQL); verify no owned listeners remain; no deletion or prune of others' resources; retain evidence (argv, exits, UTC, redacted configs, owned-resource list, DB/storage identity)",
+        "expected": "zero owned listeners; evidence retained; retention-vs-removal follows Codex governance after this milestone",
+        "evidence_profile": "E1",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "INT-CONF-01",
+      "source_line": 84,
+      "classification_now": "NEEDS_SCOPE_DECISION",
+      "classification_if_INT_A_selected_and_frozen": "REQUIRED_FOR_SELECTED_INTEGRATION_SLICE",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "INT-CONF-01",
+        "Trace": "task plan MC-002-INT-ARCH-CHECK",
+        "Fixture/preconditions": "Sections A\u2013E executed",
+        "Exact action": "Claude reviews executed evidence against the approved ARCH-FINAL contract",
+        "Expected assertion and evidence": "per-boundary conformance or variance disposition; new material variances return to the PO; not PO approval, not product/cost closure",
+        "Owner": "Claude",
+        "Reviewer": "OpenCode",
+        "RESULT": "NOT_RUN"
+      },
+      "planning_supplement": {
+        "prerequisites": "G-PO + G-FREEZE + G-OWNER + G-ENV as applicable, then Sections A\u2013E executed",
+        "owner": "Claude",
+        "reviewer": "OpenCode",
+        "environment": "E-LOCAL-INTA",
+        "procedure": "Claude reviews executed evidence against the approved ARCH-FINAL contract",
+        "expected": "per-boundary conformance or variance disposition; new material variances return to the PO; not PO approval, not product/cost closure",
+        "evidence_profile": "E6",
+        "cleanup_profile": "C1"
+      }
+    },
+    {
+      "id": "D-01",
+      "source_line": 92,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-01",
+        "Future case": "Missing authentication",
+        "Trace": "NFR-001; TB-04",
+        "Future fixture": "FIX-D-AUTH",
+        "Future action": "request without credentials",
+        "Expected (CANDIDATE where marked)": "CANDIDATE 401 `/problems/unauthenticated`",
+        "Gate/prerequisite": "G-1; INT-D02",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-02",
+      "source_line": 93,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-02",
+        "Future case": "Invalid/expired credentials",
+        "Trace": "NFR-001",
+        "Future fixture": "FIX-D-AUTH",
+        "Future action": "wrong-signature token; expired token",
+        "Expected (CANDIDATE where marked)": "CANDIDATE 401, externally identical for both; no claim trusted",
+        "Gate/prerequisite": "G-1; INT-D02",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-03",
+      "source_line": 94,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-03",
+        "Future case": "Valid authenticated request",
+        "Trace": "INT-D02",
+        "Future fixture": "FIX-D-AUTH",
+        "Future action": "authenticated call",
+        "Expected (CANDIDATE where marked)": "CANDIDATE success yielding subject only; never proof of authorization",
+        "Gate/prerequisite": "G-1",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-04",
+      "source_line": 95,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-04",
+        "Future case": "Workspace isolation",
+        "Trace": "NFR-001/002; AC-135; AC-118",
+        "Future fixture": "FIX-D-ISOL",
+        "Future action": "WS-A member attempts WS-B matter by id, all retrieval and command paths",
+        "Expected (CANDIDATE where marked)": "uniform 404, externally indistinguishable from nonexistent; no title/count/metadata leak (CANDIDATE `/problems/not-found`)",
+        "Gate/prerequisite": "G-2",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-05",
+      "source_line": 96,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-05",
+        "Future case": "Matter isolation",
+        "Trace": "NFR-001; AC-158",
+        "Future fixture": "FIX-D-ISOL",
+        "Future action": "M-A member attempts M-B in same workspace",
+        "Expected (CANDIDATE where marked)": "uniform 404; active workspace membership AND explicit Matter membership required; Workspace OWNER no implicit access",
+        "Gate/prerequisite": "G-2",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-06",
+      "source_line": 97,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-06",
+        "Future case": "Insufficient role",
+        "Trace": "NFR-001; permission matrix; AC-134; AC-140",
+        "Future fixture": "FIX-D-ISOL",
+        "Future action": "VIEWER write; EDITOR attempts OWNER-only ops; undeclared verifier and self-verification attempts",
+        "Expected (CANDIDATE where marked)": "CANDIDATE 403 with no domain change and denied-access audit",
+        "Gate/prerequisite": "G-2",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-07",
+      "source_line": 98,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-07",
+        "Future case": "Revocation mid-access",
+        "Trace": "NFR-001; permission-matrix revocation row; AC-147",
+        "Future fixture": "FIX-D-ISOL",
+        "Future action": "externally revoke membership, then next read/export/bulk/action",
+        "Expected (CANDIDATE where marked)": "current-rights recheck; stale grant denied (uniform 404); no cached UI outcome survives",
+        "Gate/prerequisite": "G-2",
+        "Future owner": "ZCode, Antigravity",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-08",
+      "source_line": 99,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-08",
+        "Future case": "Workspace OWNER vs confidential Matter",
+        "Trace": "AC-118; AC-158",
+        "Future fixture": "FIX-D-ISOL",
+        "Future action": "Workspace OWNER without explicit membership reads and replays against that matter",
+        "Expected (CANDIDATE where marked)": "denied everywhere, including idempotent replay path (receipt never returned)",
+        "Gate/prerequisite": "G-2; G-3",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-09",
+      "source_line": 100,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-09",
+        "Future case": "Idempotency and unknown outcome",
+        "Trace": "NFR-003/009; AC-153",
+        "Future fixture": "product slice with receipts",
+        "Future action": "same-key resubmit; key reuse with different hash; aged key; `GET /operations/{key}`",
+        "Expected (CANDIDATE where marked)": "CANDIDATE: replay stored response + `Idempotent-Replayed: true`; 422 reuse; 422/410 expired; 200/410/404 as-of semantics",
+        "Gate/prerequisite": "G-3",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-10",
+      "source_line": 101,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-10",
+        "Future case": "Product CAS strictness",
+        "Trace": "candidate API \u00a71.1; AC-131",
+        "Future fixture": "product slice",
+        "Future action": "missing If-Match on CAS-scoped endpoint; If-Match on scope-none endpoint; stale revision",
+        "Expected (CANDIDATE where marked)": "CANDIDATE 428 / 400 precondition-not-applicable / 412 + currentRevision",
+        "Gate/prerequisite": "G-2/G-3",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-11",
+      "source_line": 102,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-11",
+        "Future case": "Product error and retry conventions",
+        "Trace": "INT-D09; NFR-008/009",
+        "Future fixture": "product error catalogue",
+        "Future action": "command 503 and unavailable handling",
+        "Expected (CANDIDATE where marked)": "CANDIDATE units/range of retryAfter, Retry-After header decision, catalogue-wide type URIs; outcome-unknown documented",
+        "Gate/prerequisite": "G-5",
+        "Future owner": "Claude proposes; PO decides",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-12",
+      "source_line": 103,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-12",
+        "Future case": "Frontend session and per-user cache",
+        "Trace": "NFR-001/008; AC-156",
+        "Future fixture": "product frontend slice",
+        "Future action": "check every Server Action/Route Handler/data boundary; inspect cached responses",
+        "Expected (CANDIDATE where marked)": "auth at every boundary; tokens server-side; no cached response served across users; unavailable never rendered as false empty/ready",
+        "Gate/prerequisite": "G-6",
+        "Future owner": "Antigravity",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-13",
+      "source_line": 104,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-13",
+        "Future case": "CORS/origin product policy",
+        "Trace": "NFR-001/002; G-1/G-6",
+        "Future fixture": "browser runtime",
+        "Future action": "untrusted origin requests",
+        "Expected (CANDIDATE where marked)": "CANDIDATE: only defined origins served; no browser bypass of backend authorization",
+        "Gate/prerequisite": "G-1/G-6",
+        "Future owner": "Antigravity, ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    },
+    {
+      "id": "D-14",
+      "source_line": 105,
+      "classification_now": "BLOCKED_BY_EXTERNAL_FEASIBILITY",
+      "classification_if_INT_A_selected_and_frozen": "BLOCKED_BY_EXTERNAL_FEASIBILITY",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-14",
+        "Future case": "Production hosting and cost",
+        "Trace": "INT-D04..D08; NFR-006/014",
+        "Future fixture": "production topology evidence",
+        "Future action": "adapter behavior, compute limits, full-lifecycle bill",
+        "Expected (CANDIDATE where marked)": "explicit: cannot be satisfied by any local transport PASS; paid/production activation needs PO approval",
+        "Gate/prerequisite": "G-7/G-8",
+        "Future owner": "Codex; PO",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Production topology/provider/account eligibility, actual adapter behavior and full bill remain unevidenced; this is separate from local INT-A and not a claim all hosting options are impossible."
+    },
+    {
+      "id": "D-15",
+      "source_line": 106,
+      "classification_now": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "classification_if_INT_A_selected_and_frozen": "DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION",
+      "result": "NOT_RUN",
+      "source_contract": {
+        "ID": "D-15",
+        "Future case": "Audit append-only",
+        "Trace": "NFR-004; permission matrix",
+        "Future fixture": "product slice with history",
+        "Future action": "attempts to edit/delete prior Event History by any role",
+        "Expected (CANDIDATE where marked)": "denied; corrections append with attribution",
+        "Gate/prerequisite": "G-2",
+        "Future owner": "ZCode",
+        "RESULT": "NOT_RUN"
+      },
+      "reason": "Needs later approved product API/auth/policy enforcement implementation; local synthetic User transport cannot satisfy this gate."
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+# MC-003A.8A — ZCode targeted correction F10-OC01..06 (corrected candidate, READY_FOR_SCOPED_REREVIEW)
+
+**Identity**: ZCode Desktop, session do human điều hành; model/provider session metadata: `GLM-5.3` / `account:zai-start-plan` (session-declared, không attestation độc lập); tool version UNKNOWN. Text-only đúng giao: không lệnh, không đọc file mới, không supplement access, không runtime/DB/provider call. Tôi là **tác giả candidate đang sửa theo CHANGES_REQUIRED của OpenCode thực** — tôi **không tự chấp nhận** các thay đổi của chính mình; đây không phải self-confirmation vòng hai. Trạng thái đề xuất: **CORRECTED_CANDIDATE / READY_FOR_SCOPED_REREVIEW** — không PASS, không CLOSED, không approval.
+
+## 0. OC07 — candidate precedence note (chỉ ghi vào addendum mới; Codex lo supersession record riêng)
+
+Bản addendum này **supersede các clause xung đột liệt kê ở §1** của các bản candidate trước (R2 reconcile, R3 completion, final owner-confirmation). Manifest đã review là **lịch sử bất biến**; bản corrected này là revision mới. **Lựa chọn A (final)** supersede khuyến nghị A-vs-B của tác giả ở R3: A giữ trạng thái **CANDIDATE, không phải contract-approved**; B (causeSeq filter) / B35 / L2 vẫn **unadopted**. Không retrospective edit, không owner loop bổ sung.
+
+## 1. Supersession list (rõ ràng, từng clause)
+
+| Clause cũ (bản nào) | Bị thay bởi |
+|---|---|
+| R2-final: "uniform command order admission→authz→replay→preconditions→guards→effects" phát biểu cho **mọi command** | **OC04 pipeline scoped chỉ F10 filing family**; command ngoài family không đổi, không claim authority toàn cục |
+| R2/R3: stop-condition "đủ N match ⇒ command-local completeness; history muộn không bao giờ bổ sung link" | **OC02 observed-window semantics**: closing page = trang chứa match thứ N, inspect hết trang đó rồi dừng; surplus ngoài window **không claim phát hiện**; N=0 không scan |
+| A8 cũ: "surplus / identity mismatch" gộp trong edge semantics | **OC03 tách**: exact AND-match giữ nguyên; **anomaly predicate riêng** trên scanned window; "surplus" định nghĩa lại = match thứ (N+1) **trong closing page** |
+| R2: "latest-seq terminal; superseded replacement deactivation" (có thể đọc nhầm là latest toàn cục) | **OC01+OC05 derivation per-original chính xác** (prose + JSON dưới) |
+| OC06: bounds không ghi đơn vị đếm | Đơn vị đếm pinned: **code points, biên inclusive** |
+
+## 2. OC01+OC05 — Terminal correction & effective links (derivation chính xác, per-original)
+
+**Prose.** Với mỗi **original observation O** dưới một filing, tại snapshot S (history đã commit ≤ S):
+
+- `corrections(O)` = tập correction `c` có `c.correctsObservationId = O.id` trong history ≤ S.
+- `terminal(O)` = phần tử **max seq** của `corrections(O)` — seq per-matter là unique (ADR-002 §1.5) nên argmax duy nhất; **đánh giá độc lập theo từng original**, không tồn tại khái niệm "correction mới nhất của filing".
+- `effectiveLinks(O, S)`:
+  - `corrections(O) = ∅` → **links của chính O**;
+  - `terminal(O).action = RETRACT` → **∅**;
+  - `terminal(O).action = REPLACE` → **chỉ links của replacement observation do chính terminal correction đó sinh ra**.
+- Loại khỏi effective: links của original (khi có correction) **và** links của **mọi replacement do correction không-terminal sinh ra** (superseded replacements). **Không thể resurrect replacement cũ**: terminal luôn là max seq tại snapshot đang xét.
+- Command guard: correction chỉ được target **original observation**; `correctsObservationId` resolve thành replacement/bất kỳ non-original/không resolve dưới filing này → **scoped 422 validation** (không leak tồn tại).
+- History bất biến: derivation là hàm thuần của append-only log tại S — asOf trước/giữa/sau các correction cho giá trị tương ứng, không rewrite gì.
+
+**JSON derivation** (cũng nằm trong delta cuối):
+
+```json
+{
+  "inputs": ["original O under (matter, filing)", "snapshot S with committed history <= S",
+             "corrections(O) = {c in history <= S : c.correctsObservationId == O.id}",
+             "per-matter unique seq (ADR-002 1.5)"],
+  "terminal": "corrections(O) empty -> none; else unique argmax seq over corrections(O); evaluated per original independently; no global-latest notion",
+  "effective_links": "no correction -> links(O); terminal RETRACT -> empty; terminal REPLACE -> links(terminal.replacementObservationId) ONLY",
+  "excluded": ["links(O) whenever any correction exists", "links of every replacement from a non-terminal correction", "old-replacement resurrection impossible by max-seq recomputation per snapshot"],
+  "command_guard": "corrections target originals only; correctsObservationId resolving to a replacement or unresolvable -> scoped 422 validation, no existence leak",
+  "history": "pure function of append-only history at S; asOf before/between/after yields the corresponding value; no rewrite"
+}
+```
+
+## 3. OC02 — Completeness & corruption detection tách bạch; observed window nhỏ nhất deterministic
+
+Thuật toán reader (path A giữ nguyên: cùng Matter, **không filter**, F-09 seq keyset):
+
+1. **N=0** (main event `evidenceLinkedCount=0`): **COMPLETE_0_OF_0** — không fetch trang link nào. Case tường minh.
+2. N>0: fetch tiếp các trang `after=cursor&limit=k`, đếm **unique exact-match** (dedup theo seq). Khi đếm tới **N**: **closing page = trang đang chứa match thứ N**; inspect **toàn bộ phần còn lại của chính trang đó** (đã có trong tay — 0 call thêm) rồi **STOP**. Không speculative lookahead, không scan option mới.
+3. **Surplus detectable iff** match thứ (N+1) xuất hiện **trong closing page** (quan sát được). Surplus sau closing page: **NOT_CLAIMED_DETECTED** — tường minh.
+4. **Exhaustion trước N** (hết stream, `nextCursor=null`, count<N) → **INCOMPLETE_HISTORY**.
+5. Completion claim được phát biểu chính xác là: *"N unique exact-match quan sát được + không surplus và không wrong-observation anomaly quan sát được trong scanned window"* — **không** claim "never false completeness" chống producer corrupt ngoài window.
+6. **Nth match ở page boundary**: deterministic — closing page là trang chứa nó; nếu nó là item cuối trang, remainder rỗng → dừng; trang kế không fetch. Match thứ N **không bao giờ** bị chia kẽ hai trang theo cách khác nhau tuỳ triển khai (một event thuộc đúng một trang).
+
+## 4. OC03 — Anomaly predicate riêng (không OR-match)
+
+- **Exact match (giữ nguyên, normative)**: `type = filing.observation.evidence_linked ∧ causeSeq = mainSeq ∧ payload.observationId = expectedObsId`.
+- **Anomaly predicate (MỚI, riêng biệt)**: `type = filing.observation.evidence_linked ∧ causeSeq = mainSeq ∧ payload.observationId ≠ expectedObsId` — "link event nhận causeSeq của lệnh này nhưng observationId khác". Đánh giá trên **cùng scanned window** (mọi trang đã fetch, gồm remainder của closing page).
+- Bỏ qua (không phải anomaly, không false-positive): event **derived** cùng `causeSeq` nhưng **khác type**; link event của command khác (`causeSeq` khác).
+- **Observed anomaly override N-complete**: nếu bắt được ≥1 wrong-observation anomaly trong window → trạng thái **ANOMALY** bất kể đã đủ N; UI hiển thị trạng thái anomaly (distinct khỏi COMPLETE/INCOMPLETE), **không bao giờ render zero/success** khi anomaly đã quan sát.
+- Không cần **precomputed expected evidence set** (reader có thể chưa biết Evidence IDs ban đầu): predicate chỉ dùng `mainSeq` + `expectedObsId`, cả hai lấy từ main event.
+- Độ phủ trung thực: wrong-obs **trước match thứ N** → trong window → detected; **sau Nth nhưng trong closing page** → detected; **ngoài window** → không detected (non-claim tường minh).
+
+## 5. OC04 — Check-order matrix, scoped CHỈ F10 filing family
+
+Pipeline nhất quán (một dòng cho cả family; command ngoài family **không đổi**): 
+`transport+JSON syntax admission (400, format-only) → 401 → scope/Matter authz (uniform 404) → idempotency replay → body format validation (422, format-only) → preconditions (If-Match: 428 missing/412 stale; expectedCycleNo: missing 422 validation [routine candidate choice], stale 412) → scoped target existence (422) → stage guard (409) → atomic effects`. 
+
+Ràng buộc: **authz + replay trước scoped existence**; admission chỉ validate **format** — không check tồn tại scoped trước authz (no leak).
+
+| Command | If-Match (filing revision) | expectedCycleNo | Target binding | Stage guard |
+|---|---|---|---|---|
+| Filing create | **không required** (CAS scope none, §1.1); không có "nonexistent-filing CAS" — filing chưa tồn tại | n/a | server tạo **cycle 1** | n/a |
+| Ordinary observation | required: 428/412 | required khi body nêu cycle: missing **422** (choice), stale **412** | body `cycleNo` phải resolve dưới filing → scoped **422** | không |
+| Supplement | required: 428/412 | required: missing **422** (choice), stale **412** | **không có existing-target check** — server derive n+1 | AUTHORITY_REVIEW → **409** |
+| Correction | required: **428** missing / **412** stale | required: missing 422 (choice), stale 412 | `correctsObservationId` phải là **original** dưới filing; REPLACEd `cycleNo` phải resolve → scoped **422** | không |
+
+Kết quả pinned cho tổ hợp: **stale CAS + stage đổi → 412** (precondition trước guard, chỉ trong family này); **invalid target + stale expectedCycleNo → 412** (precondition trước scoped existence); **invalid target + stage đổi → 422** (scoped existence trước guard); **correction: thiếu If-Match 428 / stale 412 / non-original target 422** (theo thứ tự đó). **Authorized replay**: theo replay semantics của api-conventions hiện hành (re-check authz hiện tại trên scope; replay stored response hoặc uniform 404 nếu mất quyền) — không phát minh lại. **Rollback**: all-or-nothing, giữ nguyên. Các lựa chọn "missing expectedCycleNo → 422" và bản thân pipeline scoped là **routine candidate choices** (một khuyến nghị, không tạo approval loop mới, không tự coi như approved).
+
+## 6. OC06 — Bounds: proposed, đơn vị đếm pinned
+
+`reason ≤ 2000`, `observationType ≤ 64`, `correlationId ≤ 128` **giữ nguyên PROPOSED** — không source-proven, không approved. Bổ sung: đơn vị đếm = **Unicode code points** (routine candidate choice), biên **inclusive** (≤). Fixture multibyte: `reason` chứa dấu tiếng Việt/CJK/emoji — ví dụ chuỗi 2.000 code points nhiều byte (~4–8 KB UTF-8) **vượt không** theo đơn vị đã pin; một chuỗi 2.001 code points dù chỉ 2.002 bytes thì **vượt**. **Envelope bound: NEEDS_AUTHORIZED_SOURCE** (tường minh; không claim constant bytes). Không thêm business link cap; không numeric PO acceptance nào được thực hiện thay PO.
+
+## 7. Bảng finding → patch → expected cases
+
+| Finding | Patch | Expected cases (DOCUMENT_EXPECTED) |
+|---|---|---|
+| OC01+OC05 | Derivation per-original §2 | T1: O4→O5(REPLACE) rồi RETRACT O4 → **none**. T2: O4→O5 rồi O4→O6 → **chỉ links(O6)**. T3: correction O4 và O9 xen kẽ (C1@O4, C2@O9, C3@O4) → terminal(O4)=C3, terminal(O9)=C2 **độc lập**. T4: correction target O5 (replacement) → **422 scoped**. T5: asOf trước/giữa/sau → giá trị theo history ≤ asOf, **không rewrite**. |
+| OC02 | Observed-window §3 | T6: interleaving hợp lệ + limit=1 → đủ N, dừng tại closing page (remainder rỗng), surplus trang kế **không detected** (đúng non-claim). T7: N=0 → COMPLETE_0_OF_0, không scan. T8: exhausted<N → INCOMPLETE_HISTORY. T9: surplus **trong** closing page → detected → anomaly path. T10: Nth match đúng item cuối trang → deterministic, không fetch trang kế. |
+| OC03 | Anomaly predicate riêng §4 | T11: wrong-obs **trước** Nth → detected → ANOMALY, không zero/success dù sau đó đủ N. T12: wrong-obs **sau Nth trong closing page** → detected. T13: wrong-obs **ngoài window** → không detected (non-claim). T14: derived event cùng causeSeq khác type, xen giữa hai link → **không** false anomaly. |
+| OC04 | Pipeline + matrix scoped §5 | T15: stale CAS + stage đổi → **412**. T16: invalid target + stale expected → **412**. T17: invalid target + stage đổi → **422**. T18: missing expectedCycleNo → **422** (choice). T19: correction thiếu If-Match **428** / stale **412** / non-original **422**. T20: authorized replay theo conventions; command ngoài family không đổi thứ tự. T21: mọi failure → rollback toàn phần. |
+| OC06 | Đơn vị đếm §6 | T22: reason 2.000 code points multibyte → hợp lệ; 2.001 code points → vượt; envelope bound NEEDS_AUTHORIZED_SOURCE. |
+| OC07 | Precedence note §0 | Bản này supersede các clause §1; manifest cũ immutable; A cuối cùng là CANDIDATE; B/B35/L2 unadopted. |
+
+## 8. Giữ nguyên phần reviewer thấy coherent (không đụng)
+
+Same-Matter cycle binding + epoch-independence; atomicity (một transaction, rollback toàn phần); OWNER+reason cho correction; immutable history; exact versions & current proof epoch; receipt ≠ approval; per-page snapshot labels (asOf/sourceRevision riêng, không merge); discovery path A (same-Matter unfiltered seq pages, không commandKey/correlation mapping); no-array invariant scoped đúng hai event types; **không route/filter mới**. Catalogue **32**; mọi field/bound **NOT_ADOPTED**.
+
+## 9. JSON delta (unique keys)
+
+```json
+{
+  "task": "MC-003A.8A.f10_oc01_06_targeted_correction",
+  "reviewer": "ZCode Desktop interactive session, human-operated (candidate author performing scoped correction; cannot independently accept own changes)",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN",
+  "trigger": "actual OpenCode independent review CHANGES_REQUIRED on the exact 6-snapshot 49688-byte packet",
+  "proposed_status": "CORRECTED_CANDIDATE_READY_FOR_SCOPED_REREVIEW",
+  "not_claimed": ["PASS", "CLOSED", "approval", "adoption", "independent acceptance"],
+  "oc07_precedence": {
+    "superseded_clauses": "listed in addendum section 1; manifest under review is immutable history",
+    "final_A_selection": "supersedes prior R3 A-vs-B author recommendation; A remains CANDIDATE not contract-approved",
+    "unadopted": ["B causeSeq filter", "B35", "L2"],
+    "process_owner": "Codex separate dispatch/supersession record; no retrospective edits or extra owner loop here"
+  },
+  "oc01_oc05_terminal_derivation": {
+    "per_original": "terminal(O) = unique argmax seq over corrections targeting original O in committed history <= S; independent per original; no global-latest interpretation",
+    "effective_links": {"no_correction": "links(O)", "terminal_RETRACT": "empty", "terminal_REPLACE": "links(terminal.replacementObservationId) only"},
+    "excluded": ["original links when any correction exists", "all superseded replacements' links", "old-replacement resurrection impossible (terminal recomputed per snapshot)"],
+    "command_guard": "original-target-only; replacement/unresolvable correctsObservationId -> scoped 422 validation, no leak",
+    "history": "pure function of append-only history at S; asOf before/between/after without rewrite",
+    "expected": ["T1 replace-then-retract -> none", "T2 double replace -> only newest replacement", "T3 interleaved originals independent terminals", "T4 target replacement -> 422", "T5 asOf variants no rewrite"]
+  },
+  "oc02_observed_window": {
+    "N_zero": "COMPLETE_0_OF_0, no link pages fetched",
+    "closing_page": "the page containing the Nth exact match; inspect its full remainder (already fetched, zero extra calls) then STOP; no speculative lookahead or new scan option",
+    "surplus_detection": "surplus = (N+1)th exact match within closing page; surplus after closing page NOT_CLAIMED_DETECTED",
+    "exhaustion": "stream exhausted with count < N -> INCOMPLETE_HISTORY",
+    "completion_claim": "N unique exact matches observed + no surplus and no wrong-observation anomaly observed within the scanned window; no claim of never-false-completeness against corrupt producers outside the window",
+    "boundary": "Nth match at page boundary deterministic; an event belongs to exactly one page; no next-page fetch",
+    "expected": ["T6 valid interleaving limit=1", "T7 N=0", "T8 exhausted<N", "T9 surplus within closing page", "T10 Nth at boundary"]
+  },
+  "oc03_anomaly_predicate": {
+    "exact_match_kept": "type=filing.observation.evidence_linked AND causeSeq=mainSeq AND payload.observationId=expectedObsId",
+    "anomaly_match_new": "type=filing.observation.evidence_linked AND causeSeq=mainSeq AND payload.observationId != expectedObsId; evaluated over the same scanned window including closing-page remainder",
+    "ignored": ["derived events with same causeSeq and different type", "other commands' links with different causeSeq"],
+    "override": "observed anomaly overrides N-complete -> status ANOMALY; UI shows anomaly state, never zero/success",
+    "no_precomputed_set": "predicate uses only mainSeq and expectedObsId from the main event; expected evidence IDs need not be known initially",
+    "coverage": "before Nth detected; after Nth within closing page detected; outside window not detected (explicit non-claim)",
+    "expected": ["T11 wrong-obs before Nth", "T12 after Nth within closing page", "T13 outside window undetected", "T14 derived between links no false anomaly"]
+  },
+  "oc04_scoped_pipeline": {
+    "scope": "F10 filing family ONLY (filing create, ordinary observation, supplement, correction); other commands unchanged; no global contract authority claimed",
+    "pipeline": "transport+JSON admission (400, format only) -> 401 -> scope/Matter authz (uniform 404) -> idempotency replay -> body format validation (422) -> preconditions (If-Match 428/412; expectedCycleNo missing 422 candidate choice, stale 412) -> scoped target existence (422) -> stage guard (409) -> atomic effects",
+    "matrix": {
+      "filing_create": "no If-Match (CAS scope none); no nonexistent-filing CAS; server creates cycle 1",
+      "ordinary_observation": "If-Match 428/412; expectedCycleNo required when body names a cycle (missing 422 choice, stale 412); body cycleNo scoped 422",
+      "supplement": "If-Match 428/412; expectedCycleNo required (missing 422 choice, stale 412); NO existing-target check, server derives n+1; stage AUTHORITY_REVIEW else 409",
+      "correction": "If-Match 428/412; expectedCycleNo required (missing 422 choice, stale 412); correctsObservationId must be an original (scoped 422); REPLACE cycleNo scoped 422"
+    },
+    "pinned_combinations": {"stale_CAS_and_changed_stage": "412", "invalid_target_and_stale_expected": "412", "invalid_target_and_changed_stage": "422", "correction_missing_IfMatch": "428", "correction_stale": "412", "correction_non_original": "422", "missing_expectedCycleNo": "422 (routine candidate choice)"},
+    "replay": "existing api-conventions replay semantics unchanged (current authz re-check on scope; stored response or uniform 404)",
+    "rollback": "all-or-nothing unchanged",
+    "expected": ["T15", "T16", "T17", "T18", "T19", "T20 non-filing order unchanged", "T21 full rollback"]
+  },
+  "oc06_bounds": {
+    "status": "PROPOSED, not source-proven, not approved, NOT_ADOPTED",
+    "values": {"reason_max": 2000, "observationType_max": 64, "correlationId_max": 128},
+    "count_unit": "Unicode code points (routine candidate choice), inclusive boundary",
+    "multibyte_fixture": "2000-codepoint multibyte string (~4-8KB UTF-8) passes; 2001 codepoints fails even if byte count low",
+    "envelope_bound": "NEEDS_AUTHORIZED_SOURCE; no constant-byte claim",
+    "no_new": "no business link cap; no numeric acceptance on behalf of PO"
+  },
+  "preserved_coherent": ["same-Matter cycle binding and epoch independence", "atomicity and full rollback", "OWNER+reason correction", "immutable history", "exact versions and current proof epoch", "receipt != approval", "per-page snapshot labels", "path A same-Matter unfiltered seq discovery", "no-array invariant scoped to two event types", "no new routes or filters"],
+  "state": {
+    "catalogue": 32,
+    "fields_and_bounds": "NOT_ADOPTED",
+    "acceptance": "DOCUMENT_EXPECTED (T1..T22)",
+    "runtime": "NOT_RUN",
+    "f08_be01_inta": "outside this work",
+    "ct_qa_gates": {"ct": "22 IDs, 16+4+1+1", "qa": "Q1..Q8 with Q2/Q4/Q6/Q8 conditional", "gates": {"G3": "NOT_VERIFIED", "G4_design_qa": "PENDING", "G5-A": "stands", "G5-B": "FINDINGS_OPEN", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED", "po_architecture_approval_gate": "NOT_PASSED"}}
+  },
+  "authorship_attribution": {"approved_rules_and_base_contract": "Claude-authored reviewed candidate (RULE-011/012/019, permission matrix, DR-15/RC-6/F-09) and PO-approved requirements", "corrections_oc01_06": "ZCode-authored corrected candidate; independent re-review required; not self-accepted"}
+}
+```
+
+## 10. Checks / skipped / risks / remaining PO choices
+
+- **Checks run**: không có — text-only đúng giao (không lệnh, không đọc file, không hash mới, không runtime). Standing: hash verification 24 files từ các vòng đầu session (không đo lại, không claim mới).
+- **Skipped**: implement/tests/Go/PG/frontend; F-08, BE-01, INT-A; mọi review lại phần reviewer thấy coherent; không gọi agent khác.
+- **Remaining genuine PO choices** (không thêm loop mới): (1) adoption tại gate của các candidate fields (`unboundObservationEvidenceTotal`, hai event payload blocks) và proposed bounds (nay kèm đơn vị code points) — hoặc chuyển NEEDS_AUTHORIZED_SOURCE; (2) B35 adoption. Các routine choices (missing expectedCycleNo → 422, code-point unit, closing-page window) đã có đúng một khuyến nghị, chờ rereview scoped của OpenCode — **không** cần approval riêng.
+- **Risks**: (1) bản corrected này chưa được rereview độc lập — Codex pin revision/manifest mới, OpenCode rereview **chỉ các clause đổi** (OC01..06); (2) các non-claim về ngoài-window (surplus/wrong-obs) là giới hạn thiết kế có chủ đích — nếu rereview muốn độ phủ rộng hơn, đó là thay đổi scope chứ không phải defect; (3) mọi T1..T22 là DOCUMENT_EXPECTED, runtime NOT_RUN.

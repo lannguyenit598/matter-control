@@ -1,0 +1,16 @@
+{
+ "run": "verify-V2-2-orphan-check-2",
+ "argv": [
+  "bash",
+  "-c",
+  "\nrc=0\nfor p in 15432 18083 18093; do\n  if lsof -nP -iTCP:$p -sTCP:LISTEN >/dev/null 2>&1; then echo \"PORT $p HELD:\"; lsof -nP -iTCP:$p -sTCP:LISTEN; rc=1; else echo \"port $p free\"; fi\ndone\npgrep -fl \"mc-walkthrough\" || echo \"no walkthrough processes\"\n(lsof -nP -iTCP -sTCP:LISTEN 2>/dev/null | grep -E \"18083|18093|15432\") || echo \"no listener rows\"\nrtk docker ps -a --format \"{{.Names}} {{.Status}}\" | grep mc-walkthrough || echo \"no mc-walkthrough container\"\nexit $rc"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031",
+ "env_file": "NONE",
+ "started_utc": "2026-10-31T17:45:33Z",
+ "ended_utc": "2026-10-31T17:45:33Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": null
+}

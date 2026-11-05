@@ -1,0 +1,92 @@
+{
+  "task": "MC-003A.8A F10 cycle clarification intake",
+  "actor": "Local Codex",
+  "utc": "2026-10-26T00:59:27.759786+00:00",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "manifest": {
+    "path": "docs/design/step-03a/handoff/step-03a-8a/opencode-f10-rereview-r2/clarification-manifest.json",
+    "sha256": "4c81d78b5e119a75a26c860c3d764fa07d13b37c6b7dca246a1adb062695b571"
+  },
+  "owner_return": {
+    "bytes": 12378,
+    "sha256": "894b7252ea0ae3addca8ab049e8f519d8ecdb04579c3192176732d3d73f11357",
+    "stored": "review-packet/01-owner-return.txt.gz"
+  },
+  "checks": [
+    {
+      "name": "input manifest exact SHA256",
+      "result": "PASS"
+    },
+    {
+      "name": "input bytes/hash docs/design/step-03a/handoff/step-03a-8a/opencode-f10-rereview-r2/intake-addendum.json",
+      "result": "PASS"
+    },
+    {
+      "name": "input bytes/hash docs/design/step-03a/handoff/step-03a-8a/opencode-f10-rereview-r2/reviewer-return.txt.gz",
+      "result": "PASS"
+    },
+    {
+      "name": "input bytes/hash docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/02-corrected-delta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "input bytes/hash docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/04-previous-final-delta.json",
+      "result": "PASS"
+    },
+    {
+      "name": "input bytes/hash docs/design/step-03a/handoff/step-03a-8a/zcode-f10-oc-correction-r1/review-packet/06-prior-C1-C2-R2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "input bytes/hash docs/architecture/api-contracts.md",
+      "result": "PASS"
+    },
+    {
+      "name": "input bytes/hash docs/architecture/filing-model.md",
+      "result": "PASS"
+    },
+    {
+      "name": "seven inputs 74405 stored bytes",
+      "result": "PASS"
+    },
+    {
+      "name": "owner return lossless gzip",
+      "result": "PASS"
+    },
+    {
+      "name": "source commit exact content api-contracts.md",
+      "result": "PASS"
+    },
+    {
+      "name": "source commit exact content filing-model.md",
+      "result": "PASS"
+    },
+    {
+      "name": "seven original F10 findings remain closed document only",
+      "result": "PASS"
+    },
+    {
+      "name": "all ten new examples document only",
+      "result": "PASS"
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/architecture/api-contracts.md",
+      "bytes": 25038,
+      "sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "last_content_commit": "8521c2a08d87f6b070900d8c2b6f490a89d34e09",
+      "matches_committed_content": true
+    },
+    {
+      "path": "docs/architecture/filing-model.md",
+      "bytes": 7652,
+      "sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "last_content_commit": "3a86ca829d15ea15c50743f67573163046393407",
+      "matches_committed_content": true
+    }
+  ],
+  "source_compatibility": "NOT_VERIFIED",
+  "external_dispatch": false,
+  "runtime": "NOT_RUN"
+}

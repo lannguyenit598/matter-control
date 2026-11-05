@@ -1,0 +1,94 @@
+The build succeeded (`build_exit=0`, binary 42 MB, version stamped `d024e3e`); my process check unintentionally started the server (no-arg binary serves HTTP). Stopping that owned process and re-verifying the binary non-blockingly.
+
+Đã dừng quy trình; không còn tiến trình userapi nào còn sót lại. Đang xác minh trạng thái cơ sở và mã thoát của nhị phân một cách không chặn (`userapi migrate` mà không cần `DATABASE_URL` sẽ thoát nhanh chóng với thông báo lỗi rõ ràng).
+
+Bước 1 PASS và baseline được bảo toàn (tree sạch, go.mod/go.sum chưa thay đổi, binary được hash). Bây giờ là bước 2 — chọn một loopback port chưa sử dụng, sau đó khởi chạy một PostgreSQL container riêng biệt, giới hạn tài nguyên với tên/credential duy nhất.
+
+Cổng 15455 khả dụng, không có xung đột tài nguyên. Đang tạo mạng chuyên dụng và PostgreSQL container đã giới hạn tài nguyên (postgres:18-alpine, cùng major version với template compose; tên, nhãn và thông tin xác thực duy nhất; không có volume có tên; healthcheck).
+
+Container `a34a25df…` đã được khởi chạy. Chờ hết trạng thái healthcheck và ghi lại manifest (digest, tài nguyên, mounts, cổng).
+
+Bước 2 đã hoàn tất — manifest đã được ghi lại (postgres:18-alpine @ `sha256:77f585114c…`, 512 MiB/1 CPU/128 pids, `127.0.0.1:15455`, volume ẩn danh, trạng thái healthy). Bây giờ là bước 3: xác nhận `TEST_DATABASE_URL` chưa được thiết lập ở bất kỳ đâu trong phiên làm việc này, sau đó chạy migration rõ ràng hai lần để kiểm chứng tính idempotent.
+
+Đã xác nhận sạch môi trường — hook session không bao giờ chạy, không có biến URL nào được đặt. Đang chạy migration một cách rõ ràng (chạy 1, sau đó chạy 2 để chứng minh tính idempotent), với DSN được thay thế nội tuyến và được redact trong log.
+
+Run 1 applied all 6 migrations, exit 0, password redacted in log. Run 2 for idempotency, then verify `goose_db_version` and the schema from inside the container.
+
+Lần chạy thứ hai ghi không có dòng nào — không có gì được áp dụng (đã chứng minh tính idempotent), nhưng hãy để tôi ghi lại mã thoát (exit code) một cách chính xác và xác minh trạng thái schema bằng cách đọc truy vấn (read-only queries) từ bên trong container.
+
+Đã xác nhận schema (goose_db_version, outbox, users; users trống). Đang sửa lỗi truy vấn version-column của tôi:
+
+Tất cả các phiên bản di chuyển (migration versions) 0–6 đã được ghi lại là đã áp dụng (applied). Hiện đang chạy bộ kiểm thử (test suite) với `TEST_DATABASE_URL` trỏ tới vùng lưu trữ dùng một lần (disposable target) (kiểm thử PostgreSQL được bao gồm, không bỏ qua).
+
+Trong khi các bài kiểm tra chạy, tôi sẽ bắt đầu bước 4 song song: xây dựng Docker image hiện có với một tag độc đáo.
+
+Bộ kiểm thử đã hoàn tất với mã thoát 0 — đang đọc phần tóm tắt.
+
+`make test`: **PASS** — tất cả các package đều ok, package tích hợp postgres đã chạy (0 lần bỏ qua, ghi đè bằng URL dùng một lần). Đang chờ bản dựng Docker, sau đó chạy `make check`.
+
+Docker image đã được xây dựng (exit 0, `mc002be/userapi:poc-d024e3e-20261024`, manifest `sha256:5d401294…`). Bây giờ thực hiện `make check` với URL kiểm thử — bao gồm sqlc-check, gofmt, `go mod tidy -diff`, golangci-lint và full race suite.
+
+Trong khi `make check` chạy, hãy chọn cổng API cho bước 4.
+
+`make check`: **PASS** (exit 0, 0 lỗi — sqlc-check, gofmt, tidy -diff, golangci-lint, và test suite đã chạy với các bài kiểm thử PostgreSQL). Bước 3 đã hoàn tất. Bắt đầu bước 4: chạy native API ở chế độ PostgreSQL trên `127.0.0.1:18091`.
+
+API đã hoạt động (PID 90601, `127.0.0.1:18091`, storage postgres, otel off). Chạy liveness/readiness và việc tạo + đọc lại synthetic User.
+
+Đã tạo người dùng tổng hợp (201, ETag "1", UUIDv7). Lưu ý: bản ghi liệt kê cũng hiển thị một hàng còn sót lại từ chính bộ kiểm thử (`race@example.com`, tổng hợp) — chỉ có phần dư của bài kiểm tra trong DB dùng một lần này; tôi sẽ ghi chú lại. Tiếp tục thực hiện kiểm tra đọc lại và các trường hợp tiêu cực.
+
+Tất cả các mapping lỗi đều đúng (404 uniform problem+json, 422 field errors, 409 duplicate). Đang kiểm tra CAS: PATCH thành công với If-Match sau đó là stale If-Match.
+
+CAS confirmed (200 → version 2, stale → 412). Verifying migrations were NOT touched by API startup, then restarting the API to prove persistence.
+
+Đã dừng hoạt động nhẹ nhàng (graceful stop); bảng migration (migration table) không thay đổi (tối đa 6) trong khi API chạy. Khởi động lại lần 2 và kiểm tra đọc lại (readback) để xác nhận tính bền vững (persistence).
+
+Persistence **PASS** (same data, version 2, ETag after restart). Now the failure behaviors: stopping the DB container while the API runs — liveness must stay 200, readiness must drop to 503, and the API error path gets exercised.
+
+DB-down behavior captured — liveness 200, readiness 503, and API data path returns **500** (not 503): an audit-relevant finding. Restoring the DB and verifying readiness recovery, then invalid-config and pending-migration guard.
+
+Recovery **PASS**. Now invalid-configuration exits and the pending-migrations startup guard (against a second, deliberately unmigrated database in the same disposable container).
+
+macOS lacks `timeout`; the pending-migration failure happens before serving so no timeout is needed — rerunning directly.
+
+Pending-migrations guard **PASS** (exit 1, fail-fast before serving) — schema verification is provably distinct from readiness. Step 4 checks are all complete. Capturing the image manifest, then shutting down owned resources gracefully while preserving them (stopped, not removed) for OpenCode inspection.
+
+All owned resources are shut down and retained: API processes exited gracefully, PG container stopped (Exited 0) and kept for OpenCode inspection, other containers untouched, nothing pruned or removed. Now writing the governance deliverables.
+
+Bằng chứng đã được ghi lại. Đang cập nhật `docs/architecture/backend-audit.md` với kết quả thực thi thực tế và các phát hiện của tôi (chỉ thêm).
+
+Đã ghi nhận tất cả hiện tượng thay đổi: quyền sở hữu của tôi là `docs/architecture/backend-audit.md` (đã sửa đổi) và `docs/testing/step-02-backend-poc.md` (mới). Các thay đổi về `frontend-audit.md`/`step-02-frontend-poc*` và `.mimosa/` là của các chủ sở hữu khác — tôi vẫn giữ nguyên trạng thái chúng và không commit bất kỳ thứ gì, giữ lại tất cả để orchestrator xem xét. Source worktree vẫn sạch sẽ.
+
+---
+
+# MC-002-BE Report — Backend Template PoC (POC-02-01)
+
+**Executed by:** ZCode (actual — ZCode desktop, model GLM-5.3-Flash). **Date:** 2026-10-24. **Reviewer:** OpenCode (pending). **Proposed status: IN_REVIEW** — runtime evidence exists for every in-scope acceptance item; no DONE claim, MC-002 stays open, no Step 03.
+
+## Verification before execution
+
+- Governance repo: branch `task/MC-002-solution-architecture`, HEAD `4a6b8f9`, continuation base `2000d94` confirmed ancestor. Requirements treated as approved at `572835a`; H5/W1 scope respected.
+- Source snapshot `/tmp/mattercontrol-step02-backend`: HEAD = pinned `d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b`, origin `https://github.com/lannguyenit598/go-hexa-template`, clean — preserved untouched.
+- `/tmp/mattercontrol-step021-backend` and branch `task/MC-002-be-poc` verified absent, then created as an isolated worktree at the pinned SHA. **Base == head: zero source changes** (diff empty; go.mod/go.sum untouched).
+- Session-start hook was **not** executed; `DATABASE_URL`/`TEST_DATABASE_URL` verified absent before I assigned them. All `TEST_DATABASE_URL` consumers enumerated first (per-test schema helper, one direct test read, Makefile, CI) — nothing at runtime consumes it.
+
+## What ran (all commands via `rtk`/`rtk proxy`, UTC logged, exit codes recorded, credentials redacted)
+
+1. **Dependencies/build:** `go mod download` exit 0 (lock unchanged); `make build` exit 0 → `bin/userapi` 42 MB, version `d024e3e`, sha256 recorded. Toolchain go1.27.3 satisfies go.mod's 1.26.0 minimum.
+2. **Disposable PostgreSQL:** new container `mc002be-pg-20261024T1454Z` (`postgres:18-alpine` @ `sha256:77f585114c…`), unique label, dedicated network, capped 512 MiB / 1 CPU / 128 pids, `127.0.0.1:15455` (verified unused), random credentials, anonymous volume only, healthy. Template compose never started; no default/pre-existing DB or volume used.
+3. **Migrations explicit:** `DATABASE_URL=… ./bin/userapi migrate` applied versions 1–6, exit 0; runs 2–3 no-op (idempotent); `goose_db_version` rows 0–6 verified via in-container psql.
+4. **Tests:** `make test` with the disposable `TEST_DATABASE_URL` → 13 packages ok under `-race`, PostgreSQL tests **ran, zero skips**; `make check` (sqlc-check, gofmt, `go mod tidy -diff`, golangci-lint v2.14.0, race suite) exit 0. Missing PATH tools reported, not installed: `psql`, `goose`, `sqlc` (sqlc is Makefile-pinned via `go run`; no global installs).
+5. **Container:** existing Dockerfile built → `mc002be/userapi:poc-d024e3e-20261024`, 43.2 MB, digest `sha256:5d401294…`.
+6. **Runtime (PG mode, `READINESS_CHECK_DB=true`, `MIGRATE_ON_START=false`, `EVENTS_SINK=none`, no telemetry credential):** `/healthz` 200 and `/readyz` 200 kept distinct; synthetic User created (201, ETag, UUIDv7), read back, listed; uniform 404, 422 field errors, 409 duplicate; If-Match PATCH 200 → version 2, stale If-Match 412; migration table untouched while running; after SIGTERM + restart the same data/version survived (persistence); with the DB container stopped — `/healthz` stayed 200, `/readyz` 503, data path returned 500 with no internals leaked, then recovered to 200 after `docker start`; invalid configs exit 1 with clear errors; an unmigrated second database made startup fail fast (`database has pending migrations…`) — schema verification is provably separate from readiness.
+
+## Finding escalated to Claude Code (architecture-impacting, not changed)
+
+The template maps DB-unreachable persistence errors to **500**, not the **503 `unavailable`** (with `retryAfter`) that MatterControl's api-contracts require — `httpapi.toProblem` only yields 503 for `context.DeadlineExceeded`. The inbound adapter error mapping must be extended before MatterControl adapters are built on it. No other architecture-impacting change was needed: the template builds, tests, migrates, serves and fails safe unmodified.
+
+## Artifacts
+
+- [docs/testing/step-02-backend-poc.md](/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/step-02-backend-poc.md) — full per-step evidence, manifests, acceptance table (all in-scope items PASS; skips/NOT_RUN listed).
+- [docs/architecture/backend-audit.md](/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/architecture/backend-audit.md) — appended "Executed PoC evidence" section with the finding above.
+- Raw redacted logs: `/tmp/mc002be-evidence/` (22 files).
+- Retained for OpenCode (nothing removed, no volume pruned/deleted): stopped container `mc002be-pg-20261024T1454Z` + its anonymous volume, network `mc002be-poc-net`, image, worktree. Governance changes are uncommitted for your review; frontend-audit/frontend-poc working-tree changes belong to another owner and were untouched.
+
+**Skipped / remaining risk:** govulncheck and standalone `go test -race` outside make (NOT_RUN — CI-only / covered twice); Workers/Wasm compatibility, product persistence harness, object lifecycle and full restore PoCs remain NOT_RUN (other owners/scope); all evidence is local/native — it does not prove Cloudflare compatibility, production behavior or $0 cost. No blockers encountered.

@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl backend PoC independent review",
+    "--file",
+    "/tmp/mc002be-opencode-input.txt",
+    "Independently review supplied ZCode native backend evidence. No tools. Return verdict and minimal actionable findings."
+  ],
+  "exit": 0,
+  "elapsed_seconds": 89.76994204521179,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "session_id": "ses_e917e3944ffe6y18sR8sJysMln",
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "outcome": "succeeded",
+  "tool_messages": [],
+  "verdict": "PASS_WITH_LIMITATIONS_TEMPLATE_CHARACTERIZATION",
+  "mandatory_owner_rechecks": [
+    "MC002BE-R01",
+    "MC002BE-R02"
+  ],
+  "product_contract_gap": "MC002BE-C01 HIGH against MatterControl conformance, outside unchanged-template baseline",
+  "runtime_replay": false
+}

@@ -1,0 +1,23 @@
+2026-10-24T14:56:31Z
+go mod tidy -diff
+golangci-lint run ./...
+0 issues.
+go test -race -count=1 ./...
+?   	github.com/example/userapi/cmd/userapi	[no test files]
+ok  	github.com/example/userapi/internal/adapter/inbound/httpapi	1.924s
+ok  	github.com/example/userapi/internal/adapter/outbound/kafka	3.526s
+ok  	github.com/example/userapi/internal/adapter/outbound/memory	1.155s
+ok  	github.com/example/userapi/internal/adapter/outbound/postgres	3.388s
+?   	github.com/example/userapi/internal/adapter/outbound/postgres/pgtest	[no test files]
+?   	github.com/example/userapi/internal/adapter/outbound/postgres/sqlcgen	[no test files]
+?   	github.com/example/userapi/internal/adapter/outbound/repotest	[no test files]
+ok  	github.com/example/userapi/internal/adapter/outbound/system	1.182s
+ok  	github.com/example/userapi/internal/app	8.026s
+ok  	github.com/example/userapi/internal/config	1.115s
+ok  	github.com/example/userapi/internal/core/domain	1.122s
+?   	github.com/example/userapi/internal/core/port	[no test files]
+ok  	github.com/example/userapi/internal/core/service	1.124s
+ok  	github.com/example/userapi/internal/observability	1.200s
+ok  	github.com/example/userapi/internal/outbox	6.239s
+make_check_exit=0
+2026-10-24T14:56:47Z

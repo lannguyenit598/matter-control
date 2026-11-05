@@ -1,0 +1,13 @@
+warning: not a git checkout; skipping the tracked-files scan
+file:///private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend/scripts/worker-build-env.mjs:10
+  for (const line of text.split('\n')) {
+                          ^
+
+TypeError: text.split is not a function or its return value is not iterable
+    at findRuntimeSecret (file:///private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend/scripts/worker-build-env.mjs:10:27)
+    at file:///private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend/scripts/preflight-before-wave2.mjs:69:35
+    at async scanFiles (file:///private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend/scripts/preflight-before-wave2.mjs:42:18)
+    at async main (file:///private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend/scripts/preflight-before-wave2.mjs:129:11)
+    at async file:///private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend/scripts/preflight-before-wave2.mjs:156:3
+
+Node.js v24.22.1

@@ -1,0 +1,78 @@
+{
+  "review_verdict": "PASS_WITH_LIMITATIONS_DOCUMENT_ONLY",
+  "review_findings": [
+    {
+      "severity": "Medium",
+      "status": "NEEDS_CONTRACT_PIN",
+      "wording": "Omitted and explicit-null cycleNo both bind persisted cycle_no=NULL for optional observation types. Equal binding is not a claim of equal request_hash. Same-key changed-representation hash behavior remains undefined until the canonical-body norm is pinned. Retry an uncertain request with the same key and the same original representation; no new key or changed body is authorized as a safe retry.",
+      "owner": "ZCode technical recommendation under existing PO reroute; architecture/contract adoption stays gated",
+      "no_norm_adopted": true,
+      "numeric_validity": "Reviewer recommends integral positive numeric value accepted, fractional/wrongtype/zero/negative rejected422; spellings1,1.0,1e0 hash equivalence remains N1, not runtime/source proof",
+      "id": "N1"
+    },
+    {
+      "severity": "Low",
+      "status": "CANDIDATE_DOC_PIN_SUPPLIED_NOT_INDEPENDENTLY_RECHECKED",
+      "scope": "ordinary observation only, authorized new non-replay command with valid body format",
+      "proposal": "Within the precondition step, evaluate If-Match first (missing428 or stale412); only after it passes, evaluate expectedCycleNo (required missing422 or supplied stale412); scoped target existence follows. Earlier body-format422 and authorized replay order remain unchanged.",
+      "examples": [
+        {
+          "IfMatch": "missing",
+          "namedCycle": true,
+          "expectedCycleNo": "missing",
+          "expected": 428
+        },
+        {
+          "IfMatch": "valid/current",
+          "namedCycle": true,
+          "expectedCycleNo": "missing",
+          "expected": 422
+        },
+        {
+          "IfMatch": "missing",
+          "cycleBody": "invalid format",
+          "expected": "body-format422 before preconditions"
+        },
+        {
+          "IfMatch": "stale",
+          "namedCycle": true,
+          "expectedCycleNo": "missing",
+          "expected": 412
+        }
+      ],
+      "owner": "Codex intake candidate; no global error-policy change",
+      "id": "N2"
+    },
+    {
+      "severity": "Low",
+      "status": "SOURCE_ANCHOR_EVIDENCE_SUPPLIED",
+      "source": {
+        "path": "docs/architecture/api-contracts.md",
+        "bytes": 25038,
+        "sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+        "content_commit": "8521c2a08d87f6b070900d8c2b6f490a89d34e09"
+      },
+      "anchors": [
+        {
+          "line": 7,
+          "text": "## 1. Conventions",
+          "contains_lines": [
+            14,
+            15
+          ]
+        },
+        {
+          "line": 49,
+          "text": "### 1.1 Revision preconditions (CAS scope) by endpoint",
+          "contains_lines": [
+            66
+          ]
+        }
+      ],
+      "owner": "Codex provenance; no semantic edit",
+      "id": "N3"
+    }
+  ],
+  "closure_limits": "N2 supplement not independently accepted; N3 exact heading evidence supplied, no retroactive reviewer closure; N1 remains open; F10 not closed",
+  "route": "MODEL_DEVIATION_REVIEWER_REPORTED_HUMAN_DISPOSITION_NOT_INDEPENDENTLY_VERIFIED"
+}

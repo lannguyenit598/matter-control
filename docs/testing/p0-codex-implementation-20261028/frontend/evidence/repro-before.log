@@ -1,0 +1,109 @@
+
+ RUN  v5.0.5 /private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/frontend/apps/frontend
+
+stderr | src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"row-1","status":"SUCCESS"}]}
+Encountered two children with the same key, `row-1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx (7 tests | 7 failed) 20289ms
+   ❯ bulk panel → actions → repository attempt (5)
+     × invalidates approval permanently on edit, add or remove, even if the payload is restored 137ms
+     × locks pending edits and duplicate submission, then reconciles identical payload and keys 59ms
+     × keeps missing or ambiguous row receipts unknown: {"receipts":[]} 5004ms
+     × keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"row-1","status":"SUCCESS"}]} 5005ms
+     × keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"unexpected","status":"SUCCESS"}]} 5003ms
+   ❯ import panel → actions → repository attempt (2)
+     × locks file replacement while pending, preserves run/file/row keys on UNKNOWN and consumes settled preview 76ms
+     × accounts for all submitted rows when an import receipt is missing 5003ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > invalidates approval permanently on edit, add or remove, even if the payload is restored
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <button
+  class="inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4"
+  type="button"
+/>
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:57:60
+     55|     fireEvent.change(screen.getByLabelText('Title new value'), { targe…
+     56|     fireEvent.change(screen.getByLabelText('Title new value'), { targe…
+     57|     expect(screen.getByRole('button', { name: 'Commit' })).toBeDisable…
+       |                                                            ^
+     58|     request.mockResolvedValueOnce({ data: bulkPreview })
+     59|     fireEvent.click(screen.getByRole('button', { name: 'Preview' }))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > locks pending edits and duplicate submission, then reconciles identical payload and keys
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <input
+  aria-label="Title new value"
+  class="w-full min-w-0 rounded-md border border-input bg-background px-3 text-sm shadow-xs transition-colors placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:outline-destructive h-9 py-1"
+  type="text"
+  value="After"
+/>
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:77:54
+     75|     fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
+     76|     fireEvent.click(screen.getByRole('button', { name: 'Commit' }))
+     77|     expect(screen.getByLabelText('Title new value')).toBeDisabled()
+       |                                                      ^
+     78|     expect(screen.getByRole('button', { name: 'Add row' })).toBeDisabl…
+     79|     await waitFor(() => expect(request).toHaveBeenCalledTimes(2))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[]}
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"row-1","status":"SUCCESS"}]}
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"unexpected","status":"SUCCESS"}]}
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:101:5
+     99|     { receipts: [result('row-1'), result('row-1')] },
+    100|     { receipts: [result('unexpected')] },
+    101|   ])('keeps missing or ambiguous row receipts unknown: %j', async ({ r…
+       |     ^
+    102|     await readyBulk()
+    103|     request.mockResolvedValueOnce({ data: receipts })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > import panel → actions → repository attempt > locks file replacement while pending, preserves run/file/row keys on UNKNOWN and consumes settled preview
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <input
+  accept=".csv,.xlsx"
+  type="file"
+/>
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:124:43
+    122|     fireEvent.click(screen.getByRole('button', { name: 'Commit valid g…
+    123|     await waitFor(() => expect(request).toHaveBeenCalledTimes(2))
+    124|     expect(screen.getByLabelText('File')).toBeDisabled()
+       |                                           ^
+    125|     const first = request.mock.calls[1]![1].raw.body as FormData
+    126|     await act(async () => reject(new McError('outcome-unknown', 503, {…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > import panel → actions → repository attempt > accounts for all submitted rows when an import receipt is missing
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:146:3
+    144|   })
+    145|
+    146|   it('accounts for all submitted rows when an import receipt is missin…
+       |   ^
+    147|     await readyImport()
+    148|     request.mockResolvedValueOnce({ data: [] })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed (7)
+   Start at  10:25:36
+   Duration  21.82s (tests 93%, environment 4%, setup 1%, import 1%, transform 1%)
+

@@ -1,0 +1,53 @@
+{
+  "api_url": "http://127.0.0.1:57604",
+  "owner": "actual Local Codex / MC-P0-CODEX-BACKEND-LOCAL-20261029",
+  "pid": 92580,
+  "start_utc": "2026-10-29T08:13:31.569845+00:00",
+  "argv": [
+    "/private/tmp/mc-codex-backend-local-20261029-r2/mcapi"
+  ],
+  "schema_version": "7",
+  "object_backend": "fs",
+  "object_directory": "/private/tmp/mc-codex-backend-local-20261029-r2/objects",
+  "identity": "fresh synthetic signing key; loopback unreachable introspection; no human login or tokens",
+  "probes": [
+    {
+      "utc": "2026-10-29T08:13:31.690068+00:00",
+      "path": "/healthz",
+      "status": 200,
+      "body": "{\"status\":\"ok\"}\n",
+      "seconds": 0.0009
+    },
+    {
+      "utc": "2026-10-29T08:13:31.691015+00:00",
+      "path": "/readyz",
+      "status": 200,
+      "body": "{\"status\":\"ready\"}\n",
+      "seconds": 0.0009
+    },
+    {
+      "utc": "2026-10-29T08:13:31.691549+00:00",
+      "path": "/api/v1/workspaces",
+      "status": 401,
+      "body": "{\"type\":\"urn:mc:unauthenticated\",\"title\":\"Unauthorized\",\"status\":401,\"detail\":\"authentication is required\",\"instance\":\"/api/v1/workspaces\",\"retryable\":false}",
+      "seconds": 0.0005
+    },
+    {
+      "utc": "2026-10-29T08:13:32.458571+00:00",
+      "path": "/healthz",
+      "status": 200,
+      "body": "{\"status\":\"ok\"}\n",
+      "seconds": 0.0008
+    },
+    {
+      "utc": "2026-10-29T08:13:32.459400+00:00",
+      "path": "/readyz",
+      "status": 503,
+      "body": "{\"type\":\"urn:mc:unavailable\",\"title\":\"Service Unavailable\",\"status\":503,\"detail\":\"service temporarily unavailable\",\"instance\":\"/readyz\",\"retryable\":true}",
+      "seconds": 0.0008
+    }
+  ],
+  "api_exit": 0,
+  "shutdown_seconds": 0.004,
+  "api_cleanup": "SIGTERM observed, process reaped"
+}

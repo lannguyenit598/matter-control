@@ -1,0 +1,599 @@
+diff --git a/apps/frontend/src/app/(app)/error.tsx b/apps/frontend/src/app/(app)/error.tsx
+index 95afa12..c6107ff 100644
+--- a/apps/frontend/src/app/(app)/error.tsx
++++ b/apps/frontend/src/app/(app)/error.tsx
+@@ -20,7 +20,10 @@ export default function AppError({ error, retry }: { error: unknown; retry: () =
+         variant="destructive"
+         title={<LocalizedText en="Something went wrong" vi="Đã xảy ra lỗi" />}
+       >
+-        The data could not be loaded. Check your connection or try again.
++        <LocalizedText
++          en="The data could not be loaded. Check your connection or try again."
++          vi="Không tải được dữ liệu. Kiểm tra kết nối hoặc thử lại."
++        />
+       </Alert>
+       <Button variant="outline" onClick={retry}>
+         <LocalizedText en="Try again" vi="Thử lại" />
+diff --git a/apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx b/apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx
+index 8770bbe..5d006d8 100644
+--- a/apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx
++++ b/apps/frontend/src/app/(app)/matters/[matterId]/documents/[documentId]/page.tsx
+@@ -20,7 +20,12 @@ import { proofRepository } from '@/features/proof/repository'
+ import { getSession } from '@/lib/auth'
+ import { attempt } from '@/lib/mc/errors'
+ 
+-export const metadata: Metadata = { title: 'Document' }
++export async function generateMetadata({
++  params,
++}: PageProps<'/matters/[matterId]/documents/[documentId]'>): Promise<Metadata> {
++  const { documentId } = await params
++  return { title: `Document \u00b7 ${documentId}` }
++}
+ 
+ type Props = PageProps<'/matters/[matterId]/documents/[documentId]'>
+ 
+@@ -144,13 +149,15 @@ async function DocumentView({ params, searchParams }: Pick<Props, 'params' | 'se
+       {role === 'OWNER' && target && impact && (
+         <Card>
+           <CardHeader>
+-            <CardTitle>Make version {target.no} current</CardTitle>
++            <CardTitle>
++              <LocalizedText en="Make version" vi="Đưa phiên bản" /> {target.no}{' '}
++              <LocalizedText en="current" vi="lên hiện hành" />
++            </CardTitle>
+             <CardDescription>
+-              Replaces{' '}
+-              {doc.currentVersionId
+-                ? `version ${detail.versions.find((v) => v.id === doc.currentVersionId)?.no ?? '?'}`
+-                : 'no version'}
+-              . Nothing changes until you confirm.
++              <LocalizedText
++                en={`Replaces ${doc.currentVersionId ? `version ${detail.versions.find((v) => v.id === doc.currentVersionId)?.no ?? '?'}` : 'no version'}. Nothing changes until you confirm.`}
++                vi={`Thay thế ${doc.currentVersionId ? `phiên bản ${detail.versions.find((v) => v.id === doc.currentVersionId)?.no ?? '?'}` : 'không có phiên bản nào'}. Không có gì thay đổi cho đến khi bạn xác nhận.`}
++              />
+             </CardDescription>
+           </CardHeader>
+           <CardContent>
+diff --git a/apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx b/apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx
+index 91e3c69..4e343e5 100644
+--- a/apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx
++++ b/apps/frontend/src/app/(app)/matters/[matterId]/filings/[filingId]/page.tsx
+@@ -33,7 +33,12 @@ import { workRepository } from '@/features/work/repository'
+ import { getSession } from '@/lib/auth'
+ import { attempt } from '@/lib/mc/errors'
+ 
+-export const metadata: Metadata = { title: 'Filing' }
++export async function generateMetadata({
++  params,
++}: PageProps<'/matters/[matterId]/filings/[filingId]'>): Promise<Metadata> {
++  const { filingId } = await params
++  return { title: `Filing \u00b7 ${filingId}` }
++}
+ 
+ type Props = PageProps<'/matters/[matterId]/filings/[filingId]'>
+ 
+diff --git a/apps/frontend/src/app/(app)/matters/[matterId]/page.tsx b/apps/frontend/src/app/(app)/matters/[matterId]/page.tsx
+index 65d9baa..c07ebc1 100644
+--- a/apps/frontend/src/app/(app)/matters/[matterId]/page.tsx
++++ b/apps/frontend/src/app/(app)/matters/[matterId]/page.tsx
+@@ -25,7 +25,14 @@ import { AddWorkDialog } from '@/features/work/components/add-work-dialog'
+ import { getSession } from '@/lib/auth'
+ import { attempt } from '@/lib/mc/errors'
+ 
+-export const metadata: Metadata = { title: 'Matter' }
++export async function generateMetadata({
++  params,
++}: PageProps<'/matters/[matterId]'>): Promise<Metadata> {
++  // The matter title is not worth a second read at the metadata boundary: the id names the route
++  // until a page that already loaded the matter shows the title itself.
++  const { matterId } = await params
++  return { title: `Matter \u00b7 ${matterId}` }
++}
+ 
+ export default function MatterPage({ params, searchParams }: PageProps<'/matters/[matterId]'>) {
+   return (
+diff --git a/apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx b/apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx
+index 52216d0..0bd276b 100644
+--- a/apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx
++++ b/apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx
+@@ -33,7 +33,12 @@ import { getSession } from '@/lib/auth'
+ import { attempt } from '@/lib/mc/errors'
+ import { safeInternalPath } from '@/lib/mc/paths'
+ 
+-export const metadata: Metadata = { title: 'Work item' }
++export async function generateMetadata({
++  params,
++}: PageProps<'/matters/[matterId]/work/[itemId]'>): Promise<Metadata> {
++  const { itemId } = await params
++  return { title: `Work item \u00b7 ${itemId}` }
++}
+ 
+ export default function WorkItemPage({
+   params,
+diff --git a/apps/frontend/src/app/(app)/matters/page.test.tsx b/apps/frontend/src/app/(app)/matters/page.test.tsx
+index d4fb07a..6353e4e 100644
+--- a/apps/frontend/src/app/(app)/matters/page.test.tsx
++++ b/apps/frontend/src/app/(app)/matters/page.test.tsx
+@@ -11,7 +11,7 @@ vi.mock('@/features/matters/repository', () => ({ matterRepository: { discover:
+ import MattersPage from './page'
+ 
+ async function renderPage(search: Record<string, string | string[]> = {}) {
+-  const tree = MattersPage({ searchParams: Promise.resolve(search) } as never)
++  const tree = await MattersPage({ searchParams: Promise.resolve(search) } as never)
+   const inner = (
+     tree as { props: { children: Array<{ props?: { children?: unknown } } | unknown> } }
+   ).props.children
+diff --git a/apps/frontend/src/app/(app)/requirements/[requirementId]/page.tsx b/apps/frontend/src/app/(app)/requirements/[requirementId]/page.tsx
+index ee9cd8b..a83ef2c 100644
+--- a/apps/frontend/src/app/(app)/requirements/[requirementId]/page.tsx
++++ b/apps/frontend/src/app/(app)/requirements/[requirementId]/page.tsx
+@@ -24,9 +24,29 @@ export default function RequirementPage({ params }: PageProps<'/requirements/[re
+ async function Requirement({ params }: Pick<PageProps<'/requirements/[requirementId]'>, 'params'>) {
+   const { requirementId } = await params
+   const here = `/requirements/${requirementId}`
+-  if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
++  // UX-L-05: the failure keeps the page's h1 — a breadcrumb of facts still known (the hub and
++  // the raw id), never a stale scope label.
++  const fallbackHeading = (
++    <nav aria-label="Current scope" className="flex items-center gap-2 text-sm font-normal">
++      <Link className="underline" href="/workspaces">
++        <LocalizedText en="Workspaces" vi="Không gian làm việc" />
++      </Link>
++      <span aria-hidden="true">/</span>
++      <span className="text-muted-foreground">{requirementId}</span>
++    </nav>
++  )
++  if (!(await getSession()))
++    return <ReadFailure kind="sign-in" retryHref={here} heading={fallbackHeading} />
+   const read = await attempt(() => requirementRepository.get(requirementId))
+-  if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="requirement" />
++  if (!read.ok)
++    return (
++      <ReadFailure
++        kind={read.kind}
++        retryHref={here}
++        subject="requirement"
++        heading={fallbackHeading}
++      />
++    )
+   const { requirement, asOf } = read.value
+   return (
+     <div className="flex flex-col gap-6">
+diff --git a/apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx b/apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx
+index 2264362..577fe9b 100644
+--- a/apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx
++++ b/apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx
+@@ -1,5 +1,6 @@
+ import { LocalizedText } from '@/components/molecules/localized-text'
+ import type { Metadata } from 'next'
++import Link from 'next/link'
+ import { connection } from 'next/server'
+ import { Suspense } from 'react'
+ 
+@@ -28,7 +29,18 @@ async function Workspace({ params }: Pick<PageProps<'/workspaces/[workspaceId]'>
+   const { workspaceId } = await params
+   await connection()
+   const here = `/workspaces/${workspaceId}`
+-  if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
++  // UX-L-05: the failure keeps the page's h1 — the hub link and the raw id, never a stale name.
++  const fallbackHeading = (
++    <nav aria-label="Current scope" className="flex items-center gap-2 text-sm font-normal">
++      <Link className="underline" href="/workspaces">
++        <LocalizedText en="Workspaces" vi="Không gian làm việc" />
++      </Link>
++      <span aria-hidden="true">/</span>
++      <span className="text-muted-foreground">{workspaceId}</span>
++    </nav>
++  )
++  if (!(await getSession()))
++    return <ReadFailure kind="sign-in" retryHref={here} heading={fallbackHeading} />
+   const read = await attempt(async () => {
+     const [{ workspace, etag }, matters] = await Promise.all([
+       workspaceRepository.get(workspaceId),
+@@ -42,7 +54,15 @@ async function Workspace({ params }: Pick<PageProps<'/workspaces/[workspaceId]'>
+     })
+     return { workspace, etag, matters, members }
+   })
+-  if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="workspace" />
++  if (!read.ok)
++    return (
++      <ReadFailure
++        kind={read.kind}
++        retryHref={here}
++        subject="workspace"
++        heading={fallbackHeading}
++      />
++    )
+   const { workspace, etag, matters, members } = read.value
+   return (
+     <div className="flex flex-col gap-6">
+diff --git a/apps/frontend/src/app/(app)/workspaces/page.tsx b/apps/frontend/src/app/(app)/workspaces/page.tsx
+index 204bb85..a9028e3 100644
+--- a/apps/frontend/src/app/(app)/workspaces/page.tsx
++++ b/apps/frontend/src/app/(app)/workspaces/page.tsx
+@@ -12,13 +12,13 @@ import { workspaceRepository } from '@/features/workspaces/repository'
+ import { getSession } from '@/lib/auth'
+ import { attempt } from '@/lib/mc/errors'
+ 
+-export const metadata: Metadata = { title: 'Matters' }
++export const metadata: Metadata = { title: 'Workspaces' }
+ 
+ export default function WorkspacesPage() {
+   return (
+     <div className="flex flex-col gap-6">
+       <PageHeader
+-        title={<LocalizedText en="Matters" vi="Hồ sơ" />}
++        title={<LocalizedText en="Workspaces" vi="Không gian làm việc" />}
+         description={
+           <LocalizedText
+             en="Choose a workspace, then open one of its matters or create a new one."
+diff --git a/apps/frontend/src/components/organisms/read-failure-context.test.tsx b/apps/frontend/src/components/organisms/read-failure-context.test.tsx
+new file mode 100644
+index 0000000..de5202a
+--- /dev/null
++++ b/apps/frontend/src/components/organisms/read-failure-context.test.tsx
+@@ -0,0 +1,35 @@
++import { render, screen } from '@testing-library/react'
++import { describe, expect, it } from 'vitest'
++
++import { LocaleProvider } from '@/components/molecules/locale-provider'
++
++import { ReadFailure } from './read-failure'
++
++// UX-L-04: every ReadFailure string is localized; UX-L-05: the failure keeps the page's h1.
++describe('ReadFailure context variant', () => {
++  it('renders the heading as the page h1 above the failure state', () => {
++    render(<ReadFailure kind="unavailable" retryHref="/x" heading={<span>Merger filing</span>} />)
++    const h1 = screen.getByRole('heading', { level: 1 })
++    expect(h1).toHaveTextContent('Merger filing')
++  })
++
++  it('localizes the not-found title with the subject, including in Vietnamese', () => {
++    render(
++      <LocaleProvider initial="vi">
++        <ReadFailure kind="not-found" subject="matter" />
++      </LocaleProvider>,
++    )
++    expect(screen.getByText('hồ sơ này không khả dụng')).toBeInTheDocument()
++  })
++
++  it('localizes the unavailable description (was EN-only, UX-L-04)', () => {
++    render(
++      <LocaleProvider initial="vi">
++        <ReadFailure kind="unavailable" />
++      </LocaleProvider>,
++    )
++    expect(
++      screen.getByText(/Chưa kết nối được dịch vụ\. Phiên của bạn không bị ảnh hưởng/),
++    ).toBeInTheDocument()
++  })
++})
+diff --git a/apps/frontend/src/components/organisms/read-failure.tsx b/apps/frontend/src/components/organisms/read-failure.tsx
+index 8686958..6abdb1e 100644
+--- a/apps/frontend/src/components/organisms/read-failure.tsx
++++ b/apps/frontend/src/components/organisms/read-failure.tsx
+@@ -1,4 +1,5 @@
+ import { LocalizedText } from '@/components/molecules/localized-text'
++import type { ReactNode } from 'react'
+ import { CloudOff, LockKeyhole, LogIn, RefreshCw, SearchX, TriangleAlert } from 'lucide-react'
+ import Link from 'next/link'
+ 
+@@ -13,6 +14,11 @@ export type ReadFailureProps = {
+   retryHref?: string
+   /** Shown for not-found, e.g. "workspace". */
+   subject?: string
++  /**
++   * The page heading the failed read belongs to (UX-L-05): a failure state keeps the page's h1
++   * and context instead of leaving the page heading-less. Rendered above the state itself.
++   */
++  heading?: ReactNode
+   /**
+    * A section of a page the user can still read (a role-limited or sub-resource read): its
+    * denial is not a loss of the page's scope, so it keeps drafts. An ended session is never
+@@ -21,8 +27,33 @@ export type ReadFailureProps = {
+   partial?: boolean
+ }
+ 
++/** The vi names of the read subjects; an unknown subject falls back to its own text. */
++const SUBJECT_VI: Record<string, string> = {
++  matter: 'hồ sơ',
++  'matter list': 'danh sách hồ sơ',
++  workspace: 'không gian làm việc',
++  'workspace list': 'danh sách không gian làm việc',
++  document: 'tài liệu',
++  filing: 'thủ tục',
++  agenda: 'lịch',
++  history: 'lịch sử',
++  grid: 'bảng công việc',
++  list: 'danh sách',
++  proof: 'bằng chứng',
++  record: 'bản ghi',
++  requirement: 'yêu cầu',
++  reviews: 'rà soát',
++  'review list': 'danh sách rà soát',
++  'Control Room': 'Phòng điều hành',
++  item: 'mục',
++}
++
++function subjectVi(subject: string): string {
++  return SUBJECT_VI[subject] ?? subject
++}
++
+ /** One truthful state per read failure: never an empty list, a zero, or a spinner that never ends. */
+-export function ReadFailure({ partial, ...props }: ReadFailureProps) {
++export function ReadFailure({ partial, heading, ...props }: ReadFailureProps) {
+   // The session ended, or a primary read was denied (the right to see this ended): keep no draft.
+   const lost =
+     props.kind === 'sign-in' ||
+@@ -30,7 +61,10 @@ export function ReadFailure({ partial, ...props }: ReadFailureProps) {
+   return (
+     <>
+       {lost && <PurgeDrafts />}
+-      <ReadFailureState {...props} />
++      <div className="flex flex-col gap-4">
++        {heading && <h1 className="text-2xl font-semibold tracking-tight">{heading}</h1>}
++        <ReadFailureState {...props} />
++      </div>
+     </>
+   )
+ }
+@@ -76,7 +110,12 @@ function ReadFailureState({ kind, retryHref, subject = 'item' }: ReadFailureProp
+       return (
+         <EmptyState
+           icon={<SearchX />}
+-          title={`This ${subject} is not available`}
++          title={
++            <LocalizedText
++              en={`This ${subject} is not available`}
++              vi={`${subjectVi(subject)} này không khả dụng`}
++            />
++          }
+           description={
+             <LocalizedText
+               en="It does not exist, or you do not have access to it."
+@@ -90,7 +129,12 @@ function ReadFailureState({ kind, retryHref, subject = 'item' }: ReadFailureProp
+         <EmptyState
+           icon={<CloudOff />}
+           title={<LocalizedText en="Temporarily unavailable" vi="Tạm thời không khả dụng" />}
+-          description="The service could not be reached. Your session is unaffected. Nothing shown here is a result."
++          description={
++            <LocalizedText
++              en="The service could not be reached. Your session is unaffected. Nothing shown here is a result."
++              vi="Chưa kết nối được dịch vụ. Phiên của bạn không bị ảnh hưởng. Không có gì hiển thị ở đây là một kết quả."
++            />
++          }
+           action={
+             retryHref ? (
+               <Link href={retryHref} className={buttonVariants({ variant: 'outline' })}>
+diff --git a/apps/frontend/src/features/filings/components/filing-forms.tsx b/apps/frontend/src/features/filings/components/filing-forms.tsx
+index 9decd90..5dd81af 100644
+--- a/apps/frontend/src/features/filings/components/filing-forms.tsx
++++ b/apps/frontend/src/features/filings/components/filing-forms.tsx
+@@ -1,6 +1,7 @@
+ 'use client'
+ 
+ import { LocalizedText } from '@/components/molecules/localized-text'
++import { useLocale } from '@/hooks/use-locale'
+ 
+ import { useState } from 'react'
+ import Link from 'next/link'
+@@ -50,6 +51,7 @@ export function CreateFilingForm({
+   members: Option[]
+ }) {
+   const router = useRouter()
++  const locale = useLocale()
+   if (!requirements.length || !parties.length)
+     return (
+       <div className="flex flex-col gap-3 text-sm">
+@@ -150,7 +152,7 @@ export function CreateFilingForm({
+             {(c) => (
+               <Select
+                 name="authorityPartyId"
+-                placeholder="Choose the authority"
++                placeholder={locale === 'vi' ? 'Chọn cơ quan phụ trách' : 'Choose the authority'}
+                 options={parties.map((p) => ({ value: p.id, label: p.label }))}
+                 {...c}
+               />
+diff --git a/apps/frontend/src/features/matters/components/matter-scope.test.tsx b/apps/frontend/src/features/matters/components/matter-scope.test.tsx
+index d59b7e8..1fb162f 100644
+--- a/apps/frontend/src/features/matters/components/matter-scope.test.tsx
++++ b/apps/frontend/src/features/matters/components/matter-scope.test.tsx
+@@ -46,9 +46,11 @@ describe('authorized scope header', () => {
+     api.get.mockRejectedValue(new McError('not-found', 404))
+     render(await MatterScope({ matterId: 'matter-1', children: <p>Protected child</p> }))
+     expect(screen.queryByText('Protected child')).not.toBeInTheDocument()
+-    expect(
+-      screen.queryByRole('navigation', { name: 'Current matter scope' }),
+-    ).not.toBeInTheDocument()
++    // UX-L-05: the failure keeps a breadcrumb, but only of facts it still knows — the hub link
++    // and the raw id. No workspace name, no matter title, no authorized scope labels.
++    const nav = screen.getByRole('navigation', { name: 'Current matter scope' })
++    expect(nav).not.toHaveTextContent('Atlas')
++    expect(nav.textContent).toContain('matter-1')
+     expect(screen.getByText('This matter is not available')).toBeInTheDocument()
+   })
+   it('requires a session before reading scope', async () => {
+diff --git a/apps/frontend/src/features/matters/components/matter-scope.tsx b/apps/frontend/src/features/matters/components/matter-scope.tsx
+index be77598..fd944cb 100644
+--- a/apps/frontend/src/features/matters/components/matter-scope.tsx
++++ b/apps/frontend/src/features/matters/components/matter-scope.tsx
+@@ -23,9 +23,25 @@ export async function MatterScope({
+   children: ReactNode
+ }) {
+   const here = `/matters/${encodeURIComponent(matterId)}`
+-  if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
++  // UX-L-05: a failed matter read (or session) must not erase the page's context — the failure
++  // keeps a breadcrumb (the hub is always reachable) and an h1, even though the scope labels are
++  // unknown without the read.
++  const scopeFallback = (
++    <nav aria-label="Current matter scope" className="flex items-center gap-2 text-sm font-normal">
++      <Link className="underline" href="/workspaces">
++        <LocalizedText en="Workspaces" vi="Không gian làm việc" />
++      </Link>
++      <span aria-hidden="true">/</span>
++      <span className="text-muted-foreground">{matterId}</span>
++    </nav>
++  )
++  if (!(await getSession()))
++    return <ReadFailure kind="sign-in" retryHref={here} heading={scopeFallback} />
+   const read = await attempt(() => matterRepository.get(matterId))
+-  if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="matter" />
++  if (!read.ok)
++    return (
++      <ReadFailure kind={read.kind} retryHref={here} subject="matter" heading={scopeFallback} />
++    )
+   const { matter, asOf } = read.value
+   const workspace = await attempt(() => matterRepository.workspace(matter.workspaceId))
+   return (
+diff --git a/apps/frontend/src/features/proof/components/document-forms.tsx b/apps/frontend/src/features/proof/components/document-forms.tsx
+index 468d1ef..856add4 100644
+--- a/apps/frontend/src/features/proof/components/document-forms.tsx
++++ b/apps/frontend/src/features/proof/components/document-forms.tsx
+@@ -1,6 +1,7 @@
+ 'use client'
+ 
+ import { LocalizedText } from '@/components/molecules/localized-text'
++import { useLocale } from '@/hooks/use-locale'
+ 
+ import { Plus, FileSignature, Upload } from 'lucide-react'
+ import { useRouter } from 'next/navigation'
+@@ -131,6 +132,7 @@ export function UploadVersionForm({
+ }) {
+   const router = useRouter()
+   const taskDone = useContext(TaskSuccess)
++  const locale = useLocale()
+   const [file, setFile] = useState<File | null>(null)
+   const [key, setKey] = useState(() => newIdempotencyKey())
+   const [state, setState] = useState<UploadState>({ kind: 'idle' })
+@@ -267,24 +269,48 @@ export function UploadVersionForm({
+       </FormField>
+       <div>
+         <Button type="submit" loading={pending} disabled={!file || checking}>
+-          {state.kind === 'failed' && state.result.retrySameKey ? 'Retry upload' : 'Upload version'}
++          {state.kind === 'failed' && state.result.retrySameKey
++            ? locale === 'vi'
++              ? 'Thử tải lại'
++              : 'Retry upload'
++            : locale === 'vi'
++              ? 'Tải lên phiên bản'
++              : 'Upload version'}
+         </Button>
+       </div>
+       {earlierName && state.kind === 'idle' && (
+-        <Alert title="Earlier upload not confirmed">
+-          {`An earlier upload of "${earlierName}" was not confirmed. Choose the same file again to retry it safely; any other file starts a new upload.`}
++        <Alert
++          title={
++            locale === 'vi' ? 'Lượt tải trước chưa được xác nhận' : 'Earlier upload not confirmed'
++          }
++        >
++          {locale === 'vi'
++            ? `Lượt tải trước của "${earlierName}" chưa được xác nhận. Chọn lại đúng tệp đó để thử lại an toàn; một tệp khác sẽ bắt đầu lượt tải mới.`
++            : `An earlier upload of "${earlierName}" was not confirmed. Choose the same file again to retry it safely; any other file starts a new upload.`}
+         </Alert>
+       )}
+       {state.kind === 'done' && (
+         <p role="status" className="text-sm">
+-          {state.replayed ? 'This file had already been stored.' : 'Version stored.'}
++          {state.replayed
++            ? locale === 'vi'
++              ? 'Tệp này đã được lưu trước đó.'
++              : 'This file had already been stored.'
++            : locale === 'vi'
++              ? 'Đã lưu phiên bản.'
++              : 'Version stored.'}
+         </p>
+       )}
+       {state.kind === 'failed' && (
+         <Alert
+           variant="destructive"
+           title={
+-            state.result.kind === 'outcome-unknown' ? 'Outcome not confirmed' : 'Upload failed'
++            state.result.kind === 'outcome-unknown'
++              ? locale === 'vi'
++                ? 'Kết quả chưa được xác nhận'
++                : 'Outcome not confirmed'
++              : locale === 'vi'
++                ? 'Tải lên thất bại'
++                : 'Upload failed'
+           }
+         >
+           {state.result.error}
+diff --git a/apps/frontend/src/features/proof/components/proof-panel.tsx b/apps/frontend/src/features/proof/components/proof-panel.tsx
+index a525780..130cd94 100644
+--- a/apps/frontend/src/features/proof/components/proof-panel.tsx
++++ b/apps/frontend/src/features/proof/components/proof-panel.tsx
+@@ -4,6 +4,7 @@ import { ClipboardCheck, FileX, Flag, Pencil, Scale, Undo2 } from 'lucide-react'
+ import type { ReactNode } from 'react'
+ 
+ import { LocalizedText } from '@/components/molecules/localized-text'
++import { useLocale } from '@/hooks/use-locale'
+ 
+ import { Input } from '@/components/atoms/input'
+ import { Select } from '@/components/atoms/select'
+@@ -82,6 +83,7 @@ function CriteriaGroup({
+ 
+ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: ProofContext }) {
+   const { subject } = checklist
++  const locale = useLocale()
+   const isVerifier = checklist.verifiers.includes(checklist.callerId) && canWrite(ctx.role)
+   const evidenceById = Object.fromEntries(checklist.evidence.map((e) => [e.id, e]))
+   const formCtx = { ...ctx, outcomeAllowed: Boolean(ctx.isFiling) && subject.proofRequired }
+@@ -175,7 +177,11 @@ export function ProofPanel({ checklist, ctx }: { checklist: Checklist; ctx: Proo
+                 <div className="mt-2 flex flex-wrap gap-4">
+                   {canWrite(ctx.role) && !openDispute && (
+                     <ReasonForm
+-                      label="Challenge this acceptance"
++                      label={
++                        locale === 'vi'
++                          ? 'Tranh chấp lời xác nhận này'
++                          : 'Challenge this acceptance'
++                      }
+                       icon={<Flag />}
+                       draftKey={`assessment:${a.id}:dispute`}
+                       run={(reason) =>
+diff --git a/apps/frontend/src/features/work/components/planning-view.tsx b/apps/frontend/src/features/work/components/planning-view.tsx
+index a86124f..4f0c35e 100644
+--- a/apps/frontend/src/features/work/components/planning-view.tsx
++++ b/apps/frontend/src/features/work/components/planning-view.tsx
+@@ -316,10 +316,14 @@ export function WaitingOnList({
+   return (
+     <Card>
+       <CardHeader>
+-        <CardTitle>Waiting on ({items.length})</CardTitle>
++        <CardTitle>
++          <LocalizedText en="Waiting on" vi="Đang chờ" /> ({items.length})
++        </CardTitle>
+         <CardDescription>
+-          Waiting is not blocked: these records wait on an external party and keep an accountable
+-          owner.
++          <LocalizedText
++            en="Waiting is not blocked: these records wait on an external party and keep an accountable owner."
++            vi="Đang chờ khác với bị chặn: các bản ghi này chờ một bên ngoài và vẫn có người phụ trách."
++          />
+         </CardDescription>
+       </CardHeader>
+       <CardContent>
+diff --git a/apps/frontend/src/features/work/components/rejection-details.tsx b/apps/frontend/src/features/work/components/rejection-details.tsx
+index caf76eb..a9fd6b4 100644
+--- a/apps/frontend/src/features/work/components/rejection-details.tsx
++++ b/apps/frontend/src/features/work/components/rejection-details.tsx
+@@ -1,5 +1,7 @@
+ import type { McRejection } from '@/lib/mc/errors'
+ 
++import { LocalizedText } from '@/components/molecules/localized-text'
++
+ import { GATE_LABEL, GATE_REASON } from '../labels'
+ 
+ /**
+@@ -19,7 +21,9 @@ export function RejectionDetails({
+     <div className="mt-2 flex flex-col gap-2 text-sm">
+       {rejection.gates.length > 0 && (
+         <div>
+-          <p className="font-medium">Not satisfied:</p>
++          <p className="font-medium">
++            <LocalizedText en="Not satisfied:" vi="Chưa thỏa mãn:" />
++          </p>
+           <ul className="list-disc pl-5">
+             {rejection.gates.map((g) => (
+               <li key={g.edgeId}>

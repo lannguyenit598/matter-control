@@ -1,0 +1,326 @@
+--- docs/testing/inta-returns/frontend/validation-r3-20261026/launcher/test-launcher-mock.mjs	2026-10-26 15:17:01
++++ /tmp/mc002-inta-fe-validation-r4-20261026/launcher/test-launcher-mock.mjs	2026-10-26 16:26:54
+@@ -1,23 +1,27 @@
+ /**
+- * MC-002-INTA-FE-VALIDATION-R3: Launcher Deterministic Mock Test Suite
++ * MC-002-INTA-FE-VALIDATION-R4: Launcher Deterministic Mock Test Suite
+  * Tests harness-dev.mjs in-process with mock spawns (zero network, zero Next server).
+- * Addresses R1-C04, R2-I02, R2-I05:
++ * Addresses R1-C04, R2-I02, R2-I05, R3-N02, R3-N06, NF-1, NF-3:
+  * - Refusal before spawn for all forbidden keys (including empty and API_MODE)
+  * - Refusal for NODE_ENV=production
+- * - Bounded environment construction including MC_INTA_STATE_DIR
+- * - CLI entry detection (relative and absolute paths)
+- * - Child lifecycle: error, signal forwarding, and close propagation without self-signal loop
++ * - Bounded environment construction including MC_INTA_STATE_DIR, SHELL, TMPDIR
++ * - Direct relative CLI entry detection without OR-fallback (NF-6/T9 fix)
++ * - Guard integrity verification (NF-3)
++ * - Child lifecycle: error, signal forwarding error visibility, and close propagation without self-signal loop
+  */
+ 
+ import assert from 'node:assert/strict';
+-import { resolve } from 'node:path';
++import path, { resolve } from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import {
+   launchHarness,
+   buildBoundedEnvironment,
+   isCliEntry,
+   attachChildLifecycle,
++  verifyGuardIntegrity,
+   ALLOWED_ENV_KEYS,
++  DEFAULT_GUARD_PATH,
++  EXPECTED_GUARD_SHA256,
+ } from './harness-dev.mjs';
+ 
+ function createMockSpawner() {
+@@ -36,6 +40,7 @@
+       kill(sig) {
+         callRecord.killed = true;
+         callRecord.signal = sig;
++        return true;
+       },
+       on(event, handler) {
+         callRecord.listeners[event] = handler;
+@@ -63,7 +68,7 @@
+ }
+ 
+ console.log('================================================================');
+-console.log('MC-002-INTA-FE-VALIDATION-R3: Pre-Listen Launcher Mock Tests');
++console.log('MC-002-INTA-FE-VALIDATION-R4: Pre-Listen Launcher Mock Tests');
+ console.log('================================================================');
+ 
+ // Test 1: Forbidden key (API_TOKEN) refuses before spawn
+@@ -104,14 +109,17 @@
+     spawnFn: mockSpawn,
+   });
+ 
+-  assert.equal(res.success, false);
+-  assert.equal(res.exitCode, 1);
+-  assert.equal(res.spawnCalled, false);
+-  assert.equal(calls.length, 0);
+-  assert.match(res.refusalMessage, /product auth\/secret env vars present \(API_TOKEN\)/);
++  assert.equal(res.success, false, 'Expected success=false');
++  assert.equal(res.exitCode, 1, 'Expected exitCode=1');
++  assert.equal(res.spawnCalled, false, 'Expected spawnCalled=false');
++  assert.equal(calls.length, 0, 'Mock spawner must not be called');
++  assert.match(
++    res.refusalMessage,
++    /Harness startup refused: product auth\/secret env vars present \(API_TOKEN\)/
++  );
+ });
+ 
+-// Test 3: API_MODE nonempty refuses without spawn on supported path (INTA-LAUNCH-01)
++// Test 3: API_MODE nonempty refuses before spawn
+ runTest('api_mode_nonempty_refuses_without_spawn', () => {
+   const { mockSpawn, calls } = createMockSpawner();
+   const testEnv = {
+@@ -129,10 +137,13 @@
+   assert.equal(res.exitCode, 1);
+   assert.equal(res.spawnCalled, false);
+   assert.equal(calls.length, 0);
+-  assert.match(res.refusalMessage, /product auth\/secret env vars present \(API_MODE\)/);
++  assert.match(
++    res.refusalMessage,
++    /Harness startup refused: product auth\/secret env vars present \(API_MODE\)/
++  );
+ });
+ 
+-// Test 4: API_MODE empty string refuses without spawn on supported path (INTA-LAUNCH-01)
++// Test 4: API_MODE empty string refuses before spawn
+ runTest('api_mode_empty_refuses_without_spawn', () => {
+   const { mockSpawn, calls } = createMockSpawner();
+   const testEnv = {
+@@ -150,10 +161,13 @@
+   assert.equal(res.exitCode, 1);
+   assert.equal(res.spawnCalled, false);
+   assert.equal(calls.length, 0);
+-  assert.match(res.refusalMessage, /product auth\/secret env vars present \(API_MODE\)/);
++  assert.match(
++    res.refusalMessage,
++    /Harness startup refused: product auth\/secret env vars present \(API_MODE\)/
++  );
+ });
+ 
+-// Test 5: Forbidden NODE_ENV=production refuses before spawn
++// Test 5: NODE_ENV=production refuses before spawn
+ runTest('forbidden_node_env_production_refuses_without_spawn', () => {
+   const { mockSpawn, calls } = createMockSpawner();
+   const testEnv = {
+@@ -173,9 +187,9 @@
+   assert.match(res.refusalMessage, /Harness startup refused: NODE_ENV cannot be production/);
+ });
+ 
+-// Test 6: All audited keys refuse before spawn
++// Test 6: All audited secret keys refuse before spawn
+ runTest('all_audited_secret_keys_refuse_without_spawn', () => {
+-  const keys = [
++  const auditedKeys = [
+     'API_MODE',
+     'API_TOKEN',
+     'API_BASE_URL',
+@@ -190,70 +204,65 @@
+     'JWT_SECRET',
+   ];
+ 
+-  for (const k of keys) {
++  for (const k of auditedKeys) {
+     const { mockSpawn, calls } = createMockSpawner();
+     const testEnv = {
+       NODE_ENV: 'development',
+       MC_INTA_ENABLE: '1',
+-      [k]: 'sample_val',
++      [k]: 'some_secret_val',
+     };
+-
+     const res = launchHarness({
+       env: testEnv,
+       spawnFn: mockSpawn,
+     });
+-
+-    assert.equal(res.success, false, `Key ${k} should have refused`);
+-    assert.equal(res.exitCode, 1, `Key ${k} should exit 1`);
+-    assert.equal(res.spawnCalled, false, `Key ${k} should not spawn`);
+-    assert.equal(calls.length, 0, `Key ${k} spawner call count should be 0`);
+-    assert.match(res.refusalMessage, new RegExp(`product auth/secret env vars present \\(${k}\\)`));
++    assert.equal(res.success, false, `Expected refusal for ${k}`);
++    assert.equal(res.exitCode, 1);
++    assert.equal(res.spawnCalled, false);
++    assert.equal(calls.length, 0);
++    assert.match(
++      res.refusalMessage,
++      new RegExp(`Harness startup refused: product auth/secret env vars present \\(${k}\\)`)
++    );
+   }
+ });
+ 
+-// Test 7: Valid environment spawns child with bounded env and stateDir
++// Test 7: Valid environment spawns child with bounded environment
+ runTest('valid_environment_spawns_child_with_bounded_env_and_state_dir', () => {
+   const { mockSpawn, calls } = createMockSpawner();
+   const testEnv = {
++    PATH: '/usr/local/bin:/usr/bin:/bin',
+     NODE_ENV: 'development',
+     MC_INTA_ENABLE: '1',
+     MC_INTA_GO_BASE_URL: 'http://127.0.0.1:18086',
++    MC_INTA_STATE_DIR: '/tmp/test_state_123',
++    SECRET_KEY_UNLEAKED: 'dont_pass_me',
+     PORT: '18085',
+-    HOSTNAME: '127.0.0.1',
+-    HOME: '/tmp/test_home',
+-    UNLISTED_CUSTOM_VAR: 'should_not_leak',
++    HOME: '/tmp/fakehome',
++    SHELL: '/bin/bash',
++    TMPDIR: '/tmp/faketmp',
+   };
+ 
+   const res = launchHarness({
+     env: testEnv,
+     spawnFn: mockSpawn,
+-    nextBin: 'next',
+-    nextArgs: ['dev', '-H', '127.0.0.1', '-p', '18085', '--webpack'],
+-    stateDir: '/tmp/test_run_state',
+   });
+ 
+   assert.equal(res.success, true);
+-  assert.equal(res.exitCode, 0);
+   assert.equal(res.spawnCalled, true);
+   assert.equal(calls.length, 1);
+ 
+   const spawnCall = calls[0];
+-  assert.equal(spawnCall.bin, 'next');
+-  assert.deepEqual(spawnCall.args, ['dev', '-H', '127.0.0.1', '-p', '18085', '--webpack']);
+-
+-  // Verify bounded env does NOT leak UNLISTED_CUSTOM_VAR
+-  assert.equal(spawnCall.options.env.UNLISTED_CUSTOM_VAR, undefined);
++  assert.equal(spawnCall.options.env.PATH, '/usr/local/bin:/usr/bin:/bin');
+   assert.equal(spawnCall.options.env.NODE_ENV, 'development');
+-  assert.equal(spawnCall.options.env.MC_INTA_ENABLE, '1');
++  assert.equal(spawnCall.options.env.MC_INTA_STATE_DIR, '/tmp/test_state_123');
+   assert.equal(spawnCall.options.env.PORT, '18085');
+-  // Verify MC_INTA_STATE_DIR is passed
+-  assert.equal(spawnCall.options.env.MC_INTA_STATE_DIR, '/tmp/test_run_state');
++  assert.equal(spawnCall.options.env.SHELL, '/bin/bash');
++  assert.equal(spawnCall.options.env.TMPDIR, '/tmp/faketmp');
++  assert.equal(spawnCall.options.env.SECRET_KEY_UNLEAKED, undefined);
+ });
+ 
+-// Test 8: bounded_environment_strict_allowlist includes MC_INTA_STATE_DIR
++// Test 8: Bounded environment allowlist strictly filters unknown keys
+ runTest('bounded_environment_strict_allowlist_includes_state_dir', () => {
+-  assert.ok(ALLOWED_ENV_KEYS.includes('MC_INTA_STATE_DIR'), 'MC_INTA_STATE_DIR must be in ALLOWED_ENV_KEYS');
+-
+   const dirtyEnv = {
+     PATH: '/bin:/usr/bin',
+     NODE_ENV: 'development',
+@@ -261,6 +270,8 @@
+     LEAKY_SECRET_TOKEN: 'secret_123',
+     DATABASE_PASS: 'pw456',
+     PORT: '18085',
++    SHELL: '/bin/zsh',
++    TMPDIR: '/tmp/custom_tmp',
+   };
+ 
+   const clean = buildBoundedEnvironment(dirtyEnv);
+@@ -268,11 +279,13 @@
+   assert.equal(clean.NODE_ENV, 'development');
+   assert.equal(clean.MC_INTA_STATE_DIR, '/private/tmp/state');
+   assert.equal(clean.PORT, '18085');
++  assert.equal(clean.SHELL, '/bin/zsh');
++  assert.equal(clean.TMPDIR, '/tmp/custom_tmp');
+   assert.equal(clean.LEAKY_SECRET_TOKEN, undefined);
+   assert.equal(clean.DATABASE_PASS, undefined);
+ });
+ 
+-// Test 9: isCliEntry supports both relative and absolute paths
++// Test 9: isCliEntry supports both relative and absolute paths without OR-fallback (R3-N06)
+ runTest('is_cli_entry_detection_relative_and_absolute', () => {
+   const currentUrl = import.meta.url;
+   const currentFile = fileURLToPath(currentUrl);
+@@ -280,8 +293,10 @@
+   // Exact absolute path
+   assert.ok(isCliEntry(currentFile, currentUrl));
+ 
+-  // Relative path resolving to same file
+-  assert.ok(isCliEntry('./launcher/test-launcher-mock.mjs', currentUrl) || isCliEntry(currentFile, currentUrl));
++  // Exact relative path computed from cwd without OR-fallback
++  const relPath = path.relative(process.cwd(), currentFile);
++  assert.ok(isCliEntry(relPath, currentUrl), `Relative path ${relPath} must resolve to current module`);
++  assert.ok(isCliEntry(`./${relPath}`, currentUrl), `Prefixed relative path ./${relPath} must resolve to current module`);
+ 
+   // Unrelated script path returns false
+   assert.equal(isCliEntry('/bin/bash', currentUrl), false);
+@@ -298,6 +313,7 @@
+     },
+     kill(sig) {
+       killCalledWith = sig;
++      return true;
+     },
+   };
+ 
+@@ -335,6 +351,65 @@
+   assert.equal(killCalledWith, 'SIGTERM');
+ });
+ 
++// Test 11: verifyGuardIntegrity passes on valid guard and fails on mismatch (NF-3)
++runTest('guard_integrity_verification', () => {
++  // Valid guard path passes
++  assert.ok(verifyGuardIntegrity(DEFAULT_GUARD_PATH, EXPECTED_GUARD_SHA256));
++
++  // Missing path throws
++  assert.throws(
++    () => verifyGuardIntegrity('/tmp/non_existent_guard.ts', EXPECTED_GUARD_SHA256),
++    /Guard integrity failure: file not found/
++  );
++
++  // Mismatched hash throws
++  assert.throws(
++    () => verifyGuardIntegrity(DEFAULT_GUARD_PATH, 'badhash0000000000000000000000000000000000000000000000000000000000'),
++    /Guard integrity mismatch/
++  );
++});
++
++// Test 12: forwardSignal surfaces errors and doesn't swallow them (R3-N05, R2-I05)
++runTest('signal_forwarding_surfaces_failures', () => {
++  const stderrMsgs = [];
++  const mockChild = {
++    on: () => {},
++    kill: (sig) => false, // simulates kill returning false
++  };
++  const mockProcess = {
++    stderr: { write: (msg) => stderrMsgs.push(msg) },
++    on: (evt, handler) => {
++      if (evt === 'SIGTERM') handler();
++    },
++    exit: () => {},
++  };
++  attachChildLifecycle(mockChild, mockProcess);
++  assert.ok(stderrMsgs.some((m) => m.includes('Signal delivery failed for SIGTERM')));
++});
++
++// Test 13: launchHarness passes explicit stateDir and cwd bindings (R3-N02, NF-1)
++runTest('launch_harness_explicit_bindings', () => {
++  const { mockSpawn, calls } = createMockSpawner();
++  const testEnv = {
++    PATH: '/bin:/usr/bin',
++    NODE_ENV: 'development',
++    MC_INTA_ENABLE: '1',
++    MC_INTA_GO_BASE_URL: 'http://127.0.0.1:18086',
++  };
++  const res = launchHarness({
++    env: testEnv,
++    spawnFn: mockSpawn,
++    stateDir: '/tmp/test-state-dir',
++    nextBin: '/tmp/test/bin/next',
++    cwd: '/tmp/test-harness',
++  });
++  assert.equal(res.success, true);
++  assert.equal(calls.length, 1);
++  assert.equal(calls[0].bin, '/tmp/test/bin/next');
++  assert.equal(calls[0].options.cwd, '/tmp/test-harness');
++  assert.equal(calls[0].options.env.MC_INTA_STATE_DIR, '/tmp/test-state-dir');
++});
++
+ console.log('================================================================');
+ console.log(`SUMMARY: ${passed} PASS / ${failed} FAIL out of ${passed + failed} cases`);
+ console.log('================================================================');

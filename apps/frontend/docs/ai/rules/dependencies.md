@@ -1,6 +1,6 @@
 # Rules: Dependencies (R-DEP)
 
-The approved baseline and the reason for every package: [historical dependency audit](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/apps/frontend/docs/audits/dependency-deep-audit.md).
+The approved baseline and the reason for every package: [`docs/audits/dependency-deep-audit.md`](../../audits/dependency-deep-audit.md).
 
 | ID      | Level  | Rule                                                                                                                                                                                                                                                | Why                                              | Verified by                |
 | ------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ | -------------------------- |

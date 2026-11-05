@@ -1,0 +1,43 @@
+{
+  "actor": "Internal Codex read-only explorer; not actual OpenCode",
+  "mode": "read/hash/static only; no reviewed code imported or executed",
+  "improvements": [
+    "os.kill rejecting guard is installed before fresh coordinator import; function defaults capture that guard on normal standalone suite route",
+    "All present direct helper/VariantRunner/run_plan test calls inject MockSignalTracker",
+    "Test38 asserts observer wait calls and fake SIGTERM",
+    "Wrapper is copied beside an inert coordinator stub; current command reaches stub rather than original coordinator"
+  ],
+  "limits": [
+    {
+      "id": "S1",
+      "lines": "selfcheck-r4.py:529-551,699-709",
+      "detail": "Abort tests keep real Popen defaults and rely on early return. Unexpected branch drift lacks a raising unexpected-Popen fake."
+    },
+    {
+      "id": "S2",
+      "lines": "coordinator.py:327-333,395-396,448",
+      "detail": "Mock processes/probes, but real clock/sleep; not fully deterministic clock enclosure."
+    },
+    {
+      "id": "S3",
+      "lines": "selfcheck-r4.py:719-763",
+      "detail": "Wrapper test uses inert stub but ambient env/PATH; unused wrapper_env. It does not assert port arguments or nonzero stub-exit propagation."
+    },
+    {
+      "id": "S4",
+      "lines": "selfcheck-r4.py:482-689; coordinator.py:453,473",
+      "detail": "No coordinator scenario proving caller cleanup sites3 timeout and4 running-child finally; helper wait timeout is not caller coverage."
+    },
+    {
+      "id": "S5",
+      "lines": "launcher/harness-dev.mjs:230-247; test-launcher-mock.mjs:296-299,372-388",
+      "detail": "Relative-entry assertion and false-signal-return tests improved, but real CLI adapter branch, synchronous spawn exception and signal exception remain uncovered."
+    },
+    {
+      "id": "S6",
+      "lines": "selfcheck-r4.py:444-475,737,756,772-797",
+      "detail": "Real harmless wrapper/Node test subprocesses and temp fs/chmod/fsync operations exist. Writer tests do not isolate fsync failure; broad no-process-lifecycle claims need precise bounds."
+    }
+  ],
+  "runtime_or_external_QA_verdict": "NONE"
+}

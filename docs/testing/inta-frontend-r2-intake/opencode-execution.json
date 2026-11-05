@@ -1,0 +1,49 @@
+{
+  "task": "MC-002-INTA-FE-R2-SOURCE-REVIEW",
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl INT-A frontend R2 source re-review",
+    "--file",
+    "/tmp/mc002-inta-fe-r2-source-review-input.txt",
+    "Independently review the returned frontend harness implementation and evidence against frozen INTA-1. No tools/runtime/edits. Return concise actionable review with stable finding IDs and pre-upstream blockers."
+  ],
+  "start_utc": "2026-10-25T07:18:47.941859+00:00",
+  "end_utc": "2026-10-25T07:21:04.974372+00:00",
+  "exit": 0,
+  "elapsed_seconds": 137.03252179099945,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "runtime_replay": false,
+  "session_id": "ses_e8e12de66ffeJEHGyEeCsomF6p",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e8e12de66ffeJEHGyEeCsomF6p"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "review_sha256": "cb7678035d0f550c8d8382de0c6f6c9ba41e3a6bc71b17fcf4c9b78854bc5477"
+}

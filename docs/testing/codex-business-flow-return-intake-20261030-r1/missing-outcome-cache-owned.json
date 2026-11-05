@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/core/domain/matter",
+    "-run",
+    "^TestIntakeMissingOutcomeCannotBeFinalVerified$"
+  ],
+  "cwd": "/private/tmp/mc-bf-outcome-probe-oyd52d1c",
+  "env_override": {
+    "GOWORK": "off",
+    "GOCACHE": "/private/tmp/mc-bf-intake-go-cache"
+  },
+  "start_utc": "2026-10-30T08:00:21.888007+00:00",
+  "end_utc": "2026-10-30T08:00:28.821089+00:00",
+  "exit": 1,
+  "interpretation": "Proposed safe final-outcome assertion; does not define new production policy"
+}

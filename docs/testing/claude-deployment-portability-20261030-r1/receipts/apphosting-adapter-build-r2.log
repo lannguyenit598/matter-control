@@ -1,0 +1,79 @@
+Overriding Next Config to add configs optmized for Firebase App Hosting
+Successfully created next.config.ts with Firebase App Hosting overrides
+(node:76202) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+npm notice run atomic-design-project-template@0.1.0 build
+npm notice run next build && node scripts/check-built-css.mjs
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 15ms
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.8s
+  Running TypeScript ...
+  Finished TypeScript in 7.1s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/27) ...
+  Generating static pages using 9 workers (6/27) 
+  Generating static pages using 9 workers (13/27) 
+  Generating static pages using 9 workers (20/27) 
+✓ Generating static pages using 9 workers (27/27) in 297ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/callback
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/session
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions/[versionId]/content
+├ ƒ /api/matters/[matterId]/export
+├ ◐ /login
+├   /matters/[matterId]
+│ └ ◐ /matters/[matterId]
+├   /matters/[matterId]/agenda
+│ └ ◐ /matters/[matterId]/agenda
+├   /matters/[matterId]/control-room
+│ └ ◐ /matters/[matterId]/control-room
+├   /matters/[matterId]/data
+│ └ ◐ /matters/[matterId]/data
+├   /matters/[matterId]/documents
+│ └ ◐ /matters/[matterId]/documents
+├   /matters/[matterId]/documents/[documentId]
+│ └ ◐ /matters/[matterId]/documents/[documentId]
+├   /matters/[matterId]/filings
+│ └ ◐ /matters/[matterId]/filings
+├   /matters/[matterId]/filings/[filingId]
+│ └ ◐ /matters/[matterId]/filings/[filingId]
+├   /matters/[matterId]/filings/new
+│ └ ◐ /matters/[matterId]/filings/new
+├   /matters/[matterId]/history
+│ └ ◐ /matters/[matterId]/history
+├   /matters/[matterId]/planning
+│ └ ◐ /matters/[matterId]/planning
+├   /matters/[matterId]/reviews
+│ └ ◐ /matters/[matterId]/reviews
+├   /matters/[matterId]/work
+│ └ ◐ /matters/[matterId]/work
+├   /matters/[matterId]/work/[itemId]
+│ └ ◐ /matters/[matterId]/work/[itemId]
+├ ◐ /my-actions
+├   /requirements/[requirementId]
+│ └ ◐ /requirements/[requirementId]
+├ ◐ /workspaces
+└   /workspaces/[workspaceId]
+  └ ◐ /workspaces/[workspaceId]
+
+
+○  (Static)             prerendered as static content
+◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content
+ƒ  (Dynamic)            server-rendered on demand
+
+Compiled CSS verified: 1 assets, layout/accessibility/theme utilities present
+adding /.apphosting/ to /private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/w/ah/.gitignore
+Restoring original next config in project root

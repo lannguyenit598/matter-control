@@ -1,0 +1,128 @@
+{
+  "reviewer": "OpenCode CLI v2.1.4 (provider opencode, model glm-5.3-flash-free) — non-author independent reviewer",
+  "environment": {
+    "cwd_root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+    "timezone": "UTC+07 (Asia/Ho_Chi_Minh) — local clock used where output was local; UTC flagged per entry",
+    "utc_close_observed": "2026-10-28T15:36:39Z",
+    "node": "v24.22.1",
+    "shell_rule": "every shell command prefixed rtk; rtk proxy for unwrapped commands"
+  },
+  "exit_recording": "shell tool returns success/failure; explicit exit codes captured where the command surfaces one. 'ok' = observed tool success (exit 0).",
+  "checks": [
+    {
+      "id": "C1",
+      "what": "opening HEAD/branch/status verification",
+      "argv": ["rtk git rev-parse HEAD", "rtk git branch --show-current", "rtk git status --porcelain | head -50"],
+      "utc": "~15:14Z (approx)",
+      "exit": "ok",
+      "result": "HEAD 2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc on codex/unified-project-flow — matches handoff contract; 9 modified + 1 untracked frontend file visible (candidate dirty tree)"
+    },
+    {
+      "id": "C2",
+      "what": "packet file hashes at open (author pins check)",
+      "argv": ["rtk proxy shasum -a 256 <5 packet files>"],
+      "utc": "~15:16Z (approx)",
+      "exit": "ok",
+      "result": "source-manifest.json de8424ea…4489 == contract; source-delta.json 38e9eb4f…3354 == contract; return/inputs/checks hashed for pin table"
+    },
+    {
+      "id": "C3",
+      "what": "directory absence check + packet listing (required before creating this output)",
+      "argv": ["rtk proxy ls -la docs/testing/p0-final-parallel-20261028/{,claude-rv001-fix/,review/}"],
+      "utc": "~15:15Z (approx)",
+      "exit": "ok",
+      "result": "review/opencode-post-rv001-r1 absent → clear to create; re-check repeated at ~15:37Z before writing"
+    },
+    {
+      "id": "C4",
+      "what": "full member verification of the candidate manifest against filesystem (start)",
+      "argv": ["python3 /tmp/opencode-rv001-verify.py (via rtk proxy sh -c; script written to /tmp scratch, not the repo)"],
+      "utc": "~15:18Z (approx)",
+      "exit": "0",
+      "result": "719 entries, 0 duplicate paths, 0 missing, 0 hash/byte mismatches; selection-rule reproduction git ls-files -co --exclude-standard under apps/backend+apps/frontend = 722 paths; 3 symlink dir entries (apps/backend/.claude/skills/{add-migration,add-use-case,steward} -> ../../.agents/skills/*) not in manifest; 0 manifest paths absent from selection"
+    },
+    {
+      "id": "C5",
+      "what": "prior-round artifact hashes recorded",
+      "argv": ["rtk proxy shasum -a 256 <comprehensive + comprehensive-delta-r1 files>, ls -la of the three packet dirs"],
+      "utc": "~15:19Z (approx)",
+      "exit": "ok",
+      "result": "comprehensive manifest f596b7c6…5fb868 confirmed; comprehensive-delta-r1 return 02498b27… / findings c822507c… recorded; .claude/skills entries identified as symlinks (lrwxr-xr-x)"
+    },
+    {
+      "id": "C6",
+      "what": "independent two-artifact diff comprehensive (f596b7c6) -> rv001-fix (de8424ea) manifest entries",
+      "argv": ["python3 /tmp/opencode-rv001-diff.py (via rtk proxy sh -c)"],
+      "utc": "~15:20Z (approx)",
+      "exit": "0",
+      "result": "modified=4 added=0 removed=0 same=715 — exactly the 4 src/lib delta files, candidate sha256 equal to the delta file entries; corroborates the delta WITHOUT the author-declared pre-fix baseline"
+    },
+    {
+      "id": "C7",
+      "what": "delta candidate entries vs filesystem + candidate manifest; delta baseline entries vs f596b7c6 comprehensive manifest",
+      "argv": ["python3 /tmp/opencode-rv001-delta2.py (via rtk proxy sh -c)"],
+      "utc": "~15:22Z (approx)",
+      "exit": "0",
+      "result": "ALL DELTA CANDIDATE ENTRIES VALID: true (fs + manifest); all 4 delta baseline_sha256 equal the comprehensive manifest entries for the same paths (entry-level lineage proven while the whole-file baseline f9cbbdf4 stays unproven)"
+    },
+    {
+      "id": "C8",
+      "what": "identity probe",
+      "argv": ["rtk proxy opencode --version", "rtk proxy node --version"],
+      "utc": "~15:35Z (approx; local 22:35)",
+      "exit": "ok / ok",
+      "result": "OpenCode CLI v2.1.4; node v24.22.1"
+    },
+    {
+      "id": "C9",
+      "what": "personally-run focused deterministic unit tests — the five delta test files (author T-RED evidence cited, not re-run; red state cannot be reproduced without modifying source)",
+      "argv": ["rtk proxy pnpm exec vitest run src/lib/mc/paths.test.ts src/lib/oidc/flow.test.ts src/components/organisms/read-failure-callers.test.ts src/components/organisms/drafts.test.tsx src/test/data-transfer-seam.test.ts"],
+      "cwd": "apps/frontend",
+      "utc": "15:34:24Z start (observed local 22:34:24; 'Start at 22:34:24' in vitest output), duration 2.47s",
+      "exit": "0",
+      "result": "Test Files 5 passed (5); Tests 124 passed (124); vitest v5.0.5"
+    },
+    {
+      "id": "C10",
+      "what": "executed real paths.ts probe (keep-behavior + protocol-relative classes not in the test table)",
+      "argv": ["node --experimental-strip-types /private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/rv001-probe.mts (via rtk proxy sh -c; probe imports the real apps/frontend/src/lib/mc/paths.ts, no repo write)"],
+      "utc": "~15:35Z (approx)",
+      "exit": "0",
+      "result": "keep: /a//b => /a//b; /matters/1/work?execution=WAITING&q=spa unchanged; /a%2F%2Fb unchanged; /a/b/../c?x=1 => /a/c?x=1; /#x => '/'. fallback: /..//evil.test; /%2f/..//evil.test; /.%2E//evil.test; /x/../%2E%2e//evil.test; /a/../..//evil.test; /..//evil.test?a=1 all => /fallback; path-with-colon /evil.test:8080/x kept single-origin"
+    },
+    {
+      "id": "C11",
+      "what": "backend corroboration for CR-001 (dual 400 source) and CR-002 pins",
+      "argv": ["rtk proxy sed -n 130,160p apps/backend/internal/adapter/inbound/productapi/data_handlers.go", "rtk grep ErrSheetInvalid apps/backend (.go)", "rtk proxy sed -n 50,70p problems.go", "rtk proxy sed -n 55,75p intent-form.tsx", "rtk proxy grep -n newIdempotencyKey|useState proof/components/document-forms.tsx", "rtk proxy sed -n 40,107p pending-attempts.ts (via read)"],
+      "utc": "~15:30-15:37Z (approx)",
+      "exit": "ok (one fallback grep no-op excluded from evidence)",
+      "result": "dataops_service.go:443-466 maps byte-limit/decode/empty/missing-column/row-limit to port.ErrSheetInvalid; problems.go:60 maps it to urn:mc:bad-request; readSheetUpload (data_handlers.go) independently returns errBadRequest for malformed multipart, missing/duplicate file part, and part-open failure; intent-form.tsx:62 key useState + :69 frozen ref; document-forms.tsx:61 key useState (:83,130 re-mint intents); pending-attempts.ts:59-90: beginAttempt refuses mismatched identity/running/blocked, endAttempt without results leaves attempt retained-unresolved, revokeAttempts keeps a refusal marker only"
+    },
+    {
+      "id": "C12",
+      "what": "closing drift check (hashes, HEAD, status digest at close)",
+      "argv": ["rtk proxy sh -c 'date; date -u; git rev-parse HEAD; shasum -a 256 <9 pinned files>'", "git status --porcelain | sha256sum (cut)"],
+      "utc": "2026-10-28T15:36:39Z (observed)",
+      "exit": "ok",
+      "result": "all packet pins byte-identical to open (de8424ea…, 38e9eb4f…, 439529c3…, 1e014b66…, 8bcfbb5f…, f596b7c6…, f9734568…, 02498b27…, c822507c…); HEAD unchanged; porcelain digest at close dc0f69bee6b002bf — reviewer made no source/untracked-tree writes (outputs live only in the new review dir)"
+    },
+    {
+      "id": "C13",
+      "what": "manual caller census corroboration of read-failure-callers.test.ts",
+      "argv": ["grep '<ReadFailure' apps/frontend/src (tool) + manual count from returned lines"],
+      "utc": "~15:32Z (approx)",
+      "exit": "ok",
+      "result": "31 <ReadFailure call sites across 15 non-test .tsx files; exactly one partial (work/[itemId]/page.tsx:275 subject=\"proof\"); matches the executed test (C9)"
+    }
+  ],
+  "cited_not_rerun_from_author": [
+    "pnpm check 48 files / 482 tests exit 0 (G-CHECK)",
+    "pnpm build Next.js 16.4.2 Turbopack compiled exit 0 (G-BUILD)",
+    "T-RED 13 failed / 77 passed against the pre-fix source (cannot be reproduced without editing source; red→green lineage accepted on declared evidence; new keep cases were said to pass in red — consistent with fix design)"
+  ],
+  "personally_run": ["C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13 — all above"],
+  "not_run": ["backend gates", "Storybook/webpack build", "Playwright e2e/browser", "hosted IdP", "AC-137", "restore rehearsal", "Docker/PG", "full pnpm check/build (author cited; not re-run)"
+  ]
+}

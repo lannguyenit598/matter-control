@@ -1,0 +1,649 @@
+{
+  "task": "MC-002-INTA-STAGE5-INTAKE",
+  "actor": "Local Codex",
+  "base": "da7be11acfacb2c86e352d4dacce9df24b93320e",
+  "utc": "2026-10-26T00:26:27.574453+00:00",
+  "status": "STAGE5_OWNER_OUTAGE_EVIDENCE_VERIFIED_WAITING_CODEX_RECOVERY",
+  "checks": [
+    {
+      "name": "25exports exact raw bytecopies",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 00-driver-meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 01-state-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 02-go-log-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 03-go-log-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 04-next-stdout-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 05-state-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 06-state-delta.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 10-driver.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 10-driver.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash 12-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/checkpoints/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/checkpoints/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/checkpoints/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/envelopes/T11a.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/envelopes/T11b.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/envelopes/T11c.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/envelopes/W11.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/stages/stage5.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/substeps/T11a.status",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/substeps/T11b.status",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/substeps/T11c.status",
+      "result": "PASS"
+    },
+    {
+      "name": "ownerhash state-copy/substeps/W11.status",
+      "result": "PASS"
+    },
+    {
+      "name": "24unique payloadhashes no selfcycle",
+      "result": "PASS"
+    },
+    {
+      "name": "before42matches stage4 accepted hashes",
+      "result": "PASS"
+    },
+    {
+      "name": "42to51 precisely3modified9new",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger assertions/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger checkpoints/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger checkpoints/intamvnmoems3pd/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger checkpoints/intamvnmoems3pd/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger checkpoints/intamvnmoems3pd/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/INT-PERS-01.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/INT-PERS-02.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T10.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T11a.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T11b.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T11c.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T4.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T5.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T6-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T7-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T8.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/T9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/W1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/W11.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/W2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/W3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger envelopes/intamvnmoems3pd/W9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger stages/intamvnmoems3pd/stage1.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger stages/intamvnmoems3pd/stage2.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger stages/intamvnmoems3pd/stage3.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger stages/intamvnmoems3pd/stage4.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger stages/intamvnmoems3pd/stage5.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/INT-PERS-01.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/INT-PERS-02.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T10.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T11a.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T11b.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T11c.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T4.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T5.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T6-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T7-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T8.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/T9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/W1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/W11.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/W2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/W3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "live ledger substeps/intamvnmoems3pd/W9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "4singleoutage envelopes ids21to24",
+      "result": "PASS"
+    },
+    {
+      "name": "503HTTPERRORunavailable native problem retryAfter1",
+      "result": "PASS"
+    },
+    {
+      "name": "fourcompletepinnedruntimeenvelopes",
+      "result": "PASS"
+    },
+    {
+      "name": "W11 wire503problemjson requestecho noheaderassumption",
+      "result": "PASS"
+    },
+    {
+      "name": "client wire null",
+      "result": "PASS"
+    },
+    {
+      "name": "A checkpointsnotmodifiednotrecordreconciliation",
+      "result": "PASS"
+    },
+    {
+      "name": "Xunknown immutableintent unknown",
+      "result": "PASS"
+    },
+    {
+      "name": "stage5counter24 assertions20",
+      "result": "PASS"
+    },
+    {
+      "name": "onlymarkers1to5",
+      "result": "PASS"
+    },
+    {
+      "name": "stage4to5 logchain",
+      "result": "PASS"
+    },
+    {
+      "name": "exactly4newunique503refusedloglines",
+      "result": "PASS"
+    },
+    {
+      "name": "oneGoattempt mc-int-intamvnmoems3pd-T11a-21",
+      "result": "PASS"
+    },
+    {
+      "name": "oneGoattempt mc-int-intamvnmoems3pd-T11b-22",
+      "result": "PASS"
+    },
+    {
+      "name": "oneGoattempt mc-int-intamvnmoems3pd-T11c-23",
+      "result": "PASS"
+    },
+    {
+      "name": "oneGoattempt mc-int-intamvnmoems3pd-W11-24",
+      "result": "PASS"
+    },
+    {
+      "name": "zeroIDs in oldGo log",
+      "result": "PASS"
+    },
+    {
+      "name": "actualCodexPGstop precedesall4dispatches",
+      "result": "PASS"
+    },
+    {
+      "name": "Next cumulative log contains expected additional dispatch records; no independent immediate-before Next snapshot",
+      "result": "PASS",
+      "limit": "Exact four stage5 upstream attempts independently correlated using before/after Go snapshots. Cumulative Next log alone does not isolate a four-request window."
+    },
+    {
+      "name": "pinnedclean /tmp/mc002-inta-be",
+      "result": "PASS"
+    },
+    {
+      "name": "pinnedclean /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "pinnedclean /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "limitedhighsignalcredentialscan0",
+      "result": "PASS"
+    }
+  ],
+  "checks_passed": 101,
+  "cases": [
+    "T11a",
+    "T11b",
+    "T11c",
+    "W11"
+  ],
+  "after_state_hashes": {
+    "assertions/intamvnmoems3pd.json": "1fd83d2360b142aa47e41afb70ef36224156ca1ee5ee99b93692f5a8a16ad2e9",
+    "checkpoints/intamvnmoems3pd.json": "5d75c1bc79970e128e6c3e4206ae49b26aa911e0d489ba88e3ee21aabc046a48",
+    "checkpoints/intamvnmoems3pd/checkpointA.baseline.json": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15",
+    "checkpoints/intamvnmoems3pd/checkpointA.current.json": "8562b4189a6bc4a15efb119e19fc61836cba0f988fb7784ef80e01a04835f524",
+    "checkpoints/intamvnmoems3pd/state.json": "a18933af9b7cfd52b7a4da50111982f9d553b04db6ff73e4df6239c7b7c52e25",
+    "counters.json": "ab1c1039db1bc5f927fe91bb05802bcdc46a8a8fc81bcdfc30422cc8c3adce03",
+    "envelopes/intamvnmoems3pd/INT-PERS-01.json": "906b8c246dca4e5662505ba1632974335ffaef478847b935888bc9215712bb98",
+    "envelopes/intamvnmoems3pd/INT-PERS-02.json": "cf090a94c6512322b7a1847a551d24996eb187d741bea70804533c59e27cca72",
+    "envelopes/intamvnmoems3pd/T1.json": "aaf934463218948754e8e556d8aeee618484c672dbeda4bde37e2cc3202b3218",
+    "envelopes/intamvnmoems3pd/T10.json": "bb29da180b9218c543e9049ef60b6549cd47a9e40d925f7c6f9a66197272cb10",
+    "envelopes/intamvnmoems3pd/T11a.json": "6c4cf2b15bfa50262c4563061afb59c61b5576349ccb35ea35517ca41c21d05f",
+    "envelopes/intamvnmoems3pd/T11b.json": "655a53e56c8f4b6d32b8789cafd88d0129fbd25c4d170cb87cbd115bdd4d8fe6",
+    "envelopes/intamvnmoems3pd/T11c.json": "eb69a31ffa2875b3df53740b04f1e24a0eeef7728b15fbc3936314a95e314916",
+    "envelopes/intamvnmoems3pd/T2.json": "68c8fbd7f0b0bdb409eb28d6016c88f41a4c4b7ad6b9d70fc9b22446890ca898",
+    "envelopes/intamvnmoems3pd/T3.json": "7e22996435ccf690565f944b52b73f0af2ee5b65c06cd6664820ba6444e2594d",
+    "envelopes/intamvnmoems3pd/T4.json": "be2fe5066d083e9b0bcae8a362299f1acae0a3ce90f4244631831e94fbb99e2a",
+    "envelopes/intamvnmoems3pd/T5.json": "7e35bf0813f0d63871bfe3aa7483901b401cd8f83fa21b6465fd1ad4461bd59b",
+    "envelopes/intamvnmoems3pd/T6-W.json": "8b80fb6f572041284a65a637e352ba482c90a15d43650c212a1fbdda6abc0e9d",
+    "envelopes/intamvnmoems3pd/T7-W.json": "ecd791341928b2807fef37ad55cd10bc206a59a73f87f5189e5dfef1792f2a3b",
+    "envelopes/intamvnmoems3pd/T8.json": "d54b4f79cd1650b64cdf8fd075f79d41bd6ce94a3b5ece7c14a5ff76235e643e",
+    "envelopes/intamvnmoems3pd/T9.json": "7bfad3ec620a396ab9d7cf59966de1ebb7ed821ffda7c0ede6d1151bb70f373a",
+    "envelopes/intamvnmoems3pd/W1.json": "23e2d1b5441850fc7c7ecdaa351185b2d825dd8b2535be02aedfa0c7df7b3aad",
+    "envelopes/intamvnmoems3pd/W11.json": "ce54f40e27e1f3784b084b33ac787f476cba169ccc7294ec34095ef9810b3ae3",
+    "envelopes/intamvnmoems3pd/W2.json": "cc972e7c070073876bc01a4e358ceeb1a98778ae1f5140fcc5c98a13ec63455c",
+    "envelopes/intamvnmoems3pd/W3.json": "6d14bc0364b6a6c7c9c7d5d4fb1c51821c71c59614e4046613fe8684d9b13a26",
+    "envelopes/intamvnmoems3pd/W9.json": "4d6da318a96f96e780396d4baa900484921136716e8fcf619e775692291ef4e2",
+    "stages/intamvnmoems3pd/stage1.completed": "16c9513311fb4b1f118fe3fcb2848c6e007fe125ba12ae6cb3aad539891a534f",
+    "stages/intamvnmoems3pd/stage2.completed": "1e2786bc0a8b04609130cc3e8f33ef9b04e564145f6974067d605c515668daa7",
+    "stages/intamvnmoems3pd/stage3.completed": "4640ea64a2d73e2acfbb8de495b0c3d29a1da12a2885372f8f22cf8393195464",
+    "stages/intamvnmoems3pd/stage4.completed": "21c4923a746785de7b3d0e244fe019c5a229bcaf85a7632401ece3ee3d37a212",
+    "stages/intamvnmoems3pd/stage5.completed": "cb09b9e564ff77cde2bcf7257d11d2aec93c29cb49208607fd82dca8a56d5f2b",
+    "substeps/intamvnmoems3pd/INT-PERS-01.status": "715d2718c036e5fd8e09b61d9138e052bf8554d5a236e861c6df1afd1e2b01f7",
+    "substeps/intamvnmoems3pd/INT-PERS-02.status": "b257fb39f6ce0863b23dd8826fa09d04a8722d1c85edacf71381c517e26d47d6",
+    "substeps/intamvnmoems3pd/T1.status": "34c628e5338632bed18a846745bba82a47b28e54347737abf0332233ee1407af",
+    "substeps/intamvnmoems3pd/T10.status": "a2a375897c7d911a884a1cae3ba264714b5fa9fe605bf5a7787ce0a0eaf94c83",
+    "substeps/intamvnmoems3pd/T11a.status": "cff014887c803e1fbb6aa91331794c4e400480b46614f1a58ae13f4ccec66fd1",
+    "substeps/intamvnmoems3pd/T11b.status": "718e095dd476d8b22e85b179946ba1bf62494d2c6e1ddc0d6a9146666e815c83",
+    "substeps/intamvnmoems3pd/T11c.status": "fe27c0b65361c8cbebc7eceddb96fe1941747a57651bf58fabc86f1dd1900e0a",
+    "substeps/intamvnmoems3pd/T2.status": "8f570a3ee3f4e6be2577274c5828d11eedef996d4d3481dbb6f63c4476b26066",
+    "substeps/intamvnmoems3pd/T3.status": "a32ab55b05c99312fd9b60575d7a95d8e603258a4c0220770e53922da7f0ce22",
+    "substeps/intamvnmoems3pd/T4.status": "86dfae3a5974317e3383ab5db30f84a20eda956e537aa360bd8502f70fbaef03",
+    "substeps/intamvnmoems3pd/T5.status": "455ad1459e0d28c4cc3689f01191c580b2c5dcf4f86d7c3335fece6a46bdd0eb",
+    "substeps/intamvnmoems3pd/T6-W.status": "64b1a6ef7ff129596eb27dbd6ceec29d1569f425dd4b2e9d1e82a089dc09af20",
+    "substeps/intamvnmoems3pd/T7-W.status": "1553b56f8c3456191db3b1cea677c344a9d081b81dbe5af100eae5de15e032af",
+    "substeps/intamvnmoems3pd/T8.status": "e367de62c6e8cac7e0b78eeef72a0513f83907d2c92a507ce60ed12ef93b25fe",
+    "substeps/intamvnmoems3pd/T9.status": "06fd6b26ad9120136715f19d0be75dc776ef782b520f3d50073d9c2a82490974",
+    "substeps/intamvnmoems3pd/W1.status": "c264c0e470ce5b9e5544be8da985255bec447d07fb3412eecf7e44498bca3734",
+    "substeps/intamvnmoems3pd/W11.status": "682469e7d61eef54699340b334d39fe4ea447570fabe57ec3224aa1a7f762921",
+    "substeps/intamvnmoems3pd/W2.status": "84839bcc586f174d4f9ec503a43b4ec517c1acad5b0e5f74721a111a7777e91c",
+    "substeps/intamvnmoems3pd/W3.status": "38b4bb9bfd2e7b74f71d6e2c165958fe6ae0f33ca01c01c8cc2793cd23f7f197",
+    "substeps/intamvnmoems3pd/W9.status": "9005a6578beb3b4830ac03b7c92e23e8391d25b19c3b6fdd71eb032cf8e0f9ef"
+  },
+  "modified": [
+    "assertions/intamvnmoems3pd.json",
+    "checkpoints/intamvnmoems3pd/state.json",
+    "counters.json"
+  ],
+  "added": [
+    "envelopes/intamvnmoems3pd/T11a.json",
+    "envelopes/intamvnmoems3pd/T11b.json",
+    "envelopes/intamvnmoems3pd/T11c.json",
+    "envelopes/intamvnmoems3pd/W11.json",
+    "stages/intamvnmoems3pd/stage5.completed",
+    "substeps/intamvnmoems3pd/T11a.status",
+    "substeps/intamvnmoems3pd/T11b.status",
+    "substeps/intamvnmoems3pd/T11c.status",
+    "substeps/intamvnmoems3pd/W11.status"
+  ],
+  "report_sha256": "9c45fdc5a1e7b949cbc2158d268bc43f680d63e5743b8e6e9139250c785b9d8a",
+  "session_sha256": "eef2ee7e53bc977479a601282e5cc27865631d9c78441ca73fc291ffef565a7a",
+  "limited_secret_scan": {
+    "private_key": 0,
+    "credential_uri": 0,
+    "api_key": 0
+  },
+  "X": "OUTCOME_UNKNOWN_NO_RETRY_NO_LIST_NO_SQL",
+  "A": "Preoutagecheckpointv2unchanged; no503basedcommit/nochangeconclusion; real readback pendingstage6",
+  "causal_limit": "Actual Codex stop before dispatch plus recorded per-request connection refusals and owner before/after exited observations support request-time outage. No continuous independent lifecycle telemetry attestation or product recovery proof.",
+  "model_provider": "ZCodeGLM5.3/ZAIselfreport_notindependentattestation",
+  "independent_qa": "PENDING",
+  "no_codex_record_http_sql_driver_calls": true,
+  "inventory": [
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/06-state-delta.diff",
+      "bytes": 1631,
+      "sha256": "0b1941e76acb9c9a45a1aaff0e6d5d863f18d86ad4abf82843e0c437ecb3dd96"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/10-driver.stdout.log",
+      "bytes": 386,
+      "sha256": "0fd8c85888df787204be459b7af3d9b4afcb30dc14c63c37e35e3e6973ed4ab8"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/12-privacy-scan.txt",
+      "bytes": 1271,
+      "sha256": "be78ddbd583112d47bc6712c8e644a2ee8062a8c612e4a3758a0ba909892fd4c"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/05-state-after.sha256",
+      "bytes": 5333,
+      "sha256": "e05683f2660e2a25b0b14bf10478cf11ce5b9e0c8564b3d3ab1c6ca9e781cf44"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/02-go-log-before.log",
+      "bytes": 1880,
+      "sha256": "5c7261d814706b6e46d834ba7eae60157e7a48d4f205611540137e7d87f6645b"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/10-driver.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/00-driver-meta.txt",
+      "bytes": 576,
+      "sha256": "9457f906c0ae38e431715fae2aa9473b16b70d60f173e1eb049427a489c4bb9e"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/04-next-stdout-after.log",
+      "bytes": 1684,
+      "sha256": "51481b233ff143f47c35551c80a696f15a1b8474d7ce57b123a2d7c52a6fe1b4"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/30-hashes.txt",
+      "bytes": 2556,
+      "sha256": "5061649f5f6662be7eae00917d68ebca795fb9544b0332e0ec2be96287674096"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/03-go-log-after.log",
+      "bytes": 3855,
+      "sha256": "6c390029ff10b11bb29579a77595627589ea44ff8dea352800f4a047d28947eb"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/01-state-before.sha256",
+      "bytes": 4391,
+      "sha256": "3009e6549e2243d6a5813eae90066bead7b9e32036dfd2c11cd0ddfa31b0849e"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/intamvnmoems3pd.json",
+      "bytes": 3580,
+      "sha256": "1fd83d2360b142aa47e41afb70ef36224156ca1ee5ee99b93692f5a8a16ad2e9"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/counters.json",
+      "bytes": 27,
+      "sha256": "ab1c1039db1bc5f927fe91bb05802bcdc46a8a8fc81bcdfc30422cc8c3adce03"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/substeps/W11.status",
+      "bytes": 93,
+      "sha256": "682469e7d61eef54699340b334d39fe4ea447570fabe57ec3224aa1a7f762921"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/substeps/T11b.status",
+      "bytes": 94,
+      "sha256": "718e095dd476d8b22e85b179946ba1bf62494d2c6e1ddc0d6a9146666e815c83"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/substeps/T11a.status",
+      "bytes": 94,
+      "sha256": "cff014887c803e1fbb6aa91331794c4e400480b46614f1a58ae13f4ccec66fd1"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/substeps/T11c.status",
+      "bytes": 92,
+      "sha256": "fe27c0b65361c8cbebc7eceddb96fe1941747a57651bf58fabc86f1dd1900e0a"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/stages/stage5.completed",
+      "bytes": 64,
+      "sha256": "cb09b9e564ff77cde2bcf7257d11d2aec93c29cb49208607fd82dca8a56d5f2b"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/checkpoints/state.json",
+      "bytes": 206,
+      "sha256": "a18933af9b7cfd52b7a4da50111982f9d553b04db6ff73e4df6239c7b7c52e25"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/checkpoints/checkpointA.baseline.json",
+      "bytes": 238,
+      "sha256": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/checkpoints/checkpointA.current.json",
+      "bytes": 238,
+      "sha256": "8562b4189a6bc4a15efb119e19fc61836cba0f988fb7784ef80e01a04835f524"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/envelopes/T11a.json",
+      "bytes": 999,
+      "sha256": "6c4cf2b15bfa50262c4563061afb59c61b5576349ccb35ea35517ca41c21d05f"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/envelopes/W11.json",
+      "bytes": 1036,
+      "sha256": "ce54f40e27e1f3784b084b33ac787f476cba169ccc7294ec34095ef9810b3ae3"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/envelopes/T11c.json",
+      "bytes": 957,
+      "sha256": "eb69a31ffa2875b3df53740b04f1e24a0eeef7728b15fbc3936314a95e314916"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/state-copy/envelopes/T11b.json",
+      "bytes": 1000,
+      "sha256": "655a53e56c8f4b6d32b8789cafd88d0129fbd25c4d170cb87cbd115bdd4d8fe6"
+    },
+    {
+      "path": "docs/reviews/inta-frontend-runtime-stage5-return.md",
+      "bytes": 8485,
+      "sha256": "9c45fdc5a1e7b949cbc2158d268bc43f680d63e5743b8e6e9139250c785b9d8a"
+    }
+  ],
+  "codex_actual_recovery": {
+    "status": "SAME_PG_RECOVERED_HEALTHY_GO_NEXT_UNCHANGED_WAITING_STAGE6",
+    "raw": "/tmp/mc002-inta-evidence/environment/pg-recovery-intamvnmoems3pd-01",
+    "exports": "docs/testing/inta-returns/environment/pg-recovery-intamvnmoems3pd-01",
+    "started_utc": "2026-10-26T00:26:58.045564+00:00",
+    "ended_utc": "2026-10-26T00:27:00.681026+00:00",
+    "same_container": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+    "same_volume": "mc002-inta-data-intamvnmoems3pd",
+    "GoNext_unchanged": true,
+    "ledger51unchanged": true,
+    "no_record_http_sql": true,
+    "X": "OUTCOME_UNKNOWN_NOT_QUERIED",
+    "stage6": "NOT_DISPATCHED_NOT_EXECUTED"
+  }
+}

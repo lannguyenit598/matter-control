@@ -1,0 +1,455 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R4-SOURCE-REVIEW",
+  "reviewer": "Actual OpenCode (independent nonauthor; opencode CLI v2.1.4; model opencode/deepseek-v4.1-flash-free; provider opencode)",
+  "independence": "Nonauthor reviewer; did not author, edit, execute, or import the reviewed implementation; owner and Codex claims re-derived from source.",
+  "mode": "READ_HASH_STATIC_ONLY",
+  "runtime": "NOT_RUN",
+  "generated_utc": "2026-10-26T14:18:02.514878+00:00",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "branch": "codex/unified-project-flow",
+  "intake_pin_source": "docs/testing/inta-fe-validation-r4-intake/review-inputs.json",
+  "verification_summary": {
+    "direct_pins": {
+      "match": 18,
+      "total": 18
+    },
+    "r4_payload_pins": {
+      "match": 22,
+      "total": 22
+    },
+    "r3_payload_pins": {
+      "match": 20,
+      "total": 20
+    },
+    "mismatches": 0,
+    "needs_input_refresh_triggered": false,
+    "full_pin_verify_runs": [
+      {
+        "utc": "2026-10-26T10:10:18Z",
+        "label": "pre-write pass A",
+        "exit": 0,
+        "mismatches": 0
+      },
+      {
+        "utc": "2026-10-26T14:17:47Z",
+        "label": "post-write pass B",
+        "exit": 0,
+        "mismatches": 0
+      }
+    ]
+  },
+  "r4_manifest_verification": {
+    "manifest": "docs/testing/inta-returns/frontend/validation-r4-20261026/manifest.json",
+    "declared_payloads": 22,
+    "declared_total_payload_bytes": 285768,
+    "recomputed_payload_bytes_sum": 285768,
+    "mismatches": 0
+  },
+  "r3_manifest_verification": {
+    "manifest": "docs/testing/inta-returns/frontend/validation-r3-20261026/manifest.json",
+    "declared_payloads": 20,
+    "declared_total_payload_bytes": 225606,
+    "recomputed_payload_bytes_sum": 225606,
+    "mismatches": 0
+  },
+  "raw_export_equality": {
+    "raw_dir": "/tmp/mc002-inta-evidence/frontend/validation-r4-20261026",
+    "export_dir": "docs/testing/inta-returns/frontend/validation-r4-20261026",
+    "raw_files": 23,
+    "export_files": 23,
+    "diff_r_exit": 0,
+    "path_normalized_hash_mismatches": 0,
+    "note": "22 payloads + manifest.json in each tree"
+  },
+  "semantic_reconstruction": {
+    "utility": "patch -o on temporary copies (reviewer-owned text processing; no reviewed code imported/executed)",
+    "pairs": 7,
+    "result": "ALL_SEVEN_EXACT",
+    "detail": "Each reconstructed R4 file is byte-equal (SHA-256) to the exported R4 file."
+  },
+  "owner_outputs_corroborated_not_replayed": {
+    "selfcheck_records": 46,
+    "selfcheck_passed": 46,
+    "selfcheck_failed": 0,
+    "selfcheck_all_passed": true,
+    "launcher_mock": "13 PASS / 0 FAIL out of 13 cases",
+    "plan_variants": 25,
+    "node_env_production_present": true,
+    "note": "Read from retained JSON/stdout only; reviewer did not execute the suites."
+  },
+  "output_targets_absence_pre_write": {
+    "report_exists": false,
+    "qa_dir_exists": false,
+    "mode": "pre_write"
+  },
+  "pins": {
+    "direct": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb",
+        "bytes": 8886,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/reviews/inta-fe-validation-r4-antigravity-return.md",
+        "sha256": "c29936a5d1977e5e71eb054a9344356e0a447e32e1486a48c3ca30f89f598ecf",
+        "bytes": 19795,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/testing/inta-returns/frontend/validation-r4-20261026/manifest.json",
+        "sha256": "b594d5e348d90ef9b163769cceadec5fe451f5d3c82201b9028cff0821fa8f64",
+        "bytes": 3997,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/testing/inta-returns/frontend/validation-r3-20261026/manifest.json",
+        "sha256": "2709add9c0c1fd138968cb3c6ee7873a7eae9e0736bb8bb7f8c18d6703105d28",
+        "bytes": 3662,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/reviews/inta-opencode-fe-r3-source-review.md",
+        "sha256": "7eb30ed9450482c95d695bb18601c8bddad9d4b27bbb65032414f3be0e1d92c1",
+        "bytes": 41708,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/implementation/handoffs/MC-002-INTA-FE-VALIDATION-R4-ANTIGRAVITY-PROMPT.md",
+        "sha256": "a1d46fe42a8deb84e2c4055e15ae06225de45b349a6e29d988820b9ed9c68657",
+        "bytes": 11639,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/reviews/inta-fe-validation-r4-intake.md",
+        "sha256": "ab04641f0c0054e81311cd0b84e876053f6595ccbf9d03ae6076cbaa0640a08e",
+        "bytes": 5495,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/testing/inta-fe-validation-r4-intake/checks.json",
+        "sha256": "68310f05692b47f2abb9c63c27774b82d3d11774cdb7cdc327b2918dc4786945",
+        "bytes": 14830,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/testing/inta-fe-validation-r4-intake/source-observations.json",
+        "sha256": "c17808f3c2bb8e0b641778fc8cb09a9e18d6b8419598e88094e678fccfcf39f5",
+        "bytes": 3552,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/testing/inta-fe-validation-r4-intake/selfcheck-static-safety.json",
+        "sha256": "3e0331909da8c0ac558809e13165a945051742060b200ce030d55f6be9a92b97",
+        "bytes": 2136,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/implementation/handoffs/MC-002-INTA-OPENCODE-FE-R4-SOURCE-REVIEW-PROMPT.md",
+        "sha256": "c37f6560e9a6a68560f100cb66f20b4fea08ab4c5fdef027cb51182c6ac264cf",
+        "bytes": 8144,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/implementation/inta-launch-contract-addendum.md",
+        "sha256": "627f2b696ff946afc6bfec3e3f54dca3d1b1088c64aa0ecbe38cba95f3aa6c40",
+        "bytes": 4554,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/testing/inta-launch-approval-20261026/approval.json",
+        "sha256": "4c13d46dc4952bc6b4068788f178f65288106063a0aae810cc2b8a80e4860d77",
+        "bytes": 1155,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/implementation/inta-approved-contract.md",
+        "sha256": "6606a5da131567274f858b84a0c51ac66607a6c5a8eb12213ac7dcca585eb155",
+        "bytes": 16122,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/reviews/inta-codex-privacy-teardown-return.md",
+        "sha256": "f2829ec4bffedad3ebe2dbccde715f204cf9ccdf0aebbbbe72278eac78f007c5",
+        "bytes": 7975,
+        "status": "MATCH"
+      },
+      {
+        "path": "docs/reviews/inta-codex-privacy-supplement-return.md",
+        "sha256": "77b8226e6ce55f3c4a731025f06a5caa11e92dceabe84360f95896ee7f9943d6",
+        "bytes": 3028,
+        "status": "MATCH"
+      },
+      {
+        "path": "/tmp/mc002-inta-harness/src/guards.ts",
+        "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928",
+        "bytes": 3128,
+        "status": "MATCH"
+      },
+      {
+        "path": "tools/inta-harness/src/guards.ts",
+        "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928",
+        "bytes": 3128,
+        "status": "MATCH"
+      }
+    ],
+    "r4_payloads": [
+      {
+        "path": "credential-pattern-scan-r4.json",
+        "sha256": "365f7adb58077e06bffc16fe1bac7dfe8763579860f1c2386f4d4d3d6fadec15",
+        "bytes": 292,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/coordinator.diff",
+        "sha256": "d6b8a4f4d3ac10c937932b1fa5db6da7ff94585eb149ffdc174b3c1d73d0527c",
+        "bytes": 21017,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/guard-validator.diff",
+        "sha256": "f00f5f8b87321c63d6cf4bd52b38a02c6ae0b14d015e99995be99d25dc111810",
+        "bytes": 2072,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/guard_evaluator.diff",
+        "sha256": "2f5d261f218121e7af56477da039cc6fb145b215d094cd50f806876837a6ac82",
+        "bytes": 5608,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/harness-dev.diff",
+        "sha256": "95ee77d011a89939e0f1604bd9ff4ab10c738ece0d6261c49edef918b7912ad1",
+        "bytes": 6802,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/observer.diff",
+        "sha256": "03ed6c3f06d1cbc98d6e889449039e15cd42677f4d52aa9265da60b0cf0d04e9",
+        "bytes": 782,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/selfcheck.diff",
+        "sha256": "0841129ea898151bc1311186e0d7f9aeee54b4a2e4be96b96c0dc028ed07bdf9",
+        "bytes": 76678,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/test-launcher-mock.diff",
+        "sha256": "22d3cad1ac1b1387311bc2487a495fb92d4b3d96705b321f2f24dc9ddc50de6c",
+        "bytes": 12626,
+        "status": "MATCH"
+      },
+      {
+        "path": "launcher-mock.stdout.txt",
+        "sha256": "c50e33c66c3206a51ba3dc9dc65336d3fcea066a97fb47765d93e55c167b8a89",
+        "bytes": 2304,
+        "status": "MATCH"
+      },
+      {
+        "path": "launcher/harness-dev.mjs",
+        "sha256": "6d89694a2115aa28ce63f5e797de3e152f5033aaa50c30697fe9edaad5164e02",
+        "bytes": 7610,
+        "status": "MATCH"
+      },
+      {
+        "path": "launcher/test-launcher-mock.mjs",
+        "sha256": "4e734a19582c3bdca66aa561630d80e345f645f4d457a5493a24197e450f2408",
+        "bytes": 13011,
+        "status": "MATCH"
+      },
+      {
+        "path": "proposals/dependency-isolation-plan-r4.md",
+        "sha256": "ded266aef3243f3b4b1e76803a43b4a1c51ac5f7ca6978388f6179c66ac19a95",
+        "bytes": 4947,
+        "status": "MATCH"
+      },
+      {
+        "path": "proposals/fast-refusal-proof-basis-r4.md",
+        "sha256": "cb05e856f7f8872919c520ed1d9214d91fbb9257a747a89f22e9b15a97661f7d",
+        "bytes": 4195,
+        "status": "MATCH"
+      },
+      {
+        "path": "proposals/implementation-binding-record-r4.md",
+        "sha256": "62033f98acdf11fe33e360722e7d46f5b9567ae4c9989b72fc49712cc64dfee0",
+        "bytes": 5883,
+        "status": "MATCH"
+      },
+      {
+        "path": "r4-test-summary.json",
+        "sha256": "dea2233fdc4fbea56daffe84f49cffb35e3a0b3cd681efe692a14e1a7ee281ac",
+        "bytes": 3534,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/coordinator.py",
+        "sha256": "e77ff416beb12638119a23517f6d1bede567059a8ba0d967346161625b8f8caa",
+        "bytes": 25452,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/guard-validator-r4.sh",
+        "sha256": "e1c579ce75a5f4d06cf8418f6176141967f242d68eb51205d3ef40429bb2f404",
+        "bytes": 1610,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/guard_evaluator.py",
+        "sha256": "e6a54a786834ed69de78a7c30f2e5caed01721338600b224d9168c90c1de72f1",
+        "bytes": 9767,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/observer.py",
+        "sha256": "b5cef31ee33722ab585a393120a0a0cbe0517b2285e6b230205cf967da996c2c",
+        "bytes": 6283,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/selfcheck-r4-results.json",
+        "sha256": "0e917fa77b7f691160eb204b799e19d80735332ff2ed3571a15f1cf7786487ad",
+        "bytes": 18924,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/selfcheck-r4.py",
+        "sha256": "5d1811f3f077f7a9f43ea5f4a47b72453e39f94e991feed996fe7452f4a266c5",
+        "bytes": 50787,
+        "status": "MATCH"
+      },
+      {
+        "path": "selfcheck-r4.stdout.txt",
+        "sha256": "058ce49cab4c32da246bc96953492125ddd9f463f01f1d5b665e358a460c61c0",
+        "bytes": 5584,
+        "status": "MATCH"
+      }
+    ],
+    "r3_payloads": [
+      {
+        "path": "credential-pattern-scan-r3.json",
+        "sha256": "d01c4c50bfe699efe08c5296feac2e4a60b74aa6fb3c418e004665d4d4416025",
+        "bytes": 300,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/coordinator.diff",
+        "sha256": "39a194a5609c240954d861acc048232c9de7d7f2fd9dab8042f5b8fbaeb02fce",
+        "bytes": 29600,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/guard-validator.diff",
+        "sha256": "a14b49cde798377d5a3b3b1b00511b78a9709eeb2310aafabea963c4271a8588",
+        "bytes": 3343,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/guard_evaluator.diff",
+        "sha256": "3158d8b5e459cacfca5feb9ac1b8eaf3132a9ba7a7c01c56cc510b433c8ab056",
+        "bytes": 5136,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/harness-dev.diff",
+        "sha256": "42639202fc8d9c2eb7a5b40ffb32a9a4add98aee807cce03754bef4ccaa0bf0d",
+        "bytes": 6981,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/observer.diff",
+        "sha256": "986352a8aa055431f1859b4266e9ce03c3303952d5ab3f689ceb076600232d3b",
+        "bytes": 3372,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/selfcheck.diff",
+        "sha256": "a4e4a4b2cdaed2a5edcb4bca631dbd096fb46f2103030062877712e416119732",
+        "bytes": 41804,
+        "status": "MATCH"
+      },
+      {
+        "path": "diffs/test-launcher-mock.diff",
+        "sha256": "41fa4d3d9efe814079ac632a46d49443081861b97caf81ba964c394f711a664c",
+        "bytes": 9073,
+        "status": "MATCH"
+      },
+      {
+        "path": "launcher/harness-dev.mjs",
+        "sha256": "1294f5ca6530902456780052506de81dcbaddebb9e8349ffe9ef6e5a0a117acd",
+        "bytes": 5383,
+        "status": "MATCH"
+      },
+      {
+        "path": "launcher/test-launcher-mock.mjs",
+        "sha256": "e7e1505ea53a734824bacc1850da436d2860e92d52e51d99c9b840f33cd910c6",
+        "bytes": 10559,
+        "status": "MATCH"
+      },
+      {
+        "path": "proposals/dependency-isolation-plan-r3.md",
+        "sha256": "38010adc9ef25091994e83ccd56c668e0af607ae7e008bac3e79b26a5ba0f5a8",
+        "bytes": 4928,
+        "status": "MATCH"
+      },
+      {
+        "path": "proposals/pre-listen-launcher-proposal-r3.md",
+        "sha256": "e88b261fc253d3778744c608717223197773a3fd1698043f47b4ec7fb3201c57",
+        "bytes": 7315,
+        "status": "MATCH"
+      },
+      {
+        "path": "r3-test-summary.json",
+        "sha256": "6f981f638dc0db6fa16df9bcc373b9a30d4dc04124fd8971ed237182fbee9798",
+        "bytes": 2968,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/coordinator.py",
+        "sha256": "2d87675849cc62a62b39d09b744a4a9a396000a7800581d9f221beae03531029",
+        "bytes": 21513,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/guard-validator-r3.sh",
+        "sha256": "cd2b0dc9f715918e92e2f607c63180d56e59142e166c815ab4630a23ce28bc9a",
+        "bytes": 1683,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/guard_evaluator.py",
+        "sha256": "efb284aecb51e11f0bac794f06a15adad4350b073ccf17f24c2111e3701d3a8a",
+        "bytes": 8438,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/observer.py",
+        "sha256": "1560fd278042dd19b9ffc3cd6d60c24d7f23dc263214a1d0aa12dd8d54e523fd",
+        "bytes": 5885,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/selfcheck-r3-results.json",
+        "sha256": "48eb3f6367ed6f244a748443e1553797a57bfebb06d6538149a9ba6e194041d8",
+        "bytes": 22679,
+        "status": "MATCH"
+      },
+      {
+        "path": "runner/selfcheck-r3.py",
+        "sha256": "852453cd055387046860a8e25fdc24f17377aab219430d4bab6104141632b178",
+        "bytes": 30750,
+        "status": "MATCH"
+      },
+      {
+        "path": "selfcheck-r3.stdout.txt",
+        "sha256": "57de269f4a8cb23bcf260923738a96499f392fb4a0cc738d819adefb9c4d8a43",
+        "bytes": 3896,
+        "status": "MATCH"
+      }
+    ]
+  },
+  "path_note": "Direct paths are relative to repository root except the absolute frozen /tmp guard; r4_payloads/r3_payloads paths are relative to their manifest directories.",
+  "not_self_referencing_note": "This file records review input pins only and does not hash itself. The three output hashes/bytes are reported in the human completion message, not stored here."
+}

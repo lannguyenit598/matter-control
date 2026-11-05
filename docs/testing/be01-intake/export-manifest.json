@@ -1,0 +1,122 @@
+{
+  "task": "MC-BE-01 intake",
+  "utc": "2026-10-25T18:03:50.263276+00:00",
+  "governance_base": "cb3966538ca0aaace99f8a45008314430f02d981",
+  "backend_head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+  "files": [
+    {
+      "path": "docs/testing/be01-intake/owner-return.txt.gz",
+      "bytes": 7554,
+      "sha256": "64b67d61766382037e5266360baef8a7ff8165e9b133500428738491e5fbad74"
+    },
+    {
+      "path": "docs/testing/be01-intake/source-diff.patch.gz",
+      "bytes": 47018,
+      "sha256": "92b5236268bfaaa9ce471f0c2abe400f74f1d11db7f0fb4740c5224d00ccdea9"
+    },
+    {
+      "path": "docs/testing/be01-intake/source-manifest.json",
+      "bytes": 6810,
+      "sha256": "6834f1b9fae06bb28e13bdf9d48ae78d2a5d8e69dfde6e65d02343b80e14f5a5"
+    },
+    {
+      "path": "docs/testing/be01-intake/owner-domain-first-impl-run.log.gz",
+      "bytes": 1082,
+      "sha256": "0f8d846dec365a7b676de200df4bf42cc43af71b891a75e97c1091a24c2001d6"
+    },
+    {
+      "path": "docs/testing/be01-intake/owner-failing-before-domain-matter.log.gz",
+      "bytes": 303,
+      "sha256": "dab4fd07cc57967bef3392da788c6040d82a9d3f961fcdc2ac35170b5462d9d9"
+    },
+    {
+      "path": "docs/testing/be01-intake/owner-failing-before-service-stub.log.gz",
+      "bytes": 3177,
+      "sha256": "3e07b0e48c5e26abdf13deab9becb618945e5f645408ca3f9d3d8880a76257b5"
+    },
+    {
+      "path": "docs/testing/be01-intake/owner-race-full.json.gz",
+      "bytes": 24950,
+      "sha256": "86dc8a7b46e4785faef853a5fe6604627a7b6a3e618b69be1c7b5e0dccdf284d"
+    },
+    {
+      "path": "docs/testing/be01-intake/owner-race-full.stderr.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "docs/testing/be01-intake/owner-race-full.stdout.gz",
+      "bytes": 300,
+      "sha256": "db766fe26043fa3ac0b3a724e1beba655fd27e4155ba0564b25646405b8deee7"
+    },
+    {
+      "path": "docs/testing/be01-intake/probe-probe_test.go",
+      "bytes": 3676,
+      "sha256": "b7d8274ec1ddbc16decd7993e2d9304e769fdc7d03f7e0fbf381597b7707a89d"
+    },
+    {
+      "path": "docs/testing/be01-intake/probe-execution.json",
+      "bytes": 522,
+      "sha256": "c99f1481ca57b33b1b7858615ef740802b275a0f1f0deff90e1c5c2f7dbc0af0"
+    },
+    {
+      "path": "docs/testing/be01-intake/probe-stdout.jsonl",
+      "bytes": 4376,
+      "sha256": "473d9763f633567aa4499472ade0a4722611ff45ada860772fdaf379d9d0b854"
+    },
+    {
+      "path": "docs/testing/be01-intake/probe-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/testing/be01-intake/probe-fixture-inspection.json",
+      "bytes": 3318,
+      "sha256": "ae75360bc302fff328f32f9653ca4c47b2cfa2bc8f79a0644c675c12986390ee"
+    },
+    {
+      "path": "docs/testing/be01-intake/probe-overlay.json",
+      "bytes": 181,
+      "sha256": "e14ea9a29ac4281a41341698320e7271efd395082482f097dd0bdec63ba0bb9a"
+    },
+    {
+      "path": "docs/testing/be01-intake/test-inventory.json",
+      "bytes": 2808,
+      "sha256": "5577506af8ea082099ffeb5238d999aaa3ac9a135a44603cfe1c91a34678cd1e"
+    },
+    {
+      "path": "docs/testing/be01-intake/intake.json",
+      "bytes": 9306,
+      "sha256": "547dc723ee784f2dc84477286add625b3e346d2283717644732edcd1f8a1a728"
+    },
+    {
+      "path": "docs/testing/be01-intake/findings.json",
+      "bytes": 4151,
+      "sha256": "3f01583cc1a56c368f932532c1f4e1911c953836035265c863c0da511a800ae1"
+    },
+    {
+      "path": "docs/testing/be01-intake/intake.md",
+      "bytes": 4122,
+      "sha256": "0d119cd40351931d3c2858a4837cf00021ed554c7802e62649b8175685591cbd"
+    },
+    {
+      "path": "docs/testing/be01-intake/MC-BE-01-ZCODE-REWORK-PROMPT.md",
+      "bytes": 4741,
+      "sha256": "60f9b8a4abfcf8e9d0d23f807f4209ec64ad0dcdcafd0340c2b5fe43f26351fb"
+    },
+    {
+      "path": "docs/reviews/be01-intake.md",
+      "bytes": 1724,
+      "sha256": "595c60a0f359beb577511f33699c31d92026208888ea983ed4835b8245915279"
+    }
+  ],
+  "scope": "Lossless owner return/testlogs/diff plus independently written probes, metadata/findings/rework handoff; excludes mutable task/dashboard to prevent future hash drift",
+  "secrets_scan": {
+    "selected_files": 24,
+    "exact_knowncredential_matches": 0,
+    "values_emitted": false
+  },
+  "self_hash_excluded": true,
+  "provider_invocation": false,
+  "status": "REWORK_REQUIRED; formalindependentreviewpending"
+}

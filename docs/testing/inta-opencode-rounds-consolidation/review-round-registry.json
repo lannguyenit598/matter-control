@@ -1,0 +1,95 @@
+{
+  "task": "MC-002-INTA-QA-CLOSEOUT-R1",
+  "final_outputs_manifest": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/closeout-review-r1/outputs-manifest.json",
+    "bytes": 11916,
+    "sha256": "3a74ebf262663f1e7b94659182dbd5be32f36095b4a31b498f27ea6879f0d2d6"
+  },
+  "human_forwarded_adjudication": "Round1originalsession+round2lateral legitimateperPOrecord; no duplicateinvocationbyCodex",
+  "rounds": [
+    {
+      "id": "review-round-01-original-session",
+      "reviewer": "Actual OpenCode humanreturned",
+      "reported_model": "GLM-5.3-Flash Free",
+      "reported_provider": "opencode",
+      "cli_version": "NOT_RECORDED",
+      "report": {
+        "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/reviews/inta-opencode-closeout-review-r1-original-session.md",
+        "bytes": 22245,
+        "sha256": "dcc0c5bb736b35ca7f7ec6f950bdfeeec377dc39a6f363d27e8dc0763f7874da"
+      },
+      "outputs": [
+        {
+          "path": "docs/testing/inta-returns/qa/closeout-review-r1/review-inputs-addendum.json",
+          "sha256": "f9b11d3d2726154a9121164a6200af4020978e9690a1def67795a8687b6aa78f",
+          "bytes": 7887,
+          "mtime_utc": "2026-10-26T06:29:54Z*",
+          "note": "frozen byte-exact despite disclosed defects (CORR-01/CORR-02 below + already in-file corrected future-invalid pin stamp) so the lateral attempt's audit description of its state remains valid"
+        },
+        {
+          "path": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+          "sha256": "c467e064333e57ad10d87ab3f4870e2b75f4936671256095081537c83b6a590d",
+          "bytes": 68383,
+          "mtime_utc": "2026-10-26T06:53:15Z",
+          "note": "36-row per-row machine coverage; verdicts 33 PARTIAL / 3 INSUFFICIENT_EVIDENCE / 0 SUPPORTED / 0 FAIL"
+        },
+        {
+          "path": "docs/testing/inta-returns/qa/closeout-review-r1/verification-log.json",
+          "sha256": "3979b23d7ce059c1f569b3e324587aabfda8f040630b66a5de44c354b5d3e2e3",
+          "bytes": 16767,
+          "mtime_utc": "2026-10-26T06:55:00Z",
+          "note": "S0..S12 step log (13 steps); final content predates lateral-set discovery, discovery is recorded here"
+        },
+        {
+          "path": "docs/reviews/inta-opencode-closeout-review-r1-original-session.md",
+          "sha256": "dcc0c5bb736b35ca7f7ec6f950bdfeeec377dc39a6f363d27e8dc0763f7874da",
+          "bytes": 22245,
+          "mtime_utc": "2026-10-26T07:05:02Z",
+          "note": "this session's final review narrative under a non-colliding filename; originally reserved filename was occupied by the lateral set (see collision)"
+        }
+      ]
+    },
+    {
+      "id": "review-round-02-lateral-addendum",
+      "reviewer": "Actual OpenCode humanreturned, PO-confirmed session",
+      "reported_model": "NOT_RECORDED",
+      "reported_provider": "NOT_RECORDED",
+      "cli_version": "NOT_RECORDED",
+      "report": {
+        "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/reviews/inta-opencode-closeout-review-r1.md",
+        "bytes": 18228,
+        "sha256": "11d7994b1625f2fca262bc9e725c4ec56f9847d14be37d890f5fb902e9cb6ee5"
+      },
+      "outputs": [
+        {
+          "path": "docs/reviews/inta-opencode-closeout-review-r1.md",
+          "sha256": "11d7994b1625f2fca262bc9e725c4ec56f9847d14be37d890f5fb902e9cb6ee5",
+          "bytes": 18228,
+          "mtime_utc": "2026-10-26T06:54:22Z"
+        },
+        {
+          "path": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/inputs-pinned.json",
+          "sha256": "cb20fd2780386e1d19f411c44a23bed2a3251cb70fd411b7c403076da262dcda",
+          "bytes": 8846,
+          "mtime_utc": "2026-10-26T06:49:52Z"
+        },
+        {
+          "path": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/checks-log.json",
+          "sha256": "fc6bdb4e14db7d4a7dd83a72f19f2a18ada5d17f91968b5300b449ef0844ca9e",
+          "bytes": 8101,
+          "mtime_utc": "2026-10-26T06:50:55Z"
+        },
+        {
+          "path": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+          "sha256": "7632d7933833cc144caeedb4c98f61586621e925d1763b9af4b4617c9c83fcf8",
+          "bytes": 17846,
+          "mtime_utc": "2026-10-26T06:53:11Z",
+          "internal_utc": "2026-10-26T06:51:26Z"
+        }
+      ]
+    }
+  ],
+  "status": "REVIEW_ROUNDS_RETURNED / TECHNICAL_CHANGES_REQUIRED / LAUNCH_SCOPE_DECISION_PENDING",
+  "external_invocation_this_intake": false,
+  "future_namespace_rule": "Oneowner/pernewroundoutputdirectory; newuniqueattemptsuffix; no simultaneousreservationofsamefilename. Do notrenamemoveoroverwritecurrentevidence."
+}

@@ -1,0 +1,179 @@
+{
+  "task": "MC-BE02-N1-CONTRACT-REVIEW-R1",
+  "deliverable": "checks-log (chronological verification log)",
+  "reviewer": {
+    "identity": "OpenCode (agent harness)",
+    "model": "GLM-5.3-Flash Free",
+    "provider": "opencode",
+    "role": "independent nonauthor reviewer"
+  },
+  "environment": {
+    "os": "darwin (macOS)",
+    "shell_proxy": "rtk 1.0.1",
+    "python": "3.14.4",
+    "semble": "/Users/nguyenvanlan/.local/bin/semble"
+  },
+  "mode": "READ_HASH_STATIC_ONLY (no execution of reviewed code; no runtime/HTTP/SQL/DB/Git mutation)",
+  "checks": [
+    {
+      "seq": 1,
+      "at_utc": "2026-10-26T10:12:57Z (approx., session start of task execution)",
+      "check": "environment verify",
+      "tool": "rtk git rev-parse HEAD / rtk git branch --show-current / pwd",
+      "result": "pass",
+      "evidence": "root /Users/nguyenvanlan/Documents/code/pet-projects/matter-control; branch codex/unified-project-flow; HEAD a62d838791ba188838c4ff00b7b6e265ac775056"
+    },
+    {
+      "seq": 2,
+      "at_utc": "2026-10-26T10:12:57Z (approx.)",
+      "check": "output-path absence check (collision gate)",
+      "tool": "glob over docs/reviews/be02-n1-opencode-contract-review-r1.md and docs/testing/be02-n1-contract-review-r1/**",
+      "result": "pass",
+      "evidence": "all three output paths absent before any write; no collision"
+    },
+    {
+      "seq": 3,
+      "at_utc": "2026-10-26T10:12:57Z (approx.)",
+      "check": "RTK rule and Semble availability",
+      "tool": "rtk --version; ls ~/.local/bin/semble",
+      "result": "pass",
+      "evidence": "rtk 1.0.1 present; Semble present; semantic search run with args --content docs config all -k 8 before code exploration"
+    },
+    {
+      "seq": 4,
+      "at_utc": "2026-10-26T10:12:57Z",
+      "check": "pin verification pass 1 (pre-review)",
+      "tool": "python3 /private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/be02-n1-hashcheck.py (personal read-only utility)",
+      "result": "pass",
+      "evidence": "28 direct + 9 correction-manifest + 11 N1 output-manifest payloads: expected sha256 and byte length matched for every entry; overall_all_match true"
+    },
+    {
+      "seq": 5,
+      "at_utc": "2026-10-26 (after pass 1, before analysis)",
+      "check": "read all pinned inputs (read-only)",
+      "tool": "read/grep + rtk gzip -dc (owner-return.txt.gz decompressed to stdout only)",
+      "result": "pass",
+      "evidence": "all 28 direct inputs, 9 correction-manifest payloads, 11 N1 output-manifest payloads read in full; no input file modified"
+    },
+    {
+      "seq": 6,
+      "at_utc": "2026-10-26 (during analysis)",
+      "check": "static N1 self-consistency recomputation (no execution of reference_check.py)",
+      "tool": "python3 - (inline static recomputation of recorded check structure and hashes)",
+      "result": "pass",
+      "evidence": "79/79 author checks pass statically; section counts 26+15+16+5+3+14=79; example_tuple_sha256 recomputed 1b29a47c57146de490b71702c214addfe10631977e71204ffd758c8d1790f08a matches recorded value; R02 left hash equals baseline"
+    },
+    {
+      "seq": 7,
+      "at_utc": "2026-10-26 (during analysis)",
+      "check": "cross-consistency analysis PF03/N1 vs API/Filing/BE01 native facts",
+      "tool": "targeted grep/read of pinned documents and four pinned BE01 source files",
+      "result": "pass",
+      "evidence": "product precedence chain (media admission, 401, scope auth, replay, schema 422, preconditions, existence/guards) internally consistent; exact conflicts recorded in review doc sections 3.1-3.5 and 4 (C-A..C-E); NEEDS_SOURCE items identified without traversing unpinned trees"
+    },
+    {
+      "seq": 8,
+      "at_utc": "2026-10-26T10:13-10:15Z (approx., after analysis)",
+      "check": "pin verification pass 2 (post-review)",
+      "tool": "python3 be02-n1-hashcheck.py",
+      "result": "pass",
+      "evidence": "all 48 payloads matched again; overall_all_match true"
+    },
+    {
+      "seq": 9,
+      "at_utc": "2026-10-26T10:15:14Z",
+      "check": "environment re-verify (pre-write)",
+      "tool": "rtk git rev-parse HEAD / rtk git branch --show-current / glob output paths",
+      "result": "pass",
+      "evidence": "HEAD unchanged a62d838791ba188838c4ff00b7b6e265ac775056; branch unchanged; all three output paths still absent"
+    },
+    {
+      "seq": 10,
+      "at_utc": "2026-10-26T10:15:14Z+ (date captured immediately before run)",
+      "check": "pin verification pass 3 (pre-write)",
+      "tool": "python3 be02-n1-hashcheck.py (exit code 0)",
+      "result": "pass",
+      "evidence": "28 direct + 9 + 11 payloads all match; overall_all_match true; full report at /private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/be02-n1-pass3.json"
+    },
+    {
+      "seq": 11,
+      "at_utc": "2026-10-26T10:15:14Z",
+      "check": "master manifest sha256 recheck",
+      "tool": "rtk shasum -a 256 docs/testing/parallel-work-20261026/be02-n1-inputs.json",
+      "result": "pass",
+      "evidence": "6dd66a3768edd11d245826587fc77715ee72160338b0462452005b46a8f14d99"
+    },
+    {
+      "seq": 12,
+      "at_utc": "2026-10-26T14:20:10Z (after multi-hour session interruption)",
+      "check": "exact-quote verification greps for adoption-correction items",
+      "tool": "grep/read of pinned files",
+      "result": "pass",
+      "evidence": "PF01 14-field whitelist at be02-codex-correction-return.md:11 (ownerActorID spelling + 'contract decision' note); BE02§4 tuple expectedRevisions:{} at backend-http-preparation.md:55; API operations row api-contracts.md:15, Provenance row :16, catalogue 400 /problems/malformed row :26; filing-model.md read in full (reopen If-Match :60, no-auto-complete :67); candidate-supplement.json L5 ADEQUATE_WITH_N1_LIMITATION_DOCUMENT_ONLY at :81"
+    },
+    {
+      "seq": 13,
+      "at_utc": "2026-10-26T14:20:10Z",
+      "check": "write output 1: review-inputs.json",
+      "tool": "write",
+      "result": "done",
+      "evidence": "docs/testing/be02-n1-contract-review-r1/review-inputs.json"
+    },
+    {
+      "seq": 14,
+      "at_utc": "2026-10-26T14:20:10Z",
+      "check": "write output 2: review document",
+      "tool": "write",
+      "result": "done",
+      "evidence": "docs/reviews/be02-n1-opencode-contract-review-r1.md"
+    },
+    {
+      "seq": 15,
+      "at_utc": "2026-10-26T14:20:10Z",
+      "check": "hash written outputs 1-2 (post-write)",
+      "tool": "rtk shasum -a 256; rtk wc -c",
+      "result": "recorded",
+      "evidence": "review-inputs.json sha256 f3783d96d235dba13c0bce48526bc295e6e7c818e146f6c0846bfb03fc124ad0, 15171 bytes; review doc sha256 3f0f8cb79cdd815822c0e4c1636696989bb4af3a6cfdc1a08abffa15112553da, 29144 bytes"
+    },
+    {
+      "seq": 16,
+      "at_utc": "2026-10-26T14:20:10Z",
+      "check": "write output 3: checks-log.json (this file)",
+      "tool": "write",
+      "result": "done",
+      "evidence": "docs/testing/be02-n1-contract-review-r1/checks-log.json; this file's own sha256 is excluded here by convention and reported in the chat completion report"
+    },
+    {
+      "seq": 17,
+      "at_utc": "2026-10-26T14:20:10Z",
+      "check": "hash checks-log.json (final)",
+      "tool": "rtk shasum -a 256",
+      "result": "recorded_in_chat",
+      "evidence": "hash reported in the final chat completion report only, to keep this file's digest out of its own content"
+    }
+  ],
+  "inputs_hash_summary": {
+    "master_manifest": "6dd66a3768edd11d245826587fc77715ee72160338b0462452005b46a8f14d99",
+    "verification_passes_total": 3,
+    "passes_all_match": true,
+    "per_payload_hashes": "see docs/testing/be02-n1-contract-review-r1/review-inputs.json"
+  },
+  "outputs": [
+    {
+      "path": "docs/reviews/be02-n1-opencode-contract-review-r1.md",
+      "sha256": "3f0f8cb79cdd815822c0e4c1636696989bb4af3a6cfdc1a08abffa15112553da",
+      "bytes": 29144
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r1/review-inputs.json",
+      "sha256": "f3783d96d235dba13c0bce48526bc295e6e7c818e146f6c0846bfb03fc124ad0",
+      "bytes": 15171
+    },
+    {
+      "path": "docs/testing/be02-n1-contract-review-r1/checks-log.json",
+      "sha256": "(self-hash excluded from this file; reported in chat)",
+      "bytes": null
+    }
+  ],
+  "input_refresh_conclusion": "No pin mismatch at any pass; NEEDS_INPUT_REFRESH never triggered; all inputs read-only throughout."
+}

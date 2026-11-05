@@ -1,0 +1,43 @@
+{
+  "utc": "2026-10-26T00:43:17.585159+00:00",
+  "route": "official exec_command require_escalated after sandbox read denial",
+  "scope": "read-only ps and selected Docker inspect; no Config.Env, lifecycle or network requests",
+  "results": [
+    {
+      "argv": [
+        "ps",
+        "-p",
+        "98134",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ps",
+        "-p",
+        "88444,88453",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "exit": 0,
+      "stdout": "88444 Mon Oct 26 00:35:21 2026     node /private/tmp/mc002-inta-fe/node_modules/.bin/../.pnpm/next@16.4.2_@babel+core@7.29.7_supports-color@7.2.0__@playwright+test@1.64.1_@types+nod_a0a892e05fdbcbd9f6d2ff0a183f1dd0/node_modules/next/dist/bin/next dev -H 127.0.0.1 -p 18085 --webpack\n88453 Mon Oct 26 00:35:21 2026     next-server (v16.4.2) \n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .State.Status}} {{json .State.Health.Status}} {{json .State.StartedAt}} {{json .Mounts}} {{json .HostConfig.PortBindings}} {{json .HostConfig.Memory}} {{json .HostConfig.NanoCpus}} {{json .HostConfig.PidsLimit}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "exit": 0,
+      "stdout": "\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\" \"running\" \"healthy\" \"2026-10-26T00:26:58.345144717Z\" [{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}] {\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]} 536870912 1000000000 128\n",
+      "stderr": ""
+    }
+  ]
+}

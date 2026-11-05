@@ -1,0 +1,32 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+$ eslint .
+$ prettier --check .
+$ vitest run
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/organisms/drafts.test.tsx > form drafts > discarding an unconfirmed request drops the draft with it
+AssertionError: expected { title: 'unconfirmed', outcome: '' } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "outcome": "",
+  "title": "unconfirmed",
+}
+
+ ❯ src/components/organisms/drafts.test.tsx:146:56
+    144|     fireEvent.click(screen.getByRole('button', { name: 'Save' }))
+    145|     fireEvent.click(await screen.findByRole('button', { name: /Discard…
+    146|     expect(loadDraft('sess-a', 'matter:1:new-action')).toBeNull()
+       |                                                        ^
+    147|   })
+    148|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

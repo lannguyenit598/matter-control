@@ -1,0 +1,57 @@
+{
+  "session_id": "ses_e9114481effeDYZmLbn3RdX2lJ",
+  "exit": 1,
+  "start_utc": "2026-10-24T17:18:23.783646+00:00",
+  "end_utc": "2026-10-24T17:19:32.859514+00:00",
+  "elapsed_seconds": 69.07569983300345,
+  "outcome": "FAILED / NO_REVIEW_RETURN",
+  "reason": "length then compaction.failed: Compaction summary reached output token limit",
+  "packet": "opencode-input-manifest.json",
+  "raw_events": [
+    {
+      "type": "step_start",
+      "timestamp": 1792862318330,
+      "sessionID": "ses_e9114481effeDYZmLbn3RdX2lJ",
+      "part": {
+        "id": "prt_16eebeefa001DnMEeO7OSddU3B",
+        "sessionID": "ses_e9114481effeDYZmLbn3RdX2lJ",
+        "messageID": "msg_16eebc972001TdTDjkT3mik5Lq",
+        "type": "step-start",
+        "snapshot": "bdcecfc7c86ae1e28123476856c58cf57b37dcd0"
+      }
+    },
+    {
+      "type": "step_finish",
+      "timestamp": 1792862334792,
+      "sessionID": "ses_e9114481effeDYZmLbn3RdX2lJ",
+      "part": {
+        "id": "prt_16eec2f48001C1rE5YqCgIIa4T",
+        "sessionID": "ses_e9114481effeDYZmLbn3RdX2lJ",
+        "messageID": "msg_16eebc972001TdTDjkT3mik5Lq",
+        "type": "step-finish",
+        "reason": "length",
+        "snapshot": "bdcecfc7c86ae1e28123476856c58cf57b37dcd0",
+        "cost": 0,
+        "tokens": {
+          "input": 216811,
+          "output": 0,
+          "reasoning": 1024,
+          "cache": {
+            "read": 4352,
+            "write": 0
+          }
+        }
+      }
+    },
+    {
+      "type": "error",
+      "timestamp": 1792862372778,
+      "sessionID": "ses_e9114481effeDYZmLbn3RdX2lJ",
+      "error": {
+        "type": "compaction.failed",
+        "message": "Compaction summary reached the output token limit"
+      }
+    }
+  ],
+  "runtime_replay": false
+}

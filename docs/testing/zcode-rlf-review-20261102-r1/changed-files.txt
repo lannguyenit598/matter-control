@@ -1,0 +1,74 @@
+7bf198c103476f490ebbdf58b1bd563d0bba8a61
+--- changed vs base (tracked):
+apps/backend/internal/adapter/inbound/productapi/server.go
+apps/backend/internal/adapter/inbound/productapi/server_test.go
+apps/backend/internal/adapter/inbound/productapi/work_handlers.go
+apps/backend/internal/adapter/inbound/productapi/work_server_test.go
+apps/backend/internal/adapter/outbound/postgres/matter_test.go
+apps/backend/internal/adapter/outbound/postgres/mcsqlc/models.go
+apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_memory_test.go
+apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory.go
+apps/backend/internal/app/product.go
+apps/backend/internal/app/product_readiness_test.go
+apps/backend/internal/core/port/work.go
+apps/backend/internal/core/service/work_service.go
+apps/frontend/.prettierignore
+apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx
+apps/frontend/src/app/(app)/matters/[matterId]/work/page.tsx
+apps/frontend/src/app/(app)/workspaces/[workspaceId]/page.tsx
+apps/frontend/src/config/navigation.tsx
+apps/frontend/src/features/filings/components/filing-forms.tsx
+apps/frontend/src/features/filings/components/filing-ui.test.tsx
+apps/frontend/src/features/work/actions.ts
+apps/frontend/src/features/work/agenda.ts
+apps/frontend/src/features/work/components/agenda-view.tsx
+apps/frontend/src/features/work/components/work-now.test.tsx
+apps/frontend/src/features/work/components/work-now.tsx
+apps/frontend/src/features/work/repository.ts
+apps/frontend/src/features/work/schemas.ts
+ops/adr006/db/b1-roles.sql
+--- untracked (non-docs):
+?? apps/backend/internal/adapter/inbound/productapi/intake_guidance_handlers.go
+?? apps/backend/internal/adapter/inbound/productapi/playbook_handlers.go
+?? apps/backend/internal/adapter/inbound/productapi/savedview_handlers.go
+?? apps/backend/internal/adapter/outbound/postgres/intake_guidance_store.go
+?? apps/backend/internal/adapter/outbound/postgres/mcsqlc/intake_guidance.sql.go
+?? apps/backend/internal/adapter/outbound/postgres/mcsqlc/playbooks.sql.go
+?? apps/backend/internal/adapter/outbound/postgres/mcsqlc/saved_views.sql.go
+?? apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0013_saved_views.sql
+?? apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0014_playbooks.sql
+?? apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0015_intake.sql
+?? apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0016_guidance.sql
+?? apps/backend/internal/adapter/outbound/postgres/playbook_store.go
+?? apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/intake_guidance.sql
+?? apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/playbooks.sql
+?? apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/saved_views.sql
+?? apps/backend/internal/adapter/outbound/postgres/savedview_store.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_agenda.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_intake_guidance.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_playbook.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_savedview.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_intake_guidance.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_playbook.go
+?? apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory_savedview.go
+?? apps/backend/internal/core/domain/matter/agenda.go
+?? apps/backend/internal/core/domain/matter/intake_guidance.go
+?? apps/backend/internal/core/domain/matter/playbook.go
+?? apps/backend/internal/core/domain/matter/savedview.go
+?? apps/backend/internal/core/port/intake_guidance.go
+?? apps/backend/internal/core/port/playbook.go
+?? apps/backend/internal/core/port/savedview.go
+?? apps/backend/internal/core/service/intake_guidance_service.go
+?? apps/backend/internal/core/service/playbook_service.go
+?? apps/backend/internal/core/service/savedview_service.go
+?? apps/frontend/src/app/(app)/agenda/
+?? apps/frontend/src/features/guidance/
+?? apps/frontend/src/features/intake/
+?? apps/frontend/src/features/playbooks/
+?? apps/frontend/src/features/work/components/saved-views.tsx
+?? apps/frontend/src/features/work/components/work-context.test.tsx
+?? apps/frontend/src/features/work/components/work-context.tsx
+?? apps/frontend/src/features/work/my-agenda.test.ts
+?? apps/frontend/src/features/work/my-agenda.ts
+?? apps/frontend/src/features/work/saved-views.test.ts
+?? apps/frontend/src/features/work/saved-views.ts

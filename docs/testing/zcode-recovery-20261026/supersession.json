@@ -1,0 +1,26 @@
+{
+  "authority": "Direct PO subscription-recovery instruction",
+  "current_execution_owner": "Local Codex",
+  "old_prompts_retained_unchanged": [
+    {
+      "path": "docs/implementation/handoffs/MC-002-INTA-CLOSEOUT-READINESS-PROMPT.md",
+      "sha256": "1b81a58accd6fa995f9dcb0496604b271554104575c0849ca168e22e6c975b5e"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-BE-02-PREFLIGHT-CORRECTION-ZCODE-PROMPT.md",
+      "sha256": "776531ae004393cb248cf48c4974a7b82bd5d696b7e76c329ec7f6453e50fa29"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-BE-01-R1-COMMIT-ZCODE-PROMPT.md",
+      "sha256": "e50f74d1044b5663b46e53fd9c6d302aeac5513b8931d3d8a6bfebb10fae6249"
+    }
+  ],
+  "current_dispositions": {
+    "INTA_closeout": "Codex read-only readiness return delivered; live tasks held for Next drift reconciliation",
+    "BE02_correction": "Codex PF01..04 supplied, no new ZCode return needed",
+    "BE01_commit": "Codex owns future permitted completion, commit remains MimosaBLOCKED; do not retry or evade",
+    "F10_N1": "Already completed Codex technical recommendation; adoption/independent acceptance pending"
+  },
+  "past_ZCode_authorship_preserved": true,
+  "billing_status_source": "Direct human statement; no billing/auth probe"
+}

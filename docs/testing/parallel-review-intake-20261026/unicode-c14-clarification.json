@@ -1,0 +1,44 @@
+{
+  "actor": "Local Codex factual byte/code-point clarification, not independent contract adoption",
+  "utc": "2026-10-26T14:34:21.891531+00:00",
+  "source_vector_path": "docs/design/step-03a/handoff/step-03a-8a/codex-n1-canonical-body-r1/vectors.json",
+  "source_sha256": "1277c5e02f6d5d6e5ddb1f8531c3128bda36b8238092940b7cef27d61d0e614b",
+  "id": "N1-C14",
+  "input_keys": [
+    {
+      "escaped": "\"\\ud83d\\ude00\"",
+      "codepoints": [
+        "U+1F600"
+      ],
+      "utf8_hex": "f09f9880",
+      "utf16be_hex": "d83dde00"
+    },
+    {
+      "escaped": "\"\\ue000\"",
+      "codepoints": [
+        "U+E000"
+      ],
+      "utf8_hex": "ee8080",
+      "utf16be_hex": "e000"
+    }
+  ],
+  "scalar_order_escaped": [
+    "\"\\ue000\"",
+    "\"\\ud83d\\ude00\""
+  ],
+  "UTF16_order_escaped": [
+    "\"\\ud83d\\ude00\"",
+    "\"\\ue000\""
+  ],
+  "expected_utf8_hex": "7b22ee8080223a322c22f09f9880223a317d",
+  "expected_utf8_sha256": "cddbdeacace14eb6923e88dfafb2a3e7df21ec908682f50a886b7b9567692d02",
+  "assertions": {
+    "actual_private_use_key_not_empty": true,
+    "scalar_and_UTF16_orders_differ": true,
+    "existing_expected_matches_scalar_order": true,
+    "existing_expected_rejects_UTF16_order": true
+  },
+  "review_erratum": "Report lines73/110 visually misread U+E000 as empty. Existing C14 already discriminates; recommendation line23 already chooses scalar order. Preserve reviewer report and source vectors; ask narrow factual correction with this evidence.",
+  "reviewed_reference_code_executed": false,
+  "79_owner_tests_rerun": false
+}

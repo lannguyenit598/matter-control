@@ -1,0 +1,3941 @@
+{
+  "task": "MC-SOURCE-01",
+  "authority": "Direct PO2026-10-26: bring coded source into this MatterControl repository",
+  "date": "2026-10-26",
+  "copied_utc": "2026-10-26T01:06:41.467768+00:00",
+  "governance_branch": "codex/unified-project-flow",
+  "governance_base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "method": "Exact tracked-file snapshots from verified working trees; preserve modes/internal symlinks; no Git history merge or source edits",
+  "sources": [
+    {
+      "kind": "backend",
+      "source": "/private/tmp/mattercontrol-backend-be01",
+      "destination": "apps/backend",
+      "source_head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+      "source_branch": "codex/mc-be-01",
+      "files": [
+        {
+          "source_path": ".agents/skills/add-migration/SKILL.md",
+          "target_path": "apps/backend/.agents/skills/add-migration/SKILL.md",
+          "mode": "100644",
+          "bytes": 4614,
+          "sha256": "0245b1173092d8df76c8e40de530157fbfa318dabdc2617afc47f01478dd0c4c",
+          "index_blob": "be04cc960d1be2e936c525909f0a03dfa73f7b44"
+        },
+        {
+          "source_path": ".agents/skills/add-use-case/SKILL.md",
+          "target_path": "apps/backend/.agents/skills/add-use-case/SKILL.md",
+          "mode": "100644",
+          "bytes": 5062,
+          "sha256": "9d3cdb307fb29f19a74088b8937eeec8c293053e5fb66debe522544155c965f9",
+          "index_blob": "763649914f6963c5b84f788a6b8add7dc2f59a87"
+        },
+        {
+          "source_path": ".agents/skills/steward/SKILL.md",
+          "target_path": "apps/backend/.agents/skills/steward/SKILL.md",
+          "mode": "100644",
+          "bytes": 3123,
+          "sha256": "c68275671679a55cf88c26cfedb6d9be96efd29d5e6e24a47b21752abdcbc4b4",
+          "index_blob": "7f292ddfdb184a19c02dcbd5fbc893a87026cf61"
+        },
+        {
+          "source_path": ".claude/hooks/gofmt.sh",
+          "target_path": "apps/backend/.claude/hooks/gofmt.sh",
+          "mode": "100755",
+          "bytes": 335,
+          "sha256": "e422a5a8ab207f65814482a4449c8f2f39c4e09a19450990dde5ae1d76936528",
+          "index_blob": "10be6305bcd2411afc22c3b0efbfaa98ed97c554"
+        },
+        {
+          "source_path": ".claude/hooks/session-start.sh",
+          "target_path": "apps/backend/.claude/hooks/session-start.sh",
+          "mode": "100755",
+          "bytes": 2991,
+          "sha256": "fe0b312e2f0d221e058c8ff84f7248c74bfb8285a9d12372e5f5ff5c2c3aa2e1",
+          "index_blob": "5ad067b7b03025504f1f0c5d282f2ab2795ac981"
+        },
+        {
+          "source_path": ".claude/rules/composition-and-config.md",
+          "target_path": "apps/backend/.claude/rules/composition-and-config.md",
+          "mode": "100644",
+          "bytes": 3151,
+          "sha256": "e1cfb9408f745829876f8d683acabce374da0ad5e70cebc1a92f3df476cad26f",
+          "index_blob": "66d307464ff77ca3ee16451221f3645c897192c8"
+        },
+        {
+          "source_path": ".claude/rules/core.md",
+          "target_path": "apps/backend/.claude/rules/core.md",
+          "mode": "100644",
+          "bytes": 1471,
+          "sha256": "7bd286d29816023845bff272d2fcb403e7bc2457929b2c92437989f3aeb86c9c",
+          "index_blob": "5e0684d1ba250ed6a3f8c28d381622c4d78869f1"
+        },
+        {
+          "source_path": ".claude/rules/docs.md",
+          "target_path": "apps/backend/.claude/rules/docs.md",
+          "mode": "100644",
+          "bytes": 777,
+          "sha256": "cea03dbb1dcdbc04baa13b7e0025eb007c1265587ced44e65584581de5bd3d57",
+          "index_blob": "63773b0fa27bbbe9ca4660eff738db11e53b7ad2"
+        },
+        {
+          "source_path": ".claude/rules/http-adapter.md",
+          "target_path": "apps/backend/.claude/rules/http-adapter.md",
+          "mode": "100644",
+          "bytes": 2221,
+          "sha256": "02c67d4f21592a1fc653f503df8f1bd006c8a893064bcd4cb6dce9e73e239034",
+          "index_blob": "88464e142e16e7e8b91ebae6eff9ddb152588727"
+        },
+        {
+          "source_path": ".claude/rules/messaging.md",
+          "target_path": "apps/backend/.claude/rules/messaging.md",
+          "mode": "100644",
+          "bytes": 2110,
+          "sha256": "71169cc659bf2b747aef7e8babb52f163b6a2fea8f1a09eec37c70d7c96a20e8",
+          "index_blob": "3aa738ff52916c93bf8815c0981de195b0a359a2"
+        },
+        {
+          "source_path": ".claude/rules/persistence.md",
+          "target_path": "apps/backend/.claude/rules/persistence.md",
+          "mode": "100644",
+          "bytes": 3775,
+          "sha256": "74ca3470e6854d73ea86f94a3f78fbfbea0b7aa5f8aebf3f02fe1b50cae9372b",
+          "index_blob": "41a448d871d383ea14c0be8363f1a719e5443646"
+        },
+        {
+          "source_path": ".claude/rules/tests.md",
+          "target_path": "apps/backend/.claude/rules/tests.md",
+          "mode": "100644",
+          "bytes": 1311,
+          "sha256": "f7a4c0e0a1c64a06eb6138196cc9764c398a010fec2eda857c18bc414053401e",
+          "index_blob": "c3fbb4060a0b943420238549ec08391087dc127e"
+        },
+        {
+          "source_path": ".claude/rules/tooling-and-deps.md",
+          "target_path": "apps/backend/.claude/rules/tooling-and-deps.md",
+          "mode": "100644",
+          "bytes": 2226,
+          "sha256": "d4d77302ba1f6b7fd54190ec0d183fee06965c5e0c8890d9b21d78f20d15fdfe",
+          "index_blob": "46a51646d8e4fb5b636545bb83c9dfbe36341e50"
+        },
+        {
+          "source_path": ".claude/settings.json",
+          "target_path": "apps/backend/.claude/settings.json",
+          "mode": "100644",
+          "bytes": 464,
+          "sha256": "ea0993e542c05c57c895771e89a56604d9e3bdf8ac17ec64c6cb1112c09cd99a",
+          "index_blob": "cb81d21c56ef09aaeffcfdaad765e1bc6592e87e"
+        },
+        {
+          "source_path": ".claude/skills/add-migration",
+          "target_path": "apps/backend/.claude/skills/add-migration",
+          "mode": "120000",
+          "bytes": 34,
+          "sha256": "1e1647e7dae5921e991762b50193f9c3dd08473396b36517e1b16e0c19adc6b2",
+          "index_blob": "185c5e53b3463bc33a5d41b5149409779eccd286"
+        },
+        {
+          "source_path": ".claude/skills/add-use-case",
+          "target_path": "apps/backend/.claude/skills/add-use-case",
+          "mode": "120000",
+          "bytes": 33,
+          "sha256": "50ba016ddd1f497fc667f03dc636ca9e18bb2b6aef3ffa082086cf398eb93a1c",
+          "index_blob": "55f0ae055b0fd97ea8bc5d0fbcabc5238cc42997"
+        },
+        {
+          "source_path": ".claude/skills/steward",
+          "target_path": "apps/backend/.claude/skills/steward",
+          "mode": "120000",
+          "bytes": 28,
+          "sha256": "358d1232f54347624909c4b202d660f688d50e2537453c91672212462aadcdb8",
+          "index_blob": "57475bd1b8066f4577799e2f8b5410d2f77a40e6"
+        },
+        {
+          "source_path": ".dockerignore",
+          "target_path": "apps/backend/.dockerignore",
+          "mode": "100644",
+          "bytes": 75,
+          "sha256": "501854db12862b9b44df1ddb67012dc20bfb7b88fd7ddec5e45db8ced08d9979",
+          "index_blob": "f013d755379ab9a74bef31a84056537c7bfe1a43"
+        },
+        {
+          "source_path": ".env.example",
+          "target_path": "apps/backend/.env.example",
+          "mode": "100644",
+          "bytes": 1798,
+          "sha256": "281a97ea2c05161a2725421232f865e79c43f434efdcec3e5c3cf83c5e3b5f50",
+          "index_blob": "e70ce3689fead23ed066258d263308672e2e8cf8"
+        },
+        {
+          "source_path": ".github/dependabot.yml",
+          "target_path": "apps/backend/.github/dependabot.yml",
+          "mode": "100644",
+          "bytes": 810,
+          "sha256": "92978768dde25a0975fea3d16a12ec4476f7ec66a9eefda9c3ce72d72f126d61",
+          "index_blob": "5f8a2d27970f2a917d1c280eb5080d59182904aa"
+        },
+        {
+          "source_path": ".github/workflows/ci.yml",
+          "target_path": "apps/backend/.github/workflows/ci.yml",
+          "mode": "100644",
+          "bytes": 2945,
+          "sha256": "1c001fdbf765c03931be31f613e64331f72fdb182de7fc260afa8c666fbca8e7",
+          "index_blob": "aa4335032e831dacdb01298a09a8bc833ab8d1c0"
+        },
+        {
+          "source_path": ".github/workflows/template.yml",
+          "target_path": "apps/backend/.github/workflows/template.yml",
+          "mode": "100644",
+          "bytes": 5554,
+          "sha256": "897e86afd52dbb791d1f22ba08fa5e7d4bce4dfbac8cd129df6f68717a848ecc",
+          "index_blob": "e3ae8f3d5a66fdf4e000e9c948fa2626613bd325"
+        },
+        {
+          "source_path": ".gitignore",
+          "target_path": "apps/backend/.gitignore",
+          "mode": "100644",
+          "bytes": 30,
+          "sha256": "1c4d80e98372a1d7d9cd0cad5111a321f25e7d868d83ff55e0561064f2fbadee",
+          "index_blob": "33dc6188479f756c308afde63a231ccefe1218c6"
+        },
+        {
+          "source_path": ".golangci.yml",
+          "target_path": "apps/backend/.golangci.yml",
+          "mode": "100644",
+          "bytes": 10745,
+          "sha256": "8b47d2561e65fcac1325b2208ec12cbc95fcb378533e15c01fd36cd773f201a2",
+          "index_blob": "729922abe6f5ae444d9042462ce32f57aba5417a"
+        },
+        {
+          "source_path": "AGENTS.md",
+          "target_path": "apps/backend/AGENTS.md",
+          "mode": "100644",
+          "bytes": 5653,
+          "sha256": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f",
+          "index_blob": "a6de487cdaef590678023ee63f89b327c182ab11"
+        },
+        {
+          "source_path": "CLAUDE.md",
+          "target_path": "apps/backend/CLAUDE.md",
+          "mode": "100644",
+          "bytes": 275,
+          "sha256": "d442cb344091b2f9aced454b0cfa4e8763b4a005699e4354320f429318411360",
+          "index_blob": "4a55e0b07654a6a45fb6beb4bb03a1c5194982ed"
+        },
+        {
+          "source_path": "Dockerfile",
+          "target_path": "apps/backend/Dockerfile",
+          "mode": "100644",
+          "bytes": 568,
+          "sha256": "29ef785c2865c092c9d4d0a36bcd0509e22f72caf4a4883956308e56a46dffde",
+          "index_blob": "4c11e7f05ee0a78cfba9bfb1f11eb15f560dc2be"
+        },
+        {
+          "source_path": "LICENSE",
+          "target_path": "apps/backend/LICENSE",
+          "mode": "100644",
+          "bytes": 1071,
+          "sha256": "c11ea9f8d65e34be2e403db8cf5ca120db460031472ffaf8aa9fe992f55f49a1",
+          "index_blob": "0c2a14798933a0ae5eea1006f33cb403bc07be99"
+        },
+        {
+          "source_path": "Makefile",
+          "target_path": "apps/backend/Makefile",
+          "mode": "100644",
+          "bytes": 3699,
+          "sha256": "c5e0b60fc672fd0f6d3c45a68c4cb51b608cbd442c22154d6ea74de61e0304f3",
+          "index_blob": "471e1c8bd54373b91ac6da5bdd57c260cc1e849b"
+        },
+        {
+          "source_path": "README.md",
+          "target_path": "apps/backend/README.md",
+          "mode": "100644",
+          "bytes": 8383,
+          "sha256": "d250af32909b22eb9c8ff021eb914f942c0e76c6b3aca86415bab87dd89bd4d2",
+          "index_blob": "7b6f101263677284bddb50fef7e47b2e9b2af3b1"
+        },
+        {
+          "source_path": "README.vi.md",
+          "target_path": "apps/backend/README.vi.md",
+          "mode": "100644",
+          "bytes": 8835,
+          "sha256": "2c4093d43e0f71da04fe2e7f99f24617b2af06a2b388c52f4ada1bb059981551",
+          "index_blob": "eac0123696f979fedfec48437705a45c69d7a5af"
+        },
+        {
+          "source_path": "api.http",
+          "target_path": "apps/backend/api.http",
+          "mode": "100644",
+          "bytes": 2344,
+          "sha256": "6c1ebe43510a64d5e1b367321964d6a87bb76d23906ae20370fefba544c09241",
+          "index_blob": "3d03b62e25018cf929db255c2cdc4836c432cb3d"
+        },
+        {
+          "source_path": "cmd/userapi/main.go",
+          "target_path": "apps/backend/cmd/userapi/main.go",
+          "mode": "100644",
+          "bytes": 1859,
+          "sha256": "1870346c30c0f4da2560db9595c1ba1c9ac55b8aa0acf2b6478adbaa89164ba4",
+          "index_blob": "a1f2861b24fe911fd6ebfe8df53c377501ad88b8"
+        },
+        {
+          "source_path": "docker-compose.yml",
+          "target_path": "apps/backend/docker-compose.yml",
+          "mode": "100644",
+          "bytes": 1182,
+          "sha256": "7954ef029e2428652a7129d730a466dcb031c79c7ae5b4e0d2bcdd06d0692ec1",
+          "index_blob": "b19c0eeafd64f84e0f47f0fbf2146285eb7edb45"
+        },
+        {
+          "source_path": "docs/api.md",
+          "target_path": "apps/backend/docs/api.md",
+          "mode": "100644",
+          "bytes": 9798,
+          "sha256": "39aa7970e8e5bf75ed2bfc2af685f66f7bd5519a2b94d52744232261a03db00d",
+          "index_blob": "59590c06d767d81964f0ea9e0939423ab7a4a5dd"
+        },
+        {
+          "source_path": "docs/architecture.md",
+          "target_path": "apps/backend/docs/architecture.md",
+          "mode": "100644",
+          "bytes": 22768,
+          "sha256": "fd1d17b6ef5c9209406490224121ecec0ae5281d62305ddf18b89a163d7b781a",
+          "index_blob": "c422216fb3a8bd608841f8dd080a80661b13c919"
+        },
+        {
+          "source_path": "docs/events.md",
+          "target_path": "apps/backend/docs/events.md",
+          "mode": "100644",
+          "bytes": 4669,
+          "sha256": "14613cd6bc172ab4ac5fbb8074967ba977158c45de61b7148f64150de2a28ab4",
+          "index_blob": "dc39c47716329fc77bdf8431c670c581ac53eb71"
+        },
+        {
+          "source_path": "docs/mattercontrol-backend.md",
+          "target_path": "apps/backend/docs/mattercontrol-backend.md",
+          "mode": "100644",
+          "bytes": 6151,
+          "sha256": "40f916ae9357b8f9f1b2ff10bd83c53791463d1da9459272f4f9f9878f50e42f",
+          "index_blob": "c4689ca29170c2eea0a86bf186ced9aa6a4570ef"
+        },
+        {
+          "source_path": "docs/new-project.md",
+          "target_path": "apps/backend/docs/new-project.md",
+          "mode": "100644",
+          "bytes": 5467,
+          "sha256": "49becfb81cdc641d5bdad5b6242bd5b3f20216b94cde3df70c0820311af6e532",
+          "index_blob": "3a4f9ef19d5ddb3742e7487cf2ba3f1b6a031129"
+        },
+        {
+          "source_path": "docs/operations.md",
+          "target_path": "apps/backend/docs/operations.md",
+          "mode": "100644",
+          "bytes": 20419,
+          "sha256": "6ca5f92747f167e69edf82eb7d1cc293c6d8204b14e05f5bb04c1b42bc61dbf5",
+          "index_blob": "5c3141bc311cbc69480829dbfe4b813643639f6e"
+        },
+        {
+          "source_path": "go.mod",
+          "target_path": "apps/backend/go.mod",
+          "mode": "100644",
+          "bytes": 2377,
+          "sha256": "63eed6d9405dd929eb48c6dfcb53f9b5f4761185cfd6989d66f72863a14afe30",
+          "index_blob": "3ca8eb1cab5ccdf71271753b3d7f2b79461d21e7"
+        },
+        {
+          "source_path": "go.sum",
+          "target_path": "apps/backend/go.sum",
+          "mode": "100644",
+          "bytes": 12929,
+          "sha256": "b34f484a93734fd4b6eda8c801fc149947d1e78f45639a948595687132d1f0b9",
+          "index_blob": "e0b5a85788dcb47dd92c7dd675d4f00495ad5025"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/contract_test.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/contract_test.go",
+          "mode": "100644",
+          "bytes": 18383,
+          "sha256": "9eed1168a1edc1f68f2998e21371e64b08cfbbc83560389e00305ce60e6243dd",
+          "index_blob": "dc7940566f3085b747886299d3f0c340da11efba"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/errors.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/errors.go",
+          "mode": "100644",
+          "bytes": 6976,
+          "sha256": "bb4153fdbccd56d73ae048b19a03fd2d03e7a7e0c6a7d835acae412e4308f471",
+          "index_blob": "141748d31b390143e8a9a7df23b8d78d1e44a9fc"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/errors_test.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/errors_test.go",
+          "mode": "100644",
+          "bytes": 9850,
+          "sha256": "48e53c1f15156c597a152ed49fbcba2b9c61d214076b2c7cfe8b428c84a24049",
+          "index_blob": "c524f16ad7562e8867f360fa4398420e1498e21b"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/huma_adapter.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/huma_adapter.go",
+          "mode": "100644",
+          "bytes": 5619,
+          "sha256": "7387d70043f555564b6e6b46f8f2d680e7192b7c252739e1e9f87bc2bc6277a4",
+          "index_blob": "cf6cf027cf5e6da8c112b7801f0f3540be458495"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/huma_adapter_test.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/huma_adapter_test.go",
+          "mode": "100644",
+          "bytes": 5230,
+          "sha256": "7a6f25906b473fcc2ba8879617bec728bdea82ac5defcd2a7c821bab2dd02348",
+          "index_blob": "3c6f5423e496276ae3e02cbfe534320921281fa3"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/observability_test.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/observability_test.go",
+          "mode": "100644",
+          "bytes": 5791,
+          "sha256": "a1cec1254ef03a4eb050b784c479d2d92d15331fecfdaa4999e6a15a971dce3f",
+          "index_blob": "605702214afd99b4586e2d303536d92d0b3dfb55"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/openapi.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/openapi.go",
+          "mode": "100644",
+          "bytes": 7651,
+          "sha256": "5050a828645808a32dbb8e5453ec8afc5d175cb11e64184c9b122c8eac775d8e",
+          "index_blob": "3967424b57b9fd9fdf5e91b238237106ec8c2bbd"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/openapi_test.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/openapi_test.go",
+          "mode": "100644",
+          "bytes": 14345,
+          "sha256": "660e2c1dc8ea1496fee5aa7188f3629dfe3b859f3f86372c7fbc37262272c99a",
+          "index_blob": "b14d234c09332778e37a6798bf691d66a9214efd"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/server.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/server.go",
+          "mode": "100644",
+          "bytes": 7380,
+          "sha256": "3319e1a355b0bf720f275bce02b1122d9a32cbda6d878f38a8676adeb5688678",
+          "index_blob": "f1f42746dbed450cc23e78fc59e183fbae6f5104"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/service_unavailable_test.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/service_unavailable_test.go",
+          "mode": "100644",
+          "bytes": 5092,
+          "sha256": "8b26ec0332862275eb114ed4eb323d60e296fe0a881280bac7d137f1a790e5b4",
+          "index_blob": "4b2ebf22f7e65b2c7fb6b3dcb6367f974bd24831"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/testdata/panic.golden",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/testdata/panic.golden",
+          "mode": "100644",
+          "bytes": 2280,
+          "sha256": "6961da8823056e46e9144f47ebbc61d6093deb7fd820e15e9b19e10a16a7f495",
+          "index_blob": "e63293351364878cc1f2acbeded9cd82b8b0d41c"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/testdata/timeout.golden",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/testdata/timeout.golden",
+          "mode": "100644",
+          "bytes": 2344,
+          "sha256": "60199081da04fedc496c5c711042554ecf5a2bb48d05323697aa3d401f0dc01a",
+          "index_blob": "cf8306ae08943ba01fc5503f725f64a8127db37e"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/testdata/unavailable.golden",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/testdata/unavailable.golden",
+          "mode": "100644",
+          "bytes": 2666,
+          "sha256": "f630d97174ce3e06252ee871a45557624ab108b448b703a645f648fe318a26fb",
+          "index_blob": "868ef2cc63ca95e5dce22a1d817741823ac22a40"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/testdata/unexpected_error.golden",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/testdata/unexpected_error.golden",
+          "mode": "100644",
+          "bytes": 2280,
+          "sha256": "6961da8823056e46e9144f47ebbc61d6093deb7fd820e15e9b19e10a16a7f495",
+          "index_blob": "e63293351364878cc1f2acbeded9cd82b8b0d41c"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/testdata/user_api.golden",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/testdata/user_api.golden",
+          "mode": "100644",
+          "bytes": 43914,
+          "sha256": "6b246e5ee32d5516708177f41de1ecaf0aa3622347a03404a620fd90a0133493",
+          "index_blob": "ae66e68d3ba39f8e07f56164d6b6cc69b6288584"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/testdata/version_conflict.golden",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/testdata/version_conflict.golden",
+          "mode": "100644",
+          "bytes": 2519,
+          "sha256": "4772be341fd25ab7928a0e3a033c0933a5c0c148131c79c4fc73af4c38dc8904",
+          "index_blob": "27cea329ef8c638e90e2d8c7457ceb11604102fd"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/user_handler.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/user_handler.go",
+          "mode": "100644",
+          "bytes": 12005,
+          "sha256": "aa66c697f626b1c3cfc531e188ab4c1c10f225d6a4a926e58f9e7cee7f2736c3",
+          "index_blob": "f0d215c84560867cadbeefd0f54512979e78a420"
+        },
+        {
+          "source_path": "internal/adapter/inbound/httpapi/user_handler_test.go",
+          "target_path": "apps/backend/internal/adapter/inbound/httpapi/user_handler_test.go",
+          "mode": "100644",
+          "bytes": 17600,
+          "sha256": "2ec386380f078b636c94e8b05ba0f174b47563f943c8f40e276b95c298b219d4",
+          "index_blob": "22e4e2210b3a7e375ba98a99740d76208bee96c6"
+        },
+        {
+          "source_path": "internal/adapter/outbound/kafka/security_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/kafka/security_test.go",
+          "mode": "100644",
+          "bytes": 5037,
+          "sha256": "e3ffeb0fbe4f94fef9d286b3b1ff98e7b51c2d1dd5ee40f35ff3f4dc6959a4da",
+          "index_blob": "48ff3fb5de6d808100c22fe6923bcb6de858790d"
+        },
+        {
+          "source_path": "internal/adapter/outbound/kafka/sink.go",
+          "target_path": "apps/backend/internal/adapter/outbound/kafka/sink.go",
+          "mode": "100644",
+          "bytes": 5692,
+          "sha256": "595a911f55b03d44105a098da8c3ccba254ef638acdc912ddd561bf36b36f7cd",
+          "index_blob": "cb0c0838cc152cad3f5982bc9590ab2f491fdda3"
+        },
+        {
+          "source_path": "internal/adapter/outbound/kafka/sink_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/kafka/sink_test.go",
+          "mode": "100644",
+          "bytes": 5554,
+          "sha256": "749ad5fd13ea6b93d9d072ded470cd3cbf2aa2b27c75baea39be611fcbf3702a",
+          "index_blob": "70ae18b1e11327375c364fa2c305dccfadb1cc91"
+        },
+        {
+          "source_path": "internal/adapter/outbound/memory/user_repository.go",
+          "target_path": "apps/backend/internal/adapter/outbound/memory/user_repository.go",
+          "mode": "100644",
+          "bytes": 2618,
+          "sha256": "97da4d4dcbd6ead540586055d458b49f4bdb96a820cd4c3b92ef744f9428aeb5",
+          "index_blob": "1e934fbeb531829a300e073a7a23a1991099b7a8"
+        },
+        {
+          "source_path": "internal/adapter/outbound/memory/user_repository_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/memory/user_repository_test.go",
+          "mode": "100644",
+          "bytes": 370,
+          "sha256": "63628aab463e536757499ada1cacfbfaf87d8c108e5d8f390b3ca27872bc01b3",
+          "index_blob": "154c35689817a95ef2e62d0e9fef1bed31fe0390"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/faults_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/faults_test.go",
+          "mode": "100644",
+          "bytes": 11942,
+          "sha256": "27a7ea7e919778f26b5f29dcf7f746d0c7a1a346dadbab5d112e21e9d7cef394",
+          "index_blob": "756c138ddd2eb309acb01ced21877824e23decf1"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/map_error_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/map_error_test.go",
+          "mode": "100644",
+          "bytes": 5506,
+          "sha256": "834ab7ff08292b0167b1c918d951e12b6c900e3c215c32b15ba7be3b3711088d",
+          "index_blob": "b2272b73f8c6b23dc9e86cc735833ea69abc45d2"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/matter_dto.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/matter_dto.go",
+          "mode": "100644",
+          "bytes": 7256,
+          "sha256": "feea81d9797365293eb4a6a152c5452f25530723d421bb047df08954c9a72aa2",
+          "index_blob": "9912694a9ce3febcc1ea89e577b8d25aaa38a9c4"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/matter_migrate.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/matter_migrate.go",
+          "mode": "100644",
+          "bytes": 3229,
+          "sha256": "ae389d2e0ccbbdad14c3594839749399dab6c624ffff7a8db05ec43d5589d70f",
+          "index_blob": "e1f4508fbd8e780398e92ce7cfa03046468abdbf"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/matter_rework_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/matter_rework_test.go",
+          "mode": "100644",
+          "bytes": 6222,
+          "sha256": "16c0ecaaec583b1157f1ad4300486e0cfaca7252091d917b0e0af2619cff83cd",
+          "index_blob": "5f4995bdf34c3b99829d538f8a66b6b0fc1cfb33"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/matter_store.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/matter_store.go",
+          "mode": "100644",
+          "bytes": 14542,
+          "sha256": "97a147af83d97d9b423b5d3f1f8e41bee7412fbe4cda271693fc69f3ec7f1cdb",
+          "index_blob": "bc9251f67dd8d999e1b612453ee02b571a69f9bd"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/matter_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/matter_test.go",
+          "mode": "100644",
+          "bytes": 20771,
+          "sha256": "42754bed6e741aadf667bc553546fd79396bd49f6f78974dbbc045022c4b96ef",
+          "index_blob": "04947677201baf361019e57ad854b92c369a080d"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/mcsqlc/db.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/mcsqlc/db.go",
+          "mode": "100644",
+          "bytes": 568,
+          "sha256": "87c9ef5a14361d4ee699b2fa3b446a6296a6ff5dcb04ef0f43f3c6c233816439",
+          "index_blob": "16ea4fc5fa0c6007c9d7ddbd6a7b398f729a328a"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/mcsqlc/matter.sql.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/mcsqlc/matter.sql.go",
+          "mode": "100644",
+          "bytes": 13234,
+          "sha256": "43d1fae7a897c0d977d2a7bddef750eee47633ad070b4b3581bcd5699d80212e",
+          "index_blob": "d61545471e9894d0bc1f7d213d5dc35c871211f8"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/mcsqlc/models.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/mcsqlc/models.go",
+          "mode": "100644",
+          "bytes": 3878,
+          "sha256": "486bfce14ba96c8087e3005329a2cc6dbc824ce5617f8c3215ced2a4effcf01d",
+          "index_blob": "69dabed9f50b4203f4a10f9edec16fff494bab01"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrate.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrate.go",
+          "mode": "100644",
+          "bytes": 3656,
+          "sha256": "43c0840b1c9ef3f0bc749a7f95064674f2e157e45af1b8d99e54b75eb7ef828d",
+          "index_blob": "ad7b63aba9878d8218e8ff59aa776b0502a151ea"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrations/0001_create_users.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrations/0001_create_users.sql",
+          "mode": "100644",
+          "bytes": 568,
+          "sha256": "4e12f598904855b38f53286984881a3ad98d8ab42d685b450a19a225f91c919b",
+          "index_blob": "3682ad64031ba1865b70138e7548e9c9c9b10552"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrations/0002_add_users_version.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrations/0002_add_users_version.sql",
+          "mode": "100644",
+          "bytes": 361,
+          "sha256": "80ddb926f418951ea5ee2e6f6a1a3d9c5746dc4621f282a33658cad22662131e",
+          "index_blob": "8cf93db4c5525326eecf0e0a79167f9cf257aa87"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrations/0003_create_outbox.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrations/0003_create_outbox.sql",
+          "mode": "100644",
+          "bytes": 1153,
+          "sha256": "a8e4a0a2c1b146cb5b4a53364a9f061c5f9535e4fc6491e6c9c5ed6379f8ade1",
+          "index_blob": "2e586a02bcc1887e601cfa88bef10e22e72dfdcb"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrations/0004_outbox_parking.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrations/0004_outbox_parking.sql",
+          "mode": "100644",
+          "bytes": 513,
+          "sha256": "7aa52bd8efc476dfb3bad8388b9213facd7d62747c7c5cd1ee6c20c57a706445",
+          "index_blob": "cc8c6857447db242f4f6735bf2abe5e9922f0ca3"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrations/0005_outbox_pending_index.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrations/0005_outbox_pending_index.sql",
+          "mode": "100644",
+          "bytes": 637,
+          "sha256": "c3247b933f7ecc70308b34e8155308905d489b3f89847799f24b1454b3ebd99f",
+          "index_blob": "1c81f481cfc9aedc70daa7f5036194c77fdaf16e"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrations/0006_drop_outbox_unpublished_index.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrations/0006_drop_outbox_unpublished_index.sql",
+          "mode": "100644",
+          "bytes": 405,
+          "sha256": "aa5407ede5e739ae98fd5a96de39cd0296d1d454760b8cdb4a940c61601b342e",
+          "index_blob": "3fd60023f35c6540e6bab6c957b65776af0c71e9"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/migrations_mattercontrol/0001_mattercontrol_core.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0001_mattercontrol_core.sql",
+          "mode": "100644",
+          "bytes": 14024,
+          "sha256": "881d8351ee50792651d41cbf593edfa04a87f04d705fa77c8370827a913647ad",
+          "index_blob": "457afe0c2125e8b1d1e93aa249b009894239bf53"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/outbox.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/outbox.go",
+          "mode": "100644",
+          "bytes": 5606,
+          "sha256": "bf583b37177a6f657bfdeed8e1db82edd5d2b6959320930c1a734c2c40559c23",
+          "index_blob": "0be62070853aeb5bdc113456036febea21e174b6"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/outbox_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/outbox_test.go",
+          "mode": "100644",
+          "bytes": 27468,
+          "sha256": "d47c2e9116b2e196f5382d658afd15497100793033cf4baeee6d27a78b3fd030",
+          "index_blob": "82d4147f4fac4b012d09d864a5932f0a0833174c"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/pgtest/dsn_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/pgtest/dsn_test.go",
+          "mode": "100644",
+          "bytes": 1314,
+          "sha256": "558609f59d8dda60fd77dd0f47e1858e8aed44734d47593ed0d10cea63726d77",
+          "index_blob": "6ff1f55c678f7e5f3451433ef4f9fd86ad1306dc"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/pgtest/pgtest.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/pgtest/pgtest.go",
+          "mode": "100644",
+          "bytes": 1975,
+          "sha256": "21bbbc42ea77894740a42c9c88882155bb761cea03122b4a3aa92f34cf6f8015",
+          "index_blob": "c84c0d7feb5563daaf75dcc47dd10091aff94a8d"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/queries/outbox.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/queries/outbox.sql",
+          "mode": "100644",
+          "bytes": 1325,
+          "sha256": "6c57f36d8e82d11758b677cb4c847b5e2ff2ea9525dfadd4cc2f87b2bbd63505",
+          "index_blob": "8c648f117e24cbc4d5f6451dffed520d7697d7ba"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/queries/session.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/queries/session.sql",
+          "mode": "100644",
+          "bytes": 357,
+          "sha256": "2b9de43fa9d01d2f059e73eee8aa0f8123a4b09c6592189f61eba718b1e52af8",
+          "index_blob": "74dad4fd651e3b43f8e64cc60886fedd8da26cb5"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/queries/users.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/queries/users.sql",
+          "mode": "100644",
+          "bytes": 972,
+          "sha256": "4c94f9823c012f193e11b012215523096cd65c009ca478bb8a92b36c33bf3bca",
+          "index_blob": "9aa38080fe72203fe24eb959448fa9e2c9741f65"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql",
+          "mode": "100644",
+          "bytes": 3808,
+          "sha256": "fc5399333b6067c5e1cf3d8fe9d46cce6f92c9067aff677a0af959a70a8db796",
+          "index_blob": "e73bf1129203a6581c528fc775a16bb5ab000e6d"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/sqlcgen/db.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/sqlcgen/db.go",
+          "mode": "100644",
+          "bytes": 569,
+          "sha256": "c40f70c9870c43ddc88f743ec63627bc9af2d57fab48fdb0c055981d090b0cf8",
+          "index_blob": "38811fcc6670469944a39de104dd97c9be1fb210"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/sqlcgen/models.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/sqlcgen/models.go",
+          "mode": "100644",
+          "bytes": 514,
+          "sha256": "1525785f36675e07e45aba6d7b28a4bb4d6ea65b0381de1c0b77c158aed5b9df",
+          "index_blob": "4352b98fbe2e596829180abd99cae149d54c6ae9"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/sqlcgen/outbox.sql.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/sqlcgen/outbox.sql.go",
+          "mode": "100644",
+          "bytes": 3422,
+          "sha256": "cd02820e10b24acb3c6812aa4e6c9be57a1ed080721b72e64c1b03eba1197b8f",
+          "index_blob": "b82970bb348bd06d3ea91578585423d450cabbdc"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/sqlcgen/session.sql.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/sqlcgen/session.sql.go",
+          "mode": "100644",
+          "bytes": 707,
+          "sha256": "2d2cd9bfa5fa5f631bb4bb329f9715126857e28d03368d229d531df5cb188f03",
+          "index_blob": "19458596ccb44e9b970acd1fc041aee438165b94"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/sqlcgen/users.sql.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/sqlcgen/users.sql.go",
+          "mode": "100644",
+          "bytes": 3406,
+          "sha256": "e850295a20aab035cc95309d8c04fbf02da707fdaf2b0cbc9a5fbfc87aed66ac",
+          "index_blob": "34550e6e67fc9f1ebc31e5af2852258cfbba0744"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/user_repository.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/user_repository.go",
+          "mode": "100644",
+          "bytes": 10369,
+          "sha256": "92d50cba4e0449e8256e89d013e9e5d5dfacee08b407942f86960b8c2a91ef0e",
+          "index_blob": "d02447a5d44e548d0f7de414651de62ac5e479be"
+        },
+        {
+          "source_path": "internal/adapter/outbound/postgres/user_repository_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/postgres/user_repository_test.go",
+          "mode": "100644",
+          "bytes": 7003,
+          "sha256": "0263ed83c7368a7c4d99b05ab9b9117027519485606b46cdcb87a7983a52209a",
+          "index_blob": "b0b45c20db7f0af8a4c8e07e569da1e12c4f16d0"
+        },
+        {
+          "source_path": "internal/adapter/outbound/repotest/contract.go",
+          "target_path": "apps/backend/internal/adapter/outbound/repotest/contract.go",
+          "mode": "100644",
+          "bytes": 5212,
+          "sha256": "e09edef17b48f6e96681468b3bdcc83900b32433aeed1a596ef9d552d2596a02",
+          "index_blob": "e583d72248b97d074797b3bd15f1e6f985ae3dcc"
+        },
+        {
+          "source_path": "internal/adapter/outbound/repotest/mattercontrol/contract.go",
+          "target_path": "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract.go",
+          "mode": "100644",
+          "bytes": 25784,
+          "sha256": "d5a3f21679488bb7f1186c847502b6141e2a20b7fb0681f99bba0debb18d8c5e",
+          "index_blob": "02e8513c12caee9952f78c867f652d586073e72d"
+        },
+        {
+          "source_path": "internal/adapter/outbound/repotest/mattercontrol/contract_memory_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_memory_test.go",
+          "mode": "100644",
+          "bytes": 705,
+          "sha256": "71c4dd665526aed8e92d477fa2f670840a1c091d491ccb0287e56d0c6c37b630",
+          "index_blob": "f104ea66ddb548a16a7d375ce3f40adde4c362f4"
+        },
+        {
+          "source_path": "internal/adapter/outbound/repotest/mattercontrol/memory.go",
+          "target_path": "apps/backend/internal/adapter/outbound/repotest/mattercontrol/memory.go",
+          "mode": "100644",
+          "bytes": 18631,
+          "sha256": "c029d58eac5cafcca95e8a6d84ad1fe9cce4e02da6d3d422cb17e8c472aeb50c",
+          "index_blob": "8609e39f32fda0b6bbd59e3df925fdcee026b512"
+        },
+        {
+          "source_path": "internal/adapter/outbound/system/record_id_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/system/record_id_test.go",
+          "mode": "100644",
+          "bytes": 785,
+          "sha256": "0f7608a8e46e24a8438c6ac2cd70301765876d4ee112904aebcd52878bc24740",
+          "index_blob": "2116f48170b38c392a4d41d379cbc3f13df79fdd"
+        },
+        {
+          "source_path": "internal/adapter/outbound/system/system.go",
+          "target_path": "apps/backend/internal/adapter/outbound/system/system.go",
+          "mode": "100644",
+          "bytes": 1497,
+          "sha256": "b7357259d6a639d5f53b1c1449af72008c4109399110d51c74a65eecac66a90c",
+          "index_blob": "983279ca68bb844faf47d3d823d7c91051f50268"
+        },
+        {
+          "source_path": "internal/adapter/outbound/system/system_test.go",
+          "target_path": "apps/backend/internal/adapter/outbound/system/system_test.go",
+          "mode": "100644",
+          "bytes": 1233,
+          "sha256": "bbfcd024458635f5af293bab2002d35a10364324fd1f7194f29b0ff4a92e8f97",
+          "index_blob": "123cee37b5f29d9ee6d731d9e8de80cb3b07202a"
+        },
+        {
+          "source_path": "internal/app/app.go",
+          "target_path": "apps/backend/internal/app/app.go",
+          "mode": "100644",
+          "bytes": 13180,
+          "sha256": "5e6cd64ac79762cb22c623e7077cc46f36bb52799e7af0a7fa27a18a6ec64ca8",
+          "index_blob": "8dd97e58fb090ecc438000974854b37fa2780aca"
+        },
+        {
+          "source_path": "internal/app/app_test.go",
+          "target_path": "apps/backend/internal/app/app_test.go",
+          "mode": "100644",
+          "bytes": 20220,
+          "sha256": "c36cc710db65c7b10971e96b26482ad8b3722644aa1597f71ac82bfa9fde2e65",
+          "index_blob": "afdcc5524c7eaab7567b6ff59a96d489085ebb4f"
+        },
+        {
+          "source_path": "internal/app/graph_test.go",
+          "target_path": "apps/backend/internal/app/graph_test.go",
+          "mode": "100644",
+          "bytes": 889,
+          "sha256": "46872cb088a9fdcfae8b279f2bc12273954cd292276f7f005995ca7cc9b7d431",
+          "index_blob": "ae0da151ff1dd2e464b3215619be3ddef9e63c14"
+        },
+        {
+          "source_path": "internal/app/relay.go",
+          "target_path": "apps/backend/internal/app/relay.go",
+          "mode": "100644",
+          "bytes": 5946,
+          "sha256": "e26905df4b3f5c3a41e45449a52212646d0a45f5d29e8bd1dad98460c70cd493",
+          "index_blob": "d75f6567e01540b144dd0d9c78a711b4bdcedcd0"
+        },
+        {
+          "source_path": "internal/config/config.go",
+          "target_path": "apps/backend/internal/config/config.go",
+          "mode": "100644",
+          "bytes": 8982,
+          "sha256": "254ed54d23ddb9e916486d5a3fa00ace485b6304ba7ece725639f9da775d548b",
+          "index_blob": "3580f374dde721299c2b4933574e121c04a2c99e"
+        },
+        {
+          "source_path": "internal/config/config_test.go",
+          "target_path": "apps/backend/internal/config/config_test.go",
+          "mode": "100644",
+          "bytes": 5134,
+          "sha256": "a793a9164f106567ed751fb6a2644a8958d788a9fe951c691ad9e0cb2f75c529",
+          "index_blob": "606d3ebf6e47988246b25e37ded6f6245a8cc0fe"
+        },
+        {
+          "source_path": "internal/core/domain/email.go",
+          "target_path": "apps/backend/internal/core/domain/email.go",
+          "mode": "100644",
+          "bytes": 1367,
+          "sha256": "e2cbefe173abbee14d7785b8ec11f9f735919f2776e0b60a0079937e2672d3e0",
+          "index_blob": "6ab49b813099c975a3ab958acb25dedcee3c39f3"
+        },
+        {
+          "source_path": "internal/core/domain/errors.go",
+          "target_path": "apps/backend/internal/core/domain/errors.go",
+          "mode": "100644",
+          "bytes": 1098,
+          "sha256": "9366b192ac71ee7cc1de18e793fec486bbe86d583c91ac68c22fe7db6eb4662e",
+          "index_blob": "0e1c1c31004ca8379c9f8186f43c5408e1100778"
+        },
+        {
+          "source_path": "internal/core/domain/matter/access.go",
+          "target_path": "apps/backend/internal/core/domain/matter/access.go",
+          "mode": "100644",
+          "bytes": 5533,
+          "sha256": "257c0e38c5d88ea9ed737405b0d6061214818fbb391a6c73ae37f782806b8f67",
+          "index_blob": "22e78015f0cde9912a2a05789bfcbab93a5d749c"
+        },
+        {
+          "source_path": "internal/core/domain/matter/identity.go",
+          "target_path": "apps/backend/internal/core/domain/matter/identity.go",
+          "mode": "100644",
+          "bytes": 4666,
+          "sha256": "9478957209d0c9a9a696913dc3327f71704d1a71fdaa123e98e27e525856cf4a",
+          "index_blob": "b00a28689bfec04cc6f83f508a94835895b9b4b6"
+        },
+        {
+          "source_path": "internal/core/domain/matter/matter_test.go",
+          "target_path": "apps/backend/internal/core/domain/matter/matter_test.go",
+          "mode": "100644",
+          "bytes": 8710,
+          "sha256": "2d99cb68da74501b79e3d1aefb696769e065bd63973869dc38c29b98c81ca7da",
+          "index_blob": "75cc78e8e4db3205024e7b778231ca31fb09926c"
+        },
+        {
+          "source_path": "internal/core/domain/matter/requirement.go",
+          "target_path": "apps/backend/internal/core/domain/matter/requirement.go",
+          "mode": "100644",
+          "bytes": 5589,
+          "sha256": "b8cb631041faaf64b3b0fe13e4f2a82525a21aabff6edd042b73c2a5876efa71",
+          "index_blob": "b63cc7e3507468a273600510601911f12b3cd6ed"
+        },
+        {
+          "source_path": "internal/core/domain/user.go",
+          "target_path": "apps/backend/internal/core/domain/user.go",
+          "mode": "100644",
+          "bytes": 2972,
+          "sha256": "53c5dbe49cb80fb58c5ae32a35856fe19d67b386f1790907cdaa8edbd0969326",
+          "index_blob": "9101ff13791c0bcb1d532b9ce99000ce00b3251e"
+        },
+        {
+          "source_path": "internal/core/domain/user_test.go",
+          "target_path": "apps/backend/internal/core/domain/user_test.go",
+          "mode": "100644",
+          "bytes": 4818,
+          "sha256": "9efd514552d2025dbe8e3286bc4435cde3396699c10ce8e31b6daf99bb6563c9",
+          "index_blob": "d3d137d31f9ad7562814331010189cb6b2ff0a54"
+        },
+        {
+          "source_path": "internal/core/policy/policy.go",
+          "target_path": "apps/backend/internal/core/policy/policy.go",
+          "mode": "100644",
+          "bytes": 2285,
+          "sha256": "68fdab1a7799da8de1e16f0aab025596e33e8c957d9a89de17ee6012655eac4e",
+          "index_blob": "01fa80f2ab06f95b6ea14a789a794330d8e8c7c3"
+        },
+        {
+          "source_path": "internal/core/policy/policy_test.go",
+          "target_path": "apps/backend/internal/core/policy/policy_test.go",
+          "mode": "100644",
+          "bytes": 3194,
+          "sha256": "4428865bd2b2192a491dfe7e4d9fa7d2462d3227d2cc0ce25cb6af2b1edd1811",
+          "index_blob": "ee454b49ca1539c6f19aec1209f34cfc560b055a"
+        },
+        {
+          "source_path": "internal/core/port/errors.go",
+          "target_path": "apps/backend/internal/core/port/errors.go",
+          "mode": "100644",
+          "bytes": 1721,
+          "sha256": "493d19f9af491dfb6e5078a384b9e7335d8162baad762ece7d83d8e10dcf208a",
+          "index_blob": "94eefd88606407cc45a5fb7e22eb719b8b73992d"
+        },
+        {
+          "source_path": "internal/core/port/matter.go",
+          "target_path": "apps/backend/internal/core/port/matter.go",
+          "mode": "100644",
+          "bytes": 6177,
+          "sha256": "e35fa144896da914d68f87b50599e55be39d52af32cc694356e9f2fc2766610c",
+          "index_blob": "efa826a87f2b215d61f1fd6c44b08afe951d5879"
+        },
+        {
+          "source_path": "internal/core/port/port.go",
+          "target_path": "apps/backend/internal/core/port/port.go",
+          "mode": "100644",
+          "bytes": 2799,
+          "sha256": "551c60989f82fefd5c3c068c86c5d314f24447384b5822ce1cae066596e5c166",
+          "index_blob": "6bfaa5a9ceb473fed4389c8b356544b93aa01961"
+        },
+        {
+          "source_path": "internal/core/service/matter_service.go",
+          "target_path": "apps/backend/internal/core/service/matter_service.go",
+          "mode": "100644",
+          "bytes": 13242,
+          "sha256": "3def660001d16aa3d788772402859e94542ff7001248389b59c7aceb4b41cf46",
+          "index_blob": "84829e3dbae8ee8813c5fd3b0e176f3a78f67bd2"
+        },
+        {
+          "source_path": "internal/core/service/matter_service_rework_test.go",
+          "target_path": "apps/backend/internal/core/service/matter_service_rework_test.go",
+          "mode": "100644",
+          "bytes": 10159,
+          "sha256": "9f1e5a289e8079e9df002815b90e63483511db7cf447318e37d9d07987cb57fa",
+          "index_blob": "eede58072668d5d6b4a39e840bd22985b33592c1"
+        },
+        {
+          "source_path": "internal/core/service/matter_service_test.go",
+          "target_path": "apps/backend/internal/core/service/matter_service_test.go",
+          "mode": "100644",
+          "bytes": 20945,
+          "sha256": "1018d6c0d49ec83a32645db4b47c1ea863fd5125556583c6bea5830faffe390e",
+          "index_blob": "84135aae07f405f6454318e4db5d1c8d4887bda1"
+        },
+        {
+          "source_path": "internal/core/service/user_service.go",
+          "target_path": "apps/backend/internal/core/service/user_service.go",
+          "mode": "100644",
+          "bytes": 4730,
+          "sha256": "fc265688cd63c89e05204013ffca9ee947f3d6ed9414489167ab76cd0fe62a20",
+          "index_blob": "9912bfa1275c45174682517ff5318d4d132f2353"
+        },
+        {
+          "source_path": "internal/core/service/user_service_test.go",
+          "target_path": "apps/backend/internal/core/service/user_service_test.go",
+          "mode": "100644",
+          "bytes": 11939,
+          "sha256": "36df42e15f911a2babcbdcb498128bbec76789c16da36684382dd4b212c60e14",
+          "index_blob": "71e97a73f043669403615a6ad3a2312267ad44aa"
+        },
+        {
+          "source_path": "internal/observability/log.go",
+          "target_path": "apps/backend/internal/observability/log.go",
+          "mode": "100644",
+          "bytes": 1828,
+          "sha256": "d1d421b107ccd3b73558762e2a31d0c65d74b502b58da90f6ef7ad2a11466752",
+          "index_blob": "5c5ce4457e20231f52958055b740b5832aa28dc5"
+        },
+        {
+          "source_path": "internal/observability/observability_test.go",
+          "target_path": "apps/backend/internal/observability/observability_test.go",
+          "mode": "100644",
+          "bytes": 2205,
+          "sha256": "1d086cdde8ce4a36f37d68f4a7dd661df05b4e070c192d841d2f444e46f5117b",
+          "index_blob": "9747a6c203b5d65f24235a15115bc736752a6719"
+        },
+        {
+          "source_path": "internal/observability/otel.go",
+          "target_path": "apps/backend/internal/observability/otel.go",
+          "mode": "100644",
+          "bytes": 2839,
+          "sha256": "a2aeec1b12a01785d9e209a8df303c46b836caa16f24e954ac41f3cec0088d24",
+          "index_blob": "3710c4559365650aebd8c42f68da868fbb2dcfc7"
+        },
+        {
+          "source_path": "internal/outbox/relay.go",
+          "target_path": "apps/backend/internal/outbox/relay.go",
+          "mode": "100644",
+          "bytes": 8009,
+          "sha256": "242804e9a6ef019c70415015400aaf297e89110ecceca1665d94fb2734239f98",
+          "index_blob": "50bca6b193e2e689188721de09d8af381e9c3648"
+        },
+        {
+          "source_path": "internal/outbox/relay_internal_test.go",
+          "target_path": "apps/backend/internal/outbox/relay_internal_test.go",
+          "mode": "100644",
+          "bytes": 670,
+          "sha256": "4d408277d86dee1239535e73f7c540c773d1505a15a799ef07210666422f0b60",
+          "index_blob": "3e755bceda29f9ffc7a52e00cdb8067e952cc667"
+        },
+        {
+          "source_path": "internal/outbox/relay_test.go",
+          "target_path": "apps/backend/internal/outbox/relay_test.go",
+          "mode": "100644",
+          "bytes": 17850,
+          "sha256": "cebae92e14b965b443afda92ce0d079f8e47277960730d300f80b742b5789196",
+          "index_blob": "41fd305c842c993b437aeaba32e83f976abb48de"
+        },
+        {
+          "source_path": "scripts/rename.sh",
+          "target_path": "apps/backend/scripts/rename.sh",
+          "mode": "100755",
+          "bytes": 3310,
+          "sha256": "f41a6df6f6752f63c67d60d507e9e9c253ee2c2c337bdd2780eddccb3a5e5030",
+          "index_blob": "179f98a51a1e8d0fb64bfc55f0e1e1ab2863fdc7"
+        },
+        {
+          "source_path": "sqlc.yaml",
+          "target_path": "apps/backend/sqlc.yaml",
+          "mode": "100644",
+          "bytes": 1862,
+          "sha256": "9b7260b804e923a81afa56ae43c738b96b55019c09344bd26fee33d4c686b832",
+          "index_blob": "4b159af5d2e1271820727a075ad7c076d0093a14"
+        }
+      ],
+      "source_git_status_sha256": "3c8fbff8985a98424fc7ae4d4f9b36b5ae6fbe75711f9fdc56e294fb4d7b3945",
+      "head_to_tree_patch_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e",
+      "staged_patch_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e"
+    },
+    {
+      "kind": "frontend",
+      "source": "/private/tmp/mc002-inta-fe",
+      "destination": "apps/frontend",
+      "source_head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "source_branch": "codex/mc-002-inta-fe",
+      "files": [
+        {
+          "source_path": ".agents/rules/routes.md",
+          "target_path": "apps/frontend/.agents/rules/routes.md",
+          "mode": "100644",
+          "bytes": 500,
+          "sha256": "9a2e4b3932c79cc9911774fd5330c73afc07e1a4822d0f0185d504b83ca247e9",
+          "index_blob": "cc60349202468313d7ade526cefd1bec1ce042df"
+        },
+        {
+          "source_path": ".agents/rules/server-security.md",
+          "target_path": "apps/frontend/.agents/rules/server-security.md",
+          "mode": "100644",
+          "bytes": 507,
+          "sha256": "5a271dd98a2a83fe39838726e0dc17856a79ec702e466a4455b633fe36efb579",
+          "index_blob": "9980a14cf0d8b6cad7011fe924105b135ccbdb5a"
+        },
+        {
+          "source_path": ".agents/rules/shared-components.md",
+          "target_path": "apps/frontend/.agents/rules/shared-components.md",
+          "mode": "100644",
+          "bytes": 469,
+          "sha256": "a0294c4f382164d03077ffb8ad8e778aaa3eb739f0d7f52ccf6574003337f3dc",
+          "index_blob": "50637bafdf4fae2b2ee417fffd965e49d80b0e58"
+        },
+        {
+          "source_path": ".agents/skills/api-integration/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/api-integration/SKILL.md",
+          "mode": "100644",
+          "bytes": 2725,
+          "sha256": "87fe88d1d094ac0251ff0fc6f074fd211930c4cc39676357a5fca0b5cc1f6a45",
+          "index_blob": "5482632a42e17a019bc2c41c4ecd69d5ac4b3d06"
+        },
+        {
+          "source_path": ".agents/skills/app-security-review/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/app-security-review/SKILL.md",
+          "mode": "100644",
+          "bytes": 3016,
+          "sha256": "115e8bd15e332301236c16f4bd696725fec2c42baa0486a22aa7d309ef8a136b",
+          "index_blob": "ba10680d2d3179ce718b0746e40a056711157df0"
+        },
+        {
+          "source_path": ".agents/skills/architecture-review/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/architecture-review/SKILL.md",
+          "mode": "100644",
+          "bytes": 2064,
+          "sha256": "f355160fcc5689832f2763dc2f166c0f673a3375e0e3d562f107a8779ed7a3ce",
+          "index_blob": "b7c2e030e9ba6cd0e2688150ce18c6f4a2cd5688"
+        },
+        {
+          "source_path": ".agents/skills/atomic-component-development/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/atomic-component-development/SKILL.md",
+          "mode": "100644",
+          "bytes": 2846,
+          "sha256": "c6e88ad11fa7faac6a117d9a8b5bf8907191acb762b093a7c5339421af2b7322",
+          "index_blob": "3386c04cfd505c0c9e81390a86f3674c98ef24a6"
+        },
+        {
+          "source_path": ".agents/skills/next-bundle-optimizer/LICENSE",
+          "target_path": "apps/frontend/.agents/skills/next-bundle-optimizer/LICENSE",
+          "mode": "100644",
+          "bytes": 1079,
+          "sha256": "ee765244e2d59f5234d474f62e0766fa0c8b99af967fdd4c0cb8dcb0c76ea224",
+          "index_blob": "5948ee9bd0de5064423688a2967ab3111c2658ed"
+        },
+        {
+          "source_path": ".agents/skills/next-bundle-optimizer/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/next-bundle-optimizer/SKILL.md",
+          "mode": "100644",
+          "bytes": 9564,
+          "sha256": "e757741100c2608022c6dfd12a1de272aba6beb04f32cfb3d7559b5aefa405b1",
+          "index_blob": "8d1b77604298876f1d8a3dcab934a8a931488f2a"
+        },
+        {
+          "source_path": ".agents/skills/next-bundle-optimizer/references/fix-patterns.md",
+          "target_path": "apps/frontend/.agents/skills/next-bundle-optimizer/references/fix-patterns.md",
+          "mode": "100644",
+          "bytes": 2647,
+          "sha256": "c805ff1f56678dcc906bd66990c553c9087f13215d1c426d387ca1d96ff4d0aa",
+          "index_blob": "6050f2098ccd05093c1de6291fffd0ca2bb257ca"
+        },
+        {
+          "source_path": ".agents/skills/next-bundle-optimizer/references/graph-methods.md",
+          "target_path": "apps/frontend/.agents/skills/next-bundle-optimizer/references/graph-methods.md",
+          "mode": "100644",
+          "bytes": 2790,
+          "sha256": "e636d046190ebff651dbd74d6fa9999a9bc3c1882ec315ac8303ff8be1bdc242",
+          "index_blob": "9ffa155500eeb85c51a13ecdca981feba9197bdb"
+        },
+        {
+          "source_path": ".agents/skills/next-cache-components-optimizer/LICENSE",
+          "target_path": "apps/frontend/.agents/skills/next-cache-components-optimizer/LICENSE",
+          "mode": "100644",
+          "bytes": 1079,
+          "sha256": "ee765244e2d59f5234d474f62e0766fa0c8b99af967fdd4c0cb8dcb0c76ea224",
+          "index_blob": "5948ee9bd0de5064423688a2967ab3111c2658ed"
+        },
+        {
+          "source_path": ".agents/skills/next-cache-components-optimizer/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/next-cache-components-optimizer/SKILL.md",
+          "mode": "100644",
+          "bytes": 23106,
+          "sha256": "df743375efa2f67619147c3594f0d1d023dd01be4c854b1860a11a92f3c5a876",
+          "index_blob": "7a6326c08ae4355c00df70766ef61c8025db9e7a"
+        },
+        {
+          "source_path": ".agents/skills/next-cache-components-optimizer/reference/red-test-robustness.md",
+          "target_path": "apps/frontend/.agents/skills/next-cache-components-optimizer/reference/red-test-robustness.md",
+          "mode": "100644",
+          "bytes": 10924,
+          "sha256": "d1355ef608d8c7319e1f6f2eeca6075f156b21a65a5e36af8242f1270ea59433",
+          "index_blob": "bd02eb7eac5c5d25ce0579ce74f6362fb988fcd4"
+        },
+        {
+          "source_path": ".agents/skills/next-cache-components-optimizer/rig-template.md",
+          "target_path": "apps/frontend/.agents/skills/next-cache-components-optimizer/rig-template.md",
+          "mode": "100644",
+          "bytes": 8170,
+          "sha256": "6128549ae453d0f5169e5c85d0ef11a19a09e9c97de04b64bc59e9851f6f92d7",
+          "index_blob": "fbc221ad7f4a19a0ce5bc4c76508f9b21b7d688d"
+        },
+        {
+          "source_path": ".agents/skills/next-cache-components-optimizer/test-template.md",
+          "target_path": "apps/frontend/.agents/skills/next-cache-components-optimizer/test-template.md",
+          "mode": "100644",
+          "bytes": 8741,
+          "sha256": "dfdca255b0704d1b904512664cb9a9bb1266ca1eb5df4e75b6d4e72d7ad07b39",
+          "index_blob": "2fb85514b76d259eff1f838f137c03f065573a6e"
+        },
+        {
+          "source_path": ".agents/skills/next-dev-loop/LICENSE",
+          "target_path": "apps/frontend/.agents/skills/next-dev-loop/LICENSE",
+          "mode": "100644",
+          "bytes": 1079,
+          "sha256": "ee765244e2d59f5234d474f62e0766fa0c8b99af967fdd4c0cb8dcb0c76ea224",
+          "index_blob": "5948ee9bd0de5064423688a2967ab3111c2658ed"
+        },
+        {
+          "source_path": ".agents/skills/next-dev-loop/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/next-dev-loop/SKILL.md",
+          "mode": "100644",
+          "bytes": 9215,
+          "sha256": "2b6f085add2ec7bdf5dfdbcfadf54451aff4a0910eeb1fa34c40f613808d0c5c",
+          "index_blob": "2fea9970c0210a835d2246caf08053234c4b0201"
+        },
+        {
+          "source_path": ".agents/skills/next-partial-prefetching-optimizer/LICENSE",
+          "target_path": "apps/frontend/.agents/skills/next-partial-prefetching-optimizer/LICENSE",
+          "mode": "100644",
+          "bytes": 1079,
+          "sha256": "ee765244e2d59f5234d474f62e0766fa0c8b99af967fdd4c0cb8dcb0c76ea224",
+          "index_blob": "5948ee9bd0de5064423688a2967ab3111c2658ed"
+        },
+        {
+          "source_path": ".agents/skills/next-partial-prefetching-optimizer/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/next-partial-prefetching-optimizer/SKILL.md",
+          "mode": "100644",
+          "bytes": 11494,
+          "sha256": "cc69f7b279ffcd4a4fc4d7ec44ebc29f1a6090e4b1c2f0464c53736dda344c08",
+          "index_blob": "bdc6f00334a08a0775e1f584bc88574696d638cb"
+        },
+        {
+          "source_path": ".agents/skills/next-partial-prefetching-optimizer/reference/red-test-robustness.md",
+          "target_path": "apps/frontend/.agents/skills/next-partial-prefetching-optimizer/reference/red-test-robustness.md",
+          "mode": "100644",
+          "bytes": 6635,
+          "sha256": "dd70265f32a5ecf1b798d98fa047420ca71f1897ae1399fb2e4a4805f49a9f1d",
+          "index_blob": "5f39ea1d9471abbea94769c32480e1910badc9ff"
+        },
+        {
+          "source_path": ".agents/skills/next-partial-prefetching-optimizer/rig-template.md",
+          "target_path": "apps/frontend/.agents/skills/next-partial-prefetching-optimizer/rig-template.md",
+          "mode": "100644",
+          "bytes": 8079,
+          "sha256": "031c73bb10e9fe1966b2eaaa546f421de9b0633dc29979cf43c2d2313b2ea775",
+          "index_blob": "508db2b974b3fdf4dcd4e510f517cc8958fc654e"
+        },
+        {
+          "source_path": ".agents/skills/nextjs-feature-development/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/nextjs-feature-development/SKILL.md",
+          "mode": "100644",
+          "bytes": 3851,
+          "sha256": "72d27912a3aaf9ddc5604d0335dd1a170b065eb75a30c855bd68e2f0efbba0d5",
+          "index_blob": "e0edc928a5f93ac745a1a6f8b99551a416460305"
+        },
+        {
+          "source_path": ".agents/skills/nextjs-server-client-boundaries/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/nextjs-server-client-boundaries/SKILL.md",
+          "mode": "100644",
+          "bytes": 3697,
+          "sha256": "d61021975e85d3d32943db71b15d9bafdceb06e606fee8e7d123e797d1f21ecf",
+          "index_blob": "a243253636e533cf57634eddd67c592543cf0c6d"
+        },
+        {
+          "source_path": ".agents/skills/release-readiness/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/release-readiness/SKILL.md",
+          "mode": "100644",
+          "bytes": 2169,
+          "sha256": "ec90471c55ad0027d9b872bf0144cf618e3416e7ca16d9968095e9a56d4b084b",
+          "index_blob": "5927ceeb8d7ff9f3ff76867f119a59a587574b7f"
+        },
+        {
+          "source_path": ".agents/skills/safe-refactoring/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/safe-refactoring/SKILL.md",
+          "mode": "100644",
+          "bytes": 1752,
+          "sha256": "2abbd8383f89ec96e06929ee7edfdc875c0df1862a2e989f7c1dbaf65194852c",
+          "index_blob": "55cb0af2f8dbd212e90cf35906aff517b81ff5ed"
+        },
+        {
+          "source_path": ".agents/skills/testing-and-verification/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/testing-and-verification/SKILL.md",
+          "mode": "100644",
+          "bytes": 2074,
+          "sha256": "a0fb14c82ffa2ba77af94dc64995fc5be5b9a26ecf119c1cd3419c9625e6dcb2",
+          "index_blob": "89e96e15c0056550ade2e74f44b7e7a5c0659fbb"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/LICENSE",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/LICENSE",
+          "mode": "100644",
+          "bytes": 1075,
+          "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014",
+          "index_blob": "1e71cbf26660f31903807d099fe902c098fc7e4c"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/SKILL.md",
+          "mode": "100644",
+          "bytes": 15647,
+          "sha256": "5a1d32489719c11619630e42fb6bf99ca8091e6bbb27bdac8dd6fda5b827b55b",
+          "index_blob": "bf059c89c97152d44b196376bd21fec6fc31d78a"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/app-interface.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/app-interface.csv",
+          "mode": "100644",
+          "bytes": 11046,
+          "sha256": "331e7cf2c0b222d80c566c5f255c63cb339f65bfd02e471a720f28e4864a9f08",
+          "index_blob": "95e328c807a23be02c9c32c736d0fa19109c6076"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/catalog-summary.json",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/catalog-summary.json",
+          "mode": "100644",
+          "bytes": 2392,
+          "sha256": "6638da97231c07fb5cef3cd9d3ce483ca7b2f9748980f8c27490eb03968d8894",
+          "index_blob": "f911c3ae48fac5863a5a5e210866ec5cabece164"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/charts.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/charts.csv",
+          "mode": "100644",
+          "bytes": 23365,
+          "sha256": "4115cf1120680f2cedef0676cb648f30c7ef4699e2a947535d4113e71ed3b12a",
+          "index_blob": "c6f4f875fd5b34379f24dbb541539492366a1058"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/colors.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/colors.csv",
+          "mode": "100644",
+          "bytes": 37940,
+          "sha256": "8162429222bce22df62b564085946a30d07cc9722c58d0a3a494bd0d1d00841c",
+          "index_blob": "5d2bf7389105f8a824b504b57cc93c00dc1d7e0a"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/data-provenance.json",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/data-provenance.json",
+          "mode": "100644",
+          "bytes": 36686,
+          "sha256": "e82fb33ed49375a300e93d9c11ccd1c1493c999e84ee7ee295e527634786e2e0",
+          "index_blob": "e41d2e553bdc7e5a8e6d16f5daab565faf372188"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/google-font-licenses.json",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/google-font-licenses.json",
+          "mode": "100644",
+          "bytes": 433127,
+          "sha256": "35688523f2955795caa1a47c53b83099e60c1708461476f9cc3a050cf3b0148a",
+          "index_blob": "3ac2c34e80665bc902e265c52ab6c27b1654524c"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/google-fonts.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/google-fonts.csv",
+          "mode": "100644",
+          "bytes": 747241,
+          "sha256": "1c8c3b2ea1faf6a1012da463756def8b3889db33f2226f0343bb4daa80307d03",
+          "index_blob": "d7f87e3e0159b1caba083b9954793d9852256aa0"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/icons.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/icons.csv",
+          "mode": "100644",
+          "bytes": 57945,
+          "sha256": "50816c6012030178195a16ee481ebf58b47bd985d70e8ec58886cc83f6eddafc",
+          "index_blob": "cfc3f1eccd7e5aee15d8d70f86d8fa17ba737958"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/landing.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/landing.csv",
+          "mode": "100644",
+          "bytes": 25449,
+          "sha256": "9a2edd3bb676c2a58f00ade7a062e285222d4297bfd847c8d5b056f0dbbf52d0",
+          "index_blob": "34858160aa2789c49dca274d48bb116d51dd3f0a"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/motion.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/motion.csv",
+          "mode": "100644",
+          "bytes": 14679,
+          "sha256": "381affe8df8ea1f66fbbda2598827f9f54299107bbe6a1b4e9b68f6b62091ceb",
+          "index_blob": "8e0ca9ceb0e4cd4832aee60ac74713e1e1830de8"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/phosphor-icons-upstream.json",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/phosphor-icons-upstream.json",
+          "mode": "100644",
+          "bytes": 823933,
+          "sha256": "2399325233b277b5c97a80e6a5e8941154f5d057beee4e7613db87c87d700236",
+          "index_blob": "ec1d76b8117ccbfdce5df214bf0d993e41a75318"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/products.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/products.csv",
+          "mode": "100644",
+          "bytes": 75623,
+          "sha256": "42473f75e8dde5987bdf89ce55d8c168091b80a356cae691dd60247d80720b70",
+          "index_blob": "9f40f1d1f9743c4a81603076dfbfd115bbb55246"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/react-performance.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/react-performance.csv",
+          "mode": "100644",
+          "bytes": 15080,
+          "sha256": "3d925802539abac5afeb63ae8aa1960b7229ad271b3a47caed40ab2d97ad0734",
+          "index_blob": "425a8e76c6b3bae40e8c633ffbf7ad6222c9f73a"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/angular.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/angular.csv",
+          "mode": "100644",
+          "bytes": 19863,
+          "sha256": "704be83f2bad30c7e6de01afb113ffa01e0c458762f48b7102f31ba2367b5553",
+          "index_blob": "5a1878dbee2b3c55c6468cbb18699b84d1a8c4d2"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/astro.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/astro.csv",
+          "mode": "100644",
+          "bytes": 14591,
+          "sha256": "2c2f55fadaafc05e04cc321c8194a1a28b656e6757fe2ba316f41b16428299c6",
+          "index_blob": "1fd2492420b20a0b311295ab883597fadb8245a6"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/avalonia.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/avalonia.csv",
+          "mode": "100644",
+          "bytes": 27327,
+          "sha256": "442fca14675a020683473e7e49f08abb27b9df0765c80efe54aef61f1a4ac258",
+          "index_blob": "c67f4117105865587eda9020c57d8c209f3a929a"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/flutter.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/flutter.csv",
+          "mode": "100644",
+          "bytes": 14192,
+          "sha256": "64dba0ac17349f28bce517a0f5f48c54d9ed2e487ec0c0258303463b382f41a0",
+          "index_blob": "731805c4076bd9f2755ca4bd7def5be6f6df7e9c"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/html-tailwind.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/html-tailwind.csv",
+          "mode": "100644",
+          "bytes": 16551,
+          "sha256": "d05a581d20af57b8ca0104a6d31d90a07c437d500662a96c3029fc2f9a4678ee",
+          "index_blob": "9089eb0fc821ff0c8d135f8ee503be345e8fcb84"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/javafx.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/javafx.csv",
+          "mode": "100644",
+          "bytes": 33577,
+          "sha256": "2e819b8d5abdd23ad4dae0991650fdb57af497aabd68b37463aa9c442944c869",
+          "index_blob": "744bd80f437f12bfb5bb9c84630a58022604675a"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/jetpack-compose.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/jetpack-compose.csv",
+          "mode": "100644",
+          "bytes": 12295,
+          "sha256": "699de218b286948eaec7d15767b6e1350ee299167e49bf476d82e3ff58724e0a",
+          "index_blob": "8daa0b8f9a2ca3f0f1711664d9d677cd1c38dd9e"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/laravel.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/laravel.csv",
+          "mode": "100644",
+          "bytes": 20163,
+          "sha256": "854ea4daa5fc61292d22235ad33b49ba3fe22423c3de8d3cb03758ffed3b59f9",
+          "index_blob": "ed11b0fba457e02857f996d1542fb0b8e1271756"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/nextjs.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/nextjs.csv",
+          "mode": "100644",
+          "bytes": 18687,
+          "sha256": "ecd2c27b2ea0127d203ae726060efcdd7335b5e83f96b99e4f3befbbfeebd5a4",
+          "index_blob": "acdaf097dff26ba0d3b22ab4544bf6169c87afd4"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/nuxt-ui.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/nuxt-ui.csv",
+          "mode": "100644",
+          "bytes": 28700,
+          "sha256": "fce682a338cfcdbf35d318d20e5befbe7b5d81b05abc37f87677a6d9cde84dc6",
+          "index_blob": "e2aaeca45faa8b987bf94010162b14d458811dde"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/nuxtjs.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/nuxtjs.csv",
+          "mode": "100644",
+          "bytes": 23014,
+          "sha256": "3d9b54ed2d151bd9c86e9e5609b8a6f88a00c4c52fa601a30af96c49b2c4d176",
+          "index_blob": "ceab9cf3358d2788af0bd7dc14cb3fab769740d0"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/react-native.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/react-native.csv",
+          "mode": "100644",
+          "bytes": 14049,
+          "sha256": "ba31dd9c0c04da6bc02a74448bf121f9c0728ae5ba3b4d47b487778b0a1135b5",
+          "index_blob": "a5aea45dc1d0341b11ee42076a86db842d4d2a19"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/react.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/react.csv",
+          "mode": "100644",
+          "bytes": 21166,
+          "sha256": "4dd176a9787e5c6306b5df94158d75955adcdc6edab41ce5286641a5842303c1",
+          "index_blob": "fe8f001e695a978733449e04e99d7135af0f1bf3"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/shadcn.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/shadcn.csv",
+          "mode": "100644",
+          "bytes": 23184,
+          "sha256": "e56cfde5b74907836ac3582a4779d5b7f3d206a702ab81b8669a1b668c3eeb51",
+          "index_blob": "0e8bedf3084e7a40d6310bcd3011c437efcb1700"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/svelte.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/svelte.csv",
+          "mode": "100644",
+          "bytes": 15078,
+          "sha256": "f6e379ba802941ba26b01d4ffbe3cd39120f2587659a1d93851c707f66bc13db",
+          "index_blob": "51684fe70448e15333cd16207db7da8aea0508e6"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/swiftui.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/swiftui.csv",
+          "mode": "100644",
+          "bytes": 15323,
+          "sha256": "bdd9231ff3ad658f4e7c063e1eb49df2fd09ac8d90631a86df899b39833b9623",
+          "index_blob": "ea9b95e8922e663b2adf27a7346e2c2f44c7a215"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/threejs.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/threejs.csv",
+          "mode": "100644",
+          "bytes": 46769,
+          "sha256": "155d583b9c64da0df4b6c6cb060c02eab222505e0734d6353da02c9e2b5d982b",
+          "index_blob": "f62286320038beabbdc5e11e07ca2818d8e959a4"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/uno.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/uno.csv",
+          "mode": "100644",
+          "bytes": 30091,
+          "sha256": "a0474363e4225b5367214d5675fd3e075f137026f9500f0d04357882ef4f6d48",
+          "index_blob": "9cab32326b4ad3a3cf43451a3c24553a41126cc1"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/uwp.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/uwp.csv",
+          "mode": "100644",
+          "bytes": 24692,
+          "sha256": "c409f08c1fbba1f1029f1acaa554e7b4471cc85517a5751c9f2e62465badcd5c",
+          "index_blob": "04a84ea092a7657fef11e5daa97982be52dc6f59"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/vue.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/vue.csv",
+          "mode": "100644",
+          "bytes": 12813,
+          "sha256": "b655f1ebb9dff2652d15981f31b1784c8a6d4759efd2815a14f3088257569f95",
+          "index_blob": "83997c515775170f22b638635aae0a67a46dfc87"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/winui.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/winui.csv",
+          "mode": "100644",
+          "bytes": 27890,
+          "sha256": "e676dc1c13ee6c205c40b0746f1335150a346c7a49a0616d2545bc3d2c930c85",
+          "index_blob": "107ecead11728a83ec0ea10d815a9d1f43a35792"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/stacks/wpf.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/stacks/wpf.csv",
+          "mode": "100644",
+          "bytes": 24158,
+          "sha256": "9781a9950b20333637b30a02e498b7efca21b618a3eeb8665836f3ac6e974da7",
+          "index_blob": "4e88d6750833a74f85ba487cf2b8f4ff6ebd2f4a"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/styles.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/styles.csv",
+          "mode": "100644",
+          "bytes": 149478,
+          "sha256": "a93a4d9d7025856575d7b7583bda020be9043013432c5af7c58af9dbdfb206b7",
+          "index_blob": "d1eb2c216e453005ffa8232ffb94491c183afe3c"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/typography.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/typography.csv",
+          "mode": "100644",
+          "bytes": 49997,
+          "sha256": "321fc446e89024488ebae96dda93efc4d2307bd8bddb240857ad51364f6782c8",
+          "index_blob": "70d107d107de30150863c965767320ec33ef29ad"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/ui-reasoning.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/ui-reasoning.csv",
+          "mode": "100644",
+          "bytes": 77360,
+          "sha256": "f0774dd741cecdad5eec842034bd6d5e9ea50e9f220a1910069748daa0bb8e9a",
+          "index_blob": "8931d4c809f8e22ddac00ce612ce0c35f34a59b6"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/data/ux-guidelines.csv",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/data/ux-guidelines.csv",
+          "mode": "100644",
+          "bytes": 27516,
+          "sha256": "ff81ec613f70ba9fc3fcce52dbe4ae35d44b2079dbe6dc066d2d6e38c28facd5",
+          "index_blob": "4e7d52b296537a03513b18b2c3f2b946cc802051"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/references/pro-rules.md",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/references/pro-rules.md",
+          "mode": "100644",
+          "bytes": 10909,
+          "sha256": "d28442d61c310b49c054a4ea736f89fb3008beebdbbc38c4b3a540b8f7fadf23",
+          "index_blob": "b2ce233287e37ec9ca13476c4014b922e9d5a0e9"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/references/quick-reference.md",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/references/quick-reference.md",
+          "mode": "100644",
+          "bytes": 24526,
+          "sha256": "0609bc7c89dacb40472465d8fc14257b56b2c43439660fc8d6fa3b8c022e1876",
+          "index_blob": "7acc7e7540ca6981d878a90aae4455c1638e2385"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/scripts/core.py",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/scripts/core.py",
+          "mode": "100644",
+          "bytes": 41236,
+          "sha256": "c3be4b23e7150e6b45095213158cfa3c8ad96502f01dde3f6ffff9de64a4f481",
+          "index_blob": "670fe33070cfe706401da4ff276831257dbf1e25"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/scripts/design_system.py",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/scripts/design_system.py",
+          "mode": "100644",
+          "bytes": 71537,
+          "sha256": "e7d1c94c4b2eada17c5551157668362659ccf9626d34dbd58e68142410f90103",
+          "index_blob": "d5fe1575f00d839f919603bd09b44fe7e9def4fb"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/scripts/reasoning_contract.py",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/scripts/reasoning_contract.py",
+          "mode": "100644",
+          "bytes": 5824,
+          "sha256": "b8bac1af82aa280d3e06f00aabaeac4337e632996b07fed874e2b6ee6e9c5913",
+          "index_blob": "63652a666b130c249ea1e2954316f1ac8a5a73d5"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/scripts/search.py",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/scripts/search.py",
+          "mode": "100644",
+          "bytes": 9373,
+          "sha256": "d54e648fe0ec2932cac66684220cc17be4bd4b4eba1d23d3195d509d398db374",
+          "index_blob": "5038aa875a0d39f24dea803a4c73b38f8f56915f"
+        },
+        {
+          "source_path": ".agents/skills/ui-ux-pro-max/scripts/validate_data.py",
+          "target_path": "apps/frontend/.agents/skills/ui-ux-pro-max/scripts/validate_data.py",
+          "mode": "100644",
+          "bytes": 52230,
+          "sha256": "a599aa256049cf30954d1f164721b99e453eb7e4cb8241bcab2d5573e6cf58b8",
+          "index_blob": "8b6c7941f6ad3e51cb9d412b11185133e7763001"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/AGENTS.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/AGENTS.md",
+          "mode": "100644",
+          "bytes": 22627,
+          "sha256": "89e3ddd58fcf99a53a50e25dfd21b8cde1be5f10b7df6bacd3dfa6796932f516",
+          "index_blob": "558bf9aa1e36db2161f1633c9bfae14a819f0508"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/README.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/README.md",
+          "mode": "100644",
+          "bytes": 2140,
+          "sha256": "85915a43a6f0b4efe525e3cf6398dd866166da2025837c4460468a24a940da94",
+          "index_blob": "01f359b0e79ce544d1463057be54946e50d62bcd"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/SKILL.md",
+          "mode": "100644",
+          "bytes": 2830,
+          "sha256": "375c3fdfe6c88484b76186a47e8ca4bd52ba5f4127657507860446851c7f1874",
+          "index_blob": "665d91a4884d83aa5077ced210169031864dc3e2"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/metadata.json",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/metadata.json",
+          "mode": "100644",
+          "bytes": 530,
+          "sha256": "49262ed5cb4186f31ee980cf8d990be0170c51efed4908d0464a1cff9905bd05",
+          "index_blob": "3470b744190af044373abbfe80d94630c0cc6041"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/_sections.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/_sections.md",
+          "mode": "100644",
+          "bytes": 829,
+          "sha256": "a174213b87e6911e2b766995a2cbaf8d1534057076e82fb79fe3f0ecb38047df",
+          "index_blob": "f921dd41b53e4d847f25a6b3eca25a4e8857db44"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/_template.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/_template.md",
+          "mode": "100644",
+          "bytes": 329,
+          "sha256": "587f7d16b0660eb61fee4a4d3d7df2b3077d6835de170602c7d6e60bee559131",
+          "index_blob": "119a30167f162c439f05e73c63044c590dff645c"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/architecture-avoid-boolean-props.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/architecture-avoid-boolean-props.md",
+          "mode": "100644",
+          "bytes": 2267,
+          "sha256": "007555ebb020f4d552582a2c4db194db71a1fd33094012e5187bcfa4f8c392d5",
+          "index_blob": "ccee19ce495b9d7fdf08867db3c6b6282006312e"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/architecture-compound-components.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/architecture-compound-components.md",
+          "mode": "100644",
+          "bytes": 2600,
+          "sha256": "f246af13dc269b521cf20eb8ad99a0cb645beac381c8c9b117262c34612c8457",
+          "index_blob": "e5e3043cb5a81b83dce0389848b828455f00854f"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/patterns-children-over-render-props.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/patterns-children-over-render-props.md",
+          "mode": "100644",
+          "bytes": 1886,
+          "sha256": "7c45a0d21b3c4126a32cba916ee31adeae195386ad1dbbe6634aedb7457aa0ad",
+          "index_blob": "d4345ee30aea5f1b11815251edca7ebd0aefe2e2"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/patterns-explicit-variants.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/patterns-explicit-variants.md",
+          "mode": "100644",
+          "bytes": 2395,
+          "sha256": "8c19e596e61807549d01ce8c6954c6358199f97a8511c0c02c625ec0efda8c0e",
+          "index_blob": "56e32e8bee5e5768f747db4e9718a6c2b54bfce5"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/react19-no-forwardref.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/react19-no-forwardref.md",
+          "mode": "100644",
+          "bytes": 953,
+          "sha256": "881830adb7534c4b2d70db426556646ad9837f5478f744f35641f635ada22227",
+          "index_blob": "e0d8f8a76f14888f2fafc8cccd3d9395e4711d0d"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/state-context-interface.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/state-context-interface.md",
+          "mode": "100644",
+          "bytes": 4974,
+          "sha256": "09e73afbf9285fa416679cc864a287b9e8b821d0969272ab784295386d8c9bc3",
+          "index_blob": "d961bede0c6c6e318f6ba3aca9b5dfcdb768d8f9"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
+          "mode": "100644",
+          "bytes": 2699,
+          "sha256": "76a8c1eb29a70d8996ab3f71260345af2f7bc89deab815a421d6c87c6591a9c3",
+          "index_blob": "71a5afaa7d7078c262c92d32c3b97723de62f99f"
+        },
+        {
+          "source_path": ".agents/skills/vercel-composition-patterns/rules/state-lift-state.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-composition-patterns/rules/state-lift-state.md",
+          "mode": "100644",
+          "bytes": 3224,
+          "sha256": "74c54038a6c554c748fe31cec673b80861b5d920b7553cf78cdf10d18b4b759b",
+          "index_blob": "d7fe27b54933135f9050365b6c2001c101029d51"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/AGENTS.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/AGENTS.md",
+          "mode": "100644",
+          "bytes": 108279,
+          "sha256": "1fe182a457585dc5d1f532beef4c956f2d071d452a1fa243602297c97b7eb7e4",
+          "index_blob": "5850e374ecb6ac9cc94ee21bc0a6da0b74aed655"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/README.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/README.md",
+          "mode": "100644",
+          "bytes": 3360,
+          "sha256": "9eafb2123d3b8b2aef41fba0db2648a3f4f49996f8c7c8bb2c86263befd8b48a",
+          "index_blob": "f283e1c0c21c5b13c848452528c3949ff544846c"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/SKILL.md",
+          "mode": "100644",
+          "bytes": 7205,
+          "sha256": "e6e1132394291ddd8425226d9dbad193fdc7e6b7e7cd9fa3d4b936e19b8912ff",
+          "index_blob": "8a85d7b5ef1737a8e414c4b283e62bf488c21f0d"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/metadata.json",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/metadata.json",
+          "mode": "100644",
+          "bytes": 921,
+          "sha256": "c4e18bac3290fbe1b471a605867d4df68b03144ea26b8befdbe8f9d8fd124354",
+          "index_blob": "3bec38b176cc71d105895ec4678bbe79305dcb4c"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/_sections.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/_sections.md",
+          "mode": "100644",
+          "bytes": 1554,
+          "sha256": "01c59969e4e867f0708c8f8ef9c6d87fab9a07d0586244f429ff84013db8a115",
+          "index_blob": "4d20c144bc3b9265fc5976c704a8dd60ed3a806a"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/_template.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/_template.md",
+          "mode": "100644",
+          "bytes": 631,
+          "sha256": "99df2a3ea088c6c22de2484ddc7e964d0e9923846f44c63380343ecc64455442",
+          "index_blob": "1e9e70703485021e0b969f5731f38c8b9f8694db"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/advanced-effect-event-deps.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/advanced-effect-event-deps.md",
+          "mode": "100644",
+          "bytes": 1802,
+          "sha256": "55ed8f9f27a1bff803d6fa55828176207714b02123cbb97ddb8a90d88024a723",
+          "index_blob": "24d901b62be66f6088eb1de5b262e67f5c337d57"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/advanced-event-handler-refs.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/advanced-event-handler-refs.md",
+          "mode": "100644",
+          "bytes": 1483,
+          "sha256": "a3097edeecfb2ff6851cd66ed8cdf0617c3c88180504bee824aa6e75a215bbbc",
+          "index_blob": "97e7ade243aa6dae50d6faa5111dea0d04778ead"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/advanced-init-once.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/advanced-init-once.md",
+          "mode": "100644",
+          "bytes": 958,
+          "sha256": "3e4dc22173eb0e2b6dcf583e3babd862b8696328f8f59aee7c4d746c5bc05f6c",
+          "index_blob": "73ee38e5e74c0afa28cb730afe3275479432092a"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/advanced-use-latest.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/advanced-use-latest.md",
+          "mode": "100644",
+          "bytes": 1072,
+          "sha256": "8a3f64dfe5a77d1564248faf17fe662ae75b55d497a243cb30b38eb07ccbbf9a",
+          "index_blob": "9c7cb501693d4a9521697f13dbd5906dd99f0257"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/async-api-routes.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/async-api-routes.md",
+          "mode": "100644",
+          "bytes": 1125,
+          "sha256": "523338540d73427dc14c0cbb19f2741ebccdf8b105a7b2c1b33d2905cf237a42",
+          "index_blob": "6feda1ef0ac06b57b33c7b5bd6a19ca88d6c8a34"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/async-cheap-condition-before-await.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/async-cheap-condition-before-await.md",
+          "mode": "100644",
+          "bytes": 1220,
+          "sha256": "03107c1f70a293cd58a8abc5474c5548e20ea4efdf01b6d45aae7ad0ac1cb32c",
+          "index_blob": "5799d7f6ee6e9d70422048ab0cae06ca021d22b2"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/async-defer-await.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/async-defer-await.md",
+          "mode": "100644",
+          "bytes": 2208,
+          "sha256": "f3c142d090615abdcc99d31c123be37b31f0f1ed8d9ec9f7789a3bc6883ae0fb",
+          "index_blob": "460b5e16baf9c66f85e4169eb9d43e4d07f2ce94"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/async-dependencies.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/async-dependencies.md",
+          "mode": "100644",
+          "bytes": 1293,
+          "sha256": "16ef469f877e30c6b8e1e1b4bc3e527312fa3c6318cb785a4eca186ea236131a",
+          "index_blob": "0484ebab993f3db78277e8731872473d02475e6d"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/async-parallel.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/async-parallel.md",
+          "mode": "100644",
+          "bytes": 654,
+          "sha256": "6d2f841896279e976dfcdc1ac89e70771ac188baadfd43c096b5706cb838b961",
+          "index_blob": "64133f6c31fec81eaaabd712586337d20122e09f"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/async-suspense-boundaries.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/async-suspense-boundaries.md",
+          "mode": "100644",
+          "bytes": 2510,
+          "sha256": "de05fedac2eb7ae563b887b5a424464ec3dfaf84e5b7797467ebe2a796ac8afc",
+          "index_blob": "1fbc05b04ed2474637b12014a77688750e78f931"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/bundle-analyzable-paths.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/bundle-analyzable-paths.md",
+          "mode": "100644",
+          "bytes": 2382,
+          "sha256": "62090b5c815fd71bf1133dce754f51abc16a9456d0ccd025fd627de27726e92a",
+          "index_blob": "8276f156cf1aa8a611bd5bc3cadcb362e16ccd13"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/bundle-barrel-imports.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/bundle-barrel-imports.md",
+          "mode": "100644",
+          "bytes": 2795,
+          "sha256": "e648f6d54525f07a691357040ca5bff6ea3424788a91ff63812adb29622a671b",
+          "index_blob": "22d1050196671b7bc9f9aaf88cc665ba6fa8deb0"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/bundle-conditional.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/bundle-conditional.md",
+          "mode": "100644",
+          "bytes": 949,
+          "sha256": "09c8259c3efb04fc0abb8e412ccbda217c222ae8118516283e571c995fe3a7d4",
+          "index_blob": "99d6fc90e31d683d2b6b71353b92d620b484b644"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/bundle-defer-third-party.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/bundle-defer-third-party.md",
+          "mode": "100644",
+          "bytes": 920,
+          "sha256": "3719fb47b191e8db4fe22686ec88448ad5af9e6838585425abbe103d0b642e37",
+          "index_blob": "db041d1510e51defeade05926ba4e6bbad1068b5"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/bundle-dynamic-imports.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/bundle-dynamic-imports.md",
+          "mode": "100644",
+          "bytes": 791,
+          "sha256": "401817a7369f315fc5a68a1095742ff7d53d0461906880dc9d64a41495ee1986",
+          "index_blob": "60b62695e7a080e2020ff2242d8d841c5e3ecbc4"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/bundle-preload.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/bundle-preload.md",
+          "mode": "100644",
+          "bytes": 1149,
+          "sha256": "d1f7cc28da7cd5ab249acd287edc5b761afcfb194e9cb62cd44c5f3543db2de2",
+          "index_blob": "7000504065472628ae614786a3faadd23b0435a7"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/client-event-listeners.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/client-event-listeners.md",
+          "mode": "100644",
+          "bytes": 1969,
+          "sha256": "242a873349febc1ce685e85617994784dbab92c2eaa68aed7fed5a83e7680e93",
+          "index_blob": "aad4ae91605d715aad8e92b76bd7fb85c91d7cdf"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/client-localstorage-schema.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/client-localstorage-schema.md",
+          "mode": "100644",
+          "bytes": 1950,
+          "sha256": "0fb7cdf9dc93fdf22f87e3669f953fb9d4ac9b0be42eec4a29fe9a2560610b88",
+          "index_blob": "d30a1a7d4f85b0d50a0808eaa1b382c6deb595f4"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/client-passive-event-listeners.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/client-passive-event-listeners.md",
+          "mode": "100644",
+          "bytes": 1644,
+          "sha256": "1f35016f9053de69e884ee9be00654e37979c2ca85f5e57764dc2626ff7acb4b",
+          "index_blob": "ce39a889efb4452ec4c044555ff818301dcf7ece"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/client-swr-dedup.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/client-swr-dedup.md",
+          "mode": "100644",
+          "bytes": 1159,
+          "sha256": "644652c39c6cc00de8d1c77a7273612e868dc3f7edda30764164c12ec0f764a3",
+          "index_blob": "2a430f27fd6abdc1b1b2f809b7a60114ff506790"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-batch-dom-css.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-batch-dom-css.md",
+          "mode": "100644",
+          "bytes": 3266,
+          "sha256": "480b891b9eaf96e929dc1e964274a4828e3a78009b7d00ccd965a0d425215959",
+          "index_blob": "a62d84ed8149b6d4f173debc7043af03f8f8dd06"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-cache-function-results.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-cache-function-results.md",
+          "mode": "100644",
+          "bytes": 1949,
+          "sha256": "3daaa11d24f4295cb6be8bc6f407f2ce83cc7b5bd1f0e68891ea8ab835721dc7",
+          "index_blob": "180f8ac8fffd7e6ee320242d59d06565d40a12f8"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-cache-property-access.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-cache-property-access.md",
+          "mode": "100644",
+          "bytes": 532,
+          "sha256": "73e47431e74878a927061bf0ddc7cd91a7556cb35d2573f3421e82300d9ae311",
+          "index_blob": "39eec9061b4ca820150cc8183fb73f9e0c91ce85"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-cache-storage.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-cache-storage.md",
+          "mode": "100644",
+          "bytes": 1651,
+          "sha256": "11b826b0433898c1ece2d3547010d8e77db9fb240185748c45db91493de9b6cc",
+          "index_blob": "aa4a30c08176aabd27b41fa44d5c1981457b675f"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-combine-iterations.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-combine-iterations.md",
+          "mode": "100644",
+          "bytes": 753,
+          "sha256": "71add08aeeb43091d4ff4c0b2842cce8b4bdef8ad3e732cc034bb5a84827e746",
+          "index_blob": "044d017ec3b24b53e46d638acd1d936a22ac6323"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-early-exit.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-early-exit.md",
+          "mode": "100644",
+          "bytes": 1133,
+          "sha256": "925ce5ce87f3347186ca62212f29cc6baa2b8c85a96d2720ad07c3d0abf781c0",
+          "index_blob": "f46cb89c6cbe06e481aba0136848e3b17263ba96"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-flatmap-filter.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-flatmap-filter.md",
+          "mode": "100644",
+          "bytes": 1411,
+          "sha256": "9e5b166a41914d975bef7635467f8fb32cd98b5c3126c0bc6f163490812fb5f0",
+          "index_blob": "ee0edf0da256eb8b62c5a998c768c51eb520e8cd"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-hoist-regexp.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-hoist-regexp.md",
+          "mode": "100644",
+          "bytes": 1028,
+          "sha256": "f9e9aef2f7c2307dd7310f283df85dcada45fc43e9bb941b0c3aa414dec21ec4",
+          "index_blob": "dae3fefdc0a1db66badcd4875489715edcdb038b"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-index-maps.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-index-maps.md",
+          "mode": "100644",
+          "bytes": 837,
+          "sha256": "5df1bdc2cfabb2c98abd55d26762e5c18189535c2e686184f426082e62920391",
+          "index_blob": "9d357a00b15ac67cdd638886f5197a13173a637d"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-length-check-first.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-length-check-first.md",
+          "mode": "100644",
+          "bytes": 1747,
+          "sha256": "8b54a311c826b299272f29187fc58bc55772a04c4a72eeb29456ee96dc9fc624",
+          "index_blob": "8b89573630fdc3aa10564273f390ecc7e2b1cd3e"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-min-max-loop.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-min-max-loop.md",
+          "mode": "100644",
+          "bytes": 2290,
+          "sha256": "87dfb67e2f39df6ad8bcfb5b78c5fb364d3c07554ad188a202408d99f3763421",
+          "index_blob": "4b6656e96aecf3ae6ade52974090ae8b3e3f2bb5"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-request-idle-callback.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-request-idle-callback.md",
+          "mode": "100644",
+          "bytes": 2647,
+          "sha256": "ee08f83905b4011abbc33d594033157d77561b5bbd9b36b04f0f409581ffec32",
+          "index_blob": "d81927e5f0ddb9fa4eece79197728bfc4382cbfe"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-set-map-lookups.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-set-map-lookups.md",
+          "mode": "100644",
+          "bytes": 532,
+          "sha256": "a7fd781a6ba9ad49065961b6f9a90ef486bf6b648390e1a08704025f98e1642b",
+          "index_blob": "680a4892ee291c432bf8e769a44d0f1eb102b74b"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/js-tosorted-immutable.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/js-tosorted-immutable.md",
+          "mode": "100644",
+          "bytes": 1782,
+          "sha256": "d0a5e1b0fec48a0a81397957e2f068e224329f7c42cb5feeed8aae6fa64025e8",
+          "index_blob": "eae8b3f8aed2c7a893ceaae4cab55fa1c444b309"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-activity.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-activity.md",
+          "mode": "100644",
+          "bytes": 564,
+          "sha256": "1e5e7eaf3555e61d6a2e900089c676527d26259501db5594f59544b6c664f85a",
+          "index_blob": "c957a490b7c2688542766150741e85e066539251"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-animate-svg-wrapper.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-animate-svg-wrapper.md",
+          "mode": "100644",
+          "bytes": 1185,
+          "sha256": "9c6ae0ca7a51434e803887c64cded760956579a1452ccb80a461a03f9c937c77",
+          "index_blob": "646744cbe53b213c6fa5ead54ef107510e5be89d"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-conditional-render.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-conditional-render.md",
+          "mode": "100644",
+          "bytes": 980,
+          "sha256": "2ec2fa23c4148285144687050c52369adba3da2fbe3d486f8d3e0aad8f06f2bc",
+          "index_blob": "7e866f5852dac80e0822e7f7c33476f5c9fc22f1"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-content-visibility.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-content-visibility.md",
+          "mode": "100644",
+          "bytes": 815,
+          "sha256": "64eee6d5b916fe74df33363994b27fc7f71bea3bcedc7ee04bda23107ca3e6e4",
+          "index_blob": "aa6656362b2c0dad9ffea788b5850843d6c0629e"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-hoist-jsx.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-hoist-jsx.md",
+          "mode": "100644",
+          "bytes": 1039,
+          "sha256": "93b229560fae92005ed9a2a829064607b39b2e984e92d221d05b2d41df2b7c0e",
+          "index_blob": "32d2f3fcea53dadcf847231ee20c60fa2c5c3049"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-hydration-no-flicker.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-hydration-no-flicker.md",
+          "mode": "100644",
+          "bytes": 2308,
+          "sha256": "dc7ab358c67c177bca6e6f360fbc935ebe4efa928c0ba3ebd3f9f3d9e2000ca3",
+          "index_blob": "5cf0e79b69afd7564b965c09435a2c7ee79eb2bd"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-hydration-suppress-warning.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-hydration-suppress-warning.md",
+          "mode": "100644",
+          "bytes": 872,
+          "sha256": "915bacb934e2927d84b37a3f3d225a47b309ac8f9e494ed2bcb66ce07c5676a2",
+          "index_blob": "24ba2513a29f5259b3184695d2d4da25e03e42ac"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-resource-hints.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-resource-hints.md",
+          "mode": "100644",
+          "bytes": 2549,
+          "sha256": "351b1095d641717b930f1b2253282b7120af3023bc74e06c17675168d4286864",
+          "index_blob": "1290bef06baf459f85dc5856ffc4486951224a48"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-script-defer-async.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-script-defer-async.md",
+          "mode": "100644",
+          "bytes": 1868,
+          "sha256": "4cea07b7875ba7fc2c7465ff23b63a2bb334f90aaf2d9293d38d67b05fdb32ab",
+          "index_blob": "ee275ed1c06da8f1ae70e744e47965799eaebf02"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-svg-precision.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-svg-precision.md",
+          "mode": "100644",
+          "bytes": 588,
+          "sha256": "ed468533f6e95f622859c884b122cf21f9f593ed6bb3d500a54de4b9f9bcb9fb",
+          "index_blob": "6d7712860365294936a1b736d29d3eb970b91da7"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rendering-usetransition-loading.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rendering-usetransition-loading.md",
+          "mode": "100644",
+          "bytes": 2074,
+          "sha256": "3a1249c3f13026b6f54ab5712c388df219d6af01b12aa542749acd99a46f4bc1",
+          "index_blob": "0c1b0b98e884d2c77bdec66df754693bd48c7777"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-defer-reads.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-defer-reads.md",
+          "mode": "100644",
+          "bytes": 973,
+          "sha256": "234050a77faf50cb306be10a9e15bd4421134ab5907e75f13e6d78e2bd262dc9",
+          "index_blob": "e867c95f02fe6ed6ac2f91fdf1c0922304e0423a"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-dependencies.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-dependencies.md",
+          "mode": "100644",
+          "bytes": 824,
+          "sha256": "17eb5830956fb56486fd3cfc7431f5849d39751730c05ad9e77dd4f0c27169c5",
+          "index_blob": "47a4d92685702e3a3b07073c62a61800fa0a6d7d"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-derived-state-no-effect.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-derived-state-no-effect.md",
+          "mode": "100644",
+          "bytes": 1201,
+          "sha256": "cb11ec76f50aa7b6847269f02d79b120c889a30d9ecd2c1d578f75144419c77a",
+          "index_blob": "3d9fe4050794ea6655add6bee50cfbc104e5dc31"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-derived-state.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-derived-state.md",
+          "mode": "100644",
+          "bytes": 728,
+          "sha256": "1c326bb67b01fb084eb00c8911b0a7cff54681c2315b629f88e49b64eaa6481d",
+          "index_blob": "e5c899f6c073338bbd1b73c0275bc3e5e7d9ae7b"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-functional-setstate.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-functional-setstate.md",
+          "mode": "100644",
+          "bytes": 2968,
+          "sha256": "5e68df6b2ae8058e67f476ff1ac67bde159f5a9d18df439e46eabcdeb7b52e58",
+          "index_blob": "b004ef45e347503947fee397b6c3d163b0a317fb"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-lazy-state-init.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-lazy-state-init.md",
+          "mode": "100644",
+          "bytes": 2016,
+          "sha256": "4ae844740f266fc8cbf050701230286624a2440ec5be67b9a63d9edc3c580573",
+          "index_blob": "4ecb350fbadff3db805b72429276e672d42736dc"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-memo-with-default-value.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-memo-with-default-value.md",
+          "mode": "100644",
+          "bytes": 1173,
+          "sha256": "81c47476564ad8a79fc68fc442734255ca7d6829424359464503fda0a9f9a0dd",
+          "index_blob": "63570491848cb42c2bc7073bceb754893a6a4cfa"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-memo.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-memo.md",
+          "mode": "100644",
+          "bytes": 1148,
+          "sha256": "1f258990c2f27ff6256b3cc5c43300631bb3f0d81f749aed08d07fcdcc131dd1",
+          "index_blob": "f8982ab612105a3b7faee1292b797338e7fb5271"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-move-effect-to-event.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-move-effect-to-event.md",
+          "mode": "100644",
+          "bytes": 1268,
+          "sha256": "abc2cbf167bee056743023351e96806a411d3398da8802093620aecf0721f029",
+          "index_blob": "dd58a1af091b3cf5cb271d25904af4feb836d1aa"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-no-inline-components.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-no-inline-components.md",
+          "mode": "100644",
+          "bytes": 2135,
+          "sha256": "1cc32907a770272524ba682eef9e7efdd8ad4533b6f89b718a1fcd7d1d0eb6a3",
+          "index_blob": "d97592acefced05bc4a8538c77d226fa24c08534"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-simple-expression-in-memo.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-simple-expression-in-memo.md",
+          "mode": "100644",
+          "bytes": 1018,
+          "sha256": "5bdcf2d1558ba5204e643c887b7b4060f89630969425651eb68e96427d97f800",
+          "index_blob": "59dfab0f3b048097627e0ca6e4c8da36629a5268"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-split-combined-hooks.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-split-combined-hooks.md",
+          "mode": "100644",
+          "bytes": 1844,
+          "sha256": "6f45d703343484ef9acef9388397f3642966ae6a5a258899a0cf1f9977cfbf6c",
+          "index_blob": "89d805644dbffe3877bc1356bdf8ad416a5c715b"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-transitions.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-transitions.md",
+          "mode": "100644",
+          "bytes": 1055,
+          "sha256": "60f4033909a62df5e5b8c601494f9e50a562e2f8c1c2d81eac24f38142265f1c",
+          "index_blob": "d99f43f764232e994a49a1df89ec9d624552f439"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-use-deferred-value.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-use-deferred-value.md",
+          "mode": "100644",
+          "bytes": 1846,
+          "sha256": "8c3579576a61a949884167745dcfaf1d5426ba305cc61fd0a79602d70fda4909",
+          "index_blob": "619c04b0142bf5a5b7d0f69532a56b797a78f664"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/rerender-use-ref-transient-values.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/rerender-use-ref-transient-values.md",
+          "mode": "100644",
+          "bytes": 1742,
+          "sha256": "f1a649af9d1d0b5c762f6c9c4c1c70c90d7df82aa10296ee87aadb78c1b76c54",
+          "index_blob": "cf04b81f8a531eacd07a32e8917fb3ed3c1bbecb"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-after-nonblocking.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-after-nonblocking.md",
+          "mode": "100644",
+          "bytes": 2012,
+          "sha256": "d0b8d24a3db9f0f65f9e2bddbf230b0e03a5f60e1229d93a4a18f5e7a991c7c2",
+          "index_blob": "e8f5b260f5fc6d58141bc61e0a091569adb81e7e"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-auth-actions.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-auth-actions.md",
+          "mode": "100644",
+          "bytes": 2649,
+          "sha256": "a2ca8aa102839251c7971ec784560fab943c20b36fe6f80365d4110c13260c23",
+          "index_blob": "ee82c0442bc69ffae7bf20c07709d57893da1123"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-cache-lru.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-cache-lru.md",
+          "mode": "100644",
+          "bytes": 1353,
+          "sha256": "1924b64561841923b88a657085097a0aeba3e0ba2d5470b9f5c15cc10d6ae70f",
+          "index_blob": "ef6938aa53c55dc3c0035bd6c66838810d870260"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-cache-react.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-cache-react.md",
+          "mode": "100644",
+          "bytes": 2228,
+          "sha256": "fddeea6c870bb3da4134b61d54b7d09b83d2603f929b7547cd3dc1dc269edd5c",
+          "index_blob": "87c9ca33168a321a59fbaaa84843e2f48c99751a"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-dedup-props.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-dedup-props.md",
+          "mode": "100644",
+          "bytes": 2060,
+          "sha256": "c2747424cdac46be62f835f245a0aa887b0090b416d28e2ac8676702645eeb37",
+          "index_blob": "fb24a2562c73fadbb9a11a79897c2cf93ea3c69a"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-hoist-static-io.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-hoist-static-io.md",
+          "mode": "100644",
+          "bytes": 4423,
+          "sha256": "5abea4dd882b13661bd5f7dfb93f9e547d5f08176c61c448ade91b210ed5d49f",
+          "index_blob": "25205c2fc42d0dd684d6423acde642774329a8cc"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-no-shared-module-state.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-no-shared-module-state.md",
+          "mode": "100644",
+          "bytes": 1766,
+          "sha256": "4d869bf1cd2f1632e5ca4c0e64b1cf0e71c5f5a0f940bc8a22174d205e735ed7",
+          "index_blob": "ff7d9f29c6e0e42ec1471acec8a3c7f394c8358d"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-parallel-fetching.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-parallel-fetching.md",
+          "mode": "100644",
+          "bytes": 1554,
+          "sha256": "569a2e9fc04f9606686cd75c5894ef8781b502786a7fffe241396846c7733472",
+          "index_blob": "1affc835a601a894fd02de08e6c9cdfd76d34b64"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
+          "mode": "100644",
+          "bytes": 992,
+          "sha256": "ad5d9656984d4a959997a2367bf59cc6632297b4634a1dd13a087939d83f30b3",
+          "index_blob": "be1dc25075e40e6bda46cb24dc5a6f42b916b0e8"
+        },
+        {
+          "source_path": ".agents/skills/vercel-react-best-practices/rules/server-serialization.md",
+          "target_path": "apps/frontend/.agents/skills/vercel-react-best-practices/rules/server-serialization.md",
+          "mode": "100644",
+          "bytes": 996,
+          "sha256": "f4c7d68b29c82381baad059c4a7f09e868e71ec9c3115a26ad3ae7d24c0dfe1f",
+          "index_blob": "39c5c4164c31be7f171ea2f4b3b32fe47709a651"
+        },
+        {
+          "source_path": ".agents/skills/web-design-guidelines/SKILL.md",
+          "target_path": "apps/frontend/.agents/skills/web-design-guidelines/SKILL.md",
+          "mode": "100644",
+          "bytes": 1150,
+          "sha256": "253a856cb854cf5507a24f0fa08a6042e1d0673ab9fd395aaf925a0767ce1f25",
+          "index_blob": "d468827f0b6b679a6174a60dd65c37427a9ef93a"
+        },
+        {
+          "source_path": ".claude/rules/routes.md",
+          "target_path": "apps/frontend/.claude/rules/routes.md",
+          "mode": "100644",
+          "bytes": 547,
+          "sha256": "5801d5500ce2d2d0851c4450846d59877acbb12acb5075cfd41d83247ba65ec8",
+          "index_blob": "f3566e7109ecc1401cbd4e83462f0a7e51db692d"
+        },
+        {
+          "source_path": ".claude/rules/server-security.md",
+          "target_path": "apps/frontend/.claude/rules/server-security.md",
+          "mode": "100644",
+          "bytes": 546,
+          "sha256": "563612b2feca10843782b8dd6e9c68c3959765947aa30e3c421114215e18f01e",
+          "index_blob": "5631d89998f0da05d1f66ca3edbe8d660d8bfff6"
+        },
+        {
+          "source_path": ".claude/rules/shared-components.md",
+          "target_path": "apps/frontend/.claude/rules/shared-components.md",
+          "mode": "100644",
+          "bytes": 529,
+          "sha256": "639a095644cc611e939fbabfbdd9878aacca4af38f6de561738857788e4eeb5b",
+          "index_blob": "59c2f4f00f125f58016696603ce25708e78e0971"
+        },
+        {
+          "source_path": ".claude/skills/api-integration/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/api-integration/SKILL.md",
+          "mode": "100644",
+          "bytes": 805,
+          "sha256": "89c436a82a4e9d96663ce4efc52eb8ed0999e8ad77d5693f6661732c7c322cc3",
+          "index_blob": "525d01cf1ee0e935d7bdb2e4ef481b269ca94f63"
+        },
+        {
+          "source_path": ".claude/skills/app-security-review/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/app-security-review/SKILL.md",
+          "mode": "100644",
+          "bytes": 878,
+          "sha256": "fc8d93286826233f2b556ed5e95848403620ce938b261ccc351a82417a0a2ee0",
+          "index_blob": "f0085aa5e64f8bc7b7d24a4fc0302e2c0db3e983"
+        },
+        {
+          "source_path": ".claude/skills/architecture-review/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/architecture-review/SKILL.md",
+          "mode": "100644",
+          "bytes": 833,
+          "sha256": "485226eef52d8f0ed7a8c3fd547f1506652ce8a3e080a01c832c0ed41c358629",
+          "index_blob": "3dd190ff301a7527b658ec117fbed623fb15581e"
+        },
+        {
+          "source_path": ".claude/skills/atomic-component-development/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/atomic-component-development/SKILL.md",
+          "mode": "100644",
+          "bytes": 785,
+          "sha256": "06714960ecb5d884cb11a4061843e190f1f5b6cfc3ed762db522bee25aa9f0f1",
+          "index_blob": "3ef132856b349502fd9c656ba757902b998bff11"
+        },
+        {
+          "source_path": ".claude/skills/next-bundle-optimizer/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/next-bundle-optimizer/SKILL.md",
+          "mode": "100644",
+          "bytes": 710,
+          "sha256": "3945ff362329658e20aeeee7554d75ada4bb73b804399c824fee3d73dfd13751",
+          "index_blob": "15ea9795726627999483bbc4d4dc72f6c6ab365b"
+        },
+        {
+          "source_path": ".claude/skills/next-cache-components-optimizer/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/next-cache-components-optimizer/SKILL.md",
+          "mode": "100644",
+          "bytes": 1144,
+          "sha256": "660975ba24c6dd66e67e358e0b3ab1a42b2c5209d0699e8e11be395a412d391d",
+          "index_blob": "b04978d5e3f86bd6bc04eff326549a1d306f332d"
+        },
+        {
+          "source_path": ".claude/skills/next-dev-loop/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/next-dev-loop/SKILL.md",
+          "mode": "100644",
+          "bytes": 775,
+          "sha256": "3e4b466e7add4361478a6e1ed9c33bb15de5c27b20c284a38a70dde6ba1ee901",
+          "index_blob": "ebd48e322c0dae6f1f074a2358e273a9a1621165"
+        },
+        {
+          "source_path": ".claude/skills/next-partial-prefetching-optimizer/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/next-partial-prefetching-optimizer/SKILL.md",
+          "mode": "100644",
+          "bytes": 947,
+          "sha256": "b387b7dc42e9c459ab1de7d042e0c5138416eaa4168737c786da95eef745ee82",
+          "index_blob": "fe1ab3b31e9527b249dbb4778773e8974dbb1960"
+        },
+        {
+          "source_path": ".claude/skills/nextjs-feature-development/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/nextjs-feature-development/SKILL.md",
+          "mode": "100644",
+          "bytes": 758,
+          "sha256": "4ca12182a3c9ae3ecceb741b90613331b67992607b1369603d5b1cf3b43fe4db",
+          "index_blob": "82184e13171dcb18e6c3b4eb9e88d9d77fa7c64e"
+        },
+        {
+          "source_path": ".claude/skills/nextjs-server-client-boundaries/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/nextjs-server-client-boundaries/SKILL.md",
+          "mode": "100644",
+          "bytes": 921,
+          "sha256": "e6d7062cf94490c2a13bef58382adba90af33f0c1772641313259cf9b29b1115",
+          "index_blob": "5b29046575699a27b9eb9a42e50e211ad3517bd8"
+        },
+        {
+          "source_path": ".claude/skills/release-readiness/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/release-readiness/SKILL.md",
+          "mode": "100644",
+          "bytes": 792,
+          "sha256": "548c9f4c081fb7a231801da0b85650c3777d067fe0d56b09d41c5f3e80281cfb",
+          "index_blob": "2605fb7c3922fbbd7e3f63073d4770554d122f0f"
+        },
+        {
+          "source_path": ".claude/skills/safe-refactoring/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/safe-refactoring/SKILL.md",
+          "mode": "100644",
+          "bytes": 741,
+          "sha256": "b7e268babd886bff913657c8d0e6826b3ff09dd1c0ec5faaa00177b78dfb52f5",
+          "index_blob": "1fdbe48db534cfc1915e911403a00fee6c3c9d57"
+        },
+        {
+          "source_path": ".claude/skills/testing-and-verification/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/testing-and-verification/SKILL.md",
+          "mode": "100644",
+          "bytes": 805,
+          "sha256": "79324ba1594980517d12be76069d565fd951734b70366520a76febc35ee7e961",
+          "index_blob": "bfd65a8a810e0b8fe94208da5e8bb8a09b24910a"
+        },
+        {
+          "source_path": ".claude/skills/ui-ux-pro-max/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/ui-ux-pro-max/SKILL.md",
+          "mode": "100644",
+          "bytes": 995,
+          "sha256": "86ae6ed2aed4160a518a9db5960eacdfd2e851d1e2ac3624d277eb36dae0acf7",
+          "index_blob": "afa43c49fcdf40d4adb28b5d92ab7d5af9526ab8"
+        },
+        {
+          "source_path": ".claude/skills/vercel-composition-patterns/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/vercel-composition-patterns/SKILL.md",
+          "mode": "100644",
+          "bytes": 864,
+          "sha256": "6fefa008953d6e372d40d27e768298feb9b753ddd10c292d30726561a94e8f11",
+          "index_blob": "46cbbf62adc1365e547c115bd57572ccedeca733"
+        },
+        {
+          "source_path": ".claude/skills/vercel-react-best-practices/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/vercel-react-best-practices/SKILL.md",
+          "mode": "100644",
+          "bytes": 883,
+          "sha256": "e565fe5028a322da2df19496237b91963e17aa5a6710b7cc1aecf4649f497da4",
+          "index_blob": "666fc40849a45b140c3eadd7e31c88cbf84cbce5"
+        },
+        {
+          "source_path": ".claude/skills/web-design-guidelines/SKILL.md",
+          "target_path": "apps/frontend/.claude/skills/web-design-guidelines/SKILL.md",
+          "mode": "100644",
+          "bytes": 714,
+          "sha256": "e529181ccf3e38b92a19c61896b09b81faa90823ab13be34ba5fc698657da998",
+          "index_blob": "ee52c5f288ae51f3418c929bf400f13726695a0a"
+        },
+        {
+          "source_path": ".env.example",
+          "target_path": "apps/frontend/.env.example",
+          "mode": "100644",
+          "bytes": 931,
+          "sha256": "ce554680c3c7fc86e1ae4112fdc5b0b4452d07ede838dfe31c9a0cb7d26b818e",
+          "index_blob": "2f0193fc4019ebf2736788c4efea10481cbc847d"
+        },
+        {
+          "source_path": ".gitattributes",
+          "target_path": "apps/frontend/.gitattributes",
+          "mode": "100644",
+          "bytes": 36,
+          "sha256": "3897c2ff4b8ccb9f7d6c9140c9ba618f7e10c1b3de4935012da700bc1cd12e94",
+          "index_blob": "3eedd7048f838b2f3c0a782dd0e3c5d3a94213b9"
+        },
+        {
+          "source_path": ".github/workflows/ci.yml",
+          "target_path": "apps/frontend/.github/workflows/ci.yml",
+          "mode": "100644",
+          "bytes": 1545,
+          "sha256": "e1ef55506bb23015d2dd4cd4d6e4b8b5087344f47d5ac58b92c62ca48d153e75",
+          "index_blob": "2ae8b56e1584b2706d1267fb1cb4de67dfc4cf0b"
+        },
+        {
+          "source_path": ".gitignore",
+          "target_path": "apps/frontend/.gitignore",
+          "mode": "100644",
+          "bytes": 628,
+          "sha256": "a555808c32ac6e52781698acaf1a99fdcbe5f3e46f50684574efdd66f27acab9",
+          "index_blob": "62c4114a8d04bf1213b00069aa378700e1d63be6"
+        },
+        {
+          "source_path": ".husky/pre-commit",
+          "target_path": "apps/frontend/.husky/pre-commit",
+          "mode": "100644",
+          "bytes": 22,
+          "sha256": "aad3507759b5b03c40f17cb27ca0e2203edebcd8820c48addadc16104b1e011c",
+          "index_blob": "5ee7abd87c6fd21a951755c1a73e539d8390a50c"
+        },
+        {
+          "source_path": ".nvmrc",
+          "target_path": "apps/frontend/.nvmrc",
+          "mode": "100644",
+          "bytes": 8,
+          "sha256": "d9f318747a126ce2247661af67852b185def7789492eabfad7bba322be087c33",
+          "index_blob": "ce62013c39aed63f656bb7ae41bdd45d81163ffe"
+        },
+        {
+          "source_path": ".prettierignore",
+          "target_path": "apps/frontend/.prettierignore",
+          "mode": "100644",
+          "bytes": 302,
+          "sha256": "a543100c6ab2bf93836e41ccbd5b60eeb7457dbe3424c1bba2f1aade37424a24",
+          "index_blob": "fe0177d878eec77c15319d6feb203ef8b8b221e3"
+        },
+        {
+          "source_path": ".prettierrc.json",
+          "target_path": "apps/frontend/.prettierrc.json",
+          "mode": "100644",
+          "bytes": 223,
+          "sha256": "40cb35518276156f1c60e799355c4fbbc911e6d001c9fb3ce18aa83f1496cedd",
+          "index_blob": "0042db664b976508edf564bfb027aa908bf3b250"
+        },
+        {
+          "source_path": ".storybook/main.ts",
+          "target_path": "apps/frontend/.storybook/main.ts",
+          "mode": "100644",
+          "bytes": 569,
+          "sha256": "3ae26bd6ae70af143be70c469914ca860d8eb3d042060715dacc335f8375bdfc",
+          "index_blob": "aa32dda112a988a4afb25422dfcae5ffcbc80f00"
+        },
+        {
+          "source_path": ".storybook/preview.tsx",
+          "target_path": "apps/frontend/.storybook/preview.tsx",
+          "mode": "100644",
+          "bytes": 663,
+          "sha256": "dabd415acd75f28d902be1951b4d6751258d980ca38351e701437354d9ffc6c3",
+          "index_blob": "987516a0849c5f461f21b65829a21282424fa91c"
+        },
+        {
+          "source_path": "AGENTS.md",
+          "target_path": "apps/frontend/AGENTS.md",
+          "mode": "100644",
+          "bytes": 4681,
+          "sha256": "d9f35173730630cdfbcd11727e6daf62e8e13b4e7581163d358adb8ef3871004",
+          "index_blob": "2336e2cd7236c6f8c8c5bd7710582c4118e1a01e"
+        },
+        {
+          "source_path": "CLAUDE.md",
+          "target_path": "apps/frontend/CLAUDE.md",
+          "mode": "100644",
+          "bytes": 328,
+          "sha256": "d34bf2be9a4dcbe28a02338e1adcde1a46c940acd351b048e04bc8943c9dedd8",
+          "index_blob": "a33a17a10c3bb0997c4d6c7e6a359cadd598b488"
+        },
+        {
+          "source_path": "README.md",
+          "target_path": "apps/frontend/README.md",
+          "mode": "100644",
+          "bytes": 13101,
+          "sha256": "59fbae3ad433ae5d0932b425d38b2dd7ac0ffa87cd49ed5a5bdb2fe523ca0413",
+          "index_blob": "1cffd43f75f6216ef3ce0b21008e8e1e535230ea"
+        },
+        {
+          "source_path": "README.vi.md",
+          "target_path": "apps/frontend/README.vi.md",
+          "mode": "100644",
+          "bytes": 13812,
+          "sha256": "aab5a3c0e02032eea0ddb823e04e7022fb351087d2381dcd8c5fc4c8a4a0ffd0",
+          "index_blob": "6491d66b6cdd9f0e5c9b5e5673ddebb9f9892084"
+        },
+        {
+          "source_path": "docs/ai/README.md",
+          "target_path": "apps/frontend/docs/ai/README.md",
+          "mode": "100644",
+          "bytes": 25314,
+          "sha256": "0b330f5bfceadacc4bced5da1abdb47a87ab0cd8aaa9517b402a081a37487ceb",
+          "index_blob": "18725051220b21776ff6f390a8d1a44bd2305c58"
+        },
+        {
+          "source_path": "docs/ai/rules/architecture.md",
+          "target_path": "apps/frontend/docs/ai/rules/architecture.md",
+          "mode": "100644",
+          "bytes": 7814,
+          "sha256": "be4f006bc5359f68c5a55c4b9b71b36ee8bf90e18a6cd94a9abc28f7c4132c7e",
+          "index_blob": "9e48b2405b3e231dcc0a8fa418f1ca77e3dbd5e5"
+        },
+        {
+          "source_path": "docs/ai/rules/dependencies.md",
+          "target_path": "apps/frontend/docs/ai/rules/dependencies.md",
+          "mode": "100644",
+          "bytes": 3302,
+          "sha256": "b79a26b67309a927c0665e68add0a1b3cc29a46435d5256f71c2e3f36701deda",
+          "index_blob": "d98e981afcda4d38ad0f1a14fd170b5f329eda40"
+        },
+        {
+          "source_path": "docs/ai/rules/nextjs.md",
+          "target_path": "apps/frontend/docs/ai/rules/nextjs.md",
+          "mode": "100644",
+          "bytes": 7829,
+          "sha256": "01ef46dde9c42dee652d2c74877c94555bca22b59fd2d7d57ecd7cd5f4e5a95b",
+          "index_blob": "85ef822119d348956eda2f9f7807016959eef6dd"
+        },
+        {
+          "source_path": "docs/ai/rules/security.md",
+          "target_path": "apps/frontend/docs/ai/rules/security.md",
+          "mode": "100644",
+          "bytes": 6344,
+          "sha256": "488f2e6aaa55270d95f04729b68bd083d9a5c5a191cdced47eaba4cb2c4e441f",
+          "index_blob": "50b8e59d77785024c01cf0144616842bba827560"
+        },
+        {
+          "source_path": "docs/ai/rules/testing.md",
+          "target_path": "apps/frontend/docs/ai/rules/testing.md",
+          "mode": "100644",
+          "bytes": 5005,
+          "sha256": "4902704eea9796747dbf6e3f0cad85523321bf6c7e600cb8becd366c8f0a4d46",
+          "index_blob": "f13a480d170c87e7e02079644df35caa15b780ff"
+        },
+        {
+          "source_path": "docs/ai/rules/typescript.md",
+          "target_path": "apps/frontend/docs/ai/rules/typescript.md",
+          "mode": "100644",
+          "bytes": 3394,
+          "sha256": "000bc6d2d40525e1f1996dd515a2c630711ce2a6815af78863f146d070d67d7b",
+          "index_blob": "b108f5690afe6abc991268345227c7679919f8a9"
+        },
+        {
+          "source_path": "docs/ai/workflows.md",
+          "target_path": "apps/frontend/docs/ai/workflows.md",
+          "mode": "100644",
+          "bytes": 3264,
+          "sha256": "d77352e22ee5cb26d5de147dc17f98c4559cb19c8f1d0188d08aa4fe9abafc03",
+          "index_blob": "17e7da792873de855893bd6d61e0c83778e608f8"
+        },
+        {
+          "source_path": "docs/api-integration.md",
+          "target_path": "apps/frontend/docs/api-integration.md",
+          "mode": "100644",
+          "bytes": 20293,
+          "sha256": "cd0f485557ef3a9702e5b81631cecaeac6c8aea8536fbbe80538e2afe28e8ef1",
+          "index_blob": "348c576c817eee69a9ac5d24400bd64efcfedb98"
+        },
+        {
+          "source_path": "docs/architecture.md",
+          "target_path": "apps/frontend/docs/architecture.md",
+          "mode": "100644",
+          "bytes": 17939,
+          "sha256": "d97656edae20407afff97543d103a3e276ec6e9eb818432cdf6a6bf5e9abe327",
+          "index_blob": "ebf2fefd56ae07599310999524ad218452686524"
+        },
+        {
+          "source_path": "docs/atomic-design-tong-ket.html",
+          "target_path": "apps/frontend/docs/atomic-design-tong-ket.html",
+          "mode": "100644",
+          "bytes": 51019,
+          "sha256": "d7a4d9c1fb1c6d2a1a86402d766feb550c95343bc0557a73b98dc1717fc70635",
+          "index_blob": "a5e8715940156c9fd4c0086f8c2aeead98f79b21"
+        },
+        {
+          "source_path": "docs/audits/dependency-deep-audit.md",
+          "target_path": "apps/frontend/docs/audits/dependency-deep-audit.md",
+          "mode": "100644",
+          "bytes": 53560,
+          "sha256": "8abd8eac668419a3bc9bb87629629416ea755af55cc0f03e2ff2a3b6f4df5aef",
+          "index_blob": "8f4bcaae1b321811e0ab0067ad66acf11639e57c"
+        },
+        {
+          "source_path": "docs/audits/production-readiness-audit.md",
+          "target_path": "apps/frontend/docs/audits/production-readiness-audit.md",
+          "mode": "100644",
+          "bytes": 35497,
+          "sha256": "6f5264334d61d03025b469bed53d1c6f6ea8338bead25d228b81e16d611daf96",
+          "index_blob": "34ea7d6f46794994845d4923103e9b035a30b619"
+        },
+        {
+          "source_path": "docs/component-guidelines.md",
+          "target_path": "apps/frontend/docs/component-guidelines.md",
+          "mode": "100644",
+          "bytes": 10282,
+          "sha256": "3bd312064914ebb93f4179125d50f3db804ca9171279f366deca5d136285450e",
+          "index_blob": "6f16ca8c3e0de01dada0e568aef3a8ee09aa8803"
+        },
+        {
+          "source_path": "docs/create-new-feature.md",
+          "target_path": "apps/frontend/docs/create-new-feature.md",
+          "mode": "100644",
+          "bytes": 14924,
+          "sha256": "1ef26f226e9f9ebfb15e9fffde89dd92f42285269a3c5b80057a3e42e0bcbe0c",
+          "index_blob": "02c50d1636d6428461e411bb75c85104e04b8d8f"
+        },
+        {
+          "source_path": "docs/feature-development-playbook.md",
+          "target_path": "apps/frontend/docs/feature-development-playbook.md",
+          "mode": "100644",
+          "bytes": 20793,
+          "sha256": "ab65acf9a04845c292f565d10d8f2a196f83d3d49144cb1f5ee83e684b8b1584",
+          "index_blob": "c3edabc91256a241235036e4e1460247924c3141"
+        },
+        {
+          "source_path": "docs/usage-guide.md",
+          "target_path": "apps/frontend/docs/usage-guide.md",
+          "mode": "100644",
+          "bytes": 20759,
+          "sha256": "73909a6d8c52ada33ff9902a0edd65ee97a7be3efc6e89c29c8e3c77a3f0a411",
+          "index_blob": "f7a5bb88fe81d7a1f2c10c60323fdcb0887dac27"
+        },
+        {
+          "source_path": "e2e/fixtures.ts",
+          "target_path": "apps/frontend/e2e/fixtures.ts",
+          "mode": "100644",
+          "bytes": 1005,
+          "sha256": "62e7c1ff1c0c1851a854dd18d4b2afc8d4af13054660241a6a4cc69278681c12",
+          "index_blob": "0d68e7d79553840a75fc4b0a50e5de724db19430"
+        },
+        {
+          "source_path": "e2e/security.spec.ts",
+          "target_path": "apps/frontend/e2e/security.spec.ts",
+          "mode": "100644",
+          "bytes": 1126,
+          "sha256": "b4bf45452d52568bb23fa761051ee301ee6ff3ebb98019e1827f024b55b51043",
+          "index_blob": "39265b168a4506d6d0c11733ee4090c325e0a954"
+        },
+        {
+          "source_path": "e2e/tasks.spec.ts",
+          "target_path": "apps/frontend/e2e/tasks.spec.ts",
+          "mode": "100644",
+          "bytes": 5456,
+          "sha256": "e7667992b2f96d505e4d773b95aa2efe79eb160fc7eb7defdf5214dc8a182a9e",
+          "index_blob": "53be74e9b66577ede66813c809c9669d2bef6cb5"
+        },
+        {
+          "source_path": "eslint.config.mjs",
+          "target_path": "apps/frontend/eslint.config.mjs",
+          "mode": "100644",
+          "bytes": 1581,
+          "sha256": "231f8c39502e1cd6d57a4a84c78f7d02b7b3fd4e14acf9b3f5847492ed9ac114",
+          "index_blob": "7b868e383800e27820413d318eeb7b376ee0efaf"
+        },
+        {
+          "source_path": "next.config.ts",
+          "target_path": "apps/frontend/next.config.ts",
+          "mode": "100644",
+          "bytes": 2074,
+          "sha256": "2338545cd690b4f458ad6e3b125f47e467e297ee14c62dfbc23b39a1d6f6d5dd",
+          "index_blob": "88e3732e397035d829385a85d4535bbf342058a1"
+        },
+        {
+          "source_path": "package.json",
+          "target_path": "apps/frontend/package.json",
+          "mode": "100644",
+          "bytes": 2270,
+          "sha256": "bdc96645980d33fd5152a856fc2a44c3dbad0fe952bb42351e0a1454ee9733b5",
+          "index_blob": "5531eb74c55cb45915ec81c64027aa04a5cfd606"
+        },
+        {
+          "source_path": "playwright.config.ts",
+          "target_path": "apps/frontend/playwright.config.ts",
+          "mode": "100644",
+          "bytes": 991,
+          "sha256": "34402bae8a7f99c9d6ce0abdcbfa672cda59aeef4a46a728f66806a8f5d18624",
+          "index_blob": "6b7e8556745c4d4561ab3a3374bc049267275c59"
+        },
+        {
+          "source_path": "pnpm-lock.yaml",
+          "target_path": "apps/frontend/pnpm-lock.yaml",
+          "mode": "100644",
+          "bytes": 250081,
+          "sha256": "ac4822428e329ba634cfa860a840614c0c12915897196f4f7142ba66f298a1e7",
+          "index_blob": "1bd1533fb522a0383cbb2bf515e485e0bd6aadbc"
+        },
+        {
+          "source_path": "pnpm-workspace.yaml",
+          "target_path": "apps/frontend/pnpm-workspace.yaml",
+          "mode": "100644",
+          "bytes": 140,
+          "sha256": "fc2fd39bc4b7388d25de315742b5491b5d7f87d56f6c55831ca46900c639d284",
+          "index_blob": "ab57d77b199ad690420b4358e6f6a23dc16df034"
+        },
+        {
+          "source_path": "public/.gitkeep",
+          "target_path": "apps/frontend/public/.gitkeep",
+          "mode": "100644",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "index_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+        },
+        {
+          "source_path": "scripts/sync-agent-config.mjs",
+          "target_path": "apps/frontend/scripts/sync-agent-config.mjs",
+          "mode": "100644",
+          "bytes": 9411,
+          "sha256": "bd7961fc3a6f34520e9a430fcc84ca3e8729f76c69c9e561874754a2afe8ca21",
+          "index_blob": "cd35f67ba6ef5ba1dad7ad15167411030cf3ab09"
+        },
+        {
+          "source_path": "src/app/(app)/dashboard/page.tsx",
+          "target_path": "apps/frontend/src/app/(app)/dashboard/page.tsx",
+          "mode": "100644",
+          "bytes": 2328,
+          "sha256": "c33cb65e5aeb1cd3e1ce59dfcc33d5cc6223cec9dc040ffb6a7a902818abc585",
+          "index_blob": "72380dfdb4d8bb32ef311672ab1959db0815926d"
+        },
+        {
+          "source_path": "src/app/(app)/error.tsx",
+          "target_path": "apps/frontend/src/app/(app)/error.tsx",
+          "mode": "100644",
+          "bytes": 785,
+          "sha256": "c37abe5faccec05e29ad5fd30053a4d098febe27167266d574098d8207ef1ed5",
+          "index_blob": "8d03154ff4612724df210740e5a942091cdd8d5e"
+        },
+        {
+          "source_path": "src/app/(app)/layout.tsx",
+          "target_path": "apps/frontend/src/app/(app)/layout.tsx",
+          "mode": "100644",
+          "bytes": 1025,
+          "sha256": "cfca7894b13e911d79ca704b26deb234d38c46c80287662de5416aabae9a7850",
+          "index_blob": "cdfdbf3b2ad6a1eb36921a11d6c6d3f63fd58b77"
+        },
+        {
+          "source_path": "src/app/(app)/tasks/page.tsx",
+          "target_path": "apps/frontend/src/app/(app)/tasks/page.tsx",
+          "mode": "100644",
+          "bytes": 4441,
+          "sha256": "a57aa6723b0d3dcc9a73fb90b3e27dc43af9401d6c7f30338427403352b726b4",
+          "index_blob": "5143445dd60adc09e5c7bc418de1ca9b6967d8ca"
+        },
+        {
+          "source_path": "src/app/favicon.ico",
+          "target_path": "apps/frontend/src/app/favicon.ico",
+          "mode": "100644",
+          "bytes": 15086,
+          "sha256": "c28fdd2a4f31e2dc64f653962286da5c82a4cdfc518b242d32812c624e9a19a4",
+          "index_blob": "af98450595e8b8efd9e505cddc5ed705b665a4d8"
+        },
+        {
+          "source_path": "src/app/global-error.tsx",
+          "target_path": "apps/frontend/src/app/global-error.tsx",
+          "mode": "100644",
+          "bytes": 1181,
+          "sha256": "1f255d49f4c27e2a5ed135f0e917e4b282ac33e5aba8f81c1a3c153eb4535970",
+          "index_blob": "316a7b7bf714800e1c49b961d447c19423dc4f53"
+        },
+        {
+          "source_path": "src/app/globals.css",
+          "target_path": "apps/frontend/src/app/globals.css",
+          "mode": "100644",
+          "bytes": 4477,
+          "sha256": "041adbea2b19405c4d6366956486e65f2f3ce1473002b1320dc1b2ab3fb18d57",
+          "index_blob": "eef33da2ba136972a99f1008b16bfc0b64bc0752"
+        },
+        {
+          "source_path": "src/app/layout.tsx",
+          "target_path": "apps/frontend/src/app/layout.tsx",
+          "mode": "100644",
+          "bytes": 973,
+          "sha256": "27f8dffb291df41fae1842381e6caf7a4a6695f80da3f2ea7c311d41972d667a",
+          "index_blob": "8781eb63dd86d8ff668a6e36c663090e08914c85"
+        },
+        {
+          "source_path": "src/app/not-found.tsx",
+          "target_path": "apps/frontend/src/app/not-found.tsx",
+          "mode": "100644",
+          "bytes": 727,
+          "sha256": "4bc2db6d6f0d2de454417c9a06d2bcf6408f1271da0b0e4bd29eade557484bee",
+          "index_blob": "f062f2bdb95858122aba4e0f1716a747e19357bc"
+        },
+        {
+          "source_path": "src/components/atoms/badge.stories.tsx",
+          "target_path": "apps/frontend/src/components/atoms/badge.stories.tsx",
+          "mode": "100644",
+          "bytes": 603,
+          "sha256": "d709225f62d8d481ac49b8fa97162f05f14c0df2137fca757746c77fb0acc960",
+          "index_blob": "9dcf778b89dcc635db4b1a21e1ad37523ee9d8f6"
+        },
+        {
+          "source_path": "src/components/atoms/badge.tsx",
+          "target_path": "apps/frontend/src/components/atoms/badge.tsx",
+          "mode": "100644",
+          "bytes": 1097,
+          "sha256": "b4b89cf7829d9b7cddcacd81b7d0cafedc042c2d511bc3271da8607ce28200e4",
+          "index_blob": "d06d2324a1ad195640aca0177182e7ed1feef191"
+        },
+        {
+          "source_path": "src/components/atoms/button.stories.tsx",
+          "target_path": "apps/frontend/src/components/atoms/button.stories.tsx",
+          "mode": "100644",
+          "bytes": 1122,
+          "sha256": "513d2c330fb07c0d72133dfdd04a7cad2a991dd94cc538edad4aa5f000d5dc42",
+          "index_blob": "757b1b98ed8bb62d2078712a4630c25634c241c7"
+        },
+        {
+          "source_path": "src/components/atoms/button.test.tsx",
+          "target_path": "apps/frontend/src/components/atoms/button.test.tsx",
+          "mode": "100644",
+          "bytes": 1308,
+          "sha256": "e58317d884251570e35287b2604a05d2f8dd432fcd4ddd4638c34f99afd6370e",
+          "index_blob": "5ed5189df564ea5f80211c4acc94bd32649a926b"
+        },
+        {
+          "source_path": "src/components/atoms/button.tsx",
+          "target_path": "apps/frontend/src/components/atoms/button.tsx",
+          "mode": "100644",
+          "bytes": 1781,
+          "sha256": "a0bc89d1e0468f547c1e4deb2505796af57717577c8c4892f0e0326b0d6dfabb",
+          "index_blob": "e02927273cce18ed8b3775e389922ff35441375c"
+        },
+        {
+          "source_path": "src/components/atoms/card.tsx",
+          "target_path": "apps/frontend/src/components/atoms/card.tsx",
+          "mode": "100644",
+          "bytes": 1078,
+          "sha256": "ddcbad4a63f686709907b73f8949231542d3ac08028b39f7cd88364fadd69282",
+          "index_blob": "ec505d6e790f6d25c9ad75e0ec4d402c10a4ea81"
+        },
+        {
+          "source_path": "src/components/atoms/form-controls.stories.tsx",
+          "target_path": "apps/frontend/src/components/atoms/form-controls.stories.tsx",
+          "mode": "100644",
+          "bytes": 989,
+          "sha256": "f3e4ea1fd086a6fcced2c13ef1d9027d4c15b17d225daba8b6a389ae95e3d87f",
+          "index_blob": "477382243a5714cddfb20662dee9895af20fda40"
+        },
+        {
+          "source_path": "src/components/atoms/input.tsx",
+          "target_path": "apps/frontend/src/components/atoms/input.tsx",
+          "mode": "100644",
+          "bytes": 695,
+          "sha256": "232fd5a45618d2869c4b03060e981aa4a2c1bf21548cc563a8162d3c31daa38e",
+          "index_blob": "6ca96414f357002a90095df4d85335382d42b148"
+        },
+        {
+          "source_path": "src/components/atoms/label.tsx",
+          "target_path": "apps/frontend/src/components/atoms/label.tsx",
+          "mode": "100644",
+          "bytes": 488,
+          "sha256": "7292bce2a9aad61c76e56d44ac93057852c1b29188c55334f7726f428b278332",
+          "index_blob": "83d5d6b732b9366c616c7e2099990b8591ea4b3f"
+        },
+        {
+          "source_path": "src/components/atoms/select.tsx",
+          "target_path": "apps/frontend/src/components/atoms/select.tsx",
+          "mode": "100644",
+          "bytes": 1147,
+          "sha256": "11d0ee079cf1cb6a1432ee25084aa73e62145c5614c11f8bc8bca46c107b3fba",
+          "index_blob": "30a2d153667b406fa623c046f534b18df06995d9"
+        },
+        {
+          "source_path": "src/components/atoms/skeleton.tsx",
+          "target_path": "apps/frontend/src/components/atoms/skeleton.tsx",
+          "mode": "100644",
+          "bytes": 370,
+          "sha256": "e6960a87e1bf0ca497e0181f8c9f29fe735dd9a8d94041380d4ffb627d14a5c6",
+          "index_blob": "65b033854311c7cafde9ac1d44375fa5c072fc05"
+        },
+        {
+          "source_path": "src/components/atoms/spinner.tsx",
+          "target_path": "apps/frontend/src/components/atoms/spinner.tsx",
+          "mode": "100644",
+          "bytes": 576,
+          "sha256": "c5ddd0de0d225d622b317d87e066b04953a310fd1439151425d99a9f04785218",
+          "index_blob": "5804df63d73c0b7134e14838a45a228d50bbe3f5"
+        },
+        {
+          "source_path": "src/components/atoms/textarea.tsx",
+          "target_path": "apps/frontend/src/components/atoms/textarea.tsx",
+          "mode": "100644",
+          "bytes": 357,
+          "sha256": "3d7b4f1e096e8f300b4e3c753ee79d2e55e9ee6dbf259f04f5be3417ef59e5c8",
+          "index_blob": "d067c804b09e31ae072058c0a7cefeef639ae75e"
+        },
+        {
+          "source_path": "src/components/molecules/alert.tsx",
+          "target_path": "apps/frontend/src/components/molecules/alert.tsx",
+          "mode": "100644",
+          "bytes": 1289,
+          "sha256": "04395a9bcbd5b94273efb45b3a081c08c755905b03ceeb58a43a4212efc17240",
+          "index_blob": "3626f34e5f90a9296f618243e42ec95104930c19"
+        },
+        {
+          "source_path": "src/components/molecules/confirmation-dialog.stories.tsx",
+          "target_path": "apps/frontend/src/components/molecules/confirmation-dialog.stories.tsx",
+          "mode": "100644",
+          "bytes": 1041,
+          "sha256": "7e9e1a9dc002657199966976d160b2206b1f29ec2e177fb66bc451366df7e01e",
+          "index_blob": "ab3f8b820e525498d48d9dd718a9c359d1f61d4e"
+        },
+        {
+          "source_path": "src/components/molecules/confirmation-dialog.test.tsx",
+          "target_path": "apps/frontend/src/components/molecules/confirmation-dialog.test.tsx",
+          "mode": "100644",
+          "bytes": 2434,
+          "sha256": "e63141ea8032ed8d4afd3fbb66128225e71fa5586dc97a1b53f8fc14fd658fb5",
+          "index_blob": "1c1714c22d5d8fe68ca9abbe9c3f8dc15644a75b"
+        },
+        {
+          "source_path": "src/components/molecules/confirmation-dialog.tsx",
+          "target_path": "apps/frontend/src/components/molecules/confirmation-dialog.tsx",
+          "mode": "100644",
+          "bytes": 1418,
+          "sha256": "6680c657c971e4f4c8f37cf0155e8a605663553d332993f9597b958eee62d4bd",
+          "index_blob": "4ea60ee4ae4f3091781425d3500339106b26fe3a"
+        },
+        {
+          "source_path": "src/components/molecules/dialog.test.tsx",
+          "target_path": "apps/frontend/src/components/molecules/dialog.test.tsx",
+          "mode": "100644",
+          "bytes": 1420,
+          "sha256": "37809bd18e11ecb0f9558fa30284b3ed37e67585d626d9d1e17a57308bc7f6ce",
+          "index_blob": "bfbe4ee657f48f06ab876677f85207932c3864c7"
+        },
+        {
+          "source_path": "src/components/molecules/dialog.tsx",
+          "target_path": "apps/frontend/src/components/molecules/dialog.tsx",
+          "mode": "100644",
+          "bytes": 3806,
+          "sha256": "d915f4f137d42e92d69fa9f066293c8b1b7ac333ac173c24455e858f701df15b",
+          "index_blob": "e53379a8cd0159755553b99c7ebdb8fa5a341154"
+        },
+        {
+          "source_path": "src/components/molecules/empty-state.tsx",
+          "target_path": "apps/frontend/src/components/molecules/empty-state.tsx",
+          "mode": "100644",
+          "bytes": 1100,
+          "sha256": "b3447d59b760dae71dc8622983c8623d5e19a9c19e7a90c5632503ea88936f41",
+          "index_blob": "097491ec9515b344f0ec3e947161d7882382583d"
+        },
+        {
+          "source_path": "src/components/molecules/feedback.stories.tsx",
+          "target_path": "apps/frontend/src/components/molecules/feedback.stories.tsx",
+          "mode": "100644",
+          "bytes": 1139,
+          "sha256": "ad2102204221d76f56cdaf8652710b5c55a1e75b0207bc6f696fc9af5f578c90",
+          "index_blob": "8dc5bbd891a2f7b981d374b63f8832e1f479b5dc"
+        },
+        {
+          "source_path": "src/components/molecules/form-field.stories.tsx",
+          "target_path": "apps/frontend/src/components/molecules/form-field.stories.tsx",
+          "mode": "100644",
+          "bytes": 658,
+          "sha256": "0177cf9c45cb91c815292377b7c5d33009091d27d00cb77e3832a2fb62bff6c7",
+          "index_blob": "32533005cc2f6a9f74092f7f4767f041ab1628f1"
+        },
+        {
+          "source_path": "src/components/molecules/form-field.test.tsx",
+          "target_path": "apps/frontend/src/components/molecules/form-field.test.tsx",
+          "mode": "100644",
+          "bytes": 953,
+          "sha256": "598c121c166817174e8836ed031c05ff53c1354e06fc93ed577682fe64a4a4f6",
+          "index_blob": "85ffd8a5d370478b33c530e62b17c16328f3fb4f"
+        },
+        {
+          "source_path": "src/components/molecules/form-field.tsx",
+          "target_path": "apps/frontend/src/components/molecules/form-field.tsx",
+          "mode": "100644",
+          "bytes": 1490,
+          "sha256": "c42e6539766d54a069a7ac2265c89c3b653371163bf9c67664eb24eba02156b2",
+          "index_blob": "892836b89060f536ef8bca5369a809b13f04ea1b"
+        },
+        {
+          "source_path": "src/components/molecules/nav-menu.tsx",
+          "target_path": "apps/frontend/src/components/molecules/nav-menu.tsx",
+          "mode": "100644",
+          "bytes": 1435,
+          "sha256": "e0ae74d029ec7ce540293b72041b35d50e4081fabaa285a91aabc527f0804a5c",
+          "index_blob": "2fa9bf1d7630dcb4eb97b85e4671b96b3769079c"
+        },
+        {
+          "source_path": "src/components/molecules/page-header.tsx",
+          "target_path": "apps/frontend/src/components/molecules/page-header.tsx",
+          "mode": "100644",
+          "bytes": 750,
+          "sha256": "a368f4c0a8747d3d18bffb80b7b11127cd80874993593cf3b9b6156eed67269b",
+          "index_blob": "032561ea76d46620eb8c426c989e693d2991d569"
+        },
+        {
+          "source_path": "src/components/molecules/pagination.stories.tsx",
+          "target_path": "apps/frontend/src/components/molecules/pagination.stories.tsx",
+          "mode": "100644",
+          "bytes": 508,
+          "sha256": "685bc41953b0c436c018b48ec17cde3fa7daba3dc6ae094c0f7eda5b747be6e0",
+          "index_blob": "4dc8ca1a27211c05c85d88e77cf702701677b53e"
+        },
+        {
+          "source_path": "src/components/molecules/pagination.test.tsx",
+          "target_path": "apps/frontend/src/components/molecules/pagination.test.tsx",
+          "mode": "100644",
+          "bytes": 1154,
+          "sha256": "777a1ec20f2a2272b0f07b539473b6d65e23b7defc405aa36abe8b626f9dfedc",
+          "index_blob": "d4f51aa86f43b311555868586c3a6b95457ad201"
+        },
+        {
+          "source_path": "src/components/molecules/pagination.tsx",
+          "target_path": "apps/frontend/src/components/molecules/pagination.tsx",
+          "mode": "100644",
+          "bytes": 3288,
+          "sha256": "5ef372b2d9d495b4c01ba3fa223d0d1021ab796b3df0468817489a9df62e9270",
+          "index_blob": "4ce85a089e935e37b7fece7470c5fd4c18d42586"
+        },
+        {
+          "source_path": "src/components/molecules/search-input.stories.tsx",
+          "target_path": "apps/frontend/src/components/molecules/search-input.stories.tsx",
+          "mode": "100644",
+          "bytes": 686,
+          "sha256": "2857bb53ee5d1af9c06a947970ec520b969de89865672f8feece932de3d81904",
+          "index_blob": "2db3cf86b48bc44005d55c63bb6f898006c07945"
+        },
+        {
+          "source_path": "src/components/molecules/search-input.test.tsx",
+          "target_path": "apps/frontend/src/components/molecules/search-input.test.tsx",
+          "mode": "100644",
+          "bytes": 787,
+          "sha256": "e2816ffecb0983cedc561c948b094b6ca8c09157f0f4a705484aceb00029407c",
+          "index_blob": "bd66d9459323100dae8ea3ddd7264ccd5108bbbd"
+        },
+        {
+          "source_path": "src/components/molecules/search-input.tsx",
+          "target_path": "apps/frontend/src/components/molecules/search-input.tsx",
+          "mode": "100644",
+          "bytes": 1115,
+          "sha256": "6386e692c43e4f07573960e8f5041b0220d0fb0764d4ad940b92bfdf934972d7",
+          "index_blob": "525eb037a160f06c56e60c1abcc691723979a833"
+        },
+        {
+          "source_path": "src/components/molecules/stat-card.tsx",
+          "target_path": "apps/frontend/src/components/molecules/stat-card.tsx",
+          "mode": "100644",
+          "bytes": 843,
+          "sha256": "b5707cf2fa20bfbbb08a951a9f185eec4bbec8565c326e8750ca9d8175896dd9",
+          "index_blob": "acec4ad76185c7443607fb19f06f2578cac54ec8"
+        },
+        {
+          "source_path": "src/components/molecules/theme-toggle.tsx",
+          "target_path": "apps/frontend/src/components/molecules/theme-toggle.tsx",
+          "mode": "100644",
+          "bytes": 504,
+          "sha256": "a19f81bf5e33d2726672115151513989d099a0fdaa6f876a9f282d251983bb3e",
+          "index_blob": "b80236d9e7d7eb968728f1e880a000c385e50328"
+        },
+        {
+          "source_path": "src/components/organisms/app-header.tsx",
+          "target_path": "apps/frontend/src/components/organisms/app-header.tsx",
+          "mode": "100644",
+          "bytes": 711,
+          "sha256": "29805d350bb426e7dcd6eaa9b4c66a26070cd530e672690a71584e4cefaceebd",
+          "index_blob": "c99d4501e62c1d07b228a6c96f50a592c42c817a"
+        },
+        {
+          "source_path": "src/components/organisms/app-sidebar.tsx",
+          "target_path": "apps/frontend/src/components/organisms/app-sidebar.tsx",
+          "mode": "100644",
+          "bytes": 740,
+          "sha256": "de1a65ce7c5ac1dba520efae7d25158ef60e8b6c761663ec6ea9f5969140bb9d",
+          "index_blob": "5166709c75f0ccddd775a9d293f205dc7d843d28"
+        },
+        {
+          "source_path": "src/components/organisms/data-table.stories.tsx",
+          "target_path": "apps/frontend/src/components/organisms/data-table.stories.tsx",
+          "mode": "100644",
+          "bytes": 1313,
+          "sha256": "07ce63a9c77dd70b1b9d4953e3a55bf62d3606e491337f1b15714bd2a380ff37",
+          "index_blob": "6ed28b69c98dc379550f7f27630dd94a02f956a3"
+        },
+        {
+          "source_path": "src/components/organisms/data-table.test.tsx",
+          "target_path": "apps/frontend/src/components/organisms/data-table.test.tsx",
+          "mode": "100644",
+          "bytes": 1225,
+          "sha256": "24f47d82c0da281e724424fbf66d77710bfb2f952842e2892e185d069e9634d4",
+          "index_blob": "104b8543ad15725b5e13d3a55bdb55502ee9d87d"
+        },
+        {
+          "source_path": "src/components/organisms/data-table.tsx",
+          "target_path": "apps/frontend/src/components/organisms/data-table.tsx",
+          "mode": "100644",
+          "bytes": 1893,
+          "sha256": "802c22703326a5d473e87e649fcfef95bd0dd8b9a118b3fa1c4425d2ba6c0751",
+          "index_blob": "b58f4a340d5cbccfcbd4af61aba0572bb07ded1b"
+        },
+        {
+          "source_path": "src/components/organisms/mobile-nav.tsx",
+          "target_path": "apps/frontend/src/components/organisms/mobile-nav.tsx",
+          "mode": "100644",
+          "bytes": 1090,
+          "sha256": "3362cd98fa18f07d5fb51c1156e334ed55f0cd3d40bd5c36f94270c6175045c7",
+          "index_blob": "7ae5e9d0eb6f55f6c1cff7bfdf4f4a295d0e4592"
+        },
+        {
+          "source_path": "src/components/templates/dashboard-template.stories.tsx",
+          "target_path": "apps/frontend/src/components/templates/dashboard-template.stories.tsx",
+          "mode": "100644",
+          "bytes": 1703,
+          "sha256": "813d1d6382aa057a9add21bb5769d4ffed3bca5ebdfe85e21c69fd1be3ac0906",
+          "index_blob": "efe032fcd53d1f4be666025d633f962291df01e0"
+        },
+        {
+          "source_path": "src/components/templates/dashboard-template.tsx",
+          "target_path": "apps/frontend/src/components/templates/dashboard-template.tsx",
+          "mode": "100644",
+          "bytes": 1094,
+          "sha256": "1e2ade34d57d7a6170bc3a5a9976afceb577434fd65b379d0440d36bdfe51ecc",
+          "index_blob": "44f857fddfb3105a8a3242d5eb2d38c451c47b7c"
+        },
+        {
+          "source_path": "src/config/navigation.tsx",
+          "target_path": "apps/frontend/src/config/navigation.tsx",
+          "mode": "100644",
+          "bytes": 370,
+          "sha256": "c95ac5a681c3d01cfd01349e2bb2b827322fe8f8d4a2dea901b84324106e2c31",
+          "index_blob": "530f52537c8827884947bedf75860a2061e81b32"
+        },
+        {
+          "source_path": "src/config/site.ts",
+          "target_path": "apps/frontend/src/config/site.ts",
+          "mode": "100644",
+          "bytes": 268,
+          "sha256": "befec88e8d06cd37732f8f9f573a31eb076523c7929864d09b855f7b864dd020",
+          "index_blob": "7d86823c9c89c652be50a96765ce52af1a893c07"
+        },
+        {
+          "source_path": "src/features/tasks/actions.test.ts",
+          "target_path": "apps/frontend/src/features/tasks/actions.test.ts",
+          "mode": "100644",
+          "bytes": 4509,
+          "sha256": "408143c130c5171dd11e2a0c6589fcc90fb42f4eddfc776d5ed79678f652d992",
+          "index_blob": "ca1d7b1e6d770a2137a778fbf12b6adf150d926d"
+        },
+        {
+          "source_path": "src/features/tasks/actions.ts",
+          "target_path": "apps/frontend/src/features/tasks/actions.ts",
+          "mode": "100644",
+          "bytes": 2648,
+          "sha256": "d98a6f28ea91a268ff20a45e9a0d64de1d95b0b8e87cd6d50f828a5185754b6b",
+          "index_blob": "bf2f611166a157a4089fa17c7eb22ca0409bfc6f"
+        },
+        {
+          "source_path": "src/features/tasks/components/delete-task-button.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/delete-task-button.tsx",
+          "mode": "100644",
+          "bytes": 1388,
+          "sha256": "39f877f7a12d4366fcf31a52fc87144ce6be452b866156abaf4cbb3af0308d94",
+          "index_blob": "62f19ee3bf10fe9367a94f080467da6df7e9d773"
+        },
+        {
+          "source_path": "src/features/tasks/components/recent-tasks.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/recent-tasks.tsx",
+          "mode": "100644",
+          "bytes": 1568,
+          "sha256": "5ec9a565eeeae672d5d9d3fd01df1fe25edf5a9859b6a93acb73219c8d8a698a",
+          "index_blob": "a59e1388510ecbd0fea7f8d65cc66b2ff42e27f4"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-badges.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-badges.tsx",
+          "mode": "100644",
+          "bytes": 568,
+          "sha256": "d0c565ba34168122c2111c0f8dc19334918de63ec369050669f90abea2d9aea1",
+          "index_blob": "33974a7e4ba1b27708a50249f413494edda8d822"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-filters.test.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-filters.test.tsx",
+          "mode": "100644",
+          "bytes": 2023,
+          "sha256": "06400b3bf6088f9ec79a6951bf70e3a291ee74537137f07285b2b5088e50f183",
+          "index_blob": "53d73f08951c17d2c86095a69f0f7ac792e8f969"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-filters.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-filters.tsx",
+          "mode": "100644",
+          "bytes": 3352,
+          "sha256": "dc7d06256349d58b2429535c6600c8a4788a356e13f41643d0dffd4f304adf83",
+          "index_blob": "dd3aae8407af13561ec0051f221b68f9ec7d00fa"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-form-dialog.test.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-form-dialog.test.tsx",
+          "mode": "100644",
+          "bytes": 1257,
+          "sha256": "50bfa2551b9d738375f57dc97c017f7125f7ba82345837161429c59709f6f51a",
+          "index_blob": "4fd753979393a203f9c274b33ce3ce176cc76357"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-form-dialog.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-form-dialog.tsx",
+          "mode": "100644",
+          "bytes": 2041,
+          "sha256": "06880159844ced9dc90068bf895d459c68ceddf2d29e4c0e2b5961e0e9ee7eb0",
+          "index_blob": "4a5d2bea395f44858a4894820ce8b139236479c8"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-form.test.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-form.test.tsx",
+          "mode": "100644",
+          "bytes": 3420,
+          "sha256": "553a74028a80e9154e382478b0a57a4dffbf2901a2f48a4549783e91141f0d35",
+          "index_blob": "59b937902877bfecbd05579b2b4b7b2aefa1d302"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-form.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-form.tsx",
+          "mode": "100644",
+          "bytes": 4398,
+          "sha256": "329733f51cc25cffe35c507ad95dcbfee6bdd0930c217ee5079e505be77427a6",
+          "index_blob": "dbc5e1c35f08e201c4a3dc0daf07014c389f1a56"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-stats.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-stats.tsx",
+          "mode": "100644",
+          "bytes": 825,
+          "sha256": "a8d052d879a49256225a9a559d6758e667ce8a31215252904f4713a8ff081cfa",
+          "index_blob": "9061622f8faa0f95259831fdbb5bf242b9e0f12d"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-status-select.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-status-select.tsx",
+          "mode": "100644",
+          "bytes": 1408,
+          "sha256": "0ef576f01b18f3d82a1353f362aa7e02f09bddb20410a3fa8ba7f84932a5966d",
+          "index_blob": "977c2f1001b63c633363a4f1078265a7d6db5f48"
+        },
+        {
+          "source_path": "src/features/tasks/components/task-table.tsx",
+          "target_path": "apps/frontend/src/features/tasks/components/task-table.tsx",
+          "mode": "100644",
+          "bytes": 2165,
+          "sha256": "9344113fc8355034b41e012325b3e0776a7809ff9d86b7d294bbe9ed26626884",
+          "index_blob": "7420904e21cea56881d226fa2f9e4719cbabfa8e"
+        },
+        {
+          "source_path": "src/features/tasks/constants.ts",
+          "target_path": "apps/frontend/src/features/tasks/constants.ts",
+          "mode": "100644",
+          "bytes": 1241,
+          "sha256": "a35890a28dc1837e002800ce6f80d0c5b529c574c6b46fda281c2ef2036fff50",
+          "index_blob": "4acb6753656e369b3f24346edea42f3b266d6ad6"
+        },
+        {
+          "source_path": "src/features/tasks/schemas.test.ts",
+          "target_path": "apps/frontend/src/features/tasks/schemas.test.ts",
+          "mode": "100644",
+          "bytes": 1866,
+          "sha256": "7ad97190f7bdd1c6f335101088757e5a0b56c04e78ed64253f9da85576dfa248",
+          "index_blob": "d20f2d5a6ca9c5282d55ca7da37e8c13926f9dbd"
+        },
+        {
+          "source_path": "src/features/tasks/schemas.ts",
+          "target_path": "apps/frontend/src/features/tasks/schemas.ts",
+          "mode": "100644",
+          "bytes": 2633,
+          "sha256": "bedfbc2faaa02e77edad336dc9b3c2cbb9edeb259c468c20b1f4f7132d9c55b4",
+          "index_blob": "b72d0d49f76a0aa98ed5dc19aa32ba63490241d6"
+        },
+        {
+          "source_path": "src/features/tasks/services/demo-task-repository.test.ts",
+          "target_path": "apps/frontend/src/features/tasks/services/demo-task-repository.test.ts",
+          "mode": "100644",
+          "bytes": 2432,
+          "sha256": "ff41a29d986a7933bf35fd55624bb4c946a3e6d5cc79b226686bb614288efe9c",
+          "index_blob": "701cab1379d26b5e22f67abf01c0c934d8ed61df"
+        },
+        {
+          "source_path": "src/features/tasks/services/demo-task-repository.ts",
+          "target_path": "apps/frontend/src/features/tasks/services/demo-task-repository.ts",
+          "mode": "100644",
+          "bytes": 4618,
+          "sha256": "275c8b5ac6f3d12eb0777637e0ad914b35baa09a783dc8285a1d94bd318f6f36",
+          "index_blob": "ba06bb9556b604528b157b94ac043550ad7c6ffc"
+        },
+        {
+          "source_path": "src/features/tasks/services/rest-task-repository.test.ts",
+          "target_path": "apps/frontend/src/features/tasks/services/rest-task-repository.test.ts",
+          "mode": "100644",
+          "bytes": 4158,
+          "sha256": "68c6688c0fc14d90aada4b69f953716865e25ad612e74c55db200fe44cc3ed6c",
+          "index_blob": "4a322a331e11d9f02e258990a1aa32f570ba4b23"
+        },
+        {
+          "source_path": "src/features/tasks/services/rest-task-repository.ts",
+          "target_path": "apps/frontend/src/features/tasks/services/rest-task-repository.ts",
+          "mode": "100644",
+          "bytes": 1893,
+          "sha256": "24d1d51e27eed7ac8af2e652e50513f0ce9b08acdeb4e0794076a1ec27f60560",
+          "index_blob": "9917b72299a196cf8415136ce127fdf3f8332605"
+        },
+        {
+          "source_path": "src/features/tasks/services/task-repository.ts",
+          "target_path": "apps/frontend/src/features/tasks/services/task-repository.ts",
+          "mode": "100644",
+          "bytes": 438,
+          "sha256": "09eff5a8ec121c129e7eeb747d67617e522ea8ded211331612f9af387405aec6",
+          "index_blob": "2fadda26b7eda5152afb2824d8601e5c5c56680f"
+        },
+        {
+          "source_path": "src/features/tasks/types.ts",
+          "target_path": "apps/frontend/src/features/tasks/types.ts",
+          "mode": "100644",
+          "bytes": 1146,
+          "sha256": "ceef498bacc2b48281095435803ff6bf120c398960d8717dc88c8e9dae047a3e",
+          "index_blob": "296ae1aa695464aec364f089dced2fef5d0d57c8"
+        },
+        {
+          "source_path": "src/instrumentation-client.ts",
+          "target_path": "apps/frontend/src/instrumentation-client.ts",
+          "mode": "100644",
+          "bytes": 357,
+          "sha256": "98203e6e781a50a9d88c4d2463bf44218f8842a47770600d67aabe02dba8d6f4",
+          "index_blob": "d11c5e08d405b6476f2550525eb9d1d76bc31c5e"
+        },
+        {
+          "source_path": "src/instrumentation-node.ts",
+          "target_path": "apps/frontend/src/instrumentation-node.ts",
+          "mode": "100644",
+          "bytes": 1105,
+          "sha256": "55c08bdfdf06f0d697ac3a8da98589525b6c147e3d9e4e437ddea5fa4695d6dd",
+          "index_blob": "ad48c20d0ab813ab4e49a22009e18f7897c148cd"
+        },
+        {
+          "source_path": "src/instrumentation.ts",
+          "target_path": "apps/frontend/src/instrumentation.ts",
+          "mode": "100644",
+          "bytes": 240,
+          "sha256": "a6d2f57851da78d3b4a030b6ad9628685b5b24147601bf6eb1a0da8c3d38c215",
+          "index_blob": "fd37319bda267a2cd6e0bc3a166d1b435af62095"
+        },
+        {
+          "source_path": "src/lib/action-result.ts",
+          "target_path": "apps/frontend/src/lib/action-result.ts",
+          "mode": "100644",
+          "bytes": 2749,
+          "sha256": "da72f55debc416773adba4046a155f00aa4691eda7e56d65f81cd7608a9d2cad",
+          "index_blob": "e37478db46b14b1d196c8a6bc0325107c9d09e37"
+        },
+        {
+          "source_path": "src/lib/api/backend.test.ts",
+          "target_path": "apps/frontend/src/lib/api/backend.test.ts",
+          "mode": "100644",
+          "bytes": 2111,
+          "sha256": "a12a72d8e4f6dbf6c0cb7ce2692c18dcce77858209089c778864ec38617380fc",
+          "index_blob": "f87739addedbef85c7f392c5e5f8d6062e9878dd"
+        },
+        {
+          "source_path": "src/lib/api/backend.ts",
+          "target_path": "apps/frontend/src/lib/api/backend.ts",
+          "mode": "100644",
+          "bytes": 1271,
+          "sha256": "a44d95736c99d13325bdaf29064d6446477c682e3f9cdd1e053d09cc8c73e5d7",
+          "index_blob": "ee407ccb51df56a63b66a8a6ebc1838b39818298"
+        },
+        {
+          "source_path": "src/lib/api/http-client.test.ts",
+          "target_path": "apps/frontend/src/lib/api/http-client.test.ts",
+          "mode": "100644",
+          "bytes": 3822,
+          "sha256": "29b0749c8022a6375ddbc75fe484e2538eaed6a7e2509a55b32b887d8483a68a",
+          "index_blob": "1bb04b5ca18ab14446079e9de0155cc2841558dc"
+        },
+        {
+          "source_path": "src/lib/api/http-client.ts",
+          "target_path": "apps/frontend/src/lib/api/http-client.ts",
+          "mode": "100644",
+          "bytes": 4703,
+          "sha256": "22e3909c97d852ef2f562a869e4a321761d854653a6532c015c1a7c21f7cdcbc",
+          "index_blob": "e70958dc0d95ca5fb788d007490f1cd42f8faa5d"
+        },
+        {
+          "source_path": "src/lib/auth-provider.ts",
+          "target_path": "apps/frontend/src/lib/auth-provider.ts",
+          "mode": "100644",
+          "bytes": 1694,
+          "sha256": "b6500105e81532e1cbe34510f31127ff51ece4699abdf0d95a8cb64cedcd0341",
+          "index_blob": "5e6afb1d73ee6725df6ff789c1ecafa50eb27546"
+        },
+        {
+          "source_path": "src/lib/auth.test.ts",
+          "target_path": "apps/frontend/src/lib/auth.test.ts",
+          "mode": "100644",
+          "bytes": 2378,
+          "sha256": "d580b6877a703aaff69284abed15dcd1fc39754c83b90e9c03344c0648b085c8",
+          "index_blob": "77fdac489fee9694c16424e320d083bf6e7ddcf3"
+        },
+        {
+          "source_path": "src/lib/auth.ts",
+          "target_path": "apps/frontend/src/lib/auth.ts",
+          "mode": "100644",
+          "bytes": 2405,
+          "sha256": "3cfdc99012f7ce30d1800f210bfd2084b3f880f763ea7081db0e9b48756c8192",
+          "index_blob": "25f19fe91c2a819a3cc9f3b2d3a3cc947a808d9a"
+        },
+        {
+          "source_path": "src/lib/env.test.ts",
+          "target_path": "apps/frontend/src/lib/env.test.ts",
+          "mode": "100644",
+          "bytes": 1416,
+          "sha256": "886518368a841dfef622b3676b68c09eb57b64f68d5cff17356c5147833bd26e",
+          "index_blob": "3187fac2d770487aedf7074db38f2f219a20d796"
+        },
+        {
+          "source_path": "src/lib/env.ts",
+          "target_path": "apps/frontend/src/lib/env.ts",
+          "mode": "100644",
+          "bytes": 1395,
+          "sha256": "f60a96bf0c30951a33dc317af32134fc1a37087d3e6f32f929cd9129282685de",
+          "index_blob": "0c4a72399ac0393bee30cc36bf30397e0d6ae4c3"
+        },
+        {
+          "source_path": "src/lib/theme.ts",
+          "target_path": "apps/frontend/src/lib/theme.ts",
+          "mode": "100644",
+          "bytes": 810,
+          "sha256": "389eaf89fa9bcc2de7e365be98a0ea43fb42c27f88e3a7e1c77e8b4db005f6c4",
+          "index_blob": "383b4ffa922b1090e4f4029ab63cc013e9042830"
+        },
+        {
+          "source_path": "src/lib/utils.ts",
+          "target_path": "apps/frontend/src/lib/utils.ts",
+          "mode": "100644",
+          "bytes": 550,
+          "sha256": "c4fc8a3d3bd49122a931b5953df538fd5da0cc43486e8d7df9198c92a7c6fa8c",
+          "index_blob": "5ea0b2746d138fa0709572754378c734a71429ff"
+        },
+        {
+          "source_path": "src/test/empty-module.ts",
+          "target_path": "apps/frontend/src/test/empty-module.ts",
+          "mode": "100644",
+          "bytes": 10,
+          "sha256": "7992a39d6cde5e050eb78461a8bf9ad986175a94826e835c110b3967290bd249",
+          "index_blob": "336ce12bb9106afdf843063ee67c0c1970f70d37"
+        },
+        {
+          "source_path": "src/test/setup.ts",
+          "target_path": "apps/frontend/src/test/setup.ts",
+          "mode": "100644",
+          "bytes": 708,
+          "sha256": "786b92abc013a164884c41d9cf2947880629ddbe8f1b4ca78d8fc56af5674ce8",
+          "index_blob": "60e93014ef4b2ec88222d05a941072a04851851a"
+        },
+        {
+          "source_path": "tsconfig.json",
+          "target_path": "apps/frontend/tsconfig.json",
+          "mode": "100644",
+          "bytes": 670,
+          "sha256": "5c51df4c59f4510d8c7dadf07a5c32132228826a3b331da5e286207b4df7ef9c",
+          "index_blob": "cf9c65d3e0676a0169374d827f7abb97497789ef"
+        },
+        {
+          "source_path": "vitest.config.mts",
+          "target_path": "apps/frontend/vitest.config.mts",
+          "mode": "100644",
+          "bytes": 619,
+          "sha256": "203df2316e078ba9ab0648f6bdce41c46bfb56eb3f582e7717626799706dc700",
+          "index_blob": "269c5829da98cea0dc861012f3cae0400fecf7e3"
+        }
+      ],
+      "source_git_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "head_to_tree_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "staged_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "inta-harness",
+      "source": "/private/tmp/mc002-inta-harness",
+      "destination": "tools/inta-harness",
+      "source_head": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+      "source_branch": "codex/mc-002-inta-harness-r4",
+      "files": [
+        {
+          "source_path": ".gitignore",
+          "target_path": "tools/inta-harness/.gitignore",
+          "mode": "100644",
+          "bytes": 106,
+          "sha256": "0c9af7cbc28691f89246cf22cd8c3f60a4611b4f7626f2ae2780f2b764d93085",
+          "index_blob": "ef45bfc86b4641a215d6db33571253183851930b"
+        },
+        {
+          "source_path": "AGENTS.md",
+          "target_path": "tools/inta-harness/AGENTS.md",
+          "mode": "100644",
+          "bytes": 679,
+          "sha256": "063098f6cb31bb44c6f8fbea25b3876de7ee1e5f7d00a50dbab506f6415eb7f0",
+          "index_blob": "af3b7c84114bafeee578bf1adff2ef74af2cc6a2"
+        },
+        {
+          "source_path": "app/harness/case/route.ts",
+          "target_path": "tools/inta-harness/app/harness/case/route.ts",
+          "mode": "100644",
+          "bytes": 2733,
+          "sha256": "457d13f0567fe4115d988db5966756efbc064a6644de3d985f824171e96ca29d",
+          "index_blob": "1be5546297a4730b1b5d181a5c8f47150552af62"
+        },
+        {
+          "source_path": "next-env.d.ts",
+          "target_path": "tools/inta-harness/next-env.d.ts",
+          "mode": "100644",
+          "bytes": 296,
+          "sha256": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc",
+          "index_blob": "a419cbe4e3a5e8d4b481b851dbf4ac767de069e6"
+        },
+        {
+          "source_path": "next.config.ts",
+          "target_path": "tools/inta-harness/next.config.ts",
+          "mode": "100644",
+          "bytes": 337,
+          "sha256": "e9c0179c975670f422483d42a3b90879620d172789678cbaa05f0d366636535d",
+          "index_blob": "9c890d0266769017123efe114c3ca66f437af14a"
+        },
+        {
+          "source_path": "package.json",
+          "target_path": "tools/inta-harness/package.json",
+          "mode": "100644",
+          "bytes": 344,
+          "sha256": "c126bb0ad5f97c41027c902a2763f6927f02feb48208b6286c9f19fa9277de38",
+          "index_blob": "296357887db3b740fab80909969b1384634087f2"
+        },
+        {
+          "source_path": "pnpm-lock.yaml",
+          "target_path": "tools/inta-harness/pnpm-lock.yaml",
+          "mode": "100644",
+          "bytes": 114,
+          "sha256": "17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a",
+          "index_blob": "9b60ae1782d6de40a88f604fe40efd8a127d3418"
+        },
+        {
+          "source_path": "scripts/live-guards.ts",
+          "target_path": "tools/inta-harness/scripts/live-guards.ts",
+          "mode": "100644",
+          "bytes": 26222,
+          "sha256": "f65ebb1e8466233eec5a2d17d9cd8634d968eaaafb9395256fdaf01d5b04fe6f",
+          "index_blob": "94c857a4b1fd438aaac7d9267033aab979f2535a"
+        },
+        {
+          "source_path": "scripts/stop-harness.sh",
+          "target_path": "tools/inta-harness/scripts/stop-harness.sh",
+          "mode": "100755",
+          "bytes": 5781,
+          "sha256": "c1687f67043a3be9b60255bfa8bb44edd8b7f16ebb8cbc3e455553d305f63d9e",
+          "index_blob": "7b4e9c0e83ad72b301750d7599c51dac9dcef07d"
+        },
+        {
+          "source_path": "src/driver.ts",
+          "target_path": "tools/inta-harness/src/driver.ts",
+          "mode": "100644",
+          "bytes": 65232,
+          "sha256": "4ca96d195a196c9d959360b2eeaea9e957c44a1bf870d6837fb58f25892fba1c",
+          "index_blob": "1b70a9e6d3b40c30e725649078a5dc5f4d4af5c3"
+        },
+        {
+          "source_path": "src/envelope.ts",
+          "target_path": "tools/inta-harness/src/envelope.ts",
+          "mode": "100644",
+          "bytes": 4674,
+          "sha256": "d0bc3e812ef99101d186e316f3717851157d2c2beb0ee2b5a0c48c27313286d8",
+          "index_blob": "cf98bf9755eecbe7e4c6b8c69663e3f2ff42cb6d"
+        },
+        {
+          "source_path": "src/executor.ts",
+          "target_path": "tools/inta-harness/src/executor.ts",
+          "mode": "100644",
+          "bytes": 18503,
+          "sha256": "4c8abe1f522476d40be17dcec56741b0139278b219294e993bdcc140d1133735",
+          "index_blob": "1e0ff4642025661d508b4532b11272534af6eed3"
+        },
+        {
+          "source_path": "src/fixtures.ts",
+          "target_path": "tools/inta-harness/src/fixtures.ts",
+          "mode": "100644",
+          "bytes": 1106,
+          "sha256": "f364d3f880eb046ab1162cd42ef36665b085c1fdacd056cdd8e21eab48dedf48",
+          "index_blob": "004e516cc59e5170aa58e11f597476c18e30ff5d"
+        },
+        {
+          "source_path": "src/guards.ts",
+          "target_path": "tools/inta-harness/src/guards.ts",
+          "mode": "100644",
+          "bytes": 3128,
+          "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928",
+          "index_blob": "6c447122d9a6b0ed4b655adbeebcc3bcebc65640"
+        },
+        {
+          "source_path": "src/request-id.ts",
+          "target_path": "tools/inta-harness/src/request-id.ts",
+          "mode": "100644",
+          "bytes": 4723,
+          "sha256": "7f97882c23799b100ffc20d770a08b59146dd1a923c9a7d5e92c1d016ea771ea",
+          "index_blob": "9968d57555fbb930f6966bf067599f123526a5fd"
+        },
+        {
+          "source_path": "src/schemas.ts",
+          "target_path": "tools/inta-harness/src/schemas.ts",
+          "mode": "100644",
+          "bytes": 2648,
+          "sha256": "45ade230c3cf1a7d7e979efc347ca10b22f3cafb16debac312250c7c4e078c02",
+          "index_blob": "877471f7c61ff59e205d6d0e5dd3c3633d2e4957"
+        },
+        {
+          "source_path": "tests/driver.test.ts",
+          "target_path": "tools/inta-harness/tests/driver.test.ts",
+          "mode": "100644",
+          "bytes": 62911,
+          "sha256": "e4afbddea103d85fbb4b72af3b8636764a5ed0d0bf78536e34499299c63e327d",
+          "index_blob": "3501e11bc8b6f21dafbd2fe3781dfb995679524d"
+        },
+        {
+          "source_path": "tests/envelope.test.ts",
+          "target_path": "tools/inta-harness/tests/envelope.test.ts",
+          "mode": "100644",
+          "bytes": 5608,
+          "sha256": "801268f10008d14c394cd99cc91ae5f58f80c0a3ca63fa056b679489a7c5ee4b",
+          "index_blob": "19a4e4d42ac552458368a73eb3da15a05ee573c6"
+        },
+        {
+          "source_path": "tests/executor.test.ts",
+          "target_path": "tools/inta-harness/tests/executor.test.ts",
+          "mode": "100644",
+          "bytes": 8578,
+          "sha256": "053c133d78282911e5ffeed7e391012d5b422024397dce7e7bf0a049a4dab56a",
+          "index_blob": "65252bbef3e554038f0e01e8ca127c6d43580a4c"
+        },
+        {
+          "source_path": "tests/fixtures.test.ts",
+          "target_path": "tools/inta-harness/tests/fixtures.test.ts",
+          "mode": "100644",
+          "bytes": 1392,
+          "sha256": "ed86bfb6dde9ab27deb000871350fd558d2599603b90dbd0b16a9b059bfa1a87",
+          "index_blob": "f42d9fef31e43ba96b91395f876d26fc9ae5bc35"
+        },
+        {
+          "source_path": "tests/guards.test.ts",
+          "target_path": "tools/inta-harness/tests/guards.test.ts",
+          "mode": "100644",
+          "bytes": 4198,
+          "sha256": "353d3ab200c0352cf20f430fb9d33c098cf6dab784ed4c7a29f78cf8a48fc71c",
+          "index_blob": "e573523b075ed41663cdd4feefe77bdef57b6d63"
+        },
+        {
+          "source_path": "tests/request-id.test.ts",
+          "target_path": "tools/inta-harness/tests/request-id.test.ts",
+          "mode": "100644",
+          "bytes": 4510,
+          "sha256": "efcb23f1396b500710da9dfb7612667ee7e8dfe65d38dc6053371edd7ea4f475",
+          "index_blob": "54f1d79c455e8414c94a9e53b5871dbe4c493db3"
+        },
+        {
+          "source_path": "tests/schemas.test.ts",
+          "target_path": "tools/inta-harness/tests/schemas.test.ts",
+          "mode": "100644",
+          "bytes": 5425,
+          "sha256": "70abd132ef08d5a46ef107882d7e85839e868679b657801674fd600f74de9eef",
+          "index_blob": "d01bb77619fe06a44c56e756215894742021d99c"
+        },
+        {
+          "source_path": "tsconfig.json",
+          "target_path": "tools/inta-harness/tsconfig.json",
+          "mode": "100644",
+          "bytes": 812,
+          "sha256": "f438298a68a5f13c68e11902c27261a6896b5049f710868763ed089abdfc46fc",
+          "index_blob": "f8247efb93aaa9a60fd013098e341f0dd3a26808"
+        },
+        {
+          "source_path": "vitest.config.ts",
+          "target_path": "tools/inta-harness/vitest.config.ts",
+          "mode": "100644",
+          "bytes": 289,
+          "sha256": "178fcdb4e53cb3781ca35df77077c1c8608a951b3547c73d3503f14233f3dc7a",
+          "index_blob": "580918cb6b7bbd477a01a8e454507228ae1582d5"
+        }
+      ],
+      "source_git_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "head_to_tree_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "staged_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "file_count": 485,
+  "bytes": 5566351,
+  "exclusions": [
+    "Git metadata",
+    "untracked/ignored/runtime/private files",
+    "node_modules/build caches/process state",
+    "credentials/actual env files"
+  ],
+  "backend_R1": "Included reviewed staged bytes as uncommitted snapshot; sourceHEAD alone is not corrected revision",
+  "harness_portability": "Exact original harness snapshot; existing /tmp template aliases and undeclared borrowed dependencies are retained, not a newly ported/running monorepo harness",
+  "git_index_mutated": false,
+  "commit_attempted": false,
+  "remote_push_attempted": false,
+  "Mimosa_gate": "Unresolved official refusal retained; import does not authorize or bypass commit gate"
+}

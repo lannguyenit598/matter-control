@@ -1,0 +1,22 @@
+2026-10-24T15:39:59Z — R01 fixture manifest (all fields non-secret; container env NOT dumped)
+Name=/mc002be-recheck-pg-20261024T1539Z
+Id=970007bbc363bb0b14da40fb6feadd763049ec9cd6660de5c52a5a6f764a893d
+Image=postgres:18-alpine
+RepoDigests=["postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873"]
+Labels={"org.mattercontrol.poc":"mc002be-recheck"}
+Memory=536870912
+NanoCpus=1000000000
+PidsLimit=128
+Ports={"5432/tcp":[{"HostIp":"127.0.0.1","HostPort":"15456"}]}
+Networks=mc002be-recheck-net (NetId=1f08f66e15be5960a5178eb59d126d0d8db1d5882b8f2b272c21e7600d7a7427, driver bridge)
+Mounts=volume:8473a9f1d0effc565a22cac0714fb045b708bc42bff8de2c79a631335fe3cef6:/var/lib/postgresql (anonymous, new)
+Health=healthy (reached within first poll)
+StartedAt=2026-10-24T15:39:43.723562378Z
+Port 15456 verified unused before publish (nc) and open from host after start.
+Pre-assignment target verification (docker exec psql, unix socket, no credential in argv):
+  current_database=mc002ber_recheck current_user=mc002ber
+  public schema tables=0 (fresh/empty)
+DSN form: postgres://mc002ber:REDACTED@127.0.0.1:15456/mc002ber_recheck?sslmode=disable
+Credential handling: fresh random per-run value generated in-session; no shell tracing (no set -x);
+never echoed, never in argv, never in an environment dump; container Config.Env retains it as normal
+(env_contains_password_entry=1 counted without printing); not reused from any prior fixture.

@@ -1,0 +1,71 @@
+{
+  "timestamp_utc": "2026-10-24T17:15:22.073666+00:00",
+  "inspection": "read-only resource state, no Config.Env/secrets",
+  "containers": [
+    {
+      "name": "mc002be-c01-pg-20261024T1700Z",
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .State}}\n{{json .HostConfig.PortBindings}}\n{{json .Config.Labels}}\n{{.Id}}\n{{.Image}}",
+        "mc002be-c01-pg-20261024T1700Z"
+      ],
+      "exit": 1,
+      "error": "permission denied while trying to connect to the docker API at unix:///Users/nguyenvanlan/.docker/run/docker.sock\n"
+    },
+    {
+      "name": "mc002be-pg-20261024T1454Z",
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .State}}\n{{json .HostConfig.PortBindings}}\n{{json .Config.Labels}}\n{{.Id}}\n{{.Image}}",
+        "mc002be-pg-20261024T1454Z"
+      ],
+      "exit": 1,
+      "error": "permission denied while trying to connect to the docker API at unix:///Users/nguyenvanlan/.docker/run/docker.sock\n"
+    },
+    {
+      "name": "mc002be-recheck-pg-20261024T1539Z",
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "--host",
+        "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .State}}\n{{json .HostConfig.PortBindings}}\n{{json .Config.Labels}}\n{{.Id}}\n{{.Image}}",
+        "mc002be-recheck-pg-20261024T1539Z"
+      ],
+      "exit": 1,
+      "error": "permission denied while trying to connect to the docker API at unix:///Users/nguyenvanlan/.docker/run/docker.sock\n"
+    }
+  ],
+  "listeners": {
+    "15457": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "18095": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "18096": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  }
+}

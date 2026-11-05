@@ -1,0 +1,50 @@
+{
+  "scope": "selected read-only metadata; no env/config/DB/HTTP or lifecycle",
+  "results": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "98134,88444,88453",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "utc": "2026-10-26T03:22:12.119526+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "rtk: Failed to execute command: ps: Operation not permitted (os error 1)\n"
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18085",
+        "-iTCP:18086",
+        "-sTCP:LISTEN"
+      ],
+      "utc": "2026-10-26T03:22:12.131993+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .State.Status}} {{json .State.Health.Status}} {{json .State.StartedAt}} {{json .Image}} {{json .Mounts}} {{json .HostConfig.PortBindings}} {{json .HostConfig.Memory}} {{json .HostConfig.NanoCpus}} {{json .HostConfig.PidsLimit}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "utc": "2026-10-26T03:22:12.197498+00:00",
+      "exit": 1,
+      "stdout": "\n",
+      "stderr": "permission denied while trying to connect to the docker API at unix:///Users/nguyenvanlan/.docker/run/docker.sock\n"
+    }
+  ]
+}

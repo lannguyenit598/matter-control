@@ -1,0 +1,102 @@
+{
+  "task": "MC-P0-CODEX-SESSIONS-INTAKE-20261028",
+  "checked_utc": "2026-10-28T03:59:19.086086+00:00",
+  "packet_final_manifest_sha256": "0c5ca28a3e8939036622653d0415c9fb985ff03434fe9edd4c438e22c13b9a76",
+  "files_checked": 140,
+  "mismatches": [],
+  "missing": [],
+  "extras": [],
+  "delivery_files": 12,
+  "checks": [
+    {
+      "receipt": "backend/evidence/green-frozen-command.json",
+      "exit": 0,
+      "sha256": "27cedd9e347f61cc9caa5534d183793d3a3bf435f0b93ea97d117625f5c38c7a"
+    },
+    {
+      "receipt": "frontend/evidence/r2-final-tests.json",
+      "exit": 0,
+      "sha256": "b76958de84017c5b943cc323f046fc6fc4286a4a67f225dcb56d6303b32de06c"
+    },
+    {
+      "receipt": "frontend/evidence/r2-final-typecheck.json",
+      "exit": 0,
+      "sha256": "173d742d1d627fdf5f26c52dc2094e03a268a9eab98f3e5814ec2f47284c66cc"
+    },
+    {
+      "receipt": "frontend/evidence/r2-final-lint.json",
+      "exit": 0,
+      "sha256": "b57cb74792d89e612ee63b7e244d82b3624baf94e5e6698b5fc9239170cf69cc"
+    },
+    {
+      "receipt": "frontend/evidence/r2-final-format.json",
+      "exit": 0,
+      "sha256": "06a5f03f7b6845520f0518a732644be1f589c19e68e3464c4f7343caa94de2a1"
+    }
+  ],
+  "live_comparisons": [
+    {
+      "path": "apps/backend/api.http",
+      "current_sha256": "0c22792f64c10998d95d794cafeab0b8f231a7b2619580b081b235ae222c8eb1",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/backend/docs/api.md",
+      "current_sha256": "55291117879de3c0b5be121858b1fccd77af4193d6f21cd3071c979d4cc111c7",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/backend/internal/adapter/inbound/productapi/data_server_test.go",
+      "current_sha256": "2fa122eb0cf2c11e77d305c4efb777298326f232758bdf0ea88068f22aab28d1",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/backend/internal/adapter/inbound/productapi/problems.go",
+      "current_sha256": "fdf3e705637fa601e42cdb9c65cfa9d09326d29a6d4a3d6e0eec0f63dab8d8c4",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go",
+      "current_sha256": "b8929a4d891085b078647816392d50872ceec9100aeed96cdd9d42336571fab3",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/backend/internal/core/service/dataops_service.go",
+      "current_sha256": "82423ad6dee98ddfa3b232358fbbde1cc8489f6bf63387d5039af951f1ca2ab8",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/backend/internal/core/service/matter_service.go",
+      "current_sha256": "e08971bc1913fa3c7088ae6d7a18d47e1b75eb2b0bdef94897300948d163ea7d",
+      "comparison": "EXACT_BASELINE_BEFORE"
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/intent.ts",
+      "current_sha256": "f2ccb2a011cd0f0569eb9f54001b9df8213e59f5c8d64353b6e83e2351d51f94",
+      "comparison": "EXACT_BASELINE_BEFORE"
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/import-section.tsx",
+      "current_sha256": "f8013ccbeeec64412ddef974cafdf61db067750544b10edb0ea1df81dec1cd36",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx",
+      "current_sha256": "a1da18ceddd65e0cc61c80668f734efcef56a325a800a2c8f54a681cc03ff9b3",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/bulk-section.tsx",
+      "current_sha256": "3dcc3a0c633ddb1a302cd1029ba012b3bbb6c0005aafc2bb8c0e3200d1afb4dc",
+      "comparison": "DIFFERENT_LIVE_BYTES_RECONCILE_REQUIRED"
+    },
+    {
+      "path": "apps/frontend/src/features/data-transfer/components/data-transfer-attempt.test.tsx",
+      "current_sha256": null,
+      "comparison": "EXACT_BASELINE_BEFORE"
+    }
+  ],
+  "review_verdict": "PASS_SOURCE_REVIEW_WITH_LIMITATIONS",
+  "runtime_reviewer": "NOT_RUN",
+  "live_comparison_limit": "Whole-file hashes show exact equality only. Different live bytes may contain manual semantic fixes and do not prove patch absence or integration failure."
+}

@@ -1,0 +1,45 @@
+--- docs/testing/inta-returns/frontend/validation-r3-20261026/runner/guard-validator-r3.sh	2026-10-26 15:17:01
++++ /tmp/mc002-inta-fe-validation-r4-20261026/runner/guard-validator-r4.sh	2026-10-26 16:28:31
+@@ -1,9 +1,9 @@
+ #!/usr/bin/env bash
+ # ==============================================================================
+-# MC-002-INTA-FE-VALIDATION-R3: Frontend Startup Guard Validation Runner
+-# Addresses R2-I01:
++# MC-002-INTA-FE-VALIDATION-R4: Frontend Startup Guard Validation Runner
++# Addresses R2-I01, R3-N01..06, NF-1..6:
+ # - Thin wrapper delegating execution to coordinator.py
+-# - Refuses occupied attempt directories (no silent overwrite or collision)
++# - Refuses existing attempt directories without reuse or truncation
+ # - No port-based process enumeration or killing in shell trap
+ # - Preserves process exit codes faithfully
+ # ==============================================================================
+@@ -14,7 +14,7 @@
+ 
+ if [ "$#" -lt 1 ]; then
+     ATTEMPT_TIMESTAMP="$(date -u +"%Y%m%d_%H%M%S")"
+-    ATTEMPT_DIR="/tmp/mc002-inta-evidence/frontend/validation-r3-20261026/run_${ATTEMPT_TIMESTAMP}"
++    ATTEMPT_DIR="/tmp/mc002-inta-evidence/frontend/validation-r4-20261026/run_${ATTEMPT_TIMESTAMP}"
+ else
+     ATTEMPT_DIR="$1"
+ fi
+@@ -23,16 +23,14 @@
+ PORT="${3:-18085}"
+ OBSERVER_PORT="${4:-18086}"
+ 
+-# Refuse occupied attempt directory (R2-I01)
+-if [ -d "$ATTEMPT_DIR" ] && [ "$(ls -A "$ATTEMPT_DIR" 2>/dev/null || true)" ]; then
+-    echo "ERROR: Attempt directory already exists and is non-empty: $ATTEMPT_DIR" >&2
++# Refuse existing attempt directory (R2-I01, R3-N05)
++if [ -e "$ATTEMPT_DIR" ]; then
++    echo "ERROR: Attempt directory already exists: $ATTEMPT_DIR" >&2
+     exit 2
+ fi
+ 
+-mkdir -p "$ATTEMPT_DIR"
+-
+ echo "=================================================================="
+-echo "MC-002-INTA-FE-VALIDATION-R3: Runner Entrypoint"
++echo "MC-002-INTA-FE-VALIDATION-R4: Runner Entrypoint"
+ echo "Attempt Directory: $ATTEMPT_DIR"
+ echo "Harness Directory: $HARNESS_DIR"
+ echo "Start UTC: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"

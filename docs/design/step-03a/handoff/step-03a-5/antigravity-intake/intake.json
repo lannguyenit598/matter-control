@@ -1,0 +1,205 @@
+{
+  "task": "MC-003A-FE-FEASIBILITY-INTAKE",
+  "owner": "Local Codex",
+  "status": "IN_REVIEW",
+  "timestamp_utc": "2026-10-25T06:55:00.622680+00:00",
+  "base_commit": "7258fc55ee95ab64579e572e97466924381bef7b",
+  "external_identity": "User-supplied Antigravity output; self-reported Gemini3.8FlashHigh, no runtime/session metadata supplied",
+  "source_attachment": "/Users/nguyenvanlan/.codex/attachments/7cdbc35c-4245-4d1a-8578-5a17eb654498/Pasted text.txt",
+  "raw_bytes": 51278,
+  "raw_sha256": "91f438c65c2dc2a70a7d8b83cc52656c9ef40af62e0eba8531e4d2307b5a1c08",
+  "feasibility_verdict": "FEASIBLE_WITH_ADAPTATION_AND_EXTENSION; accepted as scoped planning input with corrections, not independent QA/architecture/runtime acceptance",
+  "actual_codex_checks": [
+    {
+      "check": "Correct isolated branch",
+      "result": "PASS"
+    },
+    {
+      "check": "Frozen r3 output-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "check": "Frozen r3 qa-input-manifest.json",
+      "result": "PASS"
+    },
+    {
+      "check": "/tmp/mattercontrol-step02-frontend pinned and tracked/untracked clean",
+      "result": "PASS"
+    },
+    {
+      "check": "/tmp/mattercontrol-step021-frontend pinned and tracked/untracked clean",
+      "result": "PASS"
+    },
+    {
+      "check": "Returned report contains all20FR once",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-001 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-002 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-003 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-004 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-005 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-006 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-007 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-008 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-009 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-010 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-011 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-012 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-013 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-014 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-015 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-016 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-017 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-018 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-019 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    },
+    {
+      "check": "FR-020 acceptance IDs match SRS as sets",
+      "result": "PASS"
+    }
+  ],
+  "actual_check_count": 26,
+  "corrected_static_pairs": [
+    {
+      "foreground": "#17212b",
+      "background": "#ffffff",
+      "ratio": 16.293,
+      "method": "static sRGB hex pair, not computed/browser contrast"
+    },
+    {
+      "foreground": "#52606d",
+      "background": "#ffffff",
+      "ratio": 6.456,
+      "method": "static sRGB hex pair, not computed/browser contrast"
+    },
+    {
+      "foreground": "#626973",
+      "background": "#eef2f6",
+      "ratio": 4.929,
+      "method": "static sRGB hex pair, not computed/browser contrast"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "INT-01",
+      "severity": "HIGH",
+      "reported_section": "§5 bulk / §6.2 / §7 Phase5",
+      "binding_disposition": "Do not adopt207or universal409stale mapping. Candidate API §1 uses428missing precondition/412stale,409guard or preview mismatch; §3.6 uses200with APPLIED/STALE/FORBIDDEN/NOT_FOUND/INVALID row outcomes and a new failed-only preview. Candidates remain unapproved; final HTTP contracts belong to Claude. Preserve uniform unavailable response for inaccessible objects."
+    },
+    {
+      "id": "INT-02",
+      "severity": "MEDIUM",
+      "reported_section": "§1.4 / §6.1 / F-01,F-03",
+      "binding_disposition": "Generic starter CRUD and lack of grid handlers are capability gaps against future MatterControl, not proven starter defects. Guarded user execution transitions are allowed; only derived dimensions/aggregate verification must not become arbitrary dropdown assignments. No universal role=grid or spreadsheet paste/resize/virtualization requirement inferred."
+    },
+    {
+      "id": "INT-03",
+      "severity": "MEDIUM",
+      "reported_section": "§1.2 / §6.3 / F-02",
+      "binding_disposition": "Child unmount and lack of explicit fallback are source-observed. Actual draft loss depends on state ownership; focus landing on body is an untested scenario, not a reproduction. Preserve drafts outside the mounting boundary or guard intentional dismissal using existing React patterns; no mandated Zustand/ReactHookForm/new prop/library."
+    },
+    {
+      "id": "INT-04",
+      "severity": "LOW",
+      "reported_section": "§6.6",
+      "binding_disposition": "Replace approximate static ratios14.8/5.3/4.6 with recalculated pairs in intake.json. Even exact static ratios do not certify computed contrast, all component states or WCAG AA."
+    },
+    {
+      "id": "INT-05",
+      "severity": "MEDIUM",
+      "reported_section": "Execution Environment / §9",
+      "binding_disposition": "Agent/model/sandbox/no-egress/commands are user-supplied report claims, not independently attested execution metadata. List tasks/find failures exit1, grep exit2 and Edited task_tracking.md are disclosed; path/content of that edit and complete stdout/stderr/UTC/argv are absent. Current clean Git check cannot prove no prior writes, ignored files or network egress. Two listed blob hashes do not prove85-input verification."
+    },
+    {
+      "id": "INT-06",
+      "severity": "MEDIUM",
+      "reported_section": "§2,§3 / §6.4..6 / F-05",
+      "binding_disposition": "Component names/token mapping/disabledReason/focusFallbackId are suggestions, not accepted API or required packages. Reuse existing components before replacement.44px is the selected touch contract, not a universal WCAG minimum. Preserve native multiline Enter/editing and context-appropriate announcements; do not force every key into a cell-save path or every security event into public alerts."
+    },
+    {
+      "id": "INT-07",
+      "severity": "HIGH",
+      "reported_section": "§7 phases1..6",
+      "binding_disposition": "The implementation sequence is a conditional proposal only. Phases1..4 are not currently authorized merely because real API integration is drawn atPhase5. Full03B/product work requires actual applicable design and architecture gates; read-only feasibility/report intake can proceed now."
+    },
+    {
+      "id": "INT-08",
+      "severity": "MEDIUM",
+      "reported_section": "§5 A-16 / conclusion",
+      "binding_disposition": "Record actual owner feasibility return received, qualified by this intake; replace future dispatch assumptions only for this report. A-16 author intake is advanced to IN_REVIEW, not runtime/architecture approval. F-01..05 are adaptation obligations, F-06architecture gate, F-07validation/access gate; none prove a new local-r3design defect."
+    }
+  ],
+  "gates": {
+    "G1": "PASS delegated unchanged",
+    "G2": "Author corrective scope preserved; no new current HTML defect established",
+    "G3": "RENDERED_VALIDATION_BLOCKED_BY_TOOLING / NOT_TESTED",
+    "G4": "INDEPENDENT_QA_PENDING; this frontend-owner report does not satisfy it",
+    "G5": "OPEN; owner feasibility received, API/Auth and architecture acceptance unresolved",
+    "G6": "PENDING; MC-003A REWORK_REQUIRED, full03B/product NOT_AUTHORIZED"
+  },
+  "not_run": [
+    "No agent/provider invocation by Codex",
+    "No browser/native interaction/render",
+    "No completed162suite or template tests rerun",
+    "No source implementation/architecture change",
+    "No external transfer or retry initiated by Codex"
+  ],
+  "next_action": "Use corrected owner reuse/gap map for read-only Claude architecture compatibility intake and first-slice dependency resolution within approved scope; no redispatch just to restate findings. Keep existing independent QA packet until a legitimate authorized access event."
+}

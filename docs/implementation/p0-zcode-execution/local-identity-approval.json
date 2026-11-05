@@ -1,0 +1,59 @@
+{
+  "task": "MC-P0-ZCODE-EXECUTION",
+  "decision": "INT-D02-LOCAL-PROVIDER",
+  "status": "PO_SELECTED_ZITADEL_LOCAL",
+  "recorded_by": "Actual Codex / Local Codex",
+  "recorded_at": "2026-10-26T18:00:56.092508+00:00",
+  "authority_chain": [
+    {
+      "speaker": "Human PO",
+      "text": "Đề xuất OIDC self-hosted local, chưa chốt production",
+      "effect": "Authorize a concrete self-hosted local proposal only."
+    },
+    {
+      "speaker": "Codex question",
+      "summary": "Approval requested for concrete new-instance synthetic local IdP provisioning and author tests; no production/paid/current-credential/resource use."
+    },
+    {
+      "speaker": "Human PO",
+      "text": "dùng https://github.com/zitadel/zitadel",
+      "effect": "Select ZITADEL instead of the proposed provider, under that local provisioning/test scope. No repeat provider-choice question."
+    }
+  ],
+  "provider": {
+    "name": "ZITADEL",
+    "source": "https://github.com/zitadel/zitadel",
+    "deployment": "self-hosted local only",
+    "instance": "new task-owned instance",
+    "organization_project_applications": "new synthetic resources",
+    "data": "synthetic only",
+    "host_ports": "loopback only",
+    "actual_issuer": "NOT_PROVISIONED",
+    "actual_version_digest": "NOT_YET_PINNED"
+  },
+  "constraints": [
+    "No production IdP/hosting decision",
+    "No paid service or remote ZITADEL Cloud account",
+    "No existing credential, database or Docker-volume mutation",
+    "Private task-owned runtime-generated secrets, redacted evidence",
+    "Normal tool/security permissions remain mandatory",
+    "No auth/runtime/architecture acceptance inferred"
+  ],
+  "implementation_profile": {
+    "oidc": "Authorization Code + PKCE S256; state/nonce validation; server-held tokens",
+    "access_token_verification": "Documented authenticated introspection; freeze actual token format/project audience; fail closed on unavailable verification",
+    "product_authorization": "Current Workspace AND Matter AND operation permission in MatterControl; no IdP-role shortcut"
+  },
+  "execution": {
+    "provider_started": false,
+    "issuer_validated": false,
+    "login_api_integrated": false,
+    "tests": "NOT_RUN",
+    "production_selected": false
+  },
+  "references": [
+    "https://zitadel.com/docs/self-hosting/deploy/compose",
+    "https://zitadel.com/docs/guides/integrate/login/oidc/login-users",
+    "https://zitadel.com/docs/guides/integrate/token-introspection/private-key-jwt"
+  ]
+}

@@ -1,0 +1,871 @@
+[
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Requirement",
+    "Variant": "main",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 1,
+    "PostRevision": 1,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "NOT_STARTED",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 13,
+    "LastSeq": 12,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Package Preparation without criteria",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 1,
+    "PostRevision": 1,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: package-criteria-required: declare the package criteria first"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Package Preparation",
+    "Variant": "main",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 1,
+    "PostRevision": 2,
+    "Before": {
+      "Execution": "NOT_STARTED",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 15,
+    "LastSeq": 15,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Signature without contents",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 2,
+    "PostRevision": 2,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: package-contents-required: identify the versions or references the package will contain"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Signature",
+    "Variant": "main",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 2,
+    "PostRevision": 3,
+    "Before": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 16,
+    "LastSeq": 16,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Submission with unsatisfied package and signature",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 3,
+    "PostRevision": 3,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: guard-failed: package criteria are not satisfied: Signed filing form (MISSING); Package complete (MISSING)"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Submission with the package still unsatisfied",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 4,
+    "PostRevision": 4,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: guard-failed: package criteria are not satisfied: Package complete (PENDING_REVIEW)"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Submission with a wrong version",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 5,
+    "PostRevision": 5,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: unknown-version: a submitted version does not exist in this matter"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Submission dated in the future",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 5,
+    "PostRevision": 5,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: observed-in-future: an observation cannot be dated after the recorded time"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Submission without a reference",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 5,
+    "PostRevision": 5,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: reference-required: the submission reference is required"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Submission",
+    "Variant": "cycle 1",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 5,
+    "PostRevision": 6,
+    "Before": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 25,
+    "LastSeq": 25,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Receipt without evidence",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 6,
+    "PostRevision": 6,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: evidence-required: name at least one piece of evidence that records this fact"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Receipt",
+    "Variant": "main",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 6,
+    "PostRevision": 7,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "evidence.submitted",
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 26,
+    "LastSeq": 27,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Authority Review",
+    "Variant": "main",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 7,
+    "PostRevision": 8,
+    "Before": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 28,
+    "LastSeq": 28,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Supplement without the request details",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 8,
+    "PostRevision": 8,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: supplement-details-required: a supplement needs the authority's request reference, an owner and a due date"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Supplement",
+    "Variant": "cycle 2",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 8,
+    "PostRevision": 9,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 29,
+    "LastSeq": 29,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Response with the requested item unsatisfied",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 10,
+    "PostRevision": 10,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: guard-failed: package criteria are not satisfied: Additional market data (MISSING)"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Response",
+    "Variant": "cycle 2",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 11,
+    "PostRevision": 12,
+    "Before": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 36,
+    "LastSeq": 36,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Authority Review",
+    "Variant": "after cycle 2",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 12,
+    "PostRevision": 13,
+    "Before": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 37,
+    "LastSeq": 37,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Supplement",
+    "Variant": "cycle 3",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 13,
+    "PostRevision": 14,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 38,
+    "LastSeq": 38,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Response",
+    "Variant": "cycle 3",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 14,
+    "PostRevision": 15,
+    "Before": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 39,
+    "LastSeq": 39,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Authority Review",
+    "Variant": "after cycle 3",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 15,
+    "PostRevision": 16,
+    "Before": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 40,
+    "LastSeq": 40,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval without outcome evidence",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 16,
+    "PostRevision": 16,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: evidence-required: name at least one piece of evidence that records this fact"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval",
+    "Variant": "main",
+    "Actor": "01a180a3-4457-794a-a704-cee4c1ff4db8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 16,
+    "PostRevision": 17,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "COMPLETED",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.stage_changed"
+    ],
+    "FirstSeq": 42,
+    "LastSeq": 42,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval of a closed filing",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 17,
+    "PostRevision": 17,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: filing-closed: this filing is completed; an owner must reopen it first"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Reopen by an editor",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 17,
+    "PostRevision": 17,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "forbidden"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Reopen",
+    "Variant": "OWNER",
+    "Actor": "01a180a3-443c-7a60-bfff-4b085c365432",
+    "ActorRole": "OWNER",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 17,
+    "PostRevision": 18,
+    "Before": {
+      "Execution": "COMPLETED",
+      "Verification": "VERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "After": {
+      "Execution": "IN_PROGRESS",
+      "Verification": "UNVERIFIED",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 1,
+    "EventTypes": [
+      "filing.reopened",
+      "subject.proof_epoch_advanced",
+      "work.verification_changed"
+    ],
+    "FirstSeq": 43,
+    "LastSeq": 45,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval on pre-reopen evidence",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a3-4499-77d7-af77-c10eb8d1f48c",
+    "PreRevision": 18,
+    "PostRevision": 18,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: postgres: evidence-before-reopen: evidence recorded before the filing was reopened cannot support a new outcome"
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "task": "MC-003A.8A F10 final owner confirmation intake",
+  "owner": "Local Codex PM/BA",
+  "priority": "P0 document-gate dependency",
+  "base": "767f548f19b367a6893a3b8e0983107b5d509474",
+  "utc": "2026-10-25T18:14:35.437789+00:00",
+  "return": {
+    "attachment": "/Users/nguyenvanlan/.codex/attachments/253f9f1b-5d60-412d-b382-b13e4e6041c6/Pasted text.txt",
+    "archive": "owner-return.txt.gz",
+    "bytes": 22015,
+    "sha256": "39eab0fab2836ffc2afc46b2e85091c5e9045361df9f0e9768009156ed66cc2f"
+  },
+  "actual_reported_identity": "Human-operated ZCodeDesktop/GLM5.3 account:zai-start-plan; versionUNKNOWN; not independently attested",
+  "author_reported_execution": "Text-only,no new source/tools/hash/runtime; supplementNOT_READ",
+  "dispatch": "Actual manual human-return received; Codex made0newprovidercalls",
+  "disposition": "OWNER_TECHNICALLY_CONFIRMED_CANDIDATE / INDEPENDENT_REVIEW_PENDING / NOT_ADOPTED",
+  "C1_C2_C3": "Consolidated recommended clauses received; not another owner rewrite assignment",
+  "no_mandatory_Claude_round": "Explicit directPO reroute applies only this confirmation; architecture and independentQA roles/gates not waived",
+  "review_focus": [
+    {
+      "id": "IR-F10-01",
+      "scope": "C3 corruption detection versus finite stop",
+      "question": "Differentiate invariant-based command completeness from detecting corrupt producer history. After collecting N and stopping, a later surplus is unseen; an AND predicate excludes wrong-observation rows instead of automatically flagging them. Pin an anomaly predicate and observation window or qualify the guarantee; do not demand an unbounded scan by default.",
+      "acceptance": "Valid interleaving/N0/exhaustion are retained, corruption guarantees neither overclaimed nor hidden."
+    },
+    {
+      "id": "IR-F10-02",
+      "scope": "C2 effective replacement lineage",
+      "question": "Consolidated P2.2 wording about observations not targeted by terminal correction must be read with R2 at-most-one-effective-replacement and superseded-replacement exclusion. REPLACE O4->O5 then RETRACT O4 must exclude both O4/O5; REPLACE O4->O5 then REPLACE O4->O6 leaves onlyO6. Confirm a single explicit canonical derivation rather than taking the short sentence literally.",
+      "acceptance": "No original or superseded replacement resurfaces; history remains immutable; no correction-of-correction target invented."
+    },
+    {
+      "id": "IR-F10-03",
+      "scope": "C1 validation order local scope",
+      "question": "P1.3 calls the recommended order uniform for every command. Confirm filing/observation/correction-family scope and compatibility with existing command contracts; do not silently create a global command-order change outside this F10 task. Pin supplement target-vs-CAS handling and existing428/412/409 expectations.",
+      "acceptance": "No unrelated command contract superseded by scoped addendum."
+    },
+    {
+      "id": "IR-F10-04",
+      "scope": "numeric/approval status and schema projection",
+      "question": "Review proposed limits reason2000/type64/correlation128 as proposed values, not sourced policy; envelope/UTF8-vs-characters/overflow bounds remain explicit where absent. Existing32catalogue stays; zero route/filter delta still includes new payload/field/semantics.",
+      "acceptance": "One concrete decision packet after review; no production byte/latency or approved-limit claim."
+    }
+  ],
+  "po_decisions_pending": [
+    "candidate read/eventfields and numericlimits vs sourced-limits requirement",
+    "B35 adoption if pursued; currentlyunadopted"
+  ],
+  "F08": "Untouched; classifier/unit decisions remain own pending scope",
+  "scenarios": "22CT IDs/16+4+1+1 preserved",
+  "QA": "Q1..Q8/originalconditionaldependencies preserved",
+  "gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "REVIEW_RETURN_RECEIVED / FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP_03B": "NOT_AUTHORIZED"
+  },
+  "catalogue": {
+    "current": 32,
+    "new_routes_adopted": 0,
+    "new_filters_adopted": 0,
+    "B35_L2_causeSeq_filter": "unadopted"
+  },
+  "runtime": "NOT_RUN",
+  "BE01_INTA": "independent; frozen source,task and coordination hashes preserved",
+  "next": "One exact-revision independent document review by a non-author; prepared packet/manifests and manualprompt, not dispatched/authorized for newexternaltransmission"
+}

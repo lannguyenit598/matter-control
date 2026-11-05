@@ -1,5 +1,3 @@
-> Operator note: dated observations below are historical. Use the current [operations index](../../docs/operations/README.md) for maintained setup and release boundaries. Historical evidence paths refer to the coordination archive, not this product tree.
-
 # ADR-006 local readiness candidate
 
 Owner: actual Local Codex. This is a source and local-test candidate, not deployment approval. Historical ADR-006 and ZCode evidence remain unchanged. Current results are in `docs/testing/codex-adr006-remediation-20261030-r1/`.

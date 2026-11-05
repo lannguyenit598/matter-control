@@ -1,0 +1,33 @@
+{
+  "provision": {
+    "argv": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "mc-codex-be-local-20261029-r2",
+      "--label",
+      "mc.owner=MC-P0-CODEX-BACKEND-LOCAL-20261029",
+      "--cpus",
+      "1",
+      "--memory",
+      "512m",
+      "--pids-limit",
+      "128",
+      "--publish",
+      "127.0.0.1::5432",
+      "--env-file",
+      "/private/tmp/mc-codex-backend-local-20261029-r2/postgres.env",
+      "898c60cb390d"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "utc_start": "2026-10-29T08:11:55.671095+00:00",
+    "utc_end": "2026-10-29T08:11:55.839827+00:00",
+    "exit": 0
+  },
+  "name": "mc-codex-be-local-20261029-r2",
+  "binding": "127.0.0.1:56901",
+  "ownership_and_limits": "MC-P0-CODEX-BACKEND-LOCAL-20261029 sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5 536870912 1000000000 128",
+  "ready": true,
+  "private_directory": "/private/tmp/mc-codex-backend-local-20261029-r2"
+}

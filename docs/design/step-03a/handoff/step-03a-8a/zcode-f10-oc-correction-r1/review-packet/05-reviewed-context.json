@@ -1,0 +1,76 @@
+{
+  "authority": "Reviewed candidate document only; notPOapprovedAPI",
+  "DR15": {
+    "id": "DR-15",
+    "requirement_ids": [
+      "FR-008",
+      "FR-019"
+    ],
+    "ux_interaction": "History tab, recent changes (NAV-10)",
+    "domain_resource": "Event History",
+    "existing_coverage": "GET /matters/{m}/events?after=&limit=&targetId=&commandKey= (candidate)",
+    "reviewed_operations": [
+      "GET /api/v1/matters/{matterId}/events?after=|before=&limit=&targetId= (after: seq asc; before: seq desc)"
+    ],
+    "proposal_disposition": "ACCEPTED_AS_REVIEWED_CANDIDATE",
+    "reviewed_status": "EXISTING_WITH_GAP_RESOLVED",
+    "resource_identifier": "matterId + seq",
+    "required_data": "events[] {seq, type, actorRef, targetRef, recordedAt, effectiveAt, causeSeq, correlationId, reason, before/after}",
+    "links": "targets",
+    "authorization": "Active Workspace AND explicit Matter membership AND O/E/V role; Workspace OWNER no implicit grant; no shared-token fallback; reauthorized on every request, nested ref, cursor and content fetch",
+    "denial_errors": "401 unauthenticated; non-member or nonexistent -> uniform 404 /problems/not-found (byte-identical, no title/count); 422 invalid query/cursor; 503 /problems/unavailable. No 403 on P0 reads (every member may read the whole Matter)",
+    "loading_empty_error": "Loading keeps origin context; 404 -> 'not available' with no detail; 503 -> unavailable, never empty; AVAILABLE + [] only for successful zero",
+    "collection_version": "Keyset after/limit (limit <= 200 inherited candidate cap; default is an implementation parameter); opaque cursor bound to actor/matter/collection/filter/sort; each page carries its own asOf/sourceRevision; in-Matter total from same snapshot allowed",
+    "cache_concurrency": "Cache-Control: private, no-store; no If-Match/If-None-Match on GET; response asOf/sourceRevision; singleton revision (+ETag) for later commands only",
+    "architecture_dependencies": [
+      "A-01",
+      "A-02",
+      "A-03",
+      "A-04",
+      "A-08"
+    ],
+    "acceptance_ids": [
+      "AC-108",
+      "AC-119",
+      "AC-136",
+      "AC-138",
+      "AC-149",
+      "AC-153"
+    ],
+    "owner": "ZCode (API), Antigravity (consumer), Claude (contract), OpenCode (independent tests)",
+    "review_note": "Adds keyset 'before' for most-recent-first; time-window filter stays TQ-05; security audit never included"
+  },
+  "F09": {
+    "id": "F-09",
+    "owner_source": "Claude R1",
+    "owner_proposal": {
+      "id": "F-09",
+      "verdict": "RECOMMENDED_CLARIFICATION_DOCUMENT_ONLY",
+      "locations": [
+        "DR-15 reviewed_operations and collection_version",
+        "read_common_rules RC-6 (exemption)",
+        "control_room sections.recentChanges continuation"
+      ],
+      "rules": [
+        "seq bounds exempt from opaque syntax/binding only",
+        "after xor before; neither = asc from start",
+        "exclusive bounds; after>=0, before>=1 else 422",
+        "nextCursor = decimal last seq",
+        "filters unbound (deliberate)"
+      ],
+      "tq_05": "OPEN"
+    },
+    "independent_review": "ZCode ACCEPTED_DOCUMENT_ONLY; partial limitations apply to F-08/F-10",
+    "scope": "Reviewed candidate only; alternatives/source requests/retracted R1 content are not adopted rules"
+  },
+  "catalogue": 32,
+  "current_gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "REVIEW_RETURN_RECEIVED / FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP_03B": "NOT_AUTHORIZED"
+  },
+  "priorR2_R3_scope": "Preserved author clauses; final confirmation supersedes only namedclauses, not unrelatedcontracts"
+}

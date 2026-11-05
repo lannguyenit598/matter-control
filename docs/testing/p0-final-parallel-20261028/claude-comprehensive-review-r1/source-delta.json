@@ -1,0 +1,42 @@
+{
+ "baseline": "pre-pass manifest (same selection rule), sha256 0389a7635d6a4085580e8cb327a30e6efbe61c52d1b89f3018f35de57599da23",
+ "baseline_entries": 719,
+ "candidate_manifest": "source-manifest.json",
+ "candidate_manifest_sha256": "f596b7c64a996ab821747de652485c26ca52910b959c63a4dd215e560d5fb868",
+ "candidate_entries": 719,
+ "note": "Baseline already includes the 4 uncommitted candidate files (read-failure.tsx, drafts.test.tsx, work/[itemId]/page.tsx modified; read-failure-callers.test.ts untracked). This delta is only what this pass changed.",
+ "entries": [
+  {
+   "path": "apps/frontend/src/features/data-transfer/actions.ts",
+   "status": "modified",
+   "bytes": 9995,
+   "sha256": "807ff73a7fe5aa1f5a698f321764c2408ce01f0c610dae4782af6b0efddae1b2",
+   "baseline_bytes": 9497,
+   "baseline_sha256": "eed7a52ab488ae196e1d1895b7a93e76fa3025cc7a6619ae2b4b799a1f92ab6f"
+  },
+  {
+   "path": "apps/frontend/src/lib/mc/paths.test.ts",
+   "status": "modified",
+   "bytes": 1260,
+   "sha256": "937a8b29472debb4340d1dbcb990e43021dfd939028713ddefb743e19792b9e3",
+   "baseline_bytes": 1145,
+   "baseline_sha256": "8a9e1957d71a144ae17681de3aa40b84e78ec13273003dba455a4965d74db0bf"
+  },
+  {
+   "path": "apps/frontend/src/lib/oidc/flow.test.ts",
+   "status": "modified",
+   "bytes": 9432,
+   "sha256": "61d52db428afb1294a43202769599e6be25664a3601ce3829eee058b3977426b",
+   "baseline_bytes": 9299,
+   "baseline_sha256": "d02cf96c5c701e9687170d0a3e0b8e15f9a4d8e7c2b31bddf165ad1b577f05a8"
+  },
+  {
+   "path": "apps/frontend/src/test/data-transfer-seam.test.ts",
+   "status": "modified",
+   "bytes": 9349,
+   "sha256": "3a2b977b8d2ce582f34f55b9499d1d9dcc3130769328b5c355dd1f1d77a9f008",
+   "baseline_bytes": 8610,
+   "baseline_sha256": "de593f948446bc572e03fdf4c364276045d0937c881b46ebe056796bfe0e8133"
+  }
+ ]
+}

@@ -1,12 +1,7 @@
 # Operations
 
-- [Local development](local-development.md): configure and run both applications.
-- [Backend operations](../../apps/backend/docs/operations.md): configuration, lifecycle, limits,
-  introspection, object storage and diagnostics.
-- [BFF state and rotation](../../ops/adr006/README.md): durable storage, key ring and transfer leases.
-- [Database roles](../../ops/adr006/db/README.md): migration/runtime/BFF separation.
-- [Backup and restore](backup-restore.md): database/object boundary and synthetic rehearsal.
-- [Pilot deployment](../deployment/pilot-deploy-runbook.md): smoke, monitoring and rollback.
+Owner: Codex. No deployed system or production observations exist.
 
-Operate only resources you have identified and are authorized to control. Keep credentials and
-raw diagnostics outside Git. Do not stop a shared listener or delete a volume to make a test pass.
+Before release, define health/availability/performance thresholds, alert ownership, audit/security events, backup/recovery tests, incident severity/response, runtime version identification and infrastructure usage/cost tracking.
+
+OBSERVE records actual deployed evidence; IMPROVE converts incidents, user feedback and cost/performance gaps into traceable tasks or change requests. No recurring automation is created by this document.

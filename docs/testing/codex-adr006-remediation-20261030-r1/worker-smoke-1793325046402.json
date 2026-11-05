@@ -1,0 +1,28 @@
+{
+  "identity": "Actual Local Codex",
+  "fixture": "Synthetic local OIDC + real Go + owned PostgreSQL + filesystem object adapter; no cloud provider",
+  "checks": [
+    {
+      "name": "root entry redirect",
+      "pass": true
+    },
+    {
+      "name": "anonymous session",
+      "pass": true
+    },
+    {
+      "name": "login diagnostic",
+      "status": 307,
+      "location": "/loginunavailable"
+    },
+    {
+      "name": "PKCE authorize redirect",
+      "pass": false
+    },
+    {
+      "name": "runtime failure",
+      "pass": false,
+      "error": "Probe failed: PKCE authorize redirect"
+    }
+  ]
+}

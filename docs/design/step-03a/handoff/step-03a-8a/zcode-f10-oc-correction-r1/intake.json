@@ -1,0 +1,98 @@
+{
+  "task": "MC-003A.8A ZCode OC01..06 correction intake",
+  "owner": "LocalCodexPM/BA",
+  "priority": "P0 documentgate",
+  "utc": "2026-10-25T18:36:12.193091+00:00",
+  "base": "b30af8d6885c6c3b322319006e7cec02d951f184",
+  "return": {
+    "attachment": "/Users/nguyenvanlan/.codex/attachments/c51ae2c0-0c5c-4663-b762-9473a3c867b5/Pasted text.txt",
+    "archive": "owner-correction.txt.gz",
+    "bytes": 23048,
+    "sha256": "5c8f93dff8e75af589edfb30e04f06c9d5c11fd470598d410bb97e7628a0a984"
+  },
+  "actual_author": "Human-returned ZCodeDesktop GLM5.3/account:zai-start-plan, versionUNKNOWN/selfreported",
+  "reported_actions": "Textonly,nonewcommand/read/hash/supplement/runtime/providerexecution",
+  "disposition": "CORRECTED_CANDIDATE_RECEIVED / READY_FOR_SCOPED_REREVIEW / NOT_ACCEPTED",
+  "candidate_coverage": "Allsixrequestedcorrectiongroups and explicitOC07precedencenote present in prose/unique-keyJSON;T1..22documentexpectations present. Presence is not independentacceptance.",
+  "finding_ledger": [
+    {
+      "id": "F10-OC-01",
+      "severity_reported": "High",
+      "original_title": "C2 effective-view derivation omits superseded replacement observations",
+      "corrected_delta_key": "oc01_oc05_terminal_derivation",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-02",
+      "severity_reported": "High",
+      "original_title": "C3 “never false completeness” overclaims surplus detection after stop",
+      "corrected_delta_key": "oc02_observed_window",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-03",
+      "severity_reported": "High",
+      "original_title": "C3 AND predicate cannot produce the claimed identity-mismatch anomaly",
+      "corrected_delta_key": "oc03_anomaly_predicate",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-04",
+      "severity_reported": "High",
+      "original_title": "C1 P1.3 is global, incomplete on 422, and lacks a per-command CAS/precondition matrix",
+      "corrected_delta_key": "oc04_scoped_pipeline",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-05",
+      "severity_reported": "Medium",
+      "original_title": "C2 “latest-seq terminal” is not explicitly scoped per original",
+      "corrected_delta_key": "oc01_oc05_terminal_derivation",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-06",
+      "severity_reported": "Low",
+      "original_title": "Proposed numeric bounds lack units and envelope definition",
+      "corrected_delta_key": "oc06_bounds",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    },
+    {
+      "id": "F10-OC-07",
+      "severity_reported": "Low",
+      "original_title": "Cross-document status inconsistency",
+      "corrected_delta_key": "oc07_precedence + separate Codex dispatch-and-supersession.json",
+      "owner_correction": "PRECEDENCE_RETURNED / PROCESS_DISPOSITION_RECORDED",
+      "independent_disposition": "PENDING_SCOPED_REREVIEW",
+      "closure": "NOT_CLOSED"
+    }
+  ],
+  "original_coverage": "Onlycorrectedclauseconsistency/testability; fullnormativecompatibility not independentlyverified in priorreview",
+  "no_self_confirmation_round": true,
+  "next": "ActualOpenCode independentrereview on newexactpacket, onlychangedclauses/expectedcases; manualpromptpreparednotdispatched",
+  "catalogue": 32,
+  "fields_bounds": "NOT_ADOPTED;envelopeboundNEEDS_AUTHORIZED_SOURCE",
+  "runtime": "NOT_RUN",
+  "gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "REVIEW_RETURN_RECEIVED / FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP_03B": "NOT_AUTHORIZED"
+  },
+  "BE01_INTA_F08": "independentanduntouched",
+  "new_external_calls_byCodex": 0
+}

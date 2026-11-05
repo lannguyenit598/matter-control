@@ -1,0 +1,127 @@
+{
+  "actor": "Local Codex",
+  "kind": "Pure/mocksourcechecks only; no actualprocess/socket/signal",
+  "R1regressionsfixed": 3,
+  "new_evidence_gaps": [
+    {
+      "case": "nonfinal_and_errorfield_empty",
+      "expected": "NOT_PASS_INCOMPLETE_FINAL_EVIDENCE",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "PASS",
+        "verdictCode": "VALID_COMPLETE_INPUT",
+        "exitCode": 1,
+        "observerHTTPRequests": 0,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "probeError": null,
+        "notes": "Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown"
+      }
+    },
+    {
+      "case": "lsof_rc1_ENOENT",
+      "expected": "UNKNOWN/PROBE_ERROR",
+      "actual": {
+        "listener": false,
+        "error": null
+      }
+    },
+    {
+      "case": "ps_identity_read_error",
+      "expected": false,
+      "actual": true,
+      "os_kill_calls": "[call(33333, 0)]"
+    }
+  ],
+  "all_cases": [
+    {
+      "case": "unknown_listener",
+      "expected": "NOT_PASS",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "LISTENER_UNKNOWN",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": null,
+        "listenerObservedAfter": null,
+        "probeError": null,
+        "notes": "Listener state not proven False (during=None, after=None)"
+      }
+    },
+    {
+      "case": "boolean_counter",
+      "expected": "NOT_PASS",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "MALFORMED_COUNTER",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "probeError": null,
+        "notes": "requestCount is not a strict integer (type=bool, value=False)"
+      }
+    },
+    {
+      "case": "truthy_clean_string",
+      "expected": "NOT_PASS",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "UNCLEAN_SHUTDOWN",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "probeError": null,
+        "notes": "Observer did not cleanly shut down (cleanShutdown is 'false', expected True)"
+      }
+    },
+    {
+      "case": "nonfinal_and_errorfield_empty",
+      "expected": "NOT_PASS_INCOMPLETE_FINAL_EVIDENCE",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "PASS",
+        "verdictCode": "VALID_COMPLETE_INPUT",
+        "exitCode": 1,
+        "observerHTTPRequests": 0,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "probeError": null,
+        "notes": "Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown"
+      }
+    },
+    {
+      "case": "lsof_rc1_ENOENT",
+      "expected": "UNKNOWN/PROBE_ERROR",
+      "actual": {
+        "listener": false,
+        "error": null
+      }
+    },
+    {
+      "case": "ps_identity_read_error",
+      "expected": false,
+      "actual": true,
+      "os_kill_calls": "[call(33333, 0)]"
+    }
+  ]
+}

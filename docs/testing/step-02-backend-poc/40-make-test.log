@@ -1,0 +1,20 @@
+2026-10-24T14:55:34Z
+go test -race ./...
+?   	github.com/example/userapi/cmd/userapi	[no test files]
+ok  	github.com/example/userapi/internal/adapter/inbound/httpapi	2.181s
+ok  	github.com/example/userapi/internal/adapter/outbound/kafka	3.790s
+ok  	github.com/example/userapi/internal/adapter/outbound/memory	1.424s
+ok  	github.com/example/userapi/internal/adapter/outbound/postgres	3.567s
+?   	github.com/example/userapi/internal/adapter/outbound/postgres/pgtest	[no test files]
+?   	github.com/example/userapi/internal/adapter/outbound/postgres/sqlcgen	[no test files]
+?   	github.com/example/userapi/internal/adapter/outbound/repotest	[no test files]
+ok  	github.com/example/userapi/internal/adapter/outbound/system	1.453s
+ok  	github.com/example/userapi/internal/app	8.267s
+ok  	github.com/example/userapi/internal/config	1.743s
+ok  	github.com/example/userapi/internal/core/domain	1.740s
+?   	github.com/example/userapi/internal/core/port	[no test files]
+ok  	github.com/example/userapi/internal/core/service	1.341s
+ok  	github.com/example/userapi/internal/observability	1.402s
+ok  	github.com/example/userapi/internal/outbox	6.442s
+make_test_exit=0
+2026-10-24T14:55:46Z

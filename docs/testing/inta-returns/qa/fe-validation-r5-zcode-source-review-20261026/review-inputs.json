@@ -1,0 +1,102 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R5-SOURCE-REVIEW-ZCODE",
+  "actor": {
+    "tool": "ZCode (ZCode Desktop app 3.16.3, darwin 27.0.0 arm64)",
+    "model_self_reported": "account:zai-start-plan/GLM-5.3-Flash via Z.AI",
+    "session": "interactive; no provider/model/account change, no login, no OpenCode retry",
+    "quota_block": false
+  },
+  "independence": {
+    "role": "independent nonauthor of reviewed R4/R5 corrections",
+    "recorded_executor": "Actual Antigravity (Gemini 3.8 Flash High) — both R4 and R5 manifests",
+    "zcode_authorship_of_reviewed_changes": false,
+    "disclosed_overlap": [
+      "prior-round ZCode independent source review of this harness lineage (historical PASS_WITH_LIMITATIONS)",
+      "prior-round ZCode FE driver-stage runtime execution (runtime owner, not authorship)"
+    ],
+    "needs_other_reviewer_scope": []
+  },
+  "window_utc": { "started": "2026-10-26T16:35:53Z", "outputs_written": "2026-10-26T16:52Z" },
+  "head_before": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "head_after": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "branch": "codex/unified-project-flow",
+  "mode": "READ_HASH_STATIC_ONLY; no submitted code executed or imported; reviewer runtime NOT_RUN",
+  "direct_pins": [
+    { "path": "AGENTS.md", "bytes": 9171, "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318", "match": true },
+    { "path": "docs/reviews/inta-fe-validation-r5-intake.md", "bytes": 6322, "sha256": "40300ac633084289effbb5aca5c1c4c8adda8ef28ef9c0518d0b6cd2637bacd0", "match": true },
+    { "path": "docs/implementation/handoffs/MC-002-INTA-ZCODE-FE-R5-SOURCE-REVIEW-PROMPT.md", "bytes": 7594, "sha256": "953f2e911bd7f4e39a3f6371f19cec847a714aa474a0d0a4604f3c4b0c5c65fc", "match": true },
+    { "path": "docs/reviews/inta-fe-validation-r5-antigravity-return.md", "bytes": 22518, "sha256": "c052ba85820ddf0fe577694e3b4afeabb298eb758b800a8a68c68212420b607d", "match": true },
+    { "path": "docs/testing/inta-returns/frontend/validation-r5-20261026/manifest.json", "bytes": 4014, "sha256": "75edcd41c8e017a41cd4a8ce18a92b063d82de55528d0a63a2d2359d7a9c3d9c", "match": true },
+    { "path": "docs/testing/inta-returns/frontend/validation-r4-20261026/manifest.json", "bytes": 3997, "sha256": "b594d5e348d90ef9b163769cceadec5fe451f5d3c82201b9028cff0821fa8f64", "match": true },
+    { "path": "docs/reviews/inta-opencode-fe-r4-source-review.md", "bytes": 40764, "sha256": "423adc018f148c3667e20cae1f1ed1349a37f908e31a60e5a3589ed350744b96", "match": true },
+    { "path": "docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026/review-inputs.json", "bytes": 15826, "sha256": "b6272d7b7faae293df94c7d506b8bcc2e16aa104a787b7e4df90b1396dff00c2", "match": true },
+    { "path": "docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026/checks-log.json", "bytes": 7091, "sha256": "b23f53c50ac632b11d9e62c71a11609cb23dbe8f71d04c48c3cfcad83542d7d4", "match": true },
+    { "path": "docs/implementation/inta-approved-contract.md", "bytes": 16122, "sha256": "6606a5da131567274f858b84a0c51ac66607a6c5a8eb12213ac7dcca585eb155", "match": true },
+    { "path": "docs/implementation/inta-launch-contract-addendum.md", "bytes": 4554, "sha256": "627f2b696ff946afc6bfec3e3f54dca3d1b1088c64aa0ecbe38cba95f3aa6c40", "match": true },
+    { "path": "docs/testing/inta-launch-approval-20261026/approval.json", "bytes": 1155, "sha256": "4c13d46dc4952bc6b4068788f178f65288106063a0aae810cc2b8a80e4860d77", "match": true },
+    { "path": "docs/testing/inta-fe-validation-r5-intake/findings.json", "bytes": 5146, "sha256": "7ff805f7666c5b36253254faedf7dc56a90cc80c44f40d969808d4c3692f24d3", "match": true },
+    { "path": "docs/testing/inta-fe-validation-r5-intake/stage-preflight.json", "bytes": 3016, "sha256": "b04d425fb41786cf04d52c8a325d47cf370c9ea13c4beafdcb226849cb01e255", "match": true },
+    { "path": "docs/testing/inta-fe-validation-r5-intake/input-pin-disposition.json", "bytes": 1316, "sha256": "00b082618141df0553a6c1535945aa9a1505c539214f10fa6f5ca58f564408e9", "match": true },
+    { "path": "docs/testing/inta-fe-validation-r5-intake/receipt.json", "bytes": 1928, "sha256": "74f8d97e4f2aff38ef9a311e9b4ecfc9728e8f937e08819e529886ae8f8b1d36", "match": true },
+    { "path": "docs/testing/inta-fe-validation-r5-zcode-review-handoff/assignment.json", "bytes": 2057, "sha256": "e4d7bca656dd5de164dd461f5b30bf25d2dab028b6d1787a1fe2fb0bd3f87ac2", "match": true },
+    { "path": "docs/testing/inta-fe-validation-r5-intake/review-inputs.json (parent manifest)", "bytes": 6258, "sha256": "45926a408a72773aa8043d8ef9667e0c4a59b338ec95f441604f25c580ebcd54", "match": true }
+  ],
+  "transitive_payload_pins": {
+    "r5": { "manifest": "docs/testing/inta-returns/frontend/validation-r5-20261026/manifest.json", "payloads_checked": 22, "hash_matches": 22, "total_bytes_declared": 332773, "total_bytes_recomputed": 332773, "bytes_match": true },
+    "r4": { "manifest": "docs/testing/inta-returns/frontend/validation-r4-20261026/manifest.json", "payloads_checked": 22, "hash_matches": 22 }
+  },
+  "raw_export_pairs": {
+    "raw_root": "/tmp/mc002-inta-evidence/frontend/validation-r5-20261026",
+    "export_root": "docs/testing/inta-returns/frontend/validation-r5-20261026",
+    "pairs_expected": 23,
+    "pairs_ok": 23,
+    "mismatches": 0
+  },
+  "undeclared_file_check": {
+    "r5_export_tree_files": 23,
+    "r4_export_tree_files": 23,
+    "raw_root_files": 23,
+    "undeclared_found": 0
+  },
+  "diff_reconstruction": {
+    "method": "own diff -u between pinned R4 and R5 files; sorted +/- line-set SHA-256 compared with submitted diff's sorted +/- line-set",
+    "pairs": [
+      { "name": "coordinator", "result": "EXACT" },
+      { "name": "guard-validator", "result": "EXACT" },
+      { "name": "guard_evaluator", "result": "EXACT" },
+      { "name": "observer", "result": "EXACT" },
+      { "name": "selfcheck", "result": "EXACT" },
+      { "name": "harness-dev", "result": "EXACT" },
+      { "name": "test-launcher-mock", "result": "EXACT" }
+    ],
+    "exact_count": 7
+  },
+  "guard_pin": {
+    "expected_in_payloads": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928",
+    "locations": ["launcher/harness-dev.mjs:23", "runner/guard_evaluator.py:17"],
+    "immutable_pin_receipt": { "path": "/tmp/mc002-inta-harness/src/guards.ts", "bytes": 3128, "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928", "source": "docs/testing/inta-fe-validation-r5-intake/stage-preflight.json (receipt used per inputs.json; live guard not read or executed)" },
+    "owner_corroboration": "launcher-mock.stdout.txt BINDING_ERROR line shows got 0f5f2453…",
+    "match": true
+  },
+  "input_refresh": {
+    "old_author_packet_agents": { "bytes": 8886, "sha256": "9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb" },
+    "current_agents": { "bytes": 9171, "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318" },
+    "disposition": "docs/testing/inta-fe-validation-r5-intake/input-pin-disposition.json records known PO backend-routing + F1 wording drift; 11/12 other inputs matched; current review pins match current files",
+    "needs_input_refresh": false
+  },
+  "owner_evidence_corroborated_not_replayed": {
+    "selfcheck_results_json": { "total": 46, "passed": 46, "failed": 0, "allPassed": true },
+    "selfcheck_stdout": "46 PASS / 0 FAIL out of 46 cases",
+    "launcher_mock_stdout": "17 PASS / 0 FAIL out of 17 cases",
+    "r5_test_summary": "suite-level exact argv, cwd, numeric exit codes, Node/Python version+sha256 transcripts recorded; binary hashes match stage-preflight receipt",
+    "credential_pattern_scan": { "filesScanned": 24, "patternMatchesFound": 0, "actualSecretScanEstablished": false }
+  },
+  "provenance_caveat": "Antigravity return §4 inline payload inventory SHA-256 values mismatch the actual payloads for 14 of 22 entries (9-22) while byte counts match and entries 1-9 match (reviewer finding R5-Z01); authoritative chain = manifest pins + 23 raw/export pairs + Codex intake, all independently verified",
+  "verdict": "CHANGES_REQUIRED_SOURCE_ONLY + PROOF_BASIS_BLOCKED (lifecycle-continuity claim); stage BLOCKED_CONTRACT_NOT_BINDING; never READY_RUNTIME",
+  "outputs": [
+    "docs/reviews/inta-zcode-fe-r5-source-review.md",
+    "docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/review-inputs.json",
+    "docs/testing/inta-returns/qa/fe-validation-r5-zcode-source-review-20261026/checks-log.json"
+  ],
+  "no_self_hashing_output_manifest": true
+}

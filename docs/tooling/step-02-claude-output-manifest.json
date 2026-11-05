@@ -1,0 +1,107 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "session_id": "1c8baae5-6a1d-41b4-8167-9df678811b4c",
+  "duration_ms": 804969,
+  "num_turns": 2,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 86218,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 332731,
+      "webSearchRequests": 0,
+      "costUSD": 4.386216,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 21600,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "task_id": "MC-002-ARCH",
+  "status": "PROPOSED / NOT_IMPLEMENTED / WAITING_ARCHITECTURE_APPROVAL — architecture authored; hosting, frontend adapter, identity, storage and workload choices WAITING_PO_APPROVAL; critical blockers OPEN; no build/test/PoC/deploy executed; not DONE",
+  "summary": "Claude Code (claude-opus-5-5, packet-only, no tools) authored the MC-002 logical candidate architecture across 15 files: system context/container/component Mermaid views; typed bounded contexts (Legal Question reserved as P1 extension); five-axis state design with a boundary fence so expiry/due transitions take effect at their instant; recursive AND dependency engine with cycle prevention under a per-matter row lock; claim-scoped evidence assessments with proof epochs and a DB-enforced no-self-verification check; explicit version promotion with staging/commit/reconciliation and revocation-safe streaming retrieval; filing cycles and negative outcomes; concrete HTTP contracts (If-Match, Idempotency-Key, problem catalogue, permissions, events); PostgreSQL DDL/constraints/transaction template/read snapshots; recorded-time deterministic brief semantics; security architecture; 12 OPEN technical blockers. ADR-001 (hosting) and ADR-003 (frontend adapter) are unresolved alternatives WAITING_PO_APPROVAL; ADR-002 proposes the transaction/concurrency model with a race-to-test map. Workload/retention/RPO/RTO given only as NOT_APPROVED options. No build, test, PoC or deploy run; not DONE.",
+  "raw_response_sha256": "c29c1f666fbbfe0affaa7659e2122796915d3d3d14b2a28fe87b80969e733e54",
+  "formatting": "Trailing whitespace/final newline normalized; one surplus Markdown table delimiter in security tests joined with semicolon; no semantic design edits",
+  "outputs": {
+    "docs/architecture/system-architecture.md": {
+      "returned_sha256": "7c991677b31015f984c30aa5882f1099c6c8a37c477a0c86c6850a4caeea4ef9",
+      "stored_sha256": "7c991677b31015f984c30aa5882f1099c6c8a37c477a0c86c6850a4caeea4ef9",
+      "characters": 20592
+    },
+    "docs/architecture/domain-model.md": {
+      "returned_sha256": "37e160c183db33210d29c301fa50a22b17945be98ff811f5b4c089dcf13c24a8",
+      "stored_sha256": "37e160c183db33210d29c301fa50a22b17945be98ff811f5b4c089dcf13c24a8",
+      "characters": 12283
+    },
+    "docs/architecture/state-machine.md": {
+      "returned_sha256": "6194b024e867f2eba080ce9c88fa5d0b8d2169c3e04f9cadc2ae43e85986883d",
+      "stored_sha256": "6194b024e867f2eba080ce9c88fa5d0b8d2169c3e04f9cadc2ae43e85986883d",
+      "characters": 9375
+    },
+    "docs/architecture/dependency-engine.md": {
+      "returned_sha256": "7f7ddc40f6384bd725b53446254d78a0be0d55367f6d1ed6bc07e172df0f079d",
+      "stored_sha256": "7f7ddc40f6384bd725b53446254d78a0be0d55367f6d1ed6bc07e172df0f079d",
+      "characters": 8227
+    },
+    "docs/architecture/evidence-model.md": {
+      "returned_sha256": "a1796c06de7116e15ab7230cbf776f1a5d61630ec87b616df1222401fa1e6f55",
+      "stored_sha256": "a1796c06de7116e15ab7230cbf776f1a5d61630ec87b616df1222401fa1e6f55",
+      "characters": 8786
+    },
+    "docs/architecture/document-lineage.md": {
+      "returned_sha256": "33b62940a6099e059f74a3f8bac09b9ebad2775599702fc1fe9a276b7787b4b4",
+      "stored_sha256": "33b62940a6099e059f74a3f8bac09b9ebad2775599702fc1fe9a276b7787b4b4",
+      "characters": 6342
+    },
+    "docs/architecture/filing-model.md": {
+      "returned_sha256": "1c2c8e6f76f5e772e0493849c94b56749c50167d7969314e044f47ae5fdcc176",
+      "stored_sha256": "1c2c8e6f76f5e772e0493849c94b56749c50167d7969314e044f47ae5fdcc176",
+      "characters": 5419
+    },
+    "docs/architecture/api-contracts.md": {
+      "returned_sha256": "b513294fff2ccc0b5e0cd4d411b57d864409f9f8c1d9b4ab48fd27f19191f24e",
+      "stored_sha256": "b513294fff2ccc0b5e0cd4d411b57d864409f9f8c1d9b4ab48fd27f19191f24e",
+      "characters": 15815
+    },
+    "docs/architecture/data-model.md": {
+      "returned_sha256": "9863c4766267aeb090f24f617fd1844d348f115b8975500f7deb5b39ddc07810",
+      "stored_sha256": "9863c4766267aeb090f24f617fd1844d348f115b8975500f7deb5b39ddc07810",
+      "characters": 18746
+    },
+    "docs/architecture/security-architecture.md": {
+      "returned_sha256": "3faeabd60a946a515636cac65fabe86986c2cc1f402715d3a343abf631f3540d",
+      "stored_sha256": "e63004b84c452aa22842b12510d140c19c704ea789e31328c872c1ce88e4ac9d",
+      "characters": 7452
+    },
+    "docs/architecture/technical-blockers.md": {
+      "returned_sha256": "e50d8fd77fd4f3ae9df3e46930432b61052378ad55c61f06d6a49da5217b1ad8",
+      "stored_sha256": "e50d8fd77fd4f3ae9df3e46930432b61052378ad55c61f06d6a49da5217b1ad8",
+      "characters": 6900
+    },
+    "docs/architecture/adr/ADR-001-runtime-and-hosting.md": {
+      "returned_sha256": "e3fb634cea2e67aaa12230d6edccefcd333e974ef45f542ed255a438cc636eb2",
+      "stored_sha256": "e3fb634cea2e67aaa12230d6edccefcd333e974ef45f542ed255a438cc636eb2",
+      "characters": 6276
+    },
+    "docs/architecture/adr/ADR-002-transaction-and-concurrency.md": {
+      "returned_sha256": "13d1ae699a4ffb7249df53ac43c8c46dba631316e00f79c443cb0d2dedfbb1fe",
+      "stored_sha256": "13d1ae699a4ffb7249df53ac43c8c46dba631316e00f79c443cb0d2dedfbb1fe",
+      "characters": 5309
+    },
+    "docs/architecture/adr/ADR-003-frontend-runtime.md": {
+      "returned_sha256": "77d5155f3cf2eee6c4083fe86d9579f7c879778999357559ab51b61525b78070",
+      "stored_sha256": "77d5155f3cf2eee6c4083fe86d9579f7c879778999357559ab51b61525b78070",
+      "characters": 3937
+    },
+    "docs/reviews/step-02-claude-architecture-result.md": {
+      "returned_sha256": "9d1ac60335718b583bdf519f8a4323ad9c0342f714e9a5cf8d2df768925c7b9b",
+      "stored_sha256": "9d1ac60335718b583bdf519f8a4323ad9c0342f714e9a5cf8d2df768925c7b9b",
+      "characters": 6475
+    }
+  }
+}

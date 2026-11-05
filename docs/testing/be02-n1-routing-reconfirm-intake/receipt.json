@@ -1,0 +1,58 @@
+{
+  "task": "MC-BE02-N1-R2-ROUTING-RECONFIRM-INTAKE",
+  "actor": "Local Codex",
+  "recorded_at_utc": "2026-10-26T15:03:47.890308+00:00",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "reviewer_identity_as_returned": {
+    "agent": "actual OpenCode harness; same R2 session",
+    "model": "DeepSeek V4.1 Flash Free",
+    "provider": "opencode",
+    "cli_version": "NOT_RECORDED"
+  },
+  "review_window_utc": [
+    "2026-10-26T14:58:52Z",
+    "2026-10-26T15:00:26Z"
+  ],
+  "delivery": "Human-forwarded text only; no repository writes by reviewer",
+  "received_verdict": [
+    "RETAINED_DOCUMENT_ONLY_WITH_LIMITATIONS",
+    "ROUTING_REFRESH_CONFIRMED"
+  ],
+  "routing_refresh": "CONFIRMED_FOR_REVIEWED_861e874c_SNAPSHOT; no pending routing-only review",
+  "adoption": "NOT_ADOPTED",
+  "reconfirm_manifest": {
+    "path": "docs/testing/be02-n1-delta-r2-intake/reconfirm-inputs.json",
+    "bytes": 2305,
+    "sha256": "9c047595d2750e11cf69b7b810f2ccb4c8602ed7868192f76e131e032bd3a28f"
+  },
+  "reconfirm_pins_verified_before_editorial_fix": 11,
+  "original_technical_pins_reverified_by_Codex": 13,
+  "F1": {
+    "disposition": "CORRECTED_EDITORIAL_BY_CODEX",
+    "exact_line": 11,
+    "reviewed_AGENTS": {
+      "path": "docs/testing/be02-n1-routing-reconfirm-intake/agents-reviewed-snapshot.md",
+      "bytes": 9093,
+      "sha256": "861e874c00cbaba4b2fbe6db6f08e9217b7564fd7a6d3eff6eaf27de05a5d03d"
+    },
+    "post_edit_AGENTS": {
+      "path": "AGENTS.md",
+      "bytes": 9171,
+      "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318"
+    },
+    "independent_review_scope": "OpenCode reviewed prior 9093-byte hash; later single-sentence editorial correction checked by Codex only; no independent endorsement of new bytes claimed."
+  },
+  "remaining_gates": [
+    "fixed resource representation shape and producers/public owner spelling",
+    "400/415/422 catalogue boundaries and scope",
+    "T25 path and create header policy",
+    "command envelope, provenance headers, wrapper validator and N1 normative home",
+    "BE01 Mimosa resolution and accepted corrected base",
+    "bounded backend implementation assignment"
+  ],
+  "backend_owner": "actual ZCode",
+  "formal_results": "27 BE02 NOT_RUN; 79 author reference checks cited only; INT-A51 unchanged",
+  "no_new_dispatch": true,
+  "no_runtime": true,
+  "no_commit": true
+}

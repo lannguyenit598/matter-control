@@ -1,0 +1,161 @@
+Ran check git status
+Analyzed MC-002-INTA-FE-VALIDATION-R5-ANTIGRAVITY-PROMPT.md:L1-45
+Ran check absence of R5 owned paths
+Analyzed r5-inputs.json:L1-73
+Analyzed manifest.json:L1-123
+Ran verify direct pins and R4 baseline payloads · Exited with code 1
+Ran verify all 22 R4 payloads · Exited with code 1
+Ran verify all 22 R4 payloads correctly
+Analyzed inta-opencode-fe-r4-source-review.md:L1-180
+Analyzed inta-opencode-fe-r4-source-review.md:L181-261
+Analyzed parallel-opencode-reviews-intake-20261026.md:L1-49
+Ran initialize R5 scratch workspace
+Analyzed harness-dev.mjs:L1-100
+Analyzed harness-dev.mjs:L101-248
+Analyzed test-launcher-mock.mjs:L1-100
+Ran check node version
+Ran test dynamic import with experimental-strip-types
+Analyzed coordinator.py:L1-100
+Analyzed coordinator.py:L101-300
+Analyzed coordinator.py:L301-520
+Analyzed coordinator.py:L521-634
+Analyzed guard_evaluator.py:L1-120
+Analyzed guard_evaluator.py:L121-223
+Analyzed observer.py:L1-165
+Analyzed observer.py:L166-197
+Ran check python and node binary paths
+Analyzed guard-validator-r5.sh:L1-40
+Ran verify top-level await in node 24
+Ran verify guards.ts hash
+Edited harness-dev.mjs
+Ran syntax check harness-dev.mjs
+Analyzed test-launcher-mock.mjs:L100-250
+Analyzed test-launcher-mock.mjs:L251-419
+Edited test-launcher-mock.mjs
+Ran execute launcher mock test suite
+Edited observer.py
+Edited guard-validator-r5.sh
+Ran make guard-validator-r5.sh executable
+Edited guard_evaluator.py
+Edited coordinator.py
+Analyzed selfcheck-r5.py:L1-100
+Ran list tests in selfcheck-r5.py · Exited with code 1
+Analyzed selfcheck-r5.py:L101-200
+Analyzed selfcheck-r5.py:L450-560
+Analyzed selfcheck-r5.py:L561-750
+Analyzed selfcheck-r5.py:L751-839
+Edited selfcheck-r5.py
+Ran run selfcheck-r5.py · Exited with code 1
+Ran check notes for failed tests
+Ran inspect tests 39, 40, 42 results
+Ran debug test 42 stub wrapper
+Edited guard-validator-r5.sh
+Ran verify test 42 exit code 2
+Edited selfcheck-r5.py
+Ran run selfcheck-r5.py · Exited with code 1
+Ran debug test 40 in isolation · Exited with code 1
+Ran run debug script for test 40
+Edited selfcheck-r5.py
+Edited selfcheck-r5.py
+Ran run selfcheck-r5.py
+Checked task Run selfcheck-r5.py
+Ran compute binary hashes
+Created implementation-binding-record-r5.md
+Created dependency-isolation-plan-r5.md
+Created fast-refusal-proof-basis-r5.md
+Ran generate diffs between R4 and R5
+Ran capture stdout logs for selfcheck and launcher-mock
+Checked task Capture stdout logs for selfcheck and launcher-mock
+Ran inspect stdout logs
+Analyzed r4-test-summary.json:L1-59
+Ran check node and python version strings
+Created r5-test-summary.json
+Analyzed credential-pattern-scan-r4.json:L1-8
+Ran run credential pattern scan
+Ran list all files in R5 scratch directory
+Ran remove pycache and list clean payloads
+Ran generate manifest.json
+Analyzed manifest.json:L1-50
+Ran re-verify absence of target paths
+Ran sync raw evidence and governance export
+Ran verify file count in export
+Ran get manifest.json size and hash
+Analyzed inta-fe-validation-r4-antigravity-return.md:L1-100
+Created inta-fe-validation-r5-antigravity-return.md
+Ran get return report size and hash
+Ran check git status
+
+# MC-002-INTA-FE-VALIDATION-R5 — Antigravity Formal Return
+
+**Status**: `SOURCE_CORRECTIONS_RETURNED / IN_REVIEW / RUNTIME_NOT_RELEASED`  
+**Task ID**: `MC-002-INTA-FE-VALIDATION-R5`  
+**Priority**: P0  
+**Executor**: Actual Antigravity (Frontend Execution Owner, Gemini 3.8 Flash High)  
+**Coordinating Role & Intake Recipient**: Local Codex (PM / Coordination Owner)  
+**Independent QA Reviewer**: Actual OpenCode  
+**Coordination Branch**: `codex/unified-project-flow`  
+**Base Commit**: `a62d838791ba188838c4ff00b7b6e265ac775056`  
+**Execution Timestamp**: 2026-10-26T14:58:00Z  
+**Workstation Environment**: macOS (darwin arm64), Node.js `v24.22.1`, Python `3.14.4`  
+**Normative Authority**: Direct Human Product Owner Approval (2026-10-26, `INTA-LAUNCH-D01`, Option A), [`docs/implementation/inta-launch-contract-addendum.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/implementation/inta-launch-contract-addendum.md) (`INTA-1-LAUNCH-01`), [`docs/testing/inta-launch-approval-20261026/approval.json`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-launch-approval-20261026/approval.json)
+
+---
+
+## 1. Executive Summary & Review Scope
+
+In accordance with [`MC-002-INTA-FE-VALIDATION-R5-ANTIGRAVITY-PROMPT.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/implementation/handoffs/MC-002-INTA-FE-VALIDATION-R5-ANTIGRAVITY-PROMPT.md), Antigravity has executed the targeted source-level and deterministic self-check corrections addressing all findings (**R4-C01..C05**, **S1..S6**, **NF-1..NF-6**) raised in OpenCode's independent review of R4 ([`docs/reviews/inta-opencode-fe-r4-source-review.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/reviews/inta-opencode-fe-r4-source-review.md)).
+
+- **P1.1 Lifecycle-Bound Proof (NF-4 / R4-C01 / R2-I04)**:
+  - Port probes during child execution are strictly conditioned on `child_proc.poll() is None`. An already-exited or dead child process produces **zero** during-samples and fails closed as `LISTENER_UNKNOWN` (proven in Test 34).
+  - Removed synthetic `during_sample_count = 1` from the pre-flight port-occupied path.
+  - The launcher atomically persists an attempt-bound [`launcher-execution.json`](file:///tmp/mc002-inta-evidence/frontend/validation-r5-20261026/launcher-mock.stdout.txt) record into `MC_INTA_STATE_DIR`, capturing exact binary hashes, start/exit UTC, zero-spawn proof (`spawnCalled: false`), and refusal outcome, which the evaluator validates.
+- **P1.2 Actual Binding Validation & Codex Staging Prerequisites (NF-1 / R3-N02 / R4-C02)**:
+  - Settled explicit absolute binary pins for Node (`/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node`) and Python (`/Library/Frameworks/Python.framework/Versions/3.14/bin/python3`).
+  - Private, isolated `HOME` and `TMPDIR` are bound inside the variant output root, preventing user session leakage.
+  - Reserved candidate staging destination `/tmp/mc002-inta-runtime-stage-r5-20261026` is owned by Codex. Coordinator pre-flight validation requires `/tmp/mc002-inta-runtime-stage-r5-20261026/stage-receipt.json` and fails closed (`BINDING_ERROR/NOT_READY`) if absent or unverified.
+- **P2 Owned Identity & Cleanup Without Forcekill (C03 / R2-I03 / R3-N01)**:
+  - Process verification captures immutable OS start times (`lstart`) in addition to PPID and executable name.
+  - **No reviewer-suggested SIGKILL was added**: Graceful termination uses SIGTERM and bounded wait/reap; if a process remains alive after timeout, explicit cleanup failure (`still-alive / cleanup-failed`) is reported and propagated to the evaluator with retained resources and no retry.
+  - Resolved observer pre-bind signal gap: early signals arriving before server construction terminate deterministically with exit code 1.
+- **P2 Durability & Schema (C02 / NF-6 / R3-N04 / R4-C04 / R4-C05)**:
+  - [`AtomicStateWriter`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/runner/observer.py) in `observer.py` propagates directory open, fsync, and close failures rather than swallowing them.
+  - Evaluator strictly enforces exact `int` types (rejecting `bool` and `float`) for child and observer exit codes. `expected_variant` and `expected_pid` are strictly mandatory.
+- **P2 Guard Bytes Before Code Evaluation (NF-3 / R4-C03 / Item 5)**:
+  - Completely eliminated static ES import of `guards.ts`.
+  - The launcher reads raw bytes and verifies cryptographic SHA-256 against `0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928` before dynamically importing the module via Node 24 native type stripping (`--experimental-strip-types`). Mismatched or missing guard fails closed as `BINDING_ERROR/NOT_READY`.
+- **Test Reach & Provenance (S1..S6)**:
+  - Injected `raising_unexpected_popen` fake across all abort test scenarios (S1).
+  - Deterministic `FakeClock` and sleep injected into coordinator scenarios (S2).
+  - Wrapper verified with explicit env, all 4 positional arguments, and nonzero exit code 2 propagation (S3).
+  - Caller sites 3 (timeout) and 4 (finally cleanup) directly covered (S4).
+  - Launcher mock suite covers synchronous spawn throws, signal delivery exceptions, CLI adapter, and execution record output (S5).
+  - Isolated unit tests verify file and directory fsync failure propagation (S6).
+- **Deterministic Test Results**:
+  - [`selfcheck-r5.py`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/runner/selfcheck-r5.py): **46/46 PASS** (exit code 0).
+  - [`test-launcher-mock.mjs`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/launcher/test-launcher-mock.mjs): **17/17 PASS** (exit code 0).
+- **Zero Live Runtime Released**: No live Next.js development server, background HTTP observer, product build, Go backend, PostgreSQL, Docker container, or 7-stage validation replay was executed. PostgreSQL is stopped and retained.
+
+---
+
+## 2. Key Artifacts & Governance Deliverables
+
+| Deliverable | Repository Path | Description |
+|---|---|---|
+| **Formal Return Report** | [`docs/reviews/inta-fe-validation-r5-antigravity-return.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/reviews/inta-fe-validation-r5-antigravity-return.md) | Full technical return report (22,518 bytes, SHA256: `c052ba85820ddf0fe577694e3b4afeabb298eb758b800a8a68c68212420b607d`). |
+| **Governance Export Root** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/) | 22 payload files (332,773 bytes) + manifest (4,014 bytes). Byte-identical to raw evidence (`diff -r` exit 0). |
+| **Governance Manifest** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/manifest.json`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/manifest.json) | Declares 22 payloads, 332,773 payload bytes (SHA256: `75edcd41c8e017a41cd4a8ce18a92b063d82de55528d0a63a2d2359d7a9c3d9c`). |
+| **Test Summary & Provenance** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/r5-test-summary.json`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/r5-test-summary.json) | Retained commands, exact numeric exits, UTC timestamps, version transcripts, and assertion results. |
+| **Binding Record R5** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/proposals/implementation-binding-record-r5.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/proposals/implementation-binding-record-r5.md) | Absolute binary pins, hashes, allowlists, and stage receipt requirements. |
+| **Dependency Plan R5** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/proposals/dependency-isolation-plan-r5.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/proposals/dependency-isolation-plan-r5.md) | Updated isolation plan reflecting Codex staging dependencies. |
+| **Proof Basis R5** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/proposals/fast-refusal-proof-basis-r5.md`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/proposals/fast-refusal-proof-basis-r5.md) | Verified live interval conditioning and attempt-bound execution record specification. |
+| **Credential Pattern Scan** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/credential-pattern-scan-r5.json`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/credential-pattern-scan-r5.json) | 24 files scanned, 0 pattern matches found. |
+| **R4→R5 Source Diffs** | [`docs/testing/inta-returns/frontend/validation-r5-20261026/diffs/`](file:///Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/frontend/validation-r5-20261026/diffs/) | 7 unified diffs against R4 baseline (`coordinator`, `guard-validator`, `guard_evaluator`, `harness-dev`, `observer`, `selfcheck`, `test-launcher-mock`). |
+
+---
+
+## 3. Preserved Formal Statuses & Next Dependencies
+
+- **All 51 Formal Results Unchanged**: 36 required (including `T11c` with preserved status `OUTCOME_UNKNOWN`), 14 product-deferred, and 1 production-feasibility blocked (`D-14`, distinct from T11c).
+- **PostgreSQL Retained Stopped**: Verified stopped (exit 0); not operated or queried.
+- **Option A Boundary Intact**: Supported harness entrypoint is `harness-dev.mjs`; raw direct Next CLI bypass is unsupported for never-listen and its historical `FAIL_OBSERVED_LISTENER` stands.
+- **Next Dependency**: Ready for Local Codex intake, private staging provision/verification under `/tmp/mc002-inta-runtime-stage-r5-20261026`, and subsequent independent review by Actual OpenCode. Live runtime execution remains **NOT_RELEASED**.

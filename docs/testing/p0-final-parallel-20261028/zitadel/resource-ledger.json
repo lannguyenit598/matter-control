@@ -1,0 +1,97 @@
+{
+  "task": "MC-P0-ZITADEL-CLOUD-E2E-R1",
+  "run_id": "20261028T075805Z",
+  "private_runtime_root": "/tmp/mc-zitadel-20261028T075805Z",
+  "database": "mc_cloud_ui_20261028t075805z",
+  "owner": "actual Local Codex runtime/auth session",
+  "model": "GPT-6 family per system; exact model/version not exposed",
+  "independence": "Runtime verifier; no primary source authored in this session. Prior Local Codex source authorship exists; not independent source approval.",
+  "created_utc": "2026-10-28T07:58:05.191028+00:00",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "branch": "codex/unified-project-flow",
+  "frontend_snapshot": {
+    "path": "/tmp/mc-zitadel-20261028T075805Z/frontend",
+    "files": 472,
+    "all_pins_match": true,
+    "private_env_copied": false,
+    "dependency_source": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend/node_modules"
+  },
+  "database_created_utc": "2026-10-28T07:59:05.841935+00:00",
+  "container": {
+    "name": "mc-p0-zcode-pg-product-test",
+    "id": "4d09d047440d4f5d872b91f9169da1b092a061f2a29208316b88e229617e11e0",
+    "labels": {
+      "mc.role": "product-test",
+      "mc.task": "MC-P0-ZCODE-EXECUTION"
+    },
+    "port": "127.0.0.1:55442",
+    "pg_isready": true,
+    "docker_healthcheck_present": false
+  },
+  "synthetic_users": [
+    {
+      "id": "786ee5ad-e680-4d0a-8e2b-b3817bb03648",
+      "name": "cloud-synthetic-a",
+      "subject": "396984919567415686"
+    },
+    {
+      "id": "411bf0b8-ec97-4e10-a8eb-87575a11ab03",
+      "name": "cloud-synthetic-b",
+      "subject": "396984802881878406"
+    }
+  ],
+  "start-api": {
+    "pid": 40093,
+    "started_utc": "2026-10-28T07:59:16.660219+00:00",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "argv": [
+      "rtk",
+      "proxy",
+      "/tmp/mc-zitadel-20261028T075805Z/mcapi"
+    ],
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/start-api.log",
+    "port": "8081",
+    "disposition": "running; preserve for UI handoff",
+    "listener_pid": 40096,
+    "ps_identity": "40096 40093 Wed Oct 28 14:59:16 2026     /tmp/mc-zitadel-20261028T075805Z/mcapi",
+    "cwd_identity": "p40096\nfcwd\nn/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "executable_identity": [
+      "p40096",
+      "ftxt",
+      "n/private/tmp/mc-zitadel-20261028T075805Z/mcapi",
+      "ftxt"
+    ],
+    "identity_observed_utc": "2026-10-28T08:00:43.848520+00:00"
+  },
+  "start-fe": {
+    "pid": 40125,
+    "started_utc": "2026-10-28T07:59:18.348022+00:00",
+    "cwd": "/tmp/mc-zitadel-20261028T075805Z/frontend",
+    "argv": [
+      "rtk",
+      "proxy",
+      "node",
+      "/tmp/mc-zitadel-20261028T075805Z/frontend/node_modules/next/dist/bin/next",
+      "start",
+      "--hostname",
+      "127.0.0.1",
+      "--port",
+      "3000"
+    ],
+    "private_raw_log": "/tmp/mc-zitadel-20261028T075805Z/start-fe.log",
+    "port": "3000",
+    "disposition": "running; preserve for UI handoff",
+    "listener_pid": 40126,
+    "ps_identity": "40126 40125 Wed Oct 28 14:59:18 2026     next-server (v16.4.2)",
+    "cwd_identity": "p40126\nfcwd\nn/private/tmp/mc-zitadel-20261028T075805Z/frontend",
+    "executable_identity": [
+      "p40126",
+      "ftxt",
+      "n/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node",
+      "ftxt"
+    ],
+    "identity_observed_utc": "2026-10-28T08:00:43.904123+00:00"
+  },
+  "backend_binary_sha256": "c76d9f4a5d924b46c0498a2b8b2aead93d010e882cddec2df9cbaa34d8903498",
+  "stop_procedure": "Reverify listener PID, parent PID, process start time, cwd and executable against this ledger with ps/lsof before SIGTERM. Signal only the verified owned listener. Never stop Docker/PG/IdP. Restart only from the private task driver after confirming port is free; record new PID/start identity."
+}

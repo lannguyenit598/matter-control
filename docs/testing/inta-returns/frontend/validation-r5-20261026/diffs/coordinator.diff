@@ -1,0 +1,608 @@
+--- docs/testing/inta-returns/frontend/validation-r4-20261026/runner/coordinator.py	2026-10-26 16:37:20
++++ /tmp/mc002-inta-fe-validation-r5-20261026/runner/coordinator.py	2026-10-26 21:49:04
+@@ -1,35 +1,30 @@
+ #!/usr/bin/env python3
+ """
+-MC-002-INTA-FE-VALIDATION-R4: Coordinated Variant Runner
+-Addresses R1-C04, R2-I01..I05, R3-N01, R3-N02, NF-1, NF-2, NF-6:
++MC-002-INTA-FE-VALIDATION-R5: Coordinated Variant Runner
++Addresses R4-C01, R4-C02, R4-C03, R4-C05, S1..S6, NF-1, NF-2, NF-4:
+ - Dispatches approved guard-first launcher (harness-dev.mjs) using Node 24 native type stripping
+-- Canonical 25-variant plan (24 = 11 remaining forbidden variables × {nonempty, empty} + API_MODE {nonempty, empty},
+-  plus 1 = NODE_ENV=production supported-path subcheck per addendum L20)
+-- Strict bounded environments for child and observer (reconciled allowlist including MC_INTA_STATE_DIR, SHELL, TMPDIR)
+-- Single try/finally block covering observer spawn, child spawn, monitoring, and cleanup
+-- Strict owned lifecycle: immutable identity verification (executable name + parent PID), handle reap via wait(),
+-  and error escalation from all five termination call sites
+-- Strict collision check refusing existing attempt directories
++- Canonical 25-variant plan (24 forbidden variables + 1 NODE_ENV=production subcheck)
++- Strict bounded environments with private HOME and TMPDIR (no ambient leakage)
++- Verified during-sample interval binding (probes only when child poll() is None; dead child sample rejected)
++- Persists and validates attempt-bound launcher-execution.json provenance
++- Strict owned lifecycle: immutable identity verification (executable name + parent PID + start time),
++  handle reap via wait(), and fail-closed cleanup escalation without SIGKILL
++- Deterministic time and sleep injection support
+ """
+ 
+ import json
+ import os
+-import shutil
+ import signal
+ import subprocess
+ import sys
+ import time
+ from datetime import datetime, timezone
+-from typing import Any, Dict, List, Optional, Tuple
++from typing import Any, Callable, Dict, List, Optional, Tuple
+ 
+-from guard_evaluator import evaluate_guard_run
++from guard_evaluator import evaluate_guard_run, EXPECTED_GUARD_SHA256
+ 
+ 
+-# Canonical 25-variant validation plan for supported launcher path (NF-2, addendum L20):
+-# - 22 variants: 11 remaining forbidden variables × {nonempty, empty}
+-# - 2 variants: API_MODE × {nonempty, empty}
+-# - 1 variant: NODE_ENV=production supported-path subcheck (addendum L20)
+-# Total = 25 variants.
++# Canonical 25-variant validation plan for supported launcher path:
+ PLAN_VARIANTS_25 = [
+     ("API_TOKEN", "nonempty", "sample_secret_token"),
+     ("API_TOKEN", "empty", ""),
+@@ -80,7 +75,6 @@
+             return True, None
+         elif proc.returncode == 1:
+             stderr_stripped = (proc.stderr or "").strip()
+-            # R2-I04 fix: ANY non-empty stderr (including ENOENT) is an error/unknown, NOT absence
+             if not stderr_stripped:
+                 return False, None
+             else:
+@@ -93,15 +87,39 @@
+         return None, f"lsof probe execution exception: {e}"
+ 
+ 
++def get_process_start_time(pid: int, subprocess_runner=subprocess.run) -> Optional[str]:
++    """
++    Retrieves the OS start time for a PID (lstart).
++    Used as an immutable process start identity handle.
++    """
++    if pid <= 1:
++        return None
++    try:
++        proc = subprocess_runner(
++            ["ps", "-p", str(pid), "-o", "lstart="],
++            stdout=subprocess.PIPE,
++            stderr=subprocess.PIPE,
++            text=True,
++            timeout=1.0,
++        )
++        if proc.returncode == 0:
++            return proc.stdout.strip()
++    except Exception:
++        pass
++    return None
++
++
+ def verify_pid_identity(
+     pid: int,
+     expected_name: Optional[str] = None,
+     expected_parent: Optional[int] = None,
++    expected_start_time: Optional[str] = None,
+     subprocess_runner=subprocess.run,
+     kill_func=os.kill,
+ ) -> bool:
+     """
+-    Verifies that a PID exists and matches expected identity (executable name and/or parent PID).
++    Verifies that a PID exists and matches expected identity:
++    executable name, parent PID, and OS start time handle.
+     Fail-closed: any query error returns False.
+     """
+     if pid <= 1:
+@@ -111,10 +129,10 @@
+     except OSError:
+         return False
+ 
+-    if expected_name or expected_parent is not None:
++    if expected_name or expected_parent is not None or expected_start_time is not None:
+         try:
+             ps_proc = subprocess_runner(
+-                ["ps", "-p", str(pid), "-o", "comm=,ppid="],
++                ["ps", "-p", str(pid), "-o", "comm=,ppid=,lstart="],
+                 stdout=subprocess.PIPE,
+                 stderr=subprocess.PIPE,
+                 text=True,
+@@ -128,11 +146,14 @@
+                 return False
+             comm = parts[0]
+             ppid_val = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else None
++            lstart_val = " ".join(parts[2:]) if len(parts) > 2 else None
+ 
+             if expected_name and expected_name not in comm:
+                 return False
+             if expected_parent is not None and ppid_val != expected_parent:
+                 return False
++            if expected_start_time is not None and lstart_val != expected_start_time:
++                return False
+         except Exception:
+             return False
+ 
+@@ -144,13 +165,18 @@
+     timeout_sec: float = 3.0,
+     expected_name: Optional[str] = None,
+     expected_parent: Optional[int] = None,
++    expected_start_time: Optional[str] = None,
+     process_handle: Optional[Any] = None,
+     subprocess_runner=subprocess.run,
+     kill_func=os.kill,
++    time_func: Callable[[], float] = time.time,
++    sleep_func: Callable[[float], None] = time.sleep,
+ ) -> Tuple[bool, Optional[str]]:
+     """
+     Gracefully terminates an owned process with SIGTERM after strict identity verification.
+     Waits bounded time for exit using process_handle reap if available.
++    DO NOT SIGKILL: if process remains alive, returns explicit still-alive / cleanup-failed
++    propagated to evaluator with retained resources and no retry (R5 Item 3).
+     Returns (True, None) if cleanly exited, (False, error_reason) otherwise.
+     """
+     if process_handle:
+@@ -159,8 +185,15 @@
+         if hasattr(process_handle, "poll") and process_handle.poll() is not None:
+             return True, None
+ 
+-    if not verify_pid_identity(pid, expected_name, expected_parent, subprocess_runner, kill_func=kill_func):
+-        return False, f"PID {pid} failed identity verification (unowned or mismatched); refusing signal"
++    if not verify_pid_identity(
++        pid,
++        expected_name,
++        expected_parent,
++        expected_start_time,
++        subprocess_runner,
++        kill_func=kill_func,
++    ):
++        return False, f"PID {pid} failed identity verification (unowned, mismatched, or recycled); refusing signal"
+ 
+     try:
+         kill_func(pid, signal.SIGTERM)
+@@ -172,17 +205,23 @@
+             process_handle.wait(timeout=timeout_sec)
+             return True, None
+         except Exception as e:
+-            return False, f"PID {pid} did not exit within {timeout_sec}s timeout after SIGTERM (handle wait error: {e})"
++            return (
++                False,
++                f"PID {pid} remained alive after {timeout_sec}s following SIGTERM (cleanup failed: {e}; retained without retry)",
++            )
+ 
+-    deadline = time.time() + timeout_sec
+-    while time.time() < deadline:
++    deadline = time_func() + timeout_sec
++    while time_func() < deadline:
+         try:
+             kill_func(pid, 0)
+-            time.sleep(0.05)
++            sleep_func(0.05)
+         except OSError:
+             return True, None
+ 
+-    return False, f"PID {pid} did not exit within {timeout_sec}s timeout after SIGTERM"
++    return (
++        False,
++        f"PID {pid} remained alive after {timeout_sec}s following SIGTERM (cleanup failed; retained without retry)",
++    )
+ 
+ 
+ class VariantRunner:
+@@ -197,38 +236,53 @@
+         observer_port: int = 18086,
+         node_bin: Optional[str] = None,
+         launcher_path: Optional[str] = None,
++        stage_dir: Optional[str] = None,
++        stage_receipt_required: bool = False,
+         popen_factory=subprocess.Popen,
+         subprocess_runner=subprocess.run,
+         kill_func=os.kill,
++        time_func: Callable[[], float] = time.time,
++        sleep_func: Callable[[float], None] = time.sleep,
+     ):
+         self.key = key
+         self.variant = variant
+         self.env_value = env_value
+         self.attempt_dir = attempt_dir
+-        self.harness_dir = harness_dir
++        self.harness_dir = os.path.abspath(harness_dir)
+         self.port = port
+         self.observer_port = observer_port
+-        
+-        # Settle absolute path to Node (R3-N02)
+-        resolved_node = node_bin or shutil.which("node") or "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node"
+-        self.node_bin = os.path.abspath(resolved_node) if os.path.isabs(resolved_node) else shutil.which(resolved_node) or resolved_node
++        self.stage_dir = stage_dir
++        self.stage_receipt_required = stage_receipt_required
+ 
++        # Pinned absolute node executable (R4-C02)
++        default_node = "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node"
++        resolved_node = node_bin or default_node
++        self.node_bin = os.path.abspath(resolved_node)
++
+         self.popen_factory = popen_factory
+         self.subprocess_runner = subprocess_runner
+         self.kill_func = kill_func
++        self.time_func = time_func
++        self.sleep_func = sleep_func
+ 
+         script_dir = os.path.dirname(os.path.abspath(__file__))
+         if launcher_path:
+-            self.launcher_path = launcher_path
++            self.launcher_path = os.path.abspath(launcher_path)
+         else:
+-            self.launcher_path = os.path.join(
+-                os.path.dirname(script_dir), "launcher", "harness-dev.mjs"
++            self.launcher_path = os.path.abspath(
++                os.path.join(os.path.dirname(script_dir), "launcher", "harness-dev.mjs")
+             )
+ 
+         self.variant_name = f"{key}_{variant}"
+         self.output_dir = os.path.join(attempt_dir, self.variant_name)
+         os.makedirs(self.output_dir, exist_ok=True)
+ 
++        # Private temporary directories for child and observer (NF-1, R4-C02)
++        self.private_home = os.path.join(self.output_dir, "home")
++        self.private_tmp = os.path.join(self.output_dir, "tmp")
++        os.makedirs(self.private_home, exist_ok=True)
++        os.makedirs(self.private_tmp, exist_ok=True)
++
+         self.observer_file = os.path.join(self.output_dir, "observer.json")
+         self.obs_stdout_file = os.path.join(self.output_dir, "obs_stdout.log")
+         self.obs_stderr_file = os.path.join(self.output_dir, "obs_stderr.log")
+@@ -237,12 +291,58 @@
+         self.meta_file = os.path.join(self.output_dir, "meta.json")
+         self.state_dir = os.path.join(self.output_dir, "run-state")
+         os.makedirs(self.state_dir, exist_ok=True)
++        self.launcher_execution_file = os.path.join(self.state_dir, "launcher-execution.json")
++
++    def validate_preflight_stage(self) -> Optional[str]:
++        """
++        Validates stage requirements before observer or child creation (R4-C02, R5 Item 2).
++        Fails closed on missing/invalid stage receipt, missing binaries, or escaping symlinks.
++        """
++        if self.stage_receipt_required:
++            stage_root = self.stage_dir or "/tmp/mc002-inta-runtime-stage-r5-20261026"
++            receipt_path = os.path.join(stage_root, "stage-receipt.json")
++            if not os.path.exists(receipt_path):
++                return f"[BINDING_ERROR/NOT_READY] Required Codex stage receipt missing at {receipt_path}"
++            try:
++                with open(receipt_path, "r", encoding="utf-8") as rf:
++                    receipt = json.load(rf)
++                if receipt.get("stageStatus") != "VERIFIED":
++                    return f"[BINDING_ERROR/NOT_READY] Stage receipt status is not VERIFIED: {receipt.get('stageStatus')}"
++            except Exception as e:
++                return f"[BINDING_ERROR/NOT_READY] Failed to read stage receipt: {e}"
+ 
++        # Validate launcher script existence
++        if not os.path.exists(self.launcher_path):
++            return f"[BINDING_ERROR/NOT_READY] Launcher script missing at {self.launcher_path}"
++
++        # Validate Node binary existence
++        if not os.path.exists(self.node_bin):
++            return f"[BINDING_ERROR/NOT_READY] Node binary missing at {self.node_bin}"
++
++        return None
++
+     def run(self, timeout_sec: float = 4.0) -> Dict[str, Any]:
+         """
+         Executes pre-probe, observer start, child run, sample probe, post-probe,
+         and fail-closed evaluation within a strict single try/finally block.
+         """
++        # 0. Pre-flight stage and binding validation (R4-C02)
++        binding_err = self.validate_preflight_stage()
++        if binding_err:
++            return evaluate_guard_run(
++                canonical_id="INT-ENV-05",
++                key=self.key,
++                variant=self.variant,
++                exit_code=None,
++                timed_out=False,
++                stdout="",
++                stderr="",
++                listener_during=None,
++                listener_after=None,
++                during_sample_count=0,
++                probe_error=binding_err,
++            )
++
+         # 1. Pre-probe
+         pre_listen, pre_err = probe_tcp_listener(self.port, self.subprocess_runner)
+         if pre_err:
+@@ -260,6 +360,7 @@
+                 probe_error=f"Pre-flight probe error on port {self.port}: {pre_err}",
+             )
+         if pre_listen is True:
++            # NF-4 fix: remove fabricated during_sample_count=1; no child was executed at pre-flight
+             return evaluate_guard_run(
+                 canonical_id="INT-ENV-05",
+                 key=self.key,
+@@ -270,7 +371,7 @@
+                 stderr="",
+                 listener_during=True,
+                 listener_after=True,
+-                during_sample_count=1,
++                during_sample_count=0,
+                 probe_error=None,
+             )
+ 
+@@ -286,9 +387,11 @@
+ 
+         child_comm = "node"
+         obs_comm = "python"
++        child_start_time = None
++        obs_start_time = None
+ 
+         try:
+-            # 2. Start observer process with bounded environment (R3-N02, NF-1)
++            # 2. Start observer process with private HOME/TMPDIR (R3-N02, NF-1, R4-C02)
+             observer_script = os.path.join(
+                 os.path.dirname(os.path.abspath(__file__)), "observer.py"
+             )
+@@ -300,13 +403,13 @@
+                 "--variant", self.variant_name,
+             ]
+             obs_env = {
+-                "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
++                "PATH": "/usr/bin:/bin",
+                 "PYTHONPATH": os.path.dirname(os.path.abspath(__file__)),
+-                "HOME": os.environ.get("HOME", "/tmp"),
+-                "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
+-                "LANG": os.environ.get("LANG", "en_US.UTF-8"),
+-                "LC_ALL": os.environ.get("LC_ALL", "en_US.UTF-8"),
+-                "TERM": os.environ.get("TERM", "xterm"),
++                "HOME": self.private_home,
++                "TMPDIR": self.private_tmp,
++                "LANG": "en_US.UTF-8",
++                "LC_ALL": "en_US.UTF-8",
++                "TERM": "xterm",
+             }
+ 
+             obs_out_fp = open(self.obs_stdout_file, "w", encoding="utf-8")
+@@ -322,33 +425,35 @@
+                 obs_out_fp.close()
+                 obs_err_fp.close()
+ 
++            obs_start_time = get_process_start_time(obs_proc.pid, self.subprocess_runner)
++
+             # Wait for observer to bind and write initial state
+             obs_bound = False
+-            obs_deadline = time.time() + 1.5
+-            while time.time() < obs_deadline:
++            obs_deadline = self.time_func() + 1.5
++            while self.time_func() < obs_deadline:
+                 listen_state, _ = probe_tcp_listener(self.observer_port, self.subprocess_runner)
+                 if listen_state is True and os.path.exists(self.observer_file):
+                     obs_bound = True
+                     break
+-                time.sleep(0.05)
++                self.sleep_func(0.05)
+ 
+             if not obs_bound:
+                 sample_probe_err = f"Observer failed to bind on loopback port {self.observer_port}"
+             else:
+-                # 3. Construct strict bounded child environment (NF-1)
++                # 3. Construct strict bounded child environment with private HOME/TMPDIR (NF-1, R4-C02)
+                 is_prod_subcheck = (self.key == "NODE_ENV" and self.variant == "production")
+                 child_env = {
+-                    "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
++                    "PATH": "/usr/bin:/bin",
+                     "NODE_ENV": "production" if is_prod_subcheck else "development",
+                     "MC_INTA_ENABLE": "1",
+                     "MC_INTA_GO_BASE_URL": f"http://127.0.0.1:{self.observer_port}",
+                     "MC_INTA_STATE_DIR": self.state_dir,
+                     "PORT": str(self.port),
+                     "HOSTNAME": "127.0.0.1",
+-                    "HOME": os.environ.get("HOME", "/tmp"),
+-                    "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
+-                    "TERM": os.environ.get("TERM", "xterm"),
+-                    "SHELL": os.environ.get("SHELL", "/bin/sh"),
++                    "HOME": self.private_home,
++                    "TMPDIR": self.private_tmp,
++                    "TERM": "xterm",
++                    "SHELL": "/bin/sh",
+                 }
+                 if not is_prod_subcheck:
+                     child_env[self.key] = self.env_value
+@@ -375,15 +480,19 @@
+                     child_stdout_fp.close()
+                     child_stderr_fp.close()
+ 
++                child_start_time = get_process_start_time(child_proc.pid, self.subprocess_runner)
++
+                 # Record verified creation metadata
+                 meta_data = {
+                     "variant": self.variant_name,
+                     "key": self.key,
+                     "childPid": child_proc.pid,
+                     "childParentPid": os.getpid(),
++                    "childStartTime": child_start_time,
+                     "childStartUTC": child_start_utc,
+                     "childCmd": child_cmd,
+                     "observerPid": obs_proc.pid if obs_proc else None,
++                    "observerStartTime": obs_start_time,
+                     "port": self.port,
+                     "observerPort": self.observer_port,
+                     "stateDir": self.state_dir,
+@@ -391,10 +500,16 @@
+                 with open(self.meta_file, "w", encoding="utf-8") as mf:
+                     json.dump(meta_data, mf, indent=2)
+ 
+-                # 5. Monitor loop
+-                deadline = time.time() + timeout_sec
+-                while time.time() < deadline:
+-                    # Probe listener during child execution window (NF-4)
++                # 5. Monitor loop (P1.1 Lifecycle-bound proof)
++                deadline = self.time_func() + timeout_sec
++                while self.time_func() < deadline:
++                    # Poll child FIRST: do not probe if child has already exited (R4-C01 fix)
++                    poll_before = child_proc.poll()
++                    if poll_before is not None:
++                        child_exit = poll_before
++                        break
++
++                    # Child is confirmed alive: sample during active window
+                     listening, err = probe_tcp_listener(self.port, self.subprocess_runner)
+                     during_sample_count += 1
+                     if err:
+@@ -407,9 +522,12 @@
+                             2.0,
+                             expected_name=child_comm,
+                             expected_parent=os.getpid(),
++                            expected_start_time=child_start_time,
+                             process_handle=child_proc,
+                             subprocess_runner=self.subprocess_runner,
+                             kill_func=self.kill_func,
++                            time_func=self.time_func,
++                            sleep_func=self.sleep_func,
+                         )
+                         if not term_ok and term_err:
+                             cleanup_errors.append(term_err)
+@@ -430,9 +548,12 @@
+                                     2.0,
+                                     expected_name=child_comm,
+                                     expected_parent=os.getpid(),
++                                    expected_start_time=child_start_time,
+                                     process_handle=child_proc,
+                                     subprocess_runner=self.subprocess_runner,
+                                     kill_func=self.kill_func,
++                                    time_func=self.time_func,
++                                    sleep_func=self.sleep_func,
+                                 )
+                                 if not term_ok and term_err:
+                                     cleanup_errors.append(term_err)
+@@ -440,24 +561,28 @@
+                         except Exception:
+                             pass
+ 
+-                    poll_ret = child_proc.poll()
+-                    if poll_ret is not None:
+-                        child_exit = poll_ret
++                    # Poll child after probe check
++                    poll_after = child_proc.poll()
++                    if poll_after is not None:
++                        child_exit = poll_after
+                         break
+ 
+-                    time.sleep(0.05)
++                    self.sleep_func(0.05)
+ 
+                 if child_proc.poll() is None:
+                     timed_out = True
+-                    # Site 3: Timeout termination (R3-N01)
++                    # Site 3: Timeout termination (R3-N01, S4)
+                     term_ok, term_err = bounded_terminate(
+                         child_proc.pid,
+                         2.0,
+                         expected_name=child_comm,
+                         expected_parent=os.getpid(),
++                        expected_start_time=child_start_time,
+                         process_handle=child_proc,
+                         subprocess_runner=self.subprocess_runner,
+                         kill_func=self.kill_func,
++                        time_func=self.time_func,
++                        sleep_func=self.sleep_func,
+                     )
+                     if not term_ok and term_err:
+                         cleanup_errors.append(term_err)
+@@ -468,16 +593,19 @@
+             cleanup_errors.append(f"Child process failure: {e}")
+ 
+         finally:
+-            # Site 4: Owned child cleanup in finally (R3-N01, R2-I03)
++            # Site 4: Owned child cleanup in finally (R3-N01, R2-I03, S4)
+             if child_proc and child_proc.poll() is None:
+                 term_ok, term_err = bounded_terminate(
+                     child_proc.pid,
+                     2.0,
+                     expected_name=child_comm,
+                     expected_parent=os.getpid(),
++                    expected_start_time=child_start_time,
+                     process_handle=child_proc,
+                     subprocess_runner=self.subprocess_runner,
+                     kill_func=self.kill_func,
++                    time_func=self.time_func,
++                    sleep_func=self.sleep_func,
+                 )
+                 if not term_ok and term_err:
+                     cleanup_errors.append(term_err)
+@@ -489,9 +617,12 @@
+                     3.0,
+                     expected_name=obs_comm,
+                     expected_parent=os.getpid(),
++                    expected_start_time=obs_start_time,
+                     process_handle=obs_proc,
+                     subprocess_runner=self.subprocess_runner,
+                     kill_func=self.kill_func,
++                    time_func=self.time_func,
++                    sleep_func=self.sleep_func,
+                 )
+                 if not term_ok and term_err:
+                     cleanup_errors.append(term_err)
+@@ -525,12 +656,25 @@
+             except Exception as e:
+                 observer_parse_err = str(e)
+ 
++        # 9. Read attempt-bound launcher-execution.json record (NF-4, R5 Item 1)
++        launcher_execution_data = None
++        launcher_execution_error = None
++        if os.path.exists(self.launcher_execution_file):
++            try:
++                with open(self.launcher_execution_file, "r", encoding="utf-8") as lf:
++                    launcher_execution_data = json.load(lf)
++            except Exception as e:
++                launcher_execution_error = f"Failed to parse launcher-execution.json: {e}"
++        else:
++            if child_proc is not None:
++                launcher_execution_error = "launcher-execution.json was not created by launcher"
++
+         probe_err_final = sample_probe_err or post_probe_err
+         if cleanup_errors:
+             prefix = (probe_err_final + "; ") if probe_err_final else ""
+             probe_err_final = prefix + "Cleanup errors: " + ", ".join(cleanup_errors)
+ 
+-        # 9. Single unified evaluation capturing all errors (including finally)
++        # 10. Single unified evaluation capturing all evidence and errors
+         return evaluate_guard_run(
+             canonical_id="INT-ENV-05",
+             key=self.key,
+@@ -549,6 +693,8 @@
+             observer_exit_code=obs_exit_code,
+             expected_variant=self.variant_name,
+             expected_pid=obs_proc.pid if obs_proc else None,
++            launcher_execution_data=launcher_execution_data,
++            launcher_execution_error=launcher_execution_error,
+         )
+ 
+ 
+@@ -560,9 +706,13 @@
+     observer_port: int = 18086,
+     node_bin: Optional[str] = None,
+     launcher_path: Optional[str] = None,
++    stage_dir: Optional[str] = None,
++    stage_receipt_required: bool = False,
+     popen_factory=subprocess.Popen,
+     subprocess_runner=subprocess.run,
+     kill_func=os.kill,
++    time_func: Callable[[], float] = time.time,
++    sleep_func: Callable[[float], None] = time.sleep,
+ ) -> int:
+     """
+     Executes the variant plan sequentially, stopping immediately upon any failure.
+@@ -590,9 +740,13 @@
+             observer_port=observer_port,
+             node_bin=node_bin,
+             launcher_path=launcher_path,
++            stage_dir=stage_dir,
++            stage_receipt_required=stage_receipt_required,
+             popen_factory=popen_factory,
+             subprocess_runner=subprocess_runner,
+             kill_func=kill_func,
++            time_func=time_func,
++            sleep_func=sleep_func,
+         )
+         res = runner.run()
+         all_results.append(res)

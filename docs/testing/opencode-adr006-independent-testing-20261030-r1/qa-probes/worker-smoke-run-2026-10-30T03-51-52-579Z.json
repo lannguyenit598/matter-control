@@ -1,0 +1,100 @@
+{
+  "identity": "OpenCode independent QA (actual OpenCode)",
+  "fixture": "Synthetic local OIDC + real Go + owned PostgreSQL 18.6 + filesystem object adapter; no provider",
+  "checks": [
+    {
+      "name": "root entry redirect",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "anonymous session",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "PKCE authorize redirect S256",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "QA-NEW-002 wrong-state callback refused",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "durable callback login",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "QA-NEW-003 callback replay refused",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "authenticated display-only session",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "Worker to real Go and PostgreSQL read",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "compiled CSS linked",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "compiled CSS served",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "streamed upload 1048576",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "download hash 1048576",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "streamed upload 26213376",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "download hash 26213376",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "Server Action foreign origin refused",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "authenticated Server Action forwarded to Go",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "Server Action persisted readback",
+      "pass": true,
+      "extra": null
+    },
+    {
+      "name": "runtime failure",
+      "pass": false,
+      "error": "Invalid src or dest: cp returned EINVAL (cannot copy /private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/snapshot/apps/frontend/.open-next/server-functions/default/node_modules/.pnpm/client-only@0.0.1/node_modules/client-only to a subdirectory of self /private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/snapshot/apps/frontend/.open-next/server-functions/default/node_modules/.pnpm/client-only@0.0.1/node_modules/client-only) /private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/worker-preview2/.open-next/server-functions/default/node_modules/.pnpm/styled-jsx@5.1.6_@babel+core@7.29.7_supports-color@7.2.0__react@19.3.1/node_modules/client-only"
+    }
+  ],
+  "failures": [],
+  "ref_basis": "17 author smoke assertions re-asserted independently + QA-NEW-001..004 adversarial probes",
+  "adapted_from": "docs/testing/codex-adr006-remediation-20261030-r1/verification-programs/mc-worker-smoke-final.mjs",
+  "adaptation_note": "paths/fixture replaced with OpenCode-owned snapshot/preview/fixture; wrong-state and replay probes added; refresh counters added for AUTH-series derivatives"
+}

@@ -1,0 +1,61 @@
+{
+  "role": "Codex continuation of ZCode read-only readiness task",
+  "guard_keys": [
+    "API_MODE",
+    "API_TOKEN",
+    "API_BASE_URL",
+    "AUTH_ALLOW_ANONYMOUS",
+    "API_TIMEOUT_MS",
+    "AUTH_SECRET",
+    "NEXTAUTH_SECRET",
+    "CLERK_SECRET_KEY",
+    "SESSION_SECRET",
+    "COOKIE_SECRET",
+    "DATABASE_URL",
+    "JWT_SECRET"
+  ],
+  "runtime_startup_proven_by_retained_R4": [
+    "API_MODE",
+    "NODE_ENV=production"
+  ],
+  "remaining_startup_variables": [
+    "API_TOKEN",
+    "API_BASE_URL",
+    "AUTH_ALLOW_ANONYMOUS",
+    "API_TIMEOUT_MS",
+    "AUTH_SECRET",
+    "NEXTAUTH_SECRET",
+    "CLERK_SECRET_KEY",
+    "SESSION_SECRET",
+    "COOKIE_SECRET",
+    "DATABASE_URL",
+    "JWT_SECRET"
+  ],
+  "classification": "NEEDS_SCOPED_RUNTIME_VALIDATION, not observed FAIL",
+  "Next_drift": "Prior retained Next PIDs/listener absent at recovery snapshot; termination cause/signal/exit NOT_OBSERVED. Do not claim graceful teardown or restart for reassurance.",
+  "product_build_outputs": [
+    {
+      "path": "/tmp/mc002-inta-fe/.next/BUILD_ID",
+      "exists": false
+    },
+    {
+      "path": "/tmp/mc002-inta-fe/.next/build-manifest.json",
+      "exists": false
+    },
+    {
+      "path": "/tmp/mc002-inta-fe/.next/server/app-paths-manifest.json",
+      "exists": false
+    },
+    {
+      "path": "/tmp/mc002-inta-fe/storybook-static/index.html",
+      "exists": false
+    }
+  ],
+  "build_classification": "No retained production output observed at named expected locations; historical R4 skipped build. Not a proof that no build ever ran elsewhere.",
+  "proposed_minimal_next_work": [
+    "Separate run-specific guard validation for remaining11variables using synthetic sentinel values and zero-upstream observation, no product credentials; do not restart current historical runtime implicitly.",
+    "Isolated product build/module-exclusion check from pinned source, original receipt/state/logs untouched; actual command/dependency/generated-output boundaries require a separate bounded task.",
+    "Reconcile undocumented Next disappearance; no historical shutdown/exit claim. Same owned PG remains retained pending separate lifecycle cue."
+  ],
+  "private_config_read": false
+}

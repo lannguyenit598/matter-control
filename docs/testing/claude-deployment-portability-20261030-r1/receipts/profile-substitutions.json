@@ -1,0 +1,13 @@
+[
+  {
+    "profile": "cloud-run",
+    "file": "cloud-run",
+    "substitutions": [
+      "image->local tag",
+      "issuer/R2 https->loopback fixture",
+      "secretKeyRef->synthetic env file",
+      "secret volume->bind of synthetic key (0400)",
+      "platform env K_SERVICE/PORT (or CLOUD_RUN_JOB) added as Cloud Run injects them"
+    ]
+  }
+]

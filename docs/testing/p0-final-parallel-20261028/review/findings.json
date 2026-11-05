@@ -1,0 +1,44 @@
+{
+  "task_id": "MC-P0-FINAL-DELTA-REVIEW-R1",
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "open_blockers_in_reviewed_delta": 0,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "P2",
+      "kind": "informational-correctness",
+      "file_lines": ["apps/backend/internal/core/service/brief_replay.go:185-187"],
+      "trigger": "A legacy `filing.created` snapshot payload without a numeric `revision` key reaches `filing.stage_changed`/`filing.closed`/`filing.reopened` before any later full `filing.work_changed` snapshot.",
+      "expected": "The brief should either surface the true unseen revision or explicitly report revision unavailability, consistently with the fail-closed provenance policy.",
+      "actual": "The replay's own revision bump is skipped when `it.m[\"revision\"]` is missing or is not float64, so the brief item renders `Revision: 0` for that interval.",
+      "impact": "Cosmetic/informational only in the reviewed paths; verification/dependency/execution states are unaffected; fail-closed owner guard is independent of revision. No fabricate-and-pass risk.",
+      "minimum_fix": "In a future backend revision, either leave the revision undefined for the brief reader instead of defaulting to 0, or fold revision availability into the same fail-closed decision as owner provenance. Not required for the current P0 gate.",
+      "regression_test_suggestion": "Add a `TestReplayBrief` case with a revision-less legacy `filing.created` plus `filing.stage_changed`, asserting the chosen availability representation."
+    },
+    {
+      "id": "F2",
+      "severity": "P2",
+      "kind": "hardening-consistency",
+      "file_lines": ["apps/frontend/src/app/(app)/matters/[matterId]/page.tsx:29", "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx:76"],
+      "trigger": "Route param `matterId` is interpolated into local hrefs without `encodeURIComponent`, while `matter-scope.tsx:19,28` and `history/page.tsx:28,43` encode consistently.",
+      "expected": "Uniform, always-encoded id interpolation across matter routes.",
+      "actual": "Overview page lines 29/76 rely on the raw param; current id semantics (single dynamic segment, UUID-style record ids) make an actual break hard to reach.",
+      "impact": "No demonstrated defect in allowed id space; robustness/consistency only.",
+      "minimum_fix": "Wrap `matterId` with `encodeURIComponent` on those hrefs in a later frontend revision. Not required for the current P0 gate.",
+      "regression_test_suggestion": "Extend a matter page/route test with a percent-encoded id segment asserting stable same-matter links."
+    }
+  ],
+  "verified_closure_records_from_the_reviewed_delta": [
+    {"id": "CL-01-owner-null", "scope": "new filing creation records explicit `owner:null`; legacy omitted owner fails closed and is restored only by a real later full snapshot; valid new/maintained filings cannot be dropped from the brief by the guard", "evidence": ["apps/backend/internal/core/service/filing_service.go:203-209", "apps/backend/internal/core/service/brief_replay.go:129-141,190-194", "apps/backend/internal/core/service/brief_replay_test.go:193-203", "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go:735"]},
+    {"id": "CL-01-stage-closure-reopen", "scope": "stage/closure/reopen events drive the same domain evaluator at t2; closed filings drop out; reopen returns them; unknown stage refuses reconstruction", "evidence": ["apps/backend/internal/core/service/brief_replay.go:156-188", "apps/backend/internal/core/service/brief_replay_test.go:159-183", "apps/backend/internal/core/domain/matter/filing.go:14-31"]},
+    {"id": "CL-02-proof-replay", "scope": "historical criteria/claims/assessments/disputes/documents/epochs/edges evaluate at t2 with expiry/alternatives/revocation/dispute/version/dependency rules; missing history fails closed; imported blocked without edges fails closed", "evidence": ["apps/backend/internal/core/service/brief_proof.go:11-213", "brief_replay_test.go:34-145", "contract_w6.go brief t2 subtests (reviewer-run memory subtest + author receipts)"]},
+    {"id": "CL-03-nonauthoritative-claim", "scope": "importedVerificationClaim retained, included in content identity and never feeds authoritative verification or the replay's verification axis", "evidence": ["apps/backend/internal/core/service/work_service.go:164-166", "apps/backend/internal/core/service/dataops_service.go:485-486,1018-1019", "apps/backend/internal/core/service/brief_proof.go:79-86"]},
+    {"id": "CL-04-recovery-semantics", "scope": "reload read-only; authorized recheck; cached terminal receipts without rePOST; no direct-begin while un-ACKed; payload/scope identity guard; ACK matches kind/matter/key; late completion cannot release another slot; access-loss purge non-revivable; no browser storage of payload/tokens", "evidence": ["apps/frontend/src/features/data-transfer/actions.ts:127-160,172-232", "pending-attempts.ts:23-107", "components/recovery-gate.tsx:17-131", "pending-attempts.test.ts:29-103", "recovery-gate.test.tsx:17-93", "components/organisms/recovery.test.tsx:31-36"]}
+  ],
+  "notes": [
+    "A historical `filing.stage_changed` targeting REQUIREMENT would fail closed (`brief_replay.go:176-178` default branch); no legitimate forward flow reaches it via NextStages.",
+    "Transfer-recovery durability stays a documented local limitation (process-only); it is not production rollback proof.",
+    "Final-byte restore evidence remains missing (`restore/final-source-run-blocked.json`); the last retained run `20261028T072524Z` predates the final backend correction.",
+    "The mtimes used for gate-coverage ordering are advisory evidence, not cryptographic binding."
+  ]
+}

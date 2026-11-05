@@ -1,0 +1,29 @@
+# MC-003A.8A — approval-safe targeted finding intake
+
+Owner Codex (PM/BA, F-11 fixture); actual Claude F-01..10 contract authority; ZCode targeted recheck only; independent QA separate. Priority P0. Requirement IDs FR-001/003/005/007/008/009/010/015/016/017/018/019, RULE-003/008/010/021 and each finding trace in intake.json. Branch task/MC-003A-remediation; input baseline 97356ce. Proposed status IN_REVIEW / FINDINGS_OPEN, parent REWORK_REQUIRED, STEP03B NOT_AUTHORIZED.
+
+Scope: preserve original review/request, eleven-finding ownership/proposals, 22 CT/8 QA dispositions, allowlist-deviation/provenance limits, F-11 static graph correction proposal, focused Claude prompt. Allowed paths: new docs/design/step-03a/handoff/step-03a-8a/ and this task only. Existing contract/addendum/index and all other files unchanged. No code/runtime/INT-A/provider/config changes.
+
+Inputs/outputs (paths from repository root): docs/design/step-03a/handoff/step-03a-7/current-reviewed-read-set.json and its immutable base/delta; approved cited requirements/Atlas; original actual ZCode return and user MC-003A.8A request preserved under ../../design/step-03a/handoff/step-03a-8a/. Dependencies: official local write approval; independent owner/reviewer execution needs separate scoped payload/model/destination permission; no automatically inherited ZCode permission. Claude handoff READY_NOT_DISPATCHED; ZCode recheck NOT_DISPATCHED.
+
+Acceptance: all 11 exact original findings/severities/ownership and required proposal fields; 22 unique CT IDs/16+4+1+1 allNOT_RUN; eight original QA dispositions with conditional dependencies; no invented graph edge or false RQ-04→RQ-08 path; full sort keys and deterministic proposed UUID map; unchanged 18 input/index hashes/32 routes; honest approval/egress/identity limits. Static document/integrity checks only, evidence in step-03a-8a/document-checks.json after actual checks. No product tests run.
+
+Reviewer: actual Claude targeted contract recommendations then ZCode correction-only recheck; OpenCode/formally designated independent Design QA still mandatory separately. Completion evidence: original return SHA and focused intake checks, later owner/reviewer returns as available. No DONE by author alone; F-11 proposal is not accepted fixture until rechecked.
+
+
+## Claude targeted return R1 — received, targeted rework required
+
+Actual human-returned packet-only/text-only Claude review is preserved in ../../design/step-03a/handoff/step-03a-8a/claude-return-r1/review-original.txt.gz; normalized transcription, intake and exact source-provenance limits alongside it. Current Claude return status RECEIVED / SELF_REVIEW_DOCUMENT_ONLY; this supersedes the historical READY_NOT_DISPATCHED statement only for the original packet invocation. No new follow-up invocation has occurred.
+
+F-01/04/05/06/09 proposals ready for targeted recheck, still OPEN. F-02/03/08 require owner correction/clarification; F-07 NEEDS_AUTHORIZED_SOURCE; F-10 outer proposal separated from unresolved nested decision and unsupported completeness inference. F-11 remains Codex fixture proposal pending adoption/recheck. Invalid original delta and summary count erratum recorded; normalized copy is not an applied patch. All 11 findings remain OPEN.
+
+Next scoped owner packet for F-02/03/07/08/10 is prepared under claude-return-r1/claude-followup-v1 with exact manifest, extra architecture sections, proposed recipient/model/cost and text-only approval draft. WAITING_SCOPED_AUTHORIZATION; no external payload sent or agent called. After corrected owner return, ZCode correction-only recheck; no repeated full 32-operation or architecture review. 22 CT IDs/16+4+1+1, eight QA dispositions, runtime NOT_RUN and all gates unchanged. Integrity evidence: claude-return-r1/document-checks.json. No MC-003A DONE or STEP03B authorization.
+
+
+## Claude R2 received — ready for one correction-only recheck
+
+Human-returned R2 and intake are preserved under ../../design/step-03a/handoff/step-03a-8a/claude-return-r2/. R2 JSON is valid; original lossless archive retained. Both prior packet manifests and all 19 snapshots verified. R2 withdraws R1 READ-02 amendment and updates F-03/F-07/F-08/F-10; no original contract/addendum/index changed.
+
+All eleven findings OPEN. F-07 proposes candidate field/filter removal with command-example alignment still outstanding; F-08 EVIDENCE_GAP unit NEEDS_CLARIFICATION; F-10 nested cardinality/response size DECISION_REQUIRED; F-11 still unadopted fixture proposal. F-03 K6 needs an explicit nonempty-excluded fixture precondition; empty Matter must not invent work. Authorization-wrapper inference is a reviewer-reported provenance limitation, not retroactive Codex approval.
+
+Current owner-return status RECEIVED / SELF_REVIEW_DOCUMENT_ONLY. New prospective ZCode correction-only manual handoff covers F-01..F-11 including previously unrechecked R1 proposals and Codex fixture, with exact sources/hashes/permissions and text-only return. READY_NOT_DISPATCHED; no new provider call by Codex. It does not repeat 32-operation/full-architecture review or replace independent Design QA/PO decisions. All 22 CT IDs/16+4+1+1 and eight QA dispositions/runtime NOT_RUN/gates preserved. Follow zcode-recheck/PROMPT.md only when the human actually assigns that review. No product implementation, DONE or STEP03B authorization.

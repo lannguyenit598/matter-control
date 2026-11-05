@@ -1,0 +1,23 @@
+{
+  "label": "be-cloudrun-migrate-job",
+  "argv": [
+    "docker",
+    "run",
+    "--label",
+    "mc.owner=claude-portability-20261030",
+    "--network",
+    "container:mc-claude-portability-pg",
+    "--memory",
+    "512m",
+    "--cpus",
+    "1",
+    "--env-file",
+    "/private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/private/cr-migrate.env",
+    "--rm",
+    "mc-claude-portability/mcapi:local",
+    "migrate"
+  ],
+  "exit": 0,
+  "stdout": "{\"time\":\"2026-10-30T03:23:48.633052548Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":1,\"file\":\"0001_mattercontrol_core.sql\",\"duration\":\"57.039083ms\"}\n{\"time\":\"2026-10-30T03:23:48.633782881Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":2,\"file\":\"0002_work_graph.sql\",\"duration\":\"21.417708ms\"}\n{\"time\":\"2026-10-30T03:23:48.633785339Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":3,\"file\":\"0003_documents_evidence.sql\",\"duration\":\"27.71925ms\"}\n{\"time\":\"2026-10-30T03:23:48.633786589Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":4,\"file\":\"0004_filings.sql\",\"duration\":\"12.899708ms\"}\n{\"time\":\"2026-10-30T03:23:48.633787631Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":5,\"file\":\"0005_context_records.sql\",\"duration\":\"4.004375ms\"}\n{\"time\":\"2026-10-30T03:23:48.633788464Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":6,\"file\":\"0006_dataops.sql\",\"duration\":\"4.961583ms\"}\n{\"time\":\"2026-10-30T03:23:48.633789256Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":7,\"file\":\"0007_filing_signature_applicability.sql\",\"duration\":\"1.330208ms\"}\n{\"time\":\"2026-10-30T03:23:48.633790256Z\",\"level\":\"INFO\",\"msg\":\"mattercontrol migration applied\",\"version\":8,\"file\":\"0008_review_matrix.sql\",\"duration\":\"12.603ms\"}\n",
+  "stderr": ""
+}

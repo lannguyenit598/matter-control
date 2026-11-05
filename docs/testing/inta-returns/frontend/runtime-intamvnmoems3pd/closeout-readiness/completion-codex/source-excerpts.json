@@ -1,0 +1,269 @@
+[
+  {
+    "path": "/tmp/mc002-inta-harness/src/guards.ts",
+    "bytes": 3128,
+    "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 114,
+        "text": "/**\n * Template and audited session / provider-secret environment variables (INTA-1 §2, R07).\n * Any non-empty value in this set refuses harness startup and runtime execution.\n * Enumerate keys only, never values.\n */\nexport const PRODUCT_AUTH_ENV_KEYS = [\n  'API_MODE',\n  'API_TOKEN',\n  'API_BASE_URL',\n  'AUTH_ALLOW_ANONYMOUS',\n  'API_TIMEOUT_MS',\n  // Audited session / provider-secret keys:\n  'AUTH_SECRET',\n  'NEXTAUTH_SECRET',\n  'CLERK_SECRET_KEY',\n  'SESSION_SECRET',\n  'COOKIE_SECRET',\n  'DATABASE_URL',\n  'JWT_SECRET',\n] as const\n\nexport type ProductAuthEnvKey = (typeof PRODUCT_AUTH_ENV_KEYS)[number]\n\nexport type ValidationSuccess = {\n  ok: true\n  goBaseUrl: string\n}\n\nexport type ValidationFailure = {\n  ok: false\n  status: number\n  reason: string\n  refusedKeys?: string[]\n}\n\nexport type ValidationResult = ValidationSuccess | ValidationFailure\n\n/**\n * Validates harness environment per-request (defense-in-depth).\n * Never echoes configured environment values in error reasons.\n */\nexport function validateHarnessEnvironment(env: Record<string, string | undefined>): ValidationResult {\n  if (env.MC_INTA_ENABLE !== '1') {\n    return {\n      ok: false,\n      status: 404,\n      reason: 'Harness disabled: MC_INTA_ENABLE=1 is required',\n    }\n  }\n\n  if (env.NODE_ENV === 'production') {\n    return {\n      ok: false,\n      status: 403,\n      reason: 'Harness execution refused: NODE_ENV cannot be production',\n    }\n  }\n\n  const refusedKeys: string[] = []\n  for (const key of PRODUCT_AUTH_ENV_KEYS) {\n    if (env[key] !== undefined) {\n      refusedKeys.push(key)\n    }\n  }\n\n  if (refusedKeys.length > 0) {\n    return {\n      ok: false,\n      status: 403,\n      refusedKeys,\n      reason: `Harness execution refused: product auth/secret env vars present (${refusedKeys.join(', ')})`,\n    }\n  }\n\n  const goBaseUrl = env.MC_INTA_GO_BASE_URL ?? 'http://127.0.0.1:18086'\n  if (goBaseUrl !== 'http://127.0.0.1:18086') {\n    return {\n      ok: false,\n      status: 403,\n      reason: 'Fixed Go URL violation: MC_INTA_GO_BASE_URL must be http://127.0.0.1:18086',\n    }\n  }\n\n  return { ok: true, goBaseUrl }\n}\n\n/**\n * Startup refusal guard (INTA-FE-R07, INT-ENV-05, F04).\n * Refuses startup with NODE_ENV=production or any product auth/secret variable set (including empty values).\n * Throws an error to abort process startup before Next.js dev server listens on 18085.\n */\nexport function validateHarnessStartup(env: Record<string, string | undefined>): void {\n  if (env.NODE_ENV === 'production') {\n    throw new Error('Harness startup refused: NODE_ENV cannot be production')\n  }\n\n  const refusedKeys: string[] = []\n  for (const key of PRODUCT_AUTH_ENV_KEYS) {\n    if (env[key] !== undefined) {\n      refusedKeys.push(key)\n    }\n  }\n\n  if (refusedKeys.length > 0) {\n    throw new Error(\n      `Harness startup refused: product auth/secret env vars present (${refusedKeys.join(', ')})`,\n    )\n  }\n\n  const goBaseUrl = env.MC_INTA_GO_BASE_URL ?? 'http://127.0.0.1:18086'\n  if (goBaseUrl !== 'http://127.0.0.1:18086') {\n    throw new Error('Harness startup refused: MC_INTA_GO_BASE_URL must be http://127.0.0.1:18086')\n  }\n}"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/next.config.ts",
+    "bytes": 337,
+    "sha256": "e9c0179c975670f422483d42a3b90879620d172789678cbaa05f0d366636535d",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 10,
+        "text": "import type { NextConfig } from 'next'\nimport { validateHarnessStartup } from './src/guards'\n\n// Startup guard (INTA-FE-R07, F04):\n// Refuses Next.js dev server startup unconditionally before listening if environment is invalid or unsafe.\nvalidateHarnessStartup(process.env)\n\nconst nextConfig: NextConfig = {}\n\nexport default nextConfig"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/app/harness/case/route.ts",
+    "bytes": 2733,
+    "sha256": "457d13f0567fe4115d988db5966756efbc064a6644de3d985f824171e96ca29d",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 110,
+        "text": "import { NextResponse } from 'next/server'\nimport { validateHarnessEnvironment } from '../../../src/guards'\nimport { harnessCaseInputSchema } from '../../../src/schemas'\nimport { executeCase, getInstalledNextVersion, getHarnessRevision } from '../../../src/executor'\nimport { RequestIdGenerator } from '../../../src/request-id'\n\nconst NO_STORE_HEADERS = {\n  'Cache-Control': 'no-store, no-cache, must-revalidate',\n  Pragma: 'no-cache',\n}\n\nconst generators = new Map<string, RequestIdGenerator>()\n\nfunction getRequestIdGen(runId: string): RequestIdGenerator {\n  let gen = generators.get(runId)\n  if (!gen) {\n    gen = new RequestIdGenerator(runId)\n    generators.set(runId, gen)\n  }\n  return gen\n}\n\nexport async function POST(request: Request) {\n  // 1. Guard check: environment and refusal policies\n  const envCheck = validateHarnessEnvironment(process.env)\n  if (!envCheck.ok) {\n    return NextResponse.json(\n      {\n        error: envCheck.reason,\n        refusedKeys: envCheck.refusedKeys,\n      },\n      { status: envCheck.status, headers: NO_STORE_HEADERS },\n    )\n  }\n\n  // 2. Parse request body\n  let rawBody: unknown\n  try {\n    rawBody = await request.json()\n  } catch {\n    return NextResponse.json(\n      { error: 'Invalid JSON body' },\n      { status: 400, headers: NO_STORE_HEADERS },\n    )\n  }\n\n  // 3. Strict allowlist validation including fixed per-case refId table\n  const parsed = harnessCaseInputSchema.safeParse(rawBody)\n  if (!parsed.success) {\n    return NextResponse.json(\n      {\n        error: 'Bad Request: validation failed',\n        details: parsed.error.issues.map((i) => ({\n          path: i.path,\n          message: i.message,\n        })),\n      },\n      { status: 400, headers: NO_STORE_HEADERS },\n    )\n  }\n\n  const { runId, caseId, refId } = parsed.data\n\n  // 4. Execute case\n  try {\n    const reqIdGen = getRequestIdGen(runId)\n    const result = await executeCase({\n      runId,\n      caseId,\n      refId,\n      reqIdGen,\n      goBaseUrl: envCheck.goBaseUrl,\n      nextVersion: getInstalledNextVersion(),\n      harnessRevision: getHarnessRevision(),\n    })\n\n    return NextResponse.json(result, {\n      status: 200,\n      headers: NO_STORE_HEADERS,\n    })\n  } catch (err: any) {\n    return NextResponse.json(\n      {\n        error: 'Execution error: harness internal error',\n        caseId,\n        runId,\n      },\n      { status: 500, headers: NO_STORE_HEADERS },\n    )\n  }\n}\n\nexport async function GET() {\n  return NextResponse.json(\n    { error: 'Method Not Allowed' },\n    { status: 405, headers: { ...NO_STORE_HEADERS, Allow: 'POST' } },\n  )\n}\n\nexport async function PUT() {\n  return GET()\n}\n\nexport async function PATCH() {\n  return GET()\n}\n\nexport async function DELETE() {\n  return GET()\n}"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/schemas.ts",
+    "bytes": 2648,
+    "sha256": "45ade230c3cf1a7d7e979efc347ca10b22f3cafb16debac312250c7c4e078c02",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 110,
+        "text": "import { z } from 'zod'\n\nexport const ALLOWED_CASE_IDS = [\n  'T1',\n  'T2',\n  'T3',\n  'T4',\n  'T5',\n  'T8',\n  'T9',\n  'T10',\n  'T11a',\n  'T11b',\n  'T11c',\n  'T12',\n  'W1',\n  'W2',\n  'W3',\n  'T6-W',\n  'T7-W',\n  'W9',\n  'W11',\n  'INT-PERS-01',\n  'INT-PERS-02',\n  'INT-PERS-03',\n  'INT-PERS-04',\n] as const\n\nexport type CaseId = (typeof ALLOWED_CASE_IDS)[number]\n\n/**\n * Fixed per-case refId requirement table (frozen INTA-1 / R06).\n * refId is required where a fixed record-route case requires it;\n * forbidden on create / fixed-literal / synthetic wire / fault cases without an existing record target.\n */\nexport const REF_ID_REQUIRED_CASE_IDS: ReadonlySet<CaseId> = new Set<CaseId>([\n  'T2',\n  'T5',\n  'T8',\n  'T9',\n  'T10',\n  'T11a',\n  'T11b',\n  'T12',\n  'W2',\n  'W9',\n  'W11',\n  'INT-PERS-01',\n  'INT-PERS-02',\n  'INT-PERS-03',\n  'INT-PERS-04',\n])\n\nexport const REF_ID_FORBIDDEN_CASE_IDS: ReadonlySet<CaseId> = new Set<CaseId>([\n  'T1',\n  'T3',\n  'T4',\n  'T11c',\n  'W1',\n  'W3',\n  'T6-W',\n  'T7-W',\n])\n\nexport function isRefIdRequired(caseId: CaseId): boolean {\n  return REF_ID_REQUIRED_CASE_IDS.has(caseId)\n}\n\nexport function isRefIdForbidden(caseId: CaseId): boolean {\n  return REF_ID_FORBIDDEN_CASE_IDS.has(caseId)\n}\n\nconst CANONICAL_LOWERCASE_UUID_REGEX =\n  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/\n\nexport const harnessCaseInputSchema = z\n  .object({\n    runId: z\n      .string()\n      .regex(/^[a-zA-Z0-9]{8,32}$/, 'runId must be 8-32 alphanumeric characters'),\n    caseId: z.enum(ALLOWED_CASE_IDS),\n    refId: z\n      .string()\n      .regex(CANONICAL_LOWERCASE_UUID_REGEX, 'refId must be lowercase canonical UUID')\n      .optional(),\n  })\n  .strict()\n  .superRefine((data, ctx) => {\n    if (isRefIdRequired(data.caseId) && !data.refId) {\n      ctx.addIssue({\n        code: z.ZodIssueCode.custom,\n        message: `refId is required for case ${data.caseId}`,\n        path: ['refId'],\n      })\n    }\n    if (isRefIdForbidden(data.caseId) && data.refId !== undefined) {\n      ctx.addIssue({\n        code: z.ZodIssueCode.custom,\n        message: `refId is forbidden for case ${data.caseId}`,\n        path: ['refId'],\n      })\n    }\n  })\n\nexport type HarnessCaseInput = z.infer<typeof harnessCaseInputSchema>\n\n/**\n * Go native User schema with snake_case time fields (INTA-FE-R01).\n * Timestamps are RFC 3339 UTC with 0-6 fraction digits.\n */"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/executor.ts",
+    "bytes": 18503,
+    "sha256": "4c8abe1f522476d40be17dcec56741b0139278b219294e993bdcc140d1133735",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 6,
+        "text": "import fs from 'node:fs'\nimport path from 'node:path'\nimport { execSync } from 'node:child_process'\nimport { httpRequest, ApiError } from '/tmp/mc002-inta-fe/src/lib/api/http-client'\nimport { buildHarnessEnvelope, type HarnessEnvelope, type HarnessOutcome } from './envelope'\nimport {"
+      },
+      {
+        "start_line": 90,
+        "end_line": 128,
+        "text": "\n  return 'unmeasured:git-rev-parse-failed'\n}\n\nasync function runClientSubstep(params: {\n  runId: string\n  caseId: string\n  requestId: string\n  method: string\n  url: string\n  routeTemplate: string\n  body?: unknown\n  headers?: Record<string, string>\n  schema?: any\n  nextVersion: string\n  harnessRevision: string\n}): Promise<HarnessEnvelope> {\n  const startedAtUTC = new Date().toISOString()\n  const startMs = Date.now()\n  let outcome: HarnessOutcome = 'value'\n  let classification: string | null = 'success'\n  let value: unknown = null\n  let apiError: HarnessEnvelope['apiError'] = null\n\n  try {\n    const data = await httpRequest(params.url, {\n      method: params.method as any,\n      body: params.body,\n      headers: {\n        ...params.headers,\n        'X-Request-ID': params.requestId,\n      },\n      schema: params.schema,\n      init: { cache: 'no-store' },\n    })\n    value = data\n    classification = 'success'\n  } catch (err: any) {\n    outcome = 'apiError'"
+      },
+      {
+        "start_line": 200,
+        "end_line": 212,
+        "text": "\n  try {\n    const reqHeaders = new Headers(params.headers)\n    reqHeaders.set('X-Request-ID', params.requestId)\n\n    const response = await fetch(params.url, {\n      method: params.method,\n      headers: reqHeaders,\n      body: params.body,\n      cache: 'no-store',\n      signal: AbortSignal.timeout(timeoutMs),\n    })\n"
+      }
+    ],
+    "fixed_case_labels": [
+      {
+        "line": 303,
+        "text": "case 'T1': {"
+      },
+      {
+        "line": 320,
+        "text": "case 'T2': {"
+      },
+      {
+        "line": 337,
+        "text": "case 'T3': {"
+      },
+      {
+        "line": 352,
+        "text": "case 'T4': {"
+      },
+      {
+        "line": 381,
+        "text": "case 'T5': {"
+      },
+      {
+        "line": 412,
+        "text": "case 'T8': {"
+      },
+      {
+        "line": 443,
+        "text": "case 'T9': {"
+      },
+      {
+        "line": 462,
+        "text": "case 'T10': {"
+      },
+      {
+        "line": 495,
+        "text": "case 'T11a': {"
+      },
+      {
+        "line": 510,
+        "text": "case 'T11b': {"
+      },
+      {
+        "line": 527,
+        "text": "case 'T11c': {"
+      },
+      {
+        "line": 543,
+        "text": "case 'T12': {"
+      },
+      {
+        "line": 558,
+        "text": "case 'INT-PERS-01':"
+      },
+      {
+        "line": 559,
+        "text": "case 'INT-PERS-02':"
+      },
+      {
+        "line": 560,
+        "text": "case 'INT-PERS-03':"
+      },
+      {
+        "line": 561,
+        "text": "case 'INT-PERS-04': {"
+      },
+      {
+        "line": 577,
+        "text": "case 'W1': {"
+      },
+      {
+        "line": 594,
+        "text": "case 'W2': {"
+      },
+      {
+        "line": 609,
+        "text": "case 'W3': {"
+      },
+      {
+        "line": 624,
+        "text": "case 'T6-W': {"
+      },
+      {
+        "line": 641,
+        "text": "case 'T7-W': {"
+      },
+      {
+        "line": 661,
+        "text": "case 'W9': {"
+      },
+      {
+        "line": 676,
+        "text": "case 'W11': {"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/driver.ts",
+    "bytes": 65232,
+    "sha256": "4ca96d195a196c9d959360b2eeaea9e957c44a1bf870d6837fb58f25892fba1c",
+    "segments": [
+      {
+        "start_line": 206,
+        "end_line": 245,
+        "text": "  constructor(runId?: string, stateDir?: string, allowResume = false) {\n    this.runId = runId ?? generateRunId()\n    this.stateDir = stateDir ?? process.env.MC_INTA_STATE_DIR ?? path.join(process.cwd(), '.run-state')\n    this.envelopeDir = path.join(this.stateDir, 'envelopes', this.runId)\n    this.checkpointDir = path.join(this.stateDir, 'checkpoints', this.runId)\n    this.substepsDir = path.join(this.stateDir, 'substeps', this.runId)\n    this.assertionsDir = path.join(this.stateDir, 'assertions')\n    this.stagesDir = path.join(this.stateDir, 'stages', this.runId)\n\n    assertNoRunIdCollision(this.runId, undefined, this.stateDir, allowResume)\n\n    fs.mkdirSync(this.envelopeDir, { recursive: true })\n    fs.mkdirSync(this.checkpointDir, { recursive: true })\n    fs.mkdirSync(this.substepsDir, { recursive: true })\n    fs.mkdirSync(this.assertionsDir, { recursive: true })\n    fs.mkdirSync(this.stagesDir, { recursive: true })\n\n    this.state = {\n      runId: this.runId,\n      stage: 'INITIALIZED',\n      phase: 'INITIALIZED',\n      checkpointA: null,\n      checkpointABaseline: null,\n      checkpointACurrent: null,\n      checkpointBId: null,\n      userXOutcome: null,\n      envelopes: new Map(),\n      assertions: new Map(),\n    }\n\n    if (allowResume) {\n      this.loadCheckpoint()\n      this.loadAssertions()\n    }\n  }\n\n  // Compatibility getter for checkpointA (returns current state)\n  public get checkpointA(): CheckpointUserA | null {\n    return this.state.checkpointACurrent\n  }"
+      },
+      {
+        "start_line": 471,
+        "end_line": 500,
+        "text": "   * Refuses dispatch if case was already started, completed, or outcome-unknown.\n   * Fail closed on corrupt status.\n   */\n  public reserveSubstepIntent(caseId: string): void {\n    const statusFile = path.join(this.substepsDir, `${caseId}.status`)\n    if (fs.existsSync(statusFile)) {\n      let st: any\n      try {\n        const content = fs.readFileSync(statusFile, 'utf-8')\n        st = JSON.parse(content)\n      } catch (err: any) {\n        throw new Error(\n          `Fail-closed: unreadable or corrupt substep status for ${caseId} in ${statusFile}: ${err.message}`,\n        )\n      }\n\n      if (\n        st &&\n        typeof st === 'object' &&\n        st.caseId === caseId &&\n        (st.state === 'completed' || st.state === 'started' || st.state === 'unknown')\n      ) {\n        throw new Error(\n          `Dispatch refused by one-shot intent guard: case ${caseId} is already ${st.state} for runId ${this.runId}. Replay of mutations/attempts is prohibited.`,\n        )\n      }\n\n      throw new Error(\n        `Fail-closed: existing intent file already present with unrecognized state or shape for case ${caseId} in ${statusFile}. Replay/overwrite prohibited.`,\n      )"
+      },
+      {
+        "start_line": 1128,
+        "end_line": 1195,
+        "text": "   * Dispatches a single case to the local Next.js dev server endpoint with pre-dispatch intent guard (F01, R2-F02).\n   */\n  public async dispatchCaseToHarness(\n    caseId: CaseId,\n    refId?: string,\n    harnessBaseUrl = 'http://127.0.0.1:18085',\n  ): Promise<HarnessEnvelope[]> {\n    // 1. R2-F02: Atomically reserve started intent BEFORE any I/O\n    this.reserveSubstepIntent(caseId)\n\n    const payload: { runId: string; caseId: CaseId; refId?: string } = {\n      runId: this.runId,\n      caseId,\n    }\n    if (refId) {\n      payload.refId = refId\n    }\n\n    try {\n      const response = await fetch(`${harnessBaseUrl}/harness/case`, {\n        method: 'POST',\n        headers: {\n          'Content-Type': 'application/json',\n        },\n        body: JSON.stringify(payload),\n        cache: 'no-store',\n      })\n\n      if (!response.ok) {\n        const errText = await response.text()\n        throw new Error(\n          `Harness dispatch failed for ${caseId}: HTTP ${response.status} ${response.statusText} — ${errText}`,\n        )\n      }\n\n      const json = (await response.json()) as any\n      if (!json?.substeps || !Array.isArray(json.substeps)) {\n        throw new Error(`Malformed harness response for ${caseId}: missing substeps array`)\n      }\n\n      return json.substeps as HarnessEnvelope[]\n    } catch (err: any) {\n      if (caseId === 'T11c') {\n        this.completeSubstepIntent('T11c', 'unknown')\n        this.state.userXOutcome = 'OUTCOME_UNKNOWN'\n        this.saveStateSnapshot()\n      }\n      throw err\n    }\n  }\n\n  /**\n   * Executes a specific stage command with strict causal ordering and confirmation gates (R2-F01).\n   */\n  public async runStage(\n    stageNum: number,\n    options?: {\n      envReady?: boolean\n      harnessBaseUrl?: string\n      confirmGoRestarted?: boolean\n      confirmPgRestarted?: boolean\n      confirmPgStopped?: boolean\n      confirmPgRecovered?: boolean\n      confirmGoStopped?: boolean\n    },\n  ): Promise<{ ok: boolean; reason?: string; executedCases: string[] }> {\n    if (this.isStageCompleted(stageNum)) {\n      throw new Error("
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/envelope.ts",
+    "bytes": 4674,
+    "sha256": "d0bc3e812ef99101d186e316f3717851157d2c2beb0ee2b5a0c48c27313286d8",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 8,
+        "text": "export const MAX_RETAINED_BODY_BYTES = 16384\n\n/**\n * Contract outcome vocabulary per INTA-1 §5:\n * - 'value': successful request with decoded/schema-validated body\n * - 'apiError': client or HTTP error with status/code/message/details\n * - 'abort': caller abort leaves value=null, apiError=null.\n *   Note on abort reachability: The harness does not expose caller-controlled abort signals"
+      },
+      {
+        "start_line": 91,
+        "end_line": 154,
+        "text": " * Caps any retained surface (value, apiError.details) at MAX_RETAINED_BODY_BYTES (16384 bytes).\n * When an object exceeds the cap, it is serialized to JSON and truncated, changing type\n * from object to string. Truncated evidence cannot establish complete-body or schema assertions.\n */\nexport function capRetainedSurface(val: unknown, maxBytes = MAX_RETAINED_BODY_BYTES): { val: unknown; truncated: boolean } {\n  if (val === null || val === undefined) {\n    return { val, truncated: false }\n  }\n\n  if (typeof val === 'string') {\n    const res = truncateUtf8(val, maxBytes)\n    return { val: res.text, truncated: res.truncated }\n  }\n\n  try {\n    const json = JSON.stringify(val)\n    const encoder = new TextEncoder()\n    const bytes = encoder.encode(json)\n    if (bytes.length <= maxBytes) {\n      return { val, truncated: false }\n    }\n    const safeCutIndex = findSafeUtf8TruncationIndex(bytes, maxBytes)\n    const decoder = new TextDecoder('utf-8', { fatal: false })\n    const truncatedString = decoder.decode(bytes.subarray(0, safeCutIndex))\n    return { val: truncatedString, truncated: true }\n  } catch {\n    const str = String(val)\n    const res = truncateUtf8(str, maxBytes)\n    return { val: res.text, truncated: res.truncated }\n  }\n}\n\nexport function buildHarnessEnvelope(\n  params: Omit<HarnessEnvelope, 'truncated'> & { truncated?: boolean },\n): HarnessEnvelope {\n  let truncated = params.truncated ?? false\n\n  // 1. Cap value surface\n  const cappedValue = capRetainedSurface(params.value)\n  const val = cappedValue.val\n  if (cappedValue.truncated) {\n    truncated = true\n  }\n\n  // 2. Cap apiError.details surface if present\n  let apiError = params.apiError\n  if (apiError && apiError.details !== undefined && apiError.details !== null) {\n    const cappedDetails = capRetainedSurface(apiError.details)\n    if (cappedDetails.truncated) {\n      truncated = true\n    }\n    apiError = {\n      ...apiError,\n      details: cappedDetails.val,\n    }\n  }\n\n  return {\n    ...params,\n    value: val,\n    apiError,\n    truncated,\n  }\n}"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/request-id.ts",
+    "bytes": 4723,
+    "sha256": "7f97882c23799b100ffc20d770a08b59146dd1a923c9a7d5e92c1d016ea771ea",
+    "segments": [
+      {
+        "start_line": 27,
+        "end_line": 45,
+        "text": "    if (!/^[a-zA-Z0-9]{8,32}$/.test(runId)) {\n      throw new Error(`Invalid runId format for RequestIdGenerator (must be 8-32 alphanumeric): ${runId}`)\n    }\n\n    this.stateDir =\n      options?.stateDir ??\n      process.env.MC_INTA_STATE_DIR ??\n      path.join(process.cwd(), '.run-state')\n\n    if (this.stateDir) {\n      try {\n        fs.mkdirSync(this.stateDir, { recursive: true })\n        this.stateFile = path.join(this.stateDir, 'counters.json')\n      } catch (err: any) {\n        throw new Error(`Failed to initialize stateDir for RequestIdGenerator: ${err.message}`)\n      }\n    } else {\n      this.stateFile = null\n    }"
+      },
+      {
+        "start_line": 77,
+        "end_line": 110,
+        "text": "    if (!this.stateFile || !this.stateDir) return\n    try {\n      let data: Record<string, number> = {}\n      if (fs.existsSync(this.stateFile)) {\n        const content = fs.readFileSync(this.stateFile, 'utf-8')\n        data = JSON.parse(content)\n        if (typeof data !== 'object' || data === null) {\n          throw new Error('counters.json root must be a JSON object')\n        }\n      }\n\n      const onDiskSeq = typeof data[this.runId] === 'number' ? data[this.runId] : 0\n      const finalSeq = Math.max(seq, onDiskSeq)\n      data[this.runId] = finalSeq\n      this.seq = Math.max(this.seq, finalSeq)\n\n      // Atomic write via temp file + rename in same directory:\n      const tempFile = path.join(\n        this.stateDir,\n        `.counters.${this.runId}.${process.pid}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`\n      )\n      fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), 'utf-8')\n      fs.renameSync(tempFile, this.stateFile)\n    } catch (err: any) {\n      throw new Error(`Fail-closed: failed to persist counter state in ${this.stateFile}: ${err.message}`)\n    }\n  }\n\n  public currentSeq(): number {\n    return this.seq\n  }\n\n  public next(caseId: string): string {\n    let onDiskSeq = 0"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-fe/tsconfig.json",
+    "bytes": 670,
+    "sha256": "5c51df4c59f4510d8c7dadf07a5c32132228826a3b331da5e286207b4df7ef9c",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 34,
+        "text": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2017\",\n    \"lib\": [\"dom\", \"dom.iterable\", \"esnext\"],\n    \"allowJs\": true,\n    \"skipLibCheck\": true,\n    \"strict\": true,\n    \"noEmit\": true,\n    \"esModuleInterop\": true,\n    \"module\": \"esnext\",\n    \"moduleResolution\": \"bundler\",\n    \"resolveJsonModule\": true,\n    \"isolatedModules\": true,\n    \"jsx\": \"react-jsx\",\n    \"incremental\": true,\n    \"plugins\": [\n      {\n        \"name\": \"next\"\n      }\n    ],\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    }\n  },\n  \"include\": [\n    \"next-env.d.ts\",\n    \"**/*.ts\",\n    \"**/*.tsx\",\n    \".next/types/**/*.ts\",\n    \".next/dev/types/**/*.ts\",\n    \"**/*.mts\"\n  ],\n  \"exclude\": [\"node_modules\"]\n}"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-fe/vitest.config.mts",
+    "bytes": 619,
+    "sha256": "203df2316e078ba9ab0648f6bdce41c46bfb56eb3f582e7717626799706dc700",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 22,
+        "text": "import { fileURLToPath } from 'node:url'\n\nimport react from '@vitejs/plugin-react'\nimport { defineConfig } from 'vitest/config'\n\nconst fromRoot = (path: string) => fileURLToPath(new URL(path, import.meta.url))\n\nexport default defineConfig({\n  plugins: [react()],\n  resolve: {\n    alias: {\n      '@': fromRoot('./src'),\n      // `server-only` throws outside a React Server environment; tests run server modules directly.\n      'server-only': fromRoot('./src/test/empty-module.ts'),\n    },\n  },\n  test: {\n    environment: 'jsdom',\n    setupFiles: ['./src/test/setup.ts'],\n    include: ['src/**/*.test.{ts,tsx}'],\n  },\n})"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  },
+  {
+    "path": "/tmp/mc002-inta-fe/.github/workflows/ci.yml",
+    "bytes": 1545,
+    "sha256": "e1ef55506bb23015d2dd4cd4d6e4b8b5087344f47d5ac58b92c62ca48d153e75",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 59,
+        "text": "name: CI\n\non:\n  push:\n    branches: [main]\n  pull_request:\n\n# Least privilege for GITHUB_TOKEN: the jobs only read the repository.\npermissions:\n  contents: read\n\nconcurrency:\n  group: ci-${{ github.ref }}\n  cancel-in-progress: true\n\njobs:\n  quality:\n    name: Lint, types, unit tests, build\n    runs-on: ubuntu-latest\n    timeout-minutes: 15\n    steps:\n      - uses: actions/checkout@v7\n      - uses: pnpm/action-setup@v6 # version comes from \"packageManager\" in package.json\n      - uses: actions/setup-node@v7\n        with:\n          node-version-file: .nvmrc\n          cache: pnpm\n      - run: pnpm install --frozen-lockfile\n      # Runtime dependencies only: the known dev-only advisory (SEC-6) has no fix yet.\n      - run: pnpm audit --prod\n      - run: pnpm typecheck\n      - run: pnpm lint\n      - run: pnpm format:check\n      - run: pnpm agents:check\n      - run: pnpm test\n      - run: pnpm build\n      - run: pnpm build-storybook\n\n  e2e:\n    name: E2E (Playwright)\n    runs-on: ubuntu-latest\n    timeout-minutes: 20\n    steps:\n      - uses: actions/checkout@v7\n      - uses: pnpm/action-setup@v6\n      - uses: actions/setup-node@v7\n        with:\n          node-version-file: .nvmrc\n          cache: pnpm\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm exec playwright install --with-deps chromium\n      - run: pnpm build\n      - run: pnpm test:e2e\n      - uses: actions/upload-artifact@v7\n        if: failure()\n        with:\n          name: playwright-report\n          path: playwright-report\n          retention-days: 7"
+      }
+    ],
+    "author_basis": "Antigravity R4 source at48cc03e, or unchanged product template3e5a642; current read-only pin by Codex"
+  }
+]

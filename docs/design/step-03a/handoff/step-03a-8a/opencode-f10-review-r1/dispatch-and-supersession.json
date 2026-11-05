@@ -1,0 +1,29 @@
+{
+  "task": "MC-003A.8A independentF10review",
+  "state": "MANUAL_EXTERNAL_REVIEW_RETURN_RECEIVED",
+  "evidence": "Human-pasted actual OpenCode report; not a newCodexCLIinvocation",
+  "reviewed_packet": {
+    "manifest_path": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-owner-confirmation-r1/review-packet/packet-manifest.json",
+    "manifest_bytes": 1797,
+    "manifest_sha256": "6d670d8292a1775d00f099af1dd7e764151ca752fb1ae82db70a2ae6eb4ff7cd",
+    "snapshots": 6,
+    "snapshot_bytes": 49688,
+    "all_files_bytes": 51485,
+    "codex_current_hash_recheck": "PASS6of6"
+  },
+  "reviewer_reported": {
+    "tool": "OpenCodeCLI2.1.4",
+    "provider": "opencode",
+    "model_display": "DeepSeek V4.1 Flash Free",
+    "model_id": "deepseek-v4.1-flash-free",
+    "identity_and_cli_commands": "reported in human-return, no exported CLIcommand/sessiontelemetry independently verified",
+    "endpoint": "NOT_ATTESTED",
+    "independence": "reviewer declares no authorship; source scopes exclude product/runtime/fullsourcecontract audit"
+  },
+  "reviewer_git_checkpoint": "1381601d52c40da3475aac8cf5e3d3cffd1e9f19",
+  "current_governance_base": "9fe6be75d0e3ce0d1164551f14b90b02ed51835f",
+  "verdict": "CHANGES_REQUIRED_DOCUMENT_ONLY",
+  "prior_preparation_manifest": "Immutable PREPARED_NOT_DISPATCHED is historical preparation record. This separate actualreturn/dispatch record supersedes only operational no-review label; rawmanifest bytes unchanged.",
+  "candidate_supersession": "Final owner recommendation chooses pathA with BcauseSequnadopted, superseding earlierR3 openA-vsB recommendation. This is author-selection supersession, NOT adopted contract/POapproval. B35/L2unadopted.",
+  "no_new_provider_call_by_Codex": true
+}

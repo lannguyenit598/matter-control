@@ -1,0 +1,28 @@
+{
+  "executor": "Codex independent focused verification, not ZCode implementation or OpenCode runtime",
+  "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/adapter/inbound/httpapi",
+    "./internal/adapter/outbound/postgres",
+    "./internal/core/service",
+    "-run",
+    "^(TestToProblem_MappingRows|TestNewErrorHandler_UnavailableBodyAndProbes|TestContextTimeout_MiddlewareShape|TestServiceUnavailable_MemoryParity|TestMapError_UnavailableClassification|TestUpdate_DoesNotRetryUnavailable|TestUpdate_GivesUpAfterRepeatedConflicts)$"
+  ],
+  "start_utc": "2026-10-24T17:13:32.297206+00:00",
+  "end_utc": "2026-10-24T17:13:32.372335+00:00",
+  "exit": 1,
+  "elapsed_seconds": 0.07507287499902304,
+  "source_head": "fd747ae11aad05bd98737bc91f6bd19894fd72e7",
+  "env_policy": "DATABASE_URL / TEST_DATABASE_URL removed; GOTOOLCHAIN=local GOPROXY=off; no env dump",
+  "named_terminal_counts": {},
+  "test_names": [],
+  "database_execution": false,
+  "container_changes": false,
+  "scope": "seven focused test functions plus named subtests, no full baseline or DB replay"
+}

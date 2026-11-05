@@ -1,0 +1,76 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R5",
+  "executor": "Actual Antigravity (Gemini 3.8 Flash High)",
+  "provider": "Google",
+  "workstation": "macOS (darwin arm64)",
+  "branch": "codex/unified-project-flow",
+  "coordinationBase": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "timestampUTC": "2026-10-26T14:56:40Z",
+  "environmentTranscripts": {
+    "node": {
+      "command": ["/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node", "-v"],
+      "stdout": "v24.22.1\n",
+      "exitCode": 0,
+      "sha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329"
+    },
+    "python": {
+      "command": ["/Library/Frameworks/Python.framework/Versions/3.14/bin/python3", "-V"],
+      "stdout": "Python 3.14.4\n",
+      "exitCode": 0,
+      "sha256": "a6a412ff830271043f7730e2527455bdbf52c9e1712f753dc2d90089949e9943"
+    }
+  },
+  "executions": {
+    "selfcheckSuite": {
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.14/bin/python3",
+        "/tmp/mc002-inta-fe-validation-r5-20261026/runner/selfcheck-r5.py"
+      ],
+      "cwd": "/tmp/mc002-inta-fe-validation-r5-20261026",
+      "exitCode": 0,
+      "stdoutFile": "selfcheck-r5.stdout.txt",
+      "resultsFile": "runner/selfcheck-r5-results.json",
+      "totalCases": 46,
+      "passedCases": 46,
+      "failedCases": 0,
+      "allPassed": true
+    },
+    "launcherMockSuite": {
+      "command": [
+        "/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin/node",
+        "--experimental-strip-types",
+        "/tmp/mc002-inta-fe-validation-r5-20261026/launcher/test-launcher-mock.mjs"
+      ],
+      "cwd": "/tmp/mc002-inta-fe-validation-r5-20261026",
+      "exitCode": 0,
+      "stdoutFile": "launcher-mock.stdout.txt",
+      "totalCases": 17,
+      "passedCases": 17,
+      "failedCases": 0,
+      "allPassed": true
+    }
+  },
+  "targetFindingsAddressed": [
+    "R4-C01 / NF-4 / R2-I04: Fast-refusal lifecycle-bound proof; samples conditioned on child poll() is None; dead mock child produces 0 samples and fails closed (test 34); live-then-exit fake passes (test 35); spawn-then-exit defect fails closed (test 36); launcher-execution.json persisted and cross-correlated",
+    "R4-C02 / NF-1 / R3-N02: Implementation-binding record; pinned absolute Python and Node binaries; private HOME and TMPDIR (no ambient leakage); pre-flight stage receipt validation",
+    "R4-C03 / NF-3: Guard bytes checked before dynamic import; eliminates static import; verified SHA-256 0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928; fails closed as BINDING_ERROR/NOT_READY",
+    "R4-C04: Observer durability; directory open/fsync/close failures propagated, not swallowed; isolated unit tests for all fsync operations",
+    "R4-C05: Strict evaluator types; exit_code and observer_exit_code require strict int (rejecting bool and float); mandatory expected_variant and expected_pid",
+    "S1: Raising unexpected Popen fake on all abort paths",
+    "S2: Deterministic FakeClock and sleep injection",
+    "S3: Wrapper passes explicit env, validates all 4 arguments, and propagates nonzero exit code 2",
+    "S4: Caller sites 3 (timeout termination) and 4 (finally cleanup) tested",
+    "S5: Launcher CLI adapter, synchronous spawn exception, and signal exception branches tested",
+    "S6: Isolated filesystem durability failure tests"
+  ],
+  "preservationOfFormalResults": {
+    "totalFormalCases": 51,
+    "partition": "36 required / 14 product-deferred / 1 production-feasibility blocked (D-14)",
+    "t11cStatus": "OUTCOME_UNKNOWN (required test case, preserved separate from D-14)",
+    "d14Status": "PRODUCTION_FEASIBILITY_BLOCKED (production deploy / Cloudflare feasibility)",
+    "optionA": "APPROVED (INTA-LAUNCH-D01 Option A; launcher-only supported boundary)",
+    "rawNextCli": "FAIL_OBSERVED_LISTENER (unsupported for never-listen claim, historical FAIL retained)",
+    "liveRuntimeExecuted": false,
+    "postgreSqlStatus": "STOPPED_AND_RETAINED (no inspect, connect, start, stop, or SQL)"
+  }
+}

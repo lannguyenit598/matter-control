@@ -1,0 +1,31 @@
+{
+  "task": "MC-002-INTA-GO-RESTART / INTA-GOV-RESTART-01",
+  "owner": "Local Codex orchestration",
+  "base": "23ed610bc94d01b8c16774c87093584470cf1532",
+  "utc": "2026-10-25T18:07:25.487366+00:00",
+  "disposition": "EXPLAINED_TOOL_WRITE_ROUTING / NO_REMAINING_STAGE2_HOLD",
+  "authority": "Existing DEC-028/INTA-1 and scoped restart/stage2 coordination; no retroactive blanket permission",
+  "source": "Human-relayed ZCode existing-session text; no new ZCode tool action reported",
+  "source_bytes": 6031,
+  "source_sha256": "7800332042e434124b68324aade3990aadc2cc2c1e1a04c459a3d0c5a4a18de8",
+  "reported_hook_guidance": "Use Write/Edit/MultiEdit to submit same content for PreToolUse security scan; Bash script writes refused",
+  "reported_actions": "Four blocked documentary/snapshot/export Bash calls; Write path accepted; restart lifecycle stop/start unblocked; inline reviewed shell semantics; no hook/settings changes or separate approval claimed",
+  "evidence_limit": "Quoted hook text and Write-scan success are author-reported, not independently retrieved tool telemetry; no conclusive full-session compliance or zero-egress attestation",
+  "reason": "Alternative tool route expressly prescribed by reported hook; this is distinct from substituting tools to evade a blanket denial. Documentary content matches reviewed secret-free wrapper. Existing lifecycle scope stays bounded.",
+  "checks": {
+    "archive": "PASS",
+    "limited_secret_pattern_counts": {
+      "private_key": 0,
+      "credential_uri": 0,
+      "api_key": 0
+    },
+    "live_ledger_hashes_unchanged": 29,
+    "read_only_process_check_utc": "2026-10-25T18:06:18.973813+00:00",
+    "go": "98134 / startOct26 00:54:29 / 127.0.0.1:18086",
+    "next": "88444+88453 / startOct26 00:35:21 / 127.0.0.1:18085",
+    "no_http_sql_driver_lifecycle": true
+  },
+  "stage2": "CUE_RELEASED_READY_NOT_DISPATCHED; fresh preflight by ZCode required; execute stage2 once then WAITING_PG_RESTART",
+  "qa": "INDEPENDENT_RUNTIME_QA_PENDING",
+  "gates": "NO_PRODUCT_ARCHITECTURE_DESIGN_RELEASE_CHANGE"
+}

@@ -1,0 +1,247 @@
+{
+  "task": "MC-002-BE-C01-R1",
+  "timestamp_utc": "2026-10-24T17:45:05.896382+00:00",
+  "governance_base": "13efdef8e859cd9689b264596926fca9fb626e9c",
+  "backend_base": "fd747ae11aad05bd98737bc91f6bd19894fd72e7",
+  "backend_head": "52b60a4617081c41b949f2242e1784238c170f75",
+  "backend_branch": "task/MC-002-be-c01",
+  "tree_clean": true,
+  "changed_files": [
+    ".claude/rules/persistence.md",
+    "docs/api.md",
+    "internal/adapter/outbound/postgres/map_error_test.go"
+  ],
+  "diff_sha256": "f4e8fd6fa95324e8712b1d8d7cf617f46c537b4e0ac1f39b5538c3deceb33f10",
+  "production_implementation_unchanged_since_fd747ae": true,
+  "exports_equal_tmp": 16,
+  "payload_files": 14,
+  "hash_list_files": 2,
+  "owner_manifest_checks": [
+    {
+      "manifest": "49-sha256.txt",
+      "entries": 14,
+      "checks": [
+        {
+          "file": "10-f1-focused-meta.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "11-f1-focused.stdout.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "12-f1-focused.stderr.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "21-fixture-manifest.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "30-make-check-meta.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "31-make-check.stdout.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "32-make-check.stderr.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "33-json-meta.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "34-gotest.stdout.json",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "35-gotest.stderr.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "36-json-parse-summary.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "40-f8-value-check.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "41-redaction.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "49-sha256.txt",
+          "matches": false,
+          "self_entry": true
+        }
+      ]
+    },
+    {
+      "manifest": "49b-gov-export-hashes.txt",
+      "entries": 16,
+      "checks": [
+        {
+          "file": "10-f1-focused-meta.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "11-f1-focused.stdout.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "12-f1-focused.stderr.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "21-fixture-manifest.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "30-make-check-meta.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "31-make-check.stdout.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "32-make-check.stderr.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "33-json-meta.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "34-gotest.stdout.json",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "35-gotest.stderr.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "36-json-parse-summary.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "40-f8-value-check.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "41-redaction.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "42-final-state.log",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "49-sha256.txt",
+          "matches": true,
+          "self_entry": false
+        },
+        {
+          "file": "49b-gov-export-hashes.txt",
+          "matches": false,
+          "self_entry": true
+        }
+      ]
+    }
+  ],
+  "manifest_qualification": "Both original lists have stale self-hash entries. All non-self entries match. Preserve raw lists; verified-export-manifest.json is canonical intake inventory, excludes itself.",
+  "jsonl_lines": 1193,
+  "named_terminal_counts": {
+    "pass": 279
+  },
+  "per_package_named_passes": {
+    "github.com/example/userapi/internal/adapter/outbound/memory": 10,
+    "github.com/example/userapi/internal/adapter/outbound/system": 2,
+    "github.com/example/userapi/internal/adapter/outbound/postgres": 85,
+    "github.com/example/userapi/internal/adapter/inbound/httpapi": 96,
+    "github.com/example/userapi/internal/adapter/outbound/kafka": 10,
+    "github.com/example/userapi/internal/core/domain": 14,
+    "github.com/example/userapi/internal/config": 6,
+    "github.com/example/userapi/internal/core/service": 15,
+    "github.com/example/userapi/internal/observability": 3,
+    "github.com/example/userapi/internal/app": 20,
+    "github.com/example/userapi/internal/outbox": 18
+  },
+  "package_terminal_counts": {
+    "skip": 5,
+    "pass": 11
+  },
+  "named_skip_events": [],
+  "f1_terminal_event": {
+    "Time": "2026-10-25T00:35:26.323847+07:00",
+    "Action": "pass",
+    "Package": "github.com/example/userapi/internal/adapter/outbound/postgres",
+    "Test": "TestMapError_UnavailableClassification/cancelled_connect_keeps_the_cause_for_inbound_499",
+    "Elapsed": 0
+  },
+  "known_value_checks": [
+    {
+      "file": "40-api1.stdout.log",
+      "value_counts": {
+        "alice.c01@example.test": 0,
+        "bob.c01@example.test": 0,
+        "Alice C01": 0,
+        "A-Blocked": 0,
+        "B-Exhausted": 0,
+        "Cancelled": 0,
+        "Changed": 0
+      },
+      "scope": "known synthetic body values in retained sample, not general log guarantee"
+    },
+    {
+      "file": "44-api2.stdout.log",
+      "value_counts": {
+        "alice.c01@example.test": 0,
+        "bob.c01@example.test": 0,
+        "Alice C01": 0,
+        "A-Blocked": 0,
+        "B-Exhausted": 0,
+        "Cancelled": 0,
+        "Changed": 0
+      },
+      "scope": "known synthetic body values in retained sample, not general log guarantee"
+    }
+  ],
+  "fixture_secret_scan": "owner-asserted, secret not read by Codex",
+  "protected_governance_files_unchanged": 59,
+  "prior_owner_exports_unchanged": 19,
+  "test_revision_qualification": "Owner checks ran on corrected working tree before local commit52b60a4; metadata does not attest a git tree hash at test instant. Production code unchanged; exact current diff is checked.",
+  "runtime_replay": false,
+  "native_acceptance": "PENDING independent corrected-head review"
+}

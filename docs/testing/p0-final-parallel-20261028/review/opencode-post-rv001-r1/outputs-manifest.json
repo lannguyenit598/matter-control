@@ -1,0 +1,47 @@
+{
+  "review": "MC-P0 OpenCode post-RV-001 review r1",
+  "directory": "docs/testing/p0-final-parallel-20261028/review/opencode-post-rv001-r1/",
+  "created_utc": "2026-10-28T15:40Z (approx; +07 local clock observed)",
+  "reviewer_identity": {
+    "tool": "OpenCode CLI v2.1.4",
+    "provider": "opencode",
+    "model": "glm-5.3-flash-free",
+    "mode": "independent non-author reviewer; no source writes; no provider switch"
+  },
+  "verdict": "PASS_SOURCE_ONLY_WITH_LIMITATIONS",
+  "rv001_disposition": "CLOSED_SOURCE_ONLY",
+  "files": [
+    {
+      "path": "return.md",
+      "sha256": "4e6ecc0aeaef464d0c5e3d70372ecc504c5af487145c1c67716cce8f217c1a5d",
+      "bytes": null,
+      "note": "full return for human/Codex provider"
+    },
+    {
+      "path": "inputs.json",
+      "sha256": "80a03d4dab8f1296569c62ea8213f826432c00b4a10fbf9d76af206656d7916e",
+      "bytes": null,
+      "note": "pinned read set incl. packet hashes and prior-round artifacts"
+    },
+    {
+      "path": "checks.json",
+      "sha256": "dbf80ecab2c4f3ebb9ff482cd0953b7b73be855b18abc8394c87bde3026ad987",
+      "bytes": null,
+      "note": "personally-run commands, argv/cwd/UTC/exit, cited-not-run list"
+    },
+    {
+      "path": "findings.json",
+      "sha256": "f3d9145443d6704d18534c01a8ffc545b3b13f14f4c2749a11a617219c58edf7",
+      "bytes": null,
+      "note": "6 findings (OR1-001..006), 9 verified_no_finding entries, not-examined ranges"
+    }
+  ],
+  "outputs_manifest_self_hash": "NOT COMPUTED BY DESIGN (manifest does not hash itself)",
+  "key_input_pins": {
+    "candidate_manifest": "de8424ead1e9cd911c7a6fe124b48e5d67b6dcc9e519bb10a8b87453b05d4489 (719/719 verified open+close)",
+    "candidate_delta": "38e9eb4fbd8f27ab256c404df29357176c91643bf73105f84b811b1732633b54",
+    "prior_comprehensive_manifest": "f596b7c64a996ab821747de652485c26ca52910b959c63a4dd215e560d5fb868",
+    "worktree_status_digest_close": "dc0f69bee6b002bf",
+    "head_open_and_close": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc"
+  }
+}

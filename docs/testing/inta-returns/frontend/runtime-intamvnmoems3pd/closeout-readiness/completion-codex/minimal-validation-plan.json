@@ -1,0 +1,133 @@
+{
+  "status": "PROPOSED_NOT_EXECUTED",
+  "owner": "Local Codex temporary engineering owner",
+  "reviewer": "Actual nonauthor OpenCode",
+  "preconditions": [
+    "A recorded disposition acknowledges historical Next termination NOT_OBSERVED; new checks are a separate attempt, never historical teardown proof.",
+    "Recheck exact heads, existing59ledger hashes and unused18085/18086; fail closed on drift/conflict. No existing process is signalled.",
+    "No Go/PG lifecycle or private config; no network install, product config/lockfile/source patch, provider or real credentials. New evidence and state paths must be absent."
+  ],
+  "guard": {
+    "canonical_id": "INT-ENV-05",
+    "minimal_required_variants": [
+      {
+        "key": "API_TOKEN",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "API_BASE_URL",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "AUTH_ALLOW_ANONYMOUS",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "API_TIMEOUT_MS",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "AUTH_SECRET",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "NEXTAUTH_SECRET",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "CLERK_SECRET_KEY",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "SESSION_SECRET",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "COOKIE_SECRET",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "DATABASE_URL",
+        "value_class": "nonempty synthetic sentinel"
+      },
+      {
+        "key": "JWT_SECRET",
+        "value_class": "nonempty synthetic sentinel"
+      }
+    ],
+    "additional_source_claim_variants": "One empty-value variant for each11key tests the documented including-empty stronger claim; additional evidence under the same canonical ID, no renumbering.",
+    "argv_template": [
+      "rtk",
+      "proxy",
+      "env",
+      "-i",
+      "PATH=<explicit approved local tool path>",
+      "HOME=<dedicated empty temporary home>",
+      "NODE_ENV=development",
+      "MC_INTA_ENABLE=1",
+      "MC_INTA_GO_BASE_URL=http://127.0.0.1:18086",
+      "MC_INTA_STATE_DIR=<new validation-only state path>",
+      "<one key>=INTA_GUARD_SENTINEL",
+      "/tmp/mc002-inta-harness/node_modules/.bin/next",
+      "dev",
+      "-H",
+      "127.0.0.1",
+      "-p",
+      "18085",
+      "--webpack"
+    ],
+    "expected": "Finite nonzero normal process exit, precise key-name-only startup refusal, no listener ever acquired on18085, synthetic observer at18086 sees zero HTTP requests. Record start/end UTC, argv, exit and separate streams per variant. A timeout kill is not PASS.",
+    "bounds": "15seconds per child; abort whole validation on unexpected listener/request/hang. Capture child ownership before any bounded cleanup; no blanket kill.",
+    "runner_warning": "Do not run existing scripts/live-guards.ts: it repeats historical checks and writes fixed .run-state/PID provenance. Prepare only the targeted ephemeral runner after scope release."
+  },
+  "artifact": {
+    "canonical_ids": [
+      "INT-ISO-02",
+      "INT-ENV-07"
+    ],
+    "cwd": "New disposable exact3e5a642 source snapshot; do not generate outputs in historical frontend or harness checkout.",
+    "dependencies": "Use verified already-installed pinned dependencies without writing through to their originals; no install/lockfile update. Check supported Node/pnpm and installed guidance before execution.",
+    "commands": [
+      [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "exec",
+        "vitest",
+        "list",
+        "--filesOnly",
+        "--json"
+      ],
+      [
+        "rtk",
+        "proxy",
+        "pnpm",
+        "build"
+      ]
+    ],
+    "outputs": [
+      "New test-list.json, separate stdout/stderr, argv/UTC/exit per command",
+      "Only new snapshot .next and compiler outputs; retain build manifests, NFT traces, route/module maps and relevant emitted JS/assets inventory"
+    ],
+    "assertions": [
+      "Resolve each collected test/module path: none points to mc002-inta-harness, @harness, harness route/executor/driver or their copied equivalents.",
+      "Compare source import graph/config/glob findings with emitted files/traces; no harness module or /harness/case route in product build. Absence of a token alone is not complete dependency-graph proof.",
+      "If build fails on local dependency/tool/bundler requirements, report limitation; do not change product config/dependencies or switch bundler silently.",
+      "Local collection/build does not mean hosted CI ran; retain CI source pin and report hosted result NOT_RUN."
+    ],
+    "docs": "Vitest5.0.3 official docs (Context7) verify list --filesOnly/--json; installed5.x help/source remains final command compatibility prerequisite. https://github.com/vitest-dev/vitest/blob/v5.0.3/docs/guide/cli.md"
+  },
+  "dynamic_cache": {
+    "canonical_id": "INT-ENV-07",
+    "existing_proof": "Historical real A changes and repeated recovery reads show observed values at those instants; source no-store flags and guard header runtime are scoped subevidence.",
+    "optional_narrow_validation": "If reviewer needs repeat/no-cache network proof: separate synthetic upstream observer and new Next attempt/state/runId; two explicit identical fixed T3 read requests, unique request IDs, upstream counter2 and no-store response headers. No original run/driver construction, mutations or actual Go/PG access. This proves that new synthetic attempt only."
+  },
+  "private_scan": {
+    "canonical_id": "INT-PRIV-01",
+    "status": "Actual-secret-value coverage remains incomplete. Private backend.env access is not granted by this task; an explicitly scoped secret-safe process must record counts without outputting values. Pattern scan is no substitute."
+  },
+  "teardown": {
+    "canonical_id": "INT-ISO-03",
+    "status": "Separate exact-owned lifecycle cue still required. Historical Next exit cannot be reconstructed; samePG remains running/retained. No stop or removal here."
+  }
+}

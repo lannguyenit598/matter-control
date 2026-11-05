@@ -1,0 +1,30 @@
+{
+  "cwd": "/private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/backend/apps/backend",
+  "command": [
+    "rtk",
+    "proxy",
+    "env",
+    "-u",
+    "DATABASE_URL",
+    "-u",
+    "TEST_DATABASE_URL",
+    "-u",
+    "MC_TEST_DATABASE_URL",
+    "GOCACHE=/private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/backend-go-cache",
+    "GOPROXY=off",
+    "GOSUMDB=off",
+    "GOTOOLCHAIN=local",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "./internal/adapter/outbound/repotest/mattercontrol",
+    "./internal/adapter/inbound/productapi",
+    "-run",
+    "TestSuiteW6_MemoryStore|TestImport_WholeSheetFailureIsBadRequest|TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP",
+    "-v"
+  ],
+  "started_utc": "2026-10-28T03:28:34.617264+00:00",
+  "finished_utc": "2026-10-28T03:28:37.785078+00:00",
+  "exit": 0
+}

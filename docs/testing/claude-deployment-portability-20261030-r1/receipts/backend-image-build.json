@@ -1,0 +1,19 @@
+{
+  "label": "backend-image-build",
+  "argv": [
+    "docker",
+    "build",
+    "--label",
+    "mc.owner=claude-portability-20261030",
+    "--build-arg",
+    "VERSION=portability-local",
+    "-t",
+    "mc-claude-portability/mcapi:local",
+    "."
+  ],
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+  "extra_env": [],
+  "start_utc": "2026-10-30T03:19:00.040594+00:00",
+  "end_utc": "2026-10-30T03:19:17.523575+00:00",
+  "exit": 0
+}

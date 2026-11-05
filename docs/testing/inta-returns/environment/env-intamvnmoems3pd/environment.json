@@ -1,0 +1,300 @@
+{
+  "task": "MC-002-INTA-ENV",
+  "runId": "intamvnmoems3pd",
+  "attempt": "env-intamvnmoems3pd",
+  "actor": "Codex actual ENV owner",
+  "approval": "DEC-028/INTA-1 plus actual R4 ZCode source review accepted by Codex",
+  "started_utc": "2026-10-25T09:32:25.794389+00:00",
+  "state": "VERIFIED_ENV_READY_FOR_MANUAL_ZCODE_MIGRATE_START",
+  "container_name": "mc002-inta-pg-intamvnmoems3pd",
+  "volume_name": "mc002-inta-data-intamvnmoems3pd",
+  "image": "postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+  "commands": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "image",
+        "inspect",
+        "postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+        "--format",
+        "{\"Id\":{{json .Id}},\"RepoDigests\":{{json .RepoDigests}},\"Volumes\":{{json .Config.Volumes}}}"
+      ],
+      "started_utc": "2026-10-25T09:32:26.102204+00:00",
+      "ended_utc": "2026-10-25T09:32:26.127659+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"RepoDigests\":[\"postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\"],\"Volumes\":{\"/var/lib/postgresql\":{}}}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "volume",
+        "create",
+        "--label",
+        "mattercontrol.task=MC-002-INTA-ENV",
+        "--label",
+        "mattercontrol.runId=intamvnmoems3pd",
+        "--label",
+        "mattercontrol.owner=Codex",
+        "mc002-inta-data-intamvnmoems3pd"
+      ],
+      "started_utc": "2026-10-25T09:32:26.128172+00:00",
+      "ended_utc": "2026-10-25T09:32:27.862119+00:00",
+      "exit": 0,
+      "stdout": "mc002-inta-data-intamvnmoems3pd\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "run",
+        "--pull=never",
+        "-d",
+        "--name",
+        "mc002-inta-pg-intamvnmoems3pd",
+        "--label",
+        "mattercontrol.task=MC-002-INTA-ENV",
+        "--label",
+        "mattercontrol.runId=intamvnmoems3pd",
+        "--label",
+        "mattercontrol.owner=Codex",
+        "--memory",
+        "512m",
+        "--cpus",
+        "1",
+        "--pids-limit",
+        "128",
+        "--publish",
+        "127.0.0.1:15457:5432",
+        "--mount",
+        "type=volume,src=mc002-inta-data-intamvnmoems3pd,dst=/var/lib/postgresql",
+        "--env",
+        "POSTGRES_PASSWORD",
+        "--env",
+        "POSTGRES_USER",
+        "--env",
+        "POSTGRES_DB",
+        "--health-cmd",
+        "pg_isready -U mc002_inta -d mc002_inta",
+        "--health-interval",
+        "2s",
+        "--health-timeout",
+        "2s",
+        "--health-retries",
+        "15",
+        "postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873"
+      ],
+      "started_utc": "2026-10-25T09:32:27.864555+00:00",
+      "ended_utc": "2026-10-25T09:32:28.152835+00:00",
+      "exit": 0,
+      "stdout": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{{.State.Status}} {{.State.Health.Status}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T09:32:28.154409+00:00",
+      "ended_utc": "2026-10-25T09:32:28.234361+00:00",
+      "exit": 0,
+      "stdout": "running starting\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{{.State.Status}} {{.State.Health.Status}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T09:32:29.237988+00:00",
+      "ended_utc": "2026-10-25T09:32:29.274146+00:00",
+      "exit": 0,
+      "stdout": "running starting\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{{.State.Status}} {{.State.Health.Status}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T09:32:30.279062+00:00",
+      "ended_utc": "2026-10-25T09:32:30.321766+00:00",
+      "exit": 0,
+      "stdout": "running healthy\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{\"Id\":{{json .Id}},\"Name\":{{json .Name}},\"Image\":{{json .Image}},\"Labels\":{{json .Config.Labels}},\"Running\":{{json .State.Running}},\"Health\":{{json .State.Health.Status}},\"Memory\":{{json .HostConfig.Memory}},\"NanoCpus\":{{json .HostConfig.NanoCpus}},\"PidsLimit\":{{json .HostConfig.PidsLimit}},\"Ports\":{{json .NetworkSettings.Ports}},\"Mounts\":{{json .Mounts}}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "started_utc": "2026-10-25T09:32:30.322316+00:00",
+      "ended_utc": "2026-10-25T09:32:30.347719+00:00",
+      "exit": 0,
+      "stdout": "{\"Id\":\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\",\"Name\":\"/mc002-inta-pg-intamvnmoems3pd\",\"Image\":\"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\",\"Labels\":{\"mattercontrol.owner\":\"Codex\",\"mattercontrol.runId\":\"intamvnmoems3pd\",\"mattercontrol.task\":\"MC-002-INTA-ENV\"},\"Running\":true,\"Health\":\"healthy\",\"Memory\":536870912,\"NanoCpus\":1000000000,\"PidsLimit\":128,\"Ports\":{\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]},\"Mounts\":[{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}]}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "exec",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+        "psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-U",
+        "mc002_inta",
+        "-d",
+        "mc002_inta",
+        "-At",
+        "-c",
+        "SELECT current_database(), current_user, (SELECT count(*) FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE');"
+      ],
+      "started_utc": "2026-10-25T09:32:30.348270+00:00",
+      "ended_utc": "2026-10-25T09:32:30.399733+00:00",
+      "exit": 0,
+      "stdout": "mc002_inta|mc002_inta|0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "exec",
+        "-e",
+        "PGPASSWORD",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+        "psql",
+        "-X",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-h",
+        "127.0.0.1",
+        "-U",
+        "mc002_inta",
+        "-d",
+        "mc002_inta",
+        "-At",
+        "-c",
+        "SELECT current_database(), current_user;"
+      ],
+      "started_utc": "2026-10-25T09:32:30.400278+00:00",
+      "ended_utc": "2026-10-25T09:32:30.450845+00:00",
+      "exit": 0,
+      "stdout": "mc002_inta|mc002_inta\n",
+      "stderr": ""
+    }
+  ],
+  "secrets_policy": "Private0600files only; values never printed/argv/evidence; no env/fullinspect dump",
+  "existing_resources_mutated": false,
+  "go_migration_or_harness_runtime_executed": false,
+  "ports_verified_free": [
+    18085,
+    18086,
+    15457
+  ],
+  "name_preflight": [
+    {
+      "kind": "container",
+      "proposed_name": "mc002-inta-pg-intamvnmoems3pd",
+      "absent": true,
+      "existing_count": 9,
+      "inventory_sha256": "dfef6c2c719e4357062cff9824d1c1674e97ee4c8d5de189381a9f03d545317c"
+    },
+    {
+      "kind": "volume",
+      "proposed_name": "mc002-inta-data-intamvnmoems3pd",
+      "absent": true,
+      "existing_count": 93,
+      "inventory_sha256": "6bd7e44cfdbbfb40f334b0bb4cfc18038ea952705801e87411ea436f74c3d7bc"
+    }
+  ],
+  "image_verified": {
+    "Id": "sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+    "RepoDigests": [
+      "postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873"
+    ],
+    "Volumes": {
+      "/var/lib/postgresql": {}
+    }
+  },
+  "volume_created": true,
+  "container_id": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+  "verified_inspection": {
+    "Id": "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01",
+    "Name": "/mc002-inta-pg-intamvnmoems3pd",
+    "Image": "sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+    "Labels": {
+      "mattercontrol.owner": "Codex",
+      "mattercontrol.runId": "intamvnmoems3pd",
+      "mattercontrol.task": "MC-002-INTA-ENV"
+    },
+    "Running": true,
+    "Health": "healthy",
+    "Memory": 536870912,
+    "NanoCpus": 1000000000,
+    "PidsLimit": 128,
+    "Ports": {
+      "5432/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "15457"
+        }
+      ]
+    },
+    "Mounts": [
+      {
+        "Destination": "/var/lib/postgresql",
+        "Driver": "local",
+        "Mode": "z",
+        "Name": "mc002-inta-data-intamvnmoems3pd",
+        "Propagation": "",
+        "RW": true,
+        "Source": "/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data",
+        "Type": "volume"
+      }
+    ]
+  },
+  "empty_db_identity": "mc002_inta|mc002_inta|0",
+  "tcp_password_connection_verified": true,
+  "published_host_port_connect_verified": true,
+  "private_handoff": {
+    "directory": "/tmp/mc002-inta-private/intamvnmoems3pd",
+    "backend_env_path": "/tmp/mc002-inta-private/intamvnmoems3pd/backend.env",
+    "mode": "directory0700/files0600",
+    "eligible": "Only after exact new DB/user/empty/healthy identity verification completed",
+    "contains": "DSN and approved native backend config; values not in governance"
+  },
+  "ended_utc": "2026-10-25T09:32:30.455651+00:00",
+  "resource_disposition": "New task-owned container running healthy and named volume retained for immediate owner handoff. No existing resource stopped/removed/pruned; no migration/Go/Next executed."
+}

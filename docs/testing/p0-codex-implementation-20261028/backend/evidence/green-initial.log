@@ -1,0 +1,168 @@
+=== RUN   TestBulkCommit_PartialSuccessWithDistinctFailures
+--- PASS: TestBulkCommit_PartialSuccessWithDistinctFailures (0.00s)
+=== RUN   TestBulkCommit_RetryReplaysSuccessAndSkips
+--- PASS: TestBulkCommit_RetryReplaysSuccessAndSkips (0.00s)
+=== RUN   TestBulkCommit_UnknownThenReplay
+--- PASS: TestBulkCommit_UnknownThenReplay (0.00s)
+=== RUN   TestImportCommit_IdenticalReplayThenContentConflict
+--- PASS: TestImportCommit_IdenticalReplayThenContentConflict (0.00s)
+=== RUN   TestImportCommit_VerifiedClaimStaysUnverified
+--- PASS: TestImportCommit_VerifiedClaimStaysUnverified (0.00s)
+=== RUN   TestCreateRequirement_ReplayAuthorizesRepresentedMatters
+--- PASS: TestCreateRequirement_ReplayAuthorizesRepresentedMatters (0.00s)
+=== RUN   TestCreateRequirement_ReplayAuthorizesSavedWorkspace
+--- PASS: TestCreateRequirement_ReplayAuthorizesSavedWorkspace (0.00s)
+=== RUN   TestCreateRequirement_DemotionKeepsRepresentedMatterReplay
+--- PASS: TestCreateRequirement_DemotionKeepsRepresentedMatterReplay (0.00s)
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/create
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/replay
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/create
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/replay
+--- PASS: TestCreateRequirement_MembershipFailuresPropagate (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/create (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/replay (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/create (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/replay (0.00s)
+=== RUN   TestCreateRequirement_ElapsedBoundaryFailsClosed
+--- PASS: TestCreateRequirement_ElapsedBoundaryFailsClosed (0.00s)
+=== RUN   TestCreateRequirement_FutureBoundaryPreserved
+--- PASS: TestCreateRequirement_FutureBoundaryPreserved (0.00s)
+=== RUN   TestCreateRequirement_ReplayIgnoresPendingBoundary
+--- PASS: TestCreateRequirement_ReplayIgnoresPendingBoundary (0.00s)
+=== RUN   TestCreateRequirement_ValidationBeforeStore
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_actor
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_matter
+=== RUN   TestCreateRequirement_ValidationBeforeStore/non-v7_key
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_hash
+=== RUN   TestCreateRequirement_ValidationBeforeStore/blank_title
+=== RUN   TestCreateRequirement_ValidationBeforeStore/blank_outcome
+--- PASS: TestCreateRequirement_ValidationBeforeStore (0.01s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_actor (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_matter (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/non-v7_key (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_hash (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/blank_title (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/blank_outcome (0.00s)
+=== RUN   TestCreateRequirement_OneAtomicOutcome
+--- PASS: TestCreateRequirement_OneAtomicOutcome (0.00s)
+=== RUN   TestCreateRequirement_DenialMatrix
+=== RUN   TestCreateRequirement_DenialMatrix/viewer_member_is_forbidden
+=== RUN   TestCreateRequirement_DenialMatrix/workspace_owner_without_matter_membership_is_uniform_not-found
+=== RUN   TestCreateRequirement_DenialMatrix/complete_outsider_is_uniform_not-found
+=== RUN   TestCreateRequirement_DenialMatrix/nonexistent_matter_is_uniform_not-found
+--- PASS: TestCreateRequirement_DenialMatrix (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/viewer_member_is_forbidden (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/workspace_owner_without_matter_membership_is_uniform_not-found (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/complete_outsider_is_uniform_not-found (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/nonexistent_matter_is_uniform_not-found (0.00s)
+=== RUN   TestCreateRequirement_SequentialReplay
+--- PASS: TestCreateRequirement_SequentialReplay (0.00s)
+=== RUN   TestCreateRequirement_ReplayAfterRestart
+--- PASS: TestCreateRequirement_ReplayAfterRestart (0.00s)
+=== RUN   TestCreateRequirement_KeyReuse
+--- PASS: TestCreateRequirement_KeyReuse (0.00s)
+=== RUN   TestCreateRequirement_SameKeyDifferentActor
+--- PASS: TestCreateRequirement_SameKeyDifferentActor (0.00s)
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/insert_node
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/insert_requirement
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/append_event
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/store_receipt
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/complete_matter
+--- PASS: TestCreateRequirement_InjectedFailureRollsBack (0.01s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/insert_node (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/insert_requirement (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/append_event (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/store_receipt (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/complete_matter (0.00s)
+=== RUN   TestCreateRequirement_CommitOutcomes
+=== RUN   TestCreateRequirement_CommitOutcomes/unknown_outcome_commits_but_loses_the_acknowledgement
+=== RUN   TestCreateRequirement_CommitOutcomes/known_rollback_is_unavailable_with_no_effect
+--- PASS: TestCreateRequirement_CommitOutcomes (0.00s)
+    --- PASS: TestCreateRequirement_CommitOutcomes/unknown_outcome_commits_but_loses_the_acknowledgement (0.00s)
+    --- PASS: TestCreateRequirement_CommitOutcomes/known_rollback_is_unavailable_with_no_effect (0.00s)
+=== RUN   TestCreateRequirement_KeyAgePolicy
+=== RUN   TestCreateRequirement_KeyAgePolicy/fresh_key_creates_and_replays
+=== RUN   TestCreateRequirement_KeyAgePolicy/expired_key_is_rejected_without_effect
+=== RUN   TestCreateRequirement_KeyAgePolicy/key_beyond_future_skew_is_rejected_without_effect
+--- PASS: TestCreateRequirement_KeyAgePolicy (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/fresh_key_creates_and_replays (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/expired_key_is_rejected_without_effect (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/key_beyond_future_skew_is_rejected_without_effect (0.00s)
+=== RUN   TestCreateRequirement_RevocationBeatsCreateAndReplay
+--- PASS: TestCreateRequirement_RevocationBeatsCreateAndReplay (0.00s)
+=== RUN   TestCreateRequirement_DemotionKeepsReplayBlocksCreate
+--- PASS: TestCreateRequirement_DemotionKeepsReplayBlocksCreate (0.00s)
+=== RUN   TestCreateRequirement_ConcurrentSameKeyOneEffect
+--- PASS: TestCreateRequirement_ConcurrentSameKeyOneEffect (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/core/service	1.575s
+=== RUN   TestSuiteW6_MemoryStore
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows
+=== RUN   TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges
+=== RUN   TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it
+=== RUN   TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation
+=== RUN   TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records
+=== RUN   TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group
+=== RUN   TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it
+=== RUN   TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once
+=== RUN   TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing
+=== RUN   TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2
+--- PASS: TestSuiteW6_MemoryStore (0.11s)
+    --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row (0.02s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk (0.01s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import (0.01s)
+    --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes (0.05s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows (0.02s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2 (0.01s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2 (0.01s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2 (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol	1.619s
+=== RUN   TestBulk_HTTPFlow
+--- PASS: TestBulk_HTTPFlow (0.01s)
+=== RUN   TestImport_HTTPFlow
+--- PASS: TestImport_HTTPFlow (0.01s)
+=== RUN   TestImport_WholeSheetFailureIsBadRequest
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/#00
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/kind,title_ACTION,T_
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/rowkey,kind,title_"unterminated
+--- PASS: TestImport_WholeSheetFailureIsBadRequest (0.01s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/#00 (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/kind,title_ACTION,T_ (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/rowkey,kind,title_"unterminated (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/inbound/productapi	1.513s

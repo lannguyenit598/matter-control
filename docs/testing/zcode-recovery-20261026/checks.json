@@ -1,0 +1,411 @@
+{
+  "task": "MC-COORD-03 ZCode subscription recovery",
+  "actor": "Local Codex",
+  "utc": "2026-10-26T03:24:13.669470+00:00",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "checks": [
+    {
+      "name": "24partial files exact mapped set",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/request-correlation.json",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/harness-schemas.ts",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/harness-pnpm-lock.yaml",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/template-package.json",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/template-pnpm-lock.yaml",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/harness-fixtures.ts",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/harness-guards.ts",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/harness-route.ts",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/harness-package.json",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/.gitignore",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/template-http-client.ts",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/harness-gitignore.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original source-pins/ci.yml",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/runtime/03-launch-meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/runtime/01-next-stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/backend/09-migrate-attempt1.meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/backend/20-server-start.meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/backend/23-restart-identity.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/backend/09-migrate-attempt1.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/backend/10-stop-record.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/backend/10-migrate.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/backend/10-migrate.meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/r4/13-template-isolation.log",
+      "result": "PASS"
+    },
+    {
+      "name": "partial retained original evidence-copies/r4/12-live-guards.log",
+      "result": "PASS"
+    },
+    {
+      "name": "59live ledger names unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash assertions/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash checkpoints/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash checkpoints/intamvnmoems3pd/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash checkpoints/intamvnmoems3pd/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash checkpoints/intamvnmoems3pd/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/INT-PERS-01.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/INT-PERS-02.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/INT-PERS-03.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/INT-PERS-04.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T10.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T11a.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T11b.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T11c.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T12.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T4.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T5.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T6-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T7-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T8.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/T9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/W1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/W11.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/W2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/W3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash envelopes/intamvnmoems3pd/W9.json",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash stages/intamvnmoems3pd/stage1.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash stages/intamvnmoems3pd/stage2.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash stages/intamvnmoems3pd/stage3.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash stages/intamvnmoems3pd/stage4.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash stages/intamvnmoems3pd/stage5.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash stages/intamvnmoems3pd/stage6.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash stages/intamvnmoems3pd/stage7.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/INT-PERS-01.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/INT-PERS-02.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/INT-PERS-03.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/INT-PERS-04.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T10.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T11a.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T11b.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T11c.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T12.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T4.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T5.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T6-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T7-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T8.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/T9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/W1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/W11.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/W2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/W3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "stage7 ledger hash substeps/intamvnmoems3pd/W9.status",
+      "result": "PASS"
+    },
+    {
+      "name": "pinned clean /tmp/mc002-inta-be",
+      "result": "PASS"
+    },
+    {
+      "name": "pinned clean /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "pinned clean /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "BE01 staged reviewed patch intact",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 correction manifest pin",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash owner-return.txt.gz",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash technical-followups.json",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash acceptance-addendum.json",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash standards-notes.md",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash backend-http-preparation.md",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash matter_dto.go",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash 0001_mattercontrol_core.sql",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash user_handler.go",
+      "result": "PASS"
+    },
+    {
+      "name": "BE02 input bytes/hash matter.go",
+      "result": "PASS"
+    },
+    {
+      "name": "12guard variables source pinned",
+      "result": "PASS"
+    }
+  ],
+  "Next_runtime_status": "DRIFT_OBSERVED_NEXT_ABSENT / LIFECYCLE_RECONCILIATION_REQUIRED",
+  "independent_document_work": "CONTINUED_WITHOUT_RESTART",
+  "no_runtime_or_commit_mutation": true
+}

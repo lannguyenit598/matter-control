@@ -1,0 +1,54 @@
+================================================================
+MC-002-INTA-FE-VALIDATION-R2: Comprehensive Deterministic Self-Check
+Start UTC: 2026-10-26T07:27:32.953330+00:00
+Scratch Directory: /var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/mc002-inta-selfcheck-r2-e57m68m7
+================================================================
+
+--- Group 1: Original 9 Baseline Cases ---
+[PASS] 1. missingcounter: Observer file does not exist
+[PASS] 2. malformedcounter: Observer JSON malformed
+[PASS] 3. positivecounter: Observer recorded >0 HTTP requests
+[PASS] 4. observererror: Observer startup or runtime error
+[PASS] 5. transientlistener: Port 18085 listener observed during run
+[PASS] 6. probeerror: Port probe execution error
+[PASS] 7. timeout: Child hung or timed out
+[PASS] 8. wrongrefusal: Child exited without exact refusal phrase
+[PASS] 9. validcompleteinput: Fully compliant refusal and zero upstream calls
+
+--- Group 2: OpenCode / Codex Regression Probes (R1-C02) ---
+[PASS] 10. unknown_listener_observation: listener_during=None and listener_after=None
+[PASS] 11. boolean_counter_false: requestCount=False (bool subclass of int)
+[PASS] 12. truthy_unclean_string: cleanShutdown='false' (non-empty string)
+
+--- Group 3: Strict Evidence Schema Edge Cases ---
+[PASS] 13. negative_counter: requestCount=-1 (negative count)
+[PASS] 14. string_counter: requestCount='0' (string)
+[PASS] 15. missing_cleanshutdown: cleanShutdown field omitted
+[PASS] 16. observer_identity_variant_mismatch: Observer recorded different variant
+[PASS] 17. observer_identity_pid_mismatch: Observer recorded different PID
+
+--- Group 4: Coordinator Marshaling & Probes (R1-C01) ---
+[PASS] 18. probe_clean_no_match: rc=1 with empty stderr is False (no listener)
+[PASS] 19. probe_active_listener: rc=0 is True (active listener present)
+[PASS] 20. probe_error_stderr: rc=1 with error stderr is PROBE_ERROR
+[PASS] 21. pre_probe_abort_on_error: Pre-flight probe failure prevents execution
+[PASS] 22. quote_and_newline_marshaling: Stderr with newlines, single and double quotes
+
+--- Group 5: Atomic Persistence & Lifecycle (R1-C03) ---
+[PASS] 23. atomic_state_writer_durability: AtomicStateWriter temp+fsync+replace
+[PASS] 24. pid_ownership_verification: Verifies PID existence before signaling
+
+--- Group 6: Node 24 Type Stripping & Launcher (R1-C04) ---
+[PASS] 25. ts_guard_import_via_strip_types: Node 24 native type stripping loads guards.ts
+[PASS] 26. launcher_mock_test_suite: harness-dev.mjs mock test suite
+
+--- Group 7: Approved Launch Scope Conditions (API_MODE & NODE_ENV) ---
+[PASS] 27. api_mode_refusal_evaluator: API_MODE nonempty evaluated on supported path
+[PASS] 28. node_env_production_refusal_evaluator: NODE_ENV=production evaluated on supported path
+[PASS] 29. supported_launcher_api_mode_node_env_prelisten_proof: API_MODE and NODE_ENV refuse before spawn on supported path
+
+================================================================
+SUMMARY: 29 PASS / 0 FAIL out of 29 cases
+End UTC: 2026-10-26T07:27:33.162136+00:00
+================================================================
+Results saved to /tmp/mc002-inta-fe-validation-r2-20261026/runner/selfcheck-r2-results.json

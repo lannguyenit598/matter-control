@@ -1,0 +1,30 @@
+{
+  "identity": "actual Claude Code (claude-opus-5-5)",
+  "label": "worker-cloudrun-r1",
+  "fe": "worker",
+  "api": "http://127.0.0.1:47880",
+  "fixture": "synthetic OIDC + fake S3 (fixture-server.mjs) + disposable PostgreSQL; no cloud provider",
+  "started_utc": "2026-10-30T03:24:56.212Z",
+  "ended_utc": "2026-10-30T03:25:00.178Z",
+  "passed": 3,
+  "failed": 1,
+  "checks": [
+    {
+      "name": "root entry redirect",
+      "pass": true
+    },
+    {
+      "name": "anonymous session",
+      "pass": true
+    },
+    {
+      "name": "PKCE authorize redirect",
+      "pass": true
+    },
+    {
+      "name": "runtime failure",
+      "pass": false,
+      "error": "FE exited before readiness"
+    }
+  ]
+}

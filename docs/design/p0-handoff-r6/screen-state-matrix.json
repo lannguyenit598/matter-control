@@ -1,0 +1,1307 @@
+{
+  "task": "MC-P0-DESIGN-R6-CORRECTION",
+  "owner": "Antigravity Design Assistant / Local Codex",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "status": "AUTHOR_COMPLETE_WITH_VERIFICATION_BLOCKERS",
+  "source_pins": "../../testing/p0-design-consolidated-inputs-20261027.json",
+  "coverage_meaning": "Semantic mapping and test plan; not runtime/visual acceptance",
+  "requirements": [
+    {
+      "id": "FR-001",
+      "title": "Requirement vs Action",
+      "parent": "REQ-MC-P0-01",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-03",
+        "SCR-04",
+        "SCR-05"
+      ],
+      "flow": "Typed condition and work",
+      "behavior": "Create Requirement with no Action; link zero/multiple Actions; create basic Decision/Finding/Risk context without converting types.",
+      "business_rules": [
+        "RULE-001",
+        "RULE-002",
+        "RULE-020",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-101",
+        "AC-121",
+        "AC-159"
+      ],
+      "test_ids": [
+        "VAL-FR-001"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 15,
+        "line_end": 33
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-002",
+      "title": "Milestones",
+      "parent": "REQ-MC-P0-02",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-02",
+        "SCR-04",
+        "SCR-06"
+      ],
+      "flow": "Explicit milestone prerequisites",
+      "behavior": "OWNER declares required Requirements with reason; evaluate each failed prerequisite; undefined required set stays UNASSESSED.",
+      "business_rules": [
+        "RULE-008",
+        "RULE-003",
+        "RULE-010",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-102",
+        "AC-141"
+      ],
+      "test_ids": [
+        "VAL-FR-002"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 34,
+        "line_end": 52
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN",
+      "predicate": "All declared required Requirements evaluate READY + COMPLETED + (valid VERIFIED or explicit valid NOT_REQUIRED). Undefined sets evaluate UNASSESSED with count unavailable."
+    },
+    {
+      "id": "FR-003",
+      "title": "Next Action",
+      "parent": "REQ-MC-P0-03",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-02",
+        "SCR-03",
+        "SCR-05"
+      ],
+      "flow": "Eligible next work",
+      "behavior": "Read visible assigned NOT_STARTED/IN_PROGRESS Actions with dependency READY; critical chain, due ascending/no due last, stable ID; explain exclusions.",
+      "business_rules": [
+        "RULE-021",
+        "RULE-003",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-103",
+        "AC-144"
+      ],
+      "test_ids": [
+        "VAL-FR-003"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 53,
+        "line_end": 71
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-004",
+      "title": "Waiting On",
+      "parent": "REQ-MC-P0-04",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-02",
+        "SCR-03",
+        "SCR-05",
+        "SCR-09"
+      ],
+      "flow": "Accountable external wait",
+      "behavior": "Record party or condition, waiting reason and internal owner; response resolves relation only through permitted command, never auto-completes proof.",
+      "business_rules": [
+        "RULE-002",
+        "RULE-012",
+        "RULE-021",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-104",
+        "AC-130"
+      ],
+      "test_ids": [
+        "VAL-FR-004"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 72,
+        "line_end": 90
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-005",
+      "title": "Dependencies and Blocker Logic",
+      "parent": "REQ-MC-P0-05",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-03",
+        "SCR-04",
+        "SCR-05",
+        "SCR-06"
+      ],
+      "flow": "Causal chain",
+      "behavior": "Inspect each incoming gate and downstream impact; reject self/duplicate/cycle/cross-Matter links; reopen preserves historical completed work.",
+      "business_rules": [
+        "RULE-003",
+        "RULE-004",
+        "RULE-018",
+        "RULE-017",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-105",
+        "AC-122",
+        "AC-123",
+        "AC-124",
+        "AC-125",
+        "AC-146"
+      ],
+      "test_ids": [
+        "VAL-FR-005"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 91,
+        "line_end": 109
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-006",
+      "title": "Evidence Requirements",
+      "parent": "REQ-MC-P0-06",
+      "primary_wave": "P0-W3",
+      "screens": [
+        "SCR-04",
+        "SCR-07"
+      ],
+      "flow": "Criteria before proof",
+      "behavior": "Draft criterion and required components/version/validity; show missing evidence as gap, not empty attachment.",
+      "business_rules": [
+        "RULE-005",
+        "RULE-007",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-106",
+        "AC-127"
+      ],
+      "test_ids": [
+        "VAL-FR-006"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 110,
+        "line_end": 128
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-007",
+      "title": "Evidence Verification",
+      "parent": "REQ-MC-P0-07",
+      "primary_wave": "P0-W3",
+      "screens": [
+        "SCR-07"
+      ],
+      "flow": "Independent review",
+      "behavior": "Submit exact proof; designated non-submitter verifier records rationale; expiry/rejection/dispute/reversal recomputes aggregates.",
+      "business_rules": [
+        "RULE-005",
+        "RULE-006",
+        "RULE-007",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-107",
+        "AC-121",
+        "AC-126",
+        "AC-127",
+        "AC-140"
+      ],
+      "test_ids": [
+        "VAL-FR-007"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 129,
+        "line_end": 147
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-008",
+      "title": "Event History",
+      "parent": "REQ-MC-P0-08",
+      "primary_wave": "P0-W1",
+      "screens": [
+        "SCR-13"
+      ],
+      "flow": "Attributed history",
+      "behavior": "Read actor, operation, before/after, effective and recorded time, reason and causal reference; corrections append, restricted security logs stay separate.",
+      "business_rules": [
+        "RULE-019",
+        "RULE-018",
+        "RULE-017"
+      ],
+      "acceptance_ids": [
+        "AC-108",
+        "AC-136",
+        "AC-149",
+        "AC-153"
+      ],
+      "test_ids": [
+        "VAL-FR-008"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 148,
+        "line_end": 166
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-009",
+      "title": "Matter Control Room",
+      "parent": "REQ-MC-P0-09",
+      "primary_wave": "P0-W5",
+      "screens": [
+        "SCR-02"
+      ],
+      "flow": "Operational truth",
+      "behavior": "Blockers → Next Actions with adjacent Important Decisions → Waiting On → Milestones → Evidence Gaps → Changes; no fabricated score.",
+      "business_rules": [
+        "RULE-002",
+        "RULE-008",
+        "RULE-010",
+        "RULE-016",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-109",
+        "AC-137"
+      ],
+      "test_ids": [
+        "VAL-FR-009"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 167,
+        "line_end": 185
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-010",
+      "title": "My Actions",
+      "parent": "REQ-MC-P0-10",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-03",
+        "SCR-05"
+      ],
+      "flow": "Personal work queue",
+      "behavior": "Filter assigned authorized Actions by current actor; separate eligible, waiting and blocked groups; inspect related Requirement and return to queue.",
+      "business_rules": [
+        "RULE-017",
+        "RULE-021",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-110",
+        "AC-144",
+        "AC-147"
+      ],
+      "test_ids": [
+        "VAL-FR-010"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 186,
+        "line_end": 204
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-011",
+      "title": "Operational Grid",
+      "parent": "REQ-MC-P0-11",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-03"
+      ],
+      "flow": "Daily grid operation",
+      "behavior": "Search/filter/sort/page, choose density, select explicit rows, edit metadata with validation and preserved drafts; no arbitrary state dropdown.",
+      "business_rules": [
+        "RULE-002",
+        "RULE-013",
+        "RULE-018",
+        "RULE-017",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-111",
+        "AC-139",
+        "AC-150"
+      ],
+      "test_ids": [
+        "VAL-FR-011"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 205,
+        "line_end": 223
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-012",
+      "title": "Bulk Editing",
+      "parent": "REQ-MC-P0-12",
+      "primary_wave": "P0-W6",
+      "screens": [
+        "SCR-10"
+      ],
+      "flow": "Exact bulk metadata",
+      "behavior": "Preview title, description, assigned internal owner, due date only; per-row atomic change+audit, persistent partial results and failed drafts.",
+      "business_rules": [
+        "RULE-013",
+        "RULE-018",
+        "RULE-017",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-112",
+        "AC-133",
+        "AC-139"
+      ],
+      "test_ids": [
+        "VAL-FR-012"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 224,
+        "line_end": 242
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-013",
+      "title": "Excel/CSV Import",
+      "parent": "REQ-MC-P0-13",
+      "primary_wave": "P0-W6",
+      "screens": [
+        "SCR-11"
+      ],
+      "flow": "Typed import",
+      "behavior": "Map type/date/source key/scoped references; preview invalid groups; deduplicate same source/key/content; changed content reconciles; imported verification remains claim.",
+      "business_rules": [
+        "RULE-014",
+        "RULE-015",
+        "RULE-018",
+        "RULE-017",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-113",
+        "AC-131",
+        "AC-132",
+        "AC-148"
+      ],
+      "test_ids": [
+        "VAL-FR-013"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 243,
+        "line_end": 261
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-014",
+      "title": "Excel Export",
+      "parent": "REQ-MC-P0-14",
+      "primary_wave": "P0-W6",
+      "screens": [
+        "SCR-12",
+        "SCR-03"
+      ],
+      "flow": "Scoped spreadsheet export",
+      "behavior": "Choose authorized scope/filter/as-of/timezone, include axes/version context; escape formula-leading values; recheck permission at retrieval.",
+      "business_rules": [
+        "RULE-015",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-114",
+        "AC-148",
+        "AC-147"
+      ],
+      "test_ids": [
+        "VAL-FR-014"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 262,
+        "line_end": 280
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-015",
+      "title": "Document Versions",
+      "parent": "REQ-MC-P0-15",
+      "primary_wave": "P0-W3",
+      "screens": [
+        "SCR-08",
+        "SCR-07"
+      ],
+      "flow": "Version authority",
+      "behavior": "Add distinct version; OWNER promotes with expected prior version/reason/impact; current and fixed-version evidence retain distinct semantics; signatures separate.",
+      "business_rules": [
+        "RULE-011",
+        "RULE-007",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-115",
+        "AC-128"
+      ],
+      "test_ids": [
+        "VAL-FR-015"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 281,
+        "line_end": 299
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-016",
+      "title": "Regulatory Filing Lifecycle",
+      "parent": "REQ-MC-P0-16",
+      "primary_wave": "P0-W4",
+      "screens": [
+        "SCR-09"
+      ],
+      "flow": "Filing stage and cycles",
+      "behavior": "Track canonical stages, guarded package/signatures, exact submitted versions, receipt/outcome separation, repeated cycles and OWNER negative/reopen controls.",
+      "business_rules": [
+        "RULE-012",
+        "RULE-005",
+        "RULE-011",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-116",
+        "AC-129",
+        "AC-145"
+      ],
+      "test_ids": [
+        "VAL-FR-016"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 300,
+        "line_end": 318
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN",
+      "lifecycle_rule": "RULE-012",
+      "guard": "Receipt upload supplies artifact only; transition to Authority Review requires authorized observation/command. Receipt != Approval."
+    },
+    {
+      "id": "FR-017",
+      "title": "External Parties",
+      "parent": "REQ-MC-P0-17",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-05",
+        "SCR-09"
+      ],
+      "flow": "External context",
+      "behavior": "Select same-Matter external party separately from internal accountable owner; external party has no implied account/access.",
+      "business_rules": [
+        "RULE-001",
+        "RULE-017",
+        "RULE-020",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-117",
+        "AC-130"
+      ],
+      "test_ids": [
+        "VAL-FR-017"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 319,
+        "line_end": 337
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-018",
+      "title": "Simple Roles and Ownership",
+      "parent": "REQ-MC-P0-18",
+      "primary_wave": "P0-W1",
+      "screens": [
+        "SCR-01",
+        "SCR-04",
+        "SCR-07",
+        "SCR-13"
+      ],
+      "flow": "Scoped role and ownership",
+      "behavior": "Require active Workspace AND explicit Matter membership; roles and verifier designation separate; assignment never grants access; revoke pending retrieval/writes.",
+      "business_rules": [
+        "RULE-017",
+        "RULE-006",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-118",
+        "AC-134",
+        "AC-135",
+        "AC-140",
+        "AC-147",
+        "AC-149"
+      ],
+      "test_ids": [
+        "VAL-FR-018"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 338,
+        "line_end": 356
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN",
+      "assignment_rule": "Both Matter EDITOR and OWNER can assign Actions in scope to active members."
+    },
+    {
+      "id": "FR-019",
+      "title": "Delta-Based Status Brief",
+      "parent": "REQ-MC-P0-19",
+      "primary_wave": "P0-W6",
+      "screens": [
+        "SCR-12"
+      ],
+      "flow": "Draft handover",
+      "behavior": "Choose t1≤t2; changes (t1,t2] by recorded-time policy separate from outstanding at t2; stable provenance/order; draft export only.",
+      "business_rules": [
+        "RULE-016",
+        "RULE-019",
+        "RULE-017",
+        "RULE-018"
+      ],
+      "acceptance_ids": [
+        "AC-119",
+        "AC-138"
+      ],
+      "test_ids": [
+        "VAL-FR-019"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 357,
+        "line_end": 375
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    },
+    {
+      "id": "FR-020",
+      "title": "Separate State Dimensions",
+      "parent": "REQ-MC-P0-20",
+      "primary_wave": "P0-W2",
+      "screens": [
+        "SCR-02",
+        "SCR-03",
+        "SCR-04",
+        "SCR-05",
+        "SCR-07",
+        "SCR-09"
+      ],
+      "flow": "Independent axes",
+      "behavior": "Display execution, verification where applicable, dependency for Requirement/Action, timing and attention with reasons; server owns derived truth.",
+      "business_rules": [
+        "RULE-002",
+        "RULE-003",
+        "RULE-004",
+        "RULE-009",
+        "RULE-010",
+        "RULE-017",
+        "RULE-018",
+        "RULE-019"
+      ],
+      "acceptance_ids": [
+        "AC-120",
+        "AC-121",
+        "AC-139",
+        "AC-142",
+        "AC-143",
+        "AC-160"
+      ],
+      "test_ids": [
+        "VAL-FR-020"
+      ],
+      "source": {
+        "file": "../../requirements/srs.md",
+        "line_start": 376,
+        "line_end": 394
+      },
+      "semantic_status": "PROPOSED_CORRECTION_PENDING_NONAUTHOR_REVIEW",
+      "runtime_result": "NOT_RUN"
+    }
+  ],
+  "screens": [
+    {
+      "id": "SCR-01",
+      "name": "App Shell & Session Navigation",
+      "question": "Select authorized Matter without exposing inaccessible titles",
+      "wave": "P0-W1",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-018"
+      ],
+      "roles_and_operations": "Read: all scoped roles. Workspace OWNER creates Matter/initial owner; Matter OWNER manages members/designations with last-owner guard.",
+      "states": {
+        "loading": "Membership loading keeps neutral shell; no Matter name/count until access confirmed.",
+        "empty": "No accessible Matters; Workspace OWNER may create through guarded flow, others request access outside this UI.",
+        "no_match": "List search has no match; clear query, not empty-workspace claim.",
+        "unavailable": "Membership service unavailable: neutral shell and retry.",
+        "forbidden": "Invalidate pending navigation; remove protected content and names, return to authorized Matter list.",
+        "stale": "Membership snapshot stale: suspend writes and refresh rights.",
+        "conflict": "Concurrent membership/last-owner transfer: retain intent, show allowed revision comparison only.",
+        "partial": "Mixed independent memberships shown only from accepted reads; unavailable groups explicitly unknown.",
+        "recovery": "Revalidate session, reopen only authorized scope; no cached grant survives."
+      },
+      "test_ids": [
+        "VAL-SCR-01"
+      ],
+      "prototype_status": "SPECIFIED_ONLY",
+      "subviews": [
+        "Matter List",
+        "session",
+        "membership/verifier designation"
+      ]
+    },
+    {
+      "id": "SCR-02",
+      "name": "Executive Control Room",
+      "question": "What blocks this Matter and who can act?",
+      "wave": "P0-W5",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-002",
+        "FR-003",
+        "FR-004",
+        "FR-009",
+        "FR-020"
+      ],
+      "roles_and_operations": "Read all scoped roles; changes through dedicated detail commands; Decisions OWNER/EDITOR per basic context permissions.",
+      "states": {
+        "loading": "Keep section headings and shape skeletons; no derived values while loading.",
+        "empty": "No exceptions in accepted snapshot; no claim of legal completion.",
+        "no_match": "Filter excludes exceptions: state filter and clear it.",
+        "unavailable": "Failed overview region says unavailable with as-of; Next Actions/readiness never assume empty/READY.",
+        "forbidden": "Remove full Matter view, including counts and causal titles.",
+        "stale": "Show historical as-of and suspend action eligibility claims until fresh.",
+        "conflict": "Open record changed: keep origin and request authorized refresh, no overwrite.",
+        "partial": "One unavailable region leaves other authorized regions labelled with their own freshness.",
+        "recovery": "Refresh failed region; preserve filter, focused chain node and return context."
+      },
+      "test_ids": [
+        "VAL-SCR-02"
+      ],
+      "prototype_status": "EXPLORATORY_LOCAL_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-03",
+      "name": "Operational Grid",
+      "question": "Which record can I safely work on?",
+      "wave": "P0-W2",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-001",
+        "FR-003",
+        "FR-004",
+        "FR-005",
+        "FR-010",
+        "FR-011",
+        "FR-014",
+        "FR-020"
+      ],
+      "roles_and_operations": "All scoped roles read; EDITOR/OWNER edit metadata; My Actions uses actual assignee identity; Waiting On keeps party and accountable owner.",
+      "states": {
+        "loading": "Retain headers/toolbar with row skeletons and aria-busy; selection inactive.",
+        "empty": "Zero typed records; EDITOR/OWNER can create typed record, VIEWER sees explanation.",
+        "no_match": "Zero filtered matches; announce count and reset filters without pretending data was deleted.",
+        "unavailable": "Grid read failed: retain last-good as stale if still authorized; editing unavailable.",
+        "forbidden": "Purge unauthorized rows, drafts and selected IDs; no failure title leak.",
+        "stale": "Keep draft/selection, visibly label source as-of; require current revision before send.",
+        "conflict": "Keep field draft; compare only readable current values; rebase on accepted revision.",
+        "partial": "Independent row results visible; failed rows/drafts remain selected; unknown rows not retried.",
+        "recovery": "Reset filters or reopen retained draft; restore row/cell/focus after navigation."
+      },
+      "test_ids": [
+        "VAL-SCR-03"
+      ],
+      "prototype_status": "EXPLORATORY_LOCAL_ONLY",
+      "subviews": [
+        "My Actions",
+        "Waiting On",
+        "row draft"
+      ]
+    },
+    {
+      "id": "SCR-04",
+      "name": "Requirement Detail & Lifecycle Drawer",
+      "question": "Has the condition been attained and proved?",
+      "wave": "P0-W1",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-001",
+        "FR-002",
+        "FR-005",
+        "FR-006",
+        "FR-018",
+        "FR-020"
+      ],
+      "roles_and_operations": "EDITOR/OWNER create/edit/attest guarded completion; OWNER cancel/reopen/applicability only; designated independent verifier separately reviews proof.",
+      "states": {
+        "loading": "Drawer title skeleton until authorized read; criteria/links load independently.",
+        "empty": "Requirement with zero Actions is valid; unspecified criteria means UNVERIFIED unless explicit applicability decision.",
+        "no_match": "Linked-tab filter empty; reset only that tab.",
+        "unavailable": "Evaluation unavailable stays unknown; cannot attest readiness from cached fields.",
+        "forbidden": "Close detail and clear protected context; safe draft handling under revocation policy.",
+        "stale": "Show criteria/resource revision and as-of; current-version proof may be stale.",
+        "conflict": "Retain draft and permitted before/current/proposed comparison; new guarded command after rebase.",
+        "partial": "Criterion/relations partly unavailable: mark affected claims unknown, retain available evidence context.",
+        "recovery": "Return to origin Grid/Control Room/tab; readable reason for prohibited completion."
+      },
+      "test_ids": [
+        "VAL-SCR-04"
+      ],
+      "prototype_status": "EXPLORATORY_LOCAL_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-05",
+      "name": "Action Detail & Assignment Drawer",
+      "question": "What work is allowed next?",
+      "wave": "P0-W2",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-001",
+        "FR-003",
+        "FR-004",
+        "FR-005",
+        "FR-010",
+        "FR-017",
+        "FR-020"
+      ],
+      "roles_and_operations": "EDITOR/OWNER edit/assign/start/wait/complete under guards; OWNER cancel/reopen. Assignee is not the only permitted editor.",
+      "states": {
+        "loading": "Header, assignment and causal reason placeholders; no inferred eligibility.",
+        "empty": "No linked Requirement is not proof of completion; require explicit scoped relationship when needed.",
+        "no_match": "History/filter empty remains local to tab.",
+        "unavailable": "Dependency result unavailable; start/complete disabled with readable reason.",
+        "forbidden": "Remove protected record and revoke pending commands; show generic access loss.",
+        "stale": "Keep draft, disable send pending current permission/revision.",
+        "conflict": "Rebase metadata or allowed transition after authorized current read.",
+        "partial": "Metadata success independent of failed transition is explicit; never combine into one success.",
+        "recovery": "Return to My Actions/Waiting On with actor/filter/row preserved."
+      },
+      "test_ids": [
+        "VAL-SCR-05"
+      ],
+      "prototype_status": "EXPLORATORY_LOCAL_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-06",
+      "name": "Dependency Graph & Impact Inspector",
+      "question": "Why is this target blocked and what follows?",
+      "wave": "P0-W2",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-002",
+        "FR-005"
+      ],
+      "roles_and_operations": "All scoped roles inspect; EDITOR/OWNER ordinary edges; OWNER milestone required set with reason.",
+      "states": {
+        "loading": "Label edge table columns while reading graph.",
+        "empty": "No incoming edges means READY only from successful authoritative evaluation.",
+        "no_match": "No matching path under filter; preserve graph context, allow reset.",
+        "unavailable": "Graph/evaluator unavailable: no READY default.",
+        "forbidden": "Redact inaccessible graph targets and all derived counts.",
+        "stale": "Stale graph cannot accept edits until revalidated.",
+        "conflict": "Cycle/concurrent edge change rejects whole command, returns only authorized path.",
+        "partial": "One relation page unavailable marks graph incomplete; do not imply full impact census.",
+        "recovery": "Accessible edge list is equivalent to diagram; return to originating record/gate."
+      },
+      "test_ids": [
+        "VAL-SCR-06"
+      ],
+      "prototype_status": "EXPLORATORY_LOCAL_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-07",
+      "name": "Evidence Submission & Verification Drawer",
+      "question": "Does exact proof meet this criterion independently?",
+      "wave": "P0-W3",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "FR-015",
+        "FR-018",
+        "FR-020"
+      ],
+      "roles_and_operations": "Read all scoped roles; submit EDITOR/OWNER; accept/reject/resolve dispute only designated independent EDITOR/OWNER; OWNER alone insufficient.",
+      "states": {
+        "loading": "Criterion/version/submitter/reviewer placeholders; review action unavailable.",
+        "empty": "Missing proof: criterion remains visible, no fabricated EV-04.",
+        "no_match": "No matching supplied proofs; reset proof filter without clearing criterion.",
+        "unavailable": "File or validity unavailable: do not accept; retain criterion and allowed next step.",
+        "forbidden": "Clear protected bytes/metadata/draft and pending review; generic access-loss recovery.",
+        "stale": "Criterion/version/reviewer designation changed: retain rationale in authorized context, refetch.",
+        "conflict": "No force accept; compare authorized current revision, re-evaluate exact proof.",
+        "partial": "Some mandatory components accepted: PARTIALLY_VERIFIED, list missing components.",
+        "recovery": "Submitter can submit replacement; designated non-submitter reviews; no independent verifier means pending."
+      },
+      "test_ids": [
+        "VAL-SCR-07"
+      ],
+      "prototype_status": "EXPLORATORY_LOCAL_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-08",
+      "name": "Document Version & Signature History",
+      "question": "Which exact version does this observation concern?",
+      "wave": "P0-W3",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-015"
+      ],
+      "roles_and_operations": "Scoped read all; add version EDITOR/OWNER; promote OWNER only; signature observation separately guarded.",
+      "states": {
+        "loading": "Version list skeleton; no current default guessed.",
+        "empty": "No versions: add allowed version, no proof claim.",
+        "no_match": "Version filter has no match; clear it.",
+        "unavailable": "Bytes unavailable differs from missing metadata; do not substitute current bytes.",
+        "forbidden": "Recheck every retrieval; remove URLs/metadata after revocation.",
+        "stale": "Expected prior authoritative version changed; promotion suspended.",
+        "conflict": "OWNER promotion rebases explicit impact/reason on current prior version.",
+        "partial": "Upload pending/unknown does not promote; partial signature observation does not verify all criteria.",
+        "recovery": "Inspect historical fixed version; current-version criteria may need new independent review."
+      },
+      "test_ids": [
+        "VAL-SCR-08"
+      ],
+      "prototype_status": "SPECIFIED_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-09",
+      "name": "Regulatory Filing Tracker & Package Manager",
+      "question": "What has the authority actually acknowledged or decided?",
+      "wave": "P0-W4",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-004",
+        "FR-016",
+        "FR-017",
+        "FR-020"
+      ],
+      "roles_and_operations": "EDITOR/OWNER stage observations under package guards; OWNER negative controls/reopen; independent verifier proof review separately.",
+      "states": {
+        "loading": "Timeline/package/cycle placeholders, stages not guessed.",
+        "empty": "No filing yet: create typed scope/package when allowed; no submission implied.",
+        "no_match": "No matching cycle/reference: reset filter, retain all history.",
+        "unavailable": "Package or authority observation unavailable: disable next stage with persistent reason.",
+        "forbidden": "Remove submitted-package metadata/links, revoke pending stage update.",
+        "stale": "Package version changed since preview; recheck guards before recording observation.",
+        "conflict": "Retain observation draft and exact versions; OWNER correction appends attributed event.",
+        "partial": "Receipt without outcome remains Authority Review/WAITING with partial proof.",
+        "recovery": "OWNER rejection/withdrawal/correction/reopen preserves cycles; no automatic requirement to reissue authority decision under ARCH-Q5."
+      },
+      "test_ids": [
+        "VAL-SCR-09"
+      ],
+      "prototype_status": "SPECIFIED_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-10",
+      "name": "Bulk Metadata Editor & Preview Modal",
+      "question": "Exactly which fields and records will change?",
+      "wave": "P0-W6",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-012"
+      ],
+      "roles_and_operations": "EDITOR/OWNER only; title, description, assigned internal owner, due date. No type/links/waiting/state/criteria/roles/verification/promotion/delete.",
+      "states": {
+        "loading": "Load exact selected IDs/current permitted values for preview, not all-match inference.",
+        "empty": "Nothing selected: return to Grid; never target all records implicitly.",
+        "no_match": "Selected IDs hidden by filter remain explicitly listed and require confirmation; no hidden rows added.",
+        "unavailable": "Preview validation unavailable: keep draft and selection, do not send.",
+        "forbidden": "Recheck each row and redact inaccessible values; retain permitted failure identity only.",
+        "stale": "Accepted row revision differs: re-preview that row.",
+        "conflict": "No overwrite; current-readable comparison/rebase; new command when accepted contract allows.",
+        "partial": "Persistent succeeded/failed/unknown results; success deselects, failed drafts remain; unknown reconciliation before retry.",
+        "recovery": "Unchanged separate from clear; only description/due can propose clear subject to adopted validation; title/active owner cannot be empty."
+      },
+      "test_ids": [
+        "VAL-SCR-10"
+      ],
+      "prototype_status": "SPECIFIED_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-11",
+      "name": "Structured Import Wizard",
+      "question": "Which import groups are valid and what will be created?",
+      "wave": "P0-W6",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-013"
+      ],
+      "roles_and_operations": "EDITOR/OWNER only; no imported role grants or authoritative VERIFIED labels.",
+      "states": {
+        "loading": "Read/parse/validate stages labelled; no imported count until result known.",
+        "empty": "Empty input is not success; choose source again.",
+        "no_match": "Preview filter has no matching errors/rows; full group scope still explicit.",
+        "unavailable": "Parser unavailable: keep mapping/source identity when safe, do not execute formulas/macros/links.",
+        "forbidden": "Revoke commit and remove protected reference resolutions.",
+        "stale": "Scoped reference revisions changed: revalidate groups.",
+        "conflict": "Same source/key/content deduplicates; changed content requires reconciliation, no fuzzy name merge.",
+        "partial": "Connected invalid group rejected whole; independent valid groups may commit; persistent result per group.",
+        "recovery": "Return failed group drafts; resolve refs then re-preview; unknown outcome reconciles before resend."
+      },
+      "test_ids": [
+        "VAL-SCR-11"
+      ],
+      "prototype_status": "SPECIFIED_ONLY",
+      "subviews": []
+    },
+    {
+      "id": "SCR-12",
+      "name": "Delta Status Brief Generator & Viewer",
+      "question": "What changed in this window, and what remains at t2?",
+      "wave": "P0-W6",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-014",
+        "FR-019"
+      ],
+      "roles_and_operations": "Scoped OWNER/EDITOR/VIEWER read/export; P0 draft only, no managed issued-report snapshot.",
+      "states": {
+        "loading": "Window/provenance headings kept; no generated draft while source incomplete.",
+        "empty": "No changes in (t1,t2] is explicit; outstanding may still exist.",
+        "no_match": "Filtered draft scope empty differs from no changes in all Matter data.",
+        "unavailable": "History/source unavailable: cannot claim complete brief; label incomplete or block export.",
+        "forbidden": "Recheck generation AND retrieval rights; purge protected draft.",
+        "stale": "Source/window/permissions changed: regenerate visibly under new provenance.",
+        "conflict": "Invalid t1>t2 linked error; altered source revision needs fresh draft, not overwrite.",
+        "partial": "Any source gap identified, never output an apparently complete issued report.",
+        "recovery": "t1=t2 excludes events; stable recorded-time ordering with stable tie order; explicit draft."
+      },
+      "test_ids": [
+        "VAL-SCR-12"
+      ],
+      "prototype_status": "EXPLORATORY_LOCAL_ONLY",
+      "subviews": [
+        "Excel export scope"
+      ]
+    },
+    {
+      "id": "SCR-13",
+      "name": "Scoped Event History & Audit Ledger",
+      "question": "Who changed this and on which evidence?",
+      "wave": "P0-W1",
+      "route_authority": "DEPENDENCY_PENDING; old R1 routes not adopted",
+      "requirements": [
+        "FR-008",
+        "FR-018"
+      ],
+      "roles_and_operations": "All scoped roles domain history read; no role edits/deletes prior events; security log access separate.",
+      "states": {
+        "loading": "Timeline row skeletons with actor/time/reference headings.",
+        "empty": "No domain events in scope/window; denied security events are not invented domain events.",
+        "no_match": "No event matches query; clear query or adjust window.",
+        "unavailable": "History service/page unavailable: missing portion labelled, not zero.",
+        "forbidden": "No restricted audit metadata or inaccessible target title in denial.",
+        "stale": "Show source as-of; refresh appends new accepted history without rewriting old.",
+        "conflict": "Correction appends causal link/reason, no edit of prior event.",
+        "partial": "Paged timeline incomplete until authorized relation traversal completes; counts unavailable if not supplied.",
+        "recovery": "Return origin and exact event anchor; preserve filter/time window; no normal-user delete."
+      },
+      "test_ids": [
+        "VAL-SCR-13"
+      ],
+      "prototype_status": "SPECIFIED_ONLY",
+      "subviews": []
+    }
+  ],
+  "golden_workflows": [
+    {
+      "id": "GW-01",
+      "acceptance_id": "AC-161",
+      "sequence": [
+        "Approval",
+        "Document",
+        "Signature",
+        "Payment",
+        "Transfer",
+        "Closing",
+        "Filing",
+        "Post-Closing"
+      ],
+      "test_id": "VAL-GW-01",
+      "result": "NOT_RUN",
+      "source": "../../requirements/golden-workflow-acceptance.md",
+      "supplement_response_cycles": null
+    },
+    {
+      "id": "GW-02",
+      "acceptance_id": "AC-162",
+      "sequence": [
+        "Request",
+        "Document",
+        "Review",
+        "Gap",
+        "Finding",
+        "Follow-Up",
+        "Resolution"
+      ],
+      "test_id": "VAL-GW-02",
+      "result": "NOT_RUN",
+      "source": "../../requirements/golden-workflow-acceptance.md",
+      "supplement_response_cycles": null
+    },
+    {
+      "id": "GW-03",
+      "acceptance_id": "AC-163",
+      "sequence": [
+        "Requirement",
+        "Package Preparation",
+        "Signature",
+        "Submission",
+        "Receipt",
+        "Authority Review",
+        "Supplement",
+        "Response",
+        "Approval"
+      ],
+      "test_id": "VAL-GW-03",
+      "result": "NOT_RUN",
+      "source": "../../requirements/golden-workflow-acceptance.md",
+      "supplement_response_cycles": 2
+    }
+  ],
+  "cross_screen_interaction_contract": "current-ux-spec.md#interaction-contract",
+  "validation": "validation-plan.md",
+  "all_acceptance_ids": [
+    "AC-101",
+    "AC-102",
+    "AC-103",
+    "AC-104",
+    "AC-105",
+    "AC-106",
+    "AC-107",
+    "AC-108",
+    "AC-109",
+    "AC-110",
+    "AC-111",
+    "AC-112",
+    "AC-113",
+    "AC-114",
+    "AC-115",
+    "AC-116",
+    "AC-117",
+    "AC-118",
+    "AC-119",
+    "AC-120",
+    "AC-121",
+    "AC-122",
+    "AC-123",
+    "AC-124",
+    "AC-125",
+    "AC-126",
+    "AC-127",
+    "AC-128",
+    "AC-129",
+    "AC-130",
+    "AC-131",
+    "AC-132",
+    "AC-133",
+    "AC-134",
+    "AC-135",
+    "AC-136",
+    "AC-137",
+    "AC-138",
+    "AC-139",
+    "AC-140",
+    "AC-141",
+    "AC-142",
+    "AC-143",
+    "AC-144",
+    "AC-145",
+    "AC-146",
+    "AC-147",
+    "AC-148",
+    "AC-149",
+    "AC-150",
+    "AC-151",
+    "AC-152",
+    "AC-153",
+    "AC-154",
+    "AC-155",
+    "AC-156",
+    "AC-157",
+    "AC-158",
+    "AC-159",
+    "AC-160",
+    "AC-161",
+    "AC-162",
+    "AC-163"
+  ],
+  "nfr_ids": [
+    "NFR-001",
+    "NFR-002",
+    "NFR-003",
+    "NFR-004",
+    "NFR-005",
+    "NFR-006",
+    "NFR-007",
+    "NFR-008",
+    "NFR-009",
+    "NFR-010",
+    "NFR-011",
+    "NFR-012",
+    "NFR-013",
+    "NFR-014"
+  ],
+  "r3_refinements": {
+    "causal_chain": "Expanded from 5 plain buttons to an explanatory diagnostic pipeline: Condition, Cause, Downstream Impact, Accountable Owner, Permitted Next Step.",
+    "proof_context": "Structured multi-field proof verification panel: Criterion, Required Version, Submitter vs Designated Verifier (anti-self-review guard), Validity Status, Causal Consequences, Honest Non-Simulated Verification.",
+    "grid_typography": "Comfortable (44px) vs Compact (36px) without shrinking body font size (keeps 14px); multiline text wrapping without clipping; monospace IDs/time/code.",
+    "hallmark_rule_34": "html, body { overflow-x: clip; } verified to eliminate horizontal scroll leak while preserving position: sticky on table headers and padding focus outlines.",
+    "navigation_return": "View origin, filters, search query, sorting, density, selection, and local title drafts preserved across modal open/close cycles; focus restoration on close."
+  },
+  "r4_refinements": {
+    "causal_navigation_trail": {
+      "status": "IMPLEMENTED_IN_PROTOTYPE_SPECIFIED_IN_UX_SPEC",
+      "description": "Full LIFO navigation history stack (navStack) supporting AC-05 -> RQ-04 -> ER-04 -> RQ-04 -> AC-05 -> Grid with preserved record drafts, filter/sort state, and exact opener focus restoration.",
+      "actions": [
+        "back_to_record",
+        "back_to_previous_record",
+        "close_to_origin"
+      ],
+      "mobile": "Full-screen drawer with explicit top sticky Back button and breadcrumb path."
+    },
+    "my_actions_operational_queue": {
+      "status": "IMPLEMENTED_IN_PROTOTYPE_SPECIFIED_IN_UX_SPEC",
+      "description": "4-tier operational queue: 1. Eligible Actions (truthful 0 at T0), 2. Waiting On External Parties (AC-04, AC-05), 3. Blocked Actions (AC-05, AC-12), 4. Historical / Completed (AC-01, AC-02).",
+      "overlap_contract": "AC-05 maintains shared identity across Waiting and Blocked groups; single draft, zero duplicated workload.",
+      "actor_contract": "Actor is session-derived; U-01 is a testing fixture alias."
+    },
+    "control_room_scannability": {
+      "status": "IMPLEMENTED_IN_PROTOTYPE_SPECIFIED_IN_UX_SPEC",
+      "description": "Scannable 5-step causal pipeline with Step Role badges (Root Cause, Direct Gate, Downstream Pipe), condition, cause, impact, owner, permitted next step, and direct drawer inspector."
+    },
+    "density_and_text_integrity": {
+      "status": "IMPLEMENTED_IN_PROTOTYPE_SPECIFIED_IN_UX_SPEC",
+      "description": "Comfortable 44px min-height / Compact 36px min-height strictly preserving 14px body font size; multiline wrapping for long Vietnamese/English legal text without overflow-x clipping."
+    },
+    "evidence_calibration": {
+      "status": "CONFIRMED_SPEC_CALIBRATED",
+      "description": "Static CSS reasoning distinguished from rendered observations. Static image export confirmed via od export; interactive browser tests and AC-137 manager trial classified as NOT_RUN / VERIFICATION_BLOCKED."
+    }
+  },
+  "cross_cutting_test_ids": [
+    "VAL-CROSS-AUTH",
+    "VAL-CROSS-CONCURRENCY",
+    "VAL-CROSS-BOUNDARY",
+    "VAL-CROSS-RESPONSIVE-A11Y",
+    "VAL-NAV-01",
+    "VAL-NAV-02",
+    "VAL-PROOF-01",
+    "VAL-ROLE-01",
+    "VAL-MINE-01",
+    "VAL-DENS-01"
+  ],
+  "r5_refinements": {
+    "R4-I01": "Restored canonical FR identities (FR-001..020) and exact AC/rule bindings in validation-plan.md; distinct milestone predicate: READY + COMPLETED + (valid VERIFIED or explicit valid NOT_REQUIRED).",
+    "R4-I02": "Corrected session storage contract: OAuth tokens stored strictly in server-side BFF session store; browser cookie contains only opaque session handle; zero tokens in cookie/localStorage.",
+    "R4-I03": "Corrected Filing lifecycle: Uploading receipt supplies document only; transition to Authority Review requires authorized, validated observation/command (RULE-012); Receipt ≠ Approval.",
+    "R4-I04": "Proof lookup uses explicit typed relations by record kind and ID. AC-05 has explicit proof applicability NOT_REQUIRED in canonical Atlas and does not inherit RQ-05 proof or verification state.",
+    "R4-I05": "Modal navigation session initialized on open and cleaned up centrally on both Close button and Escape key; real origin label preserved; per-record drafts preserved in memory.",
+    "R4-I06": "Restored permission consistency: Both Matter EDITOR and OWNER have authority to assign Actions within scope to active members; submitter cannot self-review (RULE-007).",
+    "R4-I07": "Preserved CSV/XLSX import and meaningful scoped XLSX export; imported verification treated as claim, not VERIFIED (no invented wire enum CLAIM_IMPORTED); draft retention follows session/privacy contract.",
+    "R4-I08": "Screen-specific state specimens for all 13 screens with real skeleton animations, honest non-operational tags (SPECIFIED_ONLY), reconciled counts (3 items = 3 IDs), and non-repetitive causal chain in Control Room."
+  },
+  "r6_refinements": {
+    "R5-N01": "Restored local DOM lookup helper const $ = id => document.getElementById(id); at top level in prototype.html before callers; standalone initialization verified with zero unbound identifiers.",
+    "R5-N02": "Calibrated proof applicability model under state-semantics.md §10: verification applies to Requirement, Evidence Requirement, supplied Evidence, and to Action/Filing when proof is explicitly required (initial state UNVERIFIED; NOT_REQUIRED applies only via explicit applicability decision). Fixed AC-06 to canonical COMPLETED/READY owned by U-03; preserved RQ-05 historical VERIFIED baseline and DEP-05 satisfied status, separating current-policy audit caveats from recomputed snapshots; preserved AC-05 explicit NOT_REQUIRED without borrowing RQ-05 proof.",
+    "R5-N03": "Popped mode preserved in local variable savedMode across openRecord() in handleBackPrev() to restore proof context view; breadcrumb trail traversal returns/truncates trail instead of appending ancestor; centralized modal session cleanup on Close and Escape.",
+    "R5-N04": "Calibrated validation plan oracles: unexecuted data mutation flows (Requirement creation, proof submission/verification, atomic bulk execution, version promotion, Filing stage progression, XLSX file export) classified as SPECIFIED_ONLY / SOURCE_INSPECTED; executed exploratory UI interactions classified as CONFIRMED_IN_PROTOTYPE_EXPLORATORY; interactive browser tests marked NOT_RUN / VERIFICATION_BLOCKERS.",
+    "R5-N05": "Aligned handoff component inventory with real codebase structure under apps/frontend/src/components/{atoms,molecules,organisms}/ and business features under src/features/*, removing non-existent components/ui/; framed handoff as UX consumer specification respecting independently versioned backend API/security contracts."
+  }
+}

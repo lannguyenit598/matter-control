@@ -1,0 +1,73 @@
+### A1: GET existing
+HTTP/1.1 503 Service Unavailable
+Content-Type: application/problem+json
+X-Request-Id: RIMPHamUjOIvtUXLdQuJeEBoVkDEqfHq
+Date: Sat, 24 Oct 2026 17:07:15 GMT
+Content-Length: 197
+
+{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a16ee1-5ce0-7ead-b78e-f8a6d657d0cc","retryAfter":1}
+### A1: GET list
+HTTP/1.1 503 Service Unavailable
+Content-Type: application/problem+json
+X-Request-Id: qnZVJcrYyVSnCiuYbXDwXaiyLMPnexDO
+Date: Sat, 24 Oct 2026 17:07:15 GMT
+Content-Length: 160
+
+{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users","retryAfter":1}
+### A1: POST
+HTTP/1.1 503 Service Unavailable
+Content-Type: application/problem+json
+X-Request-Id: ZAoYslzCbdKmuSpBjmeUQLqaMXKquPqF
+Date: Sat, 24 Oct 2026 17:07:15 GMT
+Content-Length: 160
+
+{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users","retryAfter":1}
+### A1: PATCH
+HTTP/1.1 503 Service Unavailable
+Content-Type: application/problem+json
+X-Request-Id: QTTnUoinPEFhCafYKjgDeUitzoIWxEvn
+Date: Sat, 24 Oct 2026 17:07:15 GMT
+Content-Length: 197
+
+{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a16ee1-5ce0-7ead-b78e-f8a6d657d0cc","retryAfter":1}
+### A1: DELETE
+HTTP/1.1 503 Service Unavailable
+Content-Type: application/problem+json
+X-Request-Id: cGPmoHZklazoYgVyWFrbcpozkZhAQbiA
+Date: Sat, 24 Oct 2026 17:07:15 GMT
+Content-Length: 197
+
+{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a16ee1-5ce0-7ead-b78e-f8a6d657d0cc","retryAfter":1}
+### A2-native: GET nonexistent during outage
+HTTP/1.1 503 Service Unavailable
+Content-Type: application/problem+json
+X-Request-Id: BrJZQESBgzzLoFMUGuEXLOxIpMRSijYQ
+Date: Sat, 24 Oct 2026 17:07:15 GMT
+Content-Length: 197
+
+{"type":"/problems/unavailable","title":"Service Unavailable","status":503,"detail":"service temporarily unavailable","instance":"/api/v1/users/01a15359-aa28-7a00-a380-000000000999","retryAfter":1}
+### A3: healthz during outage
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Request-Id: eporLVAhWNpRDIqzXmaiPSfgjjUlryjq
+Date: Sat, 24 Oct 2026 17:07:16 GMT
+Content-Length: 16
+
+{"status":"ok"}
+
+### A3: readyz during outage (current bytes)
+HTTP/1.1 503 Service Unavailable
+Content-Type: application/problem+json
+X-Request-Id: ryhmQgzqNSMSINYQRONoXrxSDlqptyYd
+Date: Sat, 24 Oct 2026 17:07:16 GMT
+Content-Length: 86
+
+{"type":"about:blank","title":"Service Unavailable","status":503,"instance":"/readyz"}
+### A3 recovery: readyz
+200
+### A3 recovery: healthz
+200
+### A3 recovery: GET existing works, version still 1 (outage writes not applied is UNKNOWN; none were accepted)
+Content-Length: 196
+
+{"id":"01a16ee1-5ce0-7ead-b78e-f8a6d657d0cc","email":"alice.c01@example.test","name":"Alice C01","created_at":"2026-10-24T17:07:05.568962Z","updated_at":"2026-10-24T17:07:05.568962Z","version":1}

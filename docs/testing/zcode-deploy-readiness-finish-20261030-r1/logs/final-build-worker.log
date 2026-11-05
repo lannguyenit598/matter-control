@@ -1,0 +1,90 @@
+$ node scripts/build-worker.mjs
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+App directory: /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+Next.js version : 16.4.2
+@opennextjs/cloudflare version: 1.20.14
+@opennextjs/aws version: 4.1.13
+workerd compatibility_date: 2026-10-30
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+$ next build && node scripts/check-built-css.mjs
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 14ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.2s
+  Running TypeScript ...
+  Finished TypeScript in 2.0s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/13) ...
+  Generating static pages using 9 workers (3/13) 
+  Generating static pages using 9 workers (6/13) 
+  Generating static pages using 9 workers (9/13) 
+✓ Generating static pages using 9 workers (13/13) in 124ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/callback
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/session
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions/[versionId]/content
+├ ƒ /api/matters/[matterId]/export
+├ ƒ /login
+├ ƒ /matters
+├ ƒ /matters/[matterId]
+├ ƒ /matters/[matterId]/agenda
+├ ƒ /matters/[matterId]/control-room
+├ ƒ /matters/[matterId]/data
+├ ƒ /matters/[matterId]/documents
+├ ƒ /matters/[matterId]/documents/[documentId]
+├ ƒ /matters/[matterId]/filings
+├ ƒ /matters/[matterId]/filings/[filingId]
+├ ƒ /matters/[matterId]/filings/new
+├ ƒ /matters/[matterId]/history
+├ ƒ /matters/[matterId]/planning
+├ ƒ /matters/[matterId]/reviews
+├ ƒ /matters/[matterId]/work
+├ ƒ /matters/[matterId]/work/[itemId]
+├ ƒ /my-actions
+├ ƒ /my-reviews
+├ ƒ /requirements/[requirementId]
+├ ƒ /workspaces
+└ ƒ /workspaces/[workspaceId]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Compiled CSS verified: 1 assets, layout/accessibility/theme utilities present
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 1.955s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+[35mWorker saved in `.open-next/worker.js` 🚀
+[0m
+OpenNext build complete.
+BUILD_WORKER_EXIT=0
+$ node scripts/release-preflight.mjs .open-next --require-artifacts
+release preflight: clean (tracked files + .open-next)
+PREFLIGHT_OPENNEXT_EXIT=0

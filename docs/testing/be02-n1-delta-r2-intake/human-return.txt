@@ -1,0 +1,62 @@
+## MC-BE02-N1-DELTA-REVIEW-R2 — completion report
+
+**Agent identity:** actual OpenCode (harness), model DeepSeek V4.1 Flash Free, provider `opencode`; independent non-author reviewer. No provider/model/account change, login, paid route or external messaging.
+**Mode:** READ_HASH_STATIC_ONLY (read/hash/JSON/codepoint utilities only).
+**Repository / branch / HEAD:** `/Users/nguyenvanlan/Documents/code/pet-projects/matter-control`, `codex/unified-project-flow`, `a62d838791ba188838c4ff00b7b6e265ac775056` (unchanged through all passes).
+**Window:** 2026-10-26 ~14:40Z–14:52Z (21:40–21:52 +07:00).
+
+### Verdicts
+
+- **C-A: ACCEPTED_FACTUAL_ERRATUM.** The erratum is against my own R1 report, not the author. R1 lines 73/110 rendered the second N1-C14 key as ASCII `""`; the actual key is U+E000, UTF-8 `ee 80 80`. Independent byte re-encoding produced expected hex `7b22ee8080223a322c22f09f9880223a317d`, sha256 `cddbdeac…92d02`; scalar order and UTF-8 byte order match, UTF-16 order does not; 4/4 clarification assertions true. The vector already discriminates scalar from UTF-16 ordering — **no vector addition required**.
+- **C-B: ACCEPTED** as the existing N1 three-state marker. R1's “`{}` = no revision inputs” suggestion is withdrawn; create-time CAS-none behavior stays unchanged.
+- **C-C: ACCEPTED WITH REQUIRED SHAPE CLARIFICATION.** Field presence must be fixed per representation version (PF02:27 same-representation invariant); “if included” optional presence is not admissible without an explicitly approved reduced representation. Ownership producers and public owner spelling remain decisions — not invented.
+- **C-D: ACCEPTED AS CANDIDATE DELTA, INCOMPLETE CATALOGUE EDIT SCOPE.** Open items: 422 boundary vs existing `/problems/validation`; knock-on 422 references (`api-contracts.md:16`, `:18`, §3.8 `:254`); 415 wording must also cover a missing `Content-Type`; catalogue-wide vs slice scope. No URI policy adopted; existing `:43` `/problems/precondition-not-applicable` remains the create If-Match 400 behavior.
+- **C-E: ACCEPTED AS SCOPED REQUIREMENT-CREATE MAPPING** with pinned dependencies (T25 canonical path; create header policy) plus illustrative-body/version precision.
+- **E-1..E-3: ACCEPTED WITH PRECISION ITEMS** — define “trailing metadata”, scope the wrapper validator, pin the N1 normative home, fix the E-2 example and E-3 “L5” anchor. Identified gap: `eventSeqs[]` and `derivedChanges` sit outside PF01's 14-field body with no defined command envelope.
+- **Document verdict:** `DELTA_RESPONSE_PASS_DOCUMENT_ONLY_WITH_LIMITATIONS`. Nothing adopted; no canonical contract, policy or implementation change.
+
+### Integrity finding (open)
+
+`AGENTS.md` was modified **externally** at `2026-10-26T21:50:24+07:00` (14:50:24Z) — six seconds after the pass-3 gate — from the pinned 8886 bytes / `9f9ad043…50beb` to 9093 bytes / `861e874c…5d03d`. This task did not touch it, and it was not reverted or rebased. Final gate: **13/14 inputs match**; intake manifest and the other 13 inputs unchanged; outputs stable. The review stands only for the pinned 8886-byte snapshot. New body was **not** read, so materiality is unknown; Codex must re-pin and request bounded re-confirmation if BE02/N1 scope, ownership routing or gates changed.
+
+### Inputs verified (declared set; exact)
+
+```text
+be02-delta-inputs.json                         3047  8f2684723320833773e439eab2e25dfdd1a4d2d69b82cc45a5ef648e459e7fcd
+AGENTS.md (pinned)                             8886  9f9ad043592401557a4eac6812d45e758a058f9aad9206735d3c19f154950beb
+be02-n1-opencode-contract-review-r1.md        29144  3f0f8cb79cdd815822c0e4c1636696989bb4af3a6cfdc1a08abffa15112553da
+be02-n1-contract-review-r1/review-inputs.json 15171  f3783d96d235dba13c0bce48526bc295e6e7c818e146f6c0846bfb03fc124ad0
+be02-n1-contract-review-r1/checks-log.json     8371  b4558557cfcc8775abbda9cdda8108b14399147e308350921d4214a77ee42801
+be02-n1-targeted-author-response-r1.md          6748  b146b0bb5b876fb2cbff7e3225d77a1d152656a2f82655cc97bf6de8d60db089
+unicode-c14-clarification.json                  1556  2f197468c8eca77a4545fa109ae1e25d78d53d255b69af89e0b5bf11142541ab
+codex-n1-.../vectors.json                       8673  1277c5e02f6d5d6e5ddb1f8531c3128bda36b8238092940b7cef27d61d0e614b
+codex-n1-.../recommendation.md                 14401  ead64d2e73f029640f65c1794972a761b93f524fdf1335f8c1d1eb1ced398e20
+codex-n1-.../reference_check.py                 7656  60600a3b72001e6bf8649865922276f1b782d8a35a1358db7098793b747fb238
+be02-codex-correction-return.md                14522  0184448afc818479e199fb2c9c727bf6e810361b19091b92ebf53e87be106afb
+backend-http-preparation.md                    14177  542d3e6fa900051b489847adbe9d75e4278db89352b580c7209948f75d221531
+api-contracts.md                               25038  49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75
+filing-model.md                                 7652  632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd
+MC-BE02-N1-DELTA-REVIEW-R2 prompt                3131  b590e2f5e536ae0779858c2e36f51ba6c4f378a150cc3b61fe7fc5dc804a7a1f
+```
+
+### Outputs (new files only)
+
+| Path | Bytes | SHA-256 |
+|---|---|---|
+| `docs/reviews/be02-n1-opencode-delta-review-r2.md` | 36909 | `68d43d9221ebb80f2d5fc25ed54c68f120e3d403c2aa2d0da6d813fea2db047f` |
+| `docs/testing/be02-n1-contract-review-r2/review-inputs.json` | 9766 | `d750290e6012fd6180e97ce0d63448a71a49f9fb4977f19ee6c6379ffc9dd08f` |
+| `docs/testing/be02-n1-contract-review-r2/checks-log.json` | 14621 | `5e75ac284c80e73a0e0a106b8c623d3e21cc7e803684a1745f61ba151e12e226` |
+
+`checks-log.json` is valid JSON and deliberately excludes its own hash (verified: hash string absent). R1 report preserved byte-identical; erratum published only in R2. No Git mutation, staging, commit, canonical contract edit or index/security-state change; the pre-existing dirty/untracked tree was left untouched.
+
+### Remaining authority / source gates
+
+None of these were adjudicated in R2: N1 limitation status (`candidate-supplement.json:81`, outside intake); BE01 committed baseline; T25 canonical path; create header policy; producers/availability for `applicabilityReason`, `workstreamId`, public owner and `dueAt`; catalogue authority for the C-D 422/415 scope; command envelope for `eventSeqs[]`/`derivedChanges`; all Step 02 workload/retention/RPO/RTO items deferred by the PO.
+
+### Skipped / not run
+
+27 BE02 tests remain NOT_RUN; 79 author checks cited only; no reference program, scanner or suite execution; no full 32-operation re-review; no BE01 source review; no runtime/HTTP/DB/SQL/process/container probes; no build or source import; no Semble content search (read-set preservation); one grep overshoot (4 lines, 2 files) recorded and not used; Step 03B not activated.
+
+### Remaining risk
+
+Document-only evidence proves nothing about HTTP/client behavior. The AGENTS.md drift is unresolved and its materiality is unknown until Codex re-pins. C-C and C-D remain decisions pending architecture authority, and the E-1 envelope gap could become a contradiction if “ALL volatile provenance” is read literally. **Proposed status: `IN_REVIEW` — deliverable complete for the pinned inputs; open re-pin gate; no DONE and no adoption.**

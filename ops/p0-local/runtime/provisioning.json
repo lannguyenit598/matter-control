@@ -1,0 +1,49 @@
+{
+  "task": "MC-P0-ZCODE-EXECUTION",
+  "provider": "ZITADEL v4.16.0 local (docker compose, loopback-only)",
+  "issuer": "http://localhost:8080",
+  "issuer_pinned": true,
+  "organization": {
+    "name": "MatterControl Local",
+    "id": "396855005765697539"
+  },
+  "project": {
+    "name": "mattercontrol",
+    "id": "396855005832806403"
+  },
+  "oidc_web_app": {
+    "name": "mattercontrol-web",
+    "clientId": "396855005899980803",
+    "flow": "authorization_code+PKCE_S256",
+    "redirectUris": [
+      "http://localhost:3000/api/auth/callback",
+      "http://localhost:3000/api/auth/callback/dev"
+    ],
+    "postLogoutRedirectUris": [
+      "http://localhost:3000/",
+      "http://localhost:3000/logged-out"
+    ]
+  },
+  "api_app": {
+    "name": "mattercontrol-api",
+    "id": "396855361123909635",
+    "clientId": "396855361123975171",
+    "authMethod": "private_key_jwt",
+    "keyFile": "runtime/mc-api-app-key.json"
+  },
+  "audience_note": "API app clientId is the pinned MatterControl API audience for access-token checks.",
+  "test_users": [
+    {
+      "username": "mc-alice",
+      "id": "396855361476231171",
+      "passwordRef": "secrets/test-users.json#alice"
+    },
+    {
+      "username": "mc-bob",
+      "id": "396855362801631235",
+      "passwordRef": "secrets/test-users.json#bob"
+    }
+  ],
+  "provisioning_route": "login-client PAT (bootstrap) -> admin human session (Session API v2 password check) -> Management API v1 REST; no admin-session or PAT values persisted",
+  "provisioned_utc": "2026-10-26T18:43:50Z"
+}

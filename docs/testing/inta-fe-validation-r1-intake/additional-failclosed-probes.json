@@ -1,0 +1,81 @@
+{
+  "kind": "In-process pureevaluator regression probes, not runtime",
+  "vectors": [
+    {
+      "name": "unknown_listener_observation",
+      "observer_input": {
+        "requestCount": 0,
+        "cleanShutdown": true
+      },
+      "listener_during": null,
+      "listener_after": null,
+      "expected": "MUST_NOT_PASS_INCOMPLETE_OR_WRONG_TYPED_EVIDENCE",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "PASS",
+        "verdictCode": "VALID_COMPLETE_INPUT",
+        "exitCode": 1,
+        "observerHTTPRequests": 0,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": null,
+        "listenerObservedAfter": null,
+        "notes": "Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown"
+      },
+      "regression_result": "FAIL"
+    },
+    {
+      "name": "boolean_counter_false",
+      "observer_input": {
+        "requestCount": false,
+        "cleanShutdown": true
+      },
+      "listener_during": false,
+      "listener_after": false,
+      "expected": "MUST_NOT_PASS_INCOMPLETE_OR_WRONG_TYPED_EVIDENCE",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "PASS",
+        "verdictCode": "VALID_COMPLETE_INPUT",
+        "exitCode": 1,
+        "observerHTTPRequests": false,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown"
+      },
+      "regression_result": "FAIL"
+    },
+    {
+      "name": "truthy_unclean_string",
+      "observer_input": {
+        "requestCount": 0,
+        "cleanShutdown": "false"
+      },
+      "listener_during": false,
+      "listener_after": false,
+      "expected": "MUST_NOT_PASS_INCOMPLETE_OR_WRONG_TYPED_EVIDENCE",
+      "actual": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "PASS",
+        "verdictCode": "VALID_COMPLETE_INPUT",
+        "exitCode": 1,
+        "observerHTTPRequests": 0,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown"
+      },
+      "regression_result": "FAIL"
+    }
+  ],
+  "summary": {
+    "expected_rejections": 3,
+    "actual_unsafe_passes": 3
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "actor": "Local Codex",
+  "utc": "2026-10-26T06:37:49.327634+00:00",
+  "argv": [
+    "rtk",
+    "proxy",
+    "python3",
+    "-B",
+    "docs/testing/inta-fe-validation-r1-intake/reproduce_evaluator_probes.py"
+  ],
+  "exit": 1,
+  "actual_results": [
+    {
+      "case": "unknown_listener",
+      "expected": "NOT_PASS",
+      "actual": "PASS"
+    },
+    {
+      "case": "bool_counter",
+      "expected": "NOT_PASS",
+      "actual": "PASS"
+    },
+    {
+      "case": "string_clean_flag",
+      "expected": "NOT_PASS",
+      "actual": "PASS"
+    }
+  ],
+  "meaning": "Expected regression failure demonstrates3unfixed evaluator defects; no network/liveapp/sourcewrite/privatefile."
+}

@@ -1,0 +1,81 @@
+{
+  "source_head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+  "findings": [
+    {
+      "id": "BE01-F01",
+      "priority": "P1",
+      "classification": "REPRODUCED_WITH_SERVICE_STORE_DOUBLE",
+      "file": "internal/core/service/matter_service.go",
+      "line": 90,
+      "related_lines": [
+        81,
+        84,
+        99,
+        103
+      ],
+      "title": "Authorize every represented Matter before receipt hash comparison/replay",
+      "trigger": "Create receipt in A; revoke actor membership in A; keep actor authorized in B; submit same actor+key in B with a different trusted hash.",
+      "observed": "ErrIdempotencyKeyReuse instead of uniform ErrNotFound; receipt existence is distinguished before checking saved scope/represented-Matter authority.",
+      "cause": "Only target B accessFrom is checked; rcpt.ScopeKind/WorkspaceID/MatterID/Matters are never authorized before comparing hash or reading Snapshot.",
+      "impact": "Violates required replay current authorization and uniform denial; matching inconsistent trusted fingerprints could also return an unauthorized stored body, but no production hash-collision claim is made.",
+      "smallest_fix": "Authorize saved scope and every represented Matter within the locked transaction before age/hash/output; preserve deterministic lock order; no domain effect or body leak on denial.",
+      "probe": "TestCodexBE01ReceiptAuthorizationAcrossMatters",
+      "requirements": [
+        "FR-018",
+        "AC-118",
+        "AC-147",
+        "BE01-T05",
+        "BE01-T06"
+      ]
+    },
+    {
+      "id": "BE01-F02",
+      "priority": "P1",
+      "classification": "REPRODUCED_WITH_SERVICE_STORE_DOUBLE",
+      "file": "internal/core/service/matter_service.go",
+      "line": 78,
+      "related_locations": [
+        "internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql:67"
+      ],
+      "title": "Fail closed on unsupported pending temporal boundary",
+      "trigger": "Matter header has next_boundary_at earlier than t_cmd; call CreateRequirement.",
+      "observed": "Create returns success, CompleteMatter runs, one Requirement is persisted in test double.",
+      "cause": "Service ignores NextBoundaryAt and BoundariesAppliedUntil; SQL CompleteMatter advances fence and clears next_boundary_at=NULL unconditionally.",
+      "impact": "Can silently erase an unevaluated boundary in a populated Matter; contradicts explicit BE01 fail-closed rule even though this slice creates no due dates.",
+      "smallest_fix": "Refuse required unsupported boundary before new mutation/fence clearing; leave rows/history/receipt/fence unchanged; do not implement the later full temporal engine.",
+      "probe": "TestCodexBE01PendingBoundaryFailsClosed",
+      "requirements": [
+        "FR-020",
+        "BE01-T03",
+        "BE01-T08",
+        "backend-fast-track section6"
+      ]
+    },
+    {
+      "id": "BE01-F03",
+      "priority": "P1",
+      "classification": "REPRODUCED_WITH_SERVICE_STORE_DOUBLE",
+      "file": "internal/core/service/matter_service.go",
+      "line": 206,
+      "related_lines": [
+        81,
+        82,
+        208,
+        228
+      ],
+      "title": "Propagate membership storage failures before converting access facts",
+      "trigger": "Requirement read exists, WorkspaceMembership returns ErrUnavailable.",
+      "observed": "GetRequirement returns ErrNotFound.",
+      "cause": "accessFrom treats every non-nil membership error as absent facts, without first propagating non-ErrNotFound errors.",
+      "impact": "Dependency failure becomes false not-found and may purge valid UI context; create path has same normalization seam, though PostgreSQL transaction-abort behavior may surface a later commit error.",
+      "smallest_fix": "Only absent rows become missing facts; propagate unavailable/unexpected errors on read/create/replay and preserve wrapped causes.",
+      "probe": "TestCodexBE01MembershipReadUnavailablePreserved",
+      "requirements": [
+        "BE01-T07",
+        "BE01-T08",
+        "NFR-003"
+      ]
+    }
+  ],
+  "status": "REWORK_REQUIRED; targeted independently written probes, not formalOpenCode verdict"
+}

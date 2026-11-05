@@ -1,0 +1,19 @@
+{
+  "label": "backend-config-app-tests",
+  "argv": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "./internal/config/...",
+    "./internal/app/...",
+    "./cmd/..."
+  ],
+  "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+  "extra_env": [
+    "GOCACHE"
+  ],
+  "start_utc": "2026-10-30T03:33:23.197245+00:00",
+  "end_utc": "2026-10-30T03:33:45.690161+00:00",
+  "exit": 0
+}

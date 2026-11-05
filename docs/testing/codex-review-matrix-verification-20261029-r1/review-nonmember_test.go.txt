@@ -1,0 +1,11 @@
+package productapi
+import("testing";"log/slog";"github.com/google/uuid";"leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol";"leonx.me/matter-control/internal/adapter/outbound/system";"leonx.me/matter-control/internal/core/domain/matter";"leonx.me/matter-control/internal/core/service")
+func TestVerifierReviewKnownNonmemberHTTP(t *testing.T){
+ e:=newEnv(t);base,v,g,tag:=reviewFixture(t,e);p:=base+"/review-grids/"+g
+ q:=e.do("POST",p+"/questions","t-bob",ifMatch(tag),`{"text":"Q?"}`);e.expect(q,200,"");qid:=q.json()["questions"].([]any)[0].(map[string]any)["id"].(string)
+ out:=uuid.Must(uuid.NewV7()).String();e.world.AddUser(matter.ActorID(out));e.verifier.tokens["t-outsider"]="s-outsider"
+ store:=e.world.(*mattercontrol.MemoryWorld).Store();work:=service.NewWorkService(store,system.RecordIDv7{},slog.New(slog.DiscardHandler),matter.KeyAgePolicy{})
+ e.h=NewServer(Deps{Review:service.NewReviewService(work),Verifier:e.verifier,Identities:fakeResolver{"s-outsider":out}})
+ for _,path:=range []string{p,base+"/review-grids",p+"/cells/"+v+"/"+qid+"/history"}{e.expect(e.do("GET",path,"t-outsider",nil,""),404,"urn:mc:not-found")}
+ body:=`{"versionId":"`+v+`","questionId":"`+qid+`","expectedAnswerId":"","questionRevision":1,"state":"ABSENT"}`;e.expect(e.do("POST",p+"/answers","t-outsider",key(),body),404,"urn:mc:not-found")
+}

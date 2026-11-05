@@ -1,0 +1,402 @@
+{
+  "task": "MC-P0-ZCODE-W0-INTAKE-AND-EXECUTION-PLAN",
+  "owner": "Actual Codex / Local Codex",
+  "captured_at": "2026-10-26T17:56:53.980641+00:00",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "status": "W0_INTEGRITY_VERIFIED / EXECUTION_BUNDLE_PREPARED_NOT_DISPATCHED",
+  "received_attachment": {
+    "path": "/Users/nguyenvanlan/.codex/attachments/1ffa7f50-e30f-4802-a97a-47c099a73671/Pasted text.txt",
+    "bytes": 6800,
+    "sha256": "3a35fa9a93543ee5447204a5a6811391473b215c42a0fdcd49f6f7074c86d36f"
+  },
+  "w0_declared_output_checks": [
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/acknowledgement.md",
+      "bytes": 5089,
+      "sha256": "6cb9e8871fb625b0df4807f09cb4410e7edec17feec402e2b862ca5998d51cc2",
+      "declared_match": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/source-gap-map.json",
+      "bytes": 15425,
+      "sha256": "b1a29bcc08552daa950d4289b3747e4352500d696cf4b9101a3e84d5031492d9",
+      "declared_match": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/decision-package.md",
+      "bytes": 11077,
+      "sha256": "e2028080f1f646bacae28f5b83dbeeda39fab7c74e010ae5b0d0b64a9330b5fc",
+      "declared_match": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/w1-contract.md",
+      "bytes": 7384,
+      "sha256": "46075b4b409593978218f0615e0604cc081782c4f01fd95d7e7c207568ce7167",
+      "declared_match": true
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/progress.json",
+      "bytes": 6327,
+      "sha256": "c868f884447a821de9d1d0a35c0ff1fa5f1d852646c6cfb238bac5629ff04fad",
+      "declared_match": true
+    }
+  ],
+  "w0_return_check": {
+    "path": "docs/implementation/p0-zcode-returns/w0/return.md",
+    "bytes": 7552,
+    "sha256": "6fed0828500fd776363fce078620a5b2e09d51d63ef7d15013fb2b6abe77d42f"
+  },
+  "upstream_manifest_checks": [
+    {
+      "path": "docs/testing/p0-zcode-plan-20261026/inputs.json",
+      "members": 42,
+      "matches": 42,
+      "mismatches": 0
+    },
+    {
+      "path": "docs/testing/inta-r5-zcode-review-intake/p0-v2-inputs.json",
+      "members": 16,
+      "matches": 16,
+      "mismatches": 0
+    }
+  ],
+  "source_import_checks": [
+    {
+      "kind": "backend",
+      "members": 137,
+      "matches": 137
+    },
+    {
+      "kind": "frontend",
+      "members": 323,
+      "matches": 323
+    },
+    {
+      "kind": "inta-harness",
+      "members": 25,
+      "matches": 25
+    }
+  ],
+  "source_import_total": 485,
+  "source_gap_census": {
+    "backend": {
+      "PARTIAL_SOURCE": 5,
+      "ABSENT": 15
+    },
+    "frontend": {
+      "TEMPLATE_ONLY": 20
+    }
+  },
+  "observations": [
+    {
+      "id": "W0-I01",
+      "finding": "Structured map has 5 PARTIAL_SOURCE and 15 ABSENT, versus narrative 14/20; preserve authors original and use typed map, never completion percentage."
+    },
+    {
+      "id": "W0-I02",
+      "finding": "D1(c) immutable evidence rewrite is excluded as a remedy; no bypass or gate resolution claimed."
+    },
+    {
+      "id": "W0-I03",
+      "finding": "D8 deny-by-construction proposal and its only-way claim remain unverified and outside product implementation."
+    },
+    {
+      "id": "W0-I04",
+      "finding": "Acknowledgement references decision-package section7 for proof basis but actual section is2; documentary erratum only."
+    },
+    {
+      "id": "W0-I05",
+      "finding": "return.md says four spot checks but names three; no reconstructed runtime log or extra checks inferred."
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/acknowledgement.md",
+      "bytes": 5089,
+      "sha256": "6cb9e8871fb625b0df4807f09cb4410e7edec17feec402e2b862ca5998d51cc2"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/decision-package.md",
+      "bytes": 11077,
+      "sha256": "e2028080f1f646bacae28f5b83dbeeda39fab7c74e010ae5b0d0b64a9330b5fc"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/progress.json",
+      "bytes": 6327,
+      "sha256": "c868f884447a821de9d1d0a35c0ff1fa5f1d852646c6cfb238bac5629ff04fad"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/return.md",
+      "bytes": 7552,
+      "sha256": "6fed0828500fd776363fce078620a5b2e09d51d63ef7d15013fb2b6abe77d42f"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/source-gap-map.json",
+      "bytes": 15425,
+      "sha256": "b1a29bcc08552daa950d4289b3747e4352500d696cf4b9101a3e84d5031492d9"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-returns/w0/w1-contract.md",
+      "bytes": 7384,
+      "sha256": "46075b4b409593978218f0615e0604cc081782c4f01fd95d7e7c207568ce7167"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-end-to-end-execution-plan.md",
+      "bytes": 23598,
+      "sha256": "d4809bc50b50e9948ee877612e5ba4ae3ad842772797fe72e0bb189d8378f1b3"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-P0-ZCODE-END-TO-END-PROMPT.md",
+      "bytes": 14511,
+      "sha256": "16ede916e9fc5393c3374ec0fbf43579a28ed7277af01be726d9d5b6c17dc94a"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-delivery-plan.md",
+      "bytes": 15971,
+      "sha256": "772d1bc29fc81711190f8a5b7251274cc9a27160abfb18f9fe526bc7ad02b70a"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-delivery-r5-addendum.md",
+      "bytes": 5907,
+      "sha256": "9fa91c175b86a134dfc775c89ce387868ddc173797e40b2134e02157ca15d194"
+    },
+    {
+      "path": "docs/implementation/tasks/MC-P0-ZCODE-DELIVERY.md",
+      "bytes": 5186,
+      "sha256": "0c9ecd2d6479b43c92b4ac2dbc614d1d87160815896aaa02e0716ec65deb7d73"
+    },
+    {
+      "path": "docs/testing/p0-zcode-plan-20261026/inputs.json",
+      "bytes": 8421,
+      "sha256": "e19c1c2d1cf8f2f863bf60c1b5f19bfbccb58313f4f5c60d3432dac414cc3828"
+    },
+    {
+      "path": "docs/testing/p0-zcode-plan-20261026/coverage.json",
+      "bytes": 13177,
+      "sha256": "d3bd69271e8b83d460d282484866d898f9f8c611d9ff78b0df3532eb1c60f621"
+    },
+    {
+      "path": "docs/testing/inta-r5-zcode-review-intake/p0-v2-inputs.json",
+      "bytes": 3771,
+      "sha256": "a52ad1d18da80474a5be22e0434f378ec84d61cbebf4e0a023bdf96952e1cfed"
+    },
+    {
+      "path": "docs/source-import/manifest.json",
+      "bytes": 191111,
+      "sha256": "ad840160b14c387aef4ddfffd3c654035c865104892aa41a62c9dd90b0b9db1b"
+    },
+    {
+      "path": "docs/implementation/source-layout.md",
+      "bytes": 5699,
+      "sha256": "11dc1bcc68de7ca8909450e7e1aa32a48f8229fac673e2e6e4c16a5719d04c91"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 9171,
+      "sha256": "14b4831a0c540e241f3c2bbd965bf2d2e856a6ec2f07d71143bd339b6c320318"
+    },
+    {
+      "path": "apps/backend/AGENTS.md",
+      "bytes": 5653,
+      "sha256": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f"
+    },
+    {
+      "path": "apps/frontend/AGENTS.md",
+      "bytes": 4681,
+      "sha256": "d9f35173730630cdfbcd11727e6daf62e8e13b4e7581163d358adb8ef3871004"
+    },
+    {
+      "path": "apps/backend/.claude/rules/tests.md",
+      "bytes": 1311,
+      "sha256": "f7a4c0e0a1c64a06eb6138196cc9764c398a010fec2eda857c18bc414053401e"
+    },
+    {
+      "path": "apps/frontend/docs/ai/rules/testing.md",
+      "bytes": 5005,
+      "sha256": "4902704eea9796747dbf6e3f0cad85523321bf6c7e600cb8becd366c8f0a4d46"
+    },
+    {
+      "path": "apps/frontend/docs/ai/rules/dependencies.md",
+      "bytes": 3302,
+      "sha256": "b79a26b67309a927c0665e68add0a1b3cc29a46435d5256f71c2e3f36701deda"
+    },
+    {
+      "path": "docs/architecture/api-auth-decision-analysis.md",
+      "bytes": 19233,
+      "sha256": "1f2a86ea5bf34a1fb3113a812e0f44dfc099efa8d5b282aa13c4290d69589400"
+    },
+    {
+      "path": "docs/architecture/backend-http-preparation.md",
+      "bytes": 14177,
+      "sha256": "542d3e6fa900051b489847adbe9d75e4278db89352b580c7209948f75d221531"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-P0-DESIGN-CONSOLIDATED-PROMPT.md",
+      "bytes": 21120,
+      "sha256": "bc734737900f3dd0ede63221cf9964c3cec4abac0608280d13e8be019deca58b"
+    },
+    {
+      "path": "docs/reviews/p0-design-uiux-source-review-20261027.md",
+      "bytes": 16087,
+      "sha256": "40b81cb4dafc993df31ccc3e7ceb049b0e1396471afb81ebdcee1a283ceb7440"
+    },
+    {
+      "path": "docs/design/step-03a/design-decision-register.md",
+      "bytes": 1424,
+      "sha256": "3d18496f128dbc5850f4a6dc8104ae939c6e924b4eba211f5309ca82ad42bea9"
+    },
+    {
+      "path": "docs/design/step-03a/design-decisions.json",
+      "bytes": 10102,
+      "sha256": "37a90c780c4d584233fedbaaddd5f6c7e787d7b1599c5d74ff8c4f229ebb3225"
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/selected-design-system.md",
+      "bytes": 5365,
+      "sha256": "5d7de28872bbacd012d961ac50f9b3dd0adba591b24c4edd46f6774407357503"
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/design-tokens.json",
+      "bytes": 860,
+      "sha256": "f74306507e7c0dd2bdcbc76927a61080ce7e29cefbba24eec33bc85cf23e128c"
+    },
+    {
+      "path": "docs/design/step-03a/revised/local-r3/selected-tokens.css",
+      "bytes": 4148,
+      "sha256": "791d1dd86ffa534a7bef98b95795839a3beda2ba617becc28a7cb6de2bf730ec"
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/prototype.html",
+      "bytes": 358631,
+      "sha256": "68c88b60be3a1b6f4dee78e9f9e17e626c8776928c45b7b17450f003707942f5"
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/polish.css",
+      "bytes": 9304,
+      "sha256": "baca9e520a892c0b0e2ae29e1736d74e51bc30597399db7f664d6a8ab0906f7d"
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/README.md",
+      "bytes": 8327,
+      "sha256": "7c980bc74f62560e8078ddbbc164bc906ea8adc390847f18007aa3ebe4914fb0"
+    },
+    {
+      "path": "docs/design/p0-visual-polish-r1/source-checks.json",
+      "bytes": 12655,
+      "sha256": "51551eee21285aa365ac988f049cf3a2bc9ee221e68ac0dab248f0954d640c51"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-P0-DESIGN-R2-ICON-DECISION.md",
+      "bytes": 9319,
+      "sha256": "b93d0747b5977b1ea3c70e4fc74fbb1042ea2df6451bb23b2d0a8eb11f0d5166"
+    },
+    {
+      "path": "docs/requirements/srs.md",
+      "bytes": 30678,
+      "sha256": "9b813badd88a196c938d9e0503d904ad767f3090ff7522dcc6fae3eb689869f8"
+    },
+    {
+      "path": "docs/requirements/business-rules.md",
+      "bytes": 11783,
+      "sha256": "96be507d3b0d70f0b9ad1c2b27b3152fd5e2700f13e8a647920c60c220f2aa81"
+    },
+    {
+      "path": "docs/requirements/state-semantics.md",
+      "bytes": 11469,
+      "sha256": "156ca1dd2f75a7374a59d2aa4af4a9815ce62a2f11c03f84977bad2860a2ad51"
+    },
+    {
+      "path": "docs/requirements/permission-matrix.md",
+      "bytes": 5238,
+      "sha256": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276"
+    },
+    {
+      "path": "docs/requirements/acceptance-criteria.md",
+      "bytes": 39092,
+      "sha256": "809c206e576e6d4cc0f3642caeec4ee6997b465ffe2f0b316368f7e106e97fa7"
+    },
+    {
+      "path": "docs/requirements/golden-workflow-acceptance.md",
+      "bytes": 11748,
+      "sha256": "0a7d44521bdb89e2499de588242c3b9244827ef9a6366d6bcb5b5a576238a787"
+    },
+    {
+      "path": "docs/product/project-atlas-dataset.md",
+      "bytes": 18972,
+      "sha256": "3d1e722c484bfdd2eb3143b117b7a5aefe9ebae6257fc0484ae0b940a37f6ce0"
+    },
+    {
+      "path": "docs/implementation/p0-zcode-execution/local-identity-approval.json",
+      "bytes": 2495,
+      "sha256": "e1c8911dd38e506d16d1df0e291ade2527973b35355a9c69e690d4a804301f82"
+    }
+  ],
+  "mutable_initial_seed": {
+    "path": "docs/implementation/p0-zcode-execution/workboard.json",
+    "bytes": 42482,
+    "sha256": "eb4ac965ed775597d9fc83692ac6bcbac708fa9dd7b8a775e20c6cd8666cde01"
+  },
+  "resume_rule": "Baseline pins apply at first intake. On resume validate recorded owned changes and frozen contracts; do not mistake authorized implementation changes for unexplained input drift.",
+  "design_r2_return_present": false,
+  "local_identity_proposal": {
+    "provider": "ZITADEL",
+    "status": "PO_SELECTED_LOCAL_PENDING_PROVISIONING",
+    "receipt": "docs/implementation/p0-zcode-execution/local-identity-approval.json",
+    "official_sources": [
+      "https://zitadel.com/docs/self-hosting/deploy/compose",
+      "https://zitadel.com/docs/guides/integrate/login/oidc/login-users",
+      "https://zitadel.com/docs/guides/integrate/token-introspection/private-key-jwt"
+    ],
+    "provider_started": false
+  },
+  "executed_in_this_preparation": {
+    "product_code_changes": false,
+    "runtime": false,
+    "provider_creation": false,
+    "security_scan_commit": false,
+    "external_agent_dispatch": false
+  },
+  "coverage": {
+    "requirements": 20,
+    "acceptance_criteria": 63,
+    "nfr": 14,
+    "golden_workflows": 3
+  },
+  "pre_dispatch_amendments": [
+    {
+      "time": "2026-10-26T18:00:56.092508+00:00",
+      "reason": "Human chose ZITADEL in reply to concrete local IdP approval question; prepared files updated before dispatch, original W0/design/source evidence unchanged.",
+      "changes": [
+        {
+          "path": "docs/implementation/p0-zcode-end-to-end-execution-plan.md",
+          "before": {
+            "path": "docs/implementation/p0-zcode-end-to-end-execution-plan.md",
+            "bytes": 22214,
+            "sha256": "fa4f8e83cf24481b72875dfe0fe3ad66bd402f1c6f1f7ce305eb551b664cae0b"
+          },
+          "after": {
+            "path": "docs/implementation/p0-zcode-end-to-end-execution-plan.md",
+            "bytes": 23598,
+            "sha256": "d4809bc50b50e9948ee877612e5ba4ae3ad842772797fe72e0bb189d8378f1b3"
+          },
+          "reason": "Pre-dispatch update to PO-selected ZITADEL local provider."
+        },
+        {
+          "path": "docs/implementation/handoffs/MC-P0-ZCODE-END-TO-END-PROMPT.md",
+          "before": {
+            "path": "docs/implementation/handoffs/MC-P0-ZCODE-END-TO-END-PROMPT.md",
+            "bytes": 13692,
+            "sha256": "65846c5e2ae0010cd73e63040d19835e09fadef9c845b58cc6139dfa652cf5b3"
+          },
+          "after": {
+            "path": "docs/implementation/handoffs/MC-P0-ZCODE-END-TO-END-PROMPT.md",
+            "bytes": 14511,
+            "sha256": "16ede916e9fc5393c3374ec0fbf43579a28ed7277af01be726d9d5b6c17dc94a"
+          },
+          "reason": "Pre-dispatch update to PO-selected ZITADEL local provider."
+        }
+      ]
+    }
+  ],
+  "updated_at": "2026-10-26T18:00:56.092508+00:00"
+}

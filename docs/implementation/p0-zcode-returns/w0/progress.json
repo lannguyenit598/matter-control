@@ -1,0 +1,67 @@
+{
+  "task": "MC-P0-ZCODE-DELIVERY",
+  "version": "W0-V2",
+  "updated_utc": "2026-10-26T17:22Z",
+  "actor": "actual ZCode (ZCode Desktop 3.16.3, model self-reported account:zai-start-plan/GLM-5.3-Flash via Z.AI)",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "w0_status": "W0_RETURNED / IN_REVIEW — six outputs delivered, no implementation",
+  "waves": [
+    { "id": "P0-W0", "title": "Readiness preparation", "status": "RETURNED_IN_REVIEW", "requirements": "20/20 mapped (source-gap-map.json)", "dependencies": "none", "next_action": "Codex intake; route decision-package to Claude/PO/Maintainer owners; no implementation" },
+    { "id": "P0-W1", "title": "Authenticated foundation", "status": "BLOCKED_ON_GATES", "requirements": ["FR-001(partial)", "FR-008(partial)", "FR-018"], "dependencies": ["D1 source base", "D2 BE02/auth adoption + INT-D02/INT-D09", "D4 scoped design acceptance", "D7 reviewer"], "next_action": "Gates resolve in parallel; w1-contract.md is the prepared activation input" },
+    { "id": "P0-W2", "title": "Daily operations", "status": "CONDITIONAL", "requirements": ["FR-001", "FR-002", "FR-003", "FR-004", "FR-005", "FR-010", "FR-011", "FR-017", "FR-020"], "dependencies": ["W1 accepted", "state/clock/concurrency contracts", "operational-grid design acceptance"], "next_action": "prepare contract inputs during W1, no early write" },
+    { "id": "P0-W3", "title": "Documents and proof", "status": "CONDITIONAL", "requirements": ["FR-006", "FR-007", "FR-015", "(FR-018)"], "dependencies": ["W2 core accepted", "D3 F-08 adoption", "D5 object seam", "secure-file policy + design"], "next_action": "await W2" },
+    { "id": "P0-W4", "title": "Filing", "status": "CONDITIONAL", "requirements": ["FR-016"], "dependencies": ["W3 accepted", "D3 F-10 binding adoption", "filing design"], "next_action": "await W3" },
+    { "id": "P0-W5", "title": "Control Room and contexts", "status": "CONDITIONAL", "requirements": ["FR-009 + integrated read of 001-008/010/011/016/017/020"], "dependencies": ["W2/W3/W4 read contracts", "F-08 gap grain", "selected design evidence for scope", "AC-137 performance target"], "next_action": "await W2-W4" },
+    { "id": "P0-W6", "title": "Efficient data and brief", "status": "CONDITIONAL", "requirements": ["FR-012", "FR-013", "FR-014", "FR-019"], "dependencies": ["W2 edit contract", "W5 read boundary", "D5 numeric import/export/admission/retention decisions (approved before capacity claims)"], "next_action": "await W5" },
+    { "id": "P0-W7", "title": "Full local MVP acceptance", "status": "CONDITIONAL", "requirements": ["AC-101..163", "GW-01/02/03", "NFR-001..014"], "dependencies": ["W1..W6 reviewed+integrated", "reviewer availability", "recovery/hosting evidence for G8 stays separate"], "next_action": "await W6" }
+  ],
+  "inta_closure_subtrack": {
+    "status": "SEPARATE_FROM_PRODUCT_WAVES",
+    "INTA-PROOF-DEC": { "owner": "Architecture/QA propose; Human decides", "w0_contribution": "decision-package.md §2 (P-A interval evidence / P-B deny-by-construction recommended / P-C explicit re-adjudication)", "state": "PROPOSED_NOT_ADOPTED" },
+    "INTA-CORR-NEXT": { "owner": "ZCode intended execution; PLANNED_NOT_ASSIGNED", "prerequisite": "accepted proof-basis decision + explicit scoped cue", "scope": "one combined binding/record/identity/test correction + additive Z01 errata + explicit attempt dir (R5 addendum §4)" },
+    "INTA-REVIEW-NEXT": { "owner": "Codex or another qualified nonauthor (NOT ZCode if ZCode implements)", "state": "WAITING_CORRECTION_RETURN" },
+    "INTA-STAGE-NEXT": { "owner": "Codex DevOps", "state": "WAITING binding/proof source accepted; stage absent" },
+    "INTA-RUNTIME-NEXT": { "owner": "named executor + qualified nonauthor QA", "state": "WAITING combined readiness; separate explicit cue only" }
+  },
+  "earliest_independent_ready_work": [
+    "Route decision-package (D1 maintainer dossier already prepared from MC-BE01 investigation; D2 to Claude; D3 to Claude; D4 to design authority) — Codex, now",
+    "INTA-PROOF-DEC decision on §2 options — Architecture/PO, now",
+    "Scoped W1 design acceptance packet from existing frozen MC-003A contract — design authority, now",
+    "Claude technical adoption pass over BE02 BG-01..08 — now",
+    "No source write anywhere until D1/D2/D4 receipts and an activation record exist"
+  ],
+  "reviewer_assignments": {
+    "w1_source_review_proposed": "Codex (nonauthor of ZCode source changes)",
+    "w1_independent_qa": "OpenCode when quota actually returns; no retry/switch",
+    "w1_architecture_conformance": "Claude (adopted contract)",
+    "inta_correction_review": "qualified nonauthor, explicitly not ZCode if ZCode implements",
+    "fallback": "honest REVIEW_BLOCKED; no self-approval"
+  },
+  "estimates": {
+    "unit": "ZCode working sessions of focused implementation+test+docs, AFTER all of that wave's gate receipts exist",
+    "assumptions": [
+      "gates resolved without new material findings that reopen contracts",
+      "reviewer availability within ~1 session turnaround per review round",
+      "no unresolved Mimosa recurrence on new source",
+      "single active writer per wave; no parallel competing edits"
+    ],
+    "ranges": {
+      "P0-W1": "3-6 sessions + 1-2 review/repair rounds",
+      "P0-W2": "5-9 sessions (widest functional surface: actions/states/grid/dependencies)",
+      "P0-W3": "4-8 sessions (object seam + proof model)",
+      "P0-W4": "3-6 sessions (filing cycles on adopted binding)",
+      "P0-W5": "4-8 sessions (read aggregation + design-heavy; AC-137 measurement)",
+      "P0-W6": "3-6 sessions (bulk/import/export/brief)",
+      "P0-W7": "3-6 sessions + independent QA cycle (integration, recovery, a11y, regression)"
+    },
+    "excluded_from_estimates": "gate resolution time (owner-dependent, unbounded here), reviewer wait time, Mimosa maintainer response",
+    "no_calendar_dates": true,
+    "no_completion_percentages": true
+  },
+  "preserved": {
+    "formal_results": "51 INT-A formal results unchanged; T11c OUTCOME_UNKNOWN; D-14 separate",
+    "antigravity_authorship": "R4/R5 harness payloads remain Antigravity-authored; frozen review intact",
+    "source_state": "BE01 accepted snapshot 136eae6+patch 33297560; apps import uncommitted; no accepted corrected commit"
+  },
+  "no_self_done": true
+}

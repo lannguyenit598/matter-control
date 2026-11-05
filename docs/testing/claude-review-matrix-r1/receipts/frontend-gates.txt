@@ -1,0 +1,4 @@
+cwd: apps/frontend
+argv: rtk pnpm typecheck / lint / format:check / agents:check, rtk pnpm test
+result after the fix pass: typecheck, lint, format, agents pass; vitest 76 files / 692 tests passed in one run; in three other full-suite runs exactly one timing-sensitive test failed each time (upload-attempt family, pre-existing, passes alone; once my own review-list dialog test, which I gave a 15 s per-test budget)
+builds: rtk pnpm build and rtk pnpm build:webpack both passed with the compiled-CSS guard AFTER the fix pass (route /matters/[matterId]/reviews present)

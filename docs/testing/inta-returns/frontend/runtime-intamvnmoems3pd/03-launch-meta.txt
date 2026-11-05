@@ -1,0 +1,42 @@
+MC-002-INTA-FE owned Next development runtime launch — runId intamvnmoems3pd
+Owner: actual ZCode. Recorded 2026-10-25T17:31–17:36Z (UTC). Host darwin 27.0.0 arm64.
+
+Attempt 1 — 2026-10-25T17:31:13Z (REJECTED compile, stopped by owner before any harness case)
+- Constructed argv: node /tmp/mc002-inta-harness/node_modules/next/dist/bin/next dev -H 127.0.0.1 -p 18085
+  (Turbopack default, i.e. package.json "dev" script form), cwd /tmp/mc002-inta-harness, launched via
+  env -i with exactly: PATH, HOME, TMPDIR=/tmp, NODE_ENV=development, MC_INTA_ENABLE=1,
+  MC_INTA_GO_BASE_URL=http://127.0.0.1:18086, MC_INTA_STATE_DIR=/tmp/mc002-inta-state-intamvnmoems3pd.
+- Root PID 86336, listener PID 86338; banner "▲ Next.js 16.4.2 (Turbopack) ✓ Ready in 334ms".
+- First compile FAILED (GET / → 500): Turbopack "Could not find the Next.js package (next/package.json)
+  … Filesystem root used for resolution: /private/tmp/mc002-inta-harness" — Turbopack's hermetic
+  workspace-root rule refuses the INTA-1-designed cross-root dependency realpaths that land in
+  /private/tmp/mc002-inta-fe/node_modules/.pnpm/... Full stderr: 01-next-stderr.log; stdout: 01-next-stdout.log.
+- Correction basis (not a source/config change): every accepted owner round R1–R4 launched the reviewed
+  harness with argv "/private/tmp/mc002-inta-harness/node_modules/.bin/next dev -H 127.0.0.1 -p 18085 --webpack"
+  (evidence: docs/testing/inta-returns/frontend/r{1,2,3,4}/12-live-guards.log), and .next/dev/cache
+  shows turbopack last write 10:08 vs webpack dev caches 10:10 on 2026-10-25. --webpack is a documented
+  installed-CLI option (node_modules/next/dist/docs/.../06-cli/next.md). Recorded as a reported runtime
+  deviation for INT-ENV-07 review: default Turbopack dev cannot compile this layout; webpack bundler used.
+- Owned stop 2026-10-25T17:35:10Z: SIGTERM to owned root PID 86336; PIDs 86336/86338 gone, port 18085
+  free (lsof exit 1), zero harness cases dispatched, state dir still absent.
+
+Attempt 2 — 2026-10-25T17:35:21Z (ACCEPTED owned runtime; kept running for stage1)
+- Constructed argv: /bin/sh -c 'exec /private/tmp/mc002-inta-harness/node_modules/.bin/next dev
+  -H 127.0.0.1 -p 18085 --webpack' via nohup, cwd /tmp/mc002-inta-harness, env -i with exactly:
+  PATH=/Users/nguyenvanlan/.nvm/versions/node/v24.22.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin,
+  HOME=/Users/nguyenvanlan, TMPDIR=/tmp, NODE_ENV=development, MC_INTA_ENABLE=1,
+  MC_INTA_GO_BASE_URL=http://127.0.0.1:18086, MC_INTA_STATE_DIR=/tmp/mc002-inta-state-intamvnmoems3pd.
+  No product/session/provider-secret variables present (env -i whitelisting; guards.ts key set clean).
+  No .env loading (no .env files exist in harness root; verified).
+- Root owned process PID 88444, lstart "Mon Oct 26 00:35:21 2026" (+07), listener child PID 88453
+  on 127.0.0.1:18085 (next-server v16.4.2).
+- ps command= (recorded verbatim for stop-script provenance):
+  node /private/tmp/mc002-inta-fe/node_modules/.bin/../.pnpm/next@16.4.2_@babel+core@7.29.7_supports-color@7.2.0__@playwright+test@1.64.1_@types+nod_a0a892e05fdbcbd9f6d2ff0a183f1dd0/node_modules/next/dist/bin/next dev -H 127.0.0.1 -p 18085 --webpack
+- Banner: "▲ Next.js 16.4.2 (webpack) ✓ Ready in 216ms"; next.config.ts startup guard passed
+  (validateHarnessStartup accepted environment).
+- Readiness probe 2026-10-25T17:35:38Z: GET http://127.0.0.1:18085/ → HTTP 404 (expected; no root
+  route), stderr log empty — webpack compiles the cross-root layout without error. Logs:
+  02-next-stdout.log / 02-next-stderr.log.
+- Owned-process provenance written per reviewed scripts/stop-harness.sh convention:
+  /tmp/mc002-inta-harness/.run-state/harness.pid (88444) and .run-state/harness.provenance
+  (pid=88444, startTime, cmd as above), mode 0600.

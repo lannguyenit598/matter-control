@@ -1,0 +1,28 @@
+{
+ "run": "verify-R3-b1-head-72266cb",
+ "argv": [
+  "rtk",
+  "proxy",
+  "go",
+  "test",
+  "-race",
+  "-count=1",
+  "-json",
+  "./internal/adapter/outbound/postgres/",
+  "-run",
+  "TestB1LeastPrivilegeProfile|TestBFFStateRetentionPurge|TestAccessPathIndexesMigration",
+  "-o",
+  "/dev/null"
+ ],
+ "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+ "env_file": "/private/tmp/mc-opencode-verify-wave-20261031/private/dsn.env",
+ "started_utc": "2026-11-01T00:58:42Z",
+ "ended_utc": "2026-11-01T00:59:09Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": [
+  "MC_BFF_TEST_DATABASE_URL",
+  "MC_TEST_DATABASE_URL"
+ ]
+}

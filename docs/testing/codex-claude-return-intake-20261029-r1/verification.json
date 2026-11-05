@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-29T09:01:10.104440+00:00",
+  "head": "20feedbf06c859a9806055d609f5b132fe8bb086",
+  "reviewed_source_count": 14,
+  "drift_since_review_snapshot": [],
+  "application_source_edited_by_this_intake": false,
+  "tests": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "pnpm",
+      "test",
+      "src/lib/auth.test.ts",
+      "src/lib/env.test.ts",
+      "src/app/api/auth/auth-routes.test.ts",
+      "src/features/work/agenda.test.ts",
+      "src/features/work/components/agenda-view.test.tsx",
+      "src/features/proof/evidence-basis.test.tsx"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend",
+    "reported_start_local": "2026-10-29 15:56:43 Asia/Ho_Chi_Minh",
+    "log_mtime_utc": "2026-10-29T08:56:44.770819+00:00",
+    "exit": 0,
+    "files_pass": 6,
+    "tests_pass": 54
+  },
+  "reproduction": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "node",
+      "/private/tmp/mc-review-basis.cjs"
+    ],
+    "exit": 0,
+    "meaning": "assertions confirm incorrect candidate outputs; not a desired-behavior PASS"
+  },
+  "correction_prompt": "PREPARED_NOT_DISPATCHED"
+}

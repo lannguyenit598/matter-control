@@ -1,0 +1,189 @@
+{
+  "task": "MC-002-INT-QA-FINAL",
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.3 bounded matrix correction and final review",
+    "--file",
+    "/tmp/mc002-step023-opencode-final-input.txt",
+    "Correct the acceptance matrix and recheck bounded Step02.3 proposal findings. No tools/runtime. Return the packet JSON schema with exact edits only."
+  ],
+  "exit": 0,
+  "start_utc": "2026-10-25T01:04:19.372938+00:00",
+  "end_utc": "2026-10-25T01:08:01.749968+00:00",
+  "elapsed_seconds": 222.37732533300004,
+  "session_id": "ses_e8f69b65effeTBK0EZOkBIkSuD",
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "runtime_tests": "NOT_RUN",
+  "verdict": "PASS_DOCUMENT_ONLY",
+  "findings": [
+    {
+      "id": "PREREQ-01",
+      "finding": "The exact app-client success `value` field wording (proposal \u00a75.4 envelope) needs an explicit ARCH-FINAL clarification in Claude's proposal before owner dispatch; recorded in matrix \u00a78; no claim is made that the proposal text was already amended."
+    },
+    {
+      "id": "PREREQ-02",
+      "finding": "The validated-`refId` scope wording (caller-supplied input permitted only as a fixed path parameter) needs an explicit ARCH-FINAL clarification in Claude's proposal before owner dispatch; matrix INT-ENV-04 wording is corrected provisionally in this packet."
+    }
+  ],
+  "dispositions": [
+    {
+      "id": "INT-QA-01",
+      "status": "CLOSED",
+      "reason": "Exact golden 503 detail closed on the supplied read-only source pin: literal `service temporarily unavailable`, retryAfter 1, at head 52b60a4 (docs/api.md, errors.go, unavailable.golden). Read-only accepted source, not a new architect approval and not a runtime replay; hashes in the pin are taken as supplied, not independently recomputed (tools denied)."
+    },
+    {
+      "id": "INT-QA-02",
+      "status": "CLOSED",
+      "reason": "Matrix applicability already requires explicit PO approval of INT-A including the \u00a75 harness endpoint as mandatory, not conditional; reviewed and retained unchanged."
+    },
+    {
+      "id": "INT-QA-03",
+      "status": "CLOSED",
+      "reason": "The runtime decision document (step-02-runtime-decision-request) was updated as the governing pointer over INT-D01; reviewed as supplied."
+    },
+    {
+      "id": "QX1",
+      "status": "CLOSED",
+      "reason": "INT-PERS-04 rewritten as read-only reconciliation: no re-POST, retry, new key, list or SQL scope expansion of user X; T11c POST stays OUTCOME_UNKNOWN and unresolved; 201/409 on any re-post never treated as proof; no repeated-write or false failed/success driver/UI outcome; product receipt reconciliation deferred to D-09 (G-3). Aligned with proposal \u00a77, which needed no edit."
+    },
+    {
+      "id": "QX2",
+      "status": "CLOSED",
+      "reason": "INT-PRIV-01 rewritten: synthetic body markers must be absent from Go and Next application logs ONLY; credential/DSN/password/token values absent from every retained artifact including envelopes; bounded synthetic response bodies inside envelopes permitted; truncated body cannot satisfy any body assertion."
+    },
+    {
+      "id": "QX3",
+      "status": "CLOSED",
+      "reason": "T11a now asserts client `code` `HTTP_ERROR` with harness `classification` `unavailable` per proposal \u00a75.5; T11b no longer infers unchanged from a 503 alone \u2014 after-recovery reconciliation is read-only via INT-PERS-04 recording actual state, with strict no-change only under a fixture variant that causally verifies the DB stopped before the write. Follows proposal \u00a77 and the native unknown-write rule."
+    },
+    {
+      "id": "QX4",
+      "status": "CLOSED",
+      "reason": "FIX-D-AUTH redefined as the future PO-approved identity-provider / per-user access-token mechanism under G-1/INT-D02; no provider, token format or lifetime selected now; the optional INT-B test-issuer/signature fixture validates plumbing only and can never close product authentication; a D-03 success identity never proves authorization."
+    },
+    {
+      "id": "QX5",
+      "status": "CLOSED",
+      "reason": "AC traces corrected to the evidenced mapping: D-04 cross-workspace \u2192 AC-135; D-05 membership \u2192 AC-158; D-06 viewer write + verifier \u2192 AC-134 + AC-140; D-07 revocation \u2192 AC-147; D-08 workspace-OWNER-without-membership \u2192 AC-118; AC-158 retained alongside. No invented claims mapped."
+    },
+    {
+      "id": "QX6",
+      "status": "CLOSED",
+      "reason": "INT-PERS-01/02 preconditions now sequence them explicitly after T1/T2 and before any mutation of A (T9/T10), with an immediate pre-restart checkpoint and no mutation between checkpoint and restart; a post-T9 `version` 2 is never compared against `version` 1. Matches proposal \u00a76."
+    },
+    {
+      "id": "OTHER-ENV04",
+      "status": "CLOSED",
+      "reason": "INT-ENV-04 corrected: caller-supplied input is limited to the Zod-validated `refId`, used exclusively as a fixed path parameter of the fixed route template; all other caller input becomes no method/URL/path/header/body; still not a proxy."
+    },
+    {
+      "id": "PREREQ-01",
+      "status": "OPEN",
+      "reason": "Pre-dispatch gate: app-client `value` field wording requires explicit ARCH-FINAL clarification in Claude's proposal; recorded in matrix \u00a78; no false claim of amendment."
+    },
+    {
+      "id": "PREREQ-02",
+      "status": "OPEN",
+      "reason": "Pre-dispatch gate: validated-`refId` fixed-path-param wording requires explicit ARCH-FINAL clarification in Claude's proposal; recorded in matrix \u00a78; no false claim of amendment."
+    }
+  ],
+  "intake_repair": {
+    "initial_intake_exit": 1,
+    "provider_exit": 0,
+    "edits_count": 14,
+    "applied": [
+      {
+        "index": 0,
+        "state": "already_applied"
+      },
+      {
+        "index": 1,
+        "state": "already_applied"
+      },
+      {
+        "index": 2,
+        "state": "already_applied"
+      },
+      {
+        "index": 3,
+        "state": "already_applied"
+      },
+      {
+        "index": 4,
+        "state": "already_applied"
+      },
+      {
+        "index": 5,
+        "state": "already_applied"
+      },
+      {
+        "index": 6,
+        "state": "already_applied"
+      },
+      {
+        "index": 7,
+        "state": "already_applied"
+      },
+      {
+        "index": 8,
+        "state": "already_applied"
+      },
+      {
+        "index": 9,
+        "state": "already_applied"
+      },
+      {
+        "index": 10,
+        "state": "already_applied"
+      },
+      {
+        "index": 11,
+        "state": "already_applied"
+      },
+      {
+        "index": 12,
+        "state": "target_span_normalized",
+        "reason": "Provider old-text omitted an existing clause before FIX-D-ISOL; replacement text unchanged",
+        "actual_old": "Future fixtures: FIX-D-AUTH = a run-scoped, non-production local auth layer meeting proposal \u00a72 INT-B preconditions (fresh per-run asymmetric key pair held in memory or run-scoped temp file, never committed or reused, destroyed at run end; JWT access token with pinned alg/kid, local issuer URN, `aud` equal to the local Go API identifier, `exp` \u226415 min, `nbf`/`iat` checked, no role/permission/workspace claims; validator refuses to start unless the harness flag is set, binding is loopback and the environment is not production; missing/invalid/expired \u2192 401). FIX-D-ISOL ="
+      },
+      {
+        "index": 13,
+        "state": "applied_exact"
+      }
+    ],
+    "semantic_change_to_provider_replacements": false
+  },
+  "matrix_sha256": "3665352724d388a37da75176007335a7414d7d24891b3a6991b224639fd374f8",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e8f69b65effeTBK0EZOkBIkSuD"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ]
+}

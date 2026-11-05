@@ -1,0 +1,37 @@
+# Redacted export; original author log preserved unmodified and excluded from this commit.
+# commands.log — MC-ZCODE-RLF-REVIEW-20261102 (reviewer: actual ZCode session, model account:zai-start-plan/GLM-5.3)
+
+2026-11-02T18:49Z  rtk git rev-parse --abbrev-ref HEAD && git rev-parse HEAD && git status --porcelain | wc -l
+  → codex/unified-project-flow / 7bf198c103476f490ebbdf58b1bd563d0bba8a61 / 89      [pre-flight PASS]
+2026-11-02T18:50Z  git diff --name-only 7bf198c -- apps ops (+ untracked non-docs) → changed-files.txt (74 lines incl. headers)
+2026-11-02T18:50Z  shasum -a 256 over 66 implementation files → drift-manifest.txt (start pin)
+2026-11-02T18:52Z  ls docs/testing/zcode-rlf-review-20261102-r1 → ABSENT (namespace created; author files untouched)
+2026-11-02T18:55Z  Skill(accessibility) loaded; Skill(vercel-react-best-practices) loaded; Skill(postgresql) loaded.
+                   UNAVAILABLE in this env (recorded, not substituted): review, plan-eng-review, go-skills-router, go-code-review,
+                   go-database, api-designer, api-security-auth-pattern, cso, vitest-skill, test-coverage, root-cause-tracing.
+                   supabase-postgres-best-practices: conditional per §4 — not loaded (no Supabase/pooler-specific code in diff).
+2026-11-02T19:05Z  Source probes (rtk grep/sed, all cited file:line in return.md):
+                   mapMatterError (matter_store.go:313-326) + mapError (pool.go:113-126) → 23505 unmapped except command_receipts_pkey
+                   b1-roles.sql DELETE grants = exactly 4 tables; mcsqlc/saved_views.sql.go:14 DELETE FROM saved_views
+                   b1_least_privilege_test.go:421-448 empirical probes = fixed list (no product sqlc queries)
+                   intake_guidance_service.go:92-98 mustList swallows store errors
+                   work/[itemId]/page.tsx:163 criteria=[] when !proof.ok
+                   saved-views.tsx:65 submitLabel="Delete"; guidance-panel.tsx:151 submitLabel={`Publish v${r.no}`}
+                   0016_guidance.sql UNIQUE(document_id,no) only vs memory_intake_guidance.go:123 duplicate-title rejection
+                   changed-files.txt: filing_service.go / filing.go absent → D-BF1 guard untouched
+2026-11-02T19:10Z  Ports inventory: 3000/3109/8081/18084/18094/8080/55440/55441/55462/55470/55471 all LISTEN-free; docker ps empty
+                   (retained stack untouched; author fixture already stopped)
+2026-11-02T19:12Z  docker run -d --name mc-rlf-review-pg-20261103 -p 127.0.0.1:55471:5432 (postgres:17-alpine, volume
+                   mc-rlf-review-pgdata-20261103, synthetic creds) → READY (reviewer-owned fixture)
+2026-11-02T19:14Z  cd apps/backend && MC_TEST_DATABASE_URL=<FIXTURE_DSN_REDACTED> make check
+                   → EXIT=0 (14 packages ok, -race, memory+PG suites) — log /tmp/mc_review_make_check.log
+2026-11-02T19:18Z  cd apps/frontend && pnpm check → EXIT=0 (typegen, tsc, eslint, prettier, vitest 919 passed / 12 skipped)
+                   — log /tmp/mc_review_pnpm_check.log
+2026-11-02T19:20Z  pnpm vitest run filing-ui.test.tsx work-context.test.tsx my-agenda.test.ts saved-views.test.ts → 4 files PASS (686ms)
+2026-11-02T19:22Z  docker stop mc-rlf-review-pg-20261103 → stopped; docker ps → empty
+2026-11-02T19:23Z  drift re-verify: shasum over the same 66 files vs start pin → DRIFT_NONE (bytes unchanged through review)
+2026-11-03T08:05Z  REWORK (PO-routed): B1 deletable class + b1-roles.sql + positive mc_runtime probe; duplicate-name typed
+                   409s (saved views create/update, playbooks); GetIntake error propagation; 0016 UNIQUE(matter,title) +
+                   typed pre-check; IntentForm.submitAriaLabel + localized labels; WorkContext criteria-null.
+2026-11-03T08:20Z  docker start mc-rlf-review-pg-20261103 → make check → EXIT=0 (14 pkgs, -race) → docker stop → STOPPED
+2026-11-03T08:25Z  pnpm check → EXIT=0 (920 passed / 12 skipped) — logs /tmp/mc_rework_*.log

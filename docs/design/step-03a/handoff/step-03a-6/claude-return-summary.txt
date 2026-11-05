@@ -1,0 +1,71 @@
+The review is done: all four artifacts are written to the review directory, and the verdict is ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY. That means the local-r3 design is compatible with approved policy and with the candidate architecture on paper. Nothing was built, run or rendered, and no security behaviour was tested.
+
+Task and identity
+- Task: MC-003A-ARCH-COMPAT. Reviewer is actual Claude Code 2.1.310, model claude-opus-5-5, run interactively by you. Codex's dispatch status recorded 2.1.309; I noted the drift.
+- Head: 6530858, with intake base dbcc4a9 as its parent. Frozen local-r3 24103d1 is present.
+- No auth or setting changes: no login, provider change or settings change.
+
+Disclosure. The candidate architecture documents I reviewed against (api-contracts, security-architecture, dependency-engine, document-lineage, filing-model, ADR-001/002/003) were written earlier by Claude Code claude-opus-5-5. So this review is not independent of them and cannot approve them. The PO Architecture Approval Gate is still NOT_PASSED.
+
+Inputs checked
+- Manifest: 41/41 files match bytes and SHA256, and all 7 Step02 snapshot blobs equal the source at dd959b6.
+- Frontend references: both /tmp checkouts are clean at 3e5a642 with the expected origin. No drift.
+- How deeply each file was read (full, sections only, or unread) is listed in claude-review.md §2.
+
+412 and 200 dispositions
+
+┌────────────────────────────────────────────────────┬─────────────────────────────────────────────────────────────────────────────────────┐
+│                        Item                        │                                   Classification                                    │
+├────────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+│ 412 in INT-A (T10)                                 │ Already approved, but only for the local transport scope; not product evidence      │
+├────────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+│ 412 stale-revision in the product API              │ Compatible proposal, not yet approved                                               │
+├────────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+│ 200 bulk with per-row outcomes in the product API  │ Compatible proposal, not yet approved; stale rows come back as STALE inside the 200 │
+├────────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+│ 200 bulk in INT-A                                  │ Not applicable; INT-A has no bulk route                                             │
+├────────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+│ 409 or 207 for stale (from the Antigravity return) │ Conflicts with the candidate API; already corrected by intake INT-01                │
+├────────────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────┤
+│ refId, value envelope, 16 KiB truncation           │ Harness-only, not applicable to the product; not reopened                           │
+└────────────────────────────────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+
+Requirement statuses (FR-001..020)
+- 16 compatible with constraints and 1 compatible (FR-003, Next Action).
+- 2 candidate not yet approved: FR-012 bulk editing and FR-018 the auth mechanism.
+- 1 needs evidence: FR-009, because the candidate API doesn't define the Control Room response shape.
+- The matrix also covers each of A-01..A-16, the 5 architecture-dependent findings and 12 cross-cutting rows. No change is required against approved policy or D-UX01..04.
+- No ADR proposed. The eight open technical questions (TQ-01..08) are contract details inside the existing candidate documents.
+
+Main things Antigravity must get right in a future slice
+- Shared token: the starter falls back to a shared API token (backend.ts:25) and grants demo/anonymous sessions full permissions (auth.ts:33-45). Both must fail closed for product data.
+- Error mapping: 409, 412, 428 and 503 all collapse to one generic error in the starter. The UI needs to tell conflict, guard failure, unavailable and partial results apart.
+- Unknown outcome: a timeout, network error or 503 on a mutation means the outcome is unknown, not "not applied". The retry must reuse the same Idempotency-Key.
+- Bulk: a 200 response with failed rows is not success. Row checks must use the revision from the preview; the concept's demo code uses the current revision, which is fine for a mock but wrong for production.
+- Dialogs: drafts must live above the Dialog. If the opener has been filtered out, focus goes to a labelled container. Draft loss and focus landing on the page body were not reproduced; the source only suggests they could happen.
+
+Items for others
+- K-2 (UX owner): define the import "Draft" step as the pre-confirm preview, not a new record state.
+- TQ-08 (Claude/ZCode): the candidate API lists no detail reads for nodes, dependency edges, evidence, version ledger, filing cycles, waits or parties.
+- PO decisions: the identity provider (INT-D02), hosting and frontend adapter (ADR-001/003), retention and limits, and the overall Architecture Approval Gate.
+
+Gate status (proposed for Codex intake, not self-approved)
+- G5 has an actual Claude return with the verdict above.
+- G3 rendered validation stays BLOCKED_BY_TOOLING and G4 independent QA stays PENDING.
+- MC-003A stays REWORK_REQUIRED, and STEP03B stays NOT_AUTHORIZED.
+- Next: Codex intakes the four files, records K-2 and tracks TQ-01..08.
+
+Files written (all four were checked absent first; nothing committed, no existing file edited):
+- claude-review.md — SHA256 1b02416…
+- architecture-compatibility-matrix.json — SHA256 baaccb7…
+- api-auth-dependency-matrix.md — SHA256 300e41a…
+- antigravity-implementation-constraints.md — SHA256 70a41a0…
+
+After a review pass I regenerated and edited my own new files to add the A-row dispositions, findings, TQ-08 and requirement IDs. The final hashes above are the ones to intake. The other untracked files in that worktree are not mine and were left alone.
+
+Skipped and remaining risk
+- Not read: intake.json, findings-disposition.json, project-atlas-dataset.md and the body of integration-scope-proposal.md.
+- Not reviewed: the 349 KB HTML concept beyond its bulk/dialog functions, and backend source.
+- Not run: any build, test, server or browser. React useOptimistic behaviour comes from the Context7 reference docs, not the installed 19.3.1.
+- High risk: there is no product authentication yet and no identity provider selected. Bulk and unknown-outcome handling are high-risk only if implemented wrongly.
+- Medium risk: the Control Room response shape, the missing detail reads, the reopen/promote impact preview, the starter's error flattening, and the unresolved frontend-adapter decision (ADR-003).

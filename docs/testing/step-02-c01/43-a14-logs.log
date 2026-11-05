@@ -1,0 +1,7 @@
+--- A14-native: log assertions (request_id + status 503 present; no password/DSN/query values) ---
+count_status_503_log_entries=6
+count_request_id_entries=9
+count_password_occurrences_must_be_0=0
+count_dsn_occurrences_must_be_0=0
+{"time":"2026-10-25T00:07:15.877132+07:00","level":"ERROR","msg":"http_request","method":"GET","path":"/api/v1/users/01a16ee1-5ce0-7ead-b78e-f8a6d657d0cc","route":"/api/v1/users/:id","status":503,"latency":207750,"remote_ip":"127.0.0.1","error":"get user: postgres: service temporarily unavailable: failed to connect to `user=mc002bec01 database=mc002be_c01`: 127.0.0.1:15457 (127.0.0.1): dial error: dial tcp 127.0.0.1:15457: connect: connection refused","request_id":"RIMPHamUjOIvtUXLdQuJeEBoVkDEqfHq"}
+{"time":"2026-10-25T00:07:15.897359+07:00","level":"ERROR","msg":"http_request","method":"GET","path":"/api/v1/users","route":"/api/v1/users","status":503,"latency":227042,"remote_ip":"127.0.0.1","error":"list users: postgres: service temporarily unavailable: failed to connect to `user=mc002bec01 database=mc002be_c01`: 127.0.0.1:15457 (127.0.0.1): dial error: dial tcp 127.0.0.1:15457: connect: connection refused","request_id":"qnZVJcrYyVSnCiuYbXDwXaiyLMPnexDO"}

@@ -1,0 +1,31 @@
+{
+  "status": "BA_REVIEW_RETURNED_AUTHOR_ADJACENT",
+  "base": {
+    "head": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+    "dirty": true,
+    "note": "dirty tree = Claude Code BF-01..10 remediation candidate (author-verified) + concurrent-session files; source unchanged by this review (tracked-diff hash before/after in source-manifest.json)"
+  },
+  "bfRecheck": [
+    {"id": "BF-01", "verdict": "CLOSED_VERIFIED", "evidence": "live filing walk: outcome-criterion-not-applicable on non-filing; guard-failed(MISSING) submission; APPROVAL -> PARTIALLY_VERIFIED/PENDING -> VERIFIED/ACCEPTED after independent assessment; SuiteBF+GW Postgres green; migration 0009 applied", "residual": "filing with proofRequired=true and no declared OUTCOME criterion still reads VERIFIED from package acceptance (remediation D-BF1 open PO decision); grids/control-room show package-driven verification only"},
+    {"id": "BF-02", "verdict": "CLOSED_VERIFIED", "evidence": "proofRequired=false filing completed package path + OWNER no-signature applicability + submission live; UI label NOT_RUN"},
+    {"id": "BF-03", "verdict": "CLOSED_SOURCE_ONLY", "evidence": "lib/mc/local-time.ts + 11-case zone tests green in tree; browser input NOT_RUN"},
+    {"id": "BF-04", "verdict": "CLOSED_SOURCE_ONLY", "evidence": "SearchPicker + searchWorkItemsAction + truncation tests; >200 browser search NOT_RUN"},
+    {"id": "BF-05", "verdict": "CLOSED_VERIFIED", "evidence": "live /me/reviews: designated verifier total 13 with titles; non-designated VIEWER total 0; revocation cases SuiteBF green"},
+    {"id": "BF-06", "verdict": "CLOSED_SOURCE_ONLY", "evidence": "app/page.tsx + DEFAULT_RETURN -> /my-actions; entry-route tests; browser NOT_RUN"},
+    {"id": "BF-07", "verdict": "CLOSED_SOURCE_ONLY", "evidence": "matter landing = ControlRoomView brief variant; page tests; rendered comprehension NOT_RUN"},
+    {"id": "BF-08", "verdict": "CLOSED_VERIFIED", "evidence": "live GET /matters?q= exact total + workspaceName + role scoping; client-side search nav NOT_RUN in browser"},
+    {"id": "BF-09", "verdict": "CLOSED_SOURCE_ONLY", "evidence": "WorkNow + primaryTransition + viewer-empty transitions tests; rendered NOT_RUN"},
+    {"id": "BF-10", "verdict": "CLOSED_VERIFIED", "evidence": "live brief targetLabel + invalid-window 400; rendered draft readability NOT_RUN"}
+  ],
+  "findings": [
+    {"id": "ZBA-F01", "severity": "P3", "class": "DEFECT", "flow": "F13", "title": "Contract drift: bulk preview request shape (doc-only)", "evidence": "commands/http-walkthrough bulk preview 400 malformed vs commit 200 flat; data_handlers.go bulkRowRequest"},
+    {"id": "ZBA-F02", "severity": "P3", "class": "DEFECT", "flow": "F10", "title": "Contract drift: answers require questionRevision, docs omit it", "evidence": "answer 428 without, 201 with; review_handlers.go"},
+    {"id": "ZBA-F03", "severity": "P3", "class": "GAP", "flow": "F02", "title": "Workspace role vocabulary OWNER|MEMBER undocumented", "evidence": "member-add 422 with EDITOR; access.go WorkspaceRoleOwner/Member"},
+    {"id": "ZBA-F04", "severity": "P3", "class": "UX_FRICTION", "flow": "F14", "title": "Brief targetLabel empty for membership-type events (in-spec)", "evidence": "live brief labels array"},
+    {"id": "ZBA-F05", "severity": "P3", "class": "UX_FRICTION", "flow": "F07", "title": "Evidence create response minimal; effects only via proof readback", "evidence": "POST /evidence -> {id,kind,seq}"},
+    {"id": "ZBA-F06", "severity": "P3", "class": "UX_FRICTION", "flow": "F05", "title": "WAITING needs owner via separate PATCH (API-tier friction; guards correct)", "evidence": "waiting-owner-required 409 then PATCH+WAITING 200"},
+    {"id": "ZBA-F07", "severity": "P3", "class": "NOT_VERIFIED", "flow": "F15", "title": "OUTCOME_UNKNOWN reconciliation not triggered live", "evidence": "SuiteW6/AC-139 tests green; no deterministic 503 via public API"}
+  ],
+  "counts": {"P0": 0, "P1": 0, "P2": 0, "P3": 7, "DEFECT": 2, "GAP": 1, "UX_FRICTION": 3, "RECOMMENDATION": 1, "NOT_VERIFIED": 1},
+  "testRun": {"command": "go test -race -json ./... (MC_TEST_DATABASE_URL -> fresh fixture db)", "pass": 734, "fail": 5, "skip": 6, "failures": ["TestB1LeastPrivilegeProfile + 4 subtests (deploy-readiness task, out of BA scope; profile-role hygiene in shared container)"]}
+}

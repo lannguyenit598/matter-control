@@ -1,0 +1,19 @@
+{
+  "recorded_utc": "2026-10-30T02:59:37.488773+00:00",
+  "originals_edited": false,
+  "author_return": {
+    "path": "docs/testing/zcode-audit-fixes-20261030-r1/return.md",
+    "bytes": 4679,
+    "sha256": "ed11be914cf44e124c94f040d191ed63a97e87462d2bd1652b7b24a0bfc8200f",
+    "expected_bytes": 4671,
+    "expected_sha256": "fbda3036af04e80b7bc17dc0c3865ccb74801ad2f3ba1ed8f3069380eafdd992",
+    "disposition": "HASH_MISMATCH_RETAINED; current-byte inventory is not a repaired author manifest"
+  },
+  "failed_durable_receipt": {
+    "path": "docs/testing/zcode-adr006-cloud-readiness-20261030-r1/durable-session-events.json",
+    "bytes": 162,
+    "sha256": "1dc13a118e2ade9ddab2d62dc9b2b6c7a8cfe4269bbab92e0acda96d7cf83dff",
+    "contains_missing_module_error": true,
+    "disposition": "NOT_ESTABLISHED; fresh backend-final-green is actual Go/PG JSON evidence"
+  }
+}

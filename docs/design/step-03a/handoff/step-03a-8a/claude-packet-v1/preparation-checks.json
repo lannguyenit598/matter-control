@@ -1,0 +1,43 @@
+{
+  "task": "MC-003A.8A",
+  "action": "prepare frozen Claude packet; no dispatch",
+  "official_write_route": "exec_command require_escalated / permitted intended local write",
+  "source_head": "e8eaea71099c575360e12ba81f462d8732843b6a",
+  "contract_baseline": "97356ce45c2b10070e9303f7c2ab39a425fad7a5",
+  "packet_count": 12,
+  "snapshot_bytes": 164137,
+  "manifest_bytes": 11607,
+  "manifest_sha256": "eed788550530966eea23a66a20e1edd84f18fa024963b60fb132f0a3028f0979",
+  "snapshots_verified": [
+    "00-focused-handoff.md",
+    "01-read-set-index.json",
+    "02-read-contract-excerpts.json",
+    "03-reference-delta.json",
+    "04-reference-addendum.md",
+    "05-business-rules.md",
+    "06-state-semantics.md",
+    "07-srs.md",
+    "08-acceptance-criteria.md",
+    "09-permission-matrix.md",
+    "10-candidate-api.md",
+    "11-candidate-adr-002.md"
+  ],
+  "source_paths_within_original_allowlist_plus_focused_handoff": true,
+  "expanded_source_contents_excluded": true,
+  "private_key_api_key_pattern_scan": "NO_MATCHES; not a confidentiality or egress attestation",
+  "authorization": "WAITING_SCOPED_AUTHORIZATION",
+  "claude_invoked": false,
+  "runtime": "NOT_RUN",
+  "old_snapshots_unchanged": true,
+  "new_files": 15,
+  "payload_and_draft_files": 14,
+  "note": "Count includes this preparation-checks.json; no runtime/review execution.",
+  "eof_separator_normalized": [
+    "06-state-semantics.md",
+    "07-srs.md",
+    "08-acceptance-criteria.md",
+    "10-candidate-api.md",
+    "11-candidate-adr-002.md"
+  ],
+  "git_whitespace_first_check": "FAILED on five extracted EOF blank separators; fixed before commit; no source file changed"
+}

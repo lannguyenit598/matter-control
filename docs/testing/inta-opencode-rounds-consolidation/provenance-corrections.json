@@ -1,0 +1,37 @@
+{
+  "CORR-01": {
+    "original_file": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/closeout-review-r1/review-inputs-addendum.json",
+    "actual_recorded_pin": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df8f5e282c6d661b26b",
+    "actual_recorded_length": 64,
+    "live_credential_scan_file_hash": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df8f5e282d6d661b26b",
+    "difference": [
+      {
+        "position_1based": 55,
+        "recorded": "c",
+        "actual": "d"
+      }
+    ],
+    "round2_quoted_pin": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df5e282d6d661b26b",
+    "round2_quoted_length": 62,
+    "disposition": "Originalpin64hexwithonecharerror; round2quote62isatranscriptiondefect. PriorCodexintake62wordingdescribedround2quote,notactualoriginalpin; correctedhere. Nooldfilemutation."
+  },
+  "CORR-02": {
+    "status": "MissingrawpinlogremainsexplicitNOT_RETAINED; neverbackfilled."
+  },
+  "review_round_assignment": {
+    "basis": "POadjudicationrecordforwardedbyhumanincurrentmessage, also storedinfinaloutputsmanifest",
+    "record": {
+      "recorded_utc": "2026-10-26T07:07:02Z",
+      "question_asked": "lateral review disposition (three options presented)",
+      "po_response": "Adopt lateral as 2nd round (Recommended) — PO confirms the lateral OpenCode session was legitimately launched",
+      "disposition": "lateral doc + r1-addendum ADOPTED as review round 2 per PO decision; this session's artifacts remain the round-1 record incl. the deepest per-row binding (required-rows.json); Codex intake merges both rounds",
+      "statuses_after_decision": "all four lateral artifacts: PRESERVED-UNMODIFIED then ADOPTED-ROUND-2 (PO); this session's five outputs: REVIEW-ROUND-1-EVIDENCE (current)",
+      "lineage_note": "append-only edits to this manifest for the adjudication record; intermediate hashes: pre-adjudication 7e35c75ca07dd18d9e8c5b253da96456547f6c807a6a0481b203a942353c164c; a first adjudication draft stamped 07:12:00Z was corrected to the observed clock 07:07:02Z before its hash became an anchor (same future-stamp class of error disclosed in review-inputs-addendum.json); final sha256 of this manifest is quoted in the final return message",
+      "supersedes": "the 'needs PO adjudication / pending' wording in collision_record.invocation_verifiability and residual-risk statements in the review narrative remain accurate as of their writing time; this block resolves them forward"
+    },
+    "effect": "Adoptoriginsetasround1,lateralsetasround2. This adjudicatesreviewprovenanceonly, notneverlistensemantics/runtime/securityapproval."
+  },
+  "timestamps": {
+    "status": "Ordering/timestampclaimsremainqualified. Neitherhashnorfilesystemmtimealoneprovesinvocation/sessionchronology; no needreopenfourtechnicalfindingsbecauseoftimeerrata."
+  }
+}

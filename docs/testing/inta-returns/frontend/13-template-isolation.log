@@ -1,0 +1,26 @@
+================================================================================
+MC-002-INTA-FE Template Invariance & Product Isolation Verification
+Timestamp: 2026-10-25T03:17:00Z
+Template Worktree: /tmp/mc002-inta-fe
+Base Commit: 3e5a642479acb789eb210e73fba956f3e85082e3
+================================================================================
+
+--- 1. Git Status ---
+On branch codex/mc-002-inta-fe
+nothing to commit, working tree clean
+
+--- 2. Git Diff against Base Commit ---
+Diff stat: (empty, 0 files changed, 0 insertions, 0 deletions)
+
+--- 3. Product TypeScript Typecheck (tsc --noEmit) ---
+Generating route types...
+✓ Types generated successfully
+Exit code: 0
+
+--- 4. Product ESLint (eslint .) ---
+Exit code: 0
+
+--- 5. Conclusion ---
+Template worktree /tmp/mc002-inta-fe has ZERO tracked changes.
+The companion harness /tmp/mc002-inta-harness is located in a sibling root outside the template checkout.
+Product TypeScript and ESLint configurations completely ignore the companion harness root.

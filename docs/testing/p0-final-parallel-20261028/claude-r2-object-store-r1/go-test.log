@@ -1,0 +1,46 @@
+=== RUN   TestR2_StoresUnderTheLocalLayoutWithItsDigestAndNeverTwice
+--- PASS: TestR2_StoresUnderTheLocalLayoutWithItsDigestAndNeverTwice (0.00s)
+=== RUN   TestR2_ReplacesAnObjectOfTheWrongSizeUnderTheKey
+--- PASS: TestR2_ReplacesAnObjectOfTheWrongSizeUnderTheKey (0.00s)
+=== RUN   TestR2_TooLargeStoresNothingAndDoesNotCallOut
+--- PASS: TestR2_TooLargeStoresNothingAndDoesNotCallOut (0.00s)
+=== RUN   TestR2_OpenVerifiesTheDigestAndTreatsMissingAsUnavailable
+--- PASS: TestR2_OpenVerifiesTheDigestAndTreatsMissingAsUnavailable (0.01s)
+=== RUN   TestR2_ContentIsAddressedWithinAMatter
+--- PASS: TestR2_ContentIsAddressedWithinAMatter (0.00s)
+=== RUN   TestR2_ProviderFailuresAreUnavailableNeverSuccess
+--- PASS: TestR2_ProviderFailuresAreUnavailableNeverSuccess (4.80s)
+=== RUN   TestNewR2_RequiresEverySetting
+--- PASS: TestNewR2_RequiresEverySetting (0.00s)
+=== RUN   TestPutOpen_RoundTripIdempotentAndLimited
+--- PASS: TestPutOpen_RoundTripIdempotentAndLimited (0.02s)
+=== RUN   TestOpen_CorruptionIsUnavailableNotServed
+--- PASS: TestOpen_CorruptionIsUnavailableNotServed (0.01s)
+=== RUN   TestOpen_OtherMatterCannotReadByDigest
+--- PASS: TestOpen_OtherMatterCannotReadByDigest (0.01s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/outbound/objectstore	6.246s
+=== RUN   TestLoadProduct_Defaults
+--- PASS: TestLoadProduct_Defaults (0.00s)
+=== RUN   TestLoadProduct_Errors
+--- PASS: TestLoadProduct_Errors (0.00s)
+=== RUN   TestLoadProduct_APIClientIDIsOptionalAndPublic
+--- PASS: TestLoadProduct_APIClientIDIsOptionalAndPublic (0.00s)
+=== RUN   TestLoadProduct_IdentityURLsNeedTLSExceptLoopback
+--- PASS: TestLoadProduct_IdentityURLsNeedTLSExceptLoopback (0.00s)
+=== RUN   TestLoadProduct_MigrationURLDefaultsToRuntimeURL
+--- PASS: TestLoadProduct_MigrationURLDefaultsToRuntimeURL (0.00s)
+=== RUN   TestLoadProduct_MaxInFlight
+--- PASS: TestLoadProduct_MaxInFlight (0.00s)
+=== RUN   TestLoadProduct_ObjectBackendDefaultsToTheLocalDirectory
+--- PASS: TestLoadProduct_ObjectBackendDefaultsToTheLocalDirectory (0.00s)
+=== RUN   TestLoadProduct_R2NeedsNoDirectoryButEverySetting
+--- PASS: TestLoadProduct_R2NeedsNoDirectoryButEverySetting (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/config	1.350s
+=== RUN   TestProductGraph_ResolvesEveryDependency
+--- PASS: TestProductGraph_ResolvesEveryDependency (0.00s)
+=== RUN   TestNewTokenVerifier_RefusesAKeyForAnotherApplication
+--- PASS: TestNewTokenVerifier_RefusesAKeyForAnotherApplication (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/app	1.589s

@@ -1,0 +1,52 @@
+{
+  "owner": "Actual Local Codex",
+  "task": "LOCAL_MANUAL_TEST_20261030",
+  "checked_utc": "2026-10-30T04:33:54.063145+00:00",
+  "url": "http://localhost:3000/login",
+  "source_head": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+  "private_runtime_dir": "/private/tmp/mc-manual-20261030-76lphvoo",
+  "database": "retained mc-p0-claude-pg / mc_p0_run; no migrations/seeds performed",
+  "object_store": "two existing synthetic files checksum-verified and copied into this owned runtime; originals untouched",
+  "auth": {
+    "status": 307,
+    "issuer_host": "matter-control-legal-dev-fm2k48.au1.zitadel.cloud",
+    "callback": "http://localhost:3000/api/auth/callback",
+    "pkce": "S256"
+  },
+  "css": [
+    {
+      "status": 200,
+      "bytes": 880,
+      "tailwind_compiled": true
+    },
+    {
+      "status": 200,
+      "bytes": 46173,
+      "tailwind_compiled": true
+    }
+  ],
+  "login_status": "READY_FOR_HUMAN_LOGIN; authenticated landing not yet observed",
+  "profile_limit": "Node local memory BFF; restart requires sign-in; not Worker/cloud readiness",
+  "backend": {
+    "pid": 48108,
+    "argv": [
+      "/private/tmp/mc-manual-20261030-76lphvoo/mcapi"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "start_ticks": "recorded via process identity after readiness"
+  },
+  "frontend": {
+    "pid": 48109,
+    "argv": [
+      "node",
+      "/private/tmp/mc-manual-20261030-76lphvoo/frontend/node_modules/next/dist/bin/next",
+      "start",
+      "--hostname",
+      "127.0.0.1",
+      "--port",
+      "3000"
+    ],
+    "cwd": "/private/tmp/mc-manual-20261030-76lphvoo/frontend",
+    "start_ticks": "recorded via process identity after readiness"
+  }
+}

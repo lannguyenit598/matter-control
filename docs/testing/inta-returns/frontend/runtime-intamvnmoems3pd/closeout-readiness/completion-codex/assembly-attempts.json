@@ -1,0 +1,25 @@
+{
+  "initial_attempt": {
+    "attempt": 1,
+    "exit": 1,
+    "failed_check": "native binary retained identity",
+    "diagnosis": "Assembly helper incorrectly parsed PID77632 from20-server-identity.txt as a SHA256. Actual binary matches the explicit binary sha256 in23-restart-identity.txt. Source/runtime unchanged.",
+    "script_sha256": "387eee8b82c1f539c1899458e07b4a78e0f01efb98a578abb2275196958cceff",
+    "retained_new_files": [
+      {
+        "path": "/tmp/mc002-inta-evidence/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/resource-observation.json",
+        "sha256": "0862eba74017bfed71b9e402ff8c8d39b9c2a02489e6a23509c9af95bdfc6d7f"
+      },
+      {
+        "path": "/tmp/mc002-inta-evidence/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/source-excerpts.json",
+        "sha256": "463d316e709c55ceeca6252c160eb0a117951837e6dffabcbe3f284aaab92d7a"
+      },
+      {
+        "path": "/tmp/mc002-inta-evidence/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/source-state.json",
+        "sha256": "3d6657e08f810e80222032e42cc1d37c23698db61cb3c42877f9639080f0519b"
+      }
+    ]
+  },
+  "current_attempt": 2,
+  "correction": "Read explicit binary SHA256 rather than process identity field; retained own3partial outputs verified before continuation."
+}

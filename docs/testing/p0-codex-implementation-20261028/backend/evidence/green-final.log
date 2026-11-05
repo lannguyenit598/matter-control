@@ -1,0 +1,92 @@
+=== RUN   TestSuiteW6_MemoryStore
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries
+=== RUN   TestSuiteW6_MemoryStore/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes
+=== RUN   TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges
+=== RUN   TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it
+=== RUN   TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation
+=== RUN   TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records
+=== RUN   TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group
+=== RUN   TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it
+=== RUN   TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once
+=== RUN   TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing
+=== RUN   TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2
+--- PASS: TestSuiteW6_MemoryStore (0.05s)
+    --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row (0.01s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes (0.02s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows (0.01s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/bytes (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2 (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2 (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2 (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol	1.541s
+=== RUN   TestImport_WholeSheetFailureIsBadRequest
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/empty
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_rowkey
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_kind
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_title
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/malformed_csv
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/malformed_xlsx
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/unsupported_format
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/rows
+--- PASS: TestImport_WholeSheetFailureIsBadRequest (0.03s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/empty (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_rowkey (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_kind (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_title (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/malformed_csv (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/malformed_xlsx (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/unsupported_format (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/rows (0.01s)
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/bulk
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/import
+--- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP (0.00s)
+    --- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/bulk (0.00s)
+    --- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/import (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/inbound/productapi	1.497s

@@ -1,0 +1,997 @@
+{
+ "task": "MC-003A-ARCH-COMPAT",
+ "reviewer": "Claude Code (actual) 2.1.310, model claude-opus-5-5, interactive session invoked by the human user",
+ "review_type": "DOCUMENT_AND_SOURCE_ONLY",
+ "repository_head": "6530858c6b64873fd416c5933083c35ecf5d71e7",
+ "design_intake_base": "dbcc4a96189dc185a5113a9ad8af3296494dd2b3",
+ "frozen_local_r3": "24103d17b5c9ca5cd23ed7f9695cb623517c76fe",
+ "step02_reference_commit": "dd959b62ae464ba03ba7ef8f6f06b106e4bb0e34",
+ "frontend_reference": "nextjs-atomic-starter 3e5a642479acb789eb210e73fba956f3e85082e3 (both /tmp checkouts clean)",
+ "input_derivation": "Rows keyed from design-to-code.json features (sha256 3a3ddf9b7bdda3ada9bd9ee1467499a73172f7a0f7559411d0b6146687e38aaa); compatibility-matrix-input.json null verdicts are not reused as findings",
+ "status_semantics": "architecture_status = document-level fit of the local-r3 design to approved policy plus the candidate architecture. authority_class states what the architecture side rests on; every row with CANDIDATE_ARCH remains subject to the PO Architecture Approval Gate (NOT_PASSED). No status is runtime or security evidence.",
+ "self_review_disclosure": "Candidate architecture documents were authored by Claude Code claude-opus-5-5 in MC-002-ARCH; this review is not independent of them and cannot approve them.",
+ "verdict": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+ "fr_status_counts": {
+  "COMPATIBLE_WITH_CONSTRAINTS": 16,
+  "COMPATIBLE": 1,
+  "UNKNOWN / NEEDS_EVIDENCE": 1,
+  "CANDIDATE_NOT_YET_APPROVED": 2
+ },
+ "features": [
+  {
+   "requirement_id": "FR-001",
+   "parent_id": "REQ-MC-P0-01",
+   "feature": "Requirement vs Action",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.06 Requirement Detail / §5.07 Action Detail",
+   "acceptance_criteria_ids": [
+    "AC-101",
+    "AC-121",
+    "AC-159"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-05",
+    "A-09"
+   ],
+   "frontend_component_interaction": "Requirement Detail / Action Detail drawers (Dialog/drawer + Card/Badge atoms); typed create/link forms; separate Requirement and Action rows in Grid",
+   "backend_capability": "Typed Requirement and Action nodes; zero/many link set; RULE-020 Decision/Finding/Risk/Entity context records",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: POST /matters/{m}/requirements|/actions, POST /requirements/{id}/actions/{actionId} (link, scope none, 409 duplicate), typed decisions/findings/risks; PATCH metadata allowlist",
+   "authorization": "O,E create/edit/link; V read only; active Workspace AND explicit Matter membership AND role (permission-matrix.md (APPROVED_BY_PO OBD-08/02))",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-001/020 APPROVED; candidate §2 rows; r3 spec §1.3 S-01..03, §3.1",
+   "risk": "LOW: UI must not offer an Action-completion path that implies Requirement completion/verification",
+   "recommended_action": "[TQ-08: detail read route not enumerated in candidate §2] Keep kinds as separate typed records and separate actions; no 'mark Requirement done' control; link is a set op (duplicate → existing link)",
+   "responsible_owner": "Antigravity (UI); ZCode (API); Claude (contract approval path)"
+  },
+  {
+   "requirement_id": "FR-002",
+   "parent_id": "REQ-MC-P0-02",
+   "feature": "Milestones",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.02 Control Room / §5.08 Dependency View",
+   "acceptance_criteria_ids": [
+    "AC-102",
+    "AC-141"
+   ],
+   "architecture_dependency_ids": [
+    "A-03",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Control Room milestones panel + Dependency View readiness; satisfied/total with failed reasons",
+   "backend_capability": "RULE-008 readiness evaluated server-side; UNASSESSED when no declared prerequisites; critical chain",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: GET /milestones/{id}/readiness; milestone prerequisite PUT/:remove (OWNER, If-Match milestone revision, reason)",
+   "authorization": "Read O,E,V; prerequisite/critical designation OWNER only with reason",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-008; dependency-engine.md §5 (candidate); r3 spec RULE-008 corrective clause (MS-01..03 UNASSESSED)",
+   "risk": "LOW: countdown or percentage could be read as readiness",
+   "recommended_action": "Render server readiness, counts and reasons only; UNASSESSED is a first-class state; no client predicate, no %",
+   "responsible_owner": "Antigravity; ZCode"
+  },
+  {
+   "requirement_id": "FR-003",
+   "parent_id": "REQ-MC-P0-03",
+   "feature": "Next Action",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.02 Control Room + selected-design-system.md Layout",
+   "acceptance_criteria_ids": [
+    "AC-103",
+    "AC-144"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Control Room Next Actions panel + Important Decisions queue adjacent (D-UX03); no-candidate explanation block",
+   "backend_capability": "RULE-021 candidates server-ordered (critical-unsatisfied, due asc, no-due last, stable ID) with excluded items + reasons",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: GET /matters/{m}/next-actions?assignee=; dependency-engine.md §7 returns excluded reasons WAITING/BLOCKED/UNASSIGNED + sourceRevision",
+   "authorization": "O,E,V read within Matter; assignee filter does not grant access",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE",
+   "evidence": "RULE-021; dependency-engine.md §7; controlled-handoff E-01 (AtlasT0 no eligible Action, show cause + internal owners)",
+   "risk": "LOW",
+   "recommended_action": "Use server order and excluded reasons verbatim; never synthesize candidates from Requirements or WAITING items",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "requirement_id": "FR-004",
+   "parent_id": "REQ-MC-P0-04",
+   "feature": "Waiting On",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.05 Waiting On / §5.02 Control Room",
+   "acceptance_criteria_ids": [
+    "AC-104",
+    "AC-130"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-09"
+   ],
+   "frontend_component_interaction": "Waiting On list/panel (spec-only screen 05) + Control Room Waiting On; row = button/link with accessible name",
+   "backend_capability": "Waiting relation created by execution transition to WAITING (party|condition, internalOwnerId, reason, followUpDueAt); resolve with response reference",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.1 to:WAITING payload; POST /waits/{id}:resolve (If-Match waiting revision)",
+   "authorization": "O,E mutate; V read",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "state-semantics.md execution table; r3 I-07 ('waiting_since' missing → 'Chưa có dữ liệu chờ', never 0)",
+   "risk": "LOW: waiting-since/aging field is not named in candidate read shapes",
+   "recommended_action": "[TQ-08: detail read route not enumerated in candidate §2] Display WAITING and dependency side by side (WAITING≠BLOCKED); aging only from a server field or event time; absent → explicit no-data",
+   "responsible_owner": "Antigravity; Claude (read-shape field naming, TQ-06)"
+  },
+  {
+   "requirement_id": "FR-005",
+   "parent_id": "REQ-MC-P0-05",
+   "feature": "Dependencies and Blocker Logic",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.08 Dependency View / §4.3",
+   "acceptance_criteria_ids": [
+    "AC-105",
+    "AC-122",
+    "AC-123",
+    "AC-124",
+    "AC-125",
+    "AC-146"
+   ],
+   "architecture_dependency_ids": [
+    "A-03",
+    "A-06",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Dependency View drawer (Inputs → Rule → Derived state); impact rail highlight (D-UX01); edge add/remove dialogs with reason",
+   "backend_capability": "Acyclic graph, RULE-003 edge predicate, synchronous derived propagation in matter transaction",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §1.1/§3.2: POST dependency-edges (If-Match downstream + expectedRevisions{upstream}); 409 cycle-detected path[]; 409 guard-failed failedGuards[]; :remove/:replace-gate with reason",
+   "authorization": "O,E ordinary edges with reason; milestone prerequisites OWNER",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-003/004; dependency-engine.md §2-6; ADR-002 §1 (candidate); r3 §4.2-4.3, I-01/I-02",
+   "risk": "MEDIUM: cycle/guard problem bodies collapse to generic text in starter toActionFailure",
+   "recommended_action": "[TQ-08: detail read route not enumerated in candidate §2] Map problem type → typed UI state (cycle path, failed gates); no READY toggle; unavailable evaluation shows 'Chưa đủ dữ liệu', never READY",
+   "responsible_owner": "Antigravity; ZCode"
+  },
+  {
+   "requirement_id": "FR-006",
+   "parent_id": "REQ-MC-P0-06",
+   "feature": "Evidence Requirements",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.06 Requirement Detail / §4.2",
+   "acceptance_criteria_ids": [
+    "AC-106",
+    "AC-127"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-11",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Requirement Detail evidence tab: criterion checklist distinct from supplied evidence; gaps ER-02/ER-04",
+   "backend_capability": "Evidence Requirement criteria with revisions/components/version rule/validity; applicability decision OWNER",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: POST evidence-requirements (expectedRevisions{subject}), POST /evidence-requirements/{id}/revisions (If-Match + expectedCurrentRevisionId); POST /nodes/{id}/verification-applicability (OWNER)",
+   "authorization": "O,E criteria; applicability NOT_REQUIRED OWNER only with reason, no open dispute",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-005; state-semantics verification table; r3 §4.4",
+   "risk": "LOW",
+   "recommended_action": "[TQ-08: detail read route not enumerated in candidate §2] Completeness by criterion not file count; zero criteria renders UNVERIFIED; NOT_REQUIRED only via explicit OWNER flow",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "requirement_id": "FR-007",
+   "parent_id": "REQ-MC-P0-07",
+   "feature": "Evidence Verification",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.09 Evidence & Verification",
+   "acceptance_criteria_ids": [
+    "AC-107",
+    "AC-121",
+    "AC-126",
+    "AC-127",
+    "AC-140"
+   ],
+   "architecture_dependency_ids": [
+    "A-01",
+    "A-02",
+    "A-06",
+    "A-11",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Evidence & Verification wide panel: criterion, version, submitter, reviewer; Accept/Reject disabled with reason when ineligible",
+   "backend_capability": "Assessment on exact claim/criterion revision/document version; designated independent verifier; self-verification DB check; dispute; expiry recompute",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.4: POST /evidence-claims/{id}/assessments (If-Match claim revision, criterionRevisionId, assessedDocumentVersionId, expectedSubjectEpoch) → 403 self-verification|verifier-not-designated, 412 stale-criterion-revision|stale-revision, 409 guard-failed",
+   "authorization": "DV = designated EDITOR/OWNER AND not submitter; OWNER alone insufficient (RULE-006)",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-005/006/007; security-architecture.md §3 (candidate); r3 I-05, RULE-005/006 corrective clause",
+   "risk": "MEDIUM: no candidate read field tells the client whether the caller is the designated independent verifier for this claim (affordance only)",
+   "recommended_action": "[TQ-08: detail read route not enumerated in candidate §2] Server is authoritative; UI disabled state is advisory. Add per-claim eligibility hint to read model (TQ-03) or show actions and rely on 403 problem text",
+   "responsible_owner": "Claude (read-model proposal); ZCode; Antigravity"
+  },
+  {
+   "requirement_id": "FR-008",
+   "parent_id": "REQ-MC-P0-08",
+   "feature": "Event History",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §3 History navigation / §4.7 / §7 context",
+   "acceptance_criteria_ids": [
+    "AC-108",
+    "AC-136",
+    "AC-149",
+    "AC-153"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-09"
+   ],
+   "frontend_component_interaction": "History tab/timeline; 'changes since' list (I-08) with links back to objects",
+   "backend_capability": "Append-only per-matter seq events with actor/reason/before/after/correlation; no mutation routes",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.9: GET /matters/{m}/events?after=&limit=&targetId=&commandKey= (keyset by seq); PUT/PATCH/DELETE → 405",
+   "authorization": "O,E,V same matter; security audit restricted to operators",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-019; ADR-002 §1.5; r3 I-08",
+   "risk": "LOW: events filter by seq not wall-clock; 'since T-1 09:00' needs time→seq resolution",
+   "recommended_action": "Use status-brief window (RECORDED_TIME) or add recordedAfter filter (TQ-05); never derive a diff client-side when history absent",
+   "responsible_owner": "Claude (TQ-05); Antigravity"
+  },
+  {
+   "requirement_id": "FR-009",
+   "parent_id": "REQ-MC-P0-09",
+   "feature": "Matter Control Room",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.02 Control Room; controlled-handoff.md corrigendum E-01",
+   "acceptance_criteria_ids": [
+    "AC-109",
+    "AC-137"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-04",
+    "A-08",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Control Room per E-01 order: blockers → Next Actions + Decisions → Waiting On → Milestones → Evidence Gaps → Changes; impact rail; per-region stale/error",
+   "backend_capability": "Authorized aggregate snapshot with asOf/sourceRevision; never default READY/zero on evaluator failure",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: GET /matters/{m}/control-room (O,E,V) — response shape NOT specified in candidate",
+   "authorization": "O,E,V; no inaccessible titles/counts",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "UNKNOWN / NEEDS_EVIDENCE",
+   "evidence": "candidate lists route only; FR-009 needs per-region availability for region stale/error feedback",
+   "risk": "MEDIUM: single aggregate could force all-or-nothing failure, contradicting region-level stale/error states",
+   "recommended_action": "TQ-02: specify control-room response with per-section {status: OK|UNAVAILABLE, asOf, items, reasons}; or compose from existing section endpoints. Not blocking document compatibility",
+   "responsible_owner": "Claude (contract proposal); ZCode; Antigravity"
+  },
+  {
+   "requirement_id": "FR-010",
+   "parent_id": "REQ-MC-P0-10",
+   "feature": "My Actions",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.04 My Actions",
+   "acceptance_criteria_ids": [
+    "AC-110",
+    "AC-144",
+    "AC-147"
+   ],
+   "architecture_dependency_ids": [
+    "A-01",
+    "A-02",
+    "A-03",
+    "A-04"
+   ],
+   "frontend_component_interaction": "My Actions (spec-only screen 04) list across matters",
+   "backend_capability": "Own assigned actions computed only over active memberships; revoked access disappears",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: GET /me/actions",
+   "authorization": "Any member, own scope; assignment never grants access (RULE-017)",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "security-architecture.md §3 (scoped lists); FR-010 AC-110/144/147",
+   "risk": "LOW: empty vs unavailable must stay distinct",
+   "recommended_action": "503 → unavailable banner, never empty list; empty = loaded zero with filter reset",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "requirement_id": "FR-011",
+   "parent_id": "REQ-MC-P0-11",
+   "feature": "Operational Grid",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.03 Operational Grid / §7 / selected-design-system.md Density",
+   "acceptance_criteria_ids": [
+    "AC-111",
+    "AC-139",
+    "AC-150"
+   ],
+   "architecture_dependency_ids": [
+    "A-03",
+    "A-04",
+    "A-05",
+    "A-06",
+    "A-07",
+    "A-08",
+    "A-16"
+   ],
+   "frontend_component_interaction": "Operational Grid: compose existing DataTable (presentational) with feature-owned selection, row keyboard nav, inline editor, density attr; Comfortable44/Compact36; row-card on mobile",
+   "backend_capability": "Typed grid read with row revision; metadata PATCH with CAS",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §1 Pagination keyset after/limit≤200 default 100; GET /matters/{m}/grid?kind=&filter=&after=; PATCH metadata If-Match → 412 stale-revision/428 precondition-required",
+   "authorization": "Read O,E,V; edit O,E; V sees no edit affordance",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "data-table.tsx:24-35 presentational; pagination.tsx:8-14 page/pageCount model; r3 §5.03, I-03",
+   "risk": "MEDIUM: starter Pagination is page-number based and needs total count; candidate is keyset without total",
+   "recommended_action": "50-200 rows = one request at limit=200; beyond that compose a 'next' cursor control; record count = loaded/filtered authorized rows unless server supplies scoped total; no wholesale table replacement",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "requirement_id": "FR-012",
+   "parent_id": "REQ-MC-P0-12",
+   "feature": "Bulk Editing",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §4.6 / §7 bulk / interaction-guidance.md",
+   "acceptance_criteria_ids": [
+    "AC-112",
+    "AC-133",
+    "AC-139"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-05",
+    "A-06",
+    "A-08",
+    "A-13"
+   ],
+   "frontend_component_interaction": "Bulk tray + preview dialog: exact IDs, before/after, per-row result persisted; success rows deselect, failed rows stay selected; retry",
+   "backend_capability": "Persisted preview bound to actor/matter/rows(revision)/patch/expiry/digest; per-row matter-locked transaction; outcome record per (previewId,rowId); failed-only re-preview",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.6: POST bulk-edits:preview → 200; POST /bulk-edits/{id}:commit {previewDigest} → 200 {summary, results[APPLIED|STALE|FORBIDDEN|NOT_FOUND|INVALID]}; 404/410/409 binding problems; :preview {fromPreviewId, onlyFailed:true}",
+   "authorization": "O,E; per-row reauthorization at commit; inaccessible IDs NOT_FOUND without detail",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "evidence": "RULE-013, AC-112/133 APPROVED; candidate §3.6; HTML applyBulk/commitMetadata (local simulation passes current revision, not preview-bound)",
+   "risk": "HIGH if mis-implemented: a 200 with failures shown as success toast, or commit CAS against current instead of preview revision",
+   "recommended_action": "Classified compatible proposal; implement per constraints C-BULK-*; contract approval via Architecture Approval Gate",
+   "responsible_owner": "Claude (approval path); ZCode; Antigravity"
+  },
+  {
+   "requirement_id": "FR-013",
+   "parent_id": "REQ-MC-P0-13",
+   "feature": "Excel/CSV Import",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.12 Excel/CSV Import Wizard",
+   "acceptance_criteria_ids": [
+    "AC-113",
+    "AC-131",
+    "AC-132",
+    "AC-148"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-05",
+    "A-14"
+   ],
+   "frontend_component_interaction": "Import wizard Upload → Map → Preview → confirm groups; row errors retained",
+   "backend_capability": "Parser with size/row caps; preview zero mutations; connected-group atomic confirm; source-key idempotency",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.7: POST /matters/{m}/imports (multipart) → 201 PREVIEW_READY; POST /imports/{id}:confirm {groupIds, previewDigest} → per group APPLIED|REJECTED|CONFLICT|ALREADY_APPLIED",
+   "authorization": "O,E; import cannot write memberships/designations or VERIFIED",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-014; candidate §3.7; r3 §4.6 'structured draft', I-10",
+   "risk": "MEDIUM: r3 wording 'Draft' could be implemented as a new persisted draft record state, which no approved state model contains",
+   "recommended_action": "Treat 'Draft' as the pre-confirm preview; confirmed rows become ordinary records (verification UNVERIFIED, imported labels kept as claims). Spec wording clarification by UX owner",
+   "responsible_owner": "Codex/OpenDesign (spec wording); Antigravity; ZCode"
+  },
+  {
+   "requirement_id": "FR-014",
+   "parent_id": "REQ-MC-P0-14",
+   "feature": "Excel Export",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §7 export / §5.03 Grid",
+   "acceptance_criteria_ids": [
+    "AC-114",
+    "AC-148",
+    "AC-147"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-11",
+    "A-15"
+   ],
+   "frontend_component_interaction": "Export action from Grid/Status Brief; download link",
+   "backend_capability": "Export artifact bound to matter+requester; formula-safe cells; retrieval rechecks membership",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: POST /matters/{m}/exports, GET /exports/{id}/content (O,E,V)",
+   "authorization": "O,E,V; recheck at retrieval; no leak via totals/filenames/errors",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-015; security-architecture.md §4-5; storage provider TB-05 / retention TB-06 open",
+   "risk": "LOW for UI; artifact storage/retention undecided",
+   "recommended_action": "Never generate authoritative export client-side; no presigned bearer URL; empty export identifiable",
+   "responsible_owner": "Antigravity; ZCode; PO (storage/retention decisions)"
+  },
+  {
+   "requirement_id": "FR-015",
+   "parent_id": "REQ-MC-P0-15",
+   "feature": "Document Versions",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.10 Document Versions",
+   "acceptance_criteria_ids": [
+    "AC-115",
+    "AC-128"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-06",
+    "A-11"
+   ],
+   "frontend_component_interaction": "Document Versions ledger: one current, superseded below, signature observations separate; OWNER promote dialog with reason",
+   "backend_capability": "Immutable versions; one current pointer (structural); explicit OWNER promotion; impact recompute; streaming proxy content",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.5: POST /documents/{d}:promote (If-Match doc revision, expectedCurrentVersionId) → 200 {document, impact[]} (impact post-commit); GET /document-versions/{id}/content",
+   "authorization": "Add version O,E; promote OWNER; content read O,E,V rechecked per retrieval",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-011; document-lineage.md §1-4 (candidate); r3 §5.10 ('multiple candidates' warning)",
+   "risk": "LOW: pre-confirm impact summary not in candidate (TQ-01); 'multiple current candidates' unreachable under structural single pointer",
+   "recommended_action": "[TQ-08: detail read route not enumerated in candidate §2] Show server impact after commit; any pre-confirm preview labeled non-authoritative as-of; render multiple-current only as integrity error, no user resolution flow",
+   "responsible_owner": "Antigravity; Claude (TQ-01)"
+  },
+  {
+   "requirement_id": "FR-016",
+   "parent_id": "REQ-MC-P0-16",
+   "feature": "Regulatory Filing Lifecycle",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.11 Filing Detail",
+   "acceptance_criteria_ids": [
+    "AC-116",
+    "AC-129",
+    "AC-145"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-06",
+    "A-11",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Filing Detail (spec-only screen 11): stage stepper, package checklist, cycles, receipt vs outcome, negative outcome",
+   "backend_capability": "Stage machine with guards; cycles; immutable submissions; negative outcome; proof epoch on reopen",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: POST /matters/{m}/filings, POST /filings/{id}/observations (If-Match filing revision, expectedCycleNo), :cancel/:reopen/corrections OWNER; filing-model.md §2-4",
+   "authorization": "O,E stage observations; OWNER rejection/withdrawal/cancel/reopen/correction",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-012; state-semantics filing table; filing-model.md (candidate); GW-03 acceptance",
+   "risk": "LOW: receipt must never render as approval",
+   "recommended_action": "[TQ-08: detail read route not enumerated in candidate §2] Stage from server; Approval only with outcome evidence and separate verification; repeat cycles listed, never overwritten",
+   "responsible_owner": "Antigravity; ZCode"
+  },
+  {
+   "requirement_id": "FR-017",
+   "parent_id": "REQ-MC-P0-17",
+   "feature": "External Parties",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.05 Waiting On / §2 roles",
+   "acceptance_criteria_ids": [
+    "AC-117",
+    "AC-130"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-03",
+    "A-09"
+   ],
+   "frontend_component_interaction": "Party context in Waiting On / Filing; party label only within scope",
+   "backend_capability": "ExternalParty records; inactivate not delete; no external user role",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §2: POST /matters/{m}/external-parties, PATCH, :inactivate (If-Match record revision)",
+   "authorization": "O,E; external parties never matter members",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-020; permission-matrix sensitive denial (no party label in failures); candidate §2 lists no party or waits read route",
+   "risk": "LOW",
+   "recommended_action": "No external-user login/role inference; party/waits list read route open under TQ-08",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "requirement_id": "FR-018",
+   "parent_id": "REQ-MC-P0-18",
+   "feature": "Simple Roles and Ownership",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §2.2 roles / §12 A-01..02",
+   "acceptance_criteria_ids": [
+    "AC-118",
+    "AC-134",
+    "AC-135",
+    "AC-140",
+    "AC-147",
+    "AC-149"
+   ],
+   "architecture_dependency_ids": [
+    "A-01",
+    "A-02",
+    "A-03"
+   ],
+   "frontend_component_interaction": "Role-aware affordances (hide/disable with reason); denied state without data; session expiry",
+   "backend_capability": "Authn (IdP not selected) separate from MatterControl authz policy table inside command transaction; uniform 404",
+   "api_contract_authority": "docs/architecture/security-architecture.md (CANDIDATE) §2-3; api-auth-decision-analysis INT-D02 (PO, not selected) / INT-D03 (Claude technical, preserve)",
+   "authorization": "Active Workspace AND explicit Matter membership AND role; Workspace OWNER no implicit Matter access",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "evidence": "permission-matrix APPROVED; auth-provider.ts:27-36 resolveSession→null; backend.ts:25 API_TOKEN fallback; auth.ts:33-45 demo/anonymous '*' sessions; DEC-028 excludes product auth",
+   "risk": "HIGH for integration: no product authn exists; starter fallbacks would make every user one principal",
+   "recommended_action": "Design is policy-compatible; product integration of any slice blocked until INT-D02 PO selection + Claude mechanism + negative tests. No client-only enforcement claimed",
+   "responsible_owner": "PO (IdP); Claude (mechanism); ZCode/Antigravity (implementation); OpenCode (negative matrix)"
+  },
+  {
+   "requirement_id": "FR-019",
+   "parent_id": "REQ-MC-P0-19",
+   "feature": "Delta-Based Status Brief",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §5.13 Status Brief",
+   "acceptance_criteria_ids": [
+    "AC-119",
+    "AC-138"
+   ],
+   "architecture_dependency_ids": [
+    "A-02",
+    "A-09",
+    "A-15"
+   ],
+   "frontend_component_interaction": "Status Brief dialog: t1/t2 with timezone, changes vs outstanding, no-change, DRAFT label, provisional flag",
+   "backend_capability": "Deterministic window over recorded time with provenance; xlsx formula-safe",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.8: POST /matters/{m}/status-briefs:generate → 200 {label DRAFT, provenance, changes, outstandingAtT2, provisional?}",
+   "authorization": "O,E,V scoped; provenance states access scope",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-016; candidate §3.8",
+   "risk": "LOW",
+   "recommended_action": "Show provisional and late-recorded sections; no issued/snapshot lifecycle (P1)",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "requirement_id": "FR-020",
+   "parent_id": "REQ-MC-P0-20",
+   "feature": "Separate State Dimensions",
+   "design_reference": "docs/design/step-03a/revised/local-r3/mattercontrol-step-03a-ux-specifications.md §4 state model / design-tokens.json / selected-design-system.md",
+   "acceptance_criteria_ids": [
+    "AC-120",
+    "AC-121",
+    "AC-139",
+    "AC-142",
+    "AC-143",
+    "AC-160"
+   ],
+   "architecture_dependency_ids": [
+    "A-03",
+    "A-08",
+    "A-10",
+    "A-12"
+   ],
+   "frontend_component_interaction": "Five-axis text labels with reasons and as-of; semantic tokens per axis; no color-only",
+   "backend_capability": "Derived dependency/verification/timing/attention server-computed with reasons; client derived writes rejected",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §1 Derived fields read-only → 422; §1 Provenance asOf/sourceRevision; §3.1 node shape with reasons",
+   "authorization": "Read per scope; escalation OWNER",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "evidence": "RULE-002/009/010; state-semantics derived table; design-tokens.json / selected-tokens.css; no realtime channel (ADR-002 §1.7 no event bus)",
+   "risk": "LOW: no realtime; staleness only via asOf/refetch",
+   "recommended_action": "Never compute axis values client-side; show asOf; stale/conflict instead of silent overwrite (A-10)",
+   "responsible_owner": "Antigravity"
+  }
+ ],
+ "cross_cutting": [
+  {
+   "id": "X-01",
+   "requirement_ids": [
+    "INT-D01",
+    "DEC-028"
+   ],
+   "feature": "Stale revision HTTP 412 — native INT-A (T10)",
+   "design_reference": "intake.md INT-01; inta-approved-contract.md §4 T10",
+   "frontend_component_interaction": "None in product; harness-only transport observation",
+   "backend_capability": "Unchanged Go 52b60a4 User CAS",
+   "api_contract_authority": "inta-approved-contract.md INTA-1 §3-4 (DEC-028 APPROVED_LOCAL_SCOPE): PATCH stale If-Match → client 412 / ApiError HTTP_ERROR",
+   "authorization": "None: INT-A excludes product auth/isolation",
+   "authority_class": "INT-A_TRANSPORT_ONLY",
+   "architecture_status": "COMPATIBLE",
+   "candidate_classification": "ALREADY_APPROVED_CONTRACT (transport scope only)",
+   "evidence": "inta-po-approval.md DEC-028; inta-approved-contract.md §3 mapping 409/412/503→HTTP_ERROR",
+   "risk": "MEDIUM if misread as product contract",
+   "recommended_action": "Do not cite as product API approval; runtime NOT_RUN",
+   "responsible_owner": "Codex (traceability)"
+  },
+  {
+   "id": "X-02",
+   "requirement_ids": [
+    "FR-011",
+    "FR-020",
+    "RULE-018"
+   ],
+   "feature": "Stale revision HTTP 412 — product inline edit/transition",
+   "design_reference": "r3 §4.6, §5.03 conflict state; I-03",
+   "frontend_component_interaction": "Inline editor/transition dialog conflict state: server value + retained draft + reload/reconcile",
+   "backend_capability": "Record revision CAS inside matter transaction (ADR-002 §1.2)",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §1 Revisions: missing If-Match → 428, mismatch → 412 /problems/stale-revision {currentRevision}; §1.1 per-endpoint scope; §4 maps stale-revision → reconciliation",
+   "authorization": "Evaluated after authorization; non-member gets uniform 404 not 412",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "candidate_classification": "COMPATIBLE_PROPOSAL",
+   "evidence": "RULE-018 APPROVED (mechanism delegated to architecture); candidate §1/§1.1; ADR-002",
+   "risk": "MEDIUM: candidate 428-on-missing is stricter than native template (absent If-Match = no precondition)",
+   "recommended_action": "Always send If-Match from the displayed revision; never rely on native leniency; distinguish 412 stale-criterion-revision",
+   "responsible_owner": "Claude; ZCode; Antigravity"
+  },
+  {
+   "id": "X-03",
+   "requirement_ids": [
+    "FR-012",
+    "RULE-013"
+   ],
+   "feature": "Bulk HTTP 200 per-row outcomes — product",
+   "design_reference": "r3 §4.6, I-04; HTML applyBulk",
+   "frontend_component_interaction": "Bulk result list; summary; selection retention; failed-only retry",
+   "backend_capability": "Per-row transaction + outcome record; preview binding",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.6 (see FR-012)",
+   "authorization": "Per-row reauthorization; FORBIDDEN vs NOT_FOUND without detail",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "candidate_classification": "COMPATIBLE_PROPOSAL",
+   "evidence": "RULE-013, AC-133; candidate §3.6",
+   "risk": "HIGH if 200 treated as success",
+   "recommended_action": "200 with failed>0 or applied=0 is partial/failed; stale rows arrive as STALE inside 200, never 412",
+   "responsible_owner": "Antigravity; ZCode"
+  },
+  {
+   "id": "X-04",
+   "requirement_ids": [
+    "INT-D01",
+    "DEC-028"
+   ],
+   "feature": "Bulk HTTP 200 per-row — native INT-A",
+   "design_reference": "inta-approved-contract.md §4",
+   "frontend_component_interaction": "n/a",
+   "backend_capability": "n/a",
+   "api_contract_authority": "INT-A has no bulk route",
+   "authorization": "n/a",
+   "authority_class": "INT-A_TRANSPORT_ONLY",
+   "architecture_status": "COMPATIBLE",
+   "candidate_classification": "NOT_APPLICABLE",
+   "evidence": "INTA-1 §4 fixed allowlist",
+   "risk": "None",
+   "recommended_action": "None",
+   "responsible_owner": "—"
+  },
+  {
+   "id": "X-05",
+   "requirement_ids": [
+    "INT-D01",
+    "DEC-028"
+   ],
+   "feature": "Closed Step02.3 clarifications: refId fixed-route rule, value envelope, 16KiB truncation",
+   "design_reference": "step-02-3-opencode-clarification-review.md F1/F2",
+   "frontend_component_interaction": "Harness evidence envelope only",
+   "backend_capability": "n/a",
+   "api_contract_authority": "inta-approved-contract.md §3, §5",
+   "authorization": "n/a",
+   "authority_class": "INT-A_TRANSPORT_ONLY",
+   "architecture_status": "COMPATIBLE",
+   "candidate_classification": "NOT_APPLICABLE to product (closed, not reopened)",
+   "evidence": "DEC-028 keeps Step02.3 closed; no new material evidence found",
+   "risk": "LOW: copying harness envelope/truncation into product",
+   "recommended_action": "Product responses are not truncated by contract; refId is a harness control field, product IDs are path UUIDv7",
+   "responsible_owner": "—"
+  },
+  {
+   "id": "X-06",
+   "requirement_ids": [
+    "FR-012",
+    "RULE-018"
+   ],
+   "feature": "Unknown outcome / idempotency on mutations",
+   "design_reference": "controlled-handoff (unknown-outcome reconciliation); FR-012 unverified interaction",
+   "frontend_component_interaction": "Pending → 'outcome unknown' state with same-intent retry; draft keeps its Idempotency-Key",
+   "backend_capability": "Receipt in command transaction; replay; GET /operations/{key}",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §1 Idempotency + Unknown outcome; §4 key persisted with draft",
+   "authorization": "Replay re-runs current read auth; else uniform 404",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "candidate_classification": "COMPATIBLE_PROPOSAL",
+   "evidence": "RULE-018 retry clause; http-client.ts:109-124 TIMEOUT/NETWORK_ERROR; action-result.ts:17-23 callAction generic 'try again'",
+   "risk": "HIGH: starter treats timeout/network on a mutation as plain failure; a 503 or timeout is not 'not applied'",
+   "recommended_action": "Mutation timeout/network/503 → OUTCOME_UNKNOWN; retry reuses key; 404 from operations ≠ never committed; INT-D09 conventions pending",
+   "responsible_owner": "Claude (INT-D09 proposal); Antigravity; ZCode"
+  },
+  {
+   "id": "X-07",
+   "requirement_ids": [
+    "FR-011",
+    "A-07"
+   ],
+   "feature": "Optimistic updates",
+   "design_reference": "r3 §12 A-07; I-04 'không tuyên bố optimistic update'",
+   "frontend_component_interaction": "useOptimistic only for metadata fields (title/description/owner/due) on single-record edit; visible pending; revert on failure",
+   "backend_capability": "Authoritative response replaces optimistic value",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §4 optimistic only for metadata",
+   "authorization": "n/a",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "candidate_classification": "—",
+   "evidence": "React docs (Context7 /websites/react_dev_reference): optimistic state reverts when transition ends; error display is caller's duty",
+   "risk": "MEDIUM: optimistic derived axes or gates would display unconfirmed legal state",
+   "recommended_action": "Never optimistic for execution/verification/dependency/filing/promotion/bulk; bulk shows results only after commit",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "id": "X-08",
+   "requirement_ids": [
+    "FR-011",
+    "A-04"
+   ],
+   "feature": "Dialog/drawer lifecycle, draft ownership, focus fallback",
+   "design_reference": "r3 I-03/I-12; intake INT-03",
+   "frontend_component_interaction": "Existing Dialog (native showModal); draft state lifted above Dialog; opener ref + labeled fallback container",
+   "backend_capability": "n/a",
+   "api_contract_authority": "n/a",
+   "authorization": "n/a",
+   "authority_class": "NONE",
+   "architecture_status": "DEFERRED_TO_IMPLEMENTATION",
+   "candidate_classification": "—",
+   "evidence": "dialog.tsx:18-24,82 children mount only while open (source-observed); no fallback when opener removed (source-observed). Draft loss and focus-to-body NOT reproduced",
+   "risk": "MEDIUM",
+   "recommended_action": "See constraints C-DLG-*; runtime keyboard/focus acceptance in G3/G4",
+   "responsible_owner": "Antigravity; OpenCode (QA)"
+  },
+  {
+   "id": "X-09",
+   "requirement_ids": [
+    "FR-005",
+    "FR-015",
+    "RULE-004",
+    "RULE-011"
+   ],
+   "feature": "Reopen / promote downstream impact preview before confirm",
+   "design_reference": "r3 I-11; permission-matrix 'impact summary' (promote)",
+   "frontend_component_interaction": "Reopen/promote confirmation dialog with downstream impact",
+   "backend_capability": "Derived recompute happens only in commit transaction",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §3.1 derivedChanges and §3.5 impact returned after commit; no dry-run route",
+   "authorization": "OWNER",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "architecture_status": "UNKNOWN / NEEDS_EVIDENCE",
+   "candidate_classification": "NEEDS_TECHNICAL_DECISION",
+   "evidence": "RULE-002 forbids UI deciding authoritative state; candidate has no preview endpoint",
+   "risk": "MEDIUM: client-computed impact presented as authoritative",
+   "recommended_action": "TQ-01: either read-only server dry-run, or UI shows as-of non-authoritative preview from current reads and the authoritative server result after commit",
+   "responsible_owner": "Claude; Codex/OpenDesign (copy)"
+  },
+  {
+   "id": "X-10",
+   "requirement_ids": [
+    "FR-009",
+    "FR-011",
+    "FR-020",
+    "A-16"
+   ],
+   "feature": "Design tokens, density, responsive/mobile",
+   "design_reference": "selected-design-system.md; design-tokens.json; selected-tokens.css; D-UX02/D-UX04",
+   "frontend_component_interaction": "Map mc-* roles into globals.css CSS variables + @theme; data-density attribute on Grid; Button touch size variant; row-card at ≤767px",
+   "backend_capability": "n/a",
+   "api_contract_authority": "n/a",
+   "authorization": "Mobile actions = same server permissions; no mobile-only shortcut",
+   "authority_class": "NONE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "candidate_classification": "—",
+   "evidence": "globals.css:1-40 token pattern; button.tsx sm h-8/md h-9/icon size-9 (<44px touch); mobile-nav.tsx is navigation only",
+   "risk": "LOW",
+   "recommended_action": "No second theme system; computed contrast/rendered geometry remain G3",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "id": "X-11",
+   "requirement_ids": [
+    "A-08"
+   ],
+   "feature": "Error taxonomy mapping in frontend",
+   "design_reference": "r3 §12 A-08; §4.8",
+   "frontend_component_interaction": "Typed result variants per feature (validation/denied/not-available/conflict/guard/unavailable/partial/unknown)",
+   "backend_capability": "RFC 9457 problem types",
+   "api_contract_authority": "docs/architecture/api-contracts.md (CANDIDATE, PROPOSED/WAITING_ARCHITECTURE_APPROVAL) §1 Problem catalogue",
+   "authorization": "403 only for members; non-members uniform 404",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "candidate_classification": "—",
+   "evidence": "http-client.ts:82-86 codeForStatus; action-result.ts:40-70 collapses 403/409/412/428/503 to generic text",
+   "risk": "MEDIUM",
+   "recommended_action": "Discriminate on status + details.type; extend ActionResult locally; no new dependency",
+   "responsible_owner": "Antigravity"
+  },
+  {
+   "id": "X-12",
+   "requirement_ids": [
+    "A-16",
+    "ADR-001",
+    "ADR-003"
+   ],
+   "feature": "Hosting/runtime feasibility (Cloudflare Free Tier)",
+   "design_reference": "ADR-001/ADR-003",
+   "frontend_component_interaction": "Data access behind feature service seam so Server Actions vs client-side transport can change",
+   "backend_capability": "Go origin placement unresolved",
+   "api_contract_authority": "ADR-001 PROPOSED-UNRESOLVED/WAITING_PO_APPROVAL; ADR-003 PROPOSED-UNRESOLVED",
+   "authorization": "F3 option moves tokens to browser (security-architecture §6.1)",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "architecture_status": "UNKNOWN / NEEDS_EVIDENCE",
+   "candidate_classification": "—",
+   "evidence": "ADR-001/003 status lines; Go server cannot be assumed to run unchanged on Workers",
+   "risk": "MEDIUM: UI built on Server Actions may need rework under F3",
+   "recommended_action": "Keep components transport-agnostic; no adapter choice in 03A/03B UI work",
+   "responsible_owner": "PO (decision); Claude; Antigravity"
+  }
+ ],
+ "architecture_dependencies": [
+  {
+   "id": "A-01",
+   "topic": "Authentication",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "authority_class": "UNRESOLVED_PO",
+   "accepted_at_document_level": "Policy only (authn separate from authz; no shared token/demo); mechanism awaits INT-D02 IdP selection",
+   "unblock_condition": "PO selects IdP (INT-D02); Claude mechanism; C-AUTH-1/2 in frontend; negative tests"
+  },
+  {
+   "id": "A-02",
+   "topic": "Authorization enforcement",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "accepted_at_document_level": "Candidate core/policy in command transaction, uniform 404, 403 for members only (security-architecture §3; INT-D03)",
+   "unblock_condition": "Architecture Approval Gate; enforcement negative matrix (OpenCode) on first slice"
+  },
+  {
+   "id": "A-03",
+   "topic": "API contracts",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "accepted_at_document_level": "Candidate write catalogue and aggregate reads; same object state across views via revision/sourceRevision",
+   "unblock_condition": "Resolve TQ-02 (control-room shape) and TQ-08 (detail reads); Architecture Approval Gate"
+  },
+  {
+   "id": "A-04",
+   "topic": "Pagination & loading",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "accepted_at_document_level": "Keyset after/limit<=200 covers 50-200 rows in one request",
+   "unblock_condition": "C-API-6 cursor control; no fake total"
+  },
+  {
+   "id": "A-05",
+   "topic": "Backend validation",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "accepted_at_document_level": "422 validation errors[] {field,message}; 403/404 distinct from validation",
+   "unblock_condition": "Typed result variants (C-API-3)"
+  },
+  {
+   "id": "A-06",
+   "topic": "Concurrency & revision",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "accepted_at_document_level": "If-Match CAS 428/412, expectedRevisions; ADR-002 matter-scoped single writer",
+   "unblock_condition": "Architecture Approval Gate; contract tests"
+  },
+  {
+   "id": "A-07",
+   "topic": "Optimistic updates",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "accepted_at_document_level": "Optimistic only for single-record metadata; revert on failure",
+   "unblock_condition": "C-OPT-1/2"
+  },
+  {
+   "id": "A-08",
+   "topic": "Error taxonomy",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "accepted_at_document_level": "RFC 9457 problem catalogue distinguishes denied/validation/conflict/guard/unavailable/partial",
+   "unblock_condition": "Frontend maps status+type (C-API-2/3); INT-D09 retry conventions (TQ-04)"
+  },
+  {
+   "id": "A-09",
+   "topic": "Persistence",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "DEFERRED_TO_IMPLEMENTATION",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "accepted_at_document_level": "PostgreSQL persistence, history and receipt in same transaction (ADR-002); concept persistence correctly disclaimed",
+   "unblock_condition": "Product implementation + restart/recovery evidence; INT-A transport persistence is not product proof"
+  },
+  {
+   "id": "A-10",
+   "topic": "Realtime synchronization",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "accepted_at_document_level": "No realtime channel (ADR-002 §1.7); staleness via asOf/sourceRevision and 412 conflict",
+   "unblock_condition": "Show stale/conflict, never auto-overwrite"
+  },
+  {
+   "id": "A-11",
+   "topic": "Evidence storage",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "DEFERRED_TO_IMPLEMENTATION",
+   "authority_class": "UNRESOLVED_PO",
+   "accepted_at_document_level": "Evidence tied to criterion + exact version + submitter; upload staging/commit; streaming proxy (document-lineage §3-4)",
+   "unblock_condition": "Object-store provider TB-05 (PO); retrieval revocation tests"
+  },
+  {
+   "id": "A-12",
+   "topic": "Verification aggregate",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "accepted_at_document_level": "Aggregate derived read-only; dispute non-satisfying; NOT_REQUIRED via OWNER applicability endpoint; derived writes 422",
+   "unblock_condition": "Contract tests AC-126/127/160"
+  },
+  {
+   "id": "A-13",
+   "topic": "Bulk transaction semantics",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "CANDIDATE_NOT_YET_APPROVED",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "accepted_at_document_level": "Candidate §3.6 200 per-row outcomes, preview binding, failed-only re-preview",
+   "unblock_condition": "Architecture Approval Gate; C-BULK-1..7; AC-112/133 tests"
+  },
+  {
+   "id": "A-14",
+   "topic": "Import parsing",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "accepted_at_document_level": "Candidate §3.7 preview/confirm groups, source-key idempotency; no VERIFIED import",
+   "unblock_condition": "Size/row limits (TQ-07); 'Draft' wording K-2"
+  },
+  {
+   "id": "A-15",
+   "topic": "Export & reporting",
+   "prior_compatibility": "MECHANISM_PENDING_ARCHITECTURE_ACCEPTANCE",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "APPROVED_POLICY+CANDIDATE_ARCH",
+   "accepted_at_document_level": "Exports recheck at retrieval; formula-safe; Status Brief DRAFT with provenance",
+   "unblock_condition": "Storage/retention TB-05/06 for artifacts"
+  },
+  {
+   "id": "A-16",
+   "topic": "Frontend reference",
+   "prior_compatibility": "STARTER_SOURCE_INSPECTED_OWNER_FEASIBILITY_PENDING",
+   "architecture_status": "COMPATIBLE_WITH_CONSTRAINTS",
+   "authority_class": "CANDIDATE_ARCH_ONLY",
+   "accepted_at_document_level": "Starter 3e5a642 composable without new dependencies (source-read)",
+   "unblock_condition": "C-API-1 transport seam (ADR-003 open); G3/G4 runtime evidence"
+  }
+ ],
+ "architecture_dependent_findings": [
+  {
+   "id": "UX-R01",
+   "severity": "HIGH",
+   "architecture_disposition": "RULE-013 bulk design compatible with candidate §3.6 at document level (allowlist, blank=unchanged, per-row outcomes, failed rows retained, failed-only retry). Runtime negative/retry/concurrency tests and independent QA still required.",
+   "remains_open": "Independent QA and runtime/negative tests per remaining_acceptance; not CLOSED by this review"
+  },
+  {
+   "id": "UX-R02",
+   "severity": "HIGH",
+   "architecture_disposition": "Designated non-submitter verifier, applicability/dispute, import grouping/dedup, scoped export and draft brief are compatible with approved RULE-005/006/014/015/016 and candidate §3.4/§3.7/§3.8. Contract approval and runtime tests still required.",
+   "remains_open": "Independent QA and runtime/negative tests per remaining_acceptance; not CLOSED by this review"
+  },
+  {
+   "id": "UX-R04",
+   "severity": "HIGH",
+   "architecture_disposition": "Distinct RULE-003 edge vs RULE-008 milestone predicates and NOT_REQUIRED limits match dependency-engine §2/§5. Rejected/disputed/blocked feedback maps to 409 guard-failed reasons. Runtime tests still required.",
+   "remains_open": "Independent QA and runtime/negative tests per remaining_acceptance; not CLOSED by this review"
+  },
+  {
+   "id": "UX-N04",
+   "severity": "HIGH",
+   "architecture_disposition": "Self-review/stale/missing-authority rejection maps to candidate 403 self-verification|verifier-not-designated and 412 stale-criterion-revision|stale-revision. Rationale required in assessment body. Eligibility hint open (TQ-03).",
+   "remains_open": "Independent QA and runtime/negative tests per remaining_acceptance; not CLOSED by this review"
+  },
+  {
+   "id": "UX-N09",
+   "severity": "MEDIUM",
+   "architecture_disposition": "t1<=t2, (t1,t2] changes vs outstanding at t2, stable provenance/no-change and scoped retrieval match candidate §3.8 and RULE-016. Runtime determinism tests still required.",
+   "remains_open": "Independent QA and runtime/negative tests per remaining_acceptance; not CLOSED by this review"
+  }
+ ],
+ "open_technical_questions": [
+  "TQ-01 reopen/promote pre-confirm impact",
+  "TQ-02 control-room per-section shape",
+  "TQ-03 verify eligibility/affordance hint",
+  "TQ-04 INT-D09 error/retry conventions",
+  "TQ-05 time-based changes-since",
+  "TQ-06 waiting-since field",
+  "TQ-07 bulk expiry and import limits (PO values)",
+  "TQ-08 detail read routes not enumerated (node, edges/graph, evidence/claims/assessments, document version ledger, filing cycles/submissions, waits, parties, milestone list)"
+ ]
+}

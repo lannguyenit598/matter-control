@@ -1,0 +1,39 @@
+# `mcapi migrate` as a Cloud Run job (separate step; serving instances never apply DDL).
+# Apply/execute only after authorization: gcloud run jobs replace migrate-job.yaml --region asia-southeast1;
+# gcloud run jobs execute mcqa-synth-service-migrate --region asia-southeast1 --wait.
+# The command validates the whole configuration, so it receives the same non-secret values.
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: mcqa-synth-service-migrate
+  labels:
+    cloud.googleapis.com/location: asia-southeast1
+spec:
+  template:
+    spec:
+      taskCount: 1
+      template:
+        spec:
+          serviceAccountName: mcqa-synth-qa@qa-synth-project.iam.gserviceaccount.com
+          maxRetries: 0
+          timeoutSeconds: 600
+          containers:
+            - image: qa-synth-registry.invalid/mcqa/mcapi@sha256:1f2e3d4c5b6a7988000000000000000000000000000000000000000000000000
+              args: [migrate]
+              env:
+                - { name: MC_OBJECT_BACKEND, value: r2 }
+                - { name: MC_R2_ENDPOINT, value: 'https://s3-qa-synth.invalid' }
+                - { name: MC_R2_BUCKET, value: 'mcqa-synth-bucket' }
+                - { name: MC_OIDC_ISSUER, value: 'https://idp-qa-synth.invalid/oidc' }
+                - { name: MC_OIDC_INTROSPECTION_URL, value: 'https://idp-qa-synth.invalid/api/introspect' }
+                - { name: MC_OIDC_AUDIENCE, value: 'mcqa-audience-synth' }
+                - { name: MC_OIDC_API_KEY_FILE, value: /secrets/oidc/api-key.json }
+                - name: MC_DATABASE_URL
+                  valueFrom: { secretKeyRef: { name: 'mc-qadatabase-url', key: latest } }
+                # Schema-owner role, used only by this job.
+                - name: MC_MIGRATE_DATABASE_URL
+                  valueFrom: { secretKeyRef: { name: 'mc-qamigrate-url', key: latest } }
+                - name: MC_R2_ACCESS_KEY_ID
+                  valueFrom: { secretKeyRef: { name: 'mc-qar2-key-id', key: latest } }
+                - name: MC_R2_SECRET_ACCESS_KEY
+                  valueFrom: { secretKeyRef: { name: 'mc-qar2-secret', key: latest } }

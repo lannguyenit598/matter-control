@@ -1,0 +1,81 @@
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+App directory: /private/tmp/mc-opencode-adr006-qa20261030T03343565aa40/snapshot/apps/frontend
+Next.js version : 16.4.2
+@opennextjs/cloudflare version: 1.20.14
+@opennextjs/aws version: 4.1.13
+workerd compatibility_date: 2026-10-30
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 14ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.7s
+  Running TypeScript ...
+  Finished TypeScript in 1987ms ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/11) ...
+  Generating static pages using 9 workers (2/11) 
+  Generating static pages using 9 workers (5/11) 
+  Generating static pages using 9 workers (8/11) 
+✓ Generating static pages using 9 workers (11/11) in 96ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/callback
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/session
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions/[versionId]/content
+├ ƒ /api/matters/[matterId]/export
+├ ƒ /login
+├ ƒ /matters/[matterId]
+├ ƒ /matters/[matterId]/agenda
+├ ƒ /matters/[matterId]/control-room
+├ ƒ /matters/[matterId]/data
+├ ƒ /matters/[matterId]/documents
+├ ƒ /matters/[matterId]/documents/[documentId]
+├ ƒ /matters/[matterId]/filings
+├ ƒ /matters/[matterId]/filings/[filingId]
+├ ƒ /matters/[matterId]/filings/new
+├ ƒ /matters/[matterId]/history
+├ ƒ /matters/[matterId]/planning
+├ ƒ /matters/[matterId]/reviews
+├ ƒ /matters/[matterId]/work
+├ ƒ /matters/[matterId]/work/[itemId]
+├ ƒ /my-actions
+├ ƒ /requirements/[requirementId]
+├ ƒ /workspaces
+└ ƒ /workspaces/[workspaceId]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Compiled CSS verified: 1 assets, layout/accessibility/theme utilities present
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 1.732s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+[35mWorker saved in `.open-next/worker.js` 🚀
+[0m
+OpenNext build complete.

@@ -1,0 +1,42 @@
+package mattercontrol
+
+import (
+ "errors"
+ "fmt"
+ "strings"
+ "testing"
+ "time"
+ "leonx.me/matter-control/internal/core/domain/matter"
+ "leonx.me/matter-control/internal/core/port"
+)
+
+func SuiteVerifierReview(t *testing.T, factory Factory) {
+ setup:=func(t *testing.T)(reviewFx,matter.ReviewGrid,string){
+  f:=newReviewFx(t,factory);v:=f.versionIn(f.e.m,"Synthetic",reviewSumA);g:=f.grid(f.e.editor,"Grid").Grid
+  var err error;g,err=f.addVersion(g,v);if err!=nil {t.Fatal(err)};g,err=f.addQuestion(g,"Original?");if err!=nil {t.Fatal(err)};return f,g,v
+ }
+ t.Run("concurrent same predecessor",func(t *testing.T){
+  f,g,v:=setup(t);q:=g.Questions[0].ID;first,err:=f.answer(g,v,q,"","root");if err!=nil{t.Fatal(err)}
+  gate:=make(chan struct{});done:=make(chan error,2)
+  for i:=0;i<2;i++ {go func(){<-gate;_,err:=f.answer(g,v,q,first.ID,"next");done<-err}()};close(gate)
+  wins,conflicts:=0,0;for i:=0;i<2;i++ {e:=<-done;if e==nil{wins++}else if errors.Is(e,port.ErrPreconditionFailed){conflicts++}else{t.Fatal(e)}}
+  if wins!=1||conflicts!=1{t.Fatalf("wins=%d conflicts=%d",wins,conflicts)}
+  h,e:=f.rv.AnswerHistory(f.e.ctx,port.ReviewHistoryQuery{ActorID:f.e.editor.String(),MatterID:f.e.m.String(),GridID:g.ID,VersionID:v,QuestionID:q});if e!=nil||len(h)!=2{t.Fatalf("history=%d err=%v",len(h),e)}
+ })
+ t.Run("answer races question revision",func(t *testing.T){
+  f,g,v:=setup(t);gate:=make(chan struct{});answer:=make(chan error,1);revision:=make(chan error,1)
+  go func(){<-gate;_,err:=f.answer(g,v,g.Questions[0].ID,"","old wording");answer<-err}()
+  go func(){<-gate;_,err:=f.rv.ReviseQuestion(f.e.ctx,port.ReviseReviewQuestionCmd{ActorID:f.e.editor.String(),MatterID:f.e.m.String(),GridID:g.ID,QuestionID:g.Questions[0].ID,Text:"New?",ExpectedRevision:g.Revision});revision<-err}();close(gate)
+  ae,re:=<-answer,<-revision;if re!=nil{t.Fatal(re)};view:=f.view(f.e.editor,g.ID);cell:=view.Cells[0]
+  if ae==nil {if cell.Answer==nil||!cell.Stale||cell.Answer.QuestionRevision!=1{t.Fatalf("accepted old wording not stale: %+v",cell)}} else if !errors.Is(ae,port.ErrPreconditionFailed)||cell.Answer!=nil{t.Fatalf("race=%v cell=%+v",ae,cell)}
+  t.Logf("answer result=%v, revised column stale=%v",ae,cell.Stale)
+ })
+ t.Run("concurrent structure",func(t *testing.T){f,g,_:=setup(t);gate:=make(chan struct{});done:=make(chan error,2);for i:=0;i<2;i++{go func(n int){<-gate;_,e:=f.addQuestion(g,fmt.Sprintf("Q%d",n));done<-e}(i)};close(gate);wins:=0;for i:=0;i<2;i++{e:=<-done;if e==nil{wins++}else if !errors.Is(e,port.ErrPreconditionFailed){t.Fatal(e)}};if wins!=1{t.Fatalf("winners=%d",wins)}})
+ t.Run("fifty by twenty five and Vietnamese limits",func(t *testing.T){
+  f:=newReviewFx(t,factory);g:=f.grid(f.e.editor,strings.Repeat("ế",200)).Grid
+  for i:=0;i<50;i++ {v:=f.versionIn(f.e.m,fmt.Sprintf("Doc %d",i),reviewSumA);var e error;g,e=f.addVersion(g,v);if e!=nil{t.Fatal(e)}}
+  for i:=0;i<25;i++ {var e error;g,e=f.addQuestion(g,strings.Repeat("ế",1000));if e!=nil{t.Fatal(e)}}
+  begin:=time.Now();view:=f.view(f.e.viewer,g.ID);t.Logf("grid versions=%d questions=%d cells=%d read=%s",len(view.Versions),len(view.Grid.Questions),len(view.Cells),time.Since(begin));if len(view.Cells)!=1250{t.Fatal(len(view.Cells))}
+  _,e:=f.rv.RecordAnswer(f.e.ctx,port.RecordReviewAnswerCmd{ActorID:f.e.editor.String(),MatterID:f.e.m.String(),IdempotencyKey:newKey(),RequestHash:anyHash,GridID:g.ID,VersionID:g.VersionIDs[0],QuestionID:g.Questions[0].ID,ExpectedQuestionRevision:1,State:"REVIEWED",Text:strings.Repeat("ế",4000),PageRef:strings.Repeat("ế",40),QuoteRef:strings.Repeat("ế",1000)});if e!=nil{t.Fatal(e)}
+ })
+}

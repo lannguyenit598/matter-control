@@ -1,0 +1,2098 @@
+{
+  "task": "MC-002-INTA-QA-CLOSEOUT-R1",
+  "owner": "Local Codex intakeonly",
+  "round1_source": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+    "bytes": 68383,
+    "sha256": "c467e064333e57ad10d87ab3f4870e2b75f4936671256095081537c83b6a590d"
+  },
+  "round2_source": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+    "bytes": 17846,
+    "sha256": "7632d7933833cc144caeedb4c98f61586621e925d1763b9af4b4617c9c83fcf8"
+  },
+  "required_cases": [
+    {
+      "id": "INT-ENV-01",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/0",
+        "record": {
+          "id": "INT-ENV-01",
+          "original_expectation_pointer": "REQ36: required36.json /required/0 (matrix line 25)",
+          "expected_mode": "SUPPORT_RUNTIME_ENVIRONMENT",
+          "observed": "Codex environment packet proves a disposable owned PostgreSQL fixture (container mc002-inta-pg-intamvnmoems3pd, image digest sha256:77f58511..., dedicated volume mc002-inta-data-intamvnmoems3pd, loopback-only publication) with checks.json marking healthy_empty_verified once; formal row remains NOT_RUN because the full create/label/cap assertion evidence and independent observation was never recorded as canonical runtime evidence.",
+          "evidence": [
+            {
+              "anchor": "ENV",
+              "pointer": "/ (whole file; container/image/volume identifiers)"
+            },
+            {
+              "anchor": "ENVC",
+              "pointer": "/ (healthy_empty_verified)"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/0 (NOT_RUN + sub_evidence ACTUAL_CODEX_FIXTURE_VERIFICATION_EXECUTED"
+            }
+          ],
+          "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "No independent observation of the owned-container creation contract (name-availability pre-check, no-reuse/cap enforce at creation time); original row owner Codex is also the operator who produced the evidence, so operator/independent separation is unresolved.",
+          "smallest_follow_up": "Codex freezes a bounded env-attest packet (creation argv/exits/UTC + conflict pre-checks) and OpenCode observes one fixture lifecycle without executing it."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/0",
+        "record": {
+          "id": "INT-ENV-01",
+          "current_substate": "STAGE-owned provisioning + same-PG current operational subevidence",
+          "basis": "CODEX_OPERATIONAL_EVIDENCE + OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "original provisioning/checks only; reviewer never executed runtime; owned PG final stop NOT executed; PG retained running",
+          "followup": "review original env-intamvnmoems3pd records against NFR-002 clauses; PG stop only via separately recorded owner cue (INT-ISO-03)"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ENV-02",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/1",
+        "record": {
+          "id": "INT-ENV-02",
+          "original_expectation_pointer": "REQ36: required36.json /required/1 (matrix line 26)",
+          "expected_mode": "SUPPORT_MIGRATION",
+          "observed": "Two migrate attempts recorded: attempt 1 failed through a wrapper bug (09-migrate-attempt1.meta.txt), attempt 2 exited 0 and applied the migrations (10-migrate.meta.txt + stdout), against head 52b60a4 only.",
+          "evidence": [
+            {
+              "anchor": "BE09M",
+              "pointer": "/"
+            },
+            {
+              "anchor": "BE10M",
+              "pointer": "/"
+            },
+            {
+              "anchor": "BE10S",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/1"
+            }
+          ],
+          "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Original assignee included ZCode for migration operation; ZCode remained unavailable and Codex is the interim operator (owner amendment) — role deviation is disclosed, and migration was never re-run against a freshly recreated/starting database state under later recovery stages for full NFR-012 acceptance.",
+          "smallest_follow_up": "Record an amended ownership acknowledgement (Codex as interim operator is already PO-approved) and one clean fresh-state migrate+rollback-or-reapply capture."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/1",
+        "record": {
+          "id": "INT-ENV-02",
+          "current_substate": "OWNER_MIGRATION_EVIDENCE_VERIFIED (successful 2nd attempt, failed attempt preserved)",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "no migration rerun; evidence bytes attested, not clause-re-derived by reviewer",
+          "followup": "final acceptance review of retained migrate records at final addendum"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ENV-03",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/2",
+        "record": {
+          "id": "INT-ENV-03",
+          "original_expectation_pointer": "REQ36: required36.json /required/2 (matrix line 27)",
+          "expected_mode": "SUPPORT_GO_SERVER",
+          "observed": "Go server operated by Codex: start meta records PID 77632; restart identity evidence shows same binary sha256 f3bcdc2f... under PID 98134 listening on 127.0.0.1:18086; go-initial/go-final stdout/stderr retained in closeout packet; loopback binding and API-docs-disabled claimed by owner and corroborated by zero-change state pins.",
+          "evidence": [
+            {
+              "anchor": "BE20S",
+              "pointer": "/"
+            },
+            {
+              "anchor": "BE20I",
+              "pointer": "/"
+            },
+            {
+              "anchor": "BERID",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/2"
+            },
+            {
+              "anchor": "CLSRC",
+              "pointer": "/ (backend head 52b60a4, FE 3e5a642, harness 48cc03e pins)"
+            }
+          ],
+          "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Original row owner ZCode operated-the-server criterion was executed by Codex instead (disclosed amendment); no independent conformance check of `git diff` vs 52b60a4 was re-run by OpenCode in this review (owner pins relied on), and Claude conformance disposition absent.",
+          "smallest_follow_up": "OpenCode verifies backend diff emptiness against a pinned backend snapshot path list (read-only) or owners re-record start/stop with both identities present."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/2",
+        "record": {
+          "id": "INT-ENV-03",
+          "current_substate": "OWNER start/restart/stop records + source/binary identity pinned; Go absent now",
+          "basis": "OWNER_RUNTIME_EVIDENCE + CODEX_OPERATIONAL_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "direct final Go wait status NOT_OBSERVED (retained limitation)",
+          "followup": "retain NOT_OBSERVED; no restart inference"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ENV-04",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/3",
+        "record": {
+          "id": "INT-ENV-04",
+          "original_expectation_pointer": "REQ36: required36.json /required/3 (matrix line 28)",
+          "expected_mode": "SUPPORT_HARNESS_ENDPOINT",
+          "observed": "Harness built once (Next 16.4.2/Turbopack build logs, pnpm-build.stdout/stderr) with Zod allowlist, loopback-literal re-check per call, harness envelope Cache-Control: no-store enforced; driver launched 27 attempts with 0 silent retry method/URL flexibility; other-method/unknown-caseId rejections evidenced by 404/400/415 wire cases (T3/T4/T6-W/T7-W) — but the corrected guard validation proved a transient listener behavior that boundaries the original endpoint semantics.",
+          "evidence": [
+            {
+              "anchor": "ST1",
+              "pointer": "/04-stage1-stdout.log"
+            },
+            {
+              "anchor": "ST1",
+              "pointer": "/05-stage1-envelope-summary.txt"
+            },
+            {
+              "anchor": "IAGUARD",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IBOOT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/3"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Harness endpoint behavior depends on the corrected guard configurations/evaluator whose runner currently cannot execute correctly (R1-C01/02 defects CONFIRMED), so the never-listen/nonacceptance contract for future runs is unresolved; owner was Antigravity (per actual owner), but the full one-request-per-case/caller-input-bound assertion was never independently re-verified.",
+          "smallest_follow_up": "Fix R1-C01/C02 in the corrected runner (evaluator wiring + strict typed observer inputs) then one bounded launcher-based re-capture of a single variant before considering full 22-variant rerun."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/3",
+        "record": {
+          "id": "INT-ENV-04",
+          "current_substate": "route/guard source lines + historical 405/400/default-off-404 observations pinned",
+          "basis": "OWNER_RUNTIME_EVIDENCE + SOURCE_ONLY",
+          "verdict": "PARTIAL",
+          "limits": "source controls and historical observed cases are distinct from exhaustive current runtime validation of every clause (Zod/no-proxy/dependency-unchanged boundaries)",
+          "followup": "bounded runtime cue only after runner corrections; else final acceptance review of source+observed rows"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ENV-05",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/4",
+        "record": {
+          "id": "INT-ENV-05",
+          "original_expectation_pointer": "REQ36: required36.json /required/4 (matrix line 29)",
+          "expected_mode": "SUPPORT_DEFAULT_OFF_REFUSAL",
+          "observed": "Guard negatives were partially executed then formally corrected: 22 original row verdicts were PASS but are invalid — API_TOKEN/nonempty shows listenerObservedOn18085: true alongside verdict PASS (invalid under never-listen) and was re-labeled FAIL_OBSERVED_LISTENER; the other 21 have no observer.json (zero-upstream/never-listen unverified) and were re-labeled INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN. stdout for the retained variant shows 'Ready in 178ms' concurring with the listener; stderr contains the exact refusal phrase in both variants. R1 supplied corrected evaluator/runner/selfcheck sources but reviewer confirms R1-C01..C03 defects prevent executing them as written; R1-C04 prevents the current launcher import path.",
+          "evidence": [
+            {
+              "anchor": "SUBCHECKS",
+              "pointer": "/1 (API_TOKEN nonempty listenerObservedOn18085:true + verdict PASS)"
+            },
+            {
+              "anchor": "ORIGRUN",
+              "pointer": "/106-109 (observer write only in finally)"
+            },
+            {
+              "anchor": "ORIGRUN",
+              "pointer": "/125-129 (stop_observer has no signal-handler prerequisite)"
+            },
+            {
+              "anchor": "ORIGRUN",
+              "pointer": "/263-266 (missing observer defaulted to 0)"
+            },
+            {
+              "anchor": "ORIGRUN",
+              "pointer": "/271-274 (mere key-name acceptance)"
+            },
+            {
+              "anchor": "ORIGRUN",
+              "pointer": "/281-295 (verdict chain includes listener_after_exit/observer_requests but not listener_appeared)"
+            },
+            {
+              "anchor": "R1SUB",
+              "pointer": "/"
+            },
+            {
+              "anchor": "R1EV",
+              "pointer": "/66-78,111-115,139-159"
+            },
+            {
+              "anchor": "R1RUN",
+              "pointer": "/167-173,214-218,244-248,281-285,309,313-315"
+            },
+            {
+              "anchor": "R1PROP",
+              "pointer": "/2.1,3.3"
+            },
+            {
+              "anchor": "R1DEP",
+              "pointer": "/ (cp -cR plan + realpath preflight)"
+            },
+            {
+              "anchor": "R1IPROB",
+              "pointer": "/ vectors"
+            },
+            {
+              "anchor": "IPERX",
+              "pointer": "/"
+            }
+          ],
+          "observation_basis": "SOURCE_ONLY",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Default-off refusal was evidenced only by the stderr phrase and FINITE exit=1 rows; evidence for '(b) NODE_ENV=production' refusal, exact refusal enforcement, and durable 'never-listen' is NOT complete: corrected evaluator accepts unknown listener states, boolean counters and truthy shutdown strings (3 unsafe PASS vectors CONFIRMED); corrected runner has NameError probes in metadata/evalerator interpolation plus $_ negation capture defect (R1-C01 CONFIRMED); observer write/presence/atomicity/cleanup gaps (R1-C03 CONFIRMED); launcher import path refs nonexistent guards.js (R1-C04 CONFIRMED); actual-secret scan not established.",
+          "smallest_follow_up": "Consolidate R1-C01..C04 fixes in one bounded runner/evaluator revision; freeze strict-typed evaluator regression tests (including the 3 vector cases) before any runtime cue; keep direct-CLI never-listen scope decision separate (see recommendation)."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/4",
+        "record": {
+          "id": "INT-ENV-05",
+          "current_substate": "R4: default-404 + NODE_ENV=production + API_MODE refusals with measured zero upstream; 11 other keys via historical 22-variant run: exact refusal observed x22, but zero-upstream NOT_ESTABLISHED x22, never-listen FAIL x1 observed (API_TOKEN/nonempty, Ready in 178ms stdout pinned); R1 corrected dispositions retained",
+          "evidence_extra": "R1 manifest 677cd24f... + guard-startup-subchecks 97f1eefc... + retained-variant-evidence 66 files + API_TOKEN_nonempty stdout 95c5943c...",
+          "basis": "OWNER_RUNTIME_EVIDENCE (historical) + R1 corrected evidence",
+          "verdict": "PARTIAL",
+          "limits": "never-listen and zero-upstream not established for 21/22 historical variants; pre-listen root cause (start-server.js listens before config evaluation) documented but launcher proposal P2-defective (R1-C04); corrected runner/evaluator source P1-defective (R1-C01/C02) so no new runtime can pass as written; subchecks listenerObservedDuringBoot=false x21 must be read as not-established, NOT as 'no listener occurred' (each of the 22 stdouts shows a Ready line)",
+          "followup": "fix R1-C01..C03 runner/evaluator + R1-C04 launcher, then a separately cued bounded 22-variant rerun under the corrected runner"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ENV-06",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/5",
+        "record": {
+          "id": "INT-ENV-06",
+          "original_expectation_pointer": "REQ36: required36.json /required/5 (matrix line 30)",
+          "expected_mode": "SUPPORT_DRIVER",
+          "observed": "Driver executed 7 stages over exactly the fixed case table (23 logical cases / 27 unique request-ID attempts, T12 unreachable), one upstream request per case evidenced by 26 Go access-log row matches; envelopes retained with state snapshots; no caller-defined routing or silent retry is implied by the retained artifacts; R1 median latency retraces are not part of the criterion.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/note"
+            },
+            {
+              "anchor": "ST1",
+              "pointer": "/03-launch-meta.txt"
+            },
+            {
+              "anchor": "ST5",
+              "pointer": "/00-driver-meta.txt"
+            },
+            {
+              "anchor": "ST6",
+              "pointer": "/00-driver-meta.txt"
+            },
+            {
+              "anchor": "ST7",
+              "pointer": "/00-driver-meta.txt"
+            },
+            {
+              "anchor": "CLENV",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/5"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent QA of envelope completeness/body truncation bounds for each of the 27 attempts has not been executed (envelopes retained in stage state copies were not independently re-parsed in this review); stage order repristination conflicts with the original T5/T8/T9 parametric ordering when compared with the checkpoint; every confirmation remains owner-reported with intake corroboration only.",
+          "smallest_follow_up": "OpenCode re-verifies 2-3 attempts end-to-end from retained artifacts (request ID → envelope → Go row) as a bounded independent QA sample before future acceptance."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/5",
+        "record": {
+          "id": "INT-ENV-06",
+          "current_substate": "27-attempt correlation retained (23 logical endpoint cases / 27 unique IDs / 26 Go rows + T12 unreachable are distinct counts)",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "driver invoked historically; fixed-table/single-request/no-retry clauses attested by correlation, not fully re-derived by reviewer",
+          "followup": "final acceptance review"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ENV-07",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/6",
+        "record": {
+          "id": "INT-ENV-07",
+          "original_expectation_pointer": "REQ36: required36.json /required/6 (matrix line 31)",
+          "expected_mode": "SUPPORT_NEXT_RUNTIME_CHECKS",
+          "observed": "Next runtime behavior under the harness config was exercised during 7 driver stages; documented loopback binding and dynamic handler evidenced; envelope nextVersion presence carried in Go-log correlation rows; webpack-mode variance recorded as a limitation in the check narrative; TS/lint/test glob pickup verification was achieved via vitest (18 test paths) and build logs rather than running Next under the harness config label re-verified each time.",
+          "evidence": [
+            {
+              "anchor": "ST1",
+              "pointer": "/01-next-stdout.log"
+            },
+            {
+              "anchor": "ST1",
+              "pointer": "/02-next-stdout.log"
+            },
+            {
+              "anchor": "IVIT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IBOOT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/6"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Full criterion includes overhead-correctness under the pinned front-end config with independent verification of 'no fetch result caching/reuse' at request level; independent re-observation of `cache: 'no-store'` on the retained transport envelope headers is pending; variance (webpack mode) remains reported, never independently dispositioned.",
+          "smallest_follow_up": "Owner re-captures one running variant's response envelope headers (no-store confirmation) and Codex records the variance disposition separately."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/6",
+        "record": {
+          "id": "INT-ENV-07",
+          "current_substate": "Next 16.4.2/webpack cross-root runtime subevidence; default Turbopack failure retained; no-store/dynamic flags pinned",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "universal dynamic/no-cache behavior and product artifact exclusion NOT proved; variance disposition still open",
+          "followup": "record variance disposition or bounded synthetic repeat-read probe (design only, not executed)"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T1",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/7",
+        "record": {
+          "id": "T1",
+          "original_expectation_pointer": "REQ36: required36.json /required/7 (matrix line 39)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "POST /users create (user A) via harness client path hit Go 201; request ID mc-int-intamvnmoems3pd-T1-1; envelope-summary retained; checkpoint records owner-executed stage-1 packet as export-verified; schema-possession attributes are in retained envelope data.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/0"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/7"
+            },
+            {
+              "anchor": "GOLOG",
+              "pointer": "/"
+            },
+            {
+              "anchor": "ST1",
+              "pointer": "/05-stage1-envelope-summary.txt"
+            },
+            {
+              "anchor": "ST1",
+              "pointer": "/30-hashes.txt"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/7"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent verification did not re-execute; claim rests on owner-exported artifacts plus intake/intake-intake consistent chain (canonical bytes verified).",
+          "smallest_follow_up": "Bounded independent contract-observation of 1 stage-1 attempt under a corrected runner or claude-owned conformance signature."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/7",
+        "record": {
+          "id": "T1",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "owner-executed, export integrity attested; packet-clause-level re-verification not performed by this addendum review; formal NOT_RUN unchanged",
+          "followup": "final case-by-case packet clause review in closeout acceptance"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T2",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/8",
+        "record": {
+          "id": "T2",
+          "original_expectation_pointer": "REQ36: required36.json /required/8 (matrix line 40)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "GET /users/{id} equals T1 field-for-field per retained stage-1 equivalence assertion (Int-Pers-01 later revalidated the same user with equality against the same state).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/1"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/8"
+            },
+            {
+              "anchor": "STAGE2INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/8"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Same as other stage-1 cases: owner evidence chain is intact but independently unverified at runtime level.",
+          "smallest_follow_up": "Include T1/T2 equality in the independent bounded runtime sample when correcting runner is re-dispatched."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/8",
+        "record": {
+          "id": "T2",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T3",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/9",
+        "record": {
+          "id": "T3",
+          "original_expectation_pointer": "REQ36: required36.json /required/9 (matrix line 41)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "GET never-created UUIDv7 → ApiError 404 NOT_FOUND with RFC 9457 details per retained envelope; Go log row 404 matched the request ID.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/4"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/9"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/9"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "details containing no other record's data was not independently checked from raw artifact bytes in this review.",
+          "smallest_follow_up": "Add the no-leak detail check into OpenCode's independent artifact re-verification pass."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/9",
+        "record": {
+          "id": "T3",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T4",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/10",
+        "record": {
+          "id": "T4",
+          "original_expectation_pointer": "REQ36: required36.json /required/10 (matrix line 42)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Two attempts with malformed/uppercase literal IDs (attempts -6 and -7) each 404/NOT_FOUND — canonicalization rejection behavior recorded with both ID classes.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/5"
+            },
+            {
+              "anchor": "RC",
+              "pointer": "/6"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/10"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/10"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Runtime re-observation never executed by independent QA; both attempts are owner-retained only.",
+          "smallest_follow_up": "Include T4 in the independent correction-loop sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/10",
+        "record": {
+          "id": "T4",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T5",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/11",
+        "record": {
+          "id": "T5",
+          "original_expectation_pointer": "REQ36: required36.json /required/11 (matrix line 43)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Empty name POST → 422 VALIDATION_ERROR (attempt -8) and follow-up GET A unchanged (attempt -9 shows 200 and stage-2 equality confirms version stability).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/7"
+            },
+            {
+              "anchor": "RC",
+              "pointer": "/8"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/11"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "STAGE2INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/11"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent runtime verification pending; details-presentnt assertion relies on envelope content not re-parsed here.",
+          "smallest_follow_up": "Include T5 in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/11",
+        "record": {
+          "id": "T5",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T8",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/12",
+        "record": {
+          "id": "T8",
+          "original_expectation_pointer": "REQ36: required36.json /required/12 (matrix line 44)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Duplicate-email POST → 409 (attempt -10) and subsequent GET A (attempt -11) confirm version stability after the 409.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/9"
+            },
+            {
+              "anchor": "RC",
+              "pointer": "/10"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/12"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/12"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent runtime verification pending; 409 mapping depends on client status-mapping behavior accepted as ownerenswert and unverified independently.",
+          "smallest_follow_up": "Include T8 in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/12",
+        "record": {
+          "id": "T8",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T9",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/13",
+        "record": {
+          "id": "T9",
+          "original_expectation_pointer": "REQ36: required36.json /required/13 (matrix line 45)",
+          "expected_mode": "SUPPORT_MUTATION",
+          "observed": "PATCH A with If-Match=1 and new name → 200 body version 2 name applied (attempt -17); stage-4 packet records prior state before and after (W9 then re-checks ETag 2).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/16"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/13"
+            },
+            {
+              "anchor": "ST4",
+              "pointer": "/10-driver.stdout.log"
+            },
+            {
+              "anchor": "ST4",
+              "pointer": "/11-state-after.sha256"
+            },
+            {
+              "anchor": "STAGE4INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/13"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent runtime verification pending; mutation is also referenced by later stage-5 state-after hashes.",
+          "smallest_follow_up": "Include T9 in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/13",
+        "record": {
+          "id": "T9",
+          "current_substate": "STAGE4_OWNER_EXECUTED_UPDATED_V2_STALE412_PACKET_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same class as T1 (stage4 packet)",
+          "followup": "final acceptance review"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T10",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/14",
+        "record": {
+          "id": "T10",
+          "original_expectation_pointer": "REQ36: required36.json /required/14 (matrix line 46)",
+          "expected_mode": "SUPPORT_MUTATION_NEGATIVE",
+          "observed": "PATCH A stale If-Match=1 (second stale attempt) → 412 (attempt -19); follow-up GET correct (attempt -20) shows version 2 with the T9 name (no partial write).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/18"
+            },
+            {
+              "anchor": "RC",
+              "pointer": "/19"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/14"
+            },
+            {
+              "anchor": "ST4",
+              "pointer": "/10-driver.stdout.log"
+            },
+            {
+              "anchor": "STAGE4INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/14"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent runtime verification pending; the 'no partial write' clause rests on owner state snapshots alone.",
+          "smallest_follow_up": "Add a re-hash of stage4 00-state-before / 11-state-after artifacts to the independent verification pass."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/14",
+        "record": {
+          "id": "T10",
+          "current_substate": "STAGE4_OWNER_EXECUTED_UPDATED_V2_STALE412_PACKET_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T11a",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/15",
+        "record": {
+          "id": "T11a",
+          "original_expectation_pointer": "REQ36: required36.json /required/15 (matrix line 47)",
+          "expected_mode": "SUPPORT_OUTAGE_READ",
+          "observed": "GET A during PG outage → 503 HTTP_ERROR with unavailable classification and details.type /problems/unavailable, retryAfter=1; Go log row 503 correlated with the request ID; golden 503 detail matched C01 per intake correlation verification.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/20"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/15"
+            },
+            {
+              "anchor": "OBS",
+              "pointer": "/"
+            },
+            {
+              "anchor": "STAGE5INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "ST5",
+              "pointer": "/10-driver.stdout.log"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/15"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "RetryAfter and detail bytes were not independently re-parsed from envelopes here; golden detail equality is intake-corroborated, not QAd.",
+          "smallest_follow_up": "Re-parse the retained T11a envelope and diff against the C01 golden body in a bounded independent pass."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/15",
+        "record": {
+          "id": "T11a",
+          "current_substate": "STAGE5_OWNER_EXECUTED_NATIVE503_REQUEST_CORRELATION_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same class (stage5; C01-golden 503 details pinned)",
+          "followup": "final acceptance review"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T11b",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/16",
+        "record": {
+          "id": "T11b",
+          "original_expectation_pointer": "REQ36: required36.json /required/16 (matrix line 48)",
+          "expected_mode": "SUPPORT_OUTAGE_WRITE",
+          "observed": "PATCH A during outage → 503 unavailable, identical unavailable assertions (attempt -22); per the native unknown-write rule no committed/not-committed inference is allowed from the 503 alone — this holds and reconciliation is deferred to INT-PERS-04 (read-only).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/21"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/16"
+            },
+            {
+              "anchor": "STAGE5INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "STAGE6INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/16"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Actual final state equality/outcome verification relied on stage-6 output retained by owner; not independently re-parsed in this review.",
+          "smallest_follow_up": "Bounded independent re-verification of the stage-6 state equality vs pinned before/after hashes."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/16",
+        "record": {
+          "id": "T11b",
+          "current_substate": "STAGE5_OWNER_EXECUTED_NATIVE503_REQUEST_CORRELATION_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same; committed/not-committed outcome NOT inferred from 503 (unknown-write rule honored)",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T11c",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/17",
+        "record": {
+          "id": "T11c",
+          "original_expectation_pointer": "REQ36: required36.json /required/17 (matrix line 49)",
+          "expected_mode": "SUPPORT_OUTAGE_CREATE",
+          "observed": "POST new user X during outage → 503 unavailable assertions visible in correlation (attempt -23); outcome recorded OUTCOME_UNKNOWN pending INT-PERS-04 — and per the contract no later re-POST or receipt would prove behavior; the known-unknown status is retained as OPEN (not resolved to success/fail).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/22"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/17"
+            },
+            {
+              "anchor": "STAGE5INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "STAGE6INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/17"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Reviewer's own re-observation of the CREATE outcome is not achievable without the owner runtime; the open OUTCOME_UNKNOWN status itself cannot be closed by read-only review and stays open (preserves the limits note for D-09; do NOT reinterpret absentobserver as 0 or unknown as known).",
+          "smallest_follow_up": "Owner records explicit reconciliation imperative in the stage-6 packet amendment and OpenCode then re-verifies the READ of A only (no re-POST/retry/state expansion)."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/17",
+        "record": {
+          "id": "T11c",
+          "current_substate": "STAGE5_OWNER_EXECUTED_NATIVE503_REQUEST_CORRELATION_VERIFIED; outcome remains OUTCOME_UNKNOWN by design",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "T11c user X stays OUTCOME_UNKNOWN; a 503 alone implies nothing about commit; no re-POST/re-lookup; unknown is permanent for this vertical and must never be flipped by absence of a row",
+          "followup": "none new; retain unknown in ledger and products"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T12",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/18",
+        "record": {
+          "id": "T12",
+          "original_expectation_pointer": "REQ36: required36.json /required/18 (matrix line 50)",
+          "expected_mode": "SUPPORT_TRANSPORT_FAILURE",
+          "observed": "GET A with Go stopped → client ApiError NETWORK_ERROR, status 0 (attempt -27, genuinely fired); Go no-log row (go_matches 0) with no driver retry; stage-7 packet preserves this attempt with go-stdout-before/after silent; the checkpoint mentions this is unreachable-not-retried behavior. Not a Go-log row in the 26-row set (by design).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/26"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/18"
+            },
+            {
+              "anchor": "ST7",
+              "pointer": "/10-driver.stdout.log"
+            },
+            {
+              "anchor": "ST7",
+              "pointer": "/00-driver-meta.txt"
+            },
+            {
+              "anchor": "ST7",
+              "pointer": "/05-ledger-after.sha256"
+            },
+            {
+              "anchor": "STAGE7INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/18"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent verification of never-success/never-empty behavior from raw artifact bytes is pending; the status 0 client outcome is owner-reported with packet corroboration only.",
+          "smallest_follow_up": "Add T12 to the independent envelope-based sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/18",
+        "record": {
+          "id": "T12",
+          "current_substate": "STAGE7_OWNER_EXECUTED_NETWORK_ERROR_PACKET_VERIFIED (Go stopped; client code NETWORK_ERROR status 0; unreachable attempt has NO Go log line by design)",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "historical-reachable-vs-current Go absence separate; driver no-retry attested via packet",
+          "followup": "final acceptance review"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "W1",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/19",
+        "record": {
+          "id": "W1",
+          "original_expectation_pointer": "REQ36: required36.json /required/19 (matrix line 58)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Wire POST user B (distinct email/name, own request ID) with response 201 and ETag/location/x-request-id header set recorded in retained wire-mode envelope; row applies to B only.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/2"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/19"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/19"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Header-by-header independent re-verification from envelope bytes is not done in this review; owner-exported retained artifacts alone.",
+          "smallest_follow_up": "Add W1 to the independent envelope sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/19",
+        "record": {
+          "id": "W1",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED (user B; header allowlist)",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "W2",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/20",
+        "record": {
+          "id": "W2",
+          "original_expectation_pointer": "REQ36: required36.json /required/20 (matrix line 59)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Wire GET A returns ETag \"<current version>\" plus request-ID echo per retained envelope; attempt row confirms via correlation (mode wire).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/3"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/20"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/20"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent verification pending.",
+          "smallest_follow_up": "Include W2 in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/20",
+        "record": {
+          "id": "W2",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "W3",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/21",
+        "record": {
+          "id": "W3",
+          "original_expectation_pointer": "REQ36: required36.json /required/21 (matrix line 60)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Wire GET never-created id → 404 application/problem+json with request-ID echo (attempt -12); no other record's data evidenced by row isolation across separate attempts.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/11"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/21"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/21"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent header/media-type verification from envelope bytes pending.",
+          "smallest_follow_up": "Include W3 in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/21",
+        "record": {
+          "id": "W3",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T6-W",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/22",
+        "record": {
+          "id": "T6-W",
+          "original_expectation_pointer": "REQ36: required36.json /required/22 (matrix line 61)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Wire POST malformed JSON with JSON Content-Type → 400 problem+json (attempt -13) with request-ID echo recorded in the Go-log row match.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/12"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/22"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/22"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent verification pending.",
+          "smallest_follow_up": "Include T6-W in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/22",
+        "record": {
+          "id": "T6-W",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "T7-W",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/23",
+        "record": {
+          "id": "T7-W",
+          "original_expectation_pointer": "REQ36: required36.json /required/23 (matrix line 62)",
+          "expected_mode": "SUPPORT_ATTEMPT_NEGATIVE",
+          "observed": "Wire POST valid JSON bytes as Uint8Array body without Content-Type → 415 problem+json (attempt -14); sent headers recorded as constructed per owner packet note and intake assessment; deviation free recording (any non-415 would be a finding) preserved.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/13"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/23"
+            },
+            {
+              "anchor": "STAGE1INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IAGUARD",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/23"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent verification pending; the Fetch-period gap note is intake-narrated without independent reproduction.",
+          "smallest_follow_up": "Include T7-W in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/23",
+        "record": {
+          "id": "T7-W",
+          "current_substate": "STAGE1_OWNER_EXECUTED_EXPORT_VERIFIED (415 + constructed-headers record; any non-415 would be a finding)",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same as T1",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "W9",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/24",
+        "record": {
+          "id": "W9",
+          "original_expectation_pointer": "REQ36: required36.json /required/24 (matrix line 63)",
+          "expected_mode": "SUPPORT_ATTEMPT",
+          "observed": "Wire GET A after update → ETag \"2\" with request-ID echo; attempt row -18 recorded post-T9.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/17"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/24"
+            },
+            {
+              "anchor": "STAGE4INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "ST4",
+              "pointer": "/10-driver.stdout.log"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/24"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent verification pending.",
+          "smallest_follow_up": "Include W9 in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/24",
+        "record": {
+          "id": "W9",
+          "current_substate": "STAGE4 packet (ETag \"2\")",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same class as T9",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "W11",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/25",
+        "record": {
+          "id": "W11",
+          "original_expectation_pointer": "REQ36: required36.json /required/25 (matrix line 64)",
+          "expected_mode": "SUPPORT_OUTAGE_WIRE",
+          "observed": "Wire GET A during outage → 503 problem+json with echo, Retry-After header NOT asserted (deferred to D-11 as planned).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/23"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/25"
+            },
+            {
+              "anchor": "STAGE5INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/25"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent verification pending.",
+          "smallest_follow_up": "Include W11 in the independent sample."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/25",
+        "record": {
+          "id": "W11",
+          "current_substate": "STAGE5 packet (503 problem+json; no Retry-After asserted per defer to D-11)",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same class as T11a",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-PERS-01",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/26",
+        "record": {
+          "id": "INT-PERS-01",
+          "original_expectation_pointer": "REQ36: required36.json /required/26 (matrix line 70)",
+          "expected_mode": "SUPPORT_PERSISTENCE",
+          "observed": "Cross-restart equality packet: pre-restart checkpoint state, restart log before/after, Go restart record; state equality recorded by owner (state after contains unchanged A).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/14"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/26"
+            },
+            {
+              "anchor": "ST2",
+              "pointer": "/00-state-before.sha256"
+            },
+            {
+              "anchor": "ST2",
+              "pointer": "/11-state-after.sha256"
+            },
+            {
+              "anchor": "ST2",
+              "pointer": "/12-go-restart-log-after.log"
+            },
+            {
+              "anchor": "STAGE2INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/26"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Independent hash re-check of state-before vs state-after artifacts pending (owner-recorder only).",
+          "smallest_follow_up": "OpenCode independently re-computes the two state sha256 files and diffs them."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/26",
+        "record": {
+          "id": "INT-PERS-01",
+          "current_substate": "STAGE2_OWNER_EXECUTED_FULL_A_EQUALITY_PACKET_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "packet attested; no re-run; version-1 vs version-2 guard respected",
+          "followup": "final acceptance review"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-PERS-02",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/27",
+        "record": {
+          "id": "INT-PERS-02",
+          "original_expectation_pointer": "REQ36: required36.json /required/27 (matrix line 71)",
+          "expected_mode": "SUPPORT_PERSISTENCE",
+          "observed": "Same-container PG stop/start round with container/storage identity preserved pre/post (owner-recorded identity); state equality after rebuild recorded.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/15"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/27"
+            },
+            {
+              "anchor": "ST3",
+              "pointer": "/11-state-after.sha256"
+            },
+            {
+              "anchor": "ST3",
+              "pointer": "/30-hashes.txt"
+            },
+            {
+              "anchor": "STAGE3INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/27"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Owner-recorded storage identity was never independently re-read in this review; the environment checks.json healthy_empty_verified only covers initial state.",
+          "smallest_follow_up": "OpenCode re-reads the container/storage identity records and compares with stage3 snapshot hashes."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/27",
+        "record": {
+          "id": "INT-PERS-02",
+          "current_substate": "STAGE3_OWNER_EXECUTED_FULL_A_EQUALITY_AFTER_SAME_PG_RESTART_PACKET_VERIFIED",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same container restart evidence; identity recorded by Codex",
+          "followup": "final acceptance review"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-PERS-03",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/28",
+        "record": {
+          "id": "INT-PERS-03",
+          "original_expectation_pointer": "REQ36: required36.json /required/28 (matrix line 72)",
+          "expected_mode": "SUPPORT_RECOVERY",
+          "observed": "GET A after PG restart without any Go restart → 200/classification success per stage-6 packet; Go/Next stdout logs retained as evidence of no restart (go-logs before/after flow contiguity).",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/24"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/28"
+            },
+            {
+              "anchor": "ST6",
+              "pointer": "/10-driver.stdout.log"
+            },
+            {
+              "anchor": "ST6",
+              "pointer": "/12-privacy-scan.txt"
+            },
+            {
+              "anchor": "STAGE6INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/28"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Recovery without Go restart is evidenced by log contiguity; independent log-flow continuation re-verification pending.",
+          "smallest_follow_up": "OpenCode re-verifies the stage6 log-flow continuity (before/after log identities)."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/28",
+        "record": {
+          "id": "INT-PERS-03",
+          "current_substate": "STAGE6_OWNER_EXECUTED_RECOVERY_V2_PACKET_VERIFIED (recovery without Go restart)",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "same",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-PERS-04",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/29",
+        "record": {
+          "id": "INT-PERS-04",
+          "original_expectation_pointer": "REQ36: required36.json /required/29 (matrix line 73)",
+          "expected_mode": "SUPPORT_RECONCILIATION",
+          "observed": "Read-only GET reconciliation recorded post-recovery; T11b-PATCH actual state captured; T11c-user-X stays OUTCOME_UNKNOWN with no re-POST/retry/state expansion applied in the owner packet.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/25"
+            },
+            {
+              "anchor": "CP",
+              "pointer": "/cases/29"
+            },
+            {
+              "anchor": "ST6",
+              "pointer": "/00-driver-meta.txt"
+            },
+            {
+              "anchor": "STAGE6INTK",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/29"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "T11c resolution remains OUTCOME_UNKNOWN and is an intentional state; independent confirmation of no re-POST/retry/list scope expansion could not be completed without additional artifact slice re-checks.",
+          "smallest_follow_up": "OpenCode re-verifies the stage-6 retained packet for absence of re-POST/list-expansion attempts."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/29",
+        "record": {
+          "id": "INT-PERS-04",
+          "current_substate": "STAGE6 packet; reconciliation read-only; T11b reconciled, T11c unknown retained",
+          "basis": "OWNER_RUNTIME_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "no receipt-based reconciliation (deferred D-09)",
+          "followup": "same"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-COR-01",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/30",
+        "record": {
+          "id": "INT-COR-01",
+          "original_expectation_pointer": "REQ36: required36.json /required/30 (matrix line 79)",
+          "expected_mode": "SUPPORT_OBSERVABILITY",
+          "observed": "26 unique Go rows matched the 27 request IDs stage-by-stage (26 rows; 23 logical cases, one unreachable T12), each ID found exactly once per outcome; a NOT-OBSERVABLE template fallback is not needed because IDs were found.",
+          "evidence": [
+            {
+              "anchor": "RC",
+              "pointer": "/"
+            },
+            {
+              "anchor": "GOLOG",
+              "pointer": "/"
+            },
+            {
+              "anchor": "OBS",
+              "pointer": "/"
+            },
+            {
+              "anchor": "ST1",
+              "pointer": "/06-correlation-go-log.txt"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/30"
+            }
+          ],
+          "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Reviewer counts are consistent with intake counts, but a full independent replay of all 26 log-row match counts was not executed (a spot sample only).",
+          "smallest_follow_up": "OpenCode runs a bounded file-level count cross-check (already partially done in this review) recorded in verification-log.json."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/30",
+        "record": {
+          "id": "INT-COR-01",
+          "current_substate": "26 unique Go access-log rows correlated + T12 intentionally unreachable; NO_FULL_EXECUTION_EVIDENCE formally",
+          "basis": "CODEX_OPERATIONAL_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "attribution assessment not completed independently; per closeout prompt 26 row matches and T12 unreachable remain distinct from 23 logical cases/27 unique IDs",
+          "followup": "correlation attribution review (independent reviewer)",
+          "NOTE_distinct_counts": "23 logical endpoint cases / 27 unique IDs / 26 Go matches + T12 unreachable are DIFFERENT measures; do not paraphrase any into the other"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-PRIV-01",
+      "evidence_verdict": "INSUFFICIENT_EVIDENCE",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/31",
+        "record": {
+          "id": "INT-PRIV-01",
+          "original_expectation_pointer": "REQ36: required36.json /required/31 (matrix line 80)",
+          "expected_mode": "SUPPORT_PRIVACY",
+          "observed": "Bounded synthetic-body marker scans ran over 61 retained logs (names/emails/routes) with zero marker hits in the retained copies; pattern-based credentials scan over 17 packets files found zero matches; envelope-size truncation flags present in the audit — BUT actual_secret_value_scan is explicitly NOT_ESTABLISHED (R1 correction) and basis was extend only to retained copies of logs.",
+          "evidence": [
+            {
+              "anchor": "ST1",
+              "pointer": "/07-redaction-scan.txt"
+            },
+            {
+              "anchor": "ST2",
+              "pointer": "/13-privacy-scan.txt"
+            },
+            {
+              "anchor": "ST3",
+              "pointer": "/13-privacy-scan.txt"
+            },
+            {
+              "anchor": "ST4",
+              "pointer": "/13-privacy-scan.txt"
+            },
+            {
+              "anchor": "ST5",
+              "pointer": "/12-privacy-scan.txt"
+            },
+            {
+              "anchor": "ST6",
+              "pointer": "/12-privacy-scan.txt"
+            },
+            {
+              "anchor": "ST7",
+              "pointer": "/12-privacy-scan.txt"
+            },
+            {
+              "anchor": "CLMRK",
+              "pointer": "/logs (count 61)"
+            },
+            {
+              "anchor": "CLARC",
+              "pointer": "/"
+            },
+            {
+              "anchor": "CLCRD",
+              "pointer": "/"
+            },
+            {
+              "anchor": "R1ERR",
+              "pointer": "/credentialCoverageClarification"
+            },
+            {
+              "anchor": "R1CRED",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/31"
+            }
+          ],
+          "observation_basis": "ARTIFACT_ONLY",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "gap": "Criterion requires credential/DSN/password/token values absent from EVERY artifact including envelopes; pattern-scan absence plus marker scan are strictly narrower. Actual secret-value scan of backend env/Config.Env was never executed (owner responsibility; R1 confirms ACTUAL_SECRET_SCAN_NOT_ESTABLISHED); no independent privacy review is possible on pattern evidence alone.",
+          "smallest_follow_up": "Codex executes the actual secret-value scan across env/config artifacts redacting results; owner code-reviewing OpenCode then records an independent privacy return."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/31",
+        "record": {
+          "id": "INT-PRIV-01",
+          "current_substate": "pattern-only scans clean in packets; application-log marker scan done by Codex; actual secret-value scan NOT established",
+          "evidence_extra": "credential-pattern-scan-r1.json e36b9c01... (74 files, 0 pattern hits, ACTUAL_SECRET_SCAN_NOT_ESTABLISHED) + original validation-20261026 credential-pattern-scan.json + closeout-readiness application-log-marker-scan.json",
+          "basis": "OWN_RUNTIME/CODEX_OPERATIONAL_EVIDENCE (worded scope clauses)",
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "limits": "actual-secret coverage absent by explicit owner/author statements; no hidden private read assumed",
+          "followup": "complete the bounded actual-secret-value scan scope per INT-PRIV-01 (Codex/owner responsibilities; never read backend.env/Config.Env privately in a breach policy)"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ISO-01",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/32",
+        "record": {
+          "id": "INT-ISO-01",
+          "original_expectation_pointer": "REQ36: required36.json /required/32 (matrix line 81)",
+          "expected_mode": "SUPPORT_ISOLATION",
+          "observed": "r4 live-guards and template-isolation outputs in closeout packet demonstrate the harness-is NOTHING model-compilation of shared client within product allowed-paths; ledger/source pins state FE 3e5a642, harness 48cc03e, BE 52b60a4 with adjacent unchanged paths; Go CORS configuration absence matches the server-to-server scope note (no browser surface claimed).",
+          "evidence": [
+            {
+              "anchor": "CLRID",
+              "pointer": "/"
+            },
+            {
+              "anchor": "CLTID",
+              "pointer": "/"
+            },
+            {
+              "anchor": "CLSRC",
+              "pointer": "/"
+            },
+            {
+              "anchor": "CLRP",
+              "pointer": "/"
+            },
+            {
+              "anchor": "CLDEP",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IBOOT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/32"
+            }
+          ],
+          "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "Criterion requests explicitly computed empty diffs vs the three pinned revisions; owner's diff computations were not independently re-executed by this reviewer (read-only byte/hash verify does not equal diff replay); Go zero-CORS claim relies on source pins rather than a fresh independent confirmation.",
+          "smallest_follow_up": "Codex freezes a computed-diff attestation packet or grants a bounded read-only diff replay by OpenCode."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/32",
+        "record": {
+          "id": "INT-ISO-01",
+          "current_substate": "clean trees/binary/dependency/lockfile hashes pinned; no CORS config in Go scope",
+          "basis": "CODEX_OPERATIONAL_EVIDENCE",
+          "verdict": "PARTIAL",
+          "limits": "source/dependency integrity is not product/security conformance",
+          "followup": "final conformance-style review of hashes"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ISO-02",
+      "evidence_verdict": "PARTIAL",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/33",
+        "record": {
+          "id": "INT-ISO-02",
+          "original_expectation_pointer": "REQ36: required36.json /required/33 (matrix line 82)",
+          "expected_mode": "SUPPORT_PROD_EXCLUSION",
+          "observed": "Product exclusion verified from the packet: 31 emitted assets inventoried (18 JS + 15 chunk JS + non-chunk manifest split), 8 NFT traces with zero harness references in manifest, static routes manifest with 5 static product routes and no /harness/case entry, vitest listing 18 product test paths all under product-snapshot/src, and 17 file credential-pattern scan with 0 matches; cross-referenced with the intake assessment and R1 reconciliation corrections.",
+          "evidence": [
+            {
+              "anchor": "IPERX",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IEMIT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IRUT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "INFT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IVIT",
+              "pointer": "/"
+            },
+            {
+              "anchor": "ICRED",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IPRE",
+              "pointer": "/"
+            },
+            {
+              "anchor": "IPROD",
+              "pointer": "/"
+            },
+            {
+              "anchor": "R1ERR",
+              "pointer": "/assetCountCorrections"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/33"
+            }
+          ],
+          "observation_basis": "ARTIFACT_ONLY",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "PARTIAL",
+          "gap": "All exclusion observations are artifact-derived from one captured build; an independent build/test re-capture to re-verify exclusion on fresh output is not yet requested or executed; deviations reporting framework remains intake-side.",
+          "smallest_follow_up": "OpenCode re-verifies exclusion on any future rebuild artifact (no rerun restricted now), or owner freeze-records a second capture on a different seed."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/33",
+        "record": {
+          "id": "INT-ISO-02",
+          "current_substate": "18 collected test paths, 8 NFT traces, manifests/routes, emitted assets (31/18/15) and product-exclusion report verified as artifacts in sealed packet (18 payloads re-verified 0 sha mismatch)",
+          "basis": "ARTIFACT_ONLY",
+          "verdict": "PARTIAL",
+          "limits": "local build vs hosted CI distinct; harness importability from src and dynamic runtime cache behavior NOT fully established at runtime; cross-checked with ENV-07 variance",
+          "followup": "keep PARTIAL; no re-demand of build reruns; smallest optional read-only graph spot-check only if a concrete gap appears"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-ISO-03",
+      "evidence_verdict": "INSUFFICIENT_EVIDENCE",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/34",
+        "record": {
+          "id": "INT-ISO-03",
+          "original_expectation_pointer": "REQ36: required36.json /required/34 (matrix line 83)",
+          "expected_mode": "SUPPORT_TEARDOWN",
+          "observed": "No teardown was executed; resource-and-process-disposition.json records the resource/process after initial validation but does not verify zero owned listeners; prefinal resource-observation in closeout tracks running resources; teardown finalization belongs to Codex governance after this milestone and was never performed for INT-A.",
+          "evidence": [
+            {
+              "anchor": "IRRD",
+              "pointer": "/"
+            },
+            {
+              "anchor": "CLRES",
+              "pointer": "/"
+            },
+            {
+              "anchor": "LED",
+              "pointer": "/rows/34"
+            },
+            {
+              "anchor": "R1RETD",
+              "pointer": "/7 (Next teardown NOT_OBSERVED historical)"
+            }
+          ],
+          "observation_basis": "ARTIFACT_ONLY",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "gap": "row cannot be supported: zero-owned-listeners proof, removal vs retention decision, and resource ownership close-out are unperformed; Next termination and owned-PG final stop remain NOT_OBSERVED in the historical record.",
+          "smallest_follow_up": "Codex, not OpenCode, records the controlled teardown (argv/exit/UTC per process/container) under a separate assigned task with OpenCode as observer."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/34",
+        "record": {
+          "id": "INT-ISO-03",
+          "current_substate": "Go stopped with verified records; Next termination NOT_OBSERVED; PG final stop not executed; teardown open",
+          "basis": "CODEX_OPERATIONAL_EVIDENCE",
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "limits": "Next 88444/88453 signal/exit cause never observed; cannot infer graceful stop; same-PG stop needs separate owner cue; no hidden mandatory rerun of writes",
+          "followup": "recorded exact-owner Next graceful stop + Codex same-PG stop verification"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    },
+    {
+      "id": "INT-CONF-01",
+      "evidence_verdict": "INSUFFICIENT_EVIDENCE",
+      "round1": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json",
+        "json_pointer": "/rows/35",
+        "record": {
+          "id": "INT-CONF-01",
+          "original_expectation_pointer": "REQ36: required36.json /required/35 (matrix line 84)",
+          "expected_mode": "SUPPORT_CONFORMANCE",
+          "observed": "No Claude reviews of executed evidence against the ARCH-FINAL contract exist in the retained evidence set; neither a per-boundary conformance record nor a variance disposition table exists yet for the HARNESS endpoint semantics in relation to FEVAL/R1 corrections.",
+          "evidence": [
+            {
+              "anchor": "LED",
+              "pointer": "/rows/35"
+            }
+          ],
+          "observation_basis": "NONE",
+          "reviewer_personally_executed_runtime": "NOT_RUN",
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "gap": "Claude was never assigned/executed this row in the existing evidence chain; no artifact exists for this review to verify across.",
+          "smallest_follow_up": "Claude Code (Solution Architecture) per original row row-owner assignment reviews the executed evidence and issues a conformance disposition before any external criteria closeout; not an OpenCode authority."
+        }
+      },
+      "round2": {
+        "document": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json",
+        "json_pointer": "/rows/35",
+        "record": {
+          "id": "INT-CONF-01",
+          "current_substate": "seven stage intakes + assembly exist; no conformance review performed",
+          "basis": "NONE (review-process row)",
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "limits": "acceptance clause requires Claude-only-if-deviation conformance disposition after evidence completion; not executed",
+          "followup": "run INT-CONF-01 conformance review at final closeout; no forced extra Claude round"
+        }
+      },
+      "formal_execution": "NOT_RUN",
+      "deduplication": "Onecanonicalcase,twohistoricalreviewrecords; no72casecount or runtimecorroborationinferred"
+    }
+  ],
+  "evidence_verdict_counts": {
+    "PARTIAL": 33,
+    "INSUFFICIENT_EVIDENCE": 3
+  },
+  "excluded_product": 14,
+  "excluded_external": 1,
+  "scope": "Consolidates both existingreviews, no newindependentreview/runtime/closure. Broadagreementdoesnotreplaceclausebyclausefinalacceptance; sameinputsmeanreviewsarenotnewruntimeobservations."
+}

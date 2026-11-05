@@ -1,0 +1,107 @@
+--- docs/testing/inta-returns/frontend/validation-r3-20261026/runner/guard_evaluator.py	2026-10-26 15:17:01
++++ /tmp/mc002-inta-fe-validation-r4-20261026/runner/guard_evaluator.py	2026-10-26 16:32:42
+@@ -1,10 +1,12 @@
+ #!/usr/bin/env python3
+ """
+-MC-002-INTA-FE-VALIDATION-R3: Guard Evaluator
+-Strict, fail-closed validation evaluator addressing R1-C02 and R2-I04.
+-- Strict evidence schema with type checking (no bool for int).
++MC-002-INTA-FE-VALIDATION-R4: Guard Evaluator
++Strict, fail-closed validation evaluator addressing R1-C02, R2-I04, R3-N04, and NF-6.
++- Strict evidence schema with type checking (no bool for int, no default bypass).
+ - Mandatory during_sample_count > 0 (fast-exit zero-sample is fail-closed LISTENER_UNKNOWN).
+ - Mandatory isFinal is True, cleanShutdown is True, observer_exit_code == 0.
++- Mandatory rejection of ANY present 'error' field (even empty/falsey/null).
++- Correct pre-bound port outcome wording (NF-6).
+ - Scoped sampling wording: no unproven absolute never-listen claims.
+ """
+ 
+@@ -21,12 +23,12 @@
+     stderr: str,
+     listener_during: Any,
+     listener_after: Any,
+-    during_sample_count: int = 1,
++    during_sample_count: Optional[int] = None,
+     probe_error: Optional[str] = None,
+     observer_data: Optional[Dict[str, Any]] = None,
+     observer_file_exists: bool = False,
+     observer_parse_error: Optional[str] = None,
+-    observer_exit_code: Optional[int] = 0,
++    observer_exit_code: Optional[int] = None,
+     expected_refusal_phrase: Optional[str] = None,
+     expected_variant: Optional[str] = None,
+     expected_pid: Optional[int] = None,
+@@ -69,10 +71,20 @@
+     # Any positive listener observation is an immediate contract failure (FEVAL-F01)
+     if listener_during is True or listener_after is True:
+         res["verdictCode"] = "FAIL_AGAINST_NEVER_LISTEN"
+-        res["notes"] = "Port 18085 listener was acquired during execution (violates never-listen criterion)"
++        # NF-6: distinguish pre-flight listener from execution listener
++        if exit_code is None:
++            res["notes"] = "listener observed at pre-flight (port already occupied)"
++        else:
++            res["notes"] = "Port 18085 listener was acquired during execution (violates never-listen criterion)"
+         return res
+ 
+-    # Fast-exit observation gap (R2-I04): if zero during-run samples were taken,
++    # Strict check on during_sample_count (R3-N04): cannot be None or non-int
++    if during_sample_count is None or not isinstance(during_sample_count, int) or isinstance(during_sample_count, bool):
++        res["verdictCode"] = "INCOMPLETE_EVIDENCE"
++        res["notes"] = f"Missing or invalid during_sample_count (value={during_sample_count!r})"
++        return res
++
++    # Fast-exit observation gap (R2-I04 / NF-4): if zero during-run samples were taken,
+     # listener absence cannot be claimed as False. Must fail closed.
+     if during_sample_count <= 0:
+         res["verdictCode"] = "LISTENER_UNKNOWN"
+@@ -91,7 +103,16 @@
+         )
+         return res
+ 
+-    # 4. Exit code check: guard startup refusal must exit with status 1
++    # 4. Immediate positive counter check: any upstream HTTP request violates contract
++    if observer_file_exists and isinstance(observer_data, dict):
++        req_cnt_imm = observer_data.get("requestCount")
++        if isinstance(req_cnt_imm, int) and not isinstance(req_cnt_imm, bool) and req_cnt_imm > 0:
++            res["observerHTTPRequests"] = req_cnt_imm
++            res["verdictCode"] = "POSITIVE_COUNTER"
++            res["notes"] = f"Observer recorded {req_cnt_imm} upstream HTTP requests (expected 0)"
++            return res
++
++    # 5. Exit code check: guard startup refusal must exit with status 1
+     if exit_code != 1:
+         res["verdictCode"] = "WRONG_EXIT_CODE"
+         res["notes"] = f"Child exit code was {exit_code} (expected 1)"
+@@ -110,7 +131,7 @@
+         res["notes"] = f"Expected refusal phrase '{expected_refusal_phrase}' missing in stderr/stdout"
+         return res
+ 
+-    # 6. Observer evidence validation (FEVAL-F02, R1-C02, R2-I04)
++    # 6. Observer evidence validation (FEVAL-F02, R1-C02, R2-I04, R3-N04)
+     if not observer_file_exists:
+         res["verdictCode"] = "MISSING_COUNTER"
+         res["notes"] = "Observer counter file missing; zero-upstream calls not established"
+@@ -126,10 +147,11 @@
+         res["notes"] = f"Observer counter data is not a JSON object: {type(observer_data)}"
+         return res
+ 
+-    # Check for observer runtime error (non-empty string or error object)
+-    if "error" in observer_data and observer_data["error"]:
++    # R3-N04 / C02 fix: reject ANY present error field (even empty string, null, false, or 0)
++    if "error" in observer_data:
++        err_val = observer_data["error"]
+         res["verdictCode"] = "OBSERVER_ERROR"
+-        res["notes"] = f"Observer encountered runtime error: {observer_data['error']}"
++        res["notes"] = f"Observer recorded error field (value={err_val!r})"
+         return res
+ 
+     # Strict isFinal check (R2-I04): final record must have isFinal is True
+@@ -150,7 +172,7 @@
+         return res
+     res["observerCleanShutdown"] = True
+ 
+-    # Check observer exit code (R2-I04): observer process must have exited cleanly with code 0
++    # Check observer exit code (R2-I04, R3-N04): observer process must have exited cleanly with code 0
+     if observer_exit_code is None or observer_exit_code != 0:
+         res["verdictCode"] = "OBSERVER_EXIT_ERROR"
+         res["notes"] = f"Observer process failed or unverified exit (observerExitCode={observer_exit_code!r}, expected 0)"

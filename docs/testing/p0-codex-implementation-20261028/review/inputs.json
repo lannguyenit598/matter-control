@@ -1,0 +1,84 @@
+{
+  "task": "MC-P0-CODEX-PATCH-REVIEW-20261028",
+  "reviewer": {
+    "identity": "Local Codex subagent /root/p0_final_patch_review_resume",
+    "role": "independent nonauthor static reviewer",
+    "rtk_version": "1.1.0",
+    "review_mode": "READ_HASH_STATIC_ONLY"
+  },
+  "reference": {
+    "branch": "codex/unified-project-flow",
+    "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+    "baseline_manifest": {
+      "path": "baseline-manifest.json",
+      "bytes": 161524,
+      "sha256": "03b8ccd2c2af70b8204891a119958589725c3cd46389243091ae9967db75e905"
+    },
+    "r1_manifest": {
+      "path": "delivery/manifest.json",
+      "sha256": "731089270bb14e93702d39f5bac6e6193052575eb9038165abd73e8da083ce70"
+    },
+    "r2_manifest": {
+      "path": "delivery-r2/manifest.json",
+      "bytes": 4426,
+      "sha256": "d4e71ffc34e2a1fef5508d9d4bede2b5eef7e8836c0f9b998dedd0fe52d1219d"
+    }
+  },
+  "patches": [
+    {
+      "path": "delivery-r2/backend/changes.patch",
+      "bytes": 30458,
+      "sha256": "b77279d71fccf73170313a2b77b96120c0baddb06583d26452d1b4f73aa936d7"
+    },
+    {
+      "path": "delivery-r2/frontend/changes.patch",
+      "bytes": 24534,
+      "sha256": "cf3ac2e0810a0fd447db82f0cb7bee78eb68cd5bc97ebc7044778bc921d418b1"
+    }
+  ],
+  "reviewed_after_files": [
+    {"path":"apps/backend/api.http","bytes":4832,"sha256":"5b67be6f51074e68b8b6d809b8c164d68492e777575b4556240e9aa521b5231c"},
+    {"path":"apps/backend/docs/api.md","bytes":13970,"sha256":"c660257735185765165cfae1e268d7c268eaf79f21aaae7e6a10c8d4414075a3"},
+    {"path":"apps/backend/internal/adapter/inbound/productapi/data_server_test.go","bytes":13160,"sha256":"90250c29280ed305d45a8efac69583e1cbbdcd5dfb31cc02aa9c64b646abe692"},
+    {"path":"apps/backend/internal/adapter/inbound/productapi/problems.go","bytes":7654,"sha256":"cc36818d083d2afbd63ed1c4bfe2032faa23dbdb32f0bddd5cac682e00caa0bd"},
+    {"path":"apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go","bytes":32058,"sha256":"1d33f1b1bba2f7e208acde784be6878bb2f6a7011811bf7c65834ef667029d09"},
+    {"path":"apps/backend/internal/core/service/dataops_service.go","bytes":37261,"sha256":"5e911a2bbe90d27c06d27931cf380cde515a299aaa6a27c468752725a5efad5a"},
+    {"path":"apps/backend/internal/core/service/matter_service.go","bytes":13274,"sha256":"55d7aca4ef0e5c0f99bfc7582fc9c23d5669816a24aea2d7cfef0dc58ccf4895"},
+    {"path":"apps/frontend/src/features/data-transfer/intent.ts","bytes":3738,"sha256":"c9e7bac206e2ef6c5810962b62dd08a05102a86e7dc009528010a203ebd487b7"},
+    {"path":"apps/frontend/src/features/data-transfer/components/import-section.tsx","bytes":7918,"sha256":"3181f935b6783c00656719366c0744e447ccda580ea57c835c4a9a862b532389"},
+    {"path":"apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx","bytes":18912,"sha256":"bff970b8a3ae33371fcd22fbb1a428153b2ae4ffc2d66142d1216049fb4ba1e3"},
+    {"path":"apps/frontend/src/features/data-transfer/components/bulk-section.tsx","bytes":11531,"sha256":"0eceaa3b135c5f847d37f27100b9624627886e87ffd2fc185c1933db1219b281"},
+    {"path":"apps/frontend/src/features/data-transfer/components/data-transfer-attempt.test.tsx","bytes":8309,"sha256":"7af8c62e581e795fe9215f1344a39eeaf0677b7c0107c427f84125a1dba61f8b"}
+  ],
+  "evidence_inputs": [
+    {"path":"backend/evidence/red-command.json","bytes":768,"sha256":"3fbb73c9c47c491a76f09e7da5822a73404966467337533c1e4614240fe5f7b8","exit":1},
+    {"path":"backend/evidence/red.log","bytes":5410,"sha256":"3ea05e9e4875d17eb55781a4637bd6a08eb7b9da0743012a5848683951c26e4a"},
+    {"path":"backend/evidence/red-import-fingerprint-command.json","bytes":682,"sha256":"8c68db28192ae95368919ec17fb81a26d088e0f39b729554d66e1462fc61f155","exit":1},
+    {"path":"backend/evidence/red-import-fingerprint.log","bytes":2569,"sha256":"aec7500852612e7d589715a09c46be27198f5fa03fbd57a079c712bc6faf2405"},
+    {"path":"backend/evidence/green-frozen-command.json","bytes":799,"sha256":"27cedd9e347f61cc9caa5534d183793d3a3bf435f0b93ea97d117625f5c38c7a","exit":0},
+    {"path":"backend/evidence/green-frozen.log","bytes":16753,"sha256":"9299fabb5124b71ea9792e6669cb73b1a8978e7ba55373004337fe8148604c9d"},
+    {"path":"frontend/evidence/repro-before.json","bytes":650,"sha256":"60b6e11a33711ecb53e052c6b150ef8d79823be8fde029e5a5ae5bae6cdb93ca","exit":1},
+    {"path":"frontend/evidence/repro-before.log","bytes":7283,"sha256":"dbaae9ef0c31907a29e3227dd311f50106ca9ce244694671745c7797e4e2f09d"},
+    {"path":"frontend/evidence/focused-corrected-env.json","bytes":662,"sha256":"ff92ad2dbaa63ebc561df77e230fe782b49e77023d50e1a0059fd681f1c95d75","exit":0},
+    {"path":"frontend/evidence/typecheck-scoped-corrected-env.json","bytes":557,"sha256":"98f18a781e3f80287ba90d5688fb53c4c38f2633a61959162ba98f39f90f4a82","exit":0},
+    {"path":"frontend/evidence/lint-corrected-env.json","bytes":483,"sha256":"a4be65c7b5ddf59fe2541e7aba3a2c758f537a728bedaf2ce00dee33b07992f7","exit":0},
+    {"path":"frontend/evidence/format-corrected-env.json","bytes":786,"sha256":"f8af0d07e464dd194b56f56b95d524c1b6c35f96922c5a44e3c15ed8b4c3cd25","exit":0},
+    {"path":"frontend/evidence/r2-mixed-receipts-red.json","bytes":621,"sha256":"22dea85ddd357c3b9addb915d1deb5358ef9d188866d4574f2d85509dd215673","exit":1},
+    {"path":"frontend/evidence/r2-mixed-receipts-green.json","bytes":622,"sha256":"ca401edf4159b12e20fb7bb4d091bcdc499ae6113810cba0f95aa103893b8b97","exit":1,"note":"implementation passed; retained assertion-only harness mismatch"},
+    {"path":"frontend/evidence/r2-final-tests.json","bytes":622,"sha256":"b76958de84017c5b943cc323f046fc6fc4286a4a67f225dcb56d6303b32de06c","exit":0},
+    {"path":"frontend/evidence/r2-final-tests.log","bytes":741,"sha256":"fbb95b143a452305b03ce1e2e8526763cf5dbec7e1f04948c4c9e82a4540cc6b"},
+    {"path":"frontend/evidence/r2-final-typecheck.json","bytes":517,"sha256":"173d742d1d627fdf5f26c52dc2094e03a268a9eab98f3e5814ec2f47284c66cc","exit":0},
+    {"path":"frontend/evidence/r2-final-lint.json","bytes":443,"sha256":"b57cb74792d89e612ee63b7e244d82b3624baf94e5e6698b5fc9239170cf69cc","exit":0},
+    {"path":"frontend/evidence/r2-final-format.json","bytes":549,"sha256":"06a5f03f7b6845520f0518a732644be1f589c19e68e3464c4f7343caa94de2a1","exit":0}
+  ],
+  "reviewer_execution": {
+    "reviewed_code_execution": "NOT_RUN",
+    "build": "NOT_RUN",
+    "test": "NOT_RUN",
+    "browser": "NOT_RUN",
+    "database": "NOT_RUN",
+    "provider": "NOT_RUN",
+    "live_source_inspection": "NOT_RUN"
+  },
+  "verdict": "PASS_SOURCE_REVIEW_WITH_LIMITATIONS"
+}

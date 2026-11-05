@@ -1,0 +1,8 @@
+exec(compile(open('/private/tmp/review-pg.py').read().split('mode=sys.argv[1]')[0],'/private/tmp/review-pg.py','exec'))
+label=sys.argv[1]; args=sys.argv[2:]
+name=(PRIVATE/'container').read_text()
+code,raw,_=run(['docker','inspect','--format','{{ index .Config.Labels "mc.owner" }}',name]); assert code==0 and raw.strip()==b'MC-EIGENWELT-REVIEW-MATRIX-VERIFY'
+env={k:v for k,v in os.environ.items() if not k.startswith(('MC_TEST_R2_','AWS_','MC_DATABASE','MC_MIGRATE_DATABASE','TEST_DATABASE'))}
+env['MC_TEST_DATABASE_URL']=(PRIVATE/'dsn').read_text()
+code,raw,event=run(args,env,pathlib.Path('/private/tmp/mc-review-verifier-20261029-r1/backend'),1200)
+(OUT/(label+'.log')).write_bytes(raw); (OUT/(label+'-command.json')).write_text(json.dumps(event,indent=2)+'\n');print(label,'exit',code,raw.decode()[-4500:]);sys.exit(code)

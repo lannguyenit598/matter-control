@@ -1,0 +1,35 @@
+[
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T3",
+    "requestId": "mc-int-intamvnmoems3pd-T3-5",
+    "mode": "app-client",
+    "method": "GET",
+    "routeTemplate": "/api/v1/users/{id}",
+    "startedAtUTC": "2026-10-25T17:36:47.148Z",
+    "latencyMs": 3,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": null,
+    "value": null,
+    "apiError": {
+      "status": 404,
+      "code": "NOT_FOUND",
+      "message": "resource not found",
+      "details": {
+        "type": "about:blank",
+        "title": "Not Found",
+        "status": 404,
+        "detail": "resource not found",
+        "instance": "/api/v1/users/01a15359-aa28-7a00-a380-000000000001"
+      }
+    },
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "task": "MC-P0-ZITADEL-CLOUD-E2E-R1",
+  "released_utc": "2026-10-28T08:05:55.982683+00:00",
+  "owner": "actual Local Codex runtime/auth session",
+  "status": "RELEASED_WITH_AUTH_BLOCKER",
+  "auth_tests_running": false,
+  "outage_tests_running": false,
+  "blocker": "Human reports no usable mailbox for required synthetic email verification code",
+  "cloud_e2e_pass": false,
+  "runtime_disposition": "Retained; no teardown or provider change",
+  "runtime_listener_inventory": "COMMAND   PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nmcapi   40096 nguyenvanlan    8u  IPv4 0x4fea413cad6c6261      0t0  TCP 127.0.0.1:8081 (LISTEN)\nnode    40126 nguyenvanlan   12u  IPv4 0x2698b9b6f0d5977a      0t0  TCP 127.0.0.1:3000 (LISTEN)\n",
+  "resumption": "Coordinate an exclusive auth slot before session/role/outage tests resume; human must first resolve the synthetic account verification through normal IdP controls."
+}

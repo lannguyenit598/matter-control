@@ -1,0 +1,113 @@
+{
+  "info": {
+    "id": "ses_e8deafe72ffemU9msDRvjVE1YL",
+    "projectID": "56512bc17ede1f94831e6c5716d9c01aa1a12b0d",
+    "agent": "plan",
+    "cost": 0,
+    "tokens": {
+      "input": 107284,
+      "output": 3260,
+      "reasoning": 7251,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1792915341842,
+      "updated": 1792915506195,
+      "idle": 1792915506198
+    },
+    "title": "[redacted:session-title:ses_e8deafe72ffemU9msDRvjVE1YL]",
+    "location": {
+      "directory": "/[redacted:session-directory:ses_e8deafe72ffemU9msDRvjVE1YL]"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_17215021b001w74jNSehXiG8t4",
+      "time": {
+        "created": 1792915341851
+      },
+      "type": "agent-switched",
+      "agent": "plan",
+      "previous": "plan"
+    },
+    {
+      "id": "msg_1721502150010tQnqqXj6BKsXU",
+      "time": {
+        "created": 1792915341993
+      },
+      "text": "[redacted:synthetic:msg_1721502150010tQnqqXj6BKsXU]",
+      "type": "synthetic"
+    },
+    {
+      "id": "msg_17215021b001X6Sz0ObUXABnTs",
+      "time": {
+        "created": 1792915341993
+      },
+      "text": "[redacted:text:msg_17215021b001X6Sz0ObUXABnTs]",
+      "files": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_1721502b00012gNitsAC8gFJ17",
+      "time": {
+        "created": 1792915342004,
+        "streamed": 1792915506103,
+        "completed": 1792915506195
+      },
+      "type": "assistant",
+      "agent": "plan",
+      "model": {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "[redacted:reasoning:msg_1721502b00012gNitsAC8gFJ17]",
+          "native": {
+            "redacted": "reasoning-native:msg_1721502b00012gNitsAC8gFJ17"
+          },
+          "time": {
+            "created": 1792915352764,
+            "completed": 1792915506094
+          }
+        },
+        {
+          "type": "text",
+          "text": "[redacted:text:msg_1721502b00012gNitsAC8gFJ17]"
+        }
+      ],
+      "snapshot": {
+        "start": "ca6e95b2b338e4565c8a8f6df84e4c1ba1fffe5d",
+        "end": "b57a5d3c6df8c28cd8fb58e52b8f229f2197a981",
+        "files": [
+          "docs/testing/inta-frontend-r3-intake/return-qualifications.json"
+        ]
+      },
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 107284,
+        "output": 3260,
+        "reasoning": 7251,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_172178416001TT3c06CcCHKCnc",
+      "time": {
+        "created": 1792915506198
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

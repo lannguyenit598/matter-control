@@ -1,0 +1,37 @@
+{
+  "task": "MC-ZCODE-BA-FLOW-COMPLETENESS-REVIEW-20261030 (r1 continuation)",
+  "headAtReview": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+  "headUnchanged": true,
+  "dirtyTreeHashes": {
+    "inventoryBaseline": "5b086afe86e032f5290fd6307d403955319f42ae22a3c2be32e48b11a2aedd8f",
+    "continuationStart": "21817f511a676f556ed5d82801166064a22ab7f85e0af4b8ebb110683db0aa5a",
+    "continuationEnd": "76a07216bcb17af419995beb74895c8f7a0ac22b1ec19075b56a2149532f6f7b",
+    "driftExplanation": "tracked-diff drift during the review window is attributable to CONCURRENT sessions (UIUX lawyer-experience audit writing docs/testing/uiux-lawyer-experience-audit-20261030-r1/*, project-status.md, its task file, and apps/frontend/debug-storybook.log; deploy-readiness session active earlier). No apps/backend or apps/frontend source file was modified by this review."
+  },
+  "sourceFilesReadKey": [
+    "apps/backend/internal/adapter/inbound/productapi/server.go (route table)",
+    "apps/backend/internal/adapter/inbound/productapi/{work_dto.go,data_dto.go,evidence_dto.go,filing_dto.go,evidence_handlers.go,work_handlers.go,review_handlers.go,data_handlers.go,problems.go}",
+    "apps/backend/internal/adapter/outbound/identity/zitadel/verifier.go",
+    "apps/backend/internal/adapter/outbound/postgres/identity_resolver.go",
+    "apps/backend/internal/core/domain/matter/access.go",
+    "apps/backend/internal/adapter/outbound/postgres/b1_least_privilege_test.go (failure triage only)"
+  ],
+  "sourceFilesModified": [],
+  "evidenceWritten": [
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/flow-inventory.md (earlier session, unchanged)",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/traceability-matrix.csv (earlier session, unchanged)",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/journey-walkthroughs.md",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/findings.md",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/findings.json",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/coverage-summary.md",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/persona-usability.md",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/scope-gaps.md",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/source-manifest.json",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/http-walkthrough/ (347 files: final run per step + full call log)",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/return.md",
+    "docs/implementation/tasks/MC-ZCODE-BA-FLOW-COMPLETENESS-REVIEW-20261030.md (status update)"
+  ],
+  "scratchOutsideGit": "/private/tmp/mc-ba-r1/ (walkthrough scripts walk-lib.sh gw01.sh gw02.sh gw03.sh journeys.sh, synthetic docs spa-v1/v2 dd-v1/v2 dossier-v1 wdr-v1 import-mini.csv, backend.env with fixture password mode 600, logs/)",
+  "secrets": "no real credentials; synthetic tokens tok-ba-*; fixture PostgreSQL password kept only in /private/tmp/mc-ba-r1/pw.env + backend.env (mode 600), never written to Git or logs",
+  "sourceUnchangedByThisReview": true
+}

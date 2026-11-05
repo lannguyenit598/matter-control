@@ -1,0 +1,23 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+$ eslint .
+$ prettier --check .
+$ vitest run
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/organisms/recovery.test.tsx > IntentForm: receipted creation > discarding an unconfirmed request starts a different intent with a new key
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/components/organisms/recovery.test.tsx:89:3
+     87|   })
+     88|
+     89|   it('discarding an unconfirmed request starts a different intent with…
+       |   ^
+     90|     const run = vi
+     91|       .fn<IntentFormProps['run']>()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

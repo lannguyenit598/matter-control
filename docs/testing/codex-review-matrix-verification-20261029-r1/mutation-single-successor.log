@@ -1,0 +1,22 @@
+=== RUN   TestSuiteReview_MemoryStore
+=== RUN   TestSuiteReview_MemoryStore/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels
+=== RUN   TestSuiteReview_MemoryStore/a_version_of_another_matter_and_a_missing_id_are_rejected_identically
+=== RUN   TestSuiteReview_MemoryStore/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing
+=== RUN   TestSuiteReview_MemoryStore/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another
+    contract_review.go:196: a branching answer must conflict, got <nil>
+=== RUN   TestSuiteReview_MemoryStore/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable
+=== RUN   TestSuiteReview_MemoryStore/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing
+=== RUN   TestSuiteReview_MemoryStore/removing_a_version_hides_its_row_but_keeps_its_answers_attributable
+=== RUN   TestSuiteReview_MemoryStore/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing
+--- FAIL: TestSuiteReview_MemoryStore (0.01s)
+    --- PASS: TestSuiteReview_MemoryStore/grid_round_trip:_exact_versions,_questions,_a_cited_answer_and_its_row_labels (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/a_version_of_another_matter_and_a_missing_id_are_rejected_identically (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/structure_changes_are_revision_guarded_and_a_conflict_writes_nothing (0.00s)
+    --- FAIL: TestSuiteReview_MemoryStore/answers_chain,_a_stale_expectation_conflicts,_and_only_one_answer_may_succeed_another (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/revising_a_question_stales_only_its_answers_and_keeps_the_old_wording_readable (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/an_answer_to_wording_the_writer_never_saw_is_refused_and_writes_nothing (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/removing_a_version_hides_its_row_but_keeps_its_answers_attributable (0.00s)
+    --- PASS: TestSuiteReview_MemoryStore/access:_viewers_read_but_cannot_write;_outsiders_and_revoked_members_see_nothing (0.00s)
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol	0.547s
+FAIL

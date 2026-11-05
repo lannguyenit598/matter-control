@@ -1,0 +1,5 @@
+# MC-CODEX-MANUAL-START-20261103
+
+Owner actual Local Codex; priority P0 manual-test enablement; status IN_REVIEW / LOCAL_MANUAL_READY_WITH_LIMITATIONS. Authority direct PO request start local for manual testing. Inputs current7bf198c+RLFdirty source, existing approved Cloud overlay/key, verified retained manual PG container and data. Scope isolated source build, backup/restore into new runtime DB, migrate copy and serve loopback3000/8081. No product-source edits, Pre-flight implementation, IdP administration or cloud deployment.
+
+Acceptance: primary writer unaffected; fresh FE/BE artifacts; DB source preserved; target schema16; public HTTP readiness and PKCE redirect correct; official browser login visible; private values not exported. Checks/receipts/source and process identity: docs/testing/codex-manual-start-20261103-r1/. Fresh builds/CSS and HTTP smoke pass; human login and independent acceptance pending. Reviewer human manual testing plus future nonauthor QA; no DONE/release promotion. Resources intentionally retained until user stop request. No commit/push/deploy.

@@ -1,0 +1,228 @@
+{
+  "task": "MC-P0-DESIGN-R1",
+  "governance_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "status": "PREPARED_NOT_DISPATCHED",
+  "date_prepared": "2026-10-26T23:58:00+07:00",
+  "scope": "Comprehensive findings disposition consolidating local-r3 source corrections and P0-DESIGN-R1 wave specifications; no self-closing of independent QA gate.",
+  "blocking_design_defect": [],
+  "blocking_business_contradiction": [],
+  "none_statement": "No unresolved confirmed source-level blocker established within this corrective scope; not proof of runtime defect absence.",
+  "findings": [
+    {
+      "id": "UX-R01",
+      "severity": "HIGH",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "rationale": "Approved bulk contract source-corrected; exact metadata allowlist (owner, due date, note), per-record atomic result handling, and error recovery contract fully specified in zcode-handoff.md and current-ux-spec.md. Requires independent document acceptance and integration test before feature deployment.",
+      "owner": "Independent QA, then ZCode FE/BE implementers",
+      "evidence": "RULE-013, AC-113, AC-133, SCR-10 spec in current-ux-spec.md §8.1",
+      "status": "SOURCE_CORRECTED_AND_SPECIFIED; native/QA PARTIAL"
+    },
+    {
+      "id": "UX-R02",
+      "severity": "HIGH",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "rationale": "Settled policies restored and unchanged: designated verifier separation, applicability/dispute rules, import grouping, scoped export, and draft brief windowing. Formal independent domain/permission interpretation remains pending.",
+      "owner": "Independent QA",
+      "evidence": "RULE-005, RULE-006, RULE-014, RULE-016, permission-matrix.md",
+      "status": "SOURCE_CORRECTED; formal acceptance pending"
+    },
+    {
+      "id": "UX-R03",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Atlas/namespace board corrections verified at source level; actual dense-board readability, multiline expansion, and cross-view comprehension scheduled in validation-plan.md.",
+      "owner": "ZCode FE implementer / Prototype validation owner",
+      "evidence": "VAL-SCN-01, VAL-SCN-03 in validation-plan.md",
+      "status": "SOURCE_PASS; rendered validation pending"
+    },
+    {
+      "id": "UX-R04",
+      "severity": "HIGH",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "rationale": "Proof-edge vs milestone semantics explicitly defined: proof-edge requires upstream READY + COMPLETED + valid VERIFIED; milestone requires conjunction of designated required Requirements COMPLETED + VERIFIED (or NOT_REQUIRED). Formal testability acceptance required before implementation.",
+      "owner": "Independent QA",
+      "evidence": "RULE-003, RULE-008, AC-102, AC-105, current-ux-spec.md §2",
+      "status": "SOURCE_PASS; semantic runtime tests scheduled"
+    },
+    {
+      "id": "UX-R05",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Connected concept slices (Control Room, Grid, Evidence Drawer) fully specified with persistent context, deep-link return, and shared revision guards.",
+      "owner": "ZCode FE implementer",
+      "evidence": "SCR-02, SCR-03, SCR-07 specifications in current-ux-spec.md",
+      "status": "SOURCE_CORRECTED; executable prototype pending"
+    },
+    {
+      "id": "UX-R05-MOBILE",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Mobile triage card layout defined; touch targets specified at min 44px; complex bulk/import flows retain explicit desktop alternative. Reflow and reachability scheduled in validation plan.",
+      "owner": "ZCode FE implementer / Mobile QA",
+      "evidence": "VAL-SCN-09 in validation-plan.md, D-UX04",
+      "status": "SPECIFIED; rendered device testing pending"
+    },
+    {
+      "id": "UI-T01",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Selected typography tokens (14px body, 12px metadata, 22px heading) and multiline expansion rules defined; Vietnamese diacritics and long labels specified with line-height 1.5.",
+      "owner": "ZCode FE / Localization QA",
+      "evidence": "VAL-SCN-03, VAL-SCN-10 in validation-plan.md, tokens.css",
+      "status": "SOURCE_UPDATED; rendered inspection pending"
+    },
+    {
+      "id": "UI-T02",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Control sizing contract pinned: desktop controls min 32px height, mobile touch controls min 44px height, standard 2px focus ring with 2px offset.",
+      "owner": "ZCode FE implementer",
+      "evidence": "selected-tokens.css, current-ux-spec.md §1.2",
+      "status": "SPECIFIED; geometric measurement pending"
+    },
+    {
+      "id": "UI-T03",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+      "rationale": "Palette tokens (Enterprise Precision A) bound strictly via CSS variables; calculated static sRGB contrast ratios meet 4.5:1 for normal text.",
+      "owner": "ZCode FE implementer / QA",
+      "evidence": "design-tokens.json, selected-tokens.css",
+      "status": "SOURCE_PASS; rendered contrast check scheduled"
+    },
+    {
+      "id": "UX-N01",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+      "rationale": "Operational filter presets (All, Blocked, My Actions, Due Soon, Critical) and multi-column sorting specified with URL state persistence.",
+      "owner": "ZCode FE implementer",
+      "evidence": "FR-011, current-ux-spec.md §4.1",
+      "status": "SPECIFIED; integration testing pending"
+    },
+    {
+      "id": "UX-N02",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Density switching between Comfortable (min 44px) and Compact (min 36px) fully specified; state, scroll position, and active focus survive density toggle.",
+      "owner": "ZCode FE implementer",
+      "evidence": "VAL-SCN-03 in validation-plan.md, D-UX02",
+      "status": "SOURCE_PASS; rendered density testing pending"
+    },
+    {
+      "id": "UX-N03",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Detail drawers (SCR-04, SCR-05, SCR-07) specify explicit origin-tab return, URL route synchronization, and Esc key dismissal.",
+      "owner": "ZCode FE implementer",
+      "evidence": "VAL-SCN-07 in validation-plan.md, current-ux-spec.md §3.2",
+      "status": "SPECIFIED; browser focus test pending"
+    },
+    {
+      "id": "UX-N04",
+      "severity": "HIGH",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "rationale": "Designated verifier vs submitter separation strictly enforced in UX spec: submitter cannot verify own proof; OWNER status does not confer automatic verification authority.",
+      "owner": "Independent QA, then ZCode BE/FE",
+      "evidence": "RULE-006, AC-107, AC-140, VAL-SCN-05, current-ux-spec.md §5.1",
+      "status": "SOURCE_CORRECTED_AND_SPECIFIED; formal acceptance pending"
+    },
+    {
+      "id": "UX-N05",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+      "rationale": "Seven core edge/error states specified (loading, empty, unavailable, forbidden 404, stale banner, 409 conflict modal, unsaved draft confirmation).",
+      "owner": "ZCode FE implementer",
+      "evidence": "current-ux-spec.md §3.1, §3.2",
+      "status": "SPECIFIED; E2E error suite pending"
+    },
+    {
+      "id": "UX-N06",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Keyboard grid navigation specified: ArrowUp/Down navigates rows, Enter opens drawer or commits inline edit, Esc cancels, Tab cycles interactive elements.",
+      "owner": "ZCode FE implementer",
+      "evidence": "VAL-SCN-07 in validation-plan.md, current-ux-spec.md §4.1",
+      "status": "SPECIFIED; headless browser test pending"
+    },
+    {
+      "id": "UX-N07",
+      "severity": "LOW",
+      "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+      "rationale": "Empty filter search reset behavior specified with accessible announcement and quick 'Clear filters' action.",
+      "owner": "ZCode FE implementer",
+      "evidence": "current-ux-spec.md §4.1",
+      "status": "SPECIFIED; native testing pending"
+    },
+    {
+      "id": "UX-N08",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Dedicated Important Decisions queue placed prominently alongside Next Actions; open case questions (DEC-AT-01, DEC-AT-02) expose required decision maker and risk links.",
+      "owner": "ZCode FE implementer",
+      "evidence": "D-UX03, current-ux-spec.md §7.1",
+      "status": "SOURCE_CORRECTED; interactive verification pending"
+    },
+    {
+      "id": "UX-N09",
+      "severity": "MEDIUM",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "rationale": "Delta Status Brief windowing strictly specified: baseline t1, as-of t2 (t1 <= t2); Section A contains changes in (t1, t2], Section B contains outstanding items at t2.",
+      "owner": "Independent QA, then ZCode BE/FE",
+      "evidence": "RULE-016, AC-119, AC-138, VAL-SCN-11, current-ux-spec.md §8.3",
+      "status": "SOURCE_CORRECTED_AND_SPECIFIED; contract acceptance pending"
+    },
+    {
+      "id": "UX-N10",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Five state dimensions (Execution, Verification, Dependency, Timing, Attention) fully separated into independent columns and UI badges; zero overloaded status strings.",
+      "owner": "ZCode FE implementer",
+      "evidence": "FR-020, current-ux-spec.md §2",
+      "status": "SOURCE_CORRECTED; visual comprehension testing pending"
+    },
+    {
+      "id": "STYLE-01",
+      "severity": "LOW",
+      "classification": "NON_BLOCKING_DESIGN_IMPROVEMENT",
+      "rationale": "Humanist sans font stack and clean typography scale adopted without decorative styling or unnecessary gradients.",
+      "owner": "Design Executor / ZCode FE",
+      "evidence": "selected-design-system.md",
+      "status": "RESOLVED_IN_SPEC"
+    },
+    {
+      "id": "RV-S01",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Canonical Atlas board values (24 records, owners U-01/02/03, due instants) preserved byte-identically with historical fixture.",
+      "owner": "Codex / ZCode QA",
+      "evidence": "project-atlas-dataset.md, validation-plan.md §2.1",
+      "status": "SOURCE_PASS; runtime fixture loading pending"
+    },
+    {
+      "id": "RV-S02",
+      "severity": "HIGH",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "rationale": "Unsupported headless/browser PASS claims strictly eliminated; static source integrity distinguished from unexecuted rendered validation.",
+      "owner": "Independent QA",
+      "evidence": "design-delta.md §4 Errata E-05, validation-plan.md §1",
+      "status": "SOURCE_CORRECTED_PENDING_ACCEPTANCE"
+    },
+    {
+      "id": "OBS-UI-001",
+      "severity": "MEDIUM",
+      "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+      "rationale": "Vertical density and narrow layout reading order optimized via two-column compact cards in Control Room and dedicated mobile triage stack.",
+      "owner": "ZCode FE implementer / Usability QA",
+      "evidence": "VAL-SCN-01, VAL-SCN-09 in validation-plan.md",
+      "status": "SPECIFIED; rendered evaluation pending"
+    },
+    {
+      "id": "GATE-INDEPENDENT-QA",
+      "severity": "HIGH",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "rationale": "Mandatory nonauthor independent review remains open; neither author (Codex/Antigravity) nor implementer (ZCode) can self-approve. Awaiting authorized provider/reviewer routing.",
+      "owner": "Codex Orchestrator",
+      "evidence": "independent-qa-packet.md, assignment.json",
+      "status": "BLOCKED_BY_PROVIDER_ACCESS / INDEPENDENT_QA_PENDING"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "command": "rtk proxy go test ./internal/config ./internal/app ./internal/adapter/inbound/productapi -run TestLoadProduct_CloudFilesystem|TestProductReadiness|TestReadiness_Bounds|TestTimeout_Transfer -count=1",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "exit": 1,
+    "log": "reliability-red.log",
+    "log_mtime_utc": "2026-10-29T08:06:45.375441+00:00",
+    "timestamp_limit": "mtime is an observation of log completion, not a separately captured command start",
+    "note": "Expected red before implementation; -run value supplied as one quoted argument"
+  },
+  {
+    "command": "rtk proxy go test ./internal/config ./internal/app ./internal/adapter/inbound/productapi -run TestLoadProduct_CloudFilesystem|TestProductReadiness|TestReadiness_Bounds|TestTimeout_Transfer -count=1",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "exit": 1,
+    "log": "reliability-green.log",
+    "log_mtime_utc": "2026-10-29T08:07:57.038712+00:00",
+    "timestamp_limit": "mtime is an observation of log completion, not a separately captured command start",
+    "note": "Readiness now checks DB but existing Echo error mapped to 500; corrected subsequently"
+  },
+  {
+    "command": "rtk proxy go test -race ./internal/config ./internal/app ./internal/adapter/inbound/productapi -count=1",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "exit": 1,
+    "log": "reliability-green-r2.log",
+    "log_mtime_utc": "2026-10-29T08:09:24.829221+00:00",
+    "timestamp_limit": "mtime is an observation of log completion, not a separately captured command start",
+    "note": "Sandbox Go cache permission failure, no successful test execution"
+  },
+  {
+    "command": "rtk proxy go test -race ./internal/config ./internal/app ./internal/adapter/inbound/productapi -count=1",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "exit": 0,
+    "log": "reliability-green-r3.log",
+    "log_mtime_utc": "2026-10-29T08:09:44.486435+00:00",
+    "timestamp_limit": "mtime is an observation of log completion, not a separately captured command start",
+    "note": "Scoped checks successful; two additional config/deadline tests were then included in final make check"
+  },
+  {
+    "command": "rtk proxy git diff --check -- apps/backend docs/implementation/tasks/MC-P0-CODEX-BACKEND-LOCAL-20261029.md docs/testing/codex-backend-local-readiness-20261029-r1",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "exit": 0,
+    "log": "diff-check.log",
+    "log_mtime_utc": "2026-10-29T08:16:18.395411+00:00",
+    "timestamp_limit": "mtime is an observation of log completion, not a separately captured command start",
+    "note": "Scoped whitespace check"
+  }
+]

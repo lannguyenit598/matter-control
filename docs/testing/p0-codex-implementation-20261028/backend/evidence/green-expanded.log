@@ -1,0 +1,510 @@
+=== RUN   TestReplayBrief_ProofExpiryAtT2
+=== RUN   TestReplayBrief_ProofExpiryAtT2/before_expiry_the_item_is_done
+=== RUN   TestReplayBrief_ProofExpiryAtT2/at_expiry_the_proof_no_longer_counts
+=== RUN   TestReplayBrief_ProofExpiryAtT2/after_expiry
+=== RUN   TestReplayBrief_ProofExpiryAtT2/a_revoked_acceptance_carries_no_expiry_fact
+--- PASS: TestReplayBrief_ProofExpiryAtT2 (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/before_expiry_the_item_is_done (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/at_expiry_the_proof_no_longer_counts (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/after_expiry (0.00s)
+    --- PASS: TestReplayBrief_ProofExpiryAtT2/a_revoked_acceptance_carries_no_expiry_fact (0.00s)
+=== RUN   TestReplayBrief_IgnoresEventsAfterT2
+--- PASS: TestReplayBrief_IgnoresEventsAfterT2 (0.00s)
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_assessment_without_its_subject
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_creation_event_with_no_payload
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_change_to_an_item_that_was_never_created
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_derived_change_to_an_item_that_was_never_created
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_unreadable_snapshot
+=== RUN   TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_snapshot_that_is_not_an_object
+--- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_assessment_without_its_subject (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_creation_event_with_no_payload (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_change_to_an_item_that_was_never_created (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_derived_change_to_an_item_that_was_never_created (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/an_unreadable_snapshot (0.00s)
+    --- PASS: TestReplayBrief_UnreconstructableHistoryFailsLoudly/a_snapshot_that_is_not_an_object (0.00s)
+=== RUN   TestReplayBrief_FullSnapshotReplacesOwner
+--- PASS: TestReplayBrief_FullSnapshotReplacesOwner (0.00s)
+=== RUN   TestBulkCommit_PartialSuccessWithDistinctFailures
+--- PASS: TestBulkCommit_PartialSuccessWithDistinctFailures (0.00s)
+=== RUN   TestBulkCommit_RetryReplaysSuccessAndSkips
+--- PASS: TestBulkCommit_RetryReplaysSuccessAndSkips (0.00s)
+=== RUN   TestBulkCommit_UnknownThenReplay
+--- PASS: TestBulkCommit_UnknownThenReplay (0.00s)
+=== RUN   TestImportCommit_IdenticalReplayThenContentConflict
+--- PASS: TestImportCommit_IdenticalReplayThenContentConflict (0.00s)
+=== RUN   TestImportCommit_VerifiedClaimStaysUnverified
+--- PASS: TestImportCommit_VerifiedClaimStaysUnverified (0.00s)
+=== RUN   TestBrief_WindowEndpointsAndOutstandingAtT2
+--- PASS: TestBrief_WindowEndpointsAndOutstandingAtT2 (0.00s)
+=== RUN   TestBrief_EmptyWindowStillOutstanding
+--- PASS: TestBrief_EmptyWindowStillOutstanding (0.00s)
+=== RUN   TestBrief_ReversedWindow_Refused
+--- PASS: TestBrief_ReversedWindow_Refused (0.00s)
+=== RUN   TestGW01_TransactionChain_CheckpointLedger
+--- PASS: TestGW01_TransactionChain_CheckpointLedger (0.00s)
+=== RUN   TestGW02_DueDiligenceChain_CheckpointLedger
+--- PASS: TestGW02_DueDiligenceChain_CheckpointLedger (0.00s)
+=== RUN   TestGW03_FilingCycle_CheckpointLedger
+--- PASS: TestGW03_FilingCycle_CheckpointLedger (0.00s)
+=== RUN   TestCreateRequirement_ReplayAuthorizesRepresentedMatters
+--- PASS: TestCreateRequirement_ReplayAuthorizesRepresentedMatters (0.00s)
+=== RUN   TestCreateRequirement_ReplayAuthorizesSavedWorkspace
+--- PASS: TestCreateRequirement_ReplayAuthorizesSavedWorkspace (0.00s)
+=== RUN   TestCreateRequirement_DemotionKeepsRepresentedMatterReplay
+--- PASS: TestCreateRequirement_DemotionKeepsRepresentedMatterReplay (0.00s)
+=== RUN   TestGetRequirement_MembershipReadUnavailablePreserved
+--- PASS: TestGetRequirement_MembershipReadUnavailablePreserved (0.00s)
+=== RUN   TestGetRequirement_MembershipReadUnexpectedPropagates
+--- PASS: TestGetRequirement_MembershipReadUnexpectedPropagates (0.00s)
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/create
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/replay
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/create
+=== RUN   TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/replay
+--- PASS: TestCreateRequirement_MembershipFailuresPropagate (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/create (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unavailable/replay (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/create (0.00s)
+    --- PASS: TestCreateRequirement_MembershipFailuresPropagate/membership_unexpected/replay (0.00s)
+=== RUN   TestCreateRequirement_ElapsedBoundaryFailsClosed
+--- PASS: TestCreateRequirement_ElapsedBoundaryFailsClosed (0.00s)
+=== RUN   TestCreateRequirement_FutureBoundaryPreserved
+--- PASS: TestCreateRequirement_FutureBoundaryPreserved (0.00s)
+=== RUN   TestCreateRequirement_ReplayIgnoresPendingBoundary
+--- PASS: TestCreateRequirement_ReplayIgnoresPendingBoundary (0.00s)
+=== RUN   TestCreateRequirement_ValidationBeforeStore
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_actor
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_matter
+=== RUN   TestCreateRequirement_ValidationBeforeStore/non-v7_key
+=== RUN   TestCreateRequirement_ValidationBeforeStore/bad_hash
+=== RUN   TestCreateRequirement_ValidationBeforeStore/blank_title
+=== RUN   TestCreateRequirement_ValidationBeforeStore/blank_outcome
+--- PASS: TestCreateRequirement_ValidationBeforeStore (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_actor (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_matter (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/non-v7_key (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/bad_hash (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/blank_title (0.00s)
+    --- PASS: TestCreateRequirement_ValidationBeforeStore/blank_outcome (0.00s)
+=== RUN   TestCreateRequirement_OneAtomicOutcome
+--- PASS: TestCreateRequirement_OneAtomicOutcome (0.00s)
+=== RUN   TestCreateRequirement_DenialMatrix
+=== RUN   TestCreateRequirement_DenialMatrix/viewer_member_is_forbidden
+=== RUN   TestCreateRequirement_DenialMatrix/workspace_owner_without_matter_membership_is_uniform_not-found
+=== RUN   TestCreateRequirement_DenialMatrix/complete_outsider_is_uniform_not-found
+=== RUN   TestCreateRequirement_DenialMatrix/nonexistent_matter_is_uniform_not-found
+--- PASS: TestCreateRequirement_DenialMatrix (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/viewer_member_is_forbidden (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/workspace_owner_without_matter_membership_is_uniform_not-found (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/complete_outsider_is_uniform_not-found (0.00s)
+    --- PASS: TestCreateRequirement_DenialMatrix/nonexistent_matter_is_uniform_not-found (0.00s)
+=== RUN   TestCreateRequirement_SequentialReplay
+--- PASS: TestCreateRequirement_SequentialReplay (0.00s)
+=== RUN   TestCreateRequirement_ReplayAfterRestart
+--- PASS: TestCreateRequirement_ReplayAfterRestart (0.00s)
+=== RUN   TestCreateRequirement_KeyReuse
+--- PASS: TestCreateRequirement_KeyReuse (0.00s)
+=== RUN   TestCreateRequirement_SameKeyDifferentActor
+--- PASS: TestCreateRequirement_SameKeyDifferentActor (0.00s)
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/insert_node
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/insert_requirement
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/append_event
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/store_receipt
+=== RUN   TestCreateRequirement_InjectedFailureRollsBack/complete_matter
+--- PASS: TestCreateRequirement_InjectedFailureRollsBack (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/insert_node (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/insert_requirement (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/append_event (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/store_receipt (0.00s)
+    --- PASS: TestCreateRequirement_InjectedFailureRollsBack/complete_matter (0.00s)
+=== RUN   TestCreateRequirement_CommitOutcomes
+=== RUN   TestCreateRequirement_CommitOutcomes/unknown_outcome_commits_but_loses_the_acknowledgement
+=== RUN   TestCreateRequirement_CommitOutcomes/known_rollback_is_unavailable_with_no_effect
+--- PASS: TestCreateRequirement_CommitOutcomes (0.00s)
+    --- PASS: TestCreateRequirement_CommitOutcomes/unknown_outcome_commits_but_loses_the_acknowledgement (0.00s)
+    --- PASS: TestCreateRequirement_CommitOutcomes/known_rollback_is_unavailable_with_no_effect (0.00s)
+=== RUN   TestCreateRequirement_KeyAgePolicy
+=== RUN   TestCreateRequirement_KeyAgePolicy/fresh_key_creates_and_replays
+=== RUN   TestCreateRequirement_KeyAgePolicy/expired_key_is_rejected_without_effect
+=== RUN   TestCreateRequirement_KeyAgePolicy/key_beyond_future_skew_is_rejected_without_effect
+--- PASS: TestCreateRequirement_KeyAgePolicy (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/fresh_key_creates_and_replays (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/expired_key_is_rejected_without_effect (0.00s)
+    --- PASS: TestCreateRequirement_KeyAgePolicy/key_beyond_future_skew_is_rejected_without_effect (0.00s)
+=== RUN   TestCreateRequirement_RevocationBeatsCreateAndReplay
+--- PASS: TestCreateRequirement_RevocationBeatsCreateAndReplay (0.00s)
+=== RUN   TestCreateRequirement_DemotionKeepsReplayBlocksCreate
+--- PASS: TestCreateRequirement_DemotionKeepsReplayBlocksCreate (0.00s)
+=== RUN   TestCreateRequirement_ConcurrentSameKeyOneEffect
+--- PASS: TestCreateRequirement_ConcurrentSameKeyOneEffect (0.00s)
+=== RUN   TestGetRequirement_UniformNotFound
+=== RUN   TestGetRequirement_UniformNotFound/malformed_id_is_a_validation_error
+=== RUN   TestGetRequirement_UniformNotFound/nonexistent_id
+=== RUN   TestGetRequirement_UniformNotFound/kind_mismatch_(action_node)
+=== RUN   TestGetRequirement_UniformNotFound/outsider_on_existing_id
+=== RUN   TestGetRequirement_UniformNotFound/revoked_member
+--- PASS: TestGetRequirement_UniformNotFound (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/malformed_id_is_a_validation_error (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/nonexistent_id (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/kind_mismatch_(action_node) (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/outsider_on_existing_id (0.00s)
+    --- PASS: TestGetRequirement_UniformNotFound/revoked_member (0.00s)
+=== RUN   TestGetRequirement_Authorized
+--- PASS: TestGetRequirement_Authorized (0.00s)
+=== RUN   TestGetRequirement_UnavailableIsDistinct
+--- PASS: TestGetRequirement_UnavailableIsDistinct (0.00s)
+=== RUN   TestRegister
+--- PASS: TestRegister (0.00s)
+=== RUN   TestGet_InvalidIDIsNotFound
+--- PASS: TestGet_InvalidIDIsNotFound (0.00s)
+=== RUN   TestGet_NotFoundCarriesContext
+--- PASS: TestGet_NotFoundCarriesContext (0.00s)
+=== RUN   TestList_ClampsPaging
+--- PASS: TestList_ClampsPaging (0.00s)
+=== RUN   TestList_RejectsDeepOffset
+--- PASS: TestList_RejectsDeepOffset (0.00s)
+=== RUN   TestUpdate
+--- PASS: TestUpdate (0.00s)
+=== RUN   TestUpdate_ConcurrentWriteIsNotLost
+--- PASS: TestUpdate_ConcurrentWriteIsNotLost (0.00s)
+=== RUN   TestUpdate_GivesUpAfterRepeatedConflicts
+--- PASS: TestUpdate_GivesUpAfterRepeatedConflicts (0.00s)
+=== RUN   TestUpdate_DoesNotRetryUnavailable
+--- PASS: TestUpdate_DoesNotRetryUnavailable (0.00s)
+=== RUN   TestUpdate_ExpectedVersion
+--- PASS: TestUpdate_ExpectedVersion (0.00s)
+=== RUN   TestUpdate_LogsRetriesThroughInjectedLogger
+--- PASS: TestUpdate_LogsRetriesThroughInjectedLogger (0.00s)
+=== RUN   TestNewUserService_NilLoggerIsSafe
+--- PASS: TestNewUserService_NilLoggerIsSafe (0.00s)
+=== RUN   TestUpdate_EmptyPatchIsNoOp
+--- PASS: TestUpdate_EmptyPatchIsNoOp (0.00s)
+=== RUN   TestInvalidIDsAreNotFoundForEveryUseCase
+--- PASS: TestInvalidIDsAreNotFoundForEveryUseCase (0.00s)
+=== RUN   TestDelete
+--- PASS: TestDelete (0.00s)
+=== RUN   TestGrantWorkspaceMembership_RevokedOwnerToMember_RefusedRoleMismatch
+--- PASS: TestGrantWorkspaceMembership_RevokedOwnerToMember_RefusedRoleMismatch (0.00s)
+=== RUN   TestGrantMatterMembership_RevokedOwnerToViewer_RefusedRoleMismatch
+--- PASS: TestGrantMatterMembership_RevokedOwnerToViewer_RefusedRoleMismatch (0.00s)
+=== RUN   TestGrantMatterMembership_RevokedEditorToOwner_RefusedRoleMismatch
+--- PASS: TestGrantMatterMembership_RevokedEditorToOwner_RefusedRoleMismatch (0.00s)
+=== RUN   TestGrantWorkspaceMembership_SameRoleReactivation_Succeeds
+--- PASS: TestGrantWorkspaceMembership_SameRoleReactivation_Succeeds (0.00s)
+=== RUN   TestCreateMatter_MissingPrecondition_Refused428
+--- PASS: TestCreateMatter_MissingPrecondition_Refused428 (0.00s)
+=== RUN   TestCreateMatter_StalePrecondition_Refused412
+--- PASS: TestCreateMatter_StalePrecondition_Refused412 (0.00s)
+=== RUN   TestCreateMatter_MatchingPrecondition_SucceedsAndReplays
+--- PASS: TestCreateMatter_MatchingPrecondition_SucceedsAndReplays (0.00s)
+=== RUN   TestCreateMatter_SecondFreshCreateWithSameRevision_Refused412
+--- PASS: TestCreateMatter_SecondFreshCreateWithSameRevision_Refused412 (0.00s)
+=== RUN   TestCreateMatter_PersistsTrimmedTitle
+--- PASS: TestCreateMatter_PersistsTrimmedTitle (0.00s)
+=== RUN   TestCreateWorkspaceAndMatter_BlankNameRejected
+--- PASS: TestCreateWorkspaceAndMatter_BlankNameRejected (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/core/service	1.456s
+=== RUN   TestSuite_MemoryStore
+=== RUN   TestSuite_MemoryStore/create_writes_one_atomic_outcome
+=== RUN   TestSuite_MemoryStore/denial_matrix_through_the_service
+=== RUN   TestSuite_MemoryStore/replay_sequential_and_after_restart
+=== RUN   TestSuite_MemoryStore/key_reuse_and_same_key_under_another_actor
+=== RUN   TestSuite_MemoryStore/concurrent_same_key_one_effect
+=== RUN   TestSuite_MemoryStore/concurrent_same_key_across_matters_commits_once_without_leaking
+=== RUN   TestSuite_MemoryStore/revocation_defeats_create_and_replay
+=== RUN   TestSuite_MemoryStore/demotion_keeps_replay_blocks_create
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt
+=== RUN   TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay
+=== RUN   TestSuite_MemoryStore/elapsed_pending_boundary_fails_closed
+=== RUN   TestSuite_MemoryStore/not-due_pending_boundary_is_preserved_by_a_successful_create
+=== RUN   TestSuite_MemoryStore/replay_keeps_a_later_pending_boundary_intact
+=== RUN   TestSuite_MemoryStore/uniform_read_outcomes
+=== RUN   TestSuite_MemoryStore/snapshot_stays_consistent_across_a_concurrent_create
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_node
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_requirement
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/append_event
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/store_receipt
+=== RUN   TestSuite_MemoryStore/injected_step_failures_roll_back_everything/complete_matter
+=== RUN   TestSuite_MemoryStore/commit_outcomes
+=== RUN   TestSuite_MemoryStore/commit_outcomes/unknown_outcome_is_not_proof_of_rollback
+=== RUN   TestSuite_MemoryStore/commit_outcomes/known_abort_is_unavailable_with_no_effect
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt
+=== RUN   TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty
+--- PASS: TestSuite_MemoryStore (0.01s)
+    --- PASS: TestSuite_MemoryStore/create_writes_one_atomic_outcome (0.00s)
+    --- PASS: TestSuite_MemoryStore/denial_matrix_through_the_service (0.00s)
+    --- PASS: TestSuite_MemoryStore/replay_sequential_and_after_restart (0.00s)
+    --- PASS: TestSuite_MemoryStore/key_reuse_and_same_key_under_another_actor (0.00s)
+    --- PASS: TestSuite_MemoryStore/concurrent_same_key_one_effect (0.00s)
+    --- PASS: TestSuite_MemoryStore/concurrent_same_key_across_matters_commits_once_without_leaking (0.00s)
+    --- PASS: TestSuite_MemoryStore/revocation_defeats_create_and_replay (0.00s)
+    --- PASS: TestSuite_MemoryStore/demotion_keeps_replay_blocks_create (0.00s)
+    --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/authorized_caller_learns_key_reuse_across_matters (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/revoked_represented_matter_hides_the_receipt_uniformly (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/cross-workspace_saved_scope_lost_hides_the_receipt (0.00s)
+        --- PASS: TestSuite_MemoryStore/receipt_replay_authorizes_every_represented_matter/demotion_to_viewer_keeps_represented-matter_replay (0.00s)
+    --- PASS: TestSuite_MemoryStore/elapsed_pending_boundary_fails_closed (0.00s)
+    --- PASS: TestSuite_MemoryStore/not-due_pending_boundary_is_preserved_by_a_successful_create (0.00s)
+    --- PASS: TestSuite_MemoryStore/replay_keeps_a_later_pending_boundary_intact (0.00s)
+    --- PASS: TestSuite_MemoryStore/uniform_read_outcomes (0.00s)
+    --- PASS: TestSuite_MemoryStore/snapshot_stays_consistent_across_a_concurrent_create (0.00s)
+    --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_node (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/insert_requirement (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/append_event (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/store_receipt (0.00s)
+        --- PASS: TestSuite_MemoryStore/injected_step_failures_roll_back_everything/complete_matter (0.00s)
+    --- PASS: TestSuite_MemoryStore/commit_outcomes (0.00s)
+        --- PASS: TestSuite_MemoryStore/commit_outcomes/unknown_outcome_is_not_proof_of_rollback (0.00s)
+        --- PASS: TestSuite_MemoryStore/commit_outcomes/known_abort_is_unavailable_with_no_effect (0.00s)
+    --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct (0.00s)
+        --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/create_aborts_with_no_effect (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/replay_aborts_without_exposing_the_receipt (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unavailable/read_is_unavailable,_not_empty (0.00s)
+        --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/create_aborts_with_no_effect (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/replay_aborts_without_exposing_the_receipt (0.00s)
+            --- PASS: TestSuite_MemoryStore/membership_storage_failures_stay_distinct/membership_unexpected/read_is_unavailable,_not_empty (0.00s)
+=== RUN   TestSuiteW1_MemoryStore
+=== RUN   TestSuiteW1_MemoryStore/create_workspace:_owner,_replay,_restart_replay,_key_reuse
+=== RUN   TestSuiteW1_MemoryStore/create_matter:_CAS,_title,_list,_history,_replay_without_CAS
+=== RUN   TestSuiteW1_MemoryStore/workspace_membership:_CAS,_authorization,_last_owner,_role_mismatch,_revocation
+=== RUN   TestSuiteW1_MemoryStore/matter_membership:_workspace_prerequisite,_events,_CAS,_last_owner
+=== RUN   TestSuiteW1_MemoryStore/get_matter_and_member_lists_respect_their_boundaries
+=== RUN   TestSuiteW1_MemoryStore/my_workspaces_lists_only_the_caller's_active_memberships
+=== RUN   TestSuiteW1_MemoryStore/accessible_matters_page_without_gaps_or_duplicates
+=== RUN   TestSuiteW1_MemoryStore/history_pages_without_gaps_or_duplicates
+=== RUN   TestSuiteW1_MemoryStore/history_includes_requirement_creation_in_contiguous_sequence
+=== RUN   TestSuiteW1_MemoryStore/own_receipt:_owner_only,_revocation_hides_it
+=== RUN   TestSuiteW1_MemoryStore/concurrency:_same-key_creation_has_one_effect;_same-revision_grants_have_one_winner
+=== RUN   TestSuiteW1_MemoryStore/commit_outcome_unknown_is_not_a_rollback
+--- PASS: TestSuiteW1_MemoryStore (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/create_workspace:_owner,_replay,_restart_replay,_key_reuse (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/create_matter:_CAS,_title,_list,_history,_replay_without_CAS (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/workspace_membership:_CAS,_authorization,_last_owner,_role_mismatch,_revocation (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/matter_membership:_workspace_prerequisite,_events,_CAS,_last_owner (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/get_matter_and_member_lists_respect_their_boundaries (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/my_workspaces_lists_only_the_caller's_active_memberships (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/accessible_matters_page_without_gaps_or_duplicates (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/history_pages_without_gaps_or_duplicates (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/history_includes_requirement_creation_in_contiguous_sequence (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/own_receipt:_owner_only,_revocation_hides_it (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/concurrency:_same-key_creation_has_one_effect;_same-revision_grants_have_one_winner (0.00s)
+    --- PASS: TestSuiteW1_MemoryStore/commit_outcome_unknown_is_not_a_rollback (0.00s)
+=== RUN   TestSuiteW2_MemoryStore
+=== RUN   TestSuiteW2_MemoryStore/actions:_receipted_creation,_Requirement_is_not_Action,_role_matrix
+=== RUN   TestSuiteW2_MemoryStore/metadata:_CAS,_member-only_owner,_explicit-offset_due,_same-value_no-op,_history
+=== RUN   TestSuiteW2_MemoryStore/execution:_guards,_waiting_is_not_blocked,_completed_is_not_verified,_no-op,_stale
+=== RUN   TestSuiteW2_MemoryStore/dependencies:_AND_gate,_blocked_completion,_cycles,_reblock,_cancellation
+=== RUN   TestSuiteW2_MemoryStore/dependencies:_cycle,_self,_duplicate,_cross-matter,_reason_and_revision_guards
+=== RUN   TestSuiteW2_MemoryStore/milestones:_readiness,_critical_chain_attention,_OWNER-only_settings
+=== RUN   TestSuiteW2_MemoryStore/escalation:_OWNER_only,_CRITICAL_with_reason,_cleared_with_a_reason-less_call
+=== RUN   TestSuiteW2_MemoryStore/parties:_context_only,_CAS,_history;_waiting_references_a_party
+=== RUN   TestSuiteW2_MemoryStore/grid:_filters,_derived_timing/attention,_sorting,_paging_without_gaps,_scoping
+=== RUN   TestSuiteW2_MemoryStore/my_actions:_only_the_caller's_own_work_in_readable_matters,_sections,_deterministic_order
+=== RUN   TestSuiteW2_MemoryStore/concurrency:_one_winner_per_revision;_racing_edges_cannot_both_close_a_cycle
+=== RUN   TestSuiteW2_MemoryStore/failure_modes:_injected_step_failures_roll_back;_an_unknown_commit_outcome_is_not_a_rollback
+--- PASS: TestSuiteW2_MemoryStore (0.04s)
+    --- PASS: TestSuiteW2_MemoryStore/actions:_receipted_creation,_Requirement_is_not_Action,_role_matrix (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/metadata:_CAS,_member-only_owner,_explicit-offset_due,_same-value_no-op,_history (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/execution:_guards,_waiting_is_not_blocked,_completed_is_not_verified,_no-op,_stale (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/dependencies:_AND_gate,_blocked_completion,_cycles,_reblock,_cancellation (0.01s)
+    --- PASS: TestSuiteW2_MemoryStore/dependencies:_cycle,_self,_duplicate,_cross-matter,_reason_and_revision_guards (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/milestones:_readiness,_critical_chain_attention,_OWNER-only_settings (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/escalation:_OWNER_only,_CRITICAL_with_reason,_cleared_with_a_reason-less_call (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/parties:_context_only,_CAS,_history;_waiting_references_a_party (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/grid:_filters,_derived_timing/attention,_sorting,_paging_without_gaps,_scoping (0.01s)
+    --- PASS: TestSuiteW2_MemoryStore/my_actions:_only_the_caller's_own_work_in_readable_matters,_sections,_deterministic_order (0.01s)
+    --- PASS: TestSuiteW2_MemoryStore/concurrency:_one_winner_per_revision;_racing_edges_cannot_both_close_a_cycle (0.00s)
+    --- PASS: TestSuiteW2_MemoryStore/failure_modes:_injected_step_failures_roll_back;_an_unknown_commit_outcome_is_not_a_rollback (0.00s)
+=== RUN   TestSuiteW3_MemoryStore
+=== RUN   TestSuiteW3_MemoryStore/documents:_immutable_versions,_nothing_current_by_upload,_guarded_promotion_(AC-115)
+=== RUN   TestSuiteW3_MemoryStore/verification:_criteria_are_not_proof;_independent_designated_review;_partial/reject/dispute/revoke_(AC-106,107,126,127,140)
+=== RUN   TestSuiteW3_MemoryStore/documents_as_proof:_promotion_invalidates_the_current-version_criterion,_a_fixed_one_is_unaffected_(AC-107,157)
+=== RUN   TestSuiteW3_MemoryStore/evidence:_receipted_submit,_withdrawal,_applicability,_read_authorization
+=== RUN   TestSuiteW3_MemoryStore/content:_authorize_before_storing,_bounded,_content-bound_replay,_exact_bytes_back
+--- PASS: TestSuiteW3_MemoryStore (0.01s)
+    --- PASS: TestSuiteW3_MemoryStore/documents:_immutable_versions,_nothing_current_by_upload,_guarded_promotion_(AC-115) (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/verification:_criteria_are_not_proof;_independent_designated_review;_partial/reject/dispute/revoke_(AC-106,107,126,127,140) (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/documents_as_proof:_promotion_invalidates_the_current-version_criterion,_a_fixed_one_is_unaffected_(AC-107,157) (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/evidence:_receipted_submit,_withdrawal,_applicability,_read_authorization (0.00s)
+    --- PASS: TestSuiteW3_MemoryStore/content:_authorize_before_storing,_bounded,_content-bound_replay,_exact_bytes_back (0.00s)
+=== RUN   TestSuiteW4_MemoryStore
+=== RUN   TestSuiteW4_MemoryStore/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage
+=== RUN   TestSuiteW4_MemoryStore/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163)
+=== RUN   TestSuiteW4_MemoryStore/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09)
+=== RUN   TestSuiteW4_MemoryStore/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10)
+=== RUN   TestSuiteW4_MemoryStore/correction:_appended,_never_edited;_owner_only_(AC-163)
+--- PASS: TestSuiteW4_MemoryStore (0.02s)
+    --- PASS: TestSuiteW4_MemoryStore/create:_receipted;_linked_Requirement_and_authority;_status_follows_the_stage (0.00s)
+    --- PASS: TestSuiteW4_MemoryStore/full_flow_with_proof:_guards,_exact_submissions,_repeated_cycles,_approval,_reopen_epoch_(AC-116,129,145,163) (0.01s)
+    --- PASS: TestSuiteW4_MemoryStore/negative_path:_rejection,_close,_reopen,_approval_only_on_new_evidence_(FL-04,_FL-09) (0.01s)
+    --- PASS: TestSuiteW4_MemoryStore/no-supplement_path,_proof_not_required,_role_matrix_and_stage_machine_(FL-05,06,07,10) (0.01s)
+    --- PASS: TestSuiteW4_MemoryStore/correction:_appended,_never_edited;_owner_only_(AC-163) (0.00s)
+=== RUN   TestSuiteW5_MemoryStore
+=== RUN   TestSuiteW5_MemoryStore/context_records:_receipted,_linked,_CAS,_closing_keeps_the_record_(FR-009)
+=== RUN   TestSuiteW5_MemoryStore/control_room:_every_section_matches_the_records_at_one_boundary_(AC-109)
+--- PASS: TestSuiteW5_MemoryStore (0.00s)
+    --- PASS: TestSuiteW5_MemoryStore/context_records:_receipted,_linked,_CAS,_closing_keeps_the_record_(FR-009) (0.00s)
+    --- PASS: TestSuiteW5_MemoryStore/control_room:_every_section_matches_the_records_at_one_boundary_(AC-109) (0.00s)
+=== RUN   TestSuiteW7QA_MemoryStore
+=== RUN   TestSuiteW7QA_MemoryStore/F01_dispute_survives_withdrawn
+=== RUN   TestSuiteW7QA_MemoryStore/F01_dispute_survives_revoked
+=== RUN   TestSuiteW7QA_MemoryStore/F02_stale_assessment_refused
+=== RUN   TestSuiteW7QA_MemoryStore/F03_no-proof_filing_signature_guard
+=== RUN   TestSuiteW7QA_MemoryStore/F03_observed_signature_satisfies_the_guard
+=== RUN   TestSuiteW7QA_MemoryStore/F04_room_is_self-contained
+--- PASS: TestSuiteW7QA_MemoryStore (0.01s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F01_dispute_survives_withdrawn (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F01_dispute_survives_revoked (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F02_stale_assessment_refused (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F03_no-proof_filing_signature_guard (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F03_observed_signature_satisfies_the_guard (0.00s)
+    --- PASS: TestSuiteW7QA_MemoryStore/F04_room_is_self-contained (0.00s)
+=== RUN   TestSuiteW6_MemoryStore
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text
+=== RUN   TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries
+=== RUN   TestSuiteW6_MemoryStore/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows
+=== RUN   TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges
+=== RUN   TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it
+=== RUN   TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation
+=== RUN   TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records
+=== RUN   TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group
+=== RUN   TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds
+=== RUN   TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it
+=== RUN   TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once
+=== RUN   TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing
+=== RUN   TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2
+=== RUN   TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2
+--- PASS: TestSuiteW6_MemoryStore (0.03s)
+    --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_empty (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/nil_versus_sentinel_text (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/bulk_intent_distinguishes_absent_fields_and_delimiter_collisions/delimiter_boundaries (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/import_parser_storage_errors_propagate_without_becoming_empty_success_or_validation (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes (0.01s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title (0.00s)
+        --- PASS: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows (0.01s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new-row_dependency_graph_becomes_the_exact_persisted_edges (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_reference_to_an_existing_item_links_to_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_invalid_connected_group_is_rejected_whole_and_an_independent_group_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_dependency_cycle_or_self-reference_rejects_the_group_before_any_mutation (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/an_identical_re-import_replays_and_changed_content_conflicts,_with_no_new_records (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_new_row_can_extend_an_already_imported_group (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/a_lost_commit_acknowledgement_is_UNKNOWN_and_the_same_keys_recover_it (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/concurrent_identical_imports_create_the_records_exactly_once (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/access_withdrawn_between_preview_and_commit_mutates_nothing (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_completion,_cancellation_and_reopen_move_work_in_and_out_of_outstanding_at_t2 (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_proof_assessment_and_dispute_change_readiness_at_t2 (0.00s)
+    --- PASS: TestSuiteW6_MemoryStore/brief:_imported_work_and_its_dependency_facts_appear_at_t2 (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol	1.567s
+=== RUN   TestControlRoomAndContext_HTTP
+--- PASS: TestControlRoomAndContext_HTTP (0.01s)
+=== RUN   TestBulk_HTTPFlow
+--- PASS: TestBulk_HTTPFlow (0.00s)
+=== RUN   TestImport_HTTPFlow
+--- PASS: TestImport_HTTPFlow (0.00s)
+=== RUN   TestExportAndBrief_HTTP
+--- PASS: TestExportAndBrief_HTTP (0.00s)
+=== RUN   TestImport_WholeSheetFailureIsBadRequest
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/empty
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_rowkey
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_kind
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/missing_title
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/malformed_csv
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/malformed_xlsx
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/unsupported_format
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/rows
+--- PASS: TestImport_WholeSheetFailureIsBadRequest (0.02s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/empty (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_rowkey (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_kind (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/missing_title (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/malformed_csv (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/malformed_xlsx (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/unsupported_format (0.00s)
+    --- PASS: TestImport_WholeSheetFailureIsBadRequest/rows (0.01s)
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/bulk
+=== RUN   TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/import
+--- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP (0.00s)
+    --- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/bulk (0.00s)
+    --- PASS: TestDataCommit_SavedReceiptScopeIsHiddenOverHTTP/import (0.00s)
+=== RUN   TestProof_HTTPFlow
+--- PASS: TestProof_HTTPFlow (0.01s)
+=== RUN   TestDocuments_HTTPUploadPromotionAndContent
+--- PASS: TestDocuments_HTTPUploadPromotionAndContent (0.00s)
+=== RUN   TestFilings_HTTPFlow
+--- PASS: TestFilings_HTTPFlow (0.01s)
+=== RUN   TestAuthentication
+--- PASS: TestAuthentication (0.00s)
+=== RUN   TestCreateWorkspace_BoundaryAndReplay
+--- PASS: TestCreateWorkspace_BoundaryAndReplay (0.00s)
+=== RUN   TestWorkspaceMatterAndRequirementFlow
+--- PASS: TestWorkspaceMatterAndRequirementFlow (0.00s)
+=== RUN   TestMembershipAdministration
+--- PASS: TestMembershipAdministration (0.00s)
+=== RUN   TestOutcomeUnknownIsNeverASuccessOrARollbackClaim
+--- PASS: TestOutcomeUnknownIsNeverASuccessOrARollbackClaim (0.00s)
+=== RUN   TestListMyWorkspaces
+--- PASS: TestListMyWorkspaces (0.00s)
+=== RUN   TestAuthenticationPrecedesDecode
+--- PASS: TestAuthenticationPrecedesDecode (0.00s)
+=== RUN   TestDecodeStrict
+--- PASS: TestDecodeStrict (0.00s)
+=== RUN   TestFingerprint_FrameIsUnambiguousAndStable
+--- PASS: TestFingerprint_FrameIsUnambiguousAndStable (0.00s)
+=== RUN   TestEtagIsStrongAndRepresentationDetermined
+--- PASS: TestEtagIsStrongAndRepresentationDetermined (0.00s)
+=== RUN   TestWorkItems_CreateReadPatchAndExecution
+--- PASS: TestWorkItems_CreateReadPatchAndExecution (0.01s)
+=== RUN   TestWorkItems_DependenciesGridAndMyActions
+--- PASS: TestWorkItems_DependenciesGridAndMyActions (0.01s)
+=== RUN   TestMilestonesPartiesAndWorkstreams
+--- PASS: TestMilestonesPartiesAndWorkstreams (0.00s)
+PASS
+ok  	github.com/example/userapi/internal/adapter/inbound/productapi	1.550s

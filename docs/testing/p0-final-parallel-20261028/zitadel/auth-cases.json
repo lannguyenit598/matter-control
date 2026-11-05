@@ -1,0 +1,118 @@
+{
+  "task": "MC-P0-ZITADEL-CLOUD-E2E-R1",
+  "cases": [
+    {
+      "id": "health",
+      "status": "PASS",
+      "http_status": 200,
+      "problem_code": null,
+      "start_utc": "2026-10-28T08:00:43.475684+00:00",
+      "end_utc": "2026-10-28T08:00:43.489488+00:00"
+    },
+    {
+      "id": "ready",
+      "status": "PASS",
+      "http_status": 200,
+      "problem_code": null,
+      "start_utc": "2026-10-28T08:00:43.489507+00:00",
+      "end_utc": "2026-10-28T08:00:43.492772+00:00"
+    },
+    {
+      "id": "no-token",
+      "status": "PASS",
+      "http_status": 401,
+      "problem_code": "urn:mc:unauthenticated",
+      "start_utc": "2026-10-28T08:00:43.492782+00:00",
+      "end_utc": "2026-10-28T08:00:43.496726+00:00"
+    },
+    {
+      "id": "bogus-token",
+      "status": "PASS",
+      "http_status": 401,
+      "problem_code": "urn:mc:unauthenticated",
+      "start_utc": "2026-10-28T08:00:43.496735+00:00",
+      "end_utc": "2026-10-28T08:00:43.737520+00:00"
+    },
+    {
+      "id": "unauthenticated-session",
+      "status": "PASS",
+      "http_status": 200,
+      "problem_code": null,
+      "start_utc": "2026-10-28T08:00:43.737538+00:00",
+      "end_utc": "2026-10-28T08:00:43.762662+00:00",
+      "authenticated": false
+    },
+    {
+      "id": "callback-missing-parameters",
+      "status": "PASS",
+      "http_status": 307,
+      "problem_code": null,
+      "start_utc": "2026-10-28T08:00:43.762700+00:00",
+      "end_utc": "2026-10-28T08:00:43.779668+00:00",
+      "redirect_path": "/login?error=denied"
+    },
+    {
+      "id": "callback-unbound-state",
+      "status": "PASS",
+      "http_status": 307,
+      "problem_code": null,
+      "start_utc": "2026-10-28T08:00:43.779694+00:00",
+      "end_utc": "2026-10-28T08:00:43.785260+00:00",
+      "redirect_path": "/login?error=invalid"
+    },
+    {
+      "id": "human-login-A",
+      "status": "BLOCKED_EMAIL_VERIFICATION",
+      "evidence": "Human reports synthetic email has no usable mailbox, so required email code cannot be received.",
+      "reported_utc": "2026-10-28T08:05:55.982683+00:00"
+    },
+    {
+      "id": "real-token-issuer-audience-subject",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "A-B-workspace-matter-isolation",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "viewer-write-denial",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "cross-matter-denial",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "role-change-revoke",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "real-refresh",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "session-expiry-logout-relogin",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "API-outage-unavailable",
+      "status": "NOT_RUN"
+    }
+  ],
+  "source_only": {
+    "PKCE": "S256; 48 random bytes verifier",
+    "state_nonce": "random, single-use bound state, nonce signed ID-token verification",
+    "cookie": "opaque handle; HttpOnly; SameSite=Lax; local HTTP secure=false",
+    "token_storage": "server process memory only",
+    "verifier": "trusted existing introspection verifier enforces issuer, audience, active, sub, expiry; cache TTL 0s",
+    "refresh": "30-second window; not yet exercised with real tokens"
+  },
+  "cloud_login_PASS": false,
+  "blocker": {
+    "source": "direct human report",
+    "type": "synthetic-email-verification-code-unavailable",
+    "browser_observation": "Prior task tab no longer exists; current verification screen not independently observed.",
+    "resolution_owner": "Human / IdP account administrator",
+    "boundary": "No email, credential, verification-policy or provider-admin changes authorized in this task."
+  }
+}

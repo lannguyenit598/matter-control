@@ -1,0 +1,157 @@
+[
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Rejection",
+    "Variant": "EDITOR records",
+    "Actor": "01a180a2-cb7f-7aec-ac74-642ff1bb38d8",
+    "ActorRole": "EDITOR",
+    "Subject": "01a180a2-cb80-77d0-942c-3c5b2214c487",
+    "PreRevision": 6,
+    "PostRevision": 7,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "evidence.submitted",
+      "filing.negative_outcome"
+    ],
+    "FirstSeq": 22,
+    "LastSeq": 23,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval while the rejection stands",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a2-cb80-77d0-942c-3c5b2214c487",
+    "PreRevision": 7,
+    "PostRevision": 7,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: negative-outcome-open: a rejection or withdrawal is recorded; an owner must reopen the filing before approval"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Close by an editor",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a2-cb80-77d0-942c-3c5b2214c487",
+    "PreRevision": 7,
+    "PostRevision": 7,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "forbidden"
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Closure",
+    "Variant": "OWNER",
+    "Actor": "01a180a2-cb7f-7aae-b97e-bc573fbd93e3",
+    "ActorRole": "OWNER",
+    "Subject": "01a180a2-cb80-77d0-942c-3c5b2214c487",
+    "PreRevision": 7,
+    "PostRevision": 8,
+    "Before": {
+      "Execution": "WAITING",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "ATTENTION"
+    },
+    "After": {
+      "Execution": "CANCELLED",
+      "Verification": "N/A",
+      "Dependency": "READY",
+      "Timing": "ON_TRACK",
+      "Attention": "NORMAL"
+    },
+    "ProofEpoch": 0,
+    "EventTypes": [
+      "filing.closed"
+    ],
+    "FirstSeq": 26,
+    "LastSeq": 26,
+    "Note": ""
+  },
+  {
+    "Workflow": "GW-03",
+    "AC": "AC-163",
+    "Stage": "Approval of a cancelled filing",
+    "Variant": "denied",
+    "Actor": "",
+    "ActorRole": "",
+    "Subject": "01a180a2-cb80-77d0-942c-3c5b2214c487",
+    "PreRevision": 8,
+    "PostRevision": 8,
+    "Before": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "After": {
+      "Execution": "",
+      "Verification": "",
+      "Dependency": "",
+      "Timing": "",
+      "Attention": ""
+    },
+    "ProofEpoch": 0,
+    "EventTypes": null,
+    "FirstSeq": 0,
+    "LastSeq": 0,
+    "Note": "ADVANCE_FILING: filing-closed: this filing is cancelled; an owner must reopen it first"
+  }
+]

@@ -1,0 +1,247 @@
+{
+ "task": "MC-003A-REF-RESOLUTION",
+ "reviewer": "Claude Code (actual) 2.1.310, model claude-opus-5-5, interactive session invoked by the human user",
+ "review_type": "DOCUMENT_ONLY bounded addendum; no runtime",
+ "repository_head": "cc121cf12e6d7fb3385cf9e384b7921fd6fd403a",
+ "intake_base": "cd30600dc8b88b80fb10b96d4049e84787c4cf47",
+ "amends": {
+  "reviewed-read-contract.json": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5",
+  "targeted-claude-review.md": "263718e7b7cf2554594de5bfa73e331ad3cfe4d9d97c3a7d2bfabfd45402c203",
+  "note": "Originals stay immutable; this delta is applied on top of them"
+ },
+ "verdict": "COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+ "contract_authority": "REVIEWED_CANDIDATE delta; not PO/product-contract approval; PO Architecture Approval Gate NOT_PASSED",
+ "self_review_disclosure": "Reviewer authored the base candidate architecture and the reviewed read contract; not independent",
+ "po_decisions_required": [],
+ "adr": "None",
+ "delta": [
+  {
+   "id": "RC-REF-01",
+   "supersedes": [
+    "reviewed-read-contract.json detail_read_catalogue DR-13 review_note (rejection of GET /external-parties/{id})",
+    "targeted-claude-review.md §4 table row DR-13"
+   ],
+   "dr": [
+    "DR-13",
+    "DR-16",
+    "DR-12"
+   ],
+   "nav": [
+    "NAV-08"
+   ],
+   "ct": [
+    "CT-03",
+    "CT-04",
+    "CT-05",
+    "CT-09",
+    "CT-10",
+    "CT-16"
+   ],
+   "gap": "Proven gap. Reviewed DR-13 offers only GET /matters/{m}/external-parties (keyset, limit<=200 per page, no id filter); refs are {kind,id} without label; waits?partyId= filters waits, not the party. Synthetic counterexample: Matter with 201 parties ordered by label, referenced party is #201 -> it is on page 2; the client must scan pages sequentially to show its label or context. The prior YAGNI rejection of GET /external-parties/{id} does not hold",
+   "resolution": [
+    "REINSTATE point lookup GET /api/v1/external-parties/{id} (REVIEWED_CANDIDATE), returning exactly the reviewed list-item fields: label, role/context, inactive, revision (+ asOf/sourceRevision)",
+    "GUARANTEED CONTEXT: every reviewed shape that emits an EXTERNAL_PARTY ref for display carries its label from the same snapshot: waitingOn card and DR-16 wait add partyLabel; DR-12 filing adds authorityPartyLabel"
+   ],
+   "routes": [
+    {
+     "route": "GET /api/v1/external-parties/{id}",
+     "status": "REVIEWED_CANDIDATE",
+     "change": "ADDED (reinstated)"
+    }
+   ],
+   "fields": [
+    {
+     "path": "waitingOn.items[].partyLabel",
+     "status": "CANDIDATE_FIELD",
+     "note": "null when the wait is on a condition, not a party"
+    },
+    {
+     "path": "DR-16 wait.partyLabel",
+     "status": "CANDIDATE_FIELD",
+     "note": "same"
+    },
+    {
+     "path": "DR-12 filing.authorityPartyLabel",
+     "status": "CANDIDATE_FIELD",
+     "note": "label of authorityPartyRef"
+    },
+    {
+     "path": "GET /external-parties/{id} response {ref, label, roleContext, inactive, revision, asOf, sourceRevision}",
+     "status": "CANDIDATE_FIELD",
+     "note": "no contact or legal fields"
+    }
+   ],
+   "ref_shape": "Unchanged {kind: EXTERNAL_PARTY, id}; labels are sibling fields, not part of the generic ref",
+   "parent_context": "None needed: the party belongs to exactly one Matter, which the server resolves",
+   "collection_negative": "List unchanged and still keyset paginated, no total cap assumed; a picker pages via cursor. Inactive parties stay resolvable (history) with inactive=true. Nonexistent, foreign-Matter, revoked and kind-mismatched ids -> uniform 404",
+   "acceptance": [
+    "Clicking a partyRef from a wait/filing issues exactly one GET /external-parties/{id}; no list scan",
+    "Overview wait cards render party labels with no follow-up request",
+    "Party #201 in the synthetic 201-party Matter resolves in one request",
+    "Revoked member gets the same 404 as nonexistent; client purges cached party detail for that Matter"
+   ],
+   "owner": "Claude (contract), ZCode (API), Antigravity (consumer), OpenCode (negative tests)",
+   "authorization": "RC-1/RC-3 unchanged: authentication (401) -> server resolves the owning Matter from the resource -> active Workspace AND explicit Matter membership AND O/E/V role, else uniform 404 byte-identical to nonexistent; other-kind id (e.g. a claimId on /evidence/{id}) -> same 404; no 403 on P0 reads; no Workspace OWNER implicit grant; no shared-token fallback",
+   "snapshot_boundary": "A point lookup is its own read boundary with asOf/sourceRevision; it never patches the overview snapshot. Labels embedded in overview cards come from the overview snapshot. If a lookup's sourceRevision is newer, show 'changed since overview'"
+  },
+  {
+   "id": "RC-REF-02",
+   "supersedes": [
+    "reviewed-read-contract.json detail_read_catalogue DR-09 required_data (adds claim envelope)",
+    "DR-15 events / recentChanges card shape (adds claimRef sibling for ASSESSMENT/DISPUTE targets)"
+   ],
+   "dr": [
+    "DR-08",
+    "DR-09",
+    "DR-15"
+   ],
+   "nav": [
+    "NAV-03",
+    "NAV-04",
+    "NAV-10"
+   ],
+   "ct": [
+    "CT-03",
+    "CT-05",
+    "CT-10",
+    "CT-12",
+    "CT-17",
+    "CT-19"
+   ],
+   "gap": "Proven gap in consumer navigation context, not a corrupt stored claim. Reviewed DR-08 returns claims inline under GET /evidence/{evidenceId}; DR-09 GET /evidence-claims/{claimId}/assessments returns history only. An EVIDENCE_CLAIM ref arriving from an event targetRef, dispute or assessment carries no evidenceId, so the claim definition and parent are unreachable. Existing safe path only where the emitter already carries the parent: DR-07 claims summary {claimRef, evidenceRef}",
+   "resolution": [
+    "EXTEND existing GET /api/v1/evidence-claims/{id}/assessments (REVIEWED_CANDIDATE, no new route): response always includes claim {claimRef, evidenceRef, criterionRevisionRef, componentKey|null, status, revision} plus assessments[] (may be [])",
+    "Consumer path for any standalone claimRef: GET /evidence-claims/{claimId}/assessments -> claim.evidenceRef -> GET /evidence/{evidenceId}. Never send a claimId to /evidence/{id}",
+    "The claim envelope is present on every page of the keyset-paged assessments collection, including continuation pages",
+    "ASSESSMENT and DISPUTE refs: candidate commands address these by their own ids (POST /evidence-assessments/{id}:revoke, /disputes, /disputes/{id}:resolve) and event target kinds are unspecified. Wherever such a ref is emitted (DR-15 event targetRef, recentChanges card), a sibling claimRef is carried; the consumer then uses the claim path. No new route or resolver for those kinds"
+   ],
+   "routes": [
+    {
+     "route": "GET /api/v1/evidence-claims/{id}/assessments",
+     "status": "REVIEWED_CANDIDATE",
+     "change": "RESPONSE EXTENDED with claim envelope"
+    }
+   ],
+   "fields": [
+    {
+     "path": "evidence-claims/{id}/assessments.claim",
+     "status": "CANDIDATE_FIELD",
+     "note": "{claimRef, evidenceRef, criterionRevisionRef, componentKey|null, status, revision}; on every page"
+    },
+    {
+     "path": "DR-15 events[].claimRef and recentChanges.items[].claimRef",
+     "status": "CANDIDATE_FIELD",
+     "note": "present when targetRef.kind is ASSESSMENT or DISPUTE; null otherwise"
+    }
+   ],
+   "ref_shape": "Unchanged {kind: EVIDENCE_CLAIM, id}",
+   "parent_context": "Guaranteed by the server: every claim has exactly one parent Evidence and one criterion revision (candidate api-contracts §1.1 'A claim has one criterion revision', §3.3 claims created under one Evidence), returned in claim.evidenceRef and claim.criterionRevisionRef. Exact assessedDocumentVersionRef stays on each assessment",
+   "collection_negative": "A claim with no assessments returns claim + assessments:[] (exists, unreviewed), distinct from 404. Withdrawn evidence keeps its claim resolvable with status shown. Nonexistent, foreign, revoked and kind-mismatched ids -> uniform 404. Current verification aggregate remains a separate backend projection",
+   "acceptance": [
+    "A claimRef from recentChanges resolves to claim + parent evidence in at most two requests, without guessing ids",
+    "A claimId sent to /evidence/{id} returns 404 (RC-3); the consumer never does this",
+    "Zero-assessment claim renders as an existing claim with no review, not as not-found",
+    "After promotion the assessment keeps the exact assessedDocumentVersionRef (CT-12)",
+    "A dispute or assessment-revocation event in recentChanges resolves to its claim and parent evidence without guessed ids (CT-19)"
+   ],
+   "owner": "Claude (contract), ZCode (API), Antigravity (consumer), OpenCode (negative tests)",
+   "authorization": "RC-1/RC-3 unchanged: authentication (401) -> server resolves the owning Matter from the resource -> active Workspace AND explicit Matter membership AND O/E/V role, else uniform 404 byte-identical to nonexistent; other-kind id (e.g. a claimId on /evidence/{id}) -> same 404; no 403 on P0 reads; no Workspace OWNER implicit grant; no shared-token fallback",
+   "snapshot_boundary": "A point lookup is its own read boundary with asOf/sourceRevision; it never patches the overview snapshot. Labels embedded in overview cards come from the overview snapshot. If a lookup's sourceRevision is newer, show 'changed since overview'"
+  },
+  {
+   "id": "RC-REF-03",
+   "supersedes": [
+    "reviewed-read-contract.json detail_read_catalogue DR-02 review_note (rejection of GET /workstreams/{id})",
+    "targeted-claude-review.md §4 table row DR-02"
+   ],
+   "dr": [
+    "DR-02",
+    "DR-04",
+    "DR-05"
+   ],
+   "nav": [
+    "NAV-01",
+    "NAV-05",
+    "NAV-06"
+   ],
+   "ct": [
+    "CT-03",
+    "CT-05",
+    "CT-16",
+    "CT-17"
+   ],
+   "gap": "Proven gap. Reviewed DR-02 offers GET /matters/{m}/workstreams (keyset; <=200 is per page, not an approved per-Matter count) and rejected GET /workstreams/{id}. WORKSTREAM refs are {kind,id}. Synthetic counterexample: Matter with 201 workstreams, a Requirement in workstream #201 -> its label is on page 2; a restored URL filter grid?workstreamId= has no label source without scanning",
+   "resolution": [
+    "REINSTATE point lookup GET /api/v1/workstreams/{id} (REVIEWED_CANDIDATE), returning the reviewed list-item fields: label, order, revision (+ asOf/sourceRevision)",
+    "GUARANTEED CONTEXT: DR-04 Requirement and DR-05 Action detail carry workstreamLabel next to workstreamRef from the same snapshot; any other shape that later emits a WORKSTREAM ref for display must do the same",
+    "No per-Matter workstream count is guaranteed and no business cap is set; filter pickers page the list via cursor",
+    "Grid row shape is an existing candidate the reviewed contract never specified; if grid rows display a workstream they carry workstreamLabel under the same rule"
+   ],
+   "routes": [
+    {
+     "route": "GET /api/v1/workstreams/{id}",
+     "status": "REVIEWED_CANDIDATE",
+     "change": "ADDED (reinstated)"
+    }
+   ],
+   "fields": [
+    {
+     "path": "DR-04 requirement.workstreamLabel",
+     "status": "CANDIDATE_FIELD",
+     "note": "label of workstreamRef"
+    },
+    {
+     "path": "DR-05 action.workstreamLabel",
+     "status": "CANDIDATE_FIELD",
+     "note": "label of workstreamRef"
+    },
+    {
+     "path": "GET /workstreams/{id} response {ref, label, order, revision, asOf, sourceRevision}",
+     "status": "CANDIDATE_FIELD",
+     "note": "no owner/readiness invented"
+    }
+   ],
+   "ref_shape": "Unchanged {kind: WORKSTREAM, id}",
+   "parent_context": "None needed: server resolves the owning Matter",
+   "collection_negative": "List unchanged and still paginated; no unpaginated or bounded-list guarantee. Nonexistent, foreign, revoked and kind-mismatched ids -> uniform 404",
+   "acceptance": [
+    "Requirement/Action drawers show the workstream label without an extra request",
+    "Restoring grid?workstreamId= resolves the chip label with one GET /workstreams/{id}",
+    "Workstream #201 in the synthetic 201-workstream Matter resolves in one request",
+    "Client never assumes the first list page is complete"
+   ],
+   "owner": "Claude (contract), ZCode (API), Antigravity (consumer)",
+   "authorization": "RC-1/RC-3 unchanged: authentication (401) -> server resolves the owning Matter from the resource -> active Workspace AND explicit Matter membership AND O/E/V role, else uniform 404 byte-identical to nonexistent; other-kind id (e.g. a claimId on /evidence/{id}) -> same 404; no 403 on P0 reads; no Workspace OWNER implicit grant; no shared-token fallback",
+   "snapshot_boundary": "A point lookup is its own read boundary with asOf/sourceRevision; it never patches the overview snapshot. Labels embedded in overview cards come from the overview snapshot. If a lookup's sourceRevision is newer, show 'changed since overview'"
+  }
+ ],
+ "navigation_notes": {
+  "NAV-03": "From DR-07 claims summary use the provided evidenceRef. From a standalone claimRef use RC-REF-02 resolution. Missing proof stays a gap",
+  "NAV-09": "Clarification, no change: the reviewed rule already uses node refs (blocker card ref = cause node, or failingGates[].downstreamRef). edgeRef is never sent to /nodes/{id}; it identifies the edge for :remove/:replace-gate only"
+ },
+ "resulting_catalogue": {
+  "operations_before": 30,
+  "added": [
+   "GET /api/v1/external-parties/{id}",
+   "GET /api/v1/workstreams/{id}"
+  ],
+  "operations_after": 32,
+  "extended_without_new_route": [
+   "GET /api/v1/evidence-claims/{id}/assessments"
+  ]
+ },
+ "preserved": [
+  "One overview snapshot; no section refetch or merged snapshot",
+  "TQ-02/06/08 reviewed resolutions stand; TQ-01/03/04/05/07 open",
+  "Generic 25-kind resolver not claimed; only party/claim/workstream paths addressed",
+  "Product 412/bulk 200 candidate; INT-A native 412 transport only",
+  "No retry cadence, prevCursor API, packages or persistent storage",
+  "Revocation purges protected client cache, never domain Event History",
+  "Exact FIL-02 -> DOC-05 v2 / EV-10 identity; no fake proof/version/submission outcome"
+ ],
+ "not_run": [
+  "CT-01..22",
+  "OpenCode questions 1..8",
+  "all runtime/security/render checks"
+ ]
+}

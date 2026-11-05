@@ -1,0 +1,70 @@
+[
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T5",
+    "requestId": "mc-int-intamvnmoems3pd-T5-8",
+    "mode": "app-client",
+    "method": "POST",
+    "routeTemplate": "/api/v1/users",
+    "startedAtUTC": "2026-10-25T17:36:47.196Z",
+    "latencyMs": 2,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": null,
+    "value": null,
+    "apiError": {
+      "status": 422,
+      "code": "VALIDATION_ERROR",
+      "message": "request failed validation",
+      "details": {
+        "type": "about:blank",
+        "title": "Unprocessable Entity",
+        "status": 422,
+        "detail": "request failed validation",
+        "instance": "/api/v1/users",
+        "errors": [
+          {
+            "field": "name",
+            "message": "is required"
+          }
+        ]
+      }
+    },
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  },
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T5",
+    "requestId": "mc-int-intamvnmoems3pd-T5-9",
+    "mode": "app-client",
+    "method": "GET",
+    "routeTemplate": "/api/v1/users/{id}",
+    "startedAtUTC": "2026-10-25T17:36:47.198Z",
+    "latencyMs": 1,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "value",
+    "classification": "success",
+    "value": {
+      "id": "01a17422-e796-7465-a325-1c87c74d8393",
+      "email": "inta-a-intamvnmoems3pd@example.test",
+      "name": "INTA_A_INITIAL",
+      "version": 1,
+      "created_at": "2026-10-25T17:36:46.998289Z",
+      "updated_at": "2026-10-25T17:36:46.998289Z"
+    },
+    "apiError": null,
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  }
+]

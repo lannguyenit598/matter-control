@@ -1,0 +1,7 @@
+{"time":"2026-10-24T21:58:47.071958+07:00","level":"INFO","msg":"starting userapi","addr":"127.0.0.1:18091","storage":"postgres","version":"d024e3e","otel":false}
+{"time":"2026-10-24T21:58:49.066817+07:00","level":"INFO","msg":"http_request","method":"GET","path":"/api/v1/users/01a16e6b-25fd-72e6-8217-1eb9a1ed6644","route":"/api/v1/users/:id","status":200,"latency":5464500,"remote_ip":"127.0.0.1","request_id":"BeuqilARqKwNfAcixIxOwgzmxIVkylfU"}
+{"time":"2026-10-24T21:59:03.159684+07:00","level":"WARN","msg":"readiness check failed","error":"failed to connect to `user=mc002be database=mc002be_poc`: 127.0.0.1:15455 (127.0.0.1): dial error: dial tcp 127.0.0.1:15455: connect: connection refused"}
+{"time":"2026-10-24T21:59:03.17504+07:00","level":"ERROR","msg":"http_request","method":"GET","path":"/api/v1/users","route":"/api/v1/users","status":500,"latency":325583,"remote_ip":"127.0.0.1","error":"list users: postgres: failed to connect to `user=mc002be database=mc002be_poc`: 127.0.0.1:15455 (127.0.0.1): dial error: dial tcp 127.0.0.1:15455: connect: connection refused","request_id":"TwmwCyvvmDUONqTSPfqSELpgbHCURvml"}
+{"time":"2026-10-24T21:59:18.875186+07:00","level":"INFO","msg":"http_request","method":"GET","path":"/api/v1/users","route":"/api/v1/users","status":200,"latency":10687541,"remote_ip":"127.0.0.1","request_id":"nGYOryUHzkReXgCEnREqImfJawWdBnQZ"}
+{"time":"2026-10-24T22:00:15.354377+07:00","level":"INFO","msg":"shutting down, draining","delay":"0s"}
+{"time":"2026-10-24T22:00:15.354767+07:00","level":"INFO","msg":"userapi stopped gracefully"}

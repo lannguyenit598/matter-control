@@ -1,0 +1,78 @@
+{
+  "task": "MC002-INTA-FE runtime stage1 manual handoff",
+  "state": "READY_NOT_DISPATCHED",
+  "destination": "Actual Antigravity interactive session, human delivery",
+  "requested_model": "Gemini3.8Flash / thinkingHIGH; report actual configured identity; no model/provider change",
+  "cost": "current session/existing quota only; no paid retry",
+  "scope": "Existing DEC028/INTA1 local stage1 only; updated readiness evidence not a new product/architecture approval",
+  "new_external_transmission_by_Codex": false,
+  "inputs": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 7417,
+      "sha256": "fef96d8690f7297a54fdac0448aa7f2173524830c2626b3abc527ec860d7077c"
+    },
+    {
+      "path": "docs/implementation/inta-approved-contract.md",
+      "bytes": 16122,
+      "sha256": "6606a5da131567274f858b84a0c51ac66607a6c5a8eb12213ac7dcca585eb155"
+    },
+    {
+      "path": "docs/implementation/tasks/MC-002-INT-A.md",
+      "bytes": 19648,
+      "sha256": "66a54d9bcda7e6bfeffddeceff30130d24a274e35ff5743d73e4bd5e4c95209c"
+    },
+    {
+      "path": "docs/implementation/inta-coordination.md",
+      "bytes": 4844,
+      "sha256": "eb03e8200584abe76c683c1249b2dfe4b4395cb9ea9f25cc217ed506914e5990"
+    },
+    {
+      "path": "docs/reviews/inta-frontend-r4-source-closure.md",
+      "bytes": 2786,
+      "sha256": "559522eecd08429460a64f188cd762796ea06036012fe55db830b67208286600"
+    },
+    {
+      "path": "docs/reviews/inta-environment-return.md",
+      "bytes": 5326,
+      "sha256": "142e6958270a2eab10f6d82e4e47a5e35554677afa44be83bab9eb456abc29ab"
+    },
+    {
+      "path": "docs/reviews/inta-backend-runtime-start-return.md",
+      "bytes": 6774,
+      "sha256": "503d021f7449a84a2d344b05d41a47356ecca2732b15d0b6a6979200ee926bfa"
+    },
+    {
+      "path": "docs/reviews/inta-backend-runtime-start-intake.md",
+      "bytes": 2817,
+      "sha256": "b4c9ce8672eb351bbb9677716363161d9d19c9f90c7db7400072dbb0e45b90e7"
+    },
+    {
+      "path": "docs/testing/integration-acceptance-matrix.md",
+      "bytes": 23371,
+      "sha256": "71578d6f36c0e45f5ee012c7909cad98d4b3059fa77756a67e7e6d356253abe1"
+    },
+    {
+      "path": "docs/testing/step-02-4-runtime-classification.md",
+      "bytes": 30421,
+      "sha256": "b2c8a7652a81ab43aedd61757f52095d994bb2095011bf0e61a67a56782d6bcf"
+    },
+    {
+      "path": "docs/implementation/handoffs/MC-002-INTA-FE-RUNTIME-PROMPT.md",
+      "bytes": 8687,
+      "sha256": "ea0acb18a412b46d28e9a14446590934ea8bc283ae526438fb8caee024feec4d"
+    },
+    {
+      "path": "docs/testing/continuation-20261026/runtime-readiness-recheck.json",
+      "bytes": 4849,
+      "sha256": "317946163ce81524e76d507d621e0172fafe753228f87888419c22c859717e20"
+    }
+  ],
+  "runtime_source_bases": {
+    "backend": "52b60a4617081c41b949f2242e1784238c170f75",
+    "frontend_template": "3e5a642479acb789eb210e73fba956f3e85082e3",
+    "companion": "48cc03e949d66fc47a7d304413621eb79804e6c1"
+  },
+  "private_config": "backend.env excluded; frontend must not read it; never transmit values",
+  "expected_return": "stage1 actual evidence/checkpoint then WAITING_GO_RESTART; no later stage cue"
+}

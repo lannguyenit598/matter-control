@@ -1,0 +1,94 @@
+{
+  "status": "REWORK_CORRECTED_PENDING_REVIEW",
+  "revision": "R2",
+  "supersedes": "delivery/manifest.json for final adoption; R1 retained unchanged",
+  "created_utc": "2026-10-28T03:43:22.908976+00:00",
+  "patches": [
+    {
+      "lane": "backend",
+      "files": [
+        {
+          "path": "apps/backend/api.http",
+          "before_sha256": "4eb760d866acf382c027e2b8d2ff6f576bef4e8596066b0604833a5671be3ae9",
+          "after_sha256": "5b67be6f51074e68b8b6d809b8c164d68492e777575b4556240e9aa521b5231c",
+          "after_bytes": 4832
+        },
+        {
+          "path": "apps/backend/docs/api.md",
+          "before_sha256": "c627332527c5c0b4797306f671388f98e414b633502b674fa2139877bc1b54f8",
+          "after_sha256": "c660257735185765165cfae1e268d7c268eaf79f21aaae7e6a10c8d4414075a3",
+          "after_bytes": 13970
+        },
+        {
+          "path": "apps/backend/internal/adapter/inbound/productapi/data_server_test.go",
+          "before_sha256": "22ebd21e9523ac0569e9f12e4091d0c30875c50231992e06634164ed06997471",
+          "after_sha256": "90250c29280ed305d45a8efac69583e1cbbdcd5dfb31cc02aa9c64b646abe692",
+          "after_bytes": 13160
+        },
+        {
+          "path": "apps/backend/internal/adapter/inbound/productapi/problems.go",
+          "before_sha256": "190491a07013ef35ba2cb79d62345617bb05097d2c5487e281facc631c830bca",
+          "after_sha256": "cc36818d083d2afbd63ed1c4bfe2032faa23dbdb32f0bddd5cac682e00caa0bd",
+          "after_bytes": 7654
+        },
+        {
+          "path": "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_w6.go",
+          "before_sha256": "a193ba04e8f06b8efa041db54e6957e6583e02e573ed2dfa05df625f47131d5f",
+          "after_sha256": "1d33f1b1bba2f7e208acde784be6878bb2f6a7011811bf7c65834ef667029d09",
+          "after_bytes": 32058
+        },
+        {
+          "path": "apps/backend/internal/core/service/dataops_service.go",
+          "before_sha256": "4b218657c96d6092e608c756ac530dc0dc20a04874cba029a7eb236e73b6881b",
+          "after_sha256": "5e911a2bbe90d27c06d27931cf380cde515a299aaa6a27c468752725a5efad5a",
+          "after_bytes": 37261
+        },
+        {
+          "path": "apps/backend/internal/core/service/matter_service.go",
+          "before_sha256": "e08971bc1913fa3c7088ae6d7a18d47e1b75eb2b0bdef94897300948d163ea7d",
+          "after_sha256": "55d7aca4ef0e5c0f99bfc7582fc9c23d5669816a24aea2d7cfef0dc58ccf4895",
+          "after_bytes": 13274
+        }
+      ],
+      "patch": "delivery-r2/backend/changes.patch",
+      "patch_sha256": "b77279d71fccf73170313a2b77b96120c0baddb06583d26452d1b4f73aa936d7"
+    },
+    {
+      "lane": "frontend",
+      "files": [
+        {
+          "path": "apps/frontend/src/features/data-transfer/intent.ts",
+          "before_sha256": "f2ccb2a011cd0f0569eb9f54001b9df8213e59f5c8d64353b6e83e2351d51f94",
+          "after_sha256": "c9e7bac206e2ef6c5810962b62dd08a05102a86e7dc009528010a203ebd487b7",
+          "after_bytes": 3738
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/components/import-section.tsx",
+          "before_sha256": "516b4f96d595c6473136202264bef41f7e6a4550080f1124a94da1452dd496d5",
+          "after_sha256": "3181f935b6783c00656719366c0744e447ccda580ea57c835c4a9a862b532389",
+          "after_bytes": 7918
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/components/data-transfer-ui.test.tsx",
+          "before_sha256": "7c40d9572700b6ffdb3b162c7886dc4eb8c5ff26476a2ac88256f4b84ecd8625",
+          "after_sha256": "bff970b8a3ae33371fcd22fbb1a428153b2ae4ffc2d66142d1216049fb4ba1e3",
+          "after_bytes": 18912
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/components/bulk-section.tsx",
+          "before_sha256": "5cba97be03ccceda99e32515b899418a04d995de974057f97ad3e93b7e693299",
+          "after_sha256": "0eceaa3b135c5f847d37f27100b9624627886e87ffd2fc185c1933db1219b281",
+          "after_bytes": 11531
+        },
+        {
+          "path": "apps/frontend/src/features/data-transfer/components/data-transfer-attempt.test.tsx",
+          "before_sha256": null,
+          "after_sha256": "7af8c62e581e795fe9215f1344a39eeaf0677b7c0107c427f84125a1dba61f8b",
+          "after_bytes": 8309
+        }
+      ],
+      "patch": "delivery-r2/frontend/changes.patch",
+      "patch_sha256": "cf3ac2e0810a0fd447db82f0cb7bee78eb68cd5bc97ebc7044778bc921d418b1"
+    }
+  ]
+}

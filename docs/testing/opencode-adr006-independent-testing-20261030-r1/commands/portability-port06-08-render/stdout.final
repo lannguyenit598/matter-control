@@ -1,0 +1,188 @@
+{
+ "target_us": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders",
+ "renders": [
+  {
+   "argv": [
+    "node",
+    "ops/deploy/profiles.mjs",
+    "cloud-run",
+    "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-cloud-run-sa1.json",
+    "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1"
+   ],
+   "exit": 0,
+   "stdout_tail": "Rendered cloud-run into docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1. Nothing was deployed. After authorization, from that directory:\n  gcloud run jobs replace migrate-job.yaml --region asia-southeast1\n  gcloud run jobs execute mcqa-synth-service-migrate --region asia-southeast1 --wait\n  gcloud run services replace service.yaml --region asia-southeast1\n",
+   "stderr_tail": "",
+   "outdir": "cloud-run-sa1"
+  },
+  {
+   "argv": [
+    "node",
+    "ops/deploy/profiles.mjs",
+    "cloud-run",
+    "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-cloud-run-sa2.json",
+    "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa2"
+   ],
+   "exit": 0,
+   "stdout_tail": "Rendered cloud-run into docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa2. Nothing was deployed. After authorization, from that directory:\n  gcloud run jobs replace migrate-job.yaml --region asia-southeast1\n  gcloud run jobs execute mcqa-synth-service-migrate --region asia-southeast1 --wait\n  gcloud run services replace service.yaml --region asia-southeast1\n",
+   "stderr_tail": "",
+   "outdir": "cloud-run-sa2"
+  },
+  {
+   "argv": [
+    "node",
+    "ops/deploy/profiles.mjs",
+    "compute-engine",
+    "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-compute-engine.json",
+    "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/compute-engine"
+   ],
+   "exit": 0,
+   "stdout_tail": "Rendered compute-engine into docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/compute-engine. Nothing was deployed. After authorization, from that directory:\n  gcloud compute instances create ... --image-family=cos-stable --image-project=cos-cloud --metadata-from-file=user-data=cloud-init.yaml (see docs/deployment/portability-runbook.md)\n  sudo systemctl start mcapi-migrate   # on the VM, before serving a new schema\n",
+   "stderr_tail": "",
+   "outdir": "compute-engine"
+  }
+ ],
+ "negatives": [
+  {
+   "case": "http_endpoint",
+   "exit": 0,
+   "problems": "[\"R2_ENDPOINT: must be an https URL without credentials\",\"SERVICE_NAME: required\",\"REGION: required\",\"SERVICE_ACCOUNT: required\",\"MAX_INSTANCES: required\"]",
+   "stderr": ""
+  },
+  {
+   "case": "placeholder_secret_name",
+   "exit": 0,
+   "problems": "[\"DATABASE_URL_SECRET: placeholder or unsafe characters\",\"SERVICE_NAME: required\",\"REGION: required\",\"SERVICE_ACCOUNT: required\",\"MAX_INSTANCES: required\"]",
+   "stderr": ""
+  },
+  {
+   "case": "mutable_tag",
+   "exit": 0,
+   "problems": "[\"IMAGE: must be pinned by @sha256 digest\",\"SERVICE_NAME: required\",\"REGION: required\",\"SERVICE_ACCOUNT: required\",\"MAX_INSTANCES: required\"]",
+   "stderr": ""
+  },
+  {
+   "case": "secret_value_in_secret_ref",
+   "exit": 0,
+   "problems": "[\"DATABASE_URL_SECRET: looks like a secret value; use a Secret Manager name\",\"SERVICE_NAME: required\",\"REGION: required\",\"SERVICE_ACCOUNT: required\",\"MAX_INSTANCES: required\"]",
+   "stderr": ""
+  }
+ ],
+ "parse": {
+  "yaml": [
+   {
+    "file": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1/service.yaml",
+    "parsed": true,
+    "top_keys": [
+     "apiVersion",
+     "kind",
+     "metadata",
+     "spec"
+    ]
+   },
+   {
+    "file": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1/migrate-job.yaml",
+    "parsed": true,
+    "top_keys": [
+     "apiVersion",
+     "kind",
+     "metadata",
+     "spec"
+    ]
+   },
+   {
+    "file": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/compute-engine/cloud-init.yaml",
+    "parsed": true,
+    "top_keys": [
+     "runcmd",
+     "write_files"
+    ]
+   },
+   {
+    "file": "apps/frontend/apphosting.yaml",
+    "parsed": true,
+    "top_keys": [
+     "env",
+     "runConfig"
+    ]
+   }
+  ],
+  "cloud_run_identity": {
+   "service_serviceAccount": "mcqa-synth-qa@qa-synth-project.iam.gserviceaccount.com",
+   "job_serviceAccount": "mcqa-synth-qa@qa-synth-project.iam.gserviceaccount.com",
+   "equal": true,
+   "service_paths": [
+    "MC_DATABASE_URL",
+    "MC_HTTP_ADDR",
+    "MC_MAX_IN_FLIGHT",
+    "MC_OBJECT_BACKEND",
+    "MC_OIDC_API_CLIENT_ID",
+    "MC_OIDC_API_KEY_FILE",
+    "MC_OIDC_AUDIENCE",
+    "MC_OIDC_CACHE_TTL",
+    "MC_OIDC_INTROSPECTION_URL",
+    "MC_OIDC_ISSUER",
+    "MC_R2_ACCESS_KEY_ID",
+    "MC_R2_BUCKET",
+    "MC_R2_ENDPOINT",
+    "MC_R2_SECRET_ACCESS_KEY",
+    "MC_REQUEST_TIMEOUT",
+    "MC_SHUTDOWN_DELAY",
+    "MC_SHUTDOWN_TIMEOUT",
+    "MC_TRANSFER_TIMEOUT"
+   ],
+   "job_paths": [
+    "MC_DATABASE_URL",
+    "MC_MIGRATE_DATABASE_URL",
+    "MC_OBJECT_BACKEND",
+    "MC_OIDC_API_KEY_FILE",
+    "MC_OIDC_AUDIENCE",
+    "MC_OIDC_INTROSPECTION_URL",
+    "MC_OIDC_ISSUER",
+    "MC_R2_ACCESS_KEY_ID",
+    "MC_R2_BUCKET",
+    "MC_R2_ENDPOINT",
+    "MC_R2_SECRET_ACCESS_KEY"
+   ],
+   "service_has_MC_MIGRATE_DATABASE_URL": false
+  },
+  "cloud_init": {
+   "starts_with_comment": true,
+   "cache_ttl_line": [
+    "MC_OIDC_CACHE_TTL=15s"
+   ],
+   "secret_file_paths": [
+    "- path: /etc/mattercontrol/mcapi.env",
+    "- path: /etc/mattercontrol/fetch-secrets.sh",
+    "- path: /etc/systemd/system/mc-secrets.service",
+    "- path: /etc/systemd/system/mcapi.service",
+    "- path: /etc/systemd/system/mcapi-migrate.service",
+    "- path: /etc/mattercontrol/Caddyfile",
+    "- path: /etc/systemd/system/caddy.service"
+   ]
+  }
+ },
+ "cli_unknown_profile": {
+  "argv": [
+   "node",
+   "ops/deploy/profiles.mjs",
+   "kubernetes",
+   "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-cloud-run-sa1.json",
+   "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/never"
+  ],
+  "exit": 1,
+  "stdout_tail": "",
+  "stderr_tail": "unknown profile \"kubernetes\" (expected cloud-run or compute-engine)\n"
+ },
+ "cli_reuse_guard": {
+  "argv": [
+   "node",
+   "ops/deploy/profiles.mjs",
+   "cloud-run",
+   "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-cloud-run-sa1.json",
+   "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1"
+  ],
+  "exit": 1,
+  "stdout_tail": "",
+  "stderr_tail": "refusing to reuse existing docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1\n"
+ }
+}

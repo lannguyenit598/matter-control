@@ -1,0 +1,45 @@
+**MC-002-BE-C01-R1 — Independent corrected-head review at `52b60a4` (`52b60a4617081c41b949f2242e1784238c170f75`).**
+Reviewer: OpenCode (GLM-5.3-Flash Free). Scope: supplied snapshots only. No tools, no runtime, no hash recomputation, no file access — I verified the diff, wrappers, and enumerations as transmitted rather than accepting owner or Codex conclusions.
+
+## Verdict
+
+**PASS_WITH_LIMITATIONS — accept C01-NATIVE at `52b60a4` with limitations; C01-PRODUCT remains OPEN.**
+
+## F1 — CLOSED
+
+The diff adds exactly the architect-specified subtest: `mapError(combinedChain{errs: []error{&pgconn.ConnectError{}, context.Canceled}})` with both asserted conditions (`errors.Is(_, context.Canceled)` and `errors.Is(_, port.ErrUnavailable)`), placed correctly ahead of the SQLSTATE-wins-over-ConnectError block, with honest immediate-pass annotation. Per prior source review confirmation (ConnectError branch wraps with `%w: %w`, only reached when no `PgError` is in the chain), both `errors.Is` checks necessarily hold on unchanged correct production code — the test is a durable regression guard against cause-drop.
+
+Evidence is coherent and independent: focused wrapper (10/11/12) shows the exact argv, exit 0, UTC 17:34:32→34, parent+subtest PASS, empty stderr; the full JSON enumeration includes the subtest as pass within the postgres package (85 named events, all prior subtests intact); and Codex executed an **actual focused run at the committed head** `52b60a4` (codex-f1-execution.json, exit 0, 2 named passes, no DB env, GOPROXY off) whose JSONL I checked line-by-line — it runs the committed test and nothing else. This is the one changed test file, so the working-tree-before-commit qualification does not affect F1's validity at the head.
+
+## F5 — CLOSED
+
+`docs/api.md` 499 row now reads "A disconnect wins over every other classification." — exactly the prescribed sentence, one line, nothing else changed in the file. The wording now matches row-2-first implementation precedence (cancellation before `DeadlineExceeded`/`ErrUnavailable` and before domain rows).
+
+## F6 — CLOSED
+
+`.claude/rules/persistence.md`: stale `57014→DeadlineExceeded` sentence replaced in place with the SQLSTATE-first rule. I checked the replacement text against the confirmed `mapError` behavior: retryable set (class `08`, `57P01–57P03`, `53300`, `40P01`, `40001`, `55P03`, `57014`) → `ErrUnavailable` (503); other `*pgconn.PgError` → unexpected (500); `ConnectError` → 503 only when no `PgError` in the chain; no text-based classification — all points correspond to the code as independently confirmed at `fd747ae`. The authorized one-sentence scope is respected; owner rules scan found no other stale statements and the exact 3-file diff corroborates no further edits.
+
+## E-03 — CLOSED (qualified, no reassurance rerun needed)
+
+Corrected-head checks: `make check` exit 0 (17:35:02→17) with tidy-diff, golangci-lint 0 issues, race suite ok — per-package counts match the JSON run; JSON run exit 0 (17:35:24→34), 1193 events, 0 invalid, empty stderr; **279 named terminal passes / 0 fail / 0 named skip**. Arithmetic check: 10+2+85+96+10+14+6+15+3+20+18 = **279** ✓, and the enumeration file supplies all 279 names per package (parents+subtests as labeled, correctly not presented as 279 independent leaves); 5 no-test-files packages are separated. The raw 275KB JSON is hashed and retained; packet omission is documented and no loss may be inferred.
+
+Qualification: owner checks ran on the corrected working tree before commit with no tested-tree-hash in the wrapper metadata, so no literal "ran on created `52b60a4`" claim is recorded. That qualification is adequate **because**: (a) production code is byte-identical between `fd747ae` and `52b60a4` (exact 3 files, +16/−2, test+docs only — insertions/deletions arithmetic checks out: test +14, two doc lines +1/−1 each); (b) the only executed-behavior delta is the F1 subtest, which was independently run **at the committed head**; (c) the diff state is attested and tree-clean at the head. Requiring a fresh full-suite replay would be reassurance, not evidence-generating correction. E-03 fulfills its closure requirement.
+
+Manifest accounting: the sidecar inventory (16 equal exports, 14 payloads + 2 lists, canonical `verified-export-manifest.json` recomputing all 16 hashes excluding itself) adequately resolves the stale-self-hash defect in both original lists. Self-hash mismatches are explicitly not accepted as valid checks; I make no original-self-hash PASS claim and no "14/15/16 all-hashed-payloads" claim. No owner DB replay needed — this is an inventory representation fix, not evidence of run integrity, and it doesn't rest on run integrity.
+
+F2 recorded (architect-accepted deviation, unchanged), M1 recorded (not reachable on current routes, qualification scoped), E-02 (HTTP 57014 NOT_RUN, repository-level proof retained) and E-04 (composition only, no HTTP 42P01 sample; "impossible" claim withdrawn) stand as corrected narratives — no new production deviation requiring architecture round.
+
+## F8 — CLOSED (scoped)
+
+Value check (40): all 7 disclosed synthetic body values 0 occurrences in both retained samples; Codex repeated the sample check. Fixture-password absence remains owner-asserted (Codex did not read the secret); the corrected redaction scan (41) explicitly discards the invalid empty-pattern first attempt and shows 0 password occurrences and only the REDACTED-form DSN in the manifest. Correctly not claimed: exact scan UTC (the timestamp line is literal shell text), secret reading, whole-host privacy, or a general logging guarantee — product A14 log policy stays OPEN. Closed within retained-sample scope.
+
+## Native/product acceptance scope — explicit
+
+- **Accepted now:** C01-NATIVE only, at `52b60a4`, with the above limitations (working-tree-versus-commit test qualification, owner-asserted fixture-secret absence, sample-scoped F8, composition-level A9, historical-dirty binary E-07 qualification).
+- **Not accepted / NOT claimed by this verdict:** no C01 DONE, no MC-002 DONE, no NATIVE_PASS of the whole task, no Step 03 start, no Architecture Approval Gate pass, no integration/cloud-cost/recovery approval, no product retry conventions.
+- **C01-PRODUCT stays OPEN/NOT_RUN:** auth, idempotency, full UoW, Workers, log policy (A14), product retry conventions, `retryAfter` unit/range and `Retry-After` header, outcome-unknown note, products A4/A5/A6/A11/A12, and HTTP-level 57014/42P01 remain unaddressed — any future HTTP claim still needs its own bounded replay.
+- R01/R02 CLOSED; MC-002 OPEN; no code changes requested. Owner status may move C01-NATIVE to accepted; C01-PRODUCT and MC-002 remain tracked separately.
+
+## Skipped and remaining risk
+
+Skipped (by design, authorized): all runtime/DB/container/file operations, hash recomputation, smoke replays, full-suite replay, production/integration work. Remaining risks: the packet-transmission boundary (evidence judged as transmitted; raw full JSON retained but not recomputed by me); non-adopted F3/F4/F7 remain non-blocking follow-ups; product-conformance surface unchanged and unverified; any relabeling of past HTTP logs must keep the E-02/E-04 corrected narratives intact.

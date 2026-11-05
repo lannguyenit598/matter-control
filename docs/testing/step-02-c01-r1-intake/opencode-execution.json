@@ -1,0 +1,65 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl C01 R1 closure 52b60a4",
+    "--file",
+    "/tmp/mc002-c01-r1-opencode-input.txt",
+    "Review corrected C01 R1 at52b60a4; no tools/runtime. Explicitly assess F1/F5/F6/E03 closure and native/product acceptance scope."
+  ],
+  "exit": 0,
+  "start_utc": "2026-10-24T17:41:37.969178+00:00",
+  "end_utc": "2026-10-24T17:42:38.565180+00:00",
+  "elapsed_seconds": 60.59581708299811,
+  "session_id": "ses_e90ff024dffeuJ1Kmcnp6qicY9",
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "scope": "code/evidence review of fd747ae, no runtime replay",
+  "runtime_replay": false,
+  "stdout_sha256": "ab5c9c0f5e41079ebf8a3c13968de43f3096d4fab1dc605ccbe839322b4289fe",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e90ff024dffeuJ1Kmcnp6qicY9"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "event_types": [
+    "step_start",
+    "text"
+  ],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "native_acceptance": "NATIVE_PASS / PRODUCT_OPEN",
+  "closed_findings": [
+    "F1",
+    "F5",
+    "F6",
+    "E-03",
+    "F8"
+  ],
+  "full_C01_closed": false,
+  "full_MC002_closed": false
+}

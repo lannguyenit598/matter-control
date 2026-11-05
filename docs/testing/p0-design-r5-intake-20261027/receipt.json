@@ -1,0 +1,175 @@
+{
+  "task": "MC-P0-DESIGN-R5-INTAKE-20261027",
+  "actual_inspector": "Codex / Local Codex",
+  "recorded_utc": "2026-10-27T02:50:36.430832+00:00",
+  "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+  "branch": "codex/unified-project-flow",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "mode": "Read/hash/parse/static reasoning plus JavaScript syntax check; no DOM or prototype execution",
+  "python": "3.14.4",
+  "design_pins": [
+    {
+      "path": "docs/design/p0-handoff-r5/current-ux-spec.md",
+      "bytes": 26521,
+      "sha256": "8a7ea9931a83f2aa08941c98ecff65d210f9a418d1f4857a74b21568adf855eb"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/design-delta.md",
+      "bytes": 13810,
+      "sha256": "e324ea4bb9d42a9cfe634d275c633a4cdc743e76c89e9bd45cfa95ad03cfc677"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/findings-disposition.json",
+      "bytes": 67272,
+      "sha256": "c98db3c2e3fb95cbbf465367c2bb2540c7ff0854b53c72712415df4cc1e4bb61"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/polish.css",
+      "bytes": 12240,
+      "sha256": "9b9950681a3175717049759b8874ff150d6203c1aa28bb36b55e56fdad62d343"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/prototype.html",
+      "bytes": 80343,
+      "sha256": "fdbc488c2a4f6653ce8097ae0fc86c59503f8222d51aa4d6139dfec9819aeda2"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/screen-state-matrix.json",
+      "bytes": 47169,
+      "sha256": "10ca9b1add138666ea72cd53ba5d44f3d04a7fc41d05ba40923e713914e83b08"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/validation-plan.md",
+      "bytes": 17871,
+      "sha256": "8e7f3244cb6794f25109021e1041c11cf7c1995bcb366aa62cc2c9cc066de22e"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/zcode-handoff.md",
+      "bytes": 12605,
+      "sha256": "26b1ed3738dac2228ce4455b754a586d99a078c8bd22369ac61efb5f6f384813"
+    },
+    {
+      "path": "docs/design/p0-handoff-r5/return.md",
+      "bytes": 10952,
+      "sha256": "85641ebfa6e3bc9de37cee954f9037f15c6644908aba404a7b98bd87b58267bc"
+    }
+  ],
+  "reference_pins": [
+    {
+      "path": "docs/requirements/state-semantics.md",
+      "bytes": 11469,
+      "sha256": "156ca1dd2f75a7374a59d2aa4af4a9815ce62a2f11c03f84977bad2860a2ad51"
+    },
+    {
+      "path": "docs/requirements/permission-matrix.md",
+      "bytes": 5238,
+      "sha256": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276"
+    },
+    {
+      "path": "docs/testing/p0-zcode-plan-20261026/coverage.json",
+      "bytes": 13177,
+      "sha256": "d3bd69271e8b83d460d282484866d898f9f8c611d9ff78b0df3532eb1c60f621"
+    },
+    {
+      "path": "docs/reviews/p0-design-r4-intake-20261027.md",
+      "bytes": 11045,
+      "sha256": "85bb1d381e3ba2fc7b1362d69275be5e191e935aefc820595d6d1b150415fe2b"
+    },
+    {
+      "path": "docs/design/p0-handoff-r4/screen-state-matrix.json",
+      "bytes": 44718,
+      "sha256": "68e017a3fabe7b481677863fdd75d82ff7e5ea5a9b037516cd8a4c1de0cd98db"
+    },
+    {
+      "path": "docs/design/p0-handoff-r4/findings-disposition.json",
+      "bytes": 57517,
+      "sha256": "dbaa147719f63619145451d23fe74543dd0412b1df95b4ecbaa03e56eaac365a"
+    }
+  ],
+  "structural_checks": {
+    "20_FR_AC_wave": true,
+    "63_AC": true,
+    "14_NFR": true,
+    "13_nine_states": true,
+    "reciprocal_links": true,
+    "3_GW_sequences": true,
+    "GW3_two_cycles": true,
+    "Atlas_24_12_12_7": true,
+    "action_census": true,
+    "CSS_byte_identity": true,
+    "48_history_unchanged": true,
+    "11_2_8_findings": true
+  },
+  "structural_checks_passed": 12,
+  "syntax_check": {
+    "command": "rtk proxy node --check /private/tmp/mc-p0-design-r5-intake-20261027-syntax.js",
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "exit_code": 0,
+    "combined_output": "",
+    "original_extracted_source": {
+      "path": "/private/tmp/mc-p0-design-r5-intake-20261027-syntax.js",
+      "bytes": 41611,
+      "sha256": "19c859ddc175ef4ae1bc9b0855e86276265db4615bfe73ce68f6a38d7339d37b"
+    },
+    "preserved_source": {
+      "path": "docs/testing/p0-design-r5-intake-20261027/syntax-input.js",
+      "bytes": 41611,
+      "sha256": "19c859ddc175ef4ae1bc9b0855e86276265db4615bfe73ce68f6a38d7339d37b"
+    },
+    "execution": "Syntax only; observed tool result retained in session trace; not a runtime pass"
+  },
+  "findings": [
+    {
+      "id": "R5-N01",
+      "priority": "P1",
+      "evidence_class": "CONFIRMED_SOURCE_ONLY"
+    },
+    {
+      "id": "R5-N02",
+      "priority": "P1",
+      "evidence_class": "CONFIRMED_SOURCE_ONLY"
+    },
+    {
+      "id": "R5-N03",
+      "priority": "P2",
+      "evidence_class": "CONFIRMED_SOURCE_ONLY"
+    },
+    {
+      "id": "R5-N04",
+      "priority": "P2",
+      "evidence_class": "CONFIRMED_SOURCE_ONLY"
+    },
+    {
+      "id": "R5-N05",
+      "priority": "P2",
+      "evidence_class": "CONFIRMED_SOURCE_ONLY"
+    }
+  ],
+  "r4_dispositions": {
+    "I01": "SOURCE_CORRECTED",
+    "I02": "SOURCE_CORRECTED",
+    "I03": "PRIMARY_DIRECTIVE_SOURCE_CORRECTED",
+    "I04": "PARTIAL",
+    "I05": "PARTIAL",
+    "I06": "SOURCE_CORRECTED",
+    "I07": "SOURCE_CORRECTED_DIRECTION",
+    "I08": "PARTIAL"
+  },
+  "disposition": "CHANGES_REQUIRED; not independent approval",
+  "report": {
+    "path": "docs/reviews/p0-design-r5-intake-20261027.md",
+    "bytes": 9680,
+    "sha256": "bdb5f3c606975888e3d02dedde92419d0e29fa4f3d61e1a47ee1c23aa7085586"
+  },
+  "not_run": [
+    "DOM/prototype startup",
+    "new browser/render/export/capture",
+    "interactive keyboard/touch/screen reader",
+    "product/DB/IdP/runtime",
+    "AC-137",
+    "external dispatch",
+    "Git mutation"
+  ],
+  "unchanged_owner_files": true,
+  "no_formal_gate_promotion": true
+}

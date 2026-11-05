@@ -1,0 +1,50 @@
+
+ RUN  v5.0.5 /private/tmp/mc-p0-codex-impl-20261028-1o2z4r_1/frontend/apps/frontend
+
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx (9 tests | 2 failed) 10389ms
+   ❯ bulk panel → actions → repository attempt (6)
+     ✓ invalidates approval permanently on edit, add or remove, even if the payload is restored 127ms
+     ✓ locks pending edits and duplicate submission, then reconciles identical payload and keys 89ms
+     ✓ keeps missing or ambiguous row receipts unknown: {"receipts":[]} 21ms
+     ✓ keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"row-1","status":"SUCCESS"}]} 22ms
+     ✓ keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"unexpected","status":"SUCCESS"}]} 20ms
+     × keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"unexpected","status":"SUCCESS"}]} 5003ms
+   ❯ import panel → actions → repository attempt (3)
+     ✓ locks file replacement while pending, preserves run/file/row keys on UNKNOWN and consumes settled preview 79ms
+     × keeps a mixed expected and unexpected receipt response unresolved 5004ms
+     ✓ accounts for all submitted rows when an import receipt is missing 23ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > bulk panel → actions → repository attempt > keeps missing or ambiguous row receipts unknown: {"receipts":[{"rowKey":"row-1","status":"SUCCESS"},{"rowKey":"unexpected","status":"SUCCESS"}]}
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:102:5
+    100|     { receipts: [result('unexpected')] },
+    101|     { receipts: [result('row-1'), result('unexpected')] },
+    102|   ])('keeps missing or ambiguous row receipts unknown: %j', async ({ r…
+       |     ^
+    103|     await readyBulk()
+    104|     request.mockResolvedValueOnce({ data: receipts })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-attempt.test.tsx > import panel → actions → repository attempt > keeps a mixed expected and unexpected receipt response unresolved
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/data-transfer/components/data-transfer-attempt.test.tsx:147:3
+    145|   })
+    146|
+    147|   it('keeps a mixed expected and unexpected receipt response unresolve…
+       |   ^
+    148|     await readyImport()
+    149|     request.mockResolvedValueOnce({ data: [result('R1'), result('unexp…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 passed (9)
+   Start at  10:42:13
+   Duration  11.10s (tests 94%, environment 3%, import 1%, setup 1%, transform 1%)
+

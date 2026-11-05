@@ -1,0 +1,55 @@
+{
+  "task": "MC-003A.8A.f10_observation_cycle_binding_proposal",
+  "reviewer": "ZCode Desktop interactive session, human-operated",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN (not in available session metadata)",
+  "authorship": "ZCode-authored RECOMMENDED CANDIDATE; ZCode does not independently accept its own proposal; Claude contract acceptance and PO catalogue/field decisions remain",
+  "inputs_used": "21 content inputs + 3 manifests authorized previously + inline feedback; supplemental source-gap-note.md NOT read (not attached/authorized in this delivery)",
+  "binding": {
+    "stored": "filing_stage_observations.cycle_no INT NULL + composite FK (matter_id, filing_id, cycle_no) -> filing_cycles + index; evidence links inherit via observation row",
+    "required_when": "role-bearing types (RECEIPT/OUTCOME) and SUPPLEMENT_REQUEST/RESPONSE; cycle 1 always exists per filing-model §1",
+    "nullable_when": "stage-only/CANCEL/REOPEN/meta-correction observations (unbound)",
+    "command_validation": "missing required cycleNo -> 422 validation; nonexistent cycle number under this filing -> 422 validation; expectedCycleNo CAS mismatch -> 412; no default to latest cycle/epoch/timestamp",
+    "atomic_persistence": "single transaction under matter lock + filing revision CAS: validate, insert observation+links, bump revision, domain event carrying cycleNo",
+    "missing_binding_surfaced": "filing read candidate field unboundObservationEvidenceTotal (same-snapshot integer); unbound links excluded from every B3 but counted, never silently dropped"
+  },
+  "role_mapping_candidate": {
+    "AUTHORITY_ACKNOWLEDGEMENT": "RECEIPT",
+    "AUTHORITY_OUTCOME_APPROVAL": "OUTCOME",
+    "AUTHORITY_OUTCOME_NEGATIVE": "OUTCOME",
+    "SUPPLEMENT_REQUEST": "none (opens cycle; request reference on cycle row)",
+    "RESPONSE": "none (FilingSubmission records it)",
+    "STAGE_TRANSITION/CANCEL/REOPEN/meta-correction": "none, nullable binding",
+    "note": "final type strings belong to the filing-model contract edit; vocabulary not enumerated in authorized excerpts"
+  },
+  "correction_and_views": {
+    "correction": "append-only observation with corrects_observation_id; may retract target or re-record with corrected binding",
+    "effective_view": "non-retracted observations at asOf; B3 default",
+    "historical_view": "full append-only log reachable via DR-15 events (existing candidate route, targetId filter)",
+    "safety": "B3 rows are observational only; receipt is not approval; no old-epoch proof reused for current satisfaction; satisfaction only via evidence-model §4 in current proof_epoch"
+  },
+  "reopen_epochs": "stored cycle_no is epoch-stable; reopen bumps proof_epoch only; one cycle may span epochs (merged in dedup view, per-row proofEpoch in link view); two cycles may share one epoch with disjoint bindings",
+  "provenance_policy_choice": {
+    "L1_recommended": "B3 stays distinct(evidenceRef, role); provenance delegated to DR-15 events; minimal fields; consumers join events for detail",
+    "L2_alternative": "lossless link-grain items {evidenceRef, observationKind, observationId (scalar UUID, no new typed Ref kind), proofEpoch, observedAt, correctsObservationId|null}; cursor tuple (evidenceRef.id, role, observationId); self-contained provenance; heavier payload; all new fields are candidate contract changes"
+  },
+  "change_locations": ["data-model §5 filing_stage_observations column/FK/index/type constraint", "api observation command contract body cycleNo + errors", "filing read unboundObservationEvidenceTotal + B3 cycle filter/effective view", "DR-15 unchanged as provenance; consumer filing detail; acceptance G1..G8"],
+  "route_count": "zero added by this addendum; B3 itself remains part of the unapproved B-variant (35 operations if ever adopted); no adoption",
+  "acceptance": {
+    "G1": "same evidence two roles ordered RECEIPT before OUTCOME; limit=1 tuple cursor no omit/repeat",
+    "G2": "repeated same-role deduped to one row (two rows under L2)",
+    "G3": "correction retracts/re-binds; effective view moves the pair between cycles; history retains both commands",
+    "G4": "same cycle across reopen epochs keeps association; both epochs' links in one B3",
+    "G5": "two cycles in one epoch have disjoint bindings",
+    "G6": "unbound observation excluded from B3 but counted in unboundObservationEvidenceTotal",
+    "G7": "nonexistent/foreign cycle number rejected 422 validation; no cross-matter addressability or existence leak",
+    "G8": "limit=1 traversal complete at fixed sourceRevision; different-sourceRevision pages may differ; no cross-mutation traversal guarantee"
+  },
+  "preserved": {
+    "ct_ids": "22 with 16/4/1/1",
+    "qa": "Q1..Q8 original dispositions with Q2/Q4/Q6/Q8 conditional",
+    "runtime": "NOT_RUN",
+    "gates": { "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY", "G5-B": "FINDINGS_OPEN", "G3": "NOT_VERIFIED", "G4_design_qa": "PENDING", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED", "po_architecture_approval_gate": "NOT_PASSED" },
+    "independence": "BE-01 and INT-A independent; must not wait for this design; no implementation, catalogue adoption, or business-semantics approval claimed"
+  }
+}

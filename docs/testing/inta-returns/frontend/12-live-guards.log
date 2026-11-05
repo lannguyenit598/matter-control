@@ -1,0 +1,102 @@
+================================================================================
+MC-002-INTA-FE Live Harness Guard Verification
+Timestamp: 2026-10-25T03:12:23Z
+Host: 127.0.0.1:18085
+================================================================================
+--- Cleanup: Ensuring port 18085 is closed ---
+
+=== Phase 1: Test with MC_INTA_ENABLE=1 (Enabled) ===
+
+--- Check 1: GET /harness/case -> Expected 405 Method Not Allowed ---
+HTTP/1.1 405 Method Not Allowed
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+allow: POST
+cache-control: no-store, no-cache, must-revalidate
+content-type: application/json
+pragma: no-cache
+Date: Sun, 25 Oct 2026 03:12:28 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Method Not Allowed"}
+--- Check 2: POST /harness/case with non-JSON body -> Expected 400 Bad Request ---
+HTTP/1.1 400 Bad Request
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store, no-cache, must-revalidate
+content-type: application/json
+pragma: no-cache
+Date: Sun, 25 Oct 2026 03:12:28 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Invalid JSON body"}
+--- Check 3: POST /harness/case with unknown caseId -> Expected 400 Bad Request ---
+HTTP/1.1 400 Bad Request
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store, no-cache, must-revalidate
+content-type: application/json
+pragma: no-cache
+Date: Sun, 25 Oct 2026 03:12:28 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Bad Request: validation failed","details":[{"path":["runId"],"message":"runId must be 8-32 alphanumeric characters"},{"path":["caseId"],"message":"Invalid option: expected one of \"T1\"|\"T2\"|\"T3\"|\"T4\"|\"T5\"|\"T8\"|\"T9\"|\"T10\"|\"T11a\"|\"T11b\"|\"T11c\"|\"T12\"|\"W1\"|\"W2\"|\"W3\"|\"T6-W\"|\"T7-W\"|\"W9\"|\"W11\"|\"INT-PERS-01\"|\"INT-PERS-02\"|\"INT-PERS-03\"|\"INT-PERS-04\""}]}
+--- Check 4: POST /harness/case with extra prohibited field -> Expected 400 Bad Request ---
+HTTP/1.1 400 Bad Request
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store, no-cache, must-revalidate
+content-type: application/json
+pragma: no-cache
+Date: Sun, 25 Oct 2026 03:12:28 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Bad Request: validation failed","details":[{"path":["runId"],"message":"runId must be 8-32 alphanumeric characters"},{"path":[],"message":"Unrecognized key: \"prohibitedField\""}]}
+--- Check 5: POST /harness/case with invalid runId pattern -> Expected 400 Bad Request ---
+HTTP/1.1 400 Bad Request
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store, no-cache, must-revalidate
+content-type: application/json
+pragma: no-cache
+Date: Sun, 25 Oct 2026 03:12:28 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Bad Request: validation failed","details":[{"path":["runId"],"message":"runId must be 8-32 alphanumeric characters"}]}
+
+=== Phase 2: Test without MC_INTA_ENABLE (Disabled, Default) ===
+--- Check 6: POST /harness/case when disabled -> Expected 404 Not Found ---
+HTTP/1.1 404 Not Found
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store, no-cache, must-revalidate
+content-type: application/json
+pragma: no-cache
+Date: Sun, 25 Oct 2026 03:12:33 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Harness disabled: MC_INTA_ENABLE=1 is required"}
+
+=== Phase 3: Test with Prohibited Product Auth Env (Refusal) ===
+--- Check 7: POST /harness/case with product auth env -> Expected 403 Forbidden ---
+HTTP/1.1 403 Forbidden
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+cache-control: no-store, no-cache, must-revalidate
+content-type: application/json
+pragma: no-cache
+Date: Sun, 25 Oct 2026 03:12:38 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"error":"Harness execution refused: product auth env vars present (API_MODE)","refusedKeys":["API_MODE"]}
+================================================================================
+Live Harness Guard Verification Complete
+================================================================================
+--- Cleanup: Ensuring port 18085 is closed ---

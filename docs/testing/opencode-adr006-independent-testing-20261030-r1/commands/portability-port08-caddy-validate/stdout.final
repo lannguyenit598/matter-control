@@ -1,0 +1,25 @@
+{
+ "scratch": "/private/tmp/mc-opencode-adr006-qa-caddy-20261030/Caddyfile",
+ "image": "caddy@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f",
+ "argv": [
+  "docker",
+  "run",
+  "--rm",
+  "--network",
+  "none",
+  "-v",
+  "/private/tmp/mc-opencode-adr006-qa-caddy-20261030/Caddyfile:/etc/caddy/Caddyfile:ro",
+  "caddy@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f",
+  "caddy",
+  "validate",
+  "--config",
+  "/etc/caddy/Caddyfile",
+  "--adapter",
+  "caddyfile"
+ ],
+ "exit": 0,
+ "stdout_tail": "Valid configuration\n",
+ "stderr_tail": "{\"level\":\"info\",\"ts\":1793460244.1087816,\"msg\":\"using config from file\",\"file\":\"/etc/caddy/Caddyfile\"}\n{\"level\":\"info\",\"ts\":1793460244.1773083,\"msg\":\"adapted config to JSON\",\"adapter\":\"caddyfile\"}\n{\"level\":\"warn\",\"ts\":1793460244.1784928,\"msg\":\"Caddyfile input is not formatted; run 'caddy fmt --overwrite' to fix inconsistencies\",\"adapter\":\"caddyfile\",\"file\":\"/etc/caddy/Caddyfile\",\"line\":2}\n{\"level\":\"info\",\"ts\":1793460244.197275,\"logger\":\"http.auto_https\",\"msg\":\"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS\",\"server_name\":\"srv0\",\"https_port\":443}\n{\"level\":\"info\",\"ts\":1793460244.20096,\"logger\":\"http.auto_https\",\"msg\":\"enabling automatic HTTP->HTTPS redirects\",\"server_name\":\"srv0\"}\n{\"level\":\"info\",\"ts\":1793460244.2076461,\"logger\":\"tls.cache.maintenance\",\"msg\":\"started background certificate maintenance\",\"cache\":\"0x1d2c2cb03d00\"}\n{\"level\":\"info\",\"ts\":1793460244.218104,\"logger\":\"http\",\"msg\":\"servers shutting down with eternal grace period\"}\n{\"level\":\"info\",\"ts\":1793460244.2289286,\"logger\":\"tls.cache.maintenance\",\"msg\":\"stopped background certificate maintenance\",\"cache\":\"0x1d2c2cb03d00\"}\n",
+ "network_none": true,
+ "notes": "local digest-cached public caddy image; no retained container state; caddy validate only (no TLS issuance/firewall/systemd)."
+}

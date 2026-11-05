@@ -1,0 +1,2298 @@
+[
+  {
+    "path": "/tmp/mc002-inta-harness/src/guards.ts",
+    "bytes": 3128,
+    "sha256": "0f5f245316450d76d47f79a1b668a777ef9e1134008cbbc1c566808c654ef928",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 23,
+        "lines": [
+          {
+            "line": 1,
+            "text": "/**"
+          },
+          {
+            "line": 2,
+            "text": " * Template and audited session / provider-secret environment variables (INTA-1 \u00a72, R07)."
+          },
+          {
+            "line": 3,
+            "text": " * Any non-empty value in this set refuses harness startup and runtime execution."
+          },
+          {
+            "line": 4,
+            "text": " * Enumerate keys only, never values."
+          },
+          {
+            "line": 5,
+            "text": " */"
+          },
+          {
+            "line": 6,
+            "text": "export const PRODUCT_AUTH_ENV_KEYS = ["
+          },
+          {
+            "line": 7,
+            "text": "  'API_MODE',"
+          },
+          {
+            "line": 8,
+            "text": "  'API_TOKEN',"
+          },
+          {
+            "line": 9,
+            "text": "  'API_BASE_URL',"
+          },
+          {
+            "line": 10,
+            "text": "  'AUTH_ALLOW_ANONYMOUS',"
+          },
+          {
+            "line": 11,
+            "text": "  'API_TIMEOUT_MS',"
+          },
+          {
+            "line": 12,
+            "text": "  // Audited session / provider-secret keys:"
+          },
+          {
+            "line": 13,
+            "text": "  'AUTH_SECRET',"
+          },
+          {
+            "line": 14,
+            "text": "  'NEXTAUTH_SECRET',"
+          },
+          {
+            "line": 15,
+            "text": "  'CLERK_SECRET_KEY',"
+          },
+          {
+            "line": 16,
+            "text": "  'SESSION_SECRET',"
+          },
+          {
+            "line": 17,
+            "text": "  'COOKIE_SECRET',"
+          },
+          {
+            "line": 18,
+            "text": "  'DATABASE_URL',"
+          },
+          {
+            "line": 19,
+            "text": "  'JWT_SECRET',"
+          },
+          {
+            "line": 20,
+            "text": "] as const"
+          },
+          {
+            "line": 21,
+            "text": ""
+          },
+          {
+            "line": 22,
+            "text": "export type ProductAuthEnvKey = (typeof PRODUCT_AUTH_ENV_KEYS)[number]"
+          },
+          {
+            "line": 23,
+            "text": ""
+          }
+        ]
+      },
+      {
+        "start_line": 45,
+        "end_line": 76,
+        "lines": [
+          {
+            "line": 45,
+            "text": "      ok: false,"
+          },
+          {
+            "line": 46,
+            "text": "      status: 404,"
+          },
+          {
+            "line": 47,
+            "text": "      reason: 'Harness disabled: MC_INTA_ENABLE=1 is required',"
+          },
+          {
+            "line": 48,
+            "text": "    }"
+          },
+          {
+            "line": 49,
+            "text": "  }"
+          },
+          {
+            "line": 50,
+            "text": ""
+          },
+          {
+            "line": 51,
+            "text": "  if (env.NODE_ENV === 'production') {"
+          },
+          {
+            "line": 52,
+            "text": "    return {"
+          },
+          {
+            "line": 53,
+            "text": "      ok: false,"
+          },
+          {
+            "line": 54,
+            "text": "      status: 403,"
+          },
+          {
+            "line": 55,
+            "text": "      reason: 'Harness execution refused: NODE_ENV cannot be production',"
+          },
+          {
+            "line": 56,
+            "text": "    }"
+          },
+          {
+            "line": 57,
+            "text": "  }"
+          },
+          {
+            "line": 58,
+            "text": ""
+          },
+          {
+            "line": 59,
+            "text": "  const refusedKeys: string[] = []"
+          },
+          {
+            "line": 60,
+            "text": "  for (const key of PRODUCT_AUTH_ENV_KEYS) {"
+          },
+          {
+            "line": 61,
+            "text": "    if (env[key] !== undefined) {"
+          },
+          {
+            "line": 62,
+            "text": "      refusedKeys.push(key)"
+          },
+          {
+            "line": 63,
+            "text": "    }"
+          },
+          {
+            "line": 64,
+            "text": "  }"
+          },
+          {
+            "line": 65,
+            "text": ""
+          },
+          {
+            "line": 66,
+            "text": "  if (refusedKeys.length > 0) {"
+          },
+          {
+            "line": 67,
+            "text": "    return {"
+          },
+          {
+            "line": 68,
+            "text": "      ok: false,"
+          },
+          {
+            "line": 69,
+            "text": "      status: 403,"
+          },
+          {
+            "line": 70,
+            "text": "      refusedKeys,"
+          },
+          {
+            "line": 71,
+            "text": "      reason: `Harness execution refused: product auth/secret env vars present (${refusedKeys.join(', ')})`,"
+          },
+          {
+            "line": 72,
+            "text": "    }"
+          },
+          {
+            "line": 73,
+            "text": "  }"
+          },
+          {
+            "line": 74,
+            "text": ""
+          },
+          {
+            "line": 75,
+            "text": "  const goBaseUrl = env.MC_INTA_GO_BASE_URL ?? 'http://127.0.0.1:18086'"
+          },
+          {
+            "line": 76,
+            "text": "  if (goBaseUrl !== 'http://127.0.0.1:18086') {"
+          }
+        ]
+      },
+      {
+        "start_line": 87,
+        "end_line": 114,
+        "lines": [
+          {
+            "line": 87,
+            "text": "/**"
+          },
+          {
+            "line": 88,
+            "text": " * Startup refusal guard (INTA-FE-R07, INT-ENV-05, F04)."
+          },
+          {
+            "line": 89,
+            "text": " * Refuses startup with NODE_ENV=production or any product auth/secret variable set (including empty values)."
+          },
+          {
+            "line": 90,
+            "text": " * Throws an error to abort process startup before Next.js dev server listens on 18085."
+          },
+          {
+            "line": 91,
+            "text": " */"
+          },
+          {
+            "line": 92,
+            "text": "export function validateHarnessStartup(env: Record<string, string | undefined>): void {"
+          },
+          {
+            "line": 93,
+            "text": "  if (env.NODE_ENV === 'production') {"
+          },
+          {
+            "line": 94,
+            "text": "    throw new Error('Harness startup refused: NODE_ENV cannot be production')"
+          },
+          {
+            "line": 95,
+            "text": "  }"
+          },
+          {
+            "line": 96,
+            "text": ""
+          },
+          {
+            "line": 97,
+            "text": "  const refusedKeys: string[] = []"
+          },
+          {
+            "line": 98,
+            "text": "  for (const key of PRODUCT_AUTH_ENV_KEYS) {"
+          },
+          {
+            "line": 99,
+            "text": "    if (env[key] !== undefined) {"
+          },
+          {
+            "line": 100,
+            "text": "      refusedKeys.push(key)"
+          },
+          {
+            "line": 101,
+            "text": "    }"
+          },
+          {
+            "line": 102,
+            "text": "  }"
+          },
+          {
+            "line": 103,
+            "text": ""
+          },
+          {
+            "line": 104,
+            "text": "  if (refusedKeys.length > 0) {"
+          },
+          {
+            "line": 105,
+            "text": "    throw new Error("
+          },
+          {
+            "line": 106,
+            "text": "      `Harness startup refused: product auth/secret env vars present (${refusedKeys.join(', ')})`,"
+          },
+          {
+            "line": 107,
+            "text": "    )"
+          },
+          {
+            "line": 108,
+            "text": "  }"
+          },
+          {
+            "line": 109,
+            "text": ""
+          },
+          {
+            "line": 110,
+            "text": "  const goBaseUrl = env.MC_INTA_GO_BASE_URL ?? 'http://127.0.0.1:18086'"
+          },
+          {
+            "line": 111,
+            "text": "  if (goBaseUrl !== 'http://127.0.0.1:18086') {"
+          },
+          {
+            "line": 112,
+            "text": "    throw new Error('Harness startup refused: MC_INTA_GO_BASE_URL must be http://127.0.0.1:18086')"
+          },
+          {
+            "line": 113,
+            "text": "  }"
+          },
+          {
+            "line": 114,
+            "text": "}"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/app/harness/case/route.ts",
+    "bytes": 2733,
+    "sha256": "457d13f0567fe4115d988db5966756efbc064a6644de3d985f824171e96ca29d",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 10,
+        "lines": [
+          {
+            "line": 1,
+            "text": "import { NextResponse } from 'next/server'"
+          },
+          {
+            "line": 2,
+            "text": "import { validateHarnessEnvironment } from '../../../src/guards'"
+          },
+          {
+            "line": 3,
+            "text": "import { harnessCaseInputSchema } from '../../../src/schemas'"
+          },
+          {
+            "line": 4,
+            "text": "import { executeCase, getInstalledNextVersion, getHarnessRevision } from '../../../src/executor'"
+          },
+          {
+            "line": 5,
+            "text": "import { RequestIdGenerator } from '../../../src/request-id'"
+          },
+          {
+            "line": 6,
+            "text": ""
+          },
+          {
+            "line": 7,
+            "text": "const NO_STORE_HEADERS = {"
+          },
+          {
+            "line": 8,
+            "text": "  'Cache-Control': 'no-store, no-cache, must-revalidate',"
+          },
+          {
+            "line": 9,
+            "text": "  Pragma: 'no-cache',"
+          },
+          {
+            "line": 10,
+            "text": "}"
+          }
+        ]
+      },
+      {
+        "start_line": 21,
+        "end_line": 68,
+        "lines": [
+          {
+            "line": 21,
+            "text": "}"
+          },
+          {
+            "line": 22,
+            "text": ""
+          },
+          {
+            "line": 23,
+            "text": "export async function POST(request: Request) {"
+          },
+          {
+            "line": 24,
+            "text": "  // 1. Guard check: environment and refusal policies"
+          },
+          {
+            "line": 25,
+            "text": "  const envCheck = validateHarnessEnvironment(process.env)"
+          },
+          {
+            "line": 26,
+            "text": "  if (!envCheck.ok) {"
+          },
+          {
+            "line": 27,
+            "text": "    return NextResponse.json("
+          },
+          {
+            "line": 28,
+            "text": "      {"
+          },
+          {
+            "line": 29,
+            "text": "        error: envCheck.reason,"
+          },
+          {
+            "line": 30,
+            "text": "        refusedKeys: envCheck.refusedKeys,"
+          },
+          {
+            "line": 31,
+            "text": "      },"
+          },
+          {
+            "line": 32,
+            "text": "      { status: envCheck.status, headers: NO_STORE_HEADERS },"
+          },
+          {
+            "line": 33,
+            "text": "    )"
+          },
+          {
+            "line": 34,
+            "text": "  }"
+          },
+          {
+            "line": 35,
+            "text": ""
+          },
+          {
+            "line": 36,
+            "text": "  // 2. Parse request body"
+          },
+          {
+            "line": 37,
+            "text": "  let rawBody: unknown"
+          },
+          {
+            "line": 38,
+            "text": "  try {"
+          },
+          {
+            "line": 39,
+            "text": "    rawBody = await request.json()"
+          },
+          {
+            "line": 40,
+            "text": "  } catch {"
+          },
+          {
+            "line": 41,
+            "text": "    return NextResponse.json("
+          },
+          {
+            "line": 42,
+            "text": "      { error: 'Invalid JSON body' },"
+          },
+          {
+            "line": 43,
+            "text": "      { status: 400, headers: NO_STORE_HEADERS },"
+          },
+          {
+            "line": 44,
+            "text": "    )"
+          },
+          {
+            "line": 45,
+            "text": "  }"
+          },
+          {
+            "line": 46,
+            "text": ""
+          },
+          {
+            "line": 47,
+            "text": "  // 3. Strict allowlist validation including fixed per-case refId table"
+          },
+          {
+            "line": 48,
+            "text": "  const parsed = harnessCaseInputSchema.safeParse(rawBody)"
+          },
+          {
+            "line": 49,
+            "text": "  if (!parsed.success) {"
+          },
+          {
+            "line": 50,
+            "text": "    return NextResponse.json("
+          },
+          {
+            "line": 51,
+            "text": "      {"
+          },
+          {
+            "line": 52,
+            "text": "        error: 'Bad Request: validation failed',"
+          },
+          {
+            "line": 53,
+            "text": "        details: parsed.error.issues.map((i) => ({"
+          },
+          {
+            "line": 54,
+            "text": "          path: i.path,"
+          },
+          {
+            "line": 55,
+            "text": "          message: i.message,"
+          },
+          {
+            "line": 56,
+            "text": "        })),"
+          },
+          {
+            "line": 57,
+            "text": "      },"
+          },
+          {
+            "line": 58,
+            "text": "      { status: 400, headers: NO_STORE_HEADERS },"
+          },
+          {
+            "line": 59,
+            "text": "    )"
+          },
+          {
+            "line": 60,
+            "text": "  }"
+          },
+          {
+            "line": 61,
+            "text": ""
+          },
+          {
+            "line": 62,
+            "text": "  const { runId, caseId, refId } = parsed.data"
+          },
+          {
+            "line": 63,
+            "text": ""
+          },
+          {
+            "line": 64,
+            "text": "  // 4. Execute case"
+          },
+          {
+            "line": 65,
+            "text": "  try {"
+          },
+          {
+            "line": 66,
+            "text": "    const reqIdGen = getRequestIdGen(runId)"
+          },
+          {
+            "line": 67,
+            "text": "    const result = await executeCase({"
+          },
+          {
+            "line": 68,
+            "text": "      runId,"
+          }
+        ]
+      },
+      {
+        "start_line": 86,
+        "end_line": 110,
+        "lines": [
+          {
+            "line": 86,
+            "text": "        runId,"
+          },
+          {
+            "line": 87,
+            "text": "      },"
+          },
+          {
+            "line": 88,
+            "text": "      { status: 500, headers: NO_STORE_HEADERS },"
+          },
+          {
+            "line": 89,
+            "text": "    )"
+          },
+          {
+            "line": 90,
+            "text": "  }"
+          },
+          {
+            "line": 91,
+            "text": "}"
+          },
+          {
+            "line": 92,
+            "text": ""
+          },
+          {
+            "line": 93,
+            "text": "export async function GET() {"
+          },
+          {
+            "line": 94,
+            "text": "  return NextResponse.json("
+          },
+          {
+            "line": 95,
+            "text": "    { error: 'Method Not Allowed' },"
+          },
+          {
+            "line": 96,
+            "text": "    { status: 405, headers: { ...NO_STORE_HEADERS, Allow: 'POST' } },"
+          },
+          {
+            "line": 97,
+            "text": "  )"
+          },
+          {
+            "line": 98,
+            "text": "}"
+          },
+          {
+            "line": 99,
+            "text": ""
+          },
+          {
+            "line": 100,
+            "text": "export async function PUT() {"
+          },
+          {
+            "line": 101,
+            "text": "  return GET()"
+          },
+          {
+            "line": 102,
+            "text": "}"
+          },
+          {
+            "line": 103,
+            "text": ""
+          },
+          {
+            "line": 104,
+            "text": "export async function PATCH() {"
+          },
+          {
+            "line": 105,
+            "text": "  return GET()"
+          },
+          {
+            "line": 106,
+            "text": "}"
+          },
+          {
+            "line": 107,
+            "text": ""
+          },
+          {
+            "line": 108,
+            "text": "export async function DELETE() {"
+          },
+          {
+            "line": 109,
+            "text": "  return GET()"
+          },
+          {
+            "line": 110,
+            "text": "}"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/executor.ts",
+    "bytes": 18503,
+    "sha256": "4c8abe1f522476d40be17dcec56741b0139278b219294e993bdcc140d1133735",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 6,
+        "lines": [
+          {
+            "line": 1,
+            "text": "import fs from 'node:fs'"
+          },
+          {
+            "line": 2,
+            "text": "import path from 'node:path'"
+          },
+          {
+            "line": 3,
+            "text": "import { execSync } from 'node:child_process'"
+          },
+          {
+            "line": 4,
+            "text": "import { httpRequest, ApiError } from '/tmp/mc002-inta-fe/src/lib/api/http-client'"
+          },
+          {
+            "line": 5,
+            "text": "import { buildHarnessEnvelope, type HarnessEnvelope, type HarnessOutcome } from './envelope'"
+          },
+          {
+            "line": 6,
+            "text": "import {"
+          }
+        ]
+      },
+      {
+        "start_line": 110,
+        "end_line": 128,
+        "lines": [
+          {
+            "line": 110,
+            "text": "  let classification: string | null = 'success'"
+          },
+          {
+            "line": 111,
+            "text": "  let value: unknown = null"
+          },
+          {
+            "line": 112,
+            "text": "  let apiError: HarnessEnvelope['apiError'] = null"
+          },
+          {
+            "line": 113,
+            "text": ""
+          },
+          {
+            "line": 114,
+            "text": "  try {"
+          },
+          {
+            "line": 115,
+            "text": "    const data = await httpRequest(params.url, {"
+          },
+          {
+            "line": 116,
+            "text": "      method: params.method as any,"
+          },
+          {
+            "line": 117,
+            "text": "      body: params.body,"
+          },
+          {
+            "line": 118,
+            "text": "      headers: {"
+          },
+          {
+            "line": 119,
+            "text": "        ...params.headers,"
+          },
+          {
+            "line": 120,
+            "text": "        'X-Request-ID': params.requestId,"
+          },
+          {
+            "line": 121,
+            "text": "      },"
+          },
+          {
+            "line": 122,
+            "text": "      schema: params.schema,"
+          },
+          {
+            "line": 123,
+            "text": "      init: { cache: 'no-store' },"
+          },
+          {
+            "line": 124,
+            "text": "    })"
+          },
+          {
+            "line": 125,
+            "text": "    value = data"
+          },
+          {
+            "line": 126,
+            "text": "    classification = 'success'"
+          },
+          {
+            "line": 127,
+            "text": "  } catch (err: any) {"
+          },
+          {
+            "line": 128,
+            "text": "    outcome = 'apiError'"
+          }
+        ]
+      },
+      {
+        "start_line": 200,
+        "end_line": 212,
+        "lines": [
+          {
+            "line": 200,
+            "text": ""
+          },
+          {
+            "line": 201,
+            "text": "  try {"
+          },
+          {
+            "line": 202,
+            "text": "    const reqHeaders = new Headers(params.headers)"
+          },
+          {
+            "line": 203,
+            "text": "    reqHeaders.set('X-Request-ID', params.requestId)"
+          },
+          {
+            "line": 204,
+            "text": ""
+          },
+          {
+            "line": 205,
+            "text": "    const response = await fetch(params.url, {"
+          },
+          {
+            "line": 206,
+            "text": "      method: params.method,"
+          },
+          {
+            "line": 207,
+            "text": "      headers: reqHeaders,"
+          },
+          {
+            "line": 208,
+            "text": "      body: params.body,"
+          },
+          {
+            "line": 209,
+            "text": "      cache: 'no-store',"
+          },
+          {
+            "line": 210,
+            "text": "      signal: AbortSignal.timeout(timeoutMs),"
+          },
+          {
+            "line": 211,
+            "text": "    })"
+          },
+          {
+            "line": 212,
+            "text": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/envelope.ts",
+    "bytes": 4674,
+    "sha256": "d0bc3e812ef99101d186e316f3717851157d2c2beb0ee2b5a0c48c27313286d8",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 2,
+        "lines": [
+          {
+            "line": 1,
+            "text": "export const MAX_RETAINED_BODY_BYTES = 16384"
+          },
+          {
+            "line": 2,
+            "text": ""
+          }
+        ]
+      },
+      {
+        "start_line": 91,
+        "end_line": 118,
+        "lines": [
+          {
+            "line": 91,
+            "text": " * Caps any retained surface (value, apiError.details) at MAX_RETAINED_BODY_BYTES (16384 bytes)."
+          },
+          {
+            "line": 92,
+            "text": " * When an object exceeds the cap, it is serialized to JSON and truncated, changing type"
+          },
+          {
+            "line": 93,
+            "text": " * from object to string. Truncated evidence cannot establish complete-body or schema assertions."
+          },
+          {
+            "line": 94,
+            "text": " */"
+          },
+          {
+            "line": 95,
+            "text": "export function capRetainedSurface(val: unknown, maxBytes = MAX_RETAINED_BODY_BYTES): { val: unknown; truncated: boolean } {"
+          },
+          {
+            "line": 96,
+            "text": "  if (val === null || val === undefined) {"
+          },
+          {
+            "line": 97,
+            "text": "    return { val, truncated: false }"
+          },
+          {
+            "line": 98,
+            "text": "  }"
+          },
+          {
+            "line": 99,
+            "text": ""
+          },
+          {
+            "line": 100,
+            "text": "  if (typeof val === 'string') {"
+          },
+          {
+            "line": 101,
+            "text": "    const res = truncateUtf8(val, maxBytes)"
+          },
+          {
+            "line": 102,
+            "text": "    return { val: res.text, truncated: res.truncated }"
+          },
+          {
+            "line": 103,
+            "text": "  }"
+          },
+          {
+            "line": 104,
+            "text": ""
+          },
+          {
+            "line": 105,
+            "text": "  try {"
+          },
+          {
+            "line": 106,
+            "text": "    const json = JSON.stringify(val)"
+          },
+          {
+            "line": 107,
+            "text": "    const encoder = new TextEncoder()"
+          },
+          {
+            "line": 108,
+            "text": "    const bytes = encoder.encode(json)"
+          },
+          {
+            "line": 109,
+            "text": "    if (bytes.length <= maxBytes) {"
+          },
+          {
+            "line": 110,
+            "text": "      return { val, truncated: false }"
+          },
+          {
+            "line": 111,
+            "text": "    }"
+          },
+          {
+            "line": 112,
+            "text": "    const safeCutIndex = findSafeUtf8TruncationIndex(bytes, maxBytes)"
+          },
+          {
+            "line": 113,
+            "text": "    const decoder = new TextDecoder('utf-8', { fatal: false })"
+          },
+          {
+            "line": 114,
+            "text": "    const truncatedString = decoder.decode(bytes.subarray(0, safeCutIndex))"
+          },
+          {
+            "line": 115,
+            "text": "    return { val: truncatedString, truncated: true }"
+          },
+          {
+            "line": 116,
+            "text": "  } catch {"
+          },
+          {
+            "line": 117,
+            "text": "    const str = String(val)"
+          },
+          {
+            "line": 118,
+            "text": "    const res = truncateUtf8(str, maxBytes)"
+          }
+        ]
+      },
+      {
+        "start_line": 123,
+        "end_line": 153,
+        "lines": [
+          {
+            "line": 123,
+            "text": "export function buildHarnessEnvelope("
+          },
+          {
+            "line": 124,
+            "text": "  params: Omit<HarnessEnvelope, 'truncated'> & { truncated?: boolean },"
+          },
+          {
+            "line": 125,
+            "text": "): HarnessEnvelope {"
+          },
+          {
+            "line": 126,
+            "text": "  let truncated = params.truncated ?? false"
+          },
+          {
+            "line": 127,
+            "text": ""
+          },
+          {
+            "line": 128,
+            "text": "  // 1. Cap value surface"
+          },
+          {
+            "line": 129,
+            "text": "  const cappedValue = capRetainedSurface(params.value)"
+          },
+          {
+            "line": 130,
+            "text": "  const val = cappedValue.val"
+          },
+          {
+            "line": 131,
+            "text": "  if (cappedValue.truncated) {"
+          },
+          {
+            "line": 132,
+            "text": "    truncated = true"
+          },
+          {
+            "line": 133,
+            "text": "  }"
+          },
+          {
+            "line": 134,
+            "text": ""
+          },
+          {
+            "line": 135,
+            "text": "  // 2. Cap apiError.details surface if present"
+          },
+          {
+            "line": 136,
+            "text": "  let apiError = params.apiError"
+          },
+          {
+            "line": 137,
+            "text": "  if (apiError && apiError.details !== undefined && apiError.details !== null) {"
+          },
+          {
+            "line": 138,
+            "text": "    const cappedDetails = capRetainedSurface(apiError.details)"
+          },
+          {
+            "line": 139,
+            "text": "    if (cappedDetails.truncated) {"
+          },
+          {
+            "line": 140,
+            "text": "      truncated = true"
+          },
+          {
+            "line": 141,
+            "text": "    }"
+          },
+          {
+            "line": 142,
+            "text": "    apiError = {"
+          },
+          {
+            "line": 143,
+            "text": "      ...apiError,"
+          },
+          {
+            "line": 144,
+            "text": "      details: cappedDetails.val,"
+          },
+          {
+            "line": 145,
+            "text": "    }"
+          },
+          {
+            "line": 146,
+            "text": "  }"
+          },
+          {
+            "line": 147,
+            "text": ""
+          },
+          {
+            "line": 148,
+            "text": "  return {"
+          },
+          {
+            "line": 149,
+            "text": "    ...params,"
+          },
+          {
+            "line": 150,
+            "text": "    value: val,"
+          },
+          {
+            "line": 151,
+            "text": "    apiError,"
+          },
+          {
+            "line": 152,
+            "text": "    truncated,"
+          },
+          {
+            "line": 153,
+            "text": "  }"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/driver.ts",
+    "bytes": 65232,
+    "sha256": "4ca96d195a196c9d959360b2eeaea9e957c44a1bf870d6837fb58f25892fba1c",
+    "segments": [
+      {
+        "start_line": 1128,
+        "end_line": 1195,
+        "lines": [
+          {
+            "line": 1128,
+            "text": "   * Dispatches a single case to the local Next.js dev server endpoint with pre-dispatch intent guard (F01, R2-F02)."
+          },
+          {
+            "line": 1129,
+            "text": "   */"
+          },
+          {
+            "line": 1130,
+            "text": "  public async dispatchCaseToHarness("
+          },
+          {
+            "line": 1131,
+            "text": "    caseId: CaseId,"
+          },
+          {
+            "line": 1132,
+            "text": "    refId?: string,"
+          },
+          {
+            "line": 1133,
+            "text": "    harnessBaseUrl = 'http://127.0.0.1:18085',"
+          },
+          {
+            "line": 1134,
+            "text": "  ): Promise<HarnessEnvelope[]> {"
+          },
+          {
+            "line": 1135,
+            "text": "    // 1. R2-F02: Atomically reserve started intent BEFORE any I/O"
+          },
+          {
+            "line": 1136,
+            "text": "    this.reserveSubstepIntent(caseId)"
+          },
+          {
+            "line": 1137,
+            "text": ""
+          },
+          {
+            "line": 1138,
+            "text": "    const payload: { runId: string; caseId: CaseId; refId?: string } = {"
+          },
+          {
+            "line": 1139,
+            "text": "      runId: this.runId,"
+          },
+          {
+            "line": 1140,
+            "text": "      caseId,"
+          },
+          {
+            "line": 1141,
+            "text": "    }"
+          },
+          {
+            "line": 1142,
+            "text": "    if (refId) {"
+          },
+          {
+            "line": 1143,
+            "text": "      payload.refId = refId"
+          },
+          {
+            "line": 1144,
+            "text": "    }"
+          },
+          {
+            "line": 1145,
+            "text": ""
+          },
+          {
+            "line": 1146,
+            "text": "    try {"
+          },
+          {
+            "line": 1147,
+            "text": "      const response = await fetch(`${harnessBaseUrl}/harness/case`, {"
+          },
+          {
+            "line": 1148,
+            "text": "        method: 'POST',"
+          },
+          {
+            "line": 1149,
+            "text": "        headers: {"
+          },
+          {
+            "line": 1150,
+            "text": "          'Content-Type': 'application/json',"
+          },
+          {
+            "line": 1151,
+            "text": "        },"
+          },
+          {
+            "line": 1152,
+            "text": "        body: JSON.stringify(payload),"
+          },
+          {
+            "line": 1153,
+            "text": "        cache: 'no-store',"
+          },
+          {
+            "line": 1154,
+            "text": "      })"
+          },
+          {
+            "line": 1155,
+            "text": ""
+          },
+          {
+            "line": 1156,
+            "text": "      if (!response.ok) {"
+          },
+          {
+            "line": 1157,
+            "text": "        const errText = await response.text()"
+          },
+          {
+            "line": 1158,
+            "text": "        throw new Error("
+          },
+          {
+            "line": 1159,
+            "text": "          `Harness dispatch failed for ${caseId}: HTTP ${response.status} ${response.statusText} \u2014 ${errText}`,"
+          },
+          {
+            "line": 1160,
+            "text": "        )"
+          },
+          {
+            "line": 1161,
+            "text": "      }"
+          },
+          {
+            "line": 1162,
+            "text": ""
+          },
+          {
+            "line": 1163,
+            "text": "      const json = (await response.json()) as any"
+          },
+          {
+            "line": 1164,
+            "text": "      if (!json?.substeps || !Array.isArray(json.substeps)) {"
+          },
+          {
+            "line": 1165,
+            "text": "        throw new Error(`Malformed harness response for ${caseId}: missing substeps array`)"
+          },
+          {
+            "line": 1166,
+            "text": "      }"
+          },
+          {
+            "line": 1167,
+            "text": ""
+          },
+          {
+            "line": 1168,
+            "text": "      return json.substeps as HarnessEnvelope[]"
+          },
+          {
+            "line": 1169,
+            "text": "    } catch (err: any) {"
+          },
+          {
+            "line": 1170,
+            "text": "      if (caseId === 'T11c') {"
+          },
+          {
+            "line": 1171,
+            "text": "        this.completeSubstepIntent('T11c', 'unknown')"
+          },
+          {
+            "line": 1172,
+            "text": "        this.state.userXOutcome = 'OUTCOME_UNKNOWN'"
+          },
+          {
+            "line": 1173,
+            "text": "        this.saveStateSnapshot()"
+          },
+          {
+            "line": 1174,
+            "text": "      }"
+          },
+          {
+            "line": 1175,
+            "text": "      throw err"
+          },
+          {
+            "line": 1176,
+            "text": "    }"
+          },
+          {
+            "line": 1177,
+            "text": "  }"
+          },
+          {
+            "line": 1178,
+            "text": ""
+          },
+          {
+            "line": 1179,
+            "text": "  /**"
+          },
+          {
+            "line": 1180,
+            "text": "   * Executes a specific stage command with strict causal ordering and confirmation gates (R2-F01)."
+          },
+          {
+            "line": 1181,
+            "text": "   */"
+          },
+          {
+            "line": 1182,
+            "text": "  public async runStage("
+          },
+          {
+            "line": 1183,
+            "text": "    stageNum: number,"
+          },
+          {
+            "line": 1184,
+            "text": "    options?: {"
+          },
+          {
+            "line": 1185,
+            "text": "      envReady?: boolean"
+          },
+          {
+            "line": 1186,
+            "text": "      harnessBaseUrl?: string"
+          },
+          {
+            "line": 1187,
+            "text": "      confirmGoRestarted?: boolean"
+          },
+          {
+            "line": 1188,
+            "text": "      confirmPgRestarted?: boolean"
+          },
+          {
+            "line": 1189,
+            "text": "      confirmPgStopped?: boolean"
+          },
+          {
+            "line": 1190,
+            "text": "      confirmPgRecovered?: boolean"
+          },
+          {
+            "line": 1191,
+            "text": "      confirmGoStopped?: boolean"
+          },
+          {
+            "line": 1192,
+            "text": "    },"
+          },
+          {
+            "line": 1193,
+            "text": "  ): Promise<{ ok: boolean; reason?: string; executedCases: string[] }> {"
+          },
+          {
+            "line": 1194,
+            "text": "    if (this.isStageCompleted(stageNum)) {"
+          },
+          {
+            "line": 1195,
+            "text": "      throw new Error("
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/tmp/mc002-inta-harness/src/schemas.ts",
+    "bytes": 2648,
+    "sha256": "45ade230c3cf1a7d7e979efc347ca10b22f3cafb16debac312250c7c4e078c02",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 110,
+        "lines": [
+          {
+            "line": 1,
+            "text": "import { z } from 'zod'"
+          },
+          {
+            "line": 2,
+            "text": ""
+          },
+          {
+            "line": 3,
+            "text": "export const ALLOWED_CASE_IDS = ["
+          },
+          {
+            "line": 4,
+            "text": "  'T1',"
+          },
+          {
+            "line": 5,
+            "text": "  'T2',"
+          },
+          {
+            "line": 6,
+            "text": "  'T3',"
+          },
+          {
+            "line": 7,
+            "text": "  'T4',"
+          },
+          {
+            "line": 8,
+            "text": "  'T5',"
+          },
+          {
+            "line": 9,
+            "text": "  'T8',"
+          },
+          {
+            "line": 10,
+            "text": "  'T9',"
+          },
+          {
+            "line": 11,
+            "text": "  'T10',"
+          },
+          {
+            "line": 12,
+            "text": "  'T11a',"
+          },
+          {
+            "line": 13,
+            "text": "  'T11b',"
+          },
+          {
+            "line": 14,
+            "text": "  'T11c',"
+          },
+          {
+            "line": 15,
+            "text": "  'T12',"
+          },
+          {
+            "line": 16,
+            "text": "  'W1',"
+          },
+          {
+            "line": 17,
+            "text": "  'W2',"
+          },
+          {
+            "line": 18,
+            "text": "  'W3',"
+          },
+          {
+            "line": 19,
+            "text": "  'T6-W',"
+          },
+          {
+            "line": 20,
+            "text": "  'T7-W',"
+          },
+          {
+            "line": 21,
+            "text": "  'W9',"
+          },
+          {
+            "line": 22,
+            "text": "  'W11',"
+          },
+          {
+            "line": 23,
+            "text": "  'INT-PERS-01',"
+          },
+          {
+            "line": 24,
+            "text": "  'INT-PERS-02',"
+          },
+          {
+            "line": 25,
+            "text": "  'INT-PERS-03',"
+          },
+          {
+            "line": 26,
+            "text": "  'INT-PERS-04',"
+          },
+          {
+            "line": 27,
+            "text": "] as const"
+          },
+          {
+            "line": 28,
+            "text": ""
+          },
+          {
+            "line": 29,
+            "text": "export type CaseId = (typeof ALLOWED_CASE_IDS)[number]"
+          },
+          {
+            "line": 30,
+            "text": ""
+          },
+          {
+            "line": 31,
+            "text": "/**"
+          },
+          {
+            "line": 32,
+            "text": " * Fixed per-case refId requirement table (frozen INTA-1 / R06)."
+          },
+          {
+            "line": 33,
+            "text": " * refId is required where a fixed record-route case requires it;"
+          },
+          {
+            "line": 34,
+            "text": " * forbidden on create / fixed-literal / synthetic wire / fault cases without an existing record target."
+          },
+          {
+            "line": 35,
+            "text": " */"
+          },
+          {
+            "line": 36,
+            "text": "export const REF_ID_REQUIRED_CASE_IDS: ReadonlySet<CaseId> = new Set<CaseId>(["
+          },
+          {
+            "line": 37,
+            "text": "  'T2',"
+          },
+          {
+            "line": 38,
+            "text": "  'T5',"
+          },
+          {
+            "line": 39,
+            "text": "  'T8',"
+          },
+          {
+            "line": 40,
+            "text": "  'T9',"
+          },
+          {
+            "line": 41,
+            "text": "  'T10',"
+          },
+          {
+            "line": 42,
+            "text": "  'T11a',"
+          },
+          {
+            "line": 43,
+            "text": "  'T11b',"
+          },
+          {
+            "line": 44,
+            "text": "  'T12',"
+          },
+          {
+            "line": 45,
+            "text": "  'W2',"
+          },
+          {
+            "line": 46,
+            "text": "  'W9',"
+          },
+          {
+            "line": 47,
+            "text": "  'W11',"
+          },
+          {
+            "line": 48,
+            "text": "  'INT-PERS-01',"
+          },
+          {
+            "line": 49,
+            "text": "  'INT-PERS-02',"
+          },
+          {
+            "line": 50,
+            "text": "  'INT-PERS-03',"
+          },
+          {
+            "line": 51,
+            "text": "  'INT-PERS-04',"
+          },
+          {
+            "line": 52,
+            "text": "])"
+          },
+          {
+            "line": 53,
+            "text": ""
+          },
+          {
+            "line": 54,
+            "text": "export const REF_ID_FORBIDDEN_CASE_IDS: ReadonlySet<CaseId> = new Set<CaseId>(["
+          },
+          {
+            "line": 55,
+            "text": "  'T1',"
+          },
+          {
+            "line": 56,
+            "text": "  'T3',"
+          },
+          {
+            "line": 57,
+            "text": "  'T4',"
+          },
+          {
+            "line": 58,
+            "text": "  'T11c',"
+          },
+          {
+            "line": 59,
+            "text": "  'W1',"
+          },
+          {
+            "line": 60,
+            "text": "  'W3',"
+          },
+          {
+            "line": 61,
+            "text": "  'T6-W',"
+          },
+          {
+            "line": 62,
+            "text": "  'T7-W',"
+          },
+          {
+            "line": 63,
+            "text": "])"
+          },
+          {
+            "line": 64,
+            "text": ""
+          },
+          {
+            "line": 65,
+            "text": "export function isRefIdRequired(caseId: CaseId): boolean {"
+          },
+          {
+            "line": 66,
+            "text": "  return REF_ID_REQUIRED_CASE_IDS.has(caseId)"
+          },
+          {
+            "line": 67,
+            "text": "}"
+          },
+          {
+            "line": 68,
+            "text": ""
+          },
+          {
+            "line": 69,
+            "text": "export function isRefIdForbidden(caseId: CaseId): boolean {"
+          },
+          {
+            "line": 70,
+            "text": "  return REF_ID_FORBIDDEN_CASE_IDS.has(caseId)"
+          },
+          {
+            "line": 71,
+            "text": "}"
+          },
+          {
+            "line": 72,
+            "text": ""
+          },
+          {
+            "line": 73,
+            "text": "const CANONICAL_LOWERCASE_UUID_REGEX ="
+          },
+          {
+            "line": 74,
+            "text": "  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/"
+          },
+          {
+            "line": 75,
+            "text": ""
+          },
+          {
+            "line": 76,
+            "text": "export const harnessCaseInputSchema = z"
+          },
+          {
+            "line": 77,
+            "text": "  .object({"
+          },
+          {
+            "line": 78,
+            "text": "    runId: z"
+          },
+          {
+            "line": 79,
+            "text": "      .string()"
+          },
+          {
+            "line": 80,
+            "text": "      .regex(/^[a-zA-Z0-9]{8,32}$/, 'runId must be 8-32 alphanumeric characters'),"
+          },
+          {
+            "line": 81,
+            "text": "    caseId: z.enum(ALLOWED_CASE_IDS),"
+          },
+          {
+            "line": 82,
+            "text": "    refId: z"
+          },
+          {
+            "line": 83,
+            "text": "      .string()"
+          },
+          {
+            "line": 84,
+            "text": "      .regex(CANONICAL_LOWERCASE_UUID_REGEX, 'refId must be lowercase canonical UUID')"
+          },
+          {
+            "line": 85,
+            "text": "      .optional(),"
+          },
+          {
+            "line": 86,
+            "text": "  })"
+          },
+          {
+            "line": 87,
+            "text": "  .strict()"
+          },
+          {
+            "line": 88,
+            "text": "  .superRefine((data, ctx) => {"
+          },
+          {
+            "line": 89,
+            "text": "    if (isRefIdRequired(data.caseId) && !data.refId) {"
+          },
+          {
+            "line": 90,
+            "text": "      ctx.addIssue({"
+          },
+          {
+            "line": 91,
+            "text": "        code: z.ZodIssueCode.custom,"
+          },
+          {
+            "line": 92,
+            "text": "        message: `refId is required for case ${data.caseId}`,"
+          },
+          {
+            "line": 93,
+            "text": "        path: ['refId'],"
+          },
+          {
+            "line": 94,
+            "text": "      })"
+          },
+          {
+            "line": 95,
+            "text": "    }"
+          },
+          {
+            "line": 96,
+            "text": "    if (isRefIdForbidden(data.caseId) && data.refId !== undefined) {"
+          },
+          {
+            "line": 97,
+            "text": "      ctx.addIssue({"
+          },
+          {
+            "line": 98,
+            "text": "        code: z.ZodIssueCode.custom,"
+          },
+          {
+            "line": 99,
+            "text": "        message: `refId is forbidden for case ${data.caseId}`,"
+          },
+          {
+            "line": 100,
+            "text": "        path: ['refId'],"
+          },
+          {
+            "line": 101,
+            "text": "      })"
+          },
+          {
+            "line": 102,
+            "text": "    }"
+          },
+          {
+            "line": 103,
+            "text": "  })"
+          },
+          {
+            "line": 104,
+            "text": ""
+          },
+          {
+            "line": 105,
+            "text": "export type HarnessCaseInput = z.infer<typeof harnessCaseInputSchema>"
+          },
+          {
+            "line": 106,
+            "text": ""
+          },
+          {
+            "line": 107,
+            "text": "/**"
+          },
+          {
+            "line": 108,
+            "text": " * Go native User schema with snake_case time fields (INTA-FE-R01)."
+          },
+          {
+            "line": 109,
+            "text": " * Timestamps are RFC 3339 UTC with 0-6 fraction digits."
+          },
+          {
+            "line": 110,
+            "text": " */"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/tmp/mc002-inta-fe/tsconfig.json",
+    "bytes": 670,
+    "sha256": "5c51df4c59f4510d8c7dadf07a5c32132228826a3b331da5e286207b4df7ef9c",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 34,
+        "lines": [
+          {
+            "line": 1,
+            "text": "{"
+          },
+          {
+            "line": 2,
+            "text": "  \"compilerOptions\": {"
+          },
+          {
+            "line": 3,
+            "text": "    \"target\": \"ES2017\","
+          },
+          {
+            "line": 4,
+            "text": "    \"lib\": [\"dom\", \"dom.iterable\", \"esnext\"],"
+          },
+          {
+            "line": 5,
+            "text": "    \"allowJs\": true,"
+          },
+          {
+            "line": 6,
+            "text": "    \"skipLibCheck\": true,"
+          },
+          {
+            "line": 7,
+            "text": "    \"strict\": true,"
+          },
+          {
+            "line": 8,
+            "text": "    \"noEmit\": true,"
+          },
+          {
+            "line": 9,
+            "text": "    \"esModuleInterop\": true,"
+          },
+          {
+            "line": 10,
+            "text": "    \"module\": \"esnext\","
+          },
+          {
+            "line": 11,
+            "text": "    \"moduleResolution\": \"bundler\","
+          },
+          {
+            "line": 12,
+            "text": "    \"resolveJsonModule\": true,"
+          },
+          {
+            "line": 13,
+            "text": "    \"isolatedModules\": true,"
+          },
+          {
+            "line": 14,
+            "text": "    \"jsx\": \"react-jsx\","
+          },
+          {
+            "line": 15,
+            "text": "    \"incremental\": true,"
+          },
+          {
+            "line": 16,
+            "text": "    \"plugins\": ["
+          },
+          {
+            "line": 17,
+            "text": "      {"
+          },
+          {
+            "line": 18,
+            "text": "        \"name\": \"next\""
+          },
+          {
+            "line": 19,
+            "text": "      }"
+          },
+          {
+            "line": 20,
+            "text": "    ],"
+          },
+          {
+            "line": 21,
+            "text": "    \"paths\": {"
+          },
+          {
+            "line": 22,
+            "text": "      \"@/*\": [\"./src/*\"]"
+          },
+          {
+            "line": 23,
+            "text": "    }"
+          },
+          {
+            "line": 24,
+            "text": "  },"
+          },
+          {
+            "line": 25,
+            "text": "  \"include\": ["
+          },
+          {
+            "line": 26,
+            "text": "    \"next-env.d.ts\","
+          },
+          {
+            "line": 27,
+            "text": "    \"**/*.ts\","
+          },
+          {
+            "line": 28,
+            "text": "    \"**/*.tsx\","
+          },
+          {
+            "line": 29,
+            "text": "    \".next/types/**/*.ts\","
+          },
+          {
+            "line": 30,
+            "text": "    \".next/dev/types/**/*.ts\","
+          },
+          {
+            "line": 31,
+            "text": "    \"**/*.mts\""
+          },
+          {
+            "line": 32,
+            "text": "  ],"
+          },
+          {
+            "line": 33,
+            "text": "  \"exclude\": [\"node_modules\"]"
+          },
+          {
+            "line": 34,
+            "text": "}"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/tmp/mc002-inta-fe/.github/workflows/ci.yml",
+    "bytes": 1545,
+    "sha256": "e1ef55506bb23015d2dd4cd4d6e4b8b5087344f47d5ac58b92c62ca48d153e75",
+    "segments": [
+      {
+        "start_line": 1,
+        "end_line": 59,
+        "lines": [
+          {
+            "line": 1,
+            "text": "name: CI"
+          },
+          {
+            "line": 2,
+            "text": ""
+          },
+          {
+            "line": 3,
+            "text": "on:"
+          },
+          {
+            "line": 4,
+            "text": "  push:"
+          },
+          {
+            "line": 5,
+            "text": "    branches: [main]"
+          },
+          {
+            "line": 6,
+            "text": "  pull_request:"
+          },
+          {
+            "line": 7,
+            "text": ""
+          },
+          {
+            "line": 8,
+            "text": "# Least privilege for GITHUB_TOKEN: the jobs only read the repository."
+          },
+          {
+            "line": 9,
+            "text": "permissions:"
+          },
+          {
+            "line": 10,
+            "text": "  contents: read"
+          },
+          {
+            "line": 11,
+            "text": ""
+          },
+          {
+            "line": 12,
+            "text": "concurrency:"
+          },
+          {
+            "line": 13,
+            "text": "  group: ci-${{ github.ref }}"
+          },
+          {
+            "line": 14,
+            "text": "  cancel-in-progress: true"
+          },
+          {
+            "line": 15,
+            "text": ""
+          },
+          {
+            "line": 16,
+            "text": "jobs:"
+          },
+          {
+            "line": 17,
+            "text": "  quality:"
+          },
+          {
+            "line": 18,
+            "text": "    name: Lint, types, unit tests, build"
+          },
+          {
+            "line": 19,
+            "text": "    runs-on: ubuntu-latest"
+          },
+          {
+            "line": 20,
+            "text": "    timeout-minutes: 15"
+          },
+          {
+            "line": 21,
+            "text": "    steps:"
+          },
+          {
+            "line": 22,
+            "text": "      - uses: actions/checkout@v7"
+          },
+          {
+            "line": 23,
+            "text": "      - uses: pnpm/action-setup@v6 # version comes from \"packageManager\" in package.json"
+          },
+          {
+            "line": 24,
+            "text": "      - uses: actions/setup-node@v7"
+          },
+          {
+            "line": 25,
+            "text": "        with:"
+          },
+          {
+            "line": 26,
+            "text": "          node-version-file: .nvmrc"
+          },
+          {
+            "line": 27,
+            "text": "          cache: pnpm"
+          },
+          {
+            "line": 28,
+            "text": "      - run: pnpm install --frozen-lockfile"
+          },
+          {
+            "line": 29,
+            "text": "      # Runtime dependencies only: the known dev-only advisory (SEC-6) has no fix yet."
+          },
+          {
+            "line": 30,
+            "text": "      - run: pnpm audit --prod"
+          },
+          {
+            "line": 31,
+            "text": "      - run: pnpm typecheck"
+          },
+          {
+            "line": 32,
+            "text": "      - run: pnpm lint"
+          },
+          {
+            "line": 33,
+            "text": "      - run: pnpm format:check"
+          },
+          {
+            "line": 34,
+            "text": "      - run: pnpm agents:check"
+          },
+          {
+            "line": 35,
+            "text": "      - run: pnpm test"
+          },
+          {
+            "line": 36,
+            "text": "      - run: pnpm build"
+          },
+          {
+            "line": 37,
+            "text": "      - run: pnpm build-storybook"
+          },
+          {
+            "line": 38,
+            "text": ""
+          },
+          {
+            "line": 39,
+            "text": "  e2e:"
+          },
+          {
+            "line": 40,
+            "text": "    name: E2E (Playwright)"
+          },
+          {
+            "line": 41,
+            "text": "    runs-on: ubuntu-latest"
+          },
+          {
+            "line": 42,
+            "text": "    timeout-minutes: 20"
+          },
+          {
+            "line": 43,
+            "text": "    steps:"
+          },
+          {
+            "line": 44,
+            "text": "      - uses: actions/checkout@v7"
+          },
+          {
+            "line": 45,
+            "text": "      - uses: pnpm/action-setup@v6"
+          },
+          {
+            "line": 46,
+            "text": "      - uses: actions/setup-node@v7"
+          },
+          {
+            "line": 47,
+            "text": "        with:"
+          },
+          {
+            "line": 48,
+            "text": "          node-version-file: .nvmrc"
+          },
+          {
+            "line": 49,
+            "text": "          cache: pnpm"
+          },
+          {
+            "line": 50,
+            "text": "      - run: pnpm install --frozen-lockfile"
+          },
+          {
+            "line": 51,
+            "text": "      - run: pnpm exec playwright install --with-deps chromium"
+          },
+          {
+            "line": 52,
+            "text": "      - run: pnpm build"
+          },
+          {
+            "line": 53,
+            "text": "      - run: pnpm test:e2e"
+          },
+          {
+            "line": 54,
+            "text": "      - uses: actions/upload-artifact@v7"
+          },
+          {
+            "line": 55,
+            "text": "        if: failure()"
+          },
+          {
+            "line": 56,
+            "text": "        with:"
+          },
+          {
+            "line": 57,
+            "text": "          name: playwright-report"
+          },
+          {
+            "line": 58,
+            "text": "          path: playwright-report"
+          },
+          {
+            "line": 59,
+            "text": "          retention-days: 7"
+          }
+        ]
+      }
+    ]
+  }
+]

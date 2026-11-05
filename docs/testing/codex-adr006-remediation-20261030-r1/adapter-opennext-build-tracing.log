@@ -1,0 +1,108 @@
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+App directory: /private/tmp/mc-codex-adapter-poc/opennext
+Next.js version : 16.4.2
+@opennextjs/cloudflare version: 1.20.14
+@opennextjs/aws version: 4.1.13
+workerd compatibility_date: 2026-10-30
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 74ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 707ms
+  Running TypeScript ...
+  Finished TypeScript in 2.8s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/27) ...
+  Generating static pages using 9 workers (6/27) 
+  Generating static pages using 9 workers (13/27) 
+  Generating static pages using 9 workers (20/27) 
+✓ Generating static pages using 9 workers (27/27) in 680ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/callback
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/session
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions/[versionId]/content
+├ ƒ /api/matters/[matterId]/export
+├ ◐ /login
+├   /matters/[matterId]
+│ └ ◐ /matters/[matterId]
+├   /matters/[matterId]/agenda
+│ └ ◐ /matters/[matterId]/agenda
+├   /matters/[matterId]/control-room
+│ └ ◐ /matters/[matterId]/control-room
+├   /matters/[matterId]/data
+│ └ ◐ /matters/[matterId]/data
+├   /matters/[matterId]/documents
+│ └ ◐ /matters/[matterId]/documents
+├   /matters/[matterId]/documents/[documentId]
+│ └ ◐ /matters/[matterId]/documents/[documentId]
+├   /matters/[matterId]/filings
+│ └ ◐ /matters/[matterId]/filings
+├   /matters/[matterId]/filings/[filingId]
+│ └ ◐ /matters/[matterId]/filings/[filingId]
+├   /matters/[matterId]/filings/new
+│ └ ◐ /matters/[matterId]/filings/new
+├   /matters/[matterId]/history
+│ └ ◐ /matters/[matterId]/history
+├   /matters/[matterId]/planning
+│ └ ◐ /matters/[matterId]/planning
+├   /matters/[matterId]/reviews
+│ └ ◐ /matters/[matterId]/reviews
+├   /matters/[matterId]/work
+│ └ ◐ /matters/[matterId]/work
+├   /matters/[matterId]/work/[itemId]
+│ └ ◐ /matters/[matterId]/work/[itemId]
+├ ◐ /my-actions
+├   /requirements/[requirementId]
+│ └ ◐ /requirements/[requirementId]
+├ ◐ /workspaces
+└   /workspaces/[workspaceId]
+  └ ◐ /workspaces/[workspaceId]
+
+
+○  (Static)             prerendered as static content
+◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content
+ƒ  (Dynamic)            server-rendered on demand
+
+Compiled CSS verified: 1 assets, layout/accessibility/theme utilities present
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 3.859s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+[35mWorker saved in `.open-next/worker.js` 🚀
+[0m
+OpenNext build complete.
+✓ Lockfile passes supply-chain policies (verified 2m ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+. prepare$ husky
+. prepare: .git can't be found
+. prepare: Done
+Done in 334ms using pnpm v12.11.2
+$ next build && node scripts/check-built-css.mjs

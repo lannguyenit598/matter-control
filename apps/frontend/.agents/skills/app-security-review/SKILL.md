@@ -7,7 +7,7 @@ description: 'Security review of changes in this app: Server Action authorizatio
 
 ## Read first
 
-`docs/ai/rules/security.md` (R-SEC-1…11). Background and evidence: [historical production-readiness audit](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/apps/frontend/docs/audits/production-readiness-audit.md) sections 2–4.
+`docs/ai/rules/security.md` (R-SEC-1…11). Background and evidence: `docs/audits/production-readiness-audit.md` §2–4.
 
 ## Non-negotiable baseline
 

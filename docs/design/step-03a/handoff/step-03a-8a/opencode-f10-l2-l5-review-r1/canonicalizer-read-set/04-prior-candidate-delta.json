@@ -1,0 +1,114 @@
+{
+  "task": "MC-003A.8A F10 L2/L5 narrow candidate delta",
+  "status": "AUTHOR_CLARIFICATION_RECEIVED / CANDIDATE_NOT_ADOPTED / NARROW_INDEPENDENT_REVIEW_PENDING",
+  "attribution": {
+    "L2_L5_rule": "ZCode author, human-returned text",
+    "transcription_and_expected_examples": "Local Codex, post-review material, not independently accepted",
+    "prior_OC01_07": "actual OpenCode PASS_WITH_LIMITATIONS_DOCUMENT_ONLY, unchanged"
+  },
+  "replay_citation": {
+    "target": "02-corrected-delta.json /oc04_scoped_pipeline/replay and prose section5",
+    "replace_alias": "api-conventions",
+    "with": "candidate docs/architecture/api-contracts.md section1 lines14-15 and section1.1 line66",
+    "source": {
+      "path": "docs/architecture/api-contracts.md",
+      "bytes": 25038,
+      "sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "last_content_commit": "8521c2a08d87f6b070900d8c2b6f490a89d34e09",
+      "matches_committed_content": true
+    },
+    "semantics_change": false
+  },
+  "cycle_candidate": {
+    "scope": "ordinary observation only, not a new command/global rule",
+    "optional_types": [
+      "STAGE_TRANSITION",
+      "CANCEL",
+      "REOPEN"
+    ],
+    "required_types": [
+      "AUTHORITY_ACKNOWLEDGEMENT",
+      "AUTHORITY_OUTCOME_APPROVAL",
+      "AUTHORITY_OUTCOME_NEGATIVE"
+    ],
+    "omitted_or_null_optional": "persist cycle_no NULL; no current-cycle default",
+    "omitted_or_null_required": "422 validation field cycleNo",
+    "provided": "integer >=1; resolve under path filing, valid older cycle allowed; unknown target scoped422 after preconditions",
+    "expectedCycleNo": "required for named cycle; missing422 candidate choice, stale412; unbound optional but validated if provided",
+    "expected_cycle_meaning_preserved": "expectedCycleNo is believed current OPEN cycle, not the body target cycle; pinned earlier C1",
+    "IfMatch": "required for ordinary observation; missing428/stale412, existing accepted order retained",
+    "body_format": "wrong type/zero/negative/non-integer rejected422 at body-format step before preconditions, after auth/replay",
+    "supplement": "client does not provide target cycleNo; server derives n+1, expectedCycleNo required; existing OC04 row unchanged",
+    "pipeline": "admission400(format only) ->401 ->authz404 ->replay ->body422 ->preconditions428/412/missing-expected422 ->scoped existence422 ->guard ->atomic effects",
+    "no_ordinary_stage_guard409": true
+  },
+  "intake_review_questions": [
+    "Omitted/null equivalence establishes candidate binding semantics only; do not silently normalize request hashes or change api-contracts canonical-body policy. Determine whether a separate canonicalizer pin is still needed.",
+    "For numeric format, distinguish non-integer values from lexically written integral JSON numbers such as1.0. Do not invent a lexical-token rejection or claim standards compatibility from the word float.",
+    "Confirm unbound supplied expectedCycleNo validation and old target/current-open CAS examples under the unchanged replay/precondition order."
+  ],
+  "expected_examples": [
+    {
+      "id": "L5-E01",
+      "input": "optional type,cycleNo omitted or null,valid If-Match,expectedCycleNo omitted",
+      "expected": "both persist NULL; no current-cycle default; no hash-equivalence claim"
+    },
+    {
+      "id": "L5-E02",
+      "input": "required type,cycleNo omitted or null,authorized new command",
+      "expected": "body422; no mutation/receipt"
+    },
+    {
+      "id": "L5-E03",
+      "input": "current open cycle3,target existing oldcycle1,expectedCycleNo3,valid If-Match",
+      "expected": "target binding1 allowed; current-cycle CAS3 passes"
+    },
+    {
+      "id": "L5-E04",
+      "input": "current open cycle3,target oldcycle1,expectedCycleNo1,valid If-Match",
+      "expected": "412; target identity is not CAS current state"
+    },
+    {
+      "id": "L5-E05",
+      "input": "valid integer target unknown,valid If-Match; expectedCycleNo missing/stale/matching",
+      "expected": "missing422 / stale412 / matching then scoped-target422"
+    },
+    {
+      "id": "L5-E06",
+      "input": "invalid cycleNo format and missing If-Match,authorized no replay",
+      "expected": "body-format422 before preconditions; valid body with missing If-Match428"
+    },
+    {
+      "id": "L5-E07",
+      "input": "unbound optional type,valid If-Match,provided stale expectedCycleNo",
+      "expected": "412, not silent ignore"
+    },
+    {
+      "id": "L5-E08",
+      "input": "matching committed replay with current authorization but stale CAS relative to current state",
+      "expected": "stored response before live body/precondition evaluation; changed hash422; lost authority uniform404"
+    },
+    {
+      "id": "L5-E09",
+      "input": "same key toggles omitted/null cycleNo",
+      "expected": "derive from pinned canonical request hash; not automatically replay-equivalent because both bindNULL; NEEDS_CONTRACT_PIN if canonicalizer absent"
+    },
+    {
+      "id": "L5-E10",
+      "input": "JSON cycleNo1.0 versus fractional1.5",
+      "expected": "fractional rejected; exact lexical1.0 disposition must be explicit or a remaining limitation, not invented by intake"
+    }
+  ],
+  "case_state": "DOCUMENT_EXPECTED / NOT_RUN; examples are not a runtime runner and do not change T1..T22/T14b/22CT IDs",
+  "unchanged": {
+    "catalogue": 32,
+    "F10": "OPEN",
+    "L4": "NOT_VERIFIED",
+    "adoption": "NOT_ADOPTED",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G5_B": "remaining dispositions open; OC01..07 remain CLOSED_DOCUMENT_ONLY",
+    "G6": "REWORK_REQUIRED",
+    "STEP03B": "NOT_AUTHORIZED"
+  }
+}

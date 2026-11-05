@@ -1,0 +1,22 @@
+== empty-dir dir=/private/tmp/mc-opencode-verify-wave-20261031/probe-empty
+-- before:        0 dump(s)
+{"event":"scheduled_backup","stamp":"20261101T004847Z","bytes":118744,"sha256":"bc2e83790b4e47575198a233e3182519bfa8f924847605b06c1f9b84a0d77c94","table_data_entries":41,"duration_seconds":1,"retained":2,"pruned":1}
+exit=0
+-- after:        1 dump(s),        1 sidecar(s)
+mcapi-20261101T004847Z.dump
+mcapi-20261101T004847Z.dump.sha256
+== four-old-dumps dir=/private/tmp/mc-opencode-verify-wave-20261031/probe-stale
+-- before:        4 dump(s)
+{"event":"scheduled_backup","stamp":"20261101T004848Z","bytes":118744,"sha256":"5839ba678523894a5f622b880ba7a233a19d5527225280d555b4499f43145dec","table_data_entries":41,"duration_seconds":1,"retained":2,"pruned":1}
+exit=0
+-- after:        5 dump(s),        5 sidecar(s)
+mcapi-20200101T000000Z.dump
+mcapi-20200101T000000Z.dump.sha256
+mcapi-20200102T000000Z.dump
+mcapi-20200102T000000Z.dump.sha256
+mcapi-20200103T000000Z.dump
+mcapi-20200103T000000Z.dump.sha256
+mcapi-20200104T000000Z.dump
+mcapi-20200104T000000Z.dump.sha256
+mcapi-20261101T004848Z.dump
+mcapi-20261101T004848Z.dump.sha256

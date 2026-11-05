@@ -1,0 +1,70 @@
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 1083ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.1s
+  Running TypeScript ...
+  Finished TypeScript in 4.2s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/27) ...
+  Generating static pages using 9 workers (6/27) 
+  Generating static pages using 9 workers (13/27) 
+  Generating static pages using 9 workers (20/27) 
+✓ Generating static pages using 9 workers (27/27) in 279ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/callback
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/session
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions/[versionId]/content
+├ ƒ /api/matters/[matterId]/export
+├ ◐ /login
+├   /matters/[matterId]
+│ └ ◐ /matters/[matterId]
+├   /matters/[matterId]/agenda
+│ └ ◐ /matters/[matterId]/agenda
+├   /matters/[matterId]/control-room
+│ └ ◐ /matters/[matterId]/control-room
+├   /matters/[matterId]/data
+│ └ ◐ /matters/[matterId]/data
+├   /matters/[matterId]/documents
+│ └ ◐ /matters/[matterId]/documents
+├   /matters/[matterId]/documents/[documentId]
+│ └ ◐ /matters/[matterId]/documents/[documentId]
+├   /matters/[matterId]/filings
+│ └ ◐ /matters/[matterId]/filings
+├   /matters/[matterId]/filings/[filingId]
+│ └ ◐ /matters/[matterId]/filings/[filingId]
+├   /matters/[matterId]/filings/new
+│ └ ◐ /matters/[matterId]/filings/new
+├   /matters/[matterId]/history
+│ └ ◐ /matters/[matterId]/history
+├   /matters/[matterId]/planning
+│ └ ◐ /matters/[matterId]/planning
+├   /matters/[matterId]/reviews
+│ └ ◐ /matters/[matterId]/reviews
+├   /matters/[matterId]/work
+│ └ ◐ /matters/[matterId]/work
+├   /matters/[matterId]/work/[itemId]
+│ └ ◐ /matters/[matterId]/work/[itemId]
+├ ◐ /my-actions
+├   /requirements/[requirementId]
+│ └ ◐ /requirements/[requirementId]
+├ ◐ /workspaces
+└   /workspaces/[workspaceId]
+  └ ◐ /workspaces/[workspaceId]
+
+
+○  (Static)             prerendered as static content
+◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content
+ƒ  (Dynamic)            server-rendered on demand
+
+Compiled CSS verified: 1 assets, layout/accessibility/theme utilities present

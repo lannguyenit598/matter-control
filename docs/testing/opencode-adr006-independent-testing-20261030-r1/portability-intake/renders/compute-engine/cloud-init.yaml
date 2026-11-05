@@ -1,0 +1,136 @@
+#cloud-config
+# mcapi on a Compute Engine VM (ADR-007 backend profile B): Container-Optimized OS + cloud-init + systemd +
+# `docker run` (the deprecated konlet/create-with-container path is not used). Same image digest as Cloud Run.
+# Render with `node ops/deploy/profiles.mjs compute-engine ...`; pass as `user-data` metadata only after
+# authorization. Operator duties this file does not remove: firewall (tcp:80,443 only), OS auto-update
+# reboots, disk/log retention, Secret Manager IAM for the VM service account, DNS for mcapi-qa-synth.invalid.
+# Transport: public HTTPS + per-user ZITADEL bearer; there is no Cloud Run IAM equivalent on a VM.
+
+write_files:
+  # Non-secret configuration. Secrets are fetched at boot into /run (tmpfs), never written to disk.
+  - path: /etc/mattercontrol/mcapi.env
+    permissions: '0644'
+    content: |
+      MC_HTTP_ADDR=0.0.0.0:8081
+      MC_OBJECT_BACKEND=r2
+      MC_R2_ENDPOINT=https://s3-qa-synth.invalid
+      MC_R2_BUCKET=mcqa-synth-bucket
+      MC_OIDC_ISSUER=https://idp-qa-synth.invalid/oidc
+      MC_OIDC_INTROSPECTION_URL=https://idp-qa-synth.invalid/api/introspect
+      MC_OIDC_AUDIENCE=mcqa-audience-synth
+      MC_OIDC_API_CLIENT_ID=mcqa-api-client-synth
+      MC_OIDC_API_KEY_FILE=/run/secrets/oidc/api-key.json
+      MC_OIDC_CACHE_TTL=15s
+      MC_REQUEST_TIMEOUT=10s
+      MC_TRANSFER_TIMEOUT=60s
+      MC_MAX_IN_FLIGHT=10
+      MC_SHUTDOWN_DELAY=0s
+      MC_SHUTDOWN_TIMEOUT=65s
+
+  - path: /etc/mattercontrol/fetch-secrets.sh
+    permissions: '0700'
+    content: |
+      #!/bin/bash
+      # Reads Secret Manager with the VM service account (metadata credentials) through the gcloud image.
+      set -euo pipefail
+      umask 077
+      install -d -m 0700 /run/mattercontrol
+      install -d -m 0500 -o 65532 -g 65532 /run/mattercontrol/oidc
+      get() { /usr/bin/docker run --rm qa-synth-registry.invalid/qa-synth/gcloud@sha256:1f2e3d4c5b6a7988000000000000000000000000000000000000000000000000 gcloud secrets versions access latest --project=qa-synth-project --secret="$1"; }
+      # Plain assignments so `set -e` stops on any failed fetch instead of writing an empty value.
+      db=$(get mc-qadatabase-url); r2id=$(get mc-qar2-key-id); r2key=$(get mc-qar2-secret)
+      migrate=$(get mc-qamigrate-url); key=$(get mc-qaidp-key)
+      printf 'MC_DATABASE_URL=%s\nMC_R2_ACCESS_KEY_ID=%s\nMC_R2_SECRET_ACCESS_KEY=%s\n' "$db" "$r2id" "$r2key" > /run/mattercontrol/mcapi-secrets.env
+      printf 'MC_MIGRATE_DATABASE_URL=%s\n' "$migrate" > /run/mattercontrol/migrate-secrets.env
+      printf '%s' "$key" > /run/mattercontrol/oidc/api-key.json
+      chown 65532:65532 /run/mattercontrol/oidc/api-key.json
+      chmod 0400 /run/mattercontrol/oidc/api-key.json
+
+  - path: /etc/systemd/system/mc-secrets.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Fetch MatterControl secrets into tmpfs
+      Requires=docker.service network-online.target
+      After=docker.service network-online.target
+      [Service]
+      Type=oneshot
+      RemainAfterExit=true
+      # bash explicitly: COS mounts some paths noexec.
+      ExecStart=/bin/bash /etc/mattercontrol/fetch-secrets.sh
+
+  - path: /etc/systemd/system/mcapi.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=MatterControl API (mcapi)
+      Requires=docker.service mc-secrets.service
+      After=docker.service mc-secrets.service
+      [Service]
+      Environment=HOME=/home/mcdeploy
+      ExecStartPre=/usr/bin/docker-credential-gcr configure-docker --registries=qa-synth-registry.invalid
+      ExecStartPre=-/usr/bin/docker rm -f mcapi
+      ExecStart=/usr/bin/docker run --name mcapi --rm --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --cap-drop ALL --security-opt no-new-privileges --memory 512m --pids-limit 256 --log-driver journald -p 127.0.0.1:8081:8081 --env-file /etc/mattercontrol/mcapi.env --env-file /run/mattercontrol/mcapi-secrets.env --mount type=bind,src=/run/mattercontrol/oidc,dst=/run/secrets/oidc,readonly qa-synth-registry.invalid/mcqa/mcapi@sha256:1f2e3d4c5b6a7988000000000000000000000000000000000000000000000000
+      # Drain: mcapi stops admitting, finishes in-flight transfers within MC_SHUTDOWN_TIMEOUT (65 s).
+      ExecStop=/usr/bin/docker stop -t 75 mcapi
+      TimeoutStopSec=90
+      Restart=always
+      RestartSec=5
+      [Install]
+      WantedBy=multi-user.target
+
+  # Not enabled: the operator runs `sudo systemctl start mcapi-migrate` before (re)starting mcapi.
+  - path: /etc/systemd/system/mcapi-migrate.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=MatterControl schema migration (one-shot, operator-started)
+      Requires=docker.service mc-secrets.service
+      After=docker.service mc-secrets.service
+      [Service]
+      Type=oneshot
+      Environment=HOME=/home/mcdeploy
+      ExecStartPre=/usr/bin/docker-credential-gcr configure-docker --registries=qa-synth-registry.invalid
+      ExecStart=/usr/bin/docker run --rm --read-only --cap-drop ALL --security-opt no-new-privileges --log-driver journald --env-file /etc/mattercontrol/mcapi.env --env-file /run/mattercontrol/mcapi-secrets.env --env-file /run/mattercontrol/migrate-secrets.env qa-synth-registry.invalid/mcqa/mcapi@sha256:1f2e3d4c5b6a7988000000000000000000000000000000000000000000000000 migrate
+
+  - path: /etc/mattercontrol/Caddyfile
+    permissions: '0644'
+    content: |
+      mcapi-qa-synth.invalid {
+        # Only the API is public; probes and everything else stay on the loopback upstream.
+        @api path /api/*
+        handle @api {
+          reverse_proxy 127.0.0.1:8081 {
+            health_uri /readyz
+            health_interval 5s
+          }
+        }
+        handle {
+          respond 404
+        }
+      }
+
+  - path: /etc/systemd/system/caddy.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Caddy TLS ingress for mcapi
+      Requires=docker.service
+      After=docker.service mcapi.service
+      [Service]
+      # Idempotent across restarts (COS drops inbound traffic by default).
+      ExecStartPre=/bin/sh -c '/sbin/iptables -w -C INPUT -p tcp --dport 80 -j ACCEPT || /sbin/iptables -w -A INPUT -p tcp --dport 80 -j ACCEPT'
+      ExecStartPre=/bin/sh -c '/sbin/iptables -w -C INPUT -p tcp --dport 443 -j ACCEPT || /sbin/iptables -w -A INPUT -p tcp --dport 443 -j ACCEPT'
+      ExecStartPre=-/usr/bin/docker rm -f caddy
+      ExecStart=/usr/bin/docker run --name caddy --rm --network host --read-only --cap-drop ALL --cap-add NET_BIND_SERVICE --security-opt no-new-privileges --memory 128m --log-driver journald -v /etc/mattercontrol/Caddyfile:/etc/caddy/Caddyfile:ro -v /var/lib/caddy:/data -v /var/lib/caddy-config:/config qa-synth-registry.invalid/library/caddy@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f
+      ExecStop=/usr/bin/docker stop -t 30 caddy
+      Restart=always
+      RestartSec=5
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - mkdir -p /home/mcdeploy /var/lib/caddy /var/lib/caddy-config
+  - systemctl daemon-reload
+  - systemctl start mc-secrets.service
+  - systemctl start mcapi.service caddy.service

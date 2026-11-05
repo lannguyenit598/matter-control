@@ -1,0 +1,16 @@
+{
+ "run": "verify-R8-isolate",
+ "argv": [
+  "bash",
+  "-c",
+  "\necho \"== E: only content sentinel (normal .txt name)\"\nnode scripts/release-preflight.mjs /private/tmp/mc-opencode-verify-wave-20261031/r8/only-sentinel; echo \"exit=$?\"\necho \"== F: only PEM block inside leak.txt\"\nnode scripts/release-preflight.mjs /private/tmp/mc-opencode-verify-wave-20261031/r8/only-pem-content; echo \"exit=$?\"\necho \"== G: only .env.local\"\nnode scripts/release-preflight.mjs /private/tmp/mc-opencode-verify-wave-20261031/r8/only-envfile; echo \"exit=$?\"\n"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend",
+ "env_file": "NONE",
+ "started_utc": "2026-11-01T00:50:41Z",
+ "ended_utc": "2026-11-01T00:50:41Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": null
+}

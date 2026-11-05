@@ -6,7 +6,7 @@
 |---|---|
 | Entry point | `cmd/mcapi` (`mcapi` serves, `mcapi migrate` migrates) |
 | Design | [docs/mattercontrol-backend.md](docs/mattercontrol-backend.md) |
-| HTTP contract | [docs/api.md](docs/api.md) and the shared contract in `../../docs/api/contract.md` |
+| HTTP contract | [docs/api.md](docs/api.md) and the shared contract in `../../docs/implementation/p0-zcode-execution/local-contract.md` |
 | Configuration and operations | [docs/operations.md](docs/operations.md), [.env.example](.env.example) |
 | Rules for contributors and agents | [AGENTS.md](AGENTS.md) |
 

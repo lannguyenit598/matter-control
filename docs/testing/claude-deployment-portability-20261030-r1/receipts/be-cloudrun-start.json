@@ -1,0 +1,26 @@
+{
+  "label": "be-cloudrun-start",
+  "argv": [
+    "docker",
+    "run",
+    "--label",
+    "mc.owner=claude-portability-20261030",
+    "--network",
+    "container:mc-claude-portability-pg",
+    "--memory",
+    "512m",
+    "--cpus",
+    "1",
+    "--env-file",
+    "/private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/private/cr-cloud-run.env",
+    "-d",
+    "--name",
+    "mc-claude-portability-be-cloudrun",
+    "--mount",
+    "type=bind,src=/private/tmp/claude-501/-Users-nguyenvanlan-Documents-code-pet-projects-matter-control/6b785e53-a706-4a54-8bb7-a2e46affed61/scratchpad/private/oidc-cr,dst=/secrets/oidc,readonly",
+    "mc-claude-portability/mcapi:local"
+  ],
+  "exit": 0,
+  "stdout": "abbec5e1c4a62abdfe1be98dfdc7b97830733e8dd6f8ec817e8d632bb8bd07d4\n",
+  "stderr": ""
+}

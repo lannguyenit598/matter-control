@@ -1,0 +1,19 @@
+{
+ "run": "verify-R12-scheduled-dump-3x",
+ "argv": [
+  "bash",
+  "-c",
+  "\nexport MC_BACKUP_DSN=\"$MC_TEST_DATABASE_URL\"\nexport MC_BACKUP_DIR=/private/tmp/mc-opencode-verify-wave-20261031/backup-runs\nexport MC_BACKUP_RETAIN=2\nexport MC_BACKUP_PG_DUMP=/private/tmp/mc-opencode-verify-wave-20261031/backup-bin/pg_dump\nexport MC_BACKUP_PG_RESTORE=/private/tmp/mc-opencode-verify-wave-20261031/backup-bin/pg_restore\nfor i in 1 2 3; do\n  echo \"== run $i\"\n  bash ./scheduled-dump.sh; echo \"exit=$?\"\n  sleep 1.2\ndone\necho \"-- files:\"; ls -1 \"$MC_BACKUP_DIR\" | sort\n"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/ops/backup",
+ "env_file": "/private/tmp/mc-opencode-verify-wave-20261031/private/dsn.env",
+ "started_utc": "2026-11-01T00:48:22Z",
+ "ended_utc": "2026-11-01T00:48:27Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": [
+  "MC_BFF_TEST_DATABASE_URL",
+  "MC_TEST_DATABASE_URL"
+ ]
+}

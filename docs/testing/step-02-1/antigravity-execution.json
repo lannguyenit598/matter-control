@@ -1,0 +1,32 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 63.661438941955566,
+  "model_requested": "gemini-3.8-flash-high",
+  "effort_requested": "high",
+  "packet_path": "/tmp/mattercontrol-step021-antigravity-audit-input.txt",
+  "stdout_artifact": "antigravity-output.json",
+  "stderr": "",
+  "installed_help_artifact": "agent-help.json",
+  "usage": {
+    "input_tokens": 31726,
+    "output_tokens": 6835,
+    "thinking_tokens": 3196,
+    "cache_read_tokens": 0,
+    "total_tokens": 38561
+  },
+  "command_flags": [
+    "--mode",
+    "plan",
+    "--sandbox",
+    "--model",
+    "gemini-3.8-flash-high",
+    "--effort",
+    "high",
+    "--output-format",
+    "json",
+    "--print-timeout",
+    "180s",
+    "-p",
+    "<exact approved packet>"
+  ]
+}

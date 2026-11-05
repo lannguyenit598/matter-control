@@ -1,0 +1,143 @@
+{
+  "task": "MC-BE-01-R1-COMMIT intake",
+  "date": "2026-10-26",
+  "owner": "Local Codex",
+  "source_owner": "actual ZCode, account:zai-start-plan/GLM-5.3 via Z.AI, interactive/version not recorded; identity self-reported",
+  "status": "BLOCKED",
+  "parent_MC_BE_01": "IN_REVIEW, source/evidence PASS_WITH_LIMITATIONS retained",
+  "raw_return": {
+    "bytes": 9151,
+    "sha256": "65ca650fac7da45d031c1ecd7b1f2abbb89d2f11c2ede549974d79ebb0b73a28",
+    "export": "owner-return.txt.gz"
+  },
+  "scan": {
+    "job_reported": "scan-job-mvoj5gpe-9742d4055120cd7d",
+    "scanId": "scan-2026-10-26T00-40-19.307Z-e324c2f15ce2",
+    "producer": {
+      "name": "mimosa",
+      "version": "0.1.0"
+    },
+    "job_completion": "owner-reported completed; scanner verdict remains inconclusive",
+    "run_status": "inconclusive",
+    "coverage": "partial",
+    "verdict_effect": "none",
+    "validation_investigated": 0,
+    "findingId": "finding:f4bd71af4f1cfebcec9cb0a4",
+    "severity": "high",
+    "class": "hardcoded-credential",
+    "cwe": [
+      "CWE-798"
+    ],
+    "location": {
+      "path": "docs/testing/inta-returns/environment/env-intamvnmoems3pd/provision-command.py",
+      "line": 46,
+      "endLine": 46
+    },
+    "seal_digest_reported": "sha256:0db4c9a5cf1b5dd7fad3f65057d6a08656603c4855d2ff1f61974dff347e4903",
+    "artifact_hash_checks": [
+      {
+        "file": "scan-manifest.json",
+        "bytes": 584,
+        "sha256": "5f1fc9716a497330d56cef633bd44956bc99e1028ef55859e44696f985bf0e5a",
+        "matches_seal_artifact_hash": true
+      },
+      {
+        "file": "findings.json",
+        "bytes": 1183,
+        "sha256": "39e0ed480de2b3ffa47c7b1a411e548dfd502d5ba2b0d74be428e090a06dd0f7",
+        "matches_seal_artifact_hash": true
+      },
+      {
+        "file": "coverage.json",
+        "bytes": 1282,
+        "sha256": "acf474b56abdeb353c082ded23ac434fc0bbadfb817734f18985a81670267341",
+        "matches_seal_artifact_hash": true
+      }
+    ],
+    "seal_scope": "Artifact hashes match seal entries and reported digest string; no independent publisher authentication or undocumented aggregate-digest algorithm assumed"
+  },
+  "commit_attempt": {
+    "actor": "ZCode",
+    "count_reported": 1,
+    "command_reported": "rtk git commit -F /private/tmp/mc-be01-evidence/r1/31-commit-message.txt",
+    "time_quality": "approximately00:44Z; retained log says00:4xZ; no exact command start/end or numeric exit exists for PreToolUse denial",
+    "outcome": "MIMOSA_PRETOOLUSE_REFUSED_PRE_EXECUTION",
+    "new_commit_created": false,
+    "ordinary_process_exit_code": null,
+    "owner_log_sha256": "8c75d072d6a4db68478e5daae246aabcb5dc8cbea1271fbbb83de07d6c522216"
+  },
+  "source_state": {
+    "observed_utc": "2026-10-26T00:48:13.725282+00:00",
+    "branch": "codex/mc-be-01",
+    "head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+    "tree_diff_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e",
+    "staged_diff_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e",
+    "unstaged_bytes": 0,
+    "staged_paths": [
+      "internal/adapter/outbound/postgres/matter_rework_test.go",
+      "internal/adapter/outbound/postgres/matter_test.go",
+      "internal/adapter/outbound/postgres/mcsqlc/matter.sql.go",
+      "internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql",
+      "internal/adapter/outbound/repotest/mattercontrol/contract.go",
+      "internal/adapter/outbound/repotest/mattercontrol/memory.go",
+      "internal/core/domain/matter/access.go",
+      "internal/core/service/matter_service.go",
+      "internal/core/service/matter_service_rework_test.go"
+    ],
+    "untracked_paths": [],
+    "source_manifest_matches": 39,
+    "source_manifest_count": 39
+  },
+  "sequence_note": {
+    "id": "GOV-BE01-COMMIT-01",
+    "status": "DEVIATION_RECORDED_FROM_OWNER_RETURN",
+    "basis": "The assignment required gate permission before staging/commit and stop on continued refusal. The return records a non-clearing scan followed by staging and one commit attempt; no explicit clearance evidence is present.",
+    "effect": "Staging preserved the exact reviewed bytes; commit gate held. No retrospective approval, no proof of bypass, no source rework or forced unstage assigned."
+  },
+  "next_action": "No more equivalent commit/scan attempts until actual external gate state changes. Prepare operator/maintainer false-positive resolution through supported control plane; no source/evidence edits to hide the finding.",
+  "available_Mimosa_resolution_tool_in_Codex": false,
+  "exports": [
+    {
+      "source": "/Users/nguyenvanlan/.mimosa/security-scans/project-49853fb35781fd77f00d6a18/scan-2026-10-26T00-40-19.307Z-e324c2f15ce2/seal.json",
+      "export": "seal.json.gz",
+      "bytes": 480,
+      "sha256": "4f4974a25e1bb5f8f724c233d79b2cb99c6549f143ed835d27bc6d5db50a6f08"
+    },
+    {
+      "source": "/Users/nguyenvanlan/.mimosa/security-scans/project-49853fb35781fd77f00d6a18/scan-2026-10-26T00-40-19.307Z-e324c2f15ce2/scan-manifest.json",
+      "export": "scan-manifest.json.gz",
+      "bytes": 584,
+      "sha256": "5f1fc9716a497330d56cef633bd44956bc99e1028ef55859e44696f985bf0e5a"
+    },
+    {
+      "source": "/Users/nguyenvanlan/.mimosa/security-scans/project-49853fb35781fd77f00d6a18/scan-2026-10-26T00-40-19.307Z-e324c2f15ce2/findings.json",
+      "export": "findings.json.gz",
+      "bytes": 1183,
+      "sha256": "39e0ed480de2b3ffa47c7b1a411e548dfd502d5ba2b0d74be428e090a06dd0f7"
+    },
+    {
+      "source": "/Users/nguyenvanlan/.mimosa/security-scans/project-49853fb35781fd77f00d6a18/scan-2026-10-26T00-40-19.307Z-e324c2f15ce2/coverage.json",
+      "export": "coverage.json.gz",
+      "bytes": 1282,
+      "sha256": "acf474b56abdeb353c082ded23ac434fc0bbadfb817734f18985a81670267341"
+    },
+    {
+      "source": "/Users/nguyenvanlan/.mimosa/security-scans/project-49853fb35781fd77f00d6a18/scan-2026-10-26T00-40-19.307Z-e324c2f15ce2/report.md",
+      "export": "report.md.gz",
+      "bytes": 691,
+      "sha256": "323bcc9102a85bc6df72f25c361c9c6bf9db309e55b7790438bae0db2a329022"
+    },
+    {
+      "source": "/private/tmp/mc-be01-evidence/r1/32-commit-attempt-blocked.log",
+      "export": "32-commit-attempt-blocked.log.gz",
+      "bytes": 1760,
+      "sha256": "8c75d072d6a4db68478e5daae246aabcb5dc8cbea1271fbbb83de07d6c522216"
+    }
+  ],
+  "runtime_tests": "NOT_RERUN",
+  "new_source_edits": false,
+  "new_git_mutation_by_Codex": false,
+  "credentials_read": false,
+  "lifecycle_actions": false,
+  "new_provider_calls": false
+}

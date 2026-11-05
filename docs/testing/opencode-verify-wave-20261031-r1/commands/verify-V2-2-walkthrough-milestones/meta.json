@@ -1,0 +1,16 @@
+{
+ "run": "verify-V2-2-walkthrough-milestones",
+ "argv": [
+  "bash",
+  "-c",
+  "\nA=http://127.0.0.1:18083\nm1=$(curl -sS -o /tmp/wt_m1.body -w \"%{http_code}\" $A/readyz)\nm2=$(curl -sS -o /tmp/wt_m2.body -w \"%{http_code}\" $A/api/v1/workspaces)\nm3=$(curl -sS -o /tmp/wt_m3.body -w \"%{http_code}\" -H \"Authorization: Bearer tok-wt-alice\" $A/api/v1/workspaces)\nm4=$(curl -sS -o /tmp/wt_m4.body -w \"%{http_code}\" -H \"Authorization: Bearer tok-somebody-else-totally-unknown\" $A/api/v1/workspaces)\necho \"\\\"readyz\\\": $m1\"; echo \"\\\"no-token workspaces\\\": $m2\"; echo \"\\\"valid-token workspaces\\\": $m3\"; echo \"\\\"unknown-token workspaces\\\": $m4\"\necho \"-- m1 body:\"; head -c 200 /tmp/wt_m1.body; echo\necho \"-- m2 body:\"; head -c 200 /tmp/wt_m2.body; echo\necho \"-- m3 body:\"; head -c 200 /tmp/wt_m3.body; echo\necho \"-- m4 body:\"; head -c 200 /tmp/wt_m4.body; echo\n"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031",
+ "env_file": "NONE",
+ "started_utc": "2026-10-31T17:45:11Z",
+ "ended_utc": "2026-10-31T17:45:11Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": null
+}

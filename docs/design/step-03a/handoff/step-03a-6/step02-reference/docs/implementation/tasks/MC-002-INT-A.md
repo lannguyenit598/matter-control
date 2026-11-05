@@ -1,0 +1,55 @@
+# MC-002-INT-A — Selected Local Integration Assignment
+
+Owner Codex PM/Cloud/DevOps; priority P0 local feasibility. Base e7dbfbfb63062c4df576836c744701832356edd7, branch task/MC-002-solution-architecture. **FRONTEND_REWORK_REQUIRED / BACKEND_PREPARATION_IN_REVIEW / ENV_HELD.** Actual ZCode acknowledgement/build return is received; no integration runtime evidence yet. [DEC-028](../../ai-sdlc/inta-po-approval.md) approves INT-A; [INTA-1](../inta-approved-contract.md) is frozen within that scope. No fallback to INT-A0/B/C.
+
+## Shared task contract and dependencies
+
+- Requirement trace: NFR-001/002 as exclusion/privacy constraints, NFR-003/008/009 local transport/error/persistence, selected native contract/case IDs. FR-018 and product permission/state/receipt invariants remain future gates.
+- Inputs: approval subject e7dbfbf, frozen INTA-1, original51-row matrix, actual OpenCode closure at a7e9992, Step02.4 procedure profiles, accepted native source heads and instructions; [manifest/preflight](../../testing/inta-preparation/preflight.json).
+- Outputs: new companion harness source archive/commit; exact clean backend binary/source identity; new owned ENV identity; per-request/phase runtime assertions,51-case ledger and independent QA result; owner-specific reports/artifacts below.
+- Allowed governance edits: approval/decision/status/task/handoff/selected ledger and new inta-preparation/inta-returns evidence. No historical15normative architecture/ADRs, requirements, original51-row matrix, accepted native/R01/R02 evidence or MC-003A source/design edits.
+- Acceptance: all36required cases independently reviewed on actual execution, with exact status/body/header assertions under the correct observation mode; real Next and PostgreSQL; original baseline/source-isolation; guards/log privacy/owned teardown. Current results are51NOT_RUN, not PASS.
+- Safety: new synthetic local resources only, fresh unlogged credentials, no edit/delete/reuse of existing DB/volume, no paid/provider/production action/merge, no unknown-write retries. Stop on infeasibility/material deviation and return to PO/Claude as appropriate.
+- Completion evidence: actual per-owner reports with source/base/head, exact argv/procedure, UTC/exits/raw redacted logs, per-case expected/actual/results/skips and manifest hashes, resource disposition and reviewer scope. Never turn a packet review into runtime execution.
+
+## Owner contracts
+
+| Task | Owner / priority | Scope and allowed paths | Dependencies / status | Outputs, tests and reviewer |
+|---|---|---|---|---|
+| MC-002-INTA-BE | Actual ZCode / P0 | NEW /tmp/mc002-inta-be from52b60a4, codex/mc-002-inta-be; tracked tree no changes. New binary/output only in own ignored build path or evidence backend dir. Native Go runtime, migration on new verified DB, source/probes/errors/restart coordination; no production code | Approval/freeze satisfied. Manual receipt/acknowledgement and ENV before data/runtime. PREPARED / WAITING_MANUAL_DISPATCH | backend-source/run report, hashes/argv/UTC/exits/API observations, assigned ENV-02/03/source-integrity + coordinated transport rows; no full baseline rerun. OpenCode verifies, Claude only material deviation |
+| MC-002-INTA-FE | Actual Antigravity / P0 | NEW /tmp/mc002-inta-fe from3e5a642, codex/mc-002-inta-fe unchanged; NEW companion /tmp/mc002-inta-harness only, source/config/driver/assertions isolated. Import actual shared client; no template config/dependency/lock/src edits | Approval/freeze satisfied. Verify new paths/permissions and cross-root/default-glob feasibility before implementing. Runtime additionally needs BE+ENV. PREPARED / WAITING_MANUAL_DISPATCH | full companion source commit/archive + manifest (not hidden behind zero template diff), targeted self-checks for new guards/parsers/classification, relevant actual Next/artifact tests, client/wire and persistence/outage evidence. OpenCode verifies; no automatic reduced runner |
+| MC-002-INTA-ENV | Codex / P0 | Only new task-labelled local PG resource/secret-safe private handoff and evidence environment dir per INTA-1; no existing containers/volumes or product worktrees | Approval/freeze satisfied. WAITING_OWNER_ACKNOWLEDGEMENT at current manual boundary; no container created yet | Verified unused ports/names, pinned digest/caps/storage, empty DB/user/healthy before DSN, phase logs/lifecycle/privacy/teardown. OpenCode reviews actual evidence |
+| MC-002-INTA-QA | Actual OpenCode / P0 | Review owner diffs and independently exercise approved local interface only under normal owner permissions; may write QA evidence/report, no product/harness edits during verification | WAITING_OWNER_RETURNS_AND_ENV; direct packet-review route ≠ runtime permission. Manual QA prompt prepared, not dispatched | per36case independent observed-vs-expected verdict;14product/1production remain open. Separate executed commands from owner-only evidence. No PASS from exit0/narrative. Codex intake; material architecture findings → Claude/PO |
+| MC-002-INTA-CONFORMANCE | Codex evidence / OpenCode independent scope check; Claude if material deviation / P0 | INT-CONF-01, exact frozen-contract boundary review of actual diff/evidence | WAITING_EXECUTION_AND_QA | record conforming boundaries or precise deviation; no architecture approval waiver. Current explicit PO assignment makes Claude review conditional on material deviations, not repeat Step02.3 wording |
+
+## Ordering and return paths
+
+1. Human manually opens the approved new owner workspace using the [full prompts](../handoffs/MC-002-INTA-MANUAL-PROMPTS.md); receipt/acknowledgement is recorded before IN_PROGRESS. The retained source seeds are read-only.
+2. Antigravity first confirms companion-root/import/glob feasibility without runtime DB; ZCode prepares clean native binary/config. No dependent data request before Codex ENV identity/DSN handoff.
+3. After acknowledgements Codex supplies the new capped synthetic ENV and phase controls; owners execute the frozen sequence. No task worktree/DB is created in this preparation turn because direct engineering is unavailable.
+4. Returns: docs/reviews/inta-{backend,frontend,environment,qa}-return.md and docs/testing/inta-returns/{backend,frontend,environment,qa}/, each written only by its owner. Retain raw evidence in /tmp/mc002-inta-evidence; Codex inspects/redacts/hashes before export.
+5. OpenCode verifies the36local cases independently. If its environment permits only packet review, report that limitation and keep independent runtime verification pending; do not silently convert to RUNTIME_PASS.
+6. Safe teardown of exact owned processes/container, evidence retention, then Codex updates gates. Any material architectural deviation stops for Claude and PO process; plain implementation defects are reported/reworked within approved boundaries.
+
+## Current route decision
+
+Read-only source/head checks PASS. Both ZCode packaged provider paths remain absent. Antigravity's prior actual headless RunCommand denial remains an explicit permission boundary; no redundant probe/global allow-rule/login workaround. Direct engineering orchestration is unavailable, therefore the PO-requested manual-stop condition applies now. **No dispatch, worktree creation, source implementation, binary build, DB/container mutation or runtime test executed.** OpenCode runtime QA not yet invoked; verdict PENDING.
+
+C01-NATIVE stays accepted with limitations; C01-PRODUCT, production Cloudflare/cost/recovery and MC-002 remain OPEN. INT-D01 scope is approved; these quality gates are not. No Step03A/03B completion or production implication.
+
+
+## Backend preparation return — latest checkpoint
+
+[Actual ZCode return](../../reviews/inta-backend-return.md), [Codex intake](../../reviews/inta-backend-intake.md). New clean52b60a4 task worktree and binary match source/build metadata;4/4exports and3payload hashes verify. This supersedes earlier no-owner-build/acknowledgement statements only for backend preparation. Backend runtime WAITING_ENV; no full case PASS. Frontend directories/install evidence appeared but no return/runId received. [Current coordination](../inta-coordination.md) precedes the verified new PG/private DSN handoff; no environment/resource action in this intake. OpenCode runtime verdict PENDING; all51NOT_RUN.
+
+## Frontend preparation return — latest checkpoint
+
+Actual Antigravity manual return received at clean companion e25bbc6; original source archive and exports preserved. [Codex intake](../../reviews/inta-frontend-intake.md) verifies hashes and qualifies owner unit/guard claims. Actual [OpenCode source review](../../reviews/inta-frontend-opencode-source-review.md) CHANGES_REQUIRED, R01..R09 ordinary implementation/evidence corrections; R10 minor. This supersedes earlier frontend-return-pending statements. No material architectural deviation identified. [R1 manual prompt](../handoffs/MC-002-INTA-FE-REWORK-PROMPT.md) READY / NOT_DISPATCHED, Antigravity owns companion changes only; OpenCode re-reviews before verified ENV/upstream cases. Backend WAITING_ENV, no rebuild; Codex PG held. All51NOT_RUN and runtime QA PENDING; no gate waived.
+
+## INT-A frontend R1 — latest checkpoint (2026-10-25)
+
+Actual manual Antigravity R1 return received at clean6e2f65b (Gemini3.8Flash High owner-reported); R1 READY/NOT_DISPATCHED statements are now historical. [Intake](../../reviews/inta-frontend-r1-intake.md):5raw/5export/25source/25archive hash checks verify,4raw-export copies byte-equal; all36IDs now present. Owner66unit passes/7files and7guardpasses with synthetic zero-upstream observation remain preparation sub-evidence, not matrix acceptance. Template3e5a642/backend52b60a4 clean.
+
+Actual [OpenCode R1 source review](../../reviews/inta-frontend-r1-opencode-review.md), session ses_e8e41d836ffeP3ZVDaQovlBEBD, tool-reported opencode/glm-5.3-flash-free, CHANGES_REQUIRED. Preserve source-only closures R01/R04/R05/R06/R09/R10, with residual identity caveat; R02/R03/R07/R08 partial. F01driver/F02IDstate/F03identity/F04startup are pre-upstream blockers; F06/F07guard-cleanup require correction before next evidence capture; F05/F08/F09 scope/provenance corrections. No material architecture deviation; proposed new server ENV gate is not adopted—driver-only readiness preserves frozen INTA-1. [R2 full manual prompt](../handoffs/MC-002-INTA-FE-R2-PROMPT.md) READY / NOT_DISPATCHED.
+
+Frontend REWORK_REQUIRED; Codex ENV_HELD; backend preparation IN_REVIEW/WAITING_ENV, no rebuild. All51NOT_RUN/0PASS/0FAIL;36required/14deferred/1blocked, runtime independent QA PENDING. No Go/PG launch, source edits by Codex, paid/deploy/merge or MC-003A change. R-028/R-031 and C01-PRODUCT/product identity-isolation/Cloudflare/cost/full recovery/architecture/MC-002 gates remain OPEN. Next: human delivers R2, owner returns scoped corrections, OpenCode re-reviews before verified new ENV/runtime.

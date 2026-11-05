@@ -1,0 +1,91 @@
+{
+  "task": "MC-003A.8A.f10_binding_reconciled",
+  "reviewer": "ZCode Desktop interactive session, human-operated",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN",
+  "authorship": "ZCode-authored candidate; not independent approval; Claude contract acceptance and PO decisions remain",
+  "inputs": "prior 21 content inputs + 3 manifests + inline feedback; source-gap-note.md and supplement manifest remain NOT_READ",
+  "clause1_lifecycle": {
+    "cycle1_creation": "filing-create command creates filing + filing_cycles cycle_no=1 kind=INITIAL opened_in_epoch=0 in one transaction (candidate clarification)",
+    "observation_target_vs_cas": "body cycleNo = target binding, must exist under this filing else 422 validation (scoped lookup, no existence leak); expectedCycleNo = caller's believed current open cycle, mismatch -> 412 stale-revision; late binding to an older existing cycle allowed",
+    "supplement_request": "client never supplies target cycleNo; derived n+1 inside matter lock; guards: stage AUTHORITY_REVIEW else 409 guard-failed, expectedCycleNo mismatch else 412; one transaction inserts cycle + SUPPLEMENT_REQUEST observation + evidence links + revision bump + events cycle.opened/observation.recorded; concurrent duplicate serializes to 412; UNIQUE(filing_id,cycle_no) backstop; full rollback on any failure",
+    "response_type_removed": "RESPONSE is not an observation type; filing-model §3 records FilingSubmission which already binds cycle via filing_submissions FK",
+    "examples": [
+      "initial: one txn filing+cycle1+events",
+      "next-cycle: txn creates cycle2+observation+revision r3; stale duplicate 412",
+      "injected failure: full rollback, no event"
+    ]
+  },
+  "clause2_correction": {
+    "command": "POST /filings/{id}/corrections; If-Match filing revision; expectedCycleNo required; Idempotency-Key; body discriminated by action",
+    "RETRACT_fields": [
+      "correctsObservationId",
+      "reason"
+    ],
+    "REPLACE_fields": [
+      "correctsObservationId",
+      "type",
+      "cycleNo",
+      "evidenceRefs[]",
+      "observedAt?",
+      "reason"
+    ],
+    "resolution": "type/role resolved from the new payload per corrected mapping table; target must be an original observation under this filing (scoped; unresolvable -> 422, no leak); actor OWNER; reason mandatory; atomic; no fabricated intermediate stages",
+    "terminal_rule": "corrections target original observations only (no correction-of-correction target); latest correction by seq is terminal; earlier corrections superseded and their replacement observations become ineffective in the same commit; at most one effective replacement per original",
+    "g3_records": "OBS-04 {AUTHORITY_OUTCOME_APPROVAL, c1, [E2], U1}; C1 {REPLACE, corrects OBS-04, AUTHORITY_OUTCOME_NEGATIVE, c2, [E2], OWNER U0}; effective OBS-05 only",
+    "examples": [
+      "retract-only after replace: C2 RETRACT supersedes C1 -> OBS-04 and OBS-05 both ineffective",
+      "repeated correction: C1 REPLACE->O5, C2 REPLACE->O6, terminal C2, O5 ineffective",
+      "rollback: history-write failure leaves nothing"
+    ]
+  },
+  "clause3_provenance": {
+    "dr15_gap_acknowledged": "current DR-15 events[] lacks observation/evidence/cycle/epoch/correction payload; embedding a full evidenceRefs array in one event stays unbounded",
+    "L1_recommended": {
+      "main_event_payload_CANDIDATE_FIELD": "{observationId (scalar UUID, not a typed Ref), action RECORD|RETRACT|REPLACE, observationType, cycleNo|null, proofEpoch, correctsObservationId|null, evidenceLinkedCount int>=0}",
+      "link_events": "one filing.observation.evidence_linked event per (observation, evidence) pair; targetRef={kind:EVIDENCE,id}; payload {observationId, role, cycleNo|null, proofEpoch}; causeSeq = main event seq; same correlationId; per-command event count finite (= command's own payload), each event bounded-scalar",
+      "traversal": "targetId={filingId} main events; targetId={evidenceId} link events; commandKey={k} full finite command set; F-09 seq keyset/authorization unchanged; per-page asOf/sourceRevision; no cross-mutation traversal guarantee",
+      "unbound_total_grain": "count of effective evidence links on unbound (cycle_no NULL, non-retracted) observations at asOf",
+      "unbound_reachability_O7_E3": "targetId={filingId} shows main event cycleNo null evidenceLinkedCount=1; targetId={E3} shows the link event; no guessed ids, no new route, no typed Ref kind",
+      "delta": "zero routes; events[] payload fields scoped to these event types only; catalogue stays 32"
+    },
+    "L2_alternative": "on the proposed B3 route: binding=bound|unbound|all filter + link-grain items {evidenceRef, role, observationId, proofEpoch, observedAt, correctsObservationId|null, cycleNo|null}, cursor tuple (evidenceRef.id, role, observationId); complete bound+unbound access; requires B-variant (35 ops) adoption, else no route and L1 is the only reachability path",
+    "non_claims": [
+      "DR-15 sufficient unchanged",
+      "constant bytes",
+      "catalogue adoption",
+      "risk acceptance for PO"
+    ]
+  },
+  "change_locations": [
+    "data-model: filing_stage_observations.cycle_no + composite FK + index + type constraint",
+    "command contracts: filing-create cycle-1 clause; observation body cycleNo/expectedCycleNo semantics; corrections RETRACT/REPLACE; supplement derive+guards",
+    "read: B3 (proposed) cycle filter/effective view; filing read unboundObservationEvidenceTotal (candidate field)",
+    "history: DR-15 event payload additions (CANDIDATE_FIELD, scoped to filing-observation event types)",
+    "consumer/acceptance: table G1..G8, GL1..3, GC1..2, GP1..2"
+  ],
+  "route_count": "this addendum adds zero routes; catalogue remains 32; B-variant/B35 remains proposed and unadopted",
+  "remaining_choices": [
+    "cycle-1 creation semantics (candidate clarification)",
+    "observation type strings + role mapping (filing-model contract edit)",
+    "L1 vs L2 provenance policy",
+    "events[] payload fields and unboundObservationEvidenceTotal (Claude acceptance + PO gate)",
+    "B-variant 35-ops adoption itself (PO)"
+  ],
+  "acceptance_status": "all rows DOCUMENT_EXPECTED; runtime NOT_RUN",
+  "preserved": {
+    "ct_ids": "22 with 16/4/1/1",
+    "qa": "Q1..Q8 with Q2/Q4/Q6/Q8 conditional",
+    "safety": "receipt != approval; satisfaction only via evidence-model §4 at current proof_epoch; prior submissions/history immutable (AC-129)",
+    "gates": {
+      "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+      "G5-B": "FINDINGS_OPEN",
+      "G3": "NOT_VERIFIED",
+      "G4_design_qa": "PENDING",
+      "G6": "REWORK_REQUIRED",
+      "STEP03B": "NOT_AUTHORIZED",
+      "po_architecture_approval_gate": "NOT_PASSED"
+    },
+    "independence": "BE-01 and INT-A independent; no dependency or restart; no implementation claimed"
+  }
+}

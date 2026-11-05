@@ -1,0 +1,209 @@
+{
+  "suite": "runner-selfcheck-r1",
+  "startUTC": "2026-10-26T06:24:07.116842+00:00",
+  "endUTC": "2026-10-26T06:24:07.123634+00:00",
+  "totalCases": 9,
+  "passed": 9,
+  "failed": 0,
+  "allPassed": true,
+  "cases": [
+    {
+      "testCase": "1. missingcounter",
+      "description": "Observer file does not exist (e.g. runner defaulted to 0 in old run)",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "MISSING_COUNTER",
+      "actualVerdict": "FAIL",
+      "actualCode": "MISSING_COUNTER",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "MISSING_COUNTER",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Observer counter file missing; zero-upstream calls not established"
+      }
+    },
+    {
+      "testCase": "2. malformedcounter",
+      "description": "Observer file contains invalid JSON or non-integer requestCount",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "MALFORMED_COUNTER",
+      "actualVerdict": "FAIL",
+      "actualCode": "MALFORMED_COUNTER",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "MALFORMED_COUNTER",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Observer counter file malformed JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+      }
+    },
+    {
+      "testCase": "3. positivecounter",
+      "description": "Observer recorded >0 HTTP requests (upstream was called)",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "POSITIVE_COUNTER",
+      "actualVerdict": "FAIL",
+      "actualCode": "POSITIVE_COUNTER",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "POSITIVE_COUNTER",
+        "exitCode": 1,
+        "observerHTTPRequests": 1,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Observer recorded 1 upstream HTTP requests (expected 0)"
+      }
+    },
+    {
+      "testCase": "4. observererror",
+      "description": "Observer failed to bind or encountered internal exception",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "OBSERVER_ERROR",
+      "actualVerdict": "FAIL",
+      "actualCode": "OBSERVER_ERROR",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "OBSERVER_ERROR",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Observer encountered runtime error: Address already in use on 18086"
+      }
+    },
+    {
+      "testCase": "5. transientlistener",
+      "description": "Port 18085 listener was acquired during child execution (FEVAL-F01)",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "FAIL_AGAINST_NEVER_LISTEN",
+      "actualVerdict": "FAIL",
+      "actualCode": "FAIL_AGAINST_NEVER_LISTEN",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "FAIL_AGAINST_NEVER_LISTEN",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": true,
+        "listenerObservedAfter": false,
+        "notes": "Port 18085 listener was acquired during execution (violates never-listen criterion)"
+      }
+    },
+    {
+      "testCase": "6. probeerror",
+      "description": "Port probe command failed or permission denied (cannot establish absence)",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "PROBE_ERROR",
+      "actualVerdict": "FAIL",
+      "actualCode": "PROBE_ERROR",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "PROBE_ERROR",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Port listener probe failed (lsof exit code 1); cannot establish listener absence"
+      }
+    },
+    {
+      "testCase": "7. timeout",
+      "description": "Child process hung or did not exit within timeout limit",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "TIMEOUT",
+      "actualVerdict": "FAIL",
+      "actualCode": "TIMEOUT",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "TIMEOUT",
+        "exitCode": 124,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Child timed out or hung (timeout kill is not PASS)"
+      }
+    },
+    {
+      "testCase": "8. wrongrefusal",
+      "description": "Child exited with error but without exact key refusal phrase (e.g. syntax error or generic error)",
+      "expectedVerdict": "FAIL",
+      "expectedCode": "WRONG_REFUSAL",
+      "actualVerdict": "FAIL",
+      "actualCode": "WRONG_REFUSAL",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "FAIL",
+        "verdictCode": "WRONG_REFUSAL",
+        "exitCode": 1,
+        "observerHTTPRequests": null,
+        "observerCleanShutdown": false,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Expected refusal phrase 'product auth/secret env vars present (API_TOKEN)' missing in stderr/stdout"
+      }
+    },
+    {
+      "testCase": "9. validcompleteinput",
+      "description": "Exit 1, exact refusal phrase, 0 requests measured with clean observer shutdown, port never bound",
+      "expectedVerdict": "PASS",
+      "expectedCode": "VALID_COMPLETE_INPUT",
+      "actualVerdict": "PASS",
+      "actualCode": "VALID_COMPLETE_INPUT",
+      "pass": true,
+      "evalDetails": {
+        "canonicalId": "INT-ENV-05",
+        "key": "API_TOKEN",
+        "variant": "nonempty",
+        "verdict": "PASS",
+        "verdictCode": "VALID_COMPLETE_INPUT",
+        "exitCode": 1,
+        "observerHTTPRequests": 0,
+        "observerCleanShutdown": true,
+        "listenerObservedDuring": false,
+        "listenerObservedAfter": false,
+        "notes": "Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown"
+      }
+    }
+  ]
+}

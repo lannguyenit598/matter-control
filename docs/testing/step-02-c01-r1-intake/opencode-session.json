@@ -1,0 +1,111 @@
+{
+  "info": {
+    "id": "ses_e90ff024dffeuJ1Kmcnp6qicY9",
+    "projectID": "56512bc17ede1f94831e6c5716d9c01aa1a12b0d",
+    "agent": "plan",
+    "cost": 0,
+    "tokens": {
+      "input": 49670,
+      "output": 1779,
+      "reasoning": 1973,
+      "cache": {
+        "read": 4352,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1792863698557,
+      "updated": 1792863758501,
+      "idle": 1792863758504
+    },
+    "title": "[redacted:session-title:ses_e90ff024dffeuJ1Kmcnp6qicY9]",
+    "location": {
+      "directory": "/[redacted:session-directory:ses_e90ff024dffeuJ1Kmcnp6qicY9]"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_16f00fe870011EWLRvQf5WLVAr",
+      "time": {
+        "created": 1792863698567
+      },
+      "type": "agent-switched",
+      "agent": "plan",
+      "previous": "plan"
+    },
+    {
+      "id": "msg_16f00fe7f001AIBwVInq60rylW",
+      "time": {
+        "created": 1792863698726
+      },
+      "text": "[redacted:synthetic:msg_16f00fe7f001AIBwVInq60rylW]",
+      "type": "synthetic"
+    },
+    {
+      "id": "msg_16f00fe86001SZzAOBbM1wCs2s",
+      "time": {
+        "created": 1792863698728
+      },
+      "text": "[redacted:text:msg_16f00fe86001SZzAOBbM1wCs2s]",
+      "files": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_16f00ff2d001NCVTimNDxGioHo",
+      "time": {
+        "created": 1792863698737,
+        "streamed": 1792863758464,
+        "completed": 1792863758501
+      },
+      "type": "assistant",
+      "agent": "plan",
+      "model": {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "[redacted:reasoning:msg_16f00ff2d001NCVTimNDxGioHo]",
+          "native": {
+            "redacted": "reasoning-native:msg_16f00ff2d001NCVTimNDxGioHo"
+          },
+          "time": {
+            "created": 1792863702852,
+            "completed": 1792863758449
+          }
+        },
+        {
+          "type": "text",
+          "text": "[redacted:text:msg_16f00ff2d001NCVTimNDxGioHo]"
+        }
+      ],
+      "snapshot": {
+        "start": "d58141ad98111e21d433714114d3aaeb29b13133",
+        "end": "d58141ad98111e21d433714114d3aaeb29b13133",
+        "files": []
+      },
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 49670,
+        "output": 1779,
+        "reasoning": 1973,
+        "cache": {
+          "read": 4352,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_16f01e8a8001WkpQI9F4qKVx4W",
+      "time": {
+        "created": 1792863758504
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

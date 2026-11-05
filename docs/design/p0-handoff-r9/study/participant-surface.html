@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MatterControl — Control Room (study surface)</title>
+<style id="study-polish">/* Hallmark v2 · scope: app · selected Enterprise Precision A · source refinement · R8 candidate */
+/* Critique: causal chain hierarchy, breadcrumb trail navigation, typed proof relations, six completed operational surfaces, honest specimens; independent review pending. */
+:root {
+  --r2-surface:#ffffff;
+  --r2-background:#f6f8fa;
+  --r2-ink:#17212b;
+  --r2-muted:#52606d;
+  --r2-line:#c6ced6;
+  --r2-focus:#174ea6;
+  --r2-selected:#e8effa;
+  --r2-error:#a12622;
+  --r2-disabled:#626973;
+  --r2-execution:#364152;
+  --r2-verification:#236341;
+  --r2-dependency-ready:#174ea6;
+  --r2-dependency-blocked:#8a2925;
+  --r2-timing:#775317;
+  --r2-attention:#783e14;
+  --r2-header:#101820;
+  --r2-header-text:#ffffff;
+  --font-body:"Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:ui-monospace, SFMono-Regular, Menlo, monospace;
+  --r2-gap:12px; --r2-gutter:16px; --r2-radius:8px; --r2-control-radius:4px;
+  --r2-duration:160ms;
+}
+* { box-sizing:border-box; }
+html, body { overflow-x:clip; }
+body { margin:0; background:var(--r2-background); color:var(--r2-ink); font:14px/1.5 var(--font-body); }
+[hidden] { display:none !important; }
+header { background:var(--r2-header); color:var(--r2-header-text); padding:12px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+header p { margin:0; }
+.scope { display:flex; gap:16px; flex-wrap:wrap; }
+.notice { padding:12px 24px; background:var(--r2-surface); border-bottom:1px solid var(--r2-line); }
+.notice p { margin:0; max-width:75ch; }
+.app-layout { display:grid; grid-template-columns:220px minmax(0,1fr); min-height:80vh; }
+nav { background:var(--r2-surface); border-right:1px solid var(--r2-line); padding:16px 12px; }
+nav button { display:block; width:100%; text-align:left; margin-bottom:4px; }
+nav button[aria-current="page"] { background:var(--r2-selected); color:var(--r2-focus); font-weight:600; }
+main { min-width:0; padding:24px; }
+h1 { font-size:22px; line-height:1.25; font-weight:600; margin:0 0 12px; text-wrap:balance; }
+h2 { font-size:16px; line-height:1.5; margin:0 0 12px; font-weight:600; text-wrap:balance; }
+h3 { font-size:14px; margin:16px 0 8px; text-wrap:balance; }
+p { margin:8px 0; }
+.meta, small { font-size:12px; color:var(--r2-muted); }
+header .meta { color:var(--r2-header-text); }
+code,time { font-family:var(--font-mono); font-size:12px; }
+.lede { max-width:75ch; margin-bottom:24px; }
+.cr-layout { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:var(--r2-gap); align-items:start; }
+.panel { background:var(--r2-surface); border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:16px; min-width:0; }
+.span { grid-column:1/-1; }
+.chain { display:grid; grid-template-columns:1.4fr 1.2fr repeat(3,minmax(0,1fr)); gap:8px; }
+.chain-step { display:flex; flex-direction:column; justify-content:space-between; height:100%; padding:12px; border:1px solid var(--r2-line); border-radius:var(--r2-radius); background:var(--r2-surface); }
+.chain-step.root-blocker { border:2px solid var(--r2-error); background:color-mix(in srgb,var(--r2-error) 5%,var(--r2-surface)); }
+.chain-step.direct-gate { border:1px solid var(--r2-dependency-blocked); background:color-mix(in srgb,var(--r2-dependency-blocked) 4%,var(--r2-surface)); }
+.chain-step.downstream { border:1px solid var(--r2-line); background:var(--r2-surface); }
+.chain-step strong { display:block; margin:4px 0 4px; font-size:13px; }
+.chain-step p { font-size:12px; margin:4px 0; }
+.chain-summary { margin-top:12px; padding:10px 14px; border:1px solid var(--r2-line); border-radius:var(--r2-radius); background:var(--r2-background); font-size:12px; }
+.step-tag { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; }
+.step-tag.root { color:var(--r2-error); }
+.step-tag.gate { color:var(--r2-dependency-blocked); }
+.step-tag.pipe { color:var(--r2-muted); }
+.cause { color:var(--r2-dependency-blocked); }
+.proof { color:var(--r2-verification); }
+.row { border-bottom:1px solid var(--r2-line); padding:12px 0; }
+.row:last-child { border-bottom:0; padding-bottom:0; }
+.row:first-child { padding-top:0; }
+.toolbar { display:flex; flex-wrap:wrap; align-items:end; gap:12px; margin:16px 0; }
+label { display:block; font-weight:500; }
+input,select,textarea,button { font:inherit; color:inherit; }
+input,select,textarea { display:block; max-width:100%; background:var(--r2-surface); border:1px solid var(--r2-line); border-radius:var(--r2-control-radius); padding:8px; min-height:36px; caret-color:var(--r2-focus); }
+textarea { width:100%; min-height:88px; resize:vertical; }
+button { background:var(--r2-surface); border:1px solid var(--r2-line); border-radius:var(--r2-control-radius); padding:8px 12px; min-height:32px; cursor:pointer; line-height:1.5; }
+button:hover { background:var(--r2-background); }
+button:active:not(:disabled) { background:var(--r2-selected); }
+button:disabled { opacity:1; cursor:not-allowed; color:var(--r2-disabled); }
+button.primary { background:var(--r2-focus); color:var(--r2-surface); border-color:var(--r2-focus); }
+button.primary:hover,button.primary:active { background:var(--r2-header); }
+:focus-visible { outline:2px solid var(--r2-focus); outline-offset:2px; }
+header :focus-visible { outline-color:var(--r2-surface); }
+::selection { background:var(--r2-selected); color:var(--r2-ink); }
+[aria-invalid="true"] { border:2px solid var(--r2-error); }
+.error { color:var(--r2-error); }
+.table-scroll { overflow:auto; max-height:70vh; border:1px solid var(--r2-line); background:var(--r2-surface); scrollbar-gutter:stable; }
+table { border-collapse:collapse; width:100%; font-size:14px; }
+caption { text-align:left; padding:12px; font-size:12px; color:var(--r2-muted); }
+th { text-align:left; font-size:12px; font-weight:500; color:var(--r2-muted); position:sticky; top:0; background:var(--r2-surface); z-index:1; }
+th,td { padding:8px 12px; border-bottom:1px solid var(--r2-line); vertical-align:top; overflow-wrap:break-word; word-break:normal; white-space:normal; }
+td { min-height:44px; height:auto; }
+.compact td { padding:4px 12px; min-height:36px; font-size:14px; }
+td.identity { min-width:280px; width:38%; }
+td button { text-align:left; }
+td small { display:block; margin-top:4px; }
+.selected td { background:var(--r2-selected); }
+.check { min-width:32px; min-height:32px; }
+.axes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; margin:16px 0; }
+.axes dt { font-size:12px; color:var(--r2-muted); }
+.axes dd { margin:0; overflow-wrap:anywhere; font-weight:500; }
+.field { margin-block:16px; }
+.field label { margin-bottom:8px; }
+.split { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; align-items:start; }
+dialog { width:min(820px,calc(100% - 32px)); max-height:92vh; overflow:auto; border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:24px; color:var(--r2-ink); background:var(--r2-surface); }
+dialog::backdrop { background:color-mix(in srgb,var(--r2-header) 40%,transparent); }
+.dialog-nav { position:sticky; top:-24px; z-index:3; background:var(--r2-surface); display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--r2-line); }
+.dialog-trail { display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-size:12px; color:var(--r2-muted); }
+.dialog-trail .trail-node { font-family:var(--font-mono); font-weight:600; color:var(--r2-ink); }
+.dialog-top { display:flex; gap:16px; align-items:start; justify-content:space-between; }
+.dialog-top h2 { font-size:20px; margin:0; }
+.feedback { padding:12px; border:1px solid var(--r2-line); border-radius:var(--r2-control-radius); margin:16px 0; background:var(--r2-background); }
+.feedback.warning { border-color:var(--r2-timing); background:color-mix(in srgb,var(--r2-timing) 8%,var(--r2-surface)); }
+.feedback.error { border-color:var(--r2-error); background:color-mix(in srgb,var(--r2-error) 8%,var(--r2-surface)); }
+.feedback.success { border-color:var(--r2-verification); background:color-mix(in srgb,var(--r2-verification) 8%,var(--r2-surface)); }
+.screen-link { margin-right:12px; }
+details { margin:12px 0; }
+summary { cursor:pointer; min-height:32px; font-weight:500; }
+.mobile-list { display:none; }
+.skip { position:absolute; left:-10000px; }
+.skip:focus { position:fixed; top:8px; left:8px; background:var(--r2-surface); padding:12px; z-index:5; }
+.proof-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:16px 0; }
+.proof-card { border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:12px; background:var(--r2-surface); }
+.proof-card h4 { margin:0 0 4px; font-size:12px; color:var(--r2-muted); text-transform:uppercase; letter-spacing:0.08em; }
+.proof-card p { margin:4px 0; font-size:13px; }
+.queue-group { margin-bottom:24px; border:1px solid var(--r2-line); border-radius:var(--r2-radius); background:var(--r2-surface); overflow:hidden; }
+.queue-header { padding:12px 16px; background:var(--r2-background); border-bottom:1px solid var(--r2-line); display:flex; justify-content:space-between; align-items:center; }
+.queue-header h3 { margin:0; font-size:14px; font-weight:600; }
+.queue-body { padding:8px 16px; }
+.queue-item { display:flex; justify-content:space-between; align-items:start; padding:10px 0; border-bottom:1px solid var(--r2-line); gap:12px; }
+.queue-item:last-child { border-bottom:0; }
+.state-pill { display:inline-block; font-size:11px; font-weight:600; padding:2px 6px; border-radius:3px; text-transform:uppercase; letter-spacing:0.08em; font-family:var(--font-mono); }
+.state-pill.ready { background:color-mix(in srgb,var(--r2-dependency-ready) 12%,var(--r2-surface)); color:var(--r2-dependency-ready); }
+.state-pill.blocked { background:color-mix(in srgb,var(--r2-dependency-blocked) 12%,var(--r2-surface)); color:var(--r2-dependency-blocked); }
+.state-pill.waiting { background:color-mix(in srgb,var(--r2-timing) 12%,var(--r2-surface)); color:var(--r2-timing); }
+.state-pill.completed { background:color-mix(in srgb,var(--r2-verification) 12%,var(--r2-surface)); color:var(--r2-verification); }
+.state-pill.neutral { background:var(--r2-background); color:var(--r2-muted); }
+.specimen-tag { font-size:11px; font-family:var(--font-mono); color:var(--r2-muted); background:var(--r2-background); border:1px solid var(--r2-line); border-radius:3px; padding:2px 6px; text-transform:uppercase; letter-spacing:0.08em; }
+.state-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:16px 0; }
+.state-card { border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:16px; background:var(--r2-surface); }
+.state-card h4 { margin:0 0 6px; font-size:13px; }
+.skeleton-box { height:20px; background:linear-gradient(90deg,var(--r2-background) 25%,var(--r2-selected) 50%,var(--r2-background) 75%); border-radius:var(--r2-control-radius); margin-bottom:8px; }
+/* ── R8 additions: app-level role/density bar, grouped navigation, six completed surfaces ── */
+.appbar { display:flex; flex-wrap:wrap; gap:12px; align-items:end; justify-content:space-between; padding:10px 24px; background:var(--r2-surface); border-bottom:1px solid var(--r2-line); }
+.appbar label { font-size:12px; color:var(--r2-muted); font-weight:500; }
+.appbar select { min-height:32px; padding:4px 8px; }
+.appbar .fixture-flag { font-size:11px; font-family:var(--font-mono); letter-spacing:0.08em; text-transform:uppercase; color:var(--r2-muted); border:1px dashed var(--r2-line); border-radius:3px; padding:2px 6px; }
+.nav-group { margin:0 0 12px; }
+.nav-group h2 { font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--r2-muted); margin:0 0 6px; font-weight:600; }
+.screen-id { font-family:var(--font-mono); font-size:11px; color:var(--r2-muted); }
+nav button[aria-current="page"] .screen-id { color:var(--r2-focus); }
+.screen-head { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:baseline; justify-content:space-between; margin-bottom:4px; }
+.screen-head h1 { margin:0; }
+.authority { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 16px; margin:0 0 20px; padding:12px 14px; border:1px solid var(--r2-line); border-radius:var(--r2-radius); background:var(--r2-surface); font-size:12px; }
+.authority dt { font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--r2-muted); font-weight:600; }
+.authority dd { margin:2px 0 0; }
+.denied { border:1px solid var(--r2-error); border-radius:var(--r2-radius); padding:12px 14px; background:color-mix(in srgb,var(--r2-error) 6%,var(--r2-surface)); margin:16px 0; }
+.denied h3 { margin-top:0; }
+.stepper { display:flex; flex-wrap:wrap; gap:4px; margin:16px 0; padding:0; list-style:none; }
+.stepper li { flex:1 1 128px; min-width:128px; border:1px solid var(--r2-line); border-top:3px solid var(--r2-line); border-radius:var(--r2-control-radius); padding:8px 10px; background:var(--r2-surface); font-size:12px; }
+.stepper li .stage-name { display:block; font-weight:600; font-size:13px; margin-bottom:2px; }
+.stepper li.done { border-top-color:var(--r2-verification); }
+.stepper li.current { border-top-color:var(--r2-timing); background:color-mix(in srgb,var(--r2-timing) 7%,var(--r2-surface)); }
+.stepper li.future { color:var(--r2-muted); }
+.lineage td.version-cell { white-space:nowrap; }
+.lineage .supersede { color:var(--r2-muted); }
+.wizard-steps { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; padding:0; list-style:none; counter-reset:wz; }
+.wizard-steps li { flex:1 1 180px; border:1px solid var(--r2-line); border-radius:var(--r2-radius); padding:10px 12px; background:var(--r2-surface); font-size:12px; }
+.wizard-steps li[aria-current="step"] { border-color:var(--r2-focus); box-shadow:inset 0 0 0 1px var(--r2-focus); }
+.wizard-steps li strong { display:block; font-size:13px; }
+.result-row-ok td:first-child { border-left:3px solid var(--r2-verification); }
+.result-row-fail td:first-child { border-left:3px solid var(--r2-error); }
+.result-row-unknown td:first-child { border-left:3px solid var(--r2-timing); }
+.diffpair { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0; border:1px solid var(--r2-line); border-radius:var(--r2-control-radius); overflow:hidden; }
+.diffpair > div { padding:8px 10px; font-size:13px; min-width:0; overflow-wrap:anywhere; }
+.diffpair > div:first-child { background:var(--r2-background); border-right:1px solid var(--r2-line); }
+.diffpair .diff-label { display:block; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--r2-muted); font-weight:600; margin-bottom:2px; }
+.timeline { list-style:none; margin:16px 0; padding:0; }
+.timeline li { position:relative; padding:0 0 16px 20px; border-left:2px solid var(--r2-line); }
+.timeline li:last-child { border-left-color:transparent; padding-bottom:0; }
+.timeline li::before { content:""; position:absolute; left:-6px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--r2-focus); }
+.timeline li.security::before { background:var(--r2-error); }
+.timeline .evt-head { display:flex; flex-wrap:wrap; gap:4px 12px; align-items:baseline; }
+.timeline .evt-head strong { font-size:13px; }
+.gw-stage { border:1px solid var(--r2-line); border-radius:var(--r2-radius); background:var(--r2-surface); padding:12px 14px; margin-bottom:8px; }
+.gw-stage .gw-seq { font-family:var(--font-mono); font-size:11px; color:var(--r2-muted); letter-spacing:0.08em; }
+.gw-stage h3 { margin:2px 0 6px; font-size:14px; }
+.kv { display:grid; grid-template-columns:minmax(120px,max-content) minmax(0,1fr); gap:4px 16px; margin:12px 0; font-size:13px; }
+.kv dt { color:var(--r2-muted); font-size:12px; }
+.kv dd { margin:0; overflow-wrap:anywhere; }
+.count-note { font-size:12px; color:var(--r2-muted); margin:4px 0 12px; }
+.matter-card { border:1px solid var(--r2-line); border-radius:var(--r2-radius); background:var(--r2-surface); padding:14px 16px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:12px; align-items:start; justify-content:space-between; }
+.matter-card .matter-id { font-family:var(--font-mono); font-size:12px; color:var(--r2-muted); }
+.matter-card h3 { margin:2px 0 4px; font-size:15px; }
+@media (max-width:1100px) {
+  .app-layout { grid-template-columns:minmax(0,1fr); }
+  nav { display:flex; flex-wrap:wrap; gap:8px; border-right:0; border-bottom:1px solid var(--r2-line); }
+  nav button { width:auto; margin:0; }
+  .chain { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .chain .chain-step:last-child { grid-column:1/-1; }
+  .cr-layout { grid-template-columns:minmax(0,1fr); }
+  .state-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .authority { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:640px) {
+  header,main,.notice { padding:16px; }
+  nav { padding:8px 16px; }
+  button,input,select,summary { min-height:44px; }
+  .check { min-height:44px; min-width:44px; }
+  .table-scroll { display:none; }
+  .mobile-list { display:block; }
+  .chain,.split,.proof-grid,.state-grid { grid-template-columns:minmax(0,1fr); }
+  .panel { padding:12px; }
+  .axes { grid-template-columns:minmax(0,1fr); }
+  dialog { width:100%; max-height:100dvh; height:100dvh; margin:0; border-radius:0; padding:16px; }
+  .dialog-nav { top:-16px; }
+  .authority,.diffpair { grid-template-columns:minmax(0,1fr); }
+  .diffpair > div:first-child { border-right:0; border-bottom:1px solid var(--r2-line); }
+  .toolbar { align-items:stretch; }
+  .toolbar label { flex:1 1 140px; }
+}
+@media (prefers-reduced-motion:no-preference) and (hover:hover) {
+  button { transition:background-color var(--r2-duration) ease-out; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+}
+</style>
+</head>
+<body>
+<header><strong>MatterControl</strong><div class="scope"><span id="scenario-name"></span></div><span class="meta" id="scenario-asof"></span></header>
+<div class="appbar"><label for="scenario-select">Scenario<select id="scenario-select"><option value="SCENARIO-A">A</option><option value="SCENARIO-B">B</option></select></label><span class="fixture-flag" id="counts"></span></div>
+<main id="main" tabindex="-1" style="padding:24px;">
+<h1>Control Room</h1>
+<div class="cr-layout">
+<section class="panel span"><h2>Blockers &amp; critical causal path</h2><div id="chain" class="chain"></div><div class="chain-summary" id="chain-summary"></div></section>
+<section class="panel"><h2>Next Actions</h2><div id="next"></div></section>
+<section class="panel"><h2>Milestones</h2><div id="milestones"></div></section>
+<section class="panel"><h2>Waiting On</h2><div id="waiting"></div></section>
+<section class="panel"><h2>Evidence gaps</h2><div id="gaps"></div></section>
+</div>
+</main>
+<script id="study-data" type="application/json">[{"id":"SCENARIO-A","name":"Cross-Border Subsidiary Carve-Out","synthetic":"Fully synthetic study matter. Every organisation, person, authority and deadline is invented.","asOf":"2026-09-15T09:00:00+07:00","workstreams":["Regulatory Clearance","Perimeter & Carve-Out","Employee Transfer","Tax & Treasury","Closing & Funds Flow"],"owners":["M-01 Regulatory Lead","M-02 Corporate Counsel","M-03 HR Counsel","M-04 Tax Lead","M-05 Closing Coordinator"],"records":[{"id":"RA-01","type":"req","label":"Ministry filing of the carve-out notification is accepted","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-07T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-02","type":"req","label":"Local counsel opinion on the carve-out perimeter is on file","ws":"Regulatory Clearance","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-08T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-03","type":"req","label":"Competition clearance for the transfer is granted","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-09T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-04","type":"req","label":"Sector regulator pre-notification is acknowledged","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-10T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-05","type":"req","label":"Foreign investment screening is concluded","ws":"Regulatory Clearance","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-11T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-06","type":"req","label":"Data protection transfer assessment is recorded","ws":"Regulatory Clearance","owner":"M-03 HR Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-12T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-07","type":"req","label":"Regulatory carve-out clearance notification from the local ministry is received","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"WAITING","ver":"UNVERIFIED","dueISO":"2026-09-13T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-08","type":"req","label":"Carve-out perimeter schedule is agreed with the counterparty","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-14T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-09","type":"req","label":"Excluded assets register is reconciled","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-15T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-10","type":"req","label":"Intercompany agreements inside the perimeter are listed","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"IN_PROGRESS","ver":"UNVERIFIED","dueISO":"2026-09-16T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-11","type":"req","label":"Shared services continuity terms are documented","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-17T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-12","type":"req","label":"Transferring employee population is confirmed","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-18T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-13","type":"req","label":"Works council consultation is concluded","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-19T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-14","type":"req","label":"Pension transfer mechanics are agreed","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-20T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-15","type":"req","label":"Employment transfer notices are issued","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-21T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-16","type":"req","label":"Tax clearance certificate for the transferring entity is obtained","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-22T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-17","type":"req","label":"Stamp duty assessment is settled","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-23T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-18","type":"req","label":"Transfer pricing documentation is updated","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-24T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-19","type":"req","label":"Treasury accounts for the carve-out entity are opened","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-09-25T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-20","type":"req","label":"Funds flow statement is agreed with both sides","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-26T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-21","type":"req","label":"Closing conditions schedule is satisfied","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-07T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-22","type":"req","label":"Escrow arrangements are executed","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-08T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-23","type":"req","label":"Closing fund release is authorised","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-09T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-24","type":"req","label":"Post-closing regulatory confirmations are filed","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-10T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"RA-25","type":"req","label":"Transitional services commencement is acknowledged","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-09-11T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real transaction","revision":1},{"id":"AA-01","type":"action","label":"Record the ministry acceptance reference for RA-01","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-07T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-02","type":"action","label":"File the local counsel opinion against RA-02","ws":"Regulatory Clearance","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-08T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-03","type":"action","label":"Record the competition clearance decision for RA-03","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-09T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-04","type":"action","label":"Record the sector regulator acknowledgement for RA-04","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-10T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-05","type":"action","label":"Record the screening conclusion for RA-05","ws":"Regulatory Clearance","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-11T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-06","type":"action","label":"Record the data protection assessment for RA-06","ws":"Regulatory Clearance","owner":"M-03 HR Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-12T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-07","type":"action","label":"Chase the ministry for the outstanding carve-out clearance","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"WAITING","ver":"NOT_REQUIRED","dueISO":"2026-09-13T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-08","type":"action","label":"Circulate the agreed perimeter schedule for RA-08","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-14T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-09","type":"action","label":"Reconcile the excluded assets register for RA-09","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-15T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-10","type":"action","label":"Complete the intercompany agreement inventory for RA-10","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-16T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-11","type":"action","label":"Draft the shared services continuity terms for RA-11","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-17T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-12","type":"action","label":"Confirm the transferring employee population for RA-12","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-18T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-13","type":"action","label":"Minute the works council conclusion for RA-13","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-19T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-14","type":"action","label":"Agree the pension transfer mechanics for RA-14","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-20T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-15","type":"action","label":"Issue the employment transfer notices for RA-15","ws":"Employee Transfer","owner":"M-03 HR Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-21T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-16","type":"action","label":"File the tax clearance certificate for RA-16","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-22T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-17","type":"action","label":"Settle the stamp duty assessment for RA-17","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-23T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-18","type":"action","label":"Update the transfer pricing file for RA-18","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-24T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-19","type":"action","label":"Record the treasury account opening for RA-19","ws":"Tax & Treasury","owner":"M-04 Tax Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-09-25T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-20","type":"action","label":"Agree the funds flow statement for RA-20","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-26T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-21","type":"action","label":"Walk the closing conditions schedule for RA-21","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-07T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-22","type":"action","label":"Execute the escrow arrangements for RA-22","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-08T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-23","type":"action","label":"Authorise the closing fund release for RA-23","ws":"Closing & Funds Flow","owner":"M-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-09T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-24","type":"action","label":"File the post-closing regulatory confirmations for RA-24","ws":"Regulatory Clearance","owner":"M-01 Regulatory Lead","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-10T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AA-25","type":"action","label":"Acknowledge transitional services commencement for RA-25","ws":"Perimeter & Carve-Out","owner":"M-02 Corporate Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-09-11T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1}],"edges":[{"id":"DA-01","from":"RA-07","to":"AA-10","gate":"proof"},{"id":"DA-02","from":"RA-07","to":"AA-11","gate":"proof"},{"id":"DA-03","from":"RA-07","to":"AA-14","gate":"proof"},{"id":"DA-04","from":"RA-07","to":"AA-17","gate":"proof"},{"id":"DA-05","from":"AA-10","to":"RA-10","gate":"completion"},{"id":"DA-06","from":"AA-11","to":"RA-11","gate":"completion"},{"id":"DA-07","from":"AA-14","to":"RA-14","gate":"completion"},{"id":"DA-08","from":"AA-14","to":"AA-15","gate":"completion"},{"id":"DA-09","from":"AA-15","to":"RA-15","gate":"completion"},{"id":"DA-10","from":"AA-17","to":"RA-17","gate":"completion"},{"id":"DA-11","from":"AA-17","to":"AA-18","gate":"completion"},{"id":"DA-12","from":"AA-18","to":"RA-18","gate":"completion"},{"id":"DA-13","from":"RA-10","to":"AA-20","gate":"proof"},{"id":"DA-14","from":"RA-15","to":"AA-20","gate":"proof"},{"id":"DA-15","from":"AA-20","to":"RA-20","gate":"completion"},{"id":"DA-16","from":"RA-20","to":"AA-21","gate":"proof"},{"id":"DA-17","from":"AA-21","to":"RA-21","gate":"completion"},{"id":"DA-18","from":"RA-21","to":"AA-22","gate":"proof"},{"id":"DA-19","from":"AA-22","to":"RA-22","gate":"completion"},{"id":"DA-20","from":"RA-22","to":"AA-23","gate":"proof"},{"id":"DA-21","from":"AA-23","to":"RA-23","gate":"completion"},{"id":"DA-22","from":"RA-23","to":"AA-24","gate":"proof"},{"id":"DA-23","from":"AA-24","to":"RA-24","gate":"completion"},{"id":"DA-24","from":"RA-11","to":"AA-25","gate":"proof"},{"id":"DA-25","from":"AA-25","to":"RA-25","gate":"completion"}],"evidenceRequirements":[{"id":"ERA-01","subject":"RA-01","criterion":"Recorded proof for RA-01","evidence":"EVA-01","verification":"VERIFIED"},{"id":"ERA-02","subject":"RA-02","criterion":"Recorded proof for RA-02","evidence":"EVA-02","verification":"VERIFIED"},{"id":"ERA-03","subject":"RA-03","criterion":"Recorded proof for RA-03","evidence":"EVA-03","verification":"VERIFIED"},{"id":"ERA-04","subject":"RA-04","criterion":"Recorded proof for RA-04","evidence":"EVA-04","verification":"VERIFIED"},{"id":"ERA-05","subject":"RA-05","criterion":"Recorded proof for RA-05","evidence":"EVA-05","verification":"VERIFIED"},{"id":"ERA-06","subject":"RA-06","criterion":"Recorded proof for RA-06","evidence":"EVA-06","verification":"VERIFIED"},{"id":"ERA-07","subject":"RA-07","criterion":"Written carve-out clearance notification issued by the local ministry","evidence":null,"verification":"UNVERIFIED","absence":"The ministry has not issued the clearance notification; nothing has been received to record."},{"id":"ERA-08","subject":"RA-08","criterion":"Recorded proof for RA-08","evidence":"EVA-08","verification":"VERIFIED"},{"id":"ERA-09","subject":"RA-09","criterion":"Recorded proof for RA-09","evidence":"EVA-09","verification":"VERIFIED"},{"id":"ERA-10","subject":"RA-10","criterion":"Recorded proof for RA-10","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-11","subject":"RA-11","criterion":"Recorded proof for RA-11","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-12","subject":"RA-12","criterion":"Recorded proof for RA-12","evidence":"EVA-12","verification":"VERIFIED"},{"id":"ERA-13","subject":"RA-13","criterion":"Recorded proof for RA-13","evidence":"EVA-13","verification":"VERIFIED"},{"id":"ERA-14","subject":"RA-14","criterion":"Recorded proof for RA-14","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-15","subject":"RA-15","criterion":"Recorded proof for RA-15","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-16","subject":"RA-16","criterion":"Recorded proof for RA-16","evidence":"EVA-16","verification":"VERIFIED"},{"id":"ERA-17","subject":"RA-17","criterion":"Recorded proof for RA-17","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-18","subject":"RA-18","criterion":"Recorded proof for RA-18","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-19","subject":"RA-19","criterion":"Recorded proof for RA-19","evidence":"EVA-19","verification":"VERIFIED"},{"id":"ERA-20","subject":"RA-20","criterion":"Recorded proof for RA-20","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-21","subject":"RA-21","criterion":"Recorded proof for RA-21","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-22","subject":"RA-22","criterion":"Recorded proof for RA-22","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-23","subject":"RA-23","criterion":"Recorded proof for RA-23","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-24","subject":"RA-24","criterion":"Recorded proof for RA-24","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERA-25","subject":"RA-25","criterion":"Recorded proof for RA-25","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."}],"milestones":[{"id":"MSA-01","name":"Regulatory clearance complete","due":"2026-09-18T17:00:00+07:00","required":["RA-01","RA-03","RA-04","RA-05","RA-07"]},{"id":"MSA-02","name":"Carve-out perimeter locked","due":"2026-09-24T17:00:00+07:00","required":["RA-08","RA-09","RA-10","RA-11"]},{"id":"MSA-03","name":"Closing fund release","due":"2026-09-30T17:00:00+07:00","required":["RA-20","RA-21","RA-22","RA-23"]}],"externalParties":[{"id":"EPA-01","alias":"Northgate Ministry Demo","role":"Clearance authority"},{"id":"EPA-02","alias":"Sable Counterparty Demo","role":"Transaction counterparty"}]},{"id":"SCENARIO-B","name":"Syndicated Debt Refinancing","synthetic":"Fully synthetic study matter. Every organisation, person, lender and deadline is invented.","asOf":"2026-10-12T09:00:00+07:00","workstreams":["Facility Documentation","Security & Perfection","Credit Approvals","Syndication","Closing Mechanics"],"owners":["N-01 Lead Counsel","N-02 Security Counsel","N-03 Credit Lead","N-04 Agency Lead","N-05 Closing Coordinator"],"records":[{"id":"RB-01","type":"req","label":"Facility agreement execution version is agreed","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-06T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-02","type":"req","label":"Intercreditor agreement is agreed","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-07T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-03","type":"req","label":"Fee letters are executed","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-08T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-04","type":"req","label":"Conditions precedent checklist is agreed","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-09T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-05","type":"req","label":"Counterparty perfection certificate carries the formal legal opinion exhibit","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"WAITING","ver":"PARTIALLY_VERIFIED","dueISO":"2026-10-10T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-06","type":"req","label":"Share pledge is executed and registered","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-11T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-07","type":"req","label":"Receivables security is perfected","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-12T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-08","type":"req","label":"Account control agreements are executed","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-13T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-09","type":"req","label":"Credit committee approval is minuted","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-14T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-10","type":"req","label":"Know-your-customer clearance for every lender is complete","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-15T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-11","type":"req","label":"Sanctions screening for the obligor group is complete","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-16T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-12","type":"req","label":"Financial covenant model is agreed","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"IN_PROGRESS","ver":"UNVERIFIED","dueISO":"2026-10-17T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-13","type":"req","label":"Allocation schedule is confirmed with the syndicate","ws":"Syndication","owner":"N-04 Agency Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-18T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-14","type":"req","label":"Transfer certificates are prepared","ws":"Syndication","owner":"N-04 Agency Lead","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-19T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-15","type":"req","label":"Agency fee arrangements are documented","ws":"Syndication","owner":"N-04 Agency Lead","exec":"COMPLETED","ver":"VERIFIED","dueISO":"2026-10-20T17:00:00+07:00","validProof":true,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-16","type":"req","label":"Lender signature pages are collected","ws":"Syndication","owner":"N-04 Agency Lead","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-21T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-17","type":"req","label":"Funds flow memorandum is agreed","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-22T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-18","type":"req","label":"Utilisation request is validated","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-23T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-19","type":"req","label":"Closing certificate is executed","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-24T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-20","type":"req","label":"Drawdown is authorised","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-25T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-21","type":"req","label":"Post-closing registrations are filed","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-06T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"RB-22","type":"req","label":"Legal opinions are dated and released","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"NOT_STARTED","ver":"UNVERIFIED","dueISO":"2026-10-07T17:00:00+07:00","validProof":false,"explicitNotRequired":false,"sub":"Synthetic study record; no relation to any real financing","revision":1},{"id":"AB-01","type":"action","label":"Circulate the execution version for RB-01","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-06T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-02","type":"action","label":"Record intercreditor agreement execution for RB-02","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-07T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-03","type":"action","label":"File the executed fee letters for RB-03","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-08T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-04","type":"action","label":"Agree the conditions precedent checklist for RB-04","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-09T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-05","type":"action","label":"Chase the counterparty for the missing legal opinion exhibit","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"WAITING","ver":"NOT_REQUIRED","dueISO":"2026-10-10T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-06","type":"action","label":"Prepare the share pledge for execution for RB-06","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-11T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-07","type":"action","label":"Lodge the receivables security filings for RB-07","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-12T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-08","type":"action","label":"Execute the account control agreements for RB-08","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-13T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-09","type":"action","label":"Minute the credit committee approval for RB-09","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-14T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-10","type":"action","label":"Complete lender KYC collection for RB-10","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-15T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-11","type":"action","label":"Record sanctions screening results for RB-11","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-16T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-12","type":"action","label":"Finalise the covenant model for RB-12","ws":"Credit Approvals","owner":"N-03 Credit Lead","exec":"IN_PROGRESS","ver":"NOT_REQUIRED","dueISO":"2026-10-17T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-13","type":"action","label":"Confirm the allocation schedule for RB-13","ws":"Syndication","owner":"N-04 Agency Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-18T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-14","type":"action","label":"Prepare the transfer certificates for RB-14","ws":"Syndication","owner":"N-04 Agency Lead","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-19T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-15","type":"action","label":"Document the agency fee arrangements for RB-15","ws":"Syndication","owner":"N-04 Agency Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-20T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-16","type":"action","label":"Collect lender signature pages for RB-16","ws":"Syndication","owner":"N-04 Agency Lead","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-21T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-17","type":"action","label":"Agree the funds flow memorandum for RB-17","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-22T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-18","type":"action","label":"Validate the utilisation request for RB-18","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-23T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-19","type":"action","label":"Execute the closing certificate for RB-19","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-24T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-20","type":"action","label":"Authorise the drawdown for RB-20","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-25T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-21","type":"action","label":"File the post-closing registrations for RB-21","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-06T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-22","type":"action","label":"Date and release the legal opinions for RB-22","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-07T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-23","type":"action","label":"Reconcile the signature page log against the allocation schedule","ws":"Syndication","owner":"N-04 Agency Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-08T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-24","type":"action","label":"Record the agent appointment acceptance","ws":"Syndication","owner":"N-04 Agency Lead","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-09T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-25","type":"action","label":"Confirm the borrower notice address details","ws":"Closing Mechanics","owner":"N-05 Closing Coordinator","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-10T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-26","type":"action","label":"Record the insurance broker confirmation","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-11T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-27","type":"action","label":"Archive the executed fee letters","ws":"Facility Documentation","owner":"N-01 Lead Counsel","exec":"COMPLETED","ver":"NOT_REQUIRED","dueISO":"2026-10-12T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1},{"id":"AB-28","type":"action","label":"Escalate the outstanding legal opinion exhibit to the counterparty’s counsel","ws":"Security & Perfection","owner":"N-02 Security Counsel","exec":"NOT_STARTED","ver":"NOT_REQUIRED","dueISO":"2026-10-13T17:00:00+07:00","validProof":false,"explicitNotRequired":true,"sub":"Synthetic study record; explicit no-proof applicability","revision":1}],"edges":[{"id":"DB-01","from":"RB-05","to":"AB-06","gate":"proof"},{"id":"DB-02","from":"RB-05","to":"AB-07","gate":"proof"},{"id":"DB-03","from":"RB-05","to":"AB-08","gate":"proof"},{"id":"DB-04","from":"RB-05","to":"AB-12","gate":"proof"},{"id":"DB-05","from":"AB-06","to":"RB-06","gate":"completion"},{"id":"DB-06","from":"AB-07","to":"RB-07","gate":"completion"},{"id":"DB-07","from":"AB-08","to":"RB-08","gate":"completion"},{"id":"DB-08","from":"AB-12","to":"RB-12","gate":"completion"},{"id":"DB-09","from":"RB-06","to":"AB-14","gate":"proof"},{"id":"DB-10","from":"RB-07","to":"AB-14","gate":"proof"},{"id":"DB-11","from":"AB-14","to":"RB-14","gate":"completion"},{"id":"DB-12","from":"RB-14","to":"AB-16","gate":"proof"},{"id":"DB-13","from":"AB-16","to":"RB-16","gate":"completion"},{"id":"DB-14","from":"RB-16","to":"AB-17","gate":"proof"},{"id":"DB-15","from":"AB-17","to":"RB-17","gate":"completion"},{"id":"DB-16","from":"RB-17","to":"AB-18","gate":"proof"},{"id":"DB-17","from":"AB-18","to":"RB-18","gate":"completion"},{"id":"DB-18","from":"RB-18","to":"AB-19","gate":"proof"},{"id":"DB-19","from":"AB-19","to":"RB-19","gate":"completion"},{"id":"DB-20","from":"RB-19","to":"AB-20","gate":"proof"},{"id":"DB-21","from":"AB-20","to":"RB-20","gate":"completion"},{"id":"DB-22","from":"RB-08","to":"AB-21","gate":"proof"},{"id":"DB-23","from":"AB-21","to":"RB-21","gate":"completion"},{"id":"DB-24","from":"RB-12","to":"AB-22","gate":"proof"},{"id":"DB-25","from":"AB-22","to":"RB-22","gate":"completion"}],"evidenceRequirements":[{"id":"ERB-01","subject":"RB-01","criterion":"Recorded proof for RB-01","evidence":"EVB-01","verification":"VERIFIED"},{"id":"ERB-02","subject":"RB-02","criterion":"Recorded proof for RB-02","evidence":"EVB-02","verification":"VERIFIED"},{"id":"ERB-03","subject":"RB-03","criterion":"Recorded proof for RB-03","evidence":"EVB-03","verification":"VERIFIED"},{"id":"ERB-04","subject":"RB-04","criterion":"Recorded proof for RB-04","evidence":"EVB-04","verification":"VERIFIED"},{"id":"ERB-05","subject":"RB-05","criterion":"Perfection certificate together with the formal legal opinion exhibit","evidence":"EVB-05","verification":"PARTIALLY_VERIFIED","absence":"The certificate is on file; the formal legal opinion exhibit it must carry is missing."},{"id":"ERB-06","subject":"RB-06","criterion":"Recorded proof for RB-06","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-07","subject":"RB-07","criterion":"Recorded proof for RB-07","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-08","subject":"RB-08","criterion":"Recorded proof for RB-08","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-09","subject":"RB-09","criterion":"Recorded proof for RB-09","evidence":"EVB-09","verification":"VERIFIED"},{"id":"ERB-10","subject":"RB-10","criterion":"Recorded proof for RB-10","evidence":"EVB-10","verification":"VERIFIED"},{"id":"ERB-11","subject":"RB-11","criterion":"Recorded proof for RB-11","evidence":"EVB-11","verification":"VERIFIED"},{"id":"ERB-12","subject":"RB-12","criterion":"Recorded proof for RB-12","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-13","subject":"RB-13","criterion":"Recorded proof for RB-13","evidence":"EVB-13","verification":"VERIFIED"},{"id":"ERB-14","subject":"RB-14","criterion":"Recorded proof for RB-14","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-15","subject":"RB-15","criterion":"Recorded proof for RB-15","evidence":"EVB-15","verification":"VERIFIED"},{"id":"ERB-16","subject":"RB-16","criterion":"Recorded proof for RB-16","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-17","subject":"RB-17","criterion":"Recorded proof for RB-17","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-18","subject":"RB-18","criterion":"Recorded proof for RB-18","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-19","subject":"RB-19","criterion":"Recorded proof for RB-19","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-20","subject":"RB-20","criterion":"Recorded proof for RB-20","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-21","subject":"RB-21","criterion":"Recorded proof for RB-21","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."},{"id":"ERB-22","subject":"RB-22","criterion":"Recorded proof for RB-22","evidence":null,"verification":"UNVERIFIED","absence":"No evidence has been supplied for this condition yet."}],"milestones":[{"id":"MSB-01","name":"Documentation agreed","due":"2026-10-14T17:00:00+07:00","required":["RB-01","RB-02","RB-03","RB-04"]},{"id":"MSB-02","name":"Security perfected","due":"2026-10-20T17:00:00+07:00","required":["RB-05","RB-06","RB-07","RB-08"]},{"id":"MSB-03","name":"Closing","due":"2026-10-28T17:00:00+07:00","required":["RB-16","RB-17","RB-18","RB-19","RB-20"]}],"externalParties":[{"id":"EPB-01","alias":"Lakeside Obligor Demo","role":"Counterparty"},{"id":"EPB-02","alias":"Pinebank Agent Demo","role":"Facility agent"}]}]</script>
+<script id="study-logic">
+"use strict";
+/* Participant surface for the AC-137 comprehension study.
+   It carries the two study datasets and the Control Room rendering, and
+   nothing else: no expected-response text, no scoring vocabulary and no
+   study-administration material. Those live outside this bundle. */
+const $ = id => document.getElementById(id);
+const DATASETS = JSON.parse($('study-data').textContent);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let ds = DATASETS[0];
+
+const idx = () => Object.fromEntries(ds.records.map(r => [r.id, r]));
+const incoming = id => ds.edges.filter(e => e.to === id);
+const outgoing = id => ds.edges.filter(e => e.from === id);
+const depCache = new Map();
+function gateSatisfied(e) {
+  const p = idx()[e.from];
+  if (!p) return {ok: false, why: 'prerequisite is missing'};
+  if (dependency(p.id).state !== 'READY') return {ok: false, why: `${p.id} is itself BLOCKED`};
+  if (p.exec !== 'COMPLETED') return {ok: false, why: `${p.id} execution is ${p.exec}`};
+  if (e.gate === 'completion') return {ok: true, why: `${p.id} is COMPLETED`};
+  if (p.ver !== 'VERIFIED' || p.validProof !== true) return {ok: false, why: `${p.id} has no valid accepted proof (verification ${p.ver})`};
+  return {ok: true, why: `${p.id} is COMPLETED with valid proof`};
+}
+function dependency(id) {
+  if (depCache.has(id)) return depCache.get(id);
+  depCache.set(id, {state: 'READY', failing: []});
+  const inc = incoming(id);
+  let out;
+  if (!inc.length) out = {state: 'READY', failing: [], because: 'No incoming gate is declared.'};
+  else {
+    const failing = inc.map(e => ({edge: e, ...gateSatisfied(e)})).filter(x => !x.ok);
+    out = failing.length
+      ? {state: 'BLOCKED', failing, because: `${failing.length} of ${inc.length} incoming gates are unsatisfied.`}
+      : {state: 'READY', failing: [], because: `All ${inc.length} incoming gates are satisfied.`};
+  }
+  depCache.set(id, out);
+  return out;
+}
+const eligible = r => r.type === 'action' && !!r.owner && ['NOT_STARTED', 'IN_PROGRESS'].includes(r.exec) && dependency(r.id).state === 'READY';
+function rootCauses(id, seen) {
+  seen = seen || new Set();
+  if (seen.has(id)) return [];
+  seen.add(id);
+  const d = dependency(id);
+  if (d.state === 'READY') return [];
+  const out = [];
+  for (const f of d.failing) {
+    const up = rootCauses(f.edge.from, seen);
+    if (up.length) out.push(...up); else out.push(f.edge.from);
+  }
+  return out;
+}
+function downstream(id) {
+  const seen = new Set([id]), q = outgoing(id).slice(), out = [];
+  while (q.length) { const e = q.shift(); if (seen.has(e.to)) continue; seen.add(e.to); out.push(e.to); q.push(...outgoing(e.to)); }
+  return out;
+}
+function milestoneState(m) {
+  const map = idx();
+  const unmet = (m.required || []).filter(id => {
+    const r = map[id];
+    if (!r) return true;
+    if (dependency(id).state !== 'READY' || r.exec !== 'COMPLETED') return true;
+    if (r.ver === 'NOT_REQUIRED') return r.explicitNotRequired !== true;
+    return !(r.ver === 'VERIFIED' && r.validProof === true);
+  });
+  return unmet.length
+    ? {state: 'BLOCKED', because: `Unmet declared prerequisites: ${unmet.join(', ')}.`}
+    : {state: 'READY', because: `All ${(m.required || []).length} declared prerequisites are met.`};
+}
+const pill = (c, t) => `<span class="state-pill ${c}">${esc(t)}</span>`;
+
+function render() {
+  depCache.clear();
+  const map = idx();
+  const blocked = ds.records.filter(r => dependency(r.id).state === 'BLOCKED');
+  const reach = new Map();
+  blocked.forEach(r => rootCauses(r.id).forEach(rc => {
+    if (!reach.has(rc)) reach.set(rc, new Set());
+    reach.get(rc).add(r.id);
+  }));
+  const ranked = [...reach.entries()].sort((a, b) => b[1].size - a[1].size || a[0].localeCompare(b[0]));
+  const rootId = ranked.length ? ranked[0][0] : null;
+  const root = rootId ? map[rootId] : null;
+  const er = rootId ? ds.evidenceRequirements.find(e => e.subject === rootId) : null;
+  const elig = ds.records.filter(eligible);
+
+  const steps = [];
+  if (rootId) {
+    let cursor = rootId; const guard = new Set([cursor]); steps.push(cursor);
+    while (true) {
+      const next = outgoing(cursor).map(e => e.to).filter(id => !guard.has(id) && dependency(id).state === 'BLOCKED');
+      if (!next.length) break;
+      next.sort((a, b) => downstream(b).length - downstream(a).length || a.localeCompare(b));
+      cursor = next[0]; guard.add(cursor); steps.push(cursor);
+    }
+  }
+
+  $('scenario-name').textContent = `${ds.id} · ${ds.name}`;
+  $('scenario-asof').textContent = `As of ${ds.asOf}`;
+  $('chain').innerHTML = steps.slice(0, 5).map((id, i) => {
+    const r = map[id], d = dependency(id), out = outgoing(id);
+    const cause = i === 0
+      ? (er && !er.evidence ? `${er.id} has no supplied evidence: ${er.criterion}. ${er.absence || ''}`
+         : er && er.absence ? `${er.id} is only partially satisfied: ${er.absence}`
+         : `execution is ${r.exec} and verification is ${r.ver}`)
+      : d.failing.map(f => `${f.edge.id} from ${f.edge.from}: ${f.why}`).join(' ');
+    return `<div class="chain-step ${i === 0 ? 'root-blocker' : i === 1 ? 'direct-gate' : 'downstream'}">
+      <div><span class="step-tag ${i === 0 ? 'root' : i === 1 ? 'gate' : 'pipe'}">Step ${i + 1}</span>
+        <strong><code>${esc(r.id)}</code> · ${esc(r.label)}</strong>
+        <p class="meta">${esc(r.exec)} / ${esc(d.state)} · accountable owner ${esc(r.owner || 'unassigned')}</p>
+        <p class="cause"><strong>Cause:</strong> ${esc(cause)}</p>
+        <p><strong>Downstream impact:</strong> ${esc(out.length ? out.map(e => `${e.id} → ${e.to} (${e.gate} gate)`).join('; ') : 'No outgoing edge is declared.')}</p>
+      </div></div>`;
+  }).join('');
+
+  $('chain-summary').innerHTML = root
+    ? `<p><strong>Primary blocker:</strong> <code>${esc(root.id)}</code> — ${esc(root.label)}.
+       <strong>Accountable owner:</strong> ${esc(root.owner)}.
+       <strong>Records reached through declared edges:</strong> ${esc([...reach.get(rootId)].sort().join(', '))}.</p>`
+    : '<p>No blocked record is present in this snapshot.</p>';
+
+  $('next').innerHTML = `<p><strong>${elig.length} eligible Action${elig.length === 1 ? '' : 's'}.</strong></p>` +
+    (elig.length
+      ? elig.map(r => `<div class="row"><strong><code>${esc(r.id)}</code> · ${esc(r.label)}</strong><p class="meta">Owner ${esc(r.owner)} · due ${esc(r.dueISO)}</p></div>`).join('')
+      : '<p class="meta">No Action is currently executable; every assigned Action is waiting on an external party or blocked by an unsatisfied gate.</p>');
+
+  $('milestones').innerHTML = ds.milestones.map(m => {
+    const v = milestoneState(m);
+    return `<div class="row"><code>${esc(m.id)}</code> ${esc(m.name)} · due <time>${esc(m.due)}</time>
+      <p>${pill(v.state === 'READY' ? 'ready' : 'blocked', v.state)} ${esc(v.because)}</p></div>`;
+  }).join('');
+
+  $('waiting').innerHTML = ds.records.filter(r => r.exec === 'WAITING').map(r => {
+    const d = dependency(r.id);
+    return `<div class="row"><strong><code>${esc(r.id)}</code> · ${esc(r.label)}</strong>
+      <p class="meta">Internal accountable owner ${esc(r.owner)} · execution ${esc(r.exec)} / dependency ${esc(d.state)}</p></div>`;
+  }).join('') || '<p class="meta">No record is waiting on an external party.</p>';
+
+  $('gaps').innerHTML = ds.evidenceRequirements.filter(e => e.absence).map(e =>
+    `<div class="row"><code>${esc(e.id)}</code> on <code>${esc(e.subject)}</code><p>${esc(e.criterion)}</p><p class="cause">${esc(e.absence)}</p></div>`).join('');
+
+  $('counts').textContent = `${ds.records.filter(r => r.type === 'req').length} requirements · ${ds.records.filter(r => r.type === 'action').length} actions · ${ds.edges.length} dependency edges · ${blocked.length} blocked records`;
+}
+
+$('scenario-select').addEventListener('change', e => {
+  ds = DATASETS.find(d => d.id === e.target.value) || DATASETS[0];
+  render();
+});
+render();
+</script>
+</body></html>

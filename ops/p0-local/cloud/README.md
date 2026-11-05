@@ -1,5 +1,3 @@
-> Operator note: dated observations below are historical. Use the current [operations index](../../../docs/operations/README.md) for maintained setup and release boundaries. Historical evidence paths refer to the coordination archive, not this product tree.
-
 # ZITADEL Cloud Free profile (synthetic development only)
 
 Public identifiers only; the API key stays in `keys/396983916088540712.json` (0600, git-ignored by exact

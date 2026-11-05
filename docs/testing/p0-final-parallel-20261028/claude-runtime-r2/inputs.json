@@ -1,0 +1,45 @@
+{
+ "candidate": {
+  "manifest": "docs/testing/p0-final-parallel-20261028/claude-rv001-fix/source-manifest.json",
+  "manifest_sha256": "de8424ead1e9cd911c7a6fe124b48e5d67b6dcc9e519bb10a8b87453b05d4489",
+  "delta_sha256": "38e9eb4fbd8f27ab256c404df29357176c91643bf73105f84b811b1732633b54",
+  "entries": 719,
+  "opening_match": "719/719 at 2026-10-28T15:34:41Z",
+  "closing_match": "717/719 at 2026-10-28T15:42:45Z; package.json and pnpm-lock.yaml drifted (see resources/source-drift.json)"
+ },
+ "contract_sha256": "814c419222b966d6f340cb421ab8d8d44b3310ece336cc9cbe1b747472194e30",
+ "r9_manifest_sha256": "2b68bc92431270dc456111590ca1de2231e2a10dba95829dccd0a3b68ba87563",
+ "restore_scripts": {
+  "run.sh": "8e4af211f4b6fadedccafa853d0939d1ef6b91b3cd2a1f602ebbb571477ec288",
+  "verify.py": "93e2177298915534e341594f2119d26ff9c66115abf5903d408ffd6d4a2f044b",
+  "test_verify.py": "80d8c5ed14cbd6bff79479b7547434b3b4455209d1eefec7fee60c7aae4e64d3"
+ },
+ "historical_lineage_read_not_modified": {
+  "restore/return.md": "f2b13238f1b093e8f06996a07a029637599be20c7de25646aaf4d2244f9498d9",
+  "zitadel/return.md": "77f7d0e2e92693602b30d7916b179a31d4337a6667e3d209cae1d8da8c88d6db",
+  "zitadel/auth-slot-released.json": "b87446d32ad740aad255f67a4bc3364ee10960748a09fd60d6eba539ffba6a16",
+  "zitadel/runtime-ready.json": "d2fdf60743b6b1ed7acc211ecdd3c36f3bafa315b705a288092741b726a47ae4",
+  "zitadel/resource-ledger.json": "242304451c853723e2fe064a39d2d8f78e128ab5ebfa8abb4c1961fe6a965a9c",
+  "zitadel/auth-cases.json": "2e452b527c2d04cdd61ba9bf116a9cfacd7d459823588275968500d5129c31a1",
+  "ui/return.md": "c1d0699766a3c43e7307300172873788fee87a18ba5e97ac5d618cb11f7ace99",
+  "ui/cases.json": "bf2d082e9e5465a9bc2ae04375a4ed1540e7a45d1d33b9f06c0a9a26cd29771d",
+  "ui/playwright.rest.config.ts": "4bceb6274a9ba15b6cfbea1d16bfabc459e49ef911d7c45787b5cdc61714f94f"
+ },
+ "old_714_manifest_sha256": "0f169ae1a25a0a94b591941d36eec78e8091c1c8beabc5357e193c8f0e5fd821",
+ "prompt": "docs/implementation/handoffs/p0-rv001-verification-20261028/02-CLAUDE-BROWSER-IDP-RESTORE.md",
+ "prompt_sha256": "374161036cac7bb32e3958cd889774d0d06b2db9c427c53e6500e9ac1424ecac",
+ "credential_allowlist_metadata_checked": {
+  "keys/396983916088540712.json": "regular, current uid, mode 0600, not symlink (2026-10-28T15:3x)",
+  "/tmp/mc-p0-zcode-testenv/dsns.env": "regular, current uid, mode 0600, not symlink"
+ },
+ "public_config_sources": [
+  "ops/p0-local/cloud/README.md",
+  "ops/p0-local/cloud/frontend.cloud.env.local.example",
+  "zitadel/runtime-ready.json"
+ ],
+ "not_opened": [
+  "ops/p0-local/cloud/backend.cloud.env",
+  "ops/p0-local/secrets/**",
+  "ops/p0-local/runtime/*key*"
+ ]
+}

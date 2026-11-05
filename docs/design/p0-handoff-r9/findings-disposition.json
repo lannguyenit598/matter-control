@@ -1,0 +1,1372 @@
+{
+  "task": "MC-P0-DESIGN-R9-TARGETED-CORRECTION",
+  "status": "AUTHOR_COMPLETE_WITH_VERIFICATION_BLOCKERS",
+  "historical_findings": [
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R01",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Approved bulk contract source-corrected; exact interaction/partial-result/error contract needs formal independent document acceptance before product implementation. Real permission/revision/atomic-audit tests remain implementation QA obligations.",
+        "owner": "Independent QA, then frontend/backend owners",
+        "acceptance": "Read-only reviewer must confirm RULE-013 fields/defaults/mixed results/recovery and scope; later negative/retry/concurrency tests.",
+        "status": "SOURCE_CORRECTED; native/QA PARTIAL"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R02",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Settled policies restored and unchanged; formal independent domain/permission interpretation still pending.",
+        "owner": "Independent QA",
+        "acceptance": "Review designated verifier, applicability/dispute, import grouping/dedup, scoped export and draft brief; no policy waiver.",
+        "status": "SOURCE_CORRECTED; formal acceptance pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R03",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Atlas/namespace board corrections source-checked; actual dense-board readability and full-scale cross-view comprehension still unknown.",
+        "owner": "Future authorized full-scale prototype owner; Codex coordinates",
+        "acceptance": "Same canonical T0 across Control Room/Grid/Evidence, display historical self-review caveat, no invented milestone/record owner.",
+        "status": "SOURCE_PASS; rendered PARTIAL for old shell only"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R04",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Proof-edge vs milestone semantics source-correct; formal testability/interpretation acceptance required before coding the business-facing interaction.",
+        "owner": "Independent QA",
+        "acceptance": "Review distinct predicates, valid proof and NOT_REQUIRED limitation; rejected/disputed/blocked cases with explicit expected feedback.",
+        "status": "SOURCE_PASS; semantic runtime not tested"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R05",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Three connected concept slices are honest; full-scale flow/navigation and mobile alternatives need a scoped executable specimen.",
+        "owner": "Future authorized prototype owner",
+        "acceptance": "Three canonical slices with return context, exact evidence/version and filing receipt/outcome/repeat/negative scope; disclose unimplemented functions.",
+        "status": "SOURCE_CORRECTED; mobile NEEDS_CLARIFICATION"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R05-MOBILE",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "All matching rows generated; reachability/reflow still unobserved. No PO capture duty.",
+        "owner": "Codex validation coordinator / authorized prototype owner",
+        "acceptance": "390CSSpx and zoom conditions when supported; last row, search/reset, readable owner/reasons, permitted simple-action alternatives.",
+        "status": "NOT_TESTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UI-T01",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Selected system increases app-scale text and separates miniatures; long labels/fallback/zoom unmeasured.",
+        "owner": "Prototype validation owner",
+        "acceptance": "1:1 Control Room/Grid/Evidence at1440/1280/390 and200% where supported; no clipping of critical context.",
+        "status": "SOURCE_UPDATED; no rendered PASS"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UI-T02",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Coherent control tokens specified; actual target geometry/adjacent spacing not measured.",
+        "owner": "Prototype validation owner",
+        "acceptance": "Measure clickable bounds, adjacent controls, touch and keyboard recovery; apply relevant standard/context.",
+        "status": "NOT_TESTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UI-T03",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+        "rationale": "One selected app namespace/palette now implemented in concept CSS; component/computed-state coverage later.",
+        "owner": "Frontend QA under approved implementation",
+        "acceptance": "Computed contrast for body/metadata/state/error/selected/disabled/focus, axis comprehension, no status color-only logic.",
+        "status": "Static selected token pairs checked; computed CSS not tested"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N01",
+        "severity": "HIGH",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Explicit T0 no-candidate and accountable Waiting On now in the actual Control Room representation, not only a preface.",
+        "owner": "Prototype validation owner",
+        "acceptance": "Manager identifies cause/owner/permitted next step or why none without treating WAITING/Requirement as Action.",
+        "status": "SOURCE_CORRECTED; ten-second goal unmeasured"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N02",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Milestone UNASSESSED retained where required sets missing; no fabricated counts.",
+        "owner": "Prototype validation owner",
+        "acceptance": "Distinguish date proximity, known unsatisfied prerequisites and unassessed required set.",
+        "status": "SOURCE_CORRECTED; comprehension not tested"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N03",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Origin/tab return and exact edge context code retained; native focus unobserved.",
+        "owner": "Prototype validation owner",
+        "acceptance": "RQ-02→Evidence→return, RQ-11 exact dependencies; filtering/rerender fallback and tab order.",
+        "status": "IMPLEMENTED_NOT_TESTED in browser"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N04",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "New acceptance unavailable without designated independent reviewer/exact proof; independent review must accept the contract.",
+        "owner": "Independent QA; eventual domain implementation owners",
+        "acceptance": "Reject self-review/stale/missing authority, require rationale and criteria components; no aggregate shortcut.",
+        "status": "SOURCE_CORRECTED; real authority NOT_IMPLEMENTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N05",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Bulk default/date/result logic unchanged with historical VM evidence.",
+        "owner": "Prototype validation owner",
+        "acceptance": "Owner-only change leaves dates; RQ-02success/RQ-10conflict/RQ-12denial persist after toast and keep failed selection.",
+        "status": "Historical VM support; native NOT_TESTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N06",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Representative inline/row keys and focus fallback specified/code present; full spreadsheet flow intentionally absent.",
+        "owner": "Prototype validation owner",
+        "acceptance": "Keyboard edit/cancel/invalid recovery, nested controls and density change preserve state.",
+        "status": "IMPLEMENTED_NOT_TESTED; complete cell editing SPECIFIED_ONLY"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N07",
+        "severity": "LOW",
+        "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+        "rationale": "Mixed exception filter name and real empty reset code retained.",
+        "owner": "Frontend QA",
+        "acceptance": "Each inclusion reason clear; empty search reset and accessible feedback work on current scope.",
+        "status": "SOURCE_CORRECTED; native NOT_TESTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N08",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Decision queue now prominent with explicit missing owners; finding/risk context retained, no invented resolution.",
+        "owner": "Prototype validation owner",
+        "acceptance": "Identify canonical decision question/related objects; expose unassigned exception; FD-01follow-up and required resolution proof.",
+        "status": "SOURCE_CORRECTED; full context record interaction SPECIFIED_ONLY"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N09",
+        "severity": "MEDIUM",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Canonical event window and outstanding separation restored; formal draft-report contract acceptance needed.",
+        "owner": "Independent QA",
+        "acceptance": "Review t1≤t2, changes(t1,t2] vs outstandingt2, stable provenance/order/no-change and scoped retrieval.",
+        "status": "SOURCE_CORRECTED; actual export NOT_IMPLEMENTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N10",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Five axes text/reasons retained; critical fixture inputs explicit, no authoritative UI evaluator.",
+        "owner": "Prototype validation owner",
+        "acceptance": "Recognize execution/proof/dependency/timing/attention independently, no-due uncertainty and stale/unavailable evaluation.",
+        "status": "SOURCE_CORRECTED; visual comprehension NOT_TESTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "STYLE-01",
+        "severity": "LOW",
+        "classification": "NON_BLOCKING_DESIGN_IMPROVEMENT",
+        "rationale": "Detector style preferences/miniature literals do not override domain text or stall the source correction stage.",
+        "owner": "Codex / design owner",
+        "acceptance": "Only change a style when user impact is supported; no zero-count gate.",
+        "status": "No automatic fix"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "RV-S01",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Canonical board values remain fixed in r3 and trace; no current source contradiction.",
+        "owner": "Independent QA / prototype owner",
+        "acceptance": "Source conformance review now; full-scale state readability when authorized.",
+        "status": "SOURCE_CORRECTED_PENDING_ACCEPTANCE"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "RV-S02",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Unsupported native/headless statements removed; delegated direction is explicitly separate from QA/runtime proof.",
+        "owner": "Independent QA",
+        "acceptance": "Review capability/evidence claims against named source/VM/image checks; do not infer native PASS.",
+        "status": "SOURCE_CORRECTED_PENDING_ACCEPTANCE"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "OBS-UI-001",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Old screenshot suggests vertical-density cost, not a proven responsive failure; r3 uses compact mobile card composition and accountable reading order.",
+        "owner": "Codex / prototype validation owner",
+        "acceptance": "Observe ordinary viewport/zoom and manager scan task on changed layout; do not use old image as proof.",
+        "status": "Risk mitigated in source; actual effect NOT_TESTED"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/step-03a/revised/local-r3/findings-disposition.json",
+      "historical_record": {
+        "id": "GATE-INDEPENDENT-QA",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "No actual authorized independent reviewer return for the current packet; mandatory governance gate remains open.",
+        "owner": "Codex orchestrator owns next safe review opportunity",
+        "acceptance": "Exact hash-pinned read-only packet, authorized destination/method/cost/access and independent returned verdict. No automatic403retry/provider switch.",
+        "status": "BLOCKED_BY_PROVIDER_ACCESS / INDEPENDENT_QA_PENDING"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R01",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Approved bulk contract source-corrected; exact metadata allowlist (owner, due date, note), per-record atomic result handling, and error recovery contract fully specified in zcode-handoff.md and current-ux-spec.md. Requires independent document acceptance and integration test before feature deployment.",
+        "owner": "Independent QA, then ZCode FE/BE implementers",
+        "evidence": "RULE-013, AC-113, AC-133, SCR-10 spec in current-ux-spec.md §8.1",
+        "status": "SOURCE_CORRECTED_AND_SPECIFIED; native/QA PARTIAL"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R02",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Settled policies restored and unchanged: designated verifier separation, applicability/dispute rules, import grouping, scoped export, and draft brief windowing. Formal independent domain/permission interpretation remains pending.",
+        "owner": "Independent QA",
+        "evidence": "RULE-005, RULE-006, RULE-014, RULE-016, permission-matrix.md",
+        "status": "SOURCE_CORRECTED; formal acceptance pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R03",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Atlas/namespace board corrections verified at source level; actual dense-board readability, multiline expansion, and cross-view comprehension scheduled in validation-plan.md.",
+        "owner": "ZCode FE implementer / Prototype validation owner",
+        "evidence": "VAL-SCN-01, VAL-SCN-03 in validation-plan.md",
+        "status": "SOURCE_PASS; rendered validation pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R04",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Proof-edge vs milestone semantics explicitly defined: proof-edge requires upstream READY + COMPLETED + valid VERIFIED; milestone requires conjunction of designated required Requirements COMPLETED + VERIFIED (or NOT_REQUIRED). Formal testability acceptance required before implementation.",
+        "owner": "Independent QA",
+        "evidence": "RULE-003, RULE-008, AC-102, AC-105, current-ux-spec.md §2",
+        "status": "SOURCE_PASS; semantic runtime tests scheduled"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R05",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Connected concept slices (Control Room, Grid, Evidence Drawer) fully specified with persistent context, deep-link return, and shared revision guards.",
+        "owner": "ZCode FE implementer",
+        "evidence": "SCR-02, SCR-03, SCR-07 specifications in current-ux-spec.md",
+        "status": "SOURCE_CORRECTED; executable prototype pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-R05-MOBILE",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Mobile triage card layout defined; touch targets specified at min 44px; complex bulk/import flows retain explicit desktop alternative. Reflow and reachability scheduled in validation plan.",
+        "owner": "ZCode FE implementer / Mobile QA",
+        "evidence": "VAL-SCN-09 in validation-plan.md, D-UX04",
+        "status": "SPECIFIED; rendered device testing pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UI-T01",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Selected typography tokens (14px body, 12px metadata, 22px heading) and multiline expansion rules defined; Vietnamese diacritics and long labels specified with line-height 1.5.",
+        "owner": "ZCode FE / Localization QA",
+        "evidence": "VAL-SCN-03, VAL-SCN-10 in validation-plan.md, tokens.css",
+        "status": "SOURCE_UPDATED; rendered inspection pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UI-T02",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Control sizing contract pinned: desktop controls min 32px height, mobile touch controls min 44px height, standard 2px focus ring with 2px offset.",
+        "owner": "ZCode FE implementer",
+        "evidence": "selected-tokens.css, current-ux-spec.md §1.2",
+        "status": "SPECIFIED; geometric measurement pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UI-T03",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+        "rationale": "Palette tokens (Enterprise Precision A) bound strictly via CSS variables; calculated static sRGB contrast ratios meet 4.5:1 for normal text.",
+        "owner": "ZCode FE implementer / QA",
+        "evidence": "design-tokens.json, selected-tokens.css",
+        "status": "SOURCE_PASS; rendered contrast check scheduled"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N01",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+        "rationale": "Operational filter presets (All, Blocked, My Actions, Due Soon, Critical) and multi-column sorting specified with URL state persistence.",
+        "owner": "ZCode FE implementer",
+        "evidence": "FR-011, current-ux-spec.md §4.1",
+        "status": "SPECIFIED; integration testing pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N02",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Density switching between Comfortable (min 44px) and Compact (min 36px) fully specified; state, scroll position, and active focus survive density toggle.",
+        "owner": "ZCode FE implementer",
+        "evidence": "VAL-SCN-03 in validation-plan.md, D-UX02",
+        "status": "SOURCE_PASS; rendered density testing pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N03",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Detail drawers (SCR-04, SCR-05, SCR-07) specify explicit origin-tab return, URL route synchronization, and Esc key dismissal.",
+        "owner": "ZCode FE implementer",
+        "evidence": "VAL-SCN-07 in validation-plan.md, current-ux-spec.md §3.2",
+        "status": "SPECIFIED; browser focus test pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N04",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Designated verifier vs submitter separation strictly enforced in UX spec: submitter cannot verify own proof; OWNER status does not confer automatic verification authority.",
+        "owner": "Independent QA, then ZCode BE/FE",
+        "evidence": "RULE-006, AC-107, AC-140, VAL-SCN-05, current-ux-spec.md §5.1",
+        "status": "SOURCE_CORRECTED_AND_SPECIFIED; formal acceptance pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N05",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+        "rationale": "Seven core edge/error states specified (loading, empty, unavailable, forbidden 404, stale banner, 409 conflict modal, unsaved draft confirmation).",
+        "owner": "ZCode FE implementer",
+        "evidence": "current-ux-spec.md §3.1, §3.2",
+        "status": "SPECIFIED; E2E error suite pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N06",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Keyboard grid navigation specified: ArrowUp/Down navigates rows, Enter opens drawer or commits inline edit, Esc cancels, Tab cycles interactive elements.",
+        "owner": "ZCode FE implementer",
+        "evidence": "VAL-SCN-07 in validation-plan.md, current-ux-spec.md §4.1",
+        "status": "SPECIFIED; headless browser test pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N07",
+        "severity": "LOW",
+        "classification": "CAN_VALIDATE_DURING_FRONTEND_QA",
+        "rationale": "Empty filter search reset behavior specified with accessible announcement and quick 'Clear filters' action.",
+        "owner": "ZCode FE implementer",
+        "evidence": "current-ux-spec.md §4.1",
+        "status": "SPECIFIED; native testing pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N08",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Dedicated Important Decisions queue placed prominently alongside Next Actions; open case questions (DEC-AT-01, DEC-AT-02) expose required decision maker and risk links.",
+        "owner": "ZCode FE implementer",
+        "evidence": "D-UX03, current-ux-spec.md §7.1",
+        "status": "SOURCE_CORRECTED; interactive verification pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N09",
+        "severity": "MEDIUM",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Delta Status Brief windowing strictly specified: baseline t1, as-of t2 (t1 <= t2); Section A contains changes in (t1, t2], Section B contains outstanding items at t2.",
+        "owner": "Independent QA, then ZCode BE/FE",
+        "evidence": "RULE-016, AC-119, AC-138, VAL-SCN-11, current-ux-spec.md §8.3",
+        "status": "SOURCE_CORRECTED_AND_SPECIFIED; contract acceptance pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "UX-N10",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Five state dimensions (Execution, Verification, Dependency, Timing, Attention) fully separated into independent columns and UI badges; zero overloaded status strings.",
+        "owner": "ZCode FE implementer",
+        "evidence": "FR-020, current-ux-spec.md §2",
+        "status": "SOURCE_CORRECTED; visual comprehension testing pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "STYLE-01",
+        "severity": "LOW",
+        "classification": "NON_BLOCKING_DESIGN_IMPROVEMENT",
+        "rationale": "Humanist sans font stack and clean typography scale adopted without decorative styling or unnecessary gradients.",
+        "owner": "Design Executor / ZCode FE",
+        "evidence": "selected-design-system.md",
+        "status": "RESOLVED_IN_SPEC"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "RV-S01",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Canonical Atlas board values (24 records, owners U-01/02/03, due instants) preserved byte-identically with historical fixture.",
+        "owner": "Codex / ZCode QA",
+        "evidence": "project-atlas-dataset.md, validation-plan.md §2.1",
+        "status": "SOURCE_PASS; runtime fixture loading pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "RV-S02",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Unsupported headless/browser PASS claims strictly eliminated; static source integrity distinguished from unexecuted rendered validation.",
+        "owner": "Independent QA",
+        "evidence": "design-delta.md §4 Errata E-05, validation-plan.md §1",
+        "status": "SOURCE_CORRECTED_PENDING_ACCEPTANCE"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "OBS-UI-001",
+        "severity": "MEDIUM",
+        "classification": "CAN_VALIDATE_DURING_03B_PROTOTYPING",
+        "rationale": "Vertical density and narrow layout reading order optimized via two-column compact cards in Control Room and dedicated mobile triage stack.",
+        "owner": "ZCode FE implementer / Usability QA",
+        "evidence": "VAL-SCN-01, VAL-SCN-09 in validation-plan.md",
+        "status": "SPECIFIED; rendered evaluation pending"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    },
+    {
+      "source": "docs/design/p0-handoff-r1/findings-disposition.json",
+      "historical_record": {
+        "id": "GATE-INDEPENDENT-QA",
+        "severity": "HIGH",
+        "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+        "rationale": "Mandatory nonauthor independent review remains open; neither author (Codex/Antigravity) nor implementer (ZCode) can self-approve. Awaiting authorized provider/reviewer routing.",
+        "owner": "Codex Orchestrator",
+        "evidence": "independent-qa-packet.md, assignment.json",
+        "status": "BLOCKED_BY_PROVIDER_ACCESS / INDEPENDENT_QA_PENDING"
+      },
+      "r2_assessment": "Historical claim preserved, not re-awarded. Must be evaluated against R2 scope and actual evidence.",
+      "r2_review_status": "INDEPENDENT_REVIEW_PENDING"
+    }
+  ],
+  "findings": [
+    {
+      "id": "UIUX-01",
+      "severity": "P1",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "screen-state-matrix.json:306-457; current-ux-spec.md:366-379; zcode-handoff.md:170-173",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Reassigned FR identities / substituted dashboard and signature workflows",
+      "proposed_correction": "20 FR identities and SRS AC/rules restored; 13 SCR identities retained, My Actions/Waiting On explicit subviews; original three complete GW sequences",
+      "new_evidence": "screen-state-matrix.json; current-ux-spec.md#golden-workflow-inventory",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "current-ux-spec.md",
+        "line_start": 327,
+        "line_end": 338
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-02",
+      "severity": "P1",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "current-ux-spec.md:336-344; zcode-handoff.md:156; findings-disposition.json:UX-R01",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Title omitted / description replaced by operational_note / wrong AC",
+      "proposed_correction": "Four approved metadata fields, explicit unchanged/set/clear semantics, exact row preview, atomic per-row audit and persistent failed/unknown results; AC-112 bulk, AC-113 import",
+      "new_evidence": "current-ux-spec.md#w6--bulk-import-export-and-handover",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "current-ux-spec.md",
+        "line_start": 83,
+        "line_end": 90
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-03",
+      "severity": "P1",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "current-ux-spec.md:177,343-344",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Overwrite and unsafe missing-response retry",
+      "proposed_correction": "Authorized compare/rebase/new accepted revision; OUTCOME_UNKNOWN reconciliation before resend; receipt wire pending",
+      "new_evidence": "current-ux-spec.md#conflict-uncertain-writes-and-recovery",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "current-ux-spec.md",
+        "line_start": 55,
+        "line_end": 62
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-04",
+      "severity": "P1",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "current-ux-spec.md:292-299; zcode-handoff.md:120-121",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Short stage ladder / receipt upload advances stage",
+      "proposed_correction": "Full canonical filing stages, exact versions, package/signature guards, cycle history and OWNER negatives/reopen; ARCH-Q5 preserved",
+      "new_evidence": "current-ux-spec.md#w4--filing-without-invented-legal-effect",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "current-ux-spec.md",
+        "line_start": 69,
+        "line_end": 74
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-05",
+      "severity": "P1",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "current-ux-spec.md:86-92,245,258; design-delta.md:67; findings-disposition.json:42",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Axes on wrong subject / proof on all edges / milestone missing READY",
+      "proposed_correction": "Applicability and complete approved transitions; distinct completion/proof/milestone predicates; unavailable never READY",
+      "new_evidence": "current-ux-spec.md#product-truth-and-applicability",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "current-ux-spec.md",
+        "line_start": 11,
+        "line_end": 24
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-06",
+      "severity": "P1",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "design-delta.md:64; current-ux-spec.md:314,324; zcode-handoff.md:138; validation-plan.md:21-22",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Two IN_PROGRESS Actions / invented milestone counts",
+      "proposed_correction": "Correct Action census 4/3/5/0, zero eligible, accountable Waiting On and undefined milestone sets; historical self-review caveat",
+      "new_evidence": "current-ux-spec.md#w5--understand-and-trace; prototype.html",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "current-ux-spec.md",
+        "line_start": 75,
+        "line_end": 82
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-07",
+      "severity": "P1",
+      "classification": "MUST_VALIDATE_BEFORE_IMPLEMENTATION",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "current-ux-spec.md:105-107,141-147,173,186-188,239-241,260",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Invented routes/DTOs/ETags/storage/error authority",
+      "proposed_correction": "Semantic data/command needs only; no Git SHA as resource validator; named adoption dependencies",
+      "new_evidence": "zcode-handoff.md#architecture-dependencies",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "zcode-handoff.md",
+        "line_start": 48,
+        "line_end": 62
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-08",
+      "severity": "P2",
+      "classification": "SOURCE_AND_RENDERED_VALIDATION_REQUIRED",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "current-ux-spec.md:216; zcode-handoff.md:101; screen-state-matrix.json:screens",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Hover-only reasons / no concrete screen state contract",
+      "proposed_correction": "Per-screen nine states, roles, accessible persistent reasons, context/draft/key/focus/revocation rules and mobile alternatives",
+      "new_evidence": "screen-state-matrix.json; current-ux-spec.md#interaction-contract",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "current-ux-spec.md",
+        "line_start": 91,
+        "line_end": 100
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-09",
+      "severity": "P2",
+      "classification": "SOURCE_AND_RENDERED_VALIDATION_REQUIRED",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "validation-plan.md:42,46-47",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Wrong comprehension study / nonexistent proof / incomplete tests",
+      "proposed_correction": "Exact approved AC-137 protocol, actual scenario oracles/negative paths and separate density fixtures; no rendered or usability PASS",
+      "new_evidence": "validation-plan.md",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "validation-plan.md",
+        "line_start": 72,
+        "line_end": 79
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-10",
+      "severity": "P2",
+      "classification": "SOURCE_AND_RENDERED_VALIDATION_REQUIRED",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "return.md:8-16; design-delta.md:64-68; findings-disposition.json:none_statement",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Ambiguous executor / inherited corrections misattributed / overclaim closure",
+      "proposed_correction": "Actual Codex Local Codex, pinned bytes and export hashes; corrections proposed not independently closed; inherited fixes retained explicitly",
+      "new_evidence": "return.md; design-delta.md",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "design-delta.md",
+        "line_start": 33,
+        "line_end": 38
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    },
+    {
+      "id": "UIUX-11",
+      "severity": "P2",
+      "classification": "SOURCE_AND_RENDERED_VALIDATION_REQUIRED",
+      "old_evidence": {
+        "root": "../p0-handoff-r1/",
+        "locations": "zcode-handoff.md:23,25,49-51",
+        "review": "../../reviews/p0-design-uiux-source-review-20261027.md"
+      },
+      "problem": "Business compositions in domain-free components / missing src root",
+      "proposed_correction": "Existing generic primitives retained; proposed Matter/five-axis composites under apps/frontend/src/features/; no package or architecture replacement",
+      "new_evidence": "zcode-handoff.md#component-and-token-reuse",
+      "status": "PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW",
+      "rendered": "NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched",
+      "new_source_range": {
+        "file": "zcode-handoff.md",
+        "line_start": 5,
+        "line_end": 16
+      },
+      "r3_review_note": "Verified in R3 source and prototype. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate.",
+      "r4_review_note": "Carried forward into R4 unified delivery package. Verified in R4 specification and interactive prototype with full navigation trail and scannable causal chain. Status remains PROPOSED_SOURCE_CORRECTION_PENDING_REVIEW pending independent nonauthor QA gate."
+    }
+  ],
+  "independent_gate": "OPEN; no author closure",
+  "none_statement": null,
+  "limits": "No blanket absence-of-contradiction claim. Source correction does not prove rendered/runtime conformance.",
+  "source_review_findings": [
+    {
+      "id": "R2-S01",
+      "severity": "P3",
+      "title": "Causal drill-down has no context-aware Back action",
+      "source": "docs/reviews/p0-design-r2-source-review-20261027.md#r2-s01--p3-causal-drill-down-has-no-context-aware-back-action",
+      "problem": "prototype.html openRecord() replaced currentRecord without retaining navigation history. Users had no Back action to return from child record (RQ-04) to parent (AC-05).",
+      "proposed_correction": "Implement LIFO navigation history stack (navStack) with explicit breadcrumb path (Grid / AC-05 / RQ-04 / Proof), Back-to-previous-record action, Return-to-record action, and Close-to-origin action restoring exact opener focus.",
+      "new_evidence": "docs/design/p0-handoff-r4/prototype.html:updateTrailUI, handleBackPrev, handleBackRecord; docs/design/p0-handoff-r4/current-ux-spec.md#causal-navigation-trail; docs/design/p0-handoff-r4/validation-plan.md:VAL-NAV-01",
+      "status": "SOURCE_CORRECTED_IN_R4_PENDING_REVIEW",
+      "rendered": "CONFIRMED_STATIC_IMAGE_EXPORT / INTERACTIVE_NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched"
+    },
+    {
+      "id": "R2-S02",
+      "severity": "P3",
+      "title": "My Actions is a flat assignment table instead of specified operational groups",
+      "source": "docs/reviews/p0-design-r2-source-review-20261027.md#r2-s02--p3-my-actions-is-a-flat-assignment-table-instead-of-the-specified-operational-groups",
+      "problem": "prototype.html showView(\"mine\") displayed a flat table of all U-01 actions without grouping into eligible, waiting, blocked, and completed sections.",
+      "proposed_correction": "Implement 4-tier operational queue: 1. Eligible Actions (truthful 0 at T0 with explanation), 2. Waiting On External Parties (AC-04, AC-05), 3. Blocked Actions (AC-05, AC-12), and 4. Historical / Completed (AC-01, AC-02). Clarify that AC-05 retains dual WAITING+BLOCKED status without duplicated workload.",
+      "new_evidence": "docs/design/p0-handoff-r4/prototype.html:renderMyActions; docs/design/p0-handoff-r4/current-ux-spec.md#my-actions-operational-queue; docs/design/p0-handoff-r4/validation-plan.md:VAL-MINE-01",
+      "status": "SOURCE_CORRECTED_IN_R4_PENDING_REVIEW",
+      "rendered": "CONFIRMED_STATIC_IMAGE_EXPORT / INTERACTIVE_NOT_RUN",
+      "runtime": "NOT_RUN",
+      "reviewer": "Actual nonauthor to be assigned by Codex after intake; not dispatched"
+    }
+  ],
+  "r4_intake_findings": [
+    {
+      "id": "R4-I01",
+      "severity": "P1",
+      "title": "Prose validation remaps FR identities and changes milestone predicate",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/validation-plan.md",
+        "docs/design/p0-handoff-r5/screen-state-matrix.json",
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/zcode-handoff.md"
+      ],
+      "problem": "validation-plan.md:52-71 mislabeled VAL-FR-001..020 identities (e.g. VAL-FR-001 as Workspace boundary instead of Requirement vs Action, VAL-FR-002 as auth instead of Milestones). Milestone predicate omitted explicitly valid NOT_REQUIRED permitted by RULE-008.",
+      "expected_behavior": "Every named oracle matches canonical FR identities (FR-001..FR-020). Cross-cutting tests (auth, concurrency, boundary, a11y) have separate IDs. Milestone evaluates READY only when all required items are READY + COMPLETED + (valid VERIFIED or explicit valid NOT_REQUIRED). Proof edge requires valid VERIFIED.",
+      "actual_check_evidence": "All 20 FR identities verified canonical in validation-plan.md Table 3.1; separate cross-cutting table added in Section 3.2. Milestone predicate calibrated in Section 2.2 and Section 3.1.",
+      "limits": "Rendered browser automation remains NOT_RUN; milestone logic verified in source specification.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    },
+    {
+      "id": "R4-I02",
+      "severity": "P1",
+      "title": "Token-in-cookie checklist contradicted current BFF session store contract",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/zcode-handoff.md",
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/validation-plan.md"
+      ],
+      "problem": "zcode-handoff.md line 152 stated 'tokens stored in session cookie', contradicting line 56 and local-contract.md requirement for server-side BFF storage.",
+      "expected_behavior": "OAuth tokens stored strictly in server-side BFF session store; browser cookie contains only an opaque session handle. Zero tokens in browser cookie, zero tokens in localStorage.",
+      "actual_check_evidence": "Corrected checklist line and architecture specifications across zcode-handoff.md, current-ux-spec.md, and validation-plan.md. Negative token-exposure test oracles preserved.",
+      "limits": "Full live introspection test requires ZITADEL instance execution in ZCode assignment.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    },
+    {
+      "id": "R4-I03",
+      "severity": "P1",
+      "title": "Receipt upload incorrectly described as automatic Filing stage transition",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/zcode-handoff.md",
+        "docs/design/p0-handoff-r5/validation-plan.md",
+        "docs/design/p0-handoff-r5/prototype.html"
+      ],
+      "problem": "Upload was described as advancing stage to Authority Review; cited RULE-016 (Status Brief rule) instead of RULE-012 (Filing rule).",
+      "expected_behavior": "Uploading a receipt supplies an artifact only; transition to Authority Review requires an authorized, validated observation/command acknowledged by backend with exact scope, version, reference, and guards (RULE-012). Receipt != Approval.",
+      "actual_check_evidence": "Corrected Filing narrative, spec, handoff, and prototype text to cite RULE-012 and enforce that upload alone does not advance state.",
+      "limits": "Backend command guard enforcement tested in ZCode Wave 4.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    },
+    {
+      "id": "R4-I04",
+      "severity": "P1",
+      "title": "Action proof panel borrowed Requirement proof by numeric suffix",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/prototype.html",
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/zcode-handoff.md",
+        "docs/design/p0-handoff-r5/validation-plan.md"
+      ],
+      "problem": "prototype.html used id.slice(-2) to look up proofData for both Actions and Requirements, causing AC-05 to borrow RQ-05 EV-05/DOC-03 proof and display false blocked state.",
+      "expected_behavior": "Proof lookup uses explicit typed relations by record kind (Requirement vs Action) and exact ID. AC-05 has explicit proof applicability NOT_REQUIRED in canonical Atlas and does not inherit RQ-05 proof.",
+      "actual_check_evidence": "Implemented reqProofData and actionProofData in prototype.html showProof(); verified AC-05 displays explicit NOT_REQUIRED without borrowing RQ-05; verified AC-01/03/04/06/10 and RQ-01..10.",
+      "limits": "Verified via node --check and code review; interactive browser execution NOT_RUN.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    },
+    {
+      "id": "R4-I05",
+      "severity": "P2",
+      "title": "Modal history survived a completed navigation session",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/prototype.html",
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/validation-plan.md"
+      ],
+      "problem": "openRecord pushed prior currentRecord on fresh modal open; handleCloseDetail and Escape listener did not centrally reset currentRecord and detailMode; all non-CR/MyActions origins were labeled Grid.",
+      "expected_behavior": "Centralized cleanupModalSession() on both Close button and Escape dismiss; real origin preserved (Grid, My Actions, Waiting On, Filing, Control Room); saved mode restored on Back; drafts isolated per record.",
+      "actual_check_evidence": "Implemented cleanupModalSession() in prototype.html; attached to handleCloseDetail and dialog close event; originLabel(view) preserves true origin in breadcrumbs.",
+      "limits": "Browser focus trap and click testing NOT_RUN; verified via pure JS state flow.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    },
+    {
+      "id": "R4-I06",
+      "severity": "P2",
+      "title": "Permission prose introduced non-existent owner-only assignment restriction",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/zcode-handoff.md",
+        "docs/design/p0-handoff-r5/validation-plan.md",
+        "docs/design/p0-handoff-r5/prototype.html"
+      ],
+      "problem": "current-ux-spec.md:176 stated that non-owners are forbidden from assignment changes, contradicting approved permission matrix where both EDITOR and OWNER can assign actions.",
+      "expected_behavior": "Both Matter EDITOR and OWNER can assign Actions within scope to active members. VIEWER role is read-only. Submitter cannot self-review.",
+      "actual_check_evidence": "Corrected assignment authority in current-ux-spec.md SCR-05, zcode-handoff.md W2, validation-plan.md VAL-ROLE-01, and prototype editor text.",
+      "limits": "Live RBAC enforcement verified in ZCode Wave 1/2 backend.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    },
+    {
+      "id": "R4-I07",
+      "severity": "P2",
+      "title": "Handoff substituted file formats and invented a wire status",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/zcode-handoff.md",
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/validation-plan.md"
+      ],
+      "problem": "zcode-handoff.md substituted CSV/JSON import and omitted scoped XLSX export; introduced invented wire enum CLAIM_IMPORTED; validation-plan.md line 53 included unsupported localStorage legal drafts.",
+      "expected_behavior": "Preserve CSV and XLSX import; preserve meaningful scoped XLSX export with formula injection escaping; imported verification is treated as a claim to be evaluated by contract (no invented wire enum); draft retention follows session/privacy contract.",
+      "actual_check_evidence": "Corrected import/export specifications across zcode-handoff.md, current-ux-spec.md, and validation-plan.md; removed localStorage legal draft reference; removed CLAIM_IMPORTED wire enum.",
+      "limits": "File parsing and export generation implemented in ZCode Wave 6.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    },
+    {
+      "id": "R4-I08",
+      "severity": "P2",
+      "title": "Generic state viewer and repetitive causal chain overstated completion",
+      "changed_files": [
+        "docs/design/p0-handoff-r5/prototype.html",
+        "docs/design/p0-handoff-r5/polish.css",
+        "docs/design/p0-handoff-r5/current-ux-spec.md",
+        "docs/design/p0-handoff-r5/validation-plan.md"
+      ],
+      "problem": "renderStateSpecimen in prototype used a generic template for all screens, literal aria-busy text, mismatched counts (3 accepted with 2 IDs), and fake 'Recovery Complete' buttons. Control Room causal chain repeated paragraphs across 5 cards.",
+      "expected_behavior": "Screen-specific state specimens for all 13 screens; real skeleton loaders with animated boxes and aria-busy; reconciled item counts and IDs; non-operational buttons clearly labeled SPECIFIED_ONLY; scannable, non-repetitive causal pipeline in Control Room.",
+      "actual_check_evidence": "Updated prototype.html renderStateSpecimen() with screenEmptyGuidance and screenRoleContext; added skeleton-box animation; reconciled partial counts (3 items = AC-07, AC-08, AC-10); labeled non-operational buttons SPECIFIED_ONLY; refined causal pipeline with root-blocker/direct-gate/downstream styling and single summary banner.",
+      "limits": "Visual inspection verified statically via code and layout structure; live interaction remains NOT_RUN.",
+      "status": "SOURCE_CORRECTED_IN_R5_PENDING_REVIEW"
+    }
+  ],
+  "r5_intake_findings": [
+    {
+      "id": "R5-N01",
+      "severity": "P1",
+      "title": "Missing $ helper prevents standalone prototype initialization",
+      "changed_files": [
+        "docs/design/p0-handoff-r6/prototype.html"
+      ],
+      "problem": "prototype.html called $('detail').addEventListener(...) and other callers without declaring const/let/var $ or function $, throwing ReferenceError at startup before dynamic UI rendering.",
+      "expected_behavior": "A standalone page must declare its DOM lookup helper locally before all callers, executing initialization cleanly without host, test-harness, or extension injection.",
+      "actual_check_evidence": "Declared const $ = id => document.getElementById(id); at top of script; verified all 35 $() calls match valid DOM IDs; executed Node AST check and mock DOM bootstrap with exit code 0.",
+      "limits": "Interactive browser automation remains NOT_RUN / VERIFICATION_BLOCKERS; standalone execution verified via Node AST and mock DOM bootstrap.",
+      "status": "SOURCE_CORRECTED_VERIFIED_BY_INTAKE"
+    },
+    {
+      "id": "R5-N02",
+      "severity": "P1",
+      "title": "Proof applicability and canonical facts misstated in proof context",
+      "changed_files": [
+        "docs/design/p0-handoff-r6/prototype.html",
+        "docs/design/p0-handoff-r6/current-ux-spec.md",
+        "docs/design/p0-handoff-r6/validation-plan.md",
+        "docs/design/p0-handoff-r6/zcode-handoff.md"
+      ],
+      "problem": "R5 proof context stated that proof criteria in MatterControl attach strictly to Requirements and defaulted all Actions to NOT_REQUIRED without explicit decision. Misattributed AC-06 as blocked with submitter U-01; marked RQ-05 UNVERIFIED and DEP-05 blocked.",
+      "expected_behavior": "Verification applies to Requirements, Evidence Requirements, supplied Evidence, and to Actions or Filings when proof is explicitly required under state-semantics.md §10 (initial UNVERIFIED; NOT_REQUIRED only via explicit decision). AC-06 is COMPLETED/READY owned by U-03 (first signature receipt). RQ-05 maintains historical VERIFIED baseline and DEP-05 satisfied status at T0, with U-02 self-review noted as an audit caveat. AC-05 has explicit NOT_REQUIRED applicability and does not borrow RQ-05 proof.",
+      "actual_check_evidence": "Updated showProof() in prototype.html with canonical AC-06 and RQ-05 facts, explicit NOT_REQUIRED for AC-05, and added labelled proof-bearing action fixture AC-DEMO-PROOF. Updated current-ux-spec.md, validation-plan.md, and zcode-handoff.md. In R7 (R6-E01), RQ-03 maintains canonical baseline VERIFIED with caveat; RQ-05 separates historically reported gate from current policy evaluation; AC-DEMO-PROOF is accessible via UI control.",
+      "limits": "Live evidence database and file storage require product backend implementation.",
+      "status": "SOURCE_CORRECTED_IN_R7_PENDING_REVIEW"
+    },
+    {
+      "id": "R5-N03",
+      "severity": "P2",
+      "title": "Back navigation loses saved proof mode and breadcrumbs append ancestors",
+      "changed_files": [
+        "docs/design/p0-handoff-r6/prototype.html",
+        "docs/design/p0-handoff-r6/current-ux-spec.md"
+      ],
+      "problem": "handleBackPrev() in R5 set detailMode = prev.mode, called openRecord() (which reset detailMode = 'record'), and then checked if (detailMode === 'proof'), which always evaluated to false, losing saved proof mode. Breadcrumb clicks appended ancestors rather than truncating trail.",
+      "expected_behavior": "Popped predecessor mode must be stored in a local variable across openRecord() to accurately restore proof view mode. Breadcrumb clicks must truncate navStack to return to the chosen ancestor without looping.",
+      "actual_check_evidence": "Stored const savedMode = prev.mode || 'record'; across openRecord(); invoked showProof() when savedMode === 'proof'. Implemented data-trail-idx truncation via navStack.splice(idx). Preserved centralized session cleanup on Close and Escape.",
+      "limits": "Visual rendering and interactive focus traps remain NOT_RUN / VERIFICATION_BLOCKERS.",
+      "status": "SOURCE_CORRECTED_VERIFIED_BY_INTAKE"
+    },
+    {
+      "id": "R5-N04",
+      "severity": "P2",
+      "title": "Validation plan credits unexecuted behavior and lacks actual check evidence",
+      "changed_files": [
+        "docs/design/p0-handoff-r6/validation-plan.md",
+        "docs/design/p0-handoff-r6/design-delta.md"
+      ],
+      "problem": "validation-plan.md in R5 marked unimplemented/unexecuted flows (Requirement creation, proof submission/verification, atomic bulk execution, version promotion, Filing lifecycle progression, XLSX file export) as CONFIRMED_IN_PROTOTYPE and cited R4 static export as R5 proof.",
+      "expected_behavior": "Clearly separate execution classifications: SPECIFIED_ONLY / SOURCE_INSPECTED for non-operational specifications; CONFIRMED_IN_PROTOTYPE_EXPLORATORY for executed prototype UI interactions; NOT_RUN / VERIFICATION_BLOCKERS for browser automation and human trial. Provide actual source check scripts, commands, UTC timestamps, exits, and reproducible check logs.",
+      "actual_check_evidence": "Updated validation-plan.md Table 3.1 with exact SPECIFIED_ONLY vs CONFIRMED_IN_PROTOTYPE_EXPLORATORY classifications. Added Section 5 with actual check commands, Python 3.12/Node 20 tool versions, UTC timestamps, exit codes, and check log summary. In R7 (R6-E02/E03), AC-137 protocol is fully restored with 5 managers, unseen matter, 3 questions, and answer key; all check scripts are checked into checks/ with logs in evidence/.",
+      "limits": "Interactive browser automation and AC-137 manager trial strictly preserved as NOT_RUN.",
+      "status": "SOURCE_CORRECTED_IN_R7_PENDING_REVIEW"
+    },
+    {
+      "id": "R5-N05",
+      "severity": "P2",
+      "title": "Handoff directs to non-existent components/ui/ and overstates authority",
+      "changed_files": [
+        "docs/design/p0-handoff-r6/zcode-handoff.md",
+        "docs/design/p0-handoff-r6/current-ux-spec.md"
+      ],
+      "problem": "zcode-handoff.md:16 directed primitives to non-existent apps/frontend/src/components/ui/ and described handoff as an exact binding implementation contract rather than a UX consumer specification.",
+      "expected_behavior": "Point to real codebase inventory under apps/frontend/src/components/{atoms,molecules,organisms}/ and business features under src/features/*. Frame handoff as UX consumer specification respecting independently versioned backend API/security contracts.",
+      "actual_check_evidence": "Updated zcode-handoff.md Section 1.1 and current-ux-spec.md Section 9 with exact codebase directory structure and UX consumer specification scope.",
+      "limits": "Product frontend and backend implementation is executed by ZCode across waves W1–W7.",
+      "status": "SOURCE_CORRECTED_VERIFIED_BY_INTAKE"
+    }
+  ],
+  "r6_intake_findings": [
+    {
+      "id": "R6-E01",
+      "severity": "P2",
+      "title": "Proof presentation internally inconsistent across RQ-03, RQ-05, and AC-DEMO-PROOF",
+      "changed_files": [
+        "docs/design/p0-handoff-r7/prototype.html",
+        "docs/design/p0-handoff-r7/current-ux-spec.md",
+        "docs/design/p0-handoff-r7/validation-plan.md"
+      ],
+      "problem": "In R6, RQ-03 was shown as UNVERIFIED in the proof panel while retaining historical VERIFIED in the record; RQ-05 panel described gate as historically satisfied while evaluate edgeSatisfied returned false without clear separation of historical vs current policy layers; AC-DEMO-PROOF existed only in a proof map without an indexed record or clickable UI trigger.",
+      "expected_behavior": "RQ-03 must consistently maintain canonical Atlas T0 baseline VERIFIED with caveat documented separately; RQ-05 must explicitly distinguish historically reported gate status (T0 satisfied) from current-policy evaluation (caveated/re-review required under RULE-007; validProof: false); AC-DEMO-PROOF must be a distinct labelled fixture with declared records, proof applicability, and a dedicated UI button under My Actions and Screen States without mutating canonical 24 records.",
+      "actual_check_evidence": "Updated prototype.html: RQ-03 and RQ-05 proof panels render historical baseline VERIFIED alongside current-policy evaluation; declared demoProofActionRecord and integrated into record lookup; added dedicated Inspect AC-DEMO-PROOF button under My Actions; verified in mock DOM bootstrap with exit code 0.",
+      "limits": "Interactive browser automation remains NOT_RUN / VERIFICATION_BLOCKERS; verified via standalone Node mock DOM bootstrap and canonical dataset assertions.",
+      "status": "SOURCE_CORRECTED_IN_R7_PENDING_REVIEW"
+    },
+    {
+      "id": "R6-E02",
+      "severity": "P2",
+      "title": "AC-137 study protocol substituted Atlas questions for approved manager protocol",
+      "changed_files": [
+        "docs/design/p0-handoff-r7/validation-plan.md",
+        "docs/design/p0-handoff-r7/current-ux-spec.md"
+      ],
+      "problem": "R6 validation-plan.md substituted two familiar Atlas questions (RQ-04 missing ER-04, 0 eligible actions) for the approved protocol from acceptance-criteria.md:331, dropping the requirement for 5 representative managers, unseen 50-row synthetic matter, 2 counterbalanced scenarios, and the three-question answer key.",
+      "expected_behavior": "Restore approved AC-137 protocol in full: 5 real representative managers, unseen 50-row synthetic matter (with full causal graphs), two counterbalanced scenarios, pre-recorded facilitator answer key (major state, top blocker, next owner/action), threshold >=4/5 managers correct on all three within 10 seconds, raw scoring ledger template retaining individual timings and accuracy; status NOT_RUN / AWAITING_HUMAN_TRIAL.",
+      "actual_check_evidence": "Restored Section 4 of validation-plan.md to full approved protocol, specifying two 50-row unseen scenarios (Scenario A: Cross-Border Carve-Out; Scenario B: Syndicated Debt Refinancing), facilitator answer key structure, 10-second threshold, and raw ledger template.",
+      "limits": "Actual manager trial remains NOT_RUN / AWAITING_HUMAN_TRIAL; must be coordinated with real human participants prior to production release.",
+      "status": "SOURCE_CORRECTED_IN_R7_PENDING_REVIEW"
+    },
+    {
+      "id": "R6-E03",
+      "severity": "P2",
+      "title": "Command summaries in validation plan referenced missing /tmp files and contained ellipses",
+      "changed_files": [
+        "docs/design/p0-handoff-r7/checks/*",
+        "docs/design/p0-handoff-r7/evidence/*",
+        "docs/design/p0-handoff-r7/validation-plan.md"
+      ],
+      "problem": "R6 validation plan referenced commands in /tmp that were not checked in, command snippets contained ellipses, and reported CSS size as 12,235 bytes instead of the measured 12,239 bytes binary size.",
+      "expected_behavior": "Check in all bounded verification scripts permanently under checks/, execute them and store raw execution logs under evidence/, document exact commands without ellipses, bind execution metadata (UTC, tool, version, exit code, log hashes), and report exact measured binary CSS size.",
+      "actual_check_evidence": "Created 7 runnable check scripts in checks/; executed run_all_checks.sh generating logs in evidence/; confirmed exact 12,239 bytes binary CSS match; all 6 test suites passed with exit code 0.",
+      "limits": "Source assertions and mock DOM unit tests only; live browser rendering and user trials remain NOT_RUN / VERIFICATION_BLOCKERS.",
+      "status": "SOURCE_CORRECTED_IN_R7_PENDING_REVIEW"
+    }
+  ],
+  "r9_note": "R9 targeted-correction pass. All prior keys in this file (historical_findings, findings, source_review_findings, r4_intake_findings, r5_intake_findings, r6_intake_findings) are preserved byte-for-meaning unchanged from the R7/R8 baseline; only this note, the task/status fields above, and the two new keys below are added. The 48-record historical census was re-counted at R9 time and is unchanged.",
+  "r8_intake_dr7_findings": [
+    {
+      "id": "DR7-01",
+      "severity": "P2",
+      "title": "Axis vocabulary (EXPIRED / CIRCULAR_CONFLICT removed)",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/current-ux-spec.md",
+        "docs/design/p0-handoff-r8/screen-state-matrix.json",
+        "docs/design/p0-handoff-r8/src/logic.js"
+      ],
+      "r9_status": "Unaffected by R8-N01..04; re-verified against R9 paths by checks/check_vocabulary.py (SOURCE_CHECKED, exit 0).",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "DR7-02",
+      "severity": "P1",
+      "title": "Canonical proof panels (RQ-11/RQ-07/RQ-03/RQ-05 causality)",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/src/logic.js"
+      ],
+      "r9_status": "Unaffected by R8-N01..04; re-verified against R9 paths by checks/check_mock_dom_bootstrap.js (29/29, MOCK_EXECUTED, exit 0) and checks/check_canonical_dataset_and_proof.py (SOURCE_CHECKED, exit 0).",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "DR7-03",
+      "severity": "P2",
+      "title": "428/412/422 and receipted/non-receipted OUTCOME_UNKNOWN mapping",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/src/logic.js"
+      ],
+      "r9_status": "Unaffected by R8-N01..04 itself, but a KNOWN ISOLATED CONFLICT was found at R9 close-out: docs/implementation/p0-zcode-execution/local-contract.md revision 6 (read-only, advanced by the separate Claude Code BE+FE implementation session after R8 was written) now defines a new `409 urn:mc:rejected` status for work-graph dependency rejections (dependency-blocked, transition-not-allowed, cycle, etc.) — a different thing from the edit/version CAS conflict surface this package's error mapping covers. checks/check_canonical_dataset_and_proof.py's 'the contract still defines no 409' assertion (written against an earlier contract revision) now fails: 31/32 checks still pass, 1 fails for this reason. This is NOT part of R8-N01..04 scope, is not remediated here (no new UI/route/status was invented in response, per the no-scope-creep instruction), and the assertion was left failing honestly rather than edited to force a pass. See validation-plan.md note and return.md 'Known conflicts' for detail; evidence: evidence/run-20261027T084209Z/check_canonical_dataset_and_proof.py.*",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "DR7-04",
+      "severity": "P1",
+      "title": "Role/read/operation separation across the approved permission matrix",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/src/logic.js"
+      ],
+      "r9_status": "Re-verified against R9 paths; R8-N03 additionally re-confirms OWNER-only promotion, EDITOR add-version-without-promote and VIEWER scoped read specifically on the corrected promotion panel (checks/check_r8_n01_n04_regressions.js, MOCK_EXECUTED).",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "DR7-05",
+      "severity": "P2",
+      "title": "Six distinct screen layouts, per-screen reset, sticky drawer navigation",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/src/logic.js",
+        "docs/design/p0-handoff-r8/polish.css"
+      ],
+      "r9_status": "Unaffected by R8-N01..04; behaviour re-verified MOCK_EXECUTED; rendered layout remains VERIFICATION_BLOCKED (no browser tool available this session).",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW; rendered VERIFICATION_BLOCKED"
+    },
+    {
+      "id": "DR7-06",
+      "severity": "P2",
+      "title": "AC-137 two 50-row study datasets and participant/facilitator separation",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/study/scenario-a.json",
+        "docs/design/p0-handoff-r8/study/scenario-b.json",
+        "docs/design/p0-handoff-r8/study-facilitator/facilitator-key.json"
+      ],
+      "r9_status": "Unaffected by R8-N01..04; re-verified against R9 paths by checks/check_study_assets.py (SOURCE_CHECKED, exit 0). Human trial remains NOT_RUN / AWAITING_HUMAN_TRIAL.",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW; trial NOT_RUN"
+    },
+    {
+      "id": "DR7-07",
+      "severity": "P2",
+      "title": "Strict mock DOM negative mutation tests, delegation, native dismissal, IME",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/checks/strict_dom.js",
+        "docs/design/p0-handoff-r8/checks/check_mock_dom_bootstrap.js"
+      ],
+      "r9_status": "Re-verified against R9 paths; the R9 strict_dom.js additionally fixes three DOM-semantics gaps the R9 recheck found (textarea/option value hydration, input.type) without weakening the two negative mutation tests, which still throw as required (checks/check_strict_dom_adapter.js).",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "DR7-08",
+      "severity": "P3",
+      "title": "Stale revision labels and Golden Workflow sequence completeness",
+      "changed_files": [
+        "docs/design/p0-handoff-r8/current-ux-spec.md",
+        "docs/design/p0-handoff-r8/zcode-handoff.md",
+        "docs/design/p0-handoff-r8/validation-plan.md",
+        "docs/design/p0-handoff-r8/design-delta.md",
+        "docs/design/p0-handoff-r8/return.md"
+      ],
+      "r9_status": "Re-verified against R9 paths by checks/check_vocabulary.py; R9's own documents (this ledger, validation-plan.md, return.md, zcode-handoff.md) carry the R9 revision label, not a stale R8/R7 one.",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    }
+  ],
+  "r9_corrections": [
+    {
+      "id": "R8-N01",
+      "severity": "P0",
+      "title": "Concept purge-on-access-loss did not actually clear shared draft/selection/pending-preview/intent state",
+      "source_review": "docs/reviews/p0-design-r8-intake-20261027.md; docs/testing/p0-design-r8-intake-20261027/reviewer-probes.cjs + reviewer-probes-rerun.json",
+      "problem": "The denied-access panel said '...have been purged' but the shared `drafts` Map and other protected in-memory state were never actually cleared; a revoke -> re-grant sequence resurrected the exact pre-revocation draft.",
+      "changed_locations": [
+        "docs/design/p0-handoff-r9/src/logic.js: purgeProtectedState() (new), lastHasMatterAccess tracking, the 'role' change handler's access-transition check, the 'btn-sign-out' click handler, safeEl() helper used by purge/openRecord"
+      ],
+      "actual_regression_evidence": "docs/design/p0-handoff-r9/checks/check_r8_n01_n04_regressions.js (13/13 MOCK_EXECUTED, see evidence/run-20261027T081038Z/check_r8_n01_n04_regressions.js.*) and docs/design/p0-handoff-r9/checks/check_r8_baseline_redgreen.js, which reproduces the exact reviewer marker RED against the untouched, read-only R8 baseline and GREEN against this R9 candidate using the identical adapter (evidence/run-20261027T081038Z/check_r8_baseline_redgreen.js.*).",
+      "remaining_limits": "This fixture has exactly one simulated identity/Workspace/Matter (ATLAS-001, actor U-01 alias); isolation across multiple simultaneous identities or Matters is not exercised because the fixture does not model more than one. In-flight command outcomes are represented only as fixed explanatory text (no live pending-command simulation exists in this concept to purge). This is local concept-state proof only, not a product authorization/security PASS.",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "R8-N02",
+      "severity": "P1",
+      "title": "Create Matter title and promotion reason lost on view switch / re-render",
+      "source_review": "docs/reviews/p0-design-r8-intake-20261027.md; reviewer-probes.cjs new_matter_draft_lost_on_view_switch / promotion_reason_lost_on_view_switch",
+      "problem": "renderSession()/renderDocuments() rebuild markup from scratch on every view switch; `new-matter-title` and `promote-reason` had no backing state, unlike the existing `drafts` Map pattern used for record titles.",
+      "changed_locations": [
+        "docs/design/p0-handoff-r9/src/logic.js: formDrafts Map (new, reuses the drafts Map pattern), createMatterPanel() value binding, the promote panel's reason/target/ack binding, the 'new-matter-title'/'promote-reason'/'promote-target'/'promote-impact' input/change handlers"
+      ],
+      "actual_regression_evidence": "docs/design/p0-handoff-r9/checks/check_r8_n01_n04_regressions.js (view-switch, locale-switch and cross-document isolation checks) and check_r8_baseline_redgreen.js (red on R8 baseline, green on R9).",
+      "remaining_limits": "Persistence is in-tab page memory only, as the original concept specifies (no localStorage/cookie/new dependency was added). Locale switch is proven only for the 'both' -> 'vi' transition exercised by the test; EN<->VI<->both is the same code path (lang change triggers renderAll(), which reads the same formDrafts map) but not independently re-asserted for every permutation.",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "R8-N03",
+      "severity": "P1",
+      "title": "Promotion form had no distinct target-version control separate from the expected-current concurrency guard",
+      "source_review": "docs/reviews/p0-design-r8-intake-20261027.md; reviewer-probes.cjs promotion_form_ids (promote-panel, promote-expected, promote-reason, promote-impact — no target control)",
+      "problem": "`promote-expected` was the only version selector and doubled as both the concurrency guard and the implied target, and its helper text said promotion always targets 'the current version'.",
+      "changed_locations": [
+        "docs/design/p0-handoff-r9/src/logic.js: new 'promote-target' select, promotionImpactText(), the 'promote-target'/'promote-impact' change handlers (ack invalidation on target change), the 'promote-preview' click handler (validation and DEPENDENCY_PENDING messaging)"
+      ],
+      "actual_regression_evidence": "docs/design/p0-handoff-r9/checks/check_r8_n01_n04_regressions.js: independent-controls, missing-target, target-equals-current, ack-reset-on-target-change, stale-expected-current-refused, and EDITOR/VIEWER-boundary checks (6 of the 13 total).",
+      "remaining_limits": "No promote-version wire operation or status code exists in docs/implementation/p0-zcode-execution/local-contract.md as of this R9 read (hash 377f7ae1758d302952e9a3417ac60dc1b88e94f9e976ed53588fd2586bd3f2c4, 23,077 bytes; re-read at R9 time, not overwritten). The UX intent is complete; the wire behaviour is DEPENDENCY_PENDING by design, not an oversight.",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    },
+    {
+      "id": "R8-N04",
+      "severity": "P2",
+      "title": "Handoff referenced non-existent check scripts; evidence/ empty; finding ledger stale at R7",
+      "source_review": "docs/reviews/p0-design-r8-intake-20261027.md",
+      "problem": "validation-plan.md §3 referenced checks/run_all_checks.sh, checks/check_manifest_pins.py and checks/check_screen_state_matrix.py, none of which existed in docs/design/p0-handoff-r8/checks/; evidence/ was empty; findings-disposition.json had no R8-level disposition at all.",
+      "changed_locations": [
+        "docs/design/p0-handoff-r9/validation-plan.md (dangling references removed, real commands documented, new checks table rows 9-11)",
+        "docs/design/p0-handoff-r9/checks/check_screen_state_matrix.py (new, replaces the dangling reference)",
+        "docs/design/p0-handoff-r9/findings-disposition.json (this file: r9_corrections + r8_intake_dr7_findings keys)",
+        "docs/design/p0-handoff-r9/evidence/run-20261027T081038Z/ (new, own directory)",
+        "docs/design/p0-handoff-r9/manifest.json (new)"
+      ],
+      "actual_regression_evidence": "All 11 checks in validation-plan.md §3 executed against R9 paths with real receipts in evidence/run-20261027T081038Z/ (argv, cwd, UTC, exit, stdout/stderr per check).",
+      "remaining_limits": "Independent non-author review of this disposition and of the manifest has not occurred; author self-check is not independent acceptance.",
+      "status": "SOURCE_CORRECTED_PENDING_REVIEW"
+    }
+  ]
+}

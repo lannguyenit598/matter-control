@@ -1,0 +1,29 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: survives view switch
++ actual - expected
+
++ ''
+- 'Synthetic promotion rationale'
+
+    at /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r9/checks/check_r8_n01_n04_regressions.js:116:10
+    at check (/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r9/checks/check_r8_n01_n04_regressions.js:33:28)
+    at Object.<anonymous> (/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/docs/design/p0-handoff-r9/checks/check_r8_n01_n04_regressions.js:110:1)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '',
+  expected: 'Synthetic promotion rationale',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

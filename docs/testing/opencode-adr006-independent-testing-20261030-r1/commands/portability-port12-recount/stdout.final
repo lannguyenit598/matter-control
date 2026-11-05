@@ -1,0 +1,320 @@
+{
+ "smokes": [
+  {
+   "file": "smoke-worker-cloudrun-r5.json",
+   "declared_passed": 23,
+   "declared_failed": 0,
+   "recount_checks": 23,
+   "recount_pass": 23,
+   "recount_fail": 0,
+   "matches_declared": true,
+   "identity": "actual Claude Code (claude-opus-5-5)",
+   "label": "worker-cloudrun-r5",
+   "fe": "worker",
+   "synthetic_fixture_only": "synthetic OIDC + fake S3 (fixture-server.mjs) + disposable PostgreSQL; no cloud provider",
+   "check_names": [
+    "root entry redirect",
+    "anonymous session",
+    "PKCE authorize redirect",
+    "callback after FE restart (durable PKCE)",
+    "concurrent refresh across two instances: one grant, no reuse, all authenticated",
+    "session on second instance and after restart, display-only",
+    "SSR read from Go/PostgreSQL",
+    "no token material in HTML",
+    "compiled CSS linked",
+    "compiled CSS served",
+    "upload 1048576 B via BFF",
+    "download SHA-256 equal 1048576 B",
+    "upload 26213376 B via BFF",
+    "download SHA-256 equal 26213376 B",
+    "Server Action foreign origin refused",
+    "Server Action same origin forwarded to Go",
+    "Server Action persisted readback (other instance)",
+    "second user cannot see or open the other tenant workspace",
+    "revoked identity loses data access within introspection cache TTL (15 s) + 5 s",
+    "logout on instance B",
+    "old cookie refused on instance A",
+    "same-origin Worker -> Node swap keeps the durable session",
+    "Worker-build Server Action id on Node build fails without a write"
+   ],
+   "first_party_pass_not_unauth_page": true
+  },
+  {
+   "file": "smoke-worker-vm-r2.json",
+   "declared_passed": 21,
+   "declared_failed": 0,
+   "recount_checks": 21,
+   "recount_pass": 21,
+   "recount_fail": 0,
+   "matches_declared": true,
+   "identity": "actual Claude Code (claude-opus-5-5)",
+   "label": "worker-vm-r2",
+   "fe": "worker",
+   "synthetic_fixture_only": "synthetic OIDC + fake S3 (fixture-server.mjs) + disposable PostgreSQL; no cloud provider",
+   "check_names": [
+    "root entry redirect",
+    "anonymous session",
+    "PKCE authorize redirect",
+    "callback after FE restart (durable PKCE)",
+    "concurrent refresh across two instances: one grant, no reuse, all authenticated",
+    "session on second instance and after restart, display-only",
+    "SSR read from Go/PostgreSQL",
+    "no token material in HTML",
+    "compiled CSS linked",
+    "compiled CSS served",
+    "upload 1048576 B via BFF",
+    "download SHA-256 equal 1048576 B",
+    "upload 26213376 B via BFF",
+    "download SHA-256 equal 26213376 B",
+    "Server Action foreign origin refused",
+    "Server Action same origin forwarded to Go",
+    "Server Action persisted readback (other instance)",
+    "second user cannot see or open the other tenant workspace",
+    "revoked identity loses data access within introspection cache TTL (15 s) + 5 s",
+    "logout on instance B",
+    "old cookie refused on instance A"
+   ],
+   "first_party_pass_not_unauth_page": true
+  },
+  {
+   "file": "smoke-apphosting-cloudrun-r2.json",
+   "declared_passed": 22,
+   "declared_failed": 0,
+   "recount_checks": 22,
+   "recount_pass": 22,
+   "recount_fail": 0,
+   "matches_declared": true,
+   "identity": "actual Claude Code (claude-opus-5-5)",
+   "label": "apphosting-cloudrun-r2",
+   "fe": "node",
+   "synthetic_fixture_only": "synthetic OIDC + fake S3 (fixture-server.mjs) + disposable PostgreSQL; no cloud provider",
+   "check_names": [
+    "root entry redirect",
+    "anonymous session",
+    "PKCE authorize redirect",
+    "callback after FE restart (durable PKCE)",
+    "concurrent refresh across two instances: one grant, no reuse, all authenticated",
+    "session on second instance and after restart, display-only",
+    "SSR read from Go/PostgreSQL",
+    "no token material in HTML",
+    "compiled CSS linked",
+    "compiled CSS served",
+    "upload 1048576 B via BFF",
+    "download SHA-256 equal 1048576 B",
+    "upload 26213376 B via BFF",
+    "download SHA-256 equal 26213376 B",
+    "Server Action foreign origin refused",
+    "Server Action same origin forwarded to Go",
+    "Server Action persisted readback (other instance)",
+    "second user cannot see or open the other tenant workspace",
+    "revoked identity loses data access within introspection cache TTL (15 s) + 5 s",
+    "changed origin requires sign-in again (no silent session migration)",
+    "logout on instance B",
+    "old cookie refused on instance A"
+   ],
+   "first_party_pass_not_unauth_page": true
+  },
+  {
+   "file": "smoke-apphosting-vm-r2.json",
+   "declared_passed": 22,
+   "declared_failed": 0,
+   "recount_checks": 22,
+   "recount_pass": 22,
+   "recount_fail": 0,
+   "matches_declared": true,
+   "identity": "actual Claude Code (claude-opus-5-5)",
+   "label": "apphosting-vm-r2",
+   "fe": "node",
+   "synthetic_fixture_only": "synthetic OIDC + fake S3 (fixture-server.mjs) + disposable PostgreSQL; no cloud provider",
+   "check_names": [
+    "root entry redirect",
+    "anonymous session",
+    "PKCE authorize redirect",
+    "callback after FE restart (durable PKCE)",
+    "concurrent refresh across two instances: one grant, no reuse, all authenticated",
+    "session on second instance and after restart, display-only",
+    "SSR read from Go/PostgreSQL",
+    "no token material in HTML",
+    "compiled CSS linked",
+    "compiled CSS served",
+    "upload 1048576 B via BFF",
+    "download SHA-256 equal 1048576 B",
+    "upload 26213376 B via BFF",
+    "download SHA-256 equal 26213376 B",
+    "Server Action foreign origin refused",
+    "Server Action same origin forwarded to Go",
+    "Server Action persisted readback (other instance)",
+    "second user cannot see or open the other tenant workspace",
+    "revoked identity loses data access within introspection cache TTL (15 s) + 5 s",
+    "changed origin requires sign-in again (no silent session migration)",
+    "logout on instance B",
+    "old cookie refused on instance A"
+   ],
+   "first_party_pass_not_unauth_page": true
+  }
+ ],
+ "durable": {
+  "argv": [
+   "node",
+   "node_modules/vitest/vitest.mjs",
+   "run",
+   "src/lib/oidc",
+   "src/features/data-transfer/durable-attempts.test.ts",
+   "src/test"
+  ],
+  "extra_env": [
+   "MC_BFF_TEST_DATABASE_URL"
+  ],
+  "exit": 0,
+  "log_files_line": [
+   " Test Files  13 passed (13)"
+  ],
+  "log_tests_line": [
+   "      Tests  174 passed (174)"
+  ],
+  "classification": "mixed suite: src/lib/oidc (whole OIDC dir) + durable-attempts.test.ts + src/test; not 174 SQL-integration cases",
+  "reviewer_composition_ref": "Commands/portability-durable-composition (own json-reporter rerun)"
+ },
+ "failed_attempts": [
+  {
+   "file": "smoke-apphosting-cloudrun-r1.json",
+   "keys": [
+    "api",
+    "checks",
+    "ended_utc",
+    "failed",
+    "fe",
+    "fixture",
+    "identity",
+    "label",
+    "passed",
+    "started_utc"
+   ],
+   "summary_head": "apphosting-cloudrun-r1"
+  },
+  {
+   "file": "smoke-apphosting-vm-r1.json",
+   "keys": [
+    "api",
+    "checks",
+    "ended_utc",
+    "failed",
+    "fe",
+    "fixture",
+    "identity",
+    "label",
+    "passed",
+    "started_utc"
+   ],
+   "summary_head": "apphosting-vm-r1"
+  },
+  {
+   "file": "smoke-node-hostgo-r1.note.json",
+   "json": {
+    "note": "r1 failed: harness applied schema with DML-only role (permission denied for database mc_bff); harness fixed, not product"
+   }
+  },
+  {
+   "file": "smoke-worker-cloudrun-r1.json",
+   "keys": [
+    "api",
+    "checks",
+    "ended_utc",
+    "failed",
+    "fe",
+    "fixture",
+    "identity",
+    "label",
+    "passed",
+    "started_utc"
+   ],
+   "summary_head": "worker-cloudrun-r1"
+  },
+  {
+   "file": "smoke-worker-cloudrun-r2.json",
+   "keys": [
+    "api",
+    "checks",
+    "ended_utc",
+    "failed",
+    "fe",
+    "fixture",
+    "identity",
+    "label",
+    "passed",
+    "started_utc"
+   ],
+   "summary_head": "worker-cloudrun-r2"
+  },
+  {
+   "file": "smoke-worker-cloudrun-r3.json",
+   "keys": [
+    "api",
+    "checks",
+    "ended_utc",
+    "failed",
+    "fe",
+    "fixture",
+    "identity",
+    "label",
+    "passed",
+    "started_utc"
+   ],
+   "summary_head": "worker-cloudrun-r3"
+  },
+  {
+   "file": "smoke-worker-cloudrun-r4.json",
+   "keys": [
+    "api",
+    "checks",
+    "ended_utc",
+    "failed",
+    "fe",
+    "fixture",
+    "identity",
+    "label",
+    "passed",
+    "started_utc"
+   ],
+   "summary_head": "worker-cloudrun-r4"
+  },
+  {
+   "file": "smoke-worker-vm-r1.json",
+   "keys": [
+    "api",
+    "checks",
+    "ended_utc",
+    "failed",
+    "fe",
+    "fixture",
+    "identity",
+    "label",
+    "passed",
+    "started_utc"
+   ],
+   "summary_head": "worker-vm-r1"
+  }
+ ],
+ "substitutions": {
+  "final": [
+   {
+    "profile": "cloud-run",
+    "file": "cloud-run",
+    "substitutions": [
+     "image->local tag",
+     "issuer/R2 https->loopback fixture",
+     "secretKeyRef->synthetic env file",
+     "secret volume->bind of synthetic key (0400)",
+     "platform env K_SERVICE/PORT (or CLOUD_RUN_JOB) added as Cloud Run injects them"
+    ]
+   }
+  ],
+  "run1_retained": true,
+  "run1_file": "profile-substitutions-run1.json",
+  "be-cloudrun-start-rewrite-disclosed-in": [
+   "return.md receipts notes",
+   "profile-substitutions-run1.json"
+  ]
+ },
+ "recount_ok": true
+}

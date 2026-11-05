@@ -1,0 +1,46 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "claude",
+    "-p",
+    "--output-format",
+    "json",
+    "--tools",
+    "",
+    "--restricted",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--disable-slash-commands",
+    "--no-chrome",
+    "--no-session-persistence"
+  ],
+  "start_utc": "2026-10-24T16:15:51.609162+00:00",
+  "end_utc": "2026-10-24T16:16:21.751535+00:00",
+  "exit": 0,
+  "elapsed_seconds": 30.142298541002674,
+  "scope": "supplied packet only; tools/MCP disabled; no runtime replay",
+  "input_manifest": "claude-followup-input-manifest.json",
+  "stdout_sha256": "cb171c8d54afe82783a45e83d84a6b49e5a16871d238c571cdc81f5b02e50689",
+  "session_id": "0b54701a-4132-450d-b96d-2da2ee267c39",
+  "subtype": "success",
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 2871,
+      "cacheReadInputTokens": 1383,
+      "cacheCreationInputTokens": 9450,
+      "webSearchRequests": 0,
+      "costUSD": 0.1333046,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 1021,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": []
+}

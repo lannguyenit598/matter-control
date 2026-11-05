@@ -1,0 +1,382 @@
+{
+  "task": "MC-002-INTA-FE-STAGE3-INTAKE",
+  "owner": "Local Codex PM/BA; actual ZCode runtime author; independent QA separate",
+  "priority": "P0",
+  "base": "1381601d52c40da3475aac8cf5e3d3cffd1e9f19",
+  "utc": "2026-10-25T18:23:20.290245+00:00",
+  "status": "STAGE3_OWNER_EVIDENCE_VERIFIED / CUE_STAGE4_RELEASED_NOT_DISPATCHED",
+  "checks": [
+    {
+      "name": "9exports exact raw copies",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 00-go-restart-log-before.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 00-state-before.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 10-driver.meta.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 10-driver.stderr.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 10-driver.stdout.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 11-state-after.sha256",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 12-go-restart-log-after.log",
+      "result": "PASS"
+    },
+    {
+      "name": "payload hash 13-privacy-scan.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "8unique payload hashes no selfcycle",
+      "result": "PASS"
+    },
+    {
+      "name": "before32matches acceptedstage2",
+      "result": "PASS"
+    },
+    {
+      "name": "state32to35exact3modified3new",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger assertions/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger checkpoints/intamvnmoems3pd.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger checkpoints/intamvnmoems3pd/checkpointA.baseline.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger checkpoints/intamvnmoems3pd/checkpointA.current.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger checkpoints/intamvnmoems3pd/state.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger counters.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/INT-PERS-01.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/INT-PERS-02.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T4.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T5.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T6-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T7-W.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/T8.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/W1.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/W2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger envelopes/intamvnmoems3pd/W3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger stages/intamvnmoems3pd/stage1.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger stages/intamvnmoems3pd/stage2.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger stages/intamvnmoems3pd/stage3.completed",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/INT-PERS-01.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/INT-PERS-02.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T4.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T5.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T6-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T7-W.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/T8.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/W1.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/W2.status",
+      "result": "PASS"
+    },
+    {
+      "name": "current ledger substeps/intamvnmoems3pd/W3.status",
+      "result": "PASS"
+    },
+    {
+      "name": "single INT-PERS02 envelope",
+      "result": "PASS"
+    },
+    {
+      "name": "full A equal to baseline/current/v1",
+      "result": "PASS"
+    },
+    {
+      "name": "actual pinned runtime and clientwire distinction",
+      "result": "PASS"
+    },
+    {
+      "name": "13true assertions only1PERS02",
+      "result": "PASS"
+    },
+    {
+      "name": "counter16stage3complete",
+      "result": "PASS"
+    },
+    {
+      "name": "only stages1to3",
+      "result": "PASS"
+    },
+    {
+      "name": "log snapshot chain links stage2to3",
+      "result": "PASS"
+    },
+    {
+      "name": "one appended logline",
+      "result": "PASS"
+    },
+    {
+      "name": "PERS02requestGET200 exact",
+      "result": "PASS"
+    },
+    {
+      "name": "zero same ID in original Go log",
+      "result": "PASS"
+    },
+    {
+      "name": "log UTCconversion",
+      "result": "PASS"
+    },
+    {
+      "name": "latency raw579ns scale",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned source /tmp/mc002-inta-be",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned source /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "clean pinned source /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged backend binary",
+      "result": "PASS"
+    },
+    {
+      "name": "highsignal credential scan0",
+      "result": "PASS"
+    }
+  ],
+  "checks_passed": 64,
+  "case": "INT-PERS-02",
+  "requestId": "mc-int-intamvnmoems3pd-INT-PERS-02-16",
+  "source_identity": "ZCode configured GLM5.3/ZAI self-report, not independent attestation",
+  "state_hashes_after_stage3": {
+    "assertions/intamvnmoems3pd.json": "72148dafd1640b1dcc23995ce2c1f3d70c8ac8f3fc9556995a3063e7528c233e",
+    "checkpoints/intamvnmoems3pd.json": "f1512a8ae54e5d0c187342c1e4ccbdfd82748d3911da293dc7847700b7e21a9d",
+    "checkpoints/intamvnmoems3pd/checkpointA.baseline.json": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15",
+    "checkpoints/intamvnmoems3pd/checkpointA.current.json": "fd8d2522187b742c00addd3d8bdc794e3d3341c190d0e6f94e54c475d2a16a15",
+    "checkpoints/intamvnmoems3pd/state.json": "d98e1b7368ccbadac9955934d41b36a6c8ae154fa586c7051967b80cf8ace25f",
+    "counters.json": "df28d823408a68ce208dbea3410a424753e5c4b4f8681a5d494a256eeb1f19eb",
+    "envelopes/intamvnmoems3pd/INT-PERS-01.json": "906b8c246dca4e5662505ba1632974335ffaef478847b935888bc9215712bb98",
+    "envelopes/intamvnmoems3pd/INT-PERS-02.json": "cf090a94c6512322b7a1847a551d24996eb187d741bea70804533c59e27cca72",
+    "envelopes/intamvnmoems3pd/T1.json": "aaf934463218948754e8e556d8aeee618484c672dbeda4bde37e2cc3202b3218",
+    "envelopes/intamvnmoems3pd/T2.json": "68c8fbd7f0b0bdb409eb28d6016c88f41a4c4b7ad6b9d70fc9b22446890ca898",
+    "envelopes/intamvnmoems3pd/T3.json": "7e22996435ccf690565f944b52b73f0af2ee5b65c06cd6664820ba6444e2594d",
+    "envelopes/intamvnmoems3pd/T4.json": "be2fe5066d083e9b0bcae8a362299f1acae0a3ce90f4244631831e94fbb99e2a",
+    "envelopes/intamvnmoems3pd/T5.json": "7e35bf0813f0d63871bfe3aa7483901b401cd8f83fa21b6465fd1ad4461bd59b",
+    "envelopes/intamvnmoems3pd/T6-W.json": "8b80fb6f572041284a65a637e352ba482c90a15d43650c212a1fbdda6abc0e9d",
+    "envelopes/intamvnmoems3pd/T7-W.json": "ecd791341928b2807fef37ad55cd10bc206a59a73f87f5189e5dfef1792f2a3b",
+    "envelopes/intamvnmoems3pd/T8.json": "d54b4f79cd1650b64cdf8fd075f79d41bd6ce94a3b5ece7c14a5ff76235e643e",
+    "envelopes/intamvnmoems3pd/W1.json": "23e2d1b5441850fc7c7ecdaa351185b2d825dd8b2535be02aedfa0c7df7b3aad",
+    "envelopes/intamvnmoems3pd/W2.json": "cc972e7c070073876bc01a4e358ceeb1a98778ae1f5140fcc5c98a13ec63455c",
+    "envelopes/intamvnmoems3pd/W3.json": "6d14bc0364b6a6c7c9c7d5d4fb1c51821c71c59614e4046613fe8684d9b13a26",
+    "stages/intamvnmoems3pd/stage1.completed": "16c9513311fb4b1f118fe3fcb2848c6e007fe125ba12ae6cb3aad539891a534f",
+    "stages/intamvnmoems3pd/stage2.completed": "1e2786bc0a8b04609130cc3e8f33ef9b04e564145f6974067d605c515668daa7",
+    "stages/intamvnmoems3pd/stage3.completed": "4640ea64a2d73e2acfbb8de495b0c3d29a1da12a2885372f8f22cf8393195464",
+    "substeps/intamvnmoems3pd/INT-PERS-01.status": "715d2718c036e5fd8e09b61d9138e052bf8554d5a236e861c6df1afd1e2b01f7",
+    "substeps/intamvnmoems3pd/INT-PERS-02.status": "b257fb39f6ce0863b23dd8826fa09d04a8722d1c85edacf71381c517e26d47d6",
+    "substeps/intamvnmoems3pd/T1.status": "34c628e5338632bed18a846745bba82a47b28e54347737abf0332233ee1407af",
+    "substeps/intamvnmoems3pd/T2.status": "8f570a3ee3f4e6be2577274c5828d11eedef996d4d3481dbb6f63c4476b26066",
+    "substeps/intamvnmoems3pd/T3.status": "a32ab55b05c99312fd9b60575d7a95d8e603258a4c0220770e53922da7f0ce22",
+    "substeps/intamvnmoems3pd/T4.status": "86dfae3a5974317e3383ab5db30f84a20eda956e537aa360bd8502f70fbaef03",
+    "substeps/intamvnmoems3pd/T5.status": "455ad1459e0d28c4cc3689f01191c580b2c5dcf4f86d7c3335fece6a46bdd0eb",
+    "substeps/intamvnmoems3pd/T6-W.status": "64b1a6ef7ff129596eb27dbd6ceec29d1569f425dd4b2e9d1e82a089dc09af20",
+    "substeps/intamvnmoems3pd/T7-W.status": "1553b56f8c3456191db3b1cea677c344a9d081b81dbe5af100eae5de15e032af",
+    "substeps/intamvnmoems3pd/T8.status": "e367de62c6e8cac7e0b78eeef72a0513f83907d2c92a507ce60ed12ef93b25fe",
+    "substeps/intamvnmoems3pd/W1.status": "c264c0e470ce5b9e5544be8da985255bec447d07fb3412eecf7e44498bca3734",
+    "substeps/intamvnmoems3pd/W2.status": "84839bcc586f174d4f9ec503a43b4ec517c1acad5b0e5f74721a111a7777e91c",
+    "substeps/intamvnmoems3pd/W3.status": "38b4bb9bfd2e7b74f71d6e2c165958fe6ae0f33ca01c01c8cc2793cd23f7f197"
+  },
+  "modified": [
+    "assertions/intamvnmoems3pd.json",
+    "checkpoints/intamvnmoems3pd/state.json",
+    "counters.json"
+  ],
+  "added": [
+    "envelopes/intamvnmoems3pd/INT-PERS-02.json",
+    "stages/intamvnmoems3pd/stage3.completed",
+    "substeps/intamvnmoems3pd/INT-PERS-02.status"
+  ],
+  "owner_report_sha256": "ceec9b63f72c9acc463e9c7f95e24b9c2f3908c56b8b427e6b62c52b1b869084",
+  "session_sha256": "5f9aeffc204acc676452d6a99a810d6abb80591b7930aba7a957e22592090459",
+  "errata": [
+    "Report says32 before versus32 after in heading, but after-manifest has35files:32before+3new; exact3modified accepted. Raw report retained."
+  ],
+  "scope": "Actual one known-record A persisted after same-container PG restart, not general durability/product recovery proof. App-client success wire status/headers unobservable.",
+  "limited_secret_pattern_scan": {
+    "private_key": 0,
+    "credential_uri": 0,
+    "api_key": 0
+  },
+  "independent_qa": "PENDING",
+  "no_codex_runtime_driver_http_sql_lifecycle": true,
+  "inventory": [
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/10-driver.stdout.log",
+      "bytes": 242,
+      "sha256": "43c97b30612e0f15483aaaa4acc3a5ad3ebe3728d79cacad894c67d783ad3645"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/12-go-restart-log-after.log",
+      "bytes": 747,
+      "sha256": "e731a45dbb72ebf09a323a2e2016c0a7937784efd9442fd0630e5a9dae56126a"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/13-privacy-scan.txt",
+      "bytes": 132,
+      "sha256": "804b07f17075f0bb4b10d21e53ac5552d04d13de2fc995a3c6697aeabcf85696"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/10-driver.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/10-driver.meta.txt",
+      "bytes": 219,
+      "sha256": "6b8ffd932c16c9129308537275f98490159006c64e6e8becc77ae6db602011ea"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/30-hashes.txt",
+      "bytes": 1231,
+      "sha256": "affdbea22c325276aed5e3e2b8e3629da145a5347101db5d25ddee3d65eb98d2"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/00-state-before.sha256",
+      "bytes": 4487,
+      "sha256": "3a680c15cb3f2990a536afb5b390538592f902453ec3f64b5aaf44107457bb67"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/11-state-after.sha256",
+      "bytes": 4926,
+      "sha256": "12439aded4806111bcfb49748a2971871ee54f3f8ad3eeaa3ec8367f69fe59b7"
+    },
+    {
+      "path": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/00-go-restart-log-before.log",
+      "bytes": 455,
+      "sha256": "ce7f9c4872597c90fa14da027e6818f92a20430410354a3e2644815e35ea6763"
+    },
+    {
+      "path": "docs/reviews/inta-frontend-runtime-stage3-return.md",
+      "bytes": 7150,
+      "sha256": "ceec9b63f72c9acc463e9c7f95e24b9c2f3908c56b8b427e6b62c52b1b869084"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+================================================================
+MC-002-INTA-FE-VALIDATION-R1: Deterministic Runner Self-Check
+Start UTC: 2026-10-26T06:34:05.207973+00:00
+Scratch Directory: /var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/mc002-inta-selfcheck-r1-tejkxpkg
+================================================================
+[PASS] 1. missingcounter
+       Description:     Observer file does not exist (e.g. runner defaulted to 0 in old run)
+       Expected:        verdict=FAIL, code=MISSING_COUNTER
+       Actual:          verdict=FAIL, code=MISSING_COUNTER
+       Notes:           Observer counter file missing; zero-upstream calls not established
+
+[PASS] 2. malformedcounter
+       Description:     Observer file contains invalid JSON or non-integer requestCount
+       Expected:        verdict=FAIL, code=MALFORMED_COUNTER
+       Actual:          verdict=FAIL, code=MALFORMED_COUNTER
+       Notes:           Observer counter file malformed JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+[PASS] 3. positivecounter
+       Description:     Observer recorded >0 HTTP requests (upstream was called)
+       Expected:        verdict=FAIL, code=POSITIVE_COUNTER
+       Actual:          verdict=FAIL, code=POSITIVE_COUNTER
+       Notes:           Observer recorded 1 upstream HTTP requests (expected 0)
+
+[PASS] 4. observererror
+       Description:     Observer failed to bind or encountered internal exception
+       Expected:        verdict=FAIL, code=OBSERVER_ERROR
+       Actual:          verdict=FAIL, code=OBSERVER_ERROR
+       Notes:           Observer encountered runtime error: Address already in use on 18086
+
+[PASS] 5. transientlistener
+       Description:     Port 18085 listener was acquired during child execution (FEVAL-F01)
+       Expected:        verdict=FAIL, code=FAIL_AGAINST_NEVER_LISTEN
+       Actual:          verdict=FAIL, code=FAIL_AGAINST_NEVER_LISTEN
+       Notes:           Port 18085 listener was acquired during execution (violates never-listen criterion)
+
+[PASS] 6. probeerror
+       Description:     Port probe command failed or permission denied (cannot establish absence)
+       Expected:        verdict=FAIL, code=PROBE_ERROR
+       Actual:          verdict=FAIL, code=PROBE_ERROR
+       Notes:           Port listener probe failed (lsof exit code 1); cannot establish listener absence
+
+[PASS] 7. timeout
+       Description:     Child process hung or did not exit within timeout limit
+       Expected:        verdict=FAIL, code=TIMEOUT
+       Actual:          verdict=FAIL, code=TIMEOUT
+       Notes:           Child timed out or hung (timeout kill is not PASS)
+
+[PASS] 8. wrongrefusal
+       Description:     Child exited with error but without exact key refusal phrase (e.g. syntax error or generic error)
+       Expected:        verdict=FAIL, code=WRONG_REFUSAL
+       Actual:          verdict=FAIL, code=WRONG_REFUSAL
+       Notes:           Expected refusal phrase 'product auth/secret env vars present (API_TOKEN)' missing in stderr/stdout
+
+[PASS] 9. validcompleteinput
+       Description:     Exit 1, exact refusal phrase, 0 requests measured with clean observer shutdown, port never bound
+       Expected:        verdict=PASS, code=VALID_COMPLETE_INPUT
+       Actual:          verdict=PASS, code=VALID_COMPLETE_INPUT
+       Notes:           Finite exit=1, exact refusal phrase present, port 18085 never acquired, observer confirmed 0 HTTP requests via durable clean shutdown
+
+================================================================
+SUMMARY: 9 PASS / 0 FAIL out of 9 cases
+End UTC: 2026-10-26T06:34:05.210273+00:00
+================================================================

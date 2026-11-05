@@ -1,0 +1,261 @@
+{
+ "task": "MC-P0-CLAUDE-CURRENT-RUNTIME-BROWSER-R3",
+ "candidate_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028",
+ "entries": 721,
+ "lineage": {
+  "r2_cases": "../claude-runtime-r2/browser/cases.json",
+  "r2_cases_sha256": "60270db56076b811d3003ba013f2d054fd2e49cfb0ddba08a4036dfdb05c9901",
+  "note": "R2 cases were used as a plan; none is carried forward as a result."
+ },
+ "summary": {
+  "BLOCKED_BROWSER_PERMISSION": 7,
+  "PASS": 11,
+  "NOT_RUN": 2,
+  "HUMAN_CONFIRMED_ACCOUNT_READY": 1,
+  "UNKNOWN": 1,
+  "BLOCKED": 1,
+  "WAITING_REAL_EXPIRY": 1,
+  "DECISION_REQUIRED": 1,
+  "AWAITING_HUMAN_TRIAL": 1
+ },
+ "cases": [
+  {
+   "id": "CAP-BROWSER",
+   "tool": "cmux-cua MCP (check_permissions, list_apps, health_report, start_session)",
+   "action": "Fresh capability preflight with the official browser tool",
+   "utc": "between ~16:05Z and 16:07Z on 2026-10-28 (individual call times not captured)",
+   "expected": "Daemon starts; Screen Recording granted",
+   "observed": "check_permissions: \"session ... has ended\"; list_apps, health_report and start_session each: \"computer-use daemon failed to start: Computer Use onboarding is still in progress. Finish setup in cmux, then retry.\" The R2 read on the same tool reported accessibility=true, screen_recording=false.",
+   "status": "BLOCKED_BROWSER_PERMISSION",
+   "evidence": "checks.json C-CAP",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028",
+   "human_setting_needed": "Finish the cmux Computer Use onboarding and grant Screen Recording to \"cmux Computer Use\" (bundle com.cmuxterm.cua) in System Settings > Privacy & Security > Screen Recording, then restart the cmux Computer Use helper. No alternate browser, headless run or OS capture was used."
+  },
+  {
+   "id": "HTTP-LOGIN-200",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "GET /login 200 with a sign-in prompt",
+   "observed": "status 200, title 'Sign in \u00b7 MatterControl'",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "HTTP-CSS-SERVED",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "Served CSS is compiled: no raw @theme/@apply and .flex/.sr-only/.bg-background present (R2-CSS-02 on the running instance)",
+   "observed": "1 stylesheet(s): 41382B raw=False util=[True, True, True]",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028",
+   "assets": [
+    {
+     "asset": "1151d4ec691f5f8c.css",
+     "status": 200,
+     "bytes": 41382,
+     "sha256": "6cadf954fb4ed3919680f69b9c34b23fbb7b83a997d9a87ac197a96a91fb4d0e",
+     "raw_tailwind_directives": false,
+     "utilities": {
+      "flex": true,
+      "sr-only": true,
+      "bg-background": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "HTTP-HTML-FACTS",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "<html lang>, viewport meta and a main landmark in the served HTML (HTML-level, not rendered)",
+   "observed": "{\"html_lang\": \"en\", \"viewport_meta\": true, \"main_landmark\": true, \"theme_init_script\": true}",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028",
+   "facts": {
+    "html_lang": "en",
+    "viewport_meta": true,
+    "main_landmark": true,
+    "theme_init_script": true
+   }
+  },
+  {
+   "id": "HTTP-SECURITY-HEADERS",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "Informational: record the response security headers of /login",
+   "observed": "content-security-policy=set, x-frame-options=set, x-content-type-options=set, referrer-policy=set, cache-control=set, permissions-policy=set",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028",
+   "headers": {
+    "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+    "x-frame-options": "DENY",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+    "permissions-policy": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+   },
+   "informational": true
+  },
+  {
+   "id": "HTTP-BFF-SESSION-SIGNED-OUT",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "Cookie-less session read is signed out",
+   "observed": "status 200, authenticated=False",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "HTTP-404",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "Unknown route returns 404",
+   "observed": "status 404",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "HTTP-SIGNED-OUT-ROUTE-SWEEP",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "12 product routes show Sign-in required when no session exists (no data, no empty list)",
+   "observed": "12/12 ok",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "API-HEALTHZ",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "API healthz 200",
+   "observed": "status 200",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "API-READYZ",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "API readyz 200",
+   "observed": "status 200",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "API-NO-TOKEN-401",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "No bearer: 401 urn:mc:unauthenticated",
+   "observed": "status 401, type urn:mc:unauthenticated",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "API-BOGUS-TOKEN-401",
+   "tool": "python urllib (no cookies, no redirects followed)",
+   "utc": "2026-10-28T16:07:55Z",
+   "expected": "Bogus bearer: 401 urn:mc:unauthenticated",
+   "observed": "status 401, type urn:mc:unauthenticated",
+   "status": "PASS",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "BR-LOGIN-A",
+   "action": "Actual hosted login -> callback -> authenticated Workspaces as synthetic A, human typing the password/MFA in a distinct test browser profile",
+   "status": "BLOCKED_BROWSER_PERMISSION",
+   "reason": "Needs a browser I may drive. The human has already reached an authenticated Workspaces screen on the live app (cited below), which is not my evidence.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "BR-RV001-BACK",
+   "action": "Signed in: open /matters/{m}/work/{item}?from=/..//evil.test, read the Back href and click it; repeat with a legitimate ?from= and a dot-segment path",
+   "status": "BLOCKED_BROWSER_PERMISSION",
+   "reason": "Needs session + browser. Unit proof remains the cited author evidence (claude-rv001-fix, OpenCode CLOSED_SOURCE_ONLY).",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "BR-R9-DESKTOP-MOBILE",
+   "action": "Render login, shell and Workspaces at desktop and mobile widths, 200% reflow",
+   "status": "BLOCKED_BROWSER_PERMISSION",
+   "reason": "Rendered geometry cannot be inferred from HTML.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "BR-KEYBOARD-FOCUS",
+   "action": "Keyboard traversal, focus order and focus visibility, dialogs and permission/unavailable/access-loss states",
+   "status": "BLOCKED_BROWSER_PERMISSION",
+   "reason": "No real focus movement without a browser.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "BR-LOCALE-THEME",
+   "action": "EN/VI switch and light/dark theme on the current presentation",
+   "status": "BLOCKED_BROWSER_PERMISSION",
+   "reason": "HTML shows an <html lang> and a theme init script (HTTP-HTML-FACTS); behaviour is unobserved.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "BR-GW-01..03",
+   "action": "Golden Workflows through the UI on NEWLY created synthetic fixtures with a resource ledger; never the human's Matter",
+   "status": "BLOCKED_BROWSER_PERMISSION",
+   "reason": "Needs session + browser; no fixture was created.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "BR-A11Y-SR",
+   "action": "Screen-reader pass",
+   "status": "NOT_RUN",
+   "reason": "No assistive technology executed.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "IDP-A-ACCOUNT",
+   "action": "Synthetic A has a verified usable account",
+   "status": "HUMAN_CONFIRMED_ACCOUNT_READY",
+   "reason": "PO statement and a signed-in Workspaces screenshot are CITED. I did not see the screenshot and did not log in, so this is human evidence only, not issuer/audience/refresh acceptance.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "IDP-B-ACCOUNT",
+   "action": "Synthetic B verified",
+   "status": "UNKNOWN",
+   "reason": "Status unknown; ask the human only for B's verified/not-verified status, never credentials.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "IDP-AB-ISOLATION",
+   "action": "A/B workspace and Matter isolation, VIEWER write denial, scoped grant/revoke",
+   "status": "BLOCKED",
+   "reason": "Needs B, a separate session/fixture, a browser and a coordinated slot. Not run against the user's access.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "IDP-REFRESH",
+   "action": "Real refresh observation",
+   "status": "WAITING_REAL_EXPIRY",
+   "reason": "No mock clock and no lifetime change; observe only on real expiry.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "IDP-LOGOUT-OUTAGE",
+   "action": "Logout, relogin and API-outage unavailable state",
+   "status": "NOT_RUN",
+   "reason": "Would end the human's session or stop their API during a demo. Needs an isolated session and an explicit slot.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "CR-002",
+   "action": "Observe the reload/new-key limitation safely",
+   "status": "DECISION_REQUIRED",
+   "reason": "Still a PO choice (browser storage, server slot with contract revision, or explicit local limitation). No blind resend and no key minted.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  },
+  {
+   "id": "AC-137",
+   "action": "Manager comprehension trial",
+   "status": "AWAITING_HUMAN_TRIAL",
+   "reason": "Needs five representative managers; protocol already prepared under ui/.",
+   "source_manifest_sha256": "f43738bf6c1779811259a15160ab4445c1627997a1fdb2c33ec887f921401028"
+  }
+ ]
+}

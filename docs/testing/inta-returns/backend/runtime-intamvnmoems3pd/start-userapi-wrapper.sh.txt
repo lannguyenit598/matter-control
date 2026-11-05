@@ -1,0 +1,9 @@
+#!/bin/sh
+# MC-002-INTA-BE runtime start wrapper - runId intamvnmoems3pd
+# Sources the approved private config file (values never embedded here) and
+# execs the exact reviewed binary bin/userapi at 52b60a4.
+set -eu
+set -a
+. /tmp/mc002-inta-private/intamvnmoems3pd/backend.env
+set +a
+exec /tmp/mc002-inta-be/bin/userapi

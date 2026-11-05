@@ -1,0 +1,43 @@
+{
+  "task": "MC-ZCODE-SYSTEM-MULTITENANCY-REVIEW-20261029-R2 (Phase A)",
+  "candidate": "dirty working tree @ 20feedbf06c859a9806055d609f5b132fe8bb086, 512-file pin (candidate-manifest.csv), zero drift at close",
+  "execution": {
+    "isolated_copy": "/private/tmp/mc-sysrev-20261029-r2 (verified byte-identical, 0 mismatch)",
+    "pg_fixture": "mc-sysrev-pg-20261029-r2, postgres:18.6-alpine, 127.0.0.1:52061, 1CPU/512MiB/128PIDs, label-checked, removed after tests (secrets dir removed)",
+    "backend": [
+      "go test ./internal/adapter/outbound/postgres/... -race -count=1 with MC_TEST_DATABASE_URL — PASS (64.4s; PG contracts incl. review, memberships, receipts, races)",
+      "go test ./internal/core/service/... ./internal/adapter/inbound/productapi/... -race — PASS",
+      "focused RMV: TestReviewGrid_HTTPAnswerExpectationPresence, TestReviewGrid_HTTPHistoryPagination, TestReviewGrid_HTTPCrossMatterVersionLooksMissing — PASS (PG env)",
+      "TestLocalPeopleDirectoryIssuerOwnerAndLimit — PASS (PG)",
+      "reviewer-added verifier_sysrev_test.go (isolated copy only): TestSysrevHistoryCursorIsCellScoped, TestSysrevHistoryForeignMatterAnchor, TestSysrevIdempotencyKeyCrossMatterRefusal — PASS"
+    ],
+    "frontend": [
+      "isolated copy (/private/tmp/mc-sysrev-20261029-r2/frontend, APFS-cloned node_modules): vitest run src/features/review + upload-attempt.test — 7 files / 42 tests PASS (includes corrected RMV-F02 answer-form tests, RMV-F04 cell-detail tests, timing-fixed review-list and upload-attempt tests)"
+    ]
+  },
+  "personas": {
+    "wsA_owner_matterOwner": "t-alice: workspace A OWNER (creator), matter A OWNER (auto on create), workspace B OWNER, matter B OWNER",
+    "wsA_member_editor": "t-bob: workspace A MEMBER, matter A EDITOR (review writer)",
+    "wsA_member_viewer": "t-carol: workspace A MEMBER, matter A VIEWER",
+    "unprovisioned": "t-ghost: valid token shape, no users row",
+    "foreign": "unauthenticated caller"
+  },
+  "negative_cases": [
+    {"id": "N1", "case": "guess/substitute foreign resource IDs (GET + commands, nested)", "expected": "uniform hidden denial, no existence leak", "actual": "CONFIRMED — policy.Hidden→ErrNotFound; TestReviewGrid_HTTPCrossMatterVersionLooksMissing PASS (PG); cross-matter version 404", "evidence": "review_server_test.go:279; policy.go", "status": "PASS"},
+    {"id": "N2", "case": "list/search/count/aggregate/export cannot return foreign metadata", "expected": "matter-scoped reads only", "actual": "CONFIRMED — all read paths go through readSnapshot(matterID) with default-deny; PG contracts PASS", "evidence": "work_service.go:956-997; PG suite", "status": "PASS"},
+    {"id": "N3", "case": "workspace OWNER cannot read confidential matter without membership", "expected": "hidden 404; VIEWER mutation → role 403", "actual": "CONFIRMED — policy.DecideReadRequirement/DecideCreateRequirement; witness: t-alice (ws OWNER) is hidden from review surfaces she has no matter membership in", "evidence": "policy.go; proofFixture structure", "status": "PASS"},
+    {"id": "N4", "case": "membership/role changes affect in-flight sessions, revoke-vs-write/read races", "expected": "memberships re-resolved INSIDE the command transaction; races safe", "actual": "CONFIRMED — execute() resolves ws+matter membership inside store.Execute lock (work_service.go:102-104); PG race contract suite PASS", "evidence": "work_service.go:82-134; PG race tests", "status": "PASS"},
+    {"id": "N5", "case": "same idempotency key across actor/scope must not replay another scope", "expected": "receipts PK (actor,key); cross-fingerprint reuse refused; replay re-authorized per represented matter", "actual": "CONFIRMED — createdReceipt request-hash check; TestSysrevIdempotencyKeyCrossMatterRefusal PASS (same actor, key, second matter → refused, no replay); authorizeReceiptScope re-checks current access for every represented matter", "evidence": "evidence_service.go:63-98; matter_service.go:292-320; verifier test", "status": "PASS"},
+    {"id": "N6", "case": "forged/foreign history cursors must not bypass authorization or leak rows", "expected": "cursor = seek position only; grid anchor re-authorized per page", "actual": "CONFIRMED — TestSysrevHistoryCursorIsCellScoped PASS (cross-cell cursor returns only target cell rows); malformed cursor 400; foreign-matter anchor 404 (TestSysrevHistoryForeignMatterAnchor)", "evidence": "verifier_sysrev_test.go; review_handlers.go:209-251", "status": "PASS"},
+    {"id": "N7", "case": "people/member selection cannot import/grant foreign scope", "expected": "member-candidates bounded; grants validate against the SAME workspace/matter", "actual": "CONFIRMED — MC_LOCAL_PEOPLE_DIRECTORY default false; handler gate (handlers.go:18); SQL restricts to same issuer + actor-is-workspace-OWNER + excludes current ACTIVE members + LIMIT 20 (matter.sql:177-190); TestLocalPeopleDirectoryIssuerOwnerAndLimit PASS", "evidence": "config/product.go:85; matter.sql", "status": "PASS"},
+    {"id": "N8", "case": "file keys/paths/URLs and proof/version relations stay within authorized parent", "expected": "version content download re-authorized through matter anchor; keys matter-scoped", "actual": "SOURCE_CONFIRMED, NOT_RENDERED — versionContent route behind authenticate + service read policy; object keys under matter scope (source read); no live bucket/URL test (no real R2 calls allowed)", "evidence": "server.go:153; objectstore store.go (source)", "status": "PASS_SOURCE_ONLY"},
+    {"id": "N9", "case": "frontend tenant switch/access-loss/UNKNOWN must not resurrect or submit A's data under B", "expected": "drafts namespaced per session+scope; access loss clears protected surface + scoped drafts", "actual": "CONFIRMED on corrected bytes — RMV-F04 clearing tests + RMV-F02 payload-fidelity tests PASS in isolated run (42/42 incl. cell-detail 8, answer-form 4); drafts.ts scoping + clearScopeDrafts read", "evidence": "verifier-frontend.log; drafts.ts; cell-detail.tsx", "status": "PASS (memory/pytest; rendered NOT_RUN)"},
+    {"id": "N10", "case": "pool reuse must not leak tenant context (if DB session context used)", "expected": "n/a or safe", "actual": "NOT_APPLICABLE — no SET app.tenant_id / session GUC is used anywhere in queries/migrations; scoping is join-based per query; RLS not present", "evidence": "migrations 0001-0008; queries_mattercontrol/*.sql", "status": "N_A"}
+  ],
+  "not_run": [
+    "authenticated rendered browser journeys (owner/editor/viewer UI, second-user revocation, >100-row traversal) — requires runtime-source-DB handoff; retained API is not the corrected binary (author statement)",
+    "live R2/object-store URL expiry/revocation behavior — no real provider calls allowed",
+    "production DB role grants/migrator separation as-deployed — deployment decision not executed here",
+    "same sub under a different issuer (distinct-user mapping) — exercised only via unit-level identity resolution semantics (UNIQUE(idp_issuer,idp_subject)); no end-to-end dual-issuer IdP fixture"
+  ]
+}

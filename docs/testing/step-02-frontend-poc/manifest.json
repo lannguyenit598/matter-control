@@ -1,0 +1,213 @@
+{
+  "task_id": "MC-002-FE",
+  "priority": "P0",
+  "agent_identity": "Antigravity",
+  "role": "Frontend Technical Owner",
+  "model_requested": "gemini-3.8-flash-high",
+  "model_selected": "Gemini 3.8 Flash (High)",
+  "effort": "high",
+  "runtime_status": "PO_C_EXECUTED",
+  "governance_repo": {
+    "path": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "task/MC-002-solution-architecture",
+    "continuation_base": "2000d9435a7a3d405cb89e92ea72610f09b1f1cf",
+    "head": "4a6b8f9c0b50a81930cb2edc0806c57dbda8cd99"
+  },
+  "source_repo": {
+    "origin": "https://github.com/lannguyenit598/nextjs-atomic-starter",
+    "pinned_sha": "3e5a642479acb789eb210e73fba956f3e85082e3",
+    "base_path": "/tmp/mattercontrol-step02-frontend",
+    "status": "clean"
+  },
+  "worktree": {
+    "path": "/tmp/mattercontrol-step021-frontend",
+    "branch": "task/MC-002-fe-poc",
+    "sha": "3e5a642479acb789eb210e73fba956f3e85082e3",
+    "status": "clean",
+    "untracked_dependencies": "544 packages corroborated;668MB owner-reported external measurement, not retained raw log",
+    "git_tracked_diff": "0 files changed"
+  },
+  "environment": {
+    "os": "macOS (Darwin 24.6.0 arm64)",
+    "node_version": "v24.22.1",
+    "pnpm_version": "12.11.2",
+    "rtk_version": "1.0.1",
+    "version_evidence": "owner-reported; package versions corroborated in install/build output, Node version absent from raw logs"
+  },
+  "executions": [
+    {
+      "step": 1,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend install --frozen-lockfile",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "01-pnpm-install.log",
+      "sha256": "28e686f3fe48e2f01bd89b37827eabbbfae698866c12f8117b565fda27bec893",
+      "utc_start": "2026-10-24T14:50:09Z",
+      "utc_end": "2026-10-24T14:50:11Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 2.1,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend typecheck",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "02-typecheck.log",
+      "sha256": "99d7c2179cdd316467c51f37901025a0753453664d741214ba56fc631fa6c0bc",
+      "utc_start": "2026-10-24T14:50:45Z",
+      "utc_end": "2026-10-24T14:50:48Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 2.2,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend lint",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "03-lint.log",
+      "sha256": "050c69da23536758722729aeda55a8d0fb9d557495ef6d33d70873a3b64a71c1",
+      "utc_start": "2026-10-24T14:50:54Z",
+      "utc_end": "2026-10-24T14:51:11Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 2.3,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend format:check",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "04-format-check.log",
+      "sha256": "1d66faad74f5e8709353f7288592866bd3a9095da1174a916e7aa632949971e2",
+      "utc_start": "2026-10-24T14:51:51Z",
+      "utc_end": "2026-10-24T14:51:52Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 2.4,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend test",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "05-test.log",
+      "sha256": "9ff92dd7720a3c5ef17681d9227ffb22bb0172536c979f45359eee43ff6df8f2",
+      "utc_start": "2026-10-24T14:52:52Z",
+      "utc_end": "2026-10-24T14:52:56Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 2.5,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend agents:check",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "06-agents-check.log",
+      "sha256": "491f4a4bdb8b7c87f65de72867b64bd78362251e44fd47fd1a1b8693e757950c",
+      "utc_start": "2026-10-24T14:53:19Z",
+      "utc_end": "2026-10-24T14:53:19Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 2.6,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend build",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "07-build.log",
+      "sha256": "44054c0d7c514e2a12e58262cb0dc8e4a54bf767eb5ddc7aa5c0594d3fc534d6",
+      "utc_start": "2026-10-24T14:53:31Z",
+      "utc_end": "2026-10-24T14:53:37Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 2.7,
+      "command": "rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend build-storybook",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "08-build-storybook.log",
+      "sha256": "d32d63a9631e830cc227b0cbcafaddd0b519554fdcf280c55ef1d442e54392a8",
+      "utc_start": "2026-10-24T14:53:44Z",
+      "utc_end": "2026-10-24T14:53:55Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 3,
+      "command": "Production startup & routes: ports 3088/3089 (API_MODE=demo, AUTH_ALLOW_ANONYMOUS=false)",
+      "exit_code": 0,
+      "status": "FUNCTIONAL_OUTPUT_OBSERVED_WITH_LIFECYCLE_LIMITATIONS",
+      "log_file": "09-production-start.log",
+      "sha256": "acf6b215d2210489f247f060852a0c71ec110930d433f9ae1911e39e8aac0396",
+      "utc_start": "2026-10-24T14:55:08Z",
+      "utc_end": "2026-10-24T14:55:14Z",
+      "exit_code_source": "wrapper marker in raw log; not complete acceptance assertion",
+      "utc_source": "raw log wrapper",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 4,
+      "command": "CI=true PORT=3095 rtk proxy pnpm --dir /tmp/mattercontrol-step021-frontend test:e2e",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_file": "10-playwright.log",
+      "sha256": "73f53f4f97065e661c8f8c79ca33746a9cdccce174ecfbdceb7ee1941d32692c",
+      "utc_start": "2026-10-24T14:56:52Z",
+      "utc_end": "2026-10-24T14:57:06Z",
+      "exit_code_source": "owner-manifest assertion; not in raw log",
+      "utc_source": "owner-manifest assertion; not in raw log",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    },
+    {
+      "step": 5,
+      "command": "REST fail-closed verification: port 3096 (API_MODE=rest, API_BASE_URL=http://127.0.0.1:8080, AUTH_ALLOW_ANONYMOUS=false)",
+      "exit_code": 0,
+      "status": "FAIL_CLOSED_RENDER_OBSERVED_NETWORK_COUNT_UNMEASURED",
+      "log_file": "11-rest-negative.log",
+      "sha256": "3bb6a567efb66b4ec2d8f7d6ec7d33bb9584707a3e763de59267529cf40cb23b",
+      "utc_start": "2026-10-24T14:57:56Z",
+      "utc_end": "2026-10-24T14:57:58Z",
+      "exit_code_source": "wrapper marker in raw log; not complete acceptance assertion",
+      "utc_source": "raw log wrapper",
+      "execution_identity": "Antigravity owner-reported; Codex did not replay"
+    }
+  ],
+  "review_correction_owner": "Codex PM, documentary evidence qualification only; original Antigravity artifacts preserved",
+  "review_status": "PASS_WITH_LIMITATIONS_H5_LOCAL_TEMPLATE_BASELINE",
+  "model_attestation": "owner-reported manual execution; no independent effective-model attestation",
+  "limitations": [
+    "Historical immediate checks warn ports3088/3089/3096 still occupied after wrapper kill; later15:05:01UTC check finds no listeners, not proof of graceful stop",
+    "Raw11 advertises LAN address; no explicit loopback bind in launch",
+    "No runtime request counter/spy or blanket leakage test; fail-closed render plus source/mocked-unit evidence only",
+    "Nine logs01..08 and10 have no in-log UTC/exit wrappers; metadata owner-asserted",
+    "Local Node success does not establish cohost/container/Cloudflare/provider/cost"
+  ],
+  "later_listener_check": "../step-02-frontend-intake/listeners.json",
+  "independent_review": {
+    "session_id": "ses_e9187093cffe0GgVrhsyCHzO3F",
+    "model": [
+      {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      }
+    ],
+    "verdict": "PASS_WITH_LIMITATIONS",
+    "closed_findings": [
+      "FE-VERIFY-01",
+      "FE-VERIFY-02",
+      "FE-VERIFY-03",
+      "FE-VERIFY-04",
+      "FE-VERIFY-05",
+      "FE-VERIFY-06",
+      "FE-VERIFY-07"
+    ],
+    "runtime_replay": false
+  }
+}

@@ -1,0 +1,8 @@
+2026-10-24T14:54:43Z
++zsh:3> DATABASE_URL='postgres://mc002be:[REDACTED-LOCAL-TEST-CREDENTIAL]@127.0.0.1:15455/mc002be_poc?sslmode=disable' MIGRATE_ON_START=false ./bin/userapi migrate
+{"time":"2026-10-24T21:54:43.17892+07:00","level":"INFO","msg":"migration applied","version":1,"file":"0001_create_users.sql","duration":"4.855917ms"}
+{"time":"2026-10-24T21:54:43.179086+07:00","level":"INFO","msg":"migration applied","version":2,"file":"0002_add_users_version.sql","duration":"1.297666ms"}
+{"time":"2026-10-24T21:54:43.179088+07:00","level":"INFO","msg":"migration applied","version":3,"file":"0003_create_outbox.sql","duration":"3.553584ms"}
+{"time":"2026-10-24T21:54:43.17909+07:00","level":"INFO","msg":"migration applied","version":4,"file":"0004_outbox_parking.sql","duration":"870.417µs"}
+{"time":"2026-10-24T21:54:43.179092+07:00","level":"INFO","msg":"migration applied","version":5,"file":"0005_outbox_pending_index.sql","duration":"1.287416ms"}
+{"time":"2026-10-24T21:54:43.179093+07:00","level":"INFO","msg":"migration applied","version":6,"file":"0006_drop_outbox_unpublished_index.sql","duration":"1.700125ms"}

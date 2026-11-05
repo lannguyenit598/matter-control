@@ -1,0 +1,26 @@
+{
+  "utc": "2026-11-01T04:47:55.801443+00:00",
+  "rows": [
+    {
+      "url": "http://localhost:3000/login",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:3000/my-actions",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:3000/matters",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8081/healthz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8081/readyz",
+      "status": 200
+    }
+  ],
+  "note": "HTTP readiness only. Next streaming pages may return200 with an auth/error view; this does not prove authenticated content or route protection. An earlier status-only302 assumption failed; no source change resulted."
+}

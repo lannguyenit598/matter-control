@@ -1,0 +1,79 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl MC002 frontend PoC independent review",
+    "--file",
+    "/tmp/mc002-fe-review-input.txt",
+    "Review Antigravity frontend PoC evidence and criteria independently. No tools. Return verdict and actionable findings."
+  ],
+  "exit": 0,
+  "elapsed_seconds": 126.4807059764862,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "session_id": "ses_e918cfbb6ffeO30XbAVLxB0DJq",
+  "outcome": "succeeded",
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "verdict": "CHANGES_REQUIRED",
+  "tool_messages": [],
+  "findings": [
+    {
+      "id": "FE-VERIFY-01",
+      "severity": "Medium"
+    },
+    {
+      "id": "FE-VERIFY-02",
+      "severity": "Medium"
+    },
+    {
+      "id": "FE-VERIFY-03",
+      "severity": "Medium"
+    },
+    {
+      "id": "FE-VERIFY-04",
+      "severity": "Low"
+    },
+    {
+      "id": "FE-VERIFY-05",
+      "severity": "Low-Medium"
+    },
+    {
+      "id": "FE-VERIFY-06",
+      "severity": "Low"
+    },
+    {
+      "id": "FE-VERIFY-07",
+      "severity": "Low"
+    },
+    {
+      "id": "FE-VERIFY-08",
+      "severity": "Info"
+    },
+    {
+      "id": "FE-VERIFY-09",
+      "severity": "Info"
+    }
+  ],
+  "raw_output_sha256": "e426c9f727d855fd6f1c547bb66be6608804ed34d9ada3856fdef6b56d3944d7",
+  "scope": "supplied document/evidence review; no runtime replay",
+  "qualification": "Reviewer says8/11 logs miss metadata; exact intake count is9/11 (01..08 and10). Ordinary export truncated262144bytes despite exit0; sanitized export parsed successfully."
+}

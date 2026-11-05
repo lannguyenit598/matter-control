@@ -1,0 +1,278 @@
+{
+ "artifact": "AC-137 facilitator-only answer key and scoring protocol",
+ "visibility": "FACILITATOR_ONLY. This file is never served to a participant, never embedded in the participant surface, and is not part of the participant bundle inventory.",
+ "protocol": {
+  "participants": "Exactly five real legal operations managers, corporate transactional partners or senior closing coordinators. Author self-testing, designer testing, internal AI personas and proxy engineers are disqualified.",
+  "materials": "Two unseen 50-row synthetic matters, each with a full causal graph, declared milestone prerequisites and scoped owners.",
+  "counterbalancing": "Three participants run A then B; two run B then A.",
+  "questions": [
+   "Major state",
+   "Top blocker",
+   "Next owner and permitted action"
+  ],
+  "timing": "The timer starts when the Control Room has fully rendered. No hint, prompt or coaching is given.",
+  "threshold": "At least four of five participants answer all three questions correctly within ten seconds, in each scenario separately.",
+  "noAveraging": "Elapsed time and accuracy are recorded per participant and per scenario. A mean below ten seconds does not rescue an individual failure.",
+  "consent": "Formal participant consent is required. No personally identifiable data and no client name is stored in the repository."
+ },
+ "derivation": "Every expected answer below was computed from the published dataset by checks/build_study_datasets.py and is re-derivable by checks/check_study_assets.py. None of it was typed in by hand.",
+ "expectedAnswers": {
+  "SCENARIO-A": {
+   "majorState": {
+    "milestones": [
+     {
+      "id": "MSA-01",
+      "name": "Regulatory clearance complete",
+      "state": "BLOCKED",
+      "because": "unmet declared prerequisites: RA-07"
+     },
+     {
+      "id": "MSA-02",
+      "name": "Carve-out perimeter locked",
+      "state": "BLOCKED",
+      "because": "unmet declared prerequisites: RA-10, RA-11"
+     },
+     {
+      "id": "MSA-03",
+      "name": "Closing fund release",
+      "state": "BLOCKED",
+      "because": "unmet declared prerequisites: RA-20, RA-21, RA-22, RA-23"
+     }
+    ],
+    "headline": "MSA-01 BLOCKED; MSA-02 BLOCKED; MSA-03 BLOCKED",
+    "blockedRecordCount": 24,
+    "eligibleActionCount": 0
+   },
+   "topBlocker": {
+    "record": "RA-07",
+    "title": "Regulatory carve-out clearance notification from the local ministry is received",
+    "reaches": [
+     "AA-10",
+     "AA-11",
+     "AA-14",
+     "AA-15",
+     "AA-17",
+     "AA-18",
+     "AA-20",
+     "AA-21",
+     "AA-22",
+     "AA-23",
+     "AA-24",
+     "AA-25",
+     "RA-10",
+     "RA-11",
+     "RA-14",
+     "RA-15",
+     "RA-17",
+     "RA-18",
+     "RA-20",
+     "RA-21",
+     "RA-22",
+     "RA-23",
+     "RA-24",
+     "RA-25"
+    ],
+    "why": "ERA-07 has no supplied evidence (Written carve-out clearance notification issued by the local ministry), so its proof gates cannot be satisfied"
+   },
+   "nextOwnerAction": {
+    "kind": "no-eligible-action",
+    "record": "RA-07",
+    "owner": "M-01 Regulatory Lead",
+    "statement": "No Action is eligible. The accountable internal owner is M-01 Regulatory Lead on RA-07; the permitted step is to pursue the missing input there."
+   }
+  },
+  "SCENARIO-B": {
+   "majorState": {
+    "milestones": [
+     {
+      "id": "MSB-01",
+      "name": "Documentation agreed",
+      "state": "READY",
+      "because": "all 4 declared prerequisites are met"
+     },
+     {
+      "id": "MSB-02",
+      "name": "Security perfected",
+      "state": "BLOCKED",
+      "because": "unmet declared prerequisites: RB-05, RB-06, RB-07, RB-08"
+     },
+     {
+      "id": "MSB-03",
+      "name": "Closing",
+      "state": "BLOCKED",
+      "because": "unmet declared prerequisites: RB-16, RB-17, RB-18, RB-19, RB-20"
+     }
+    ],
+    "headline": "MSB-01 READY; MSB-02 BLOCKED; MSB-03 BLOCKED",
+    "blockedRecordCount": 24,
+    "eligibleActionCount": 1
+   },
+   "topBlocker": {
+    "record": "RB-05",
+    "title": "Counterparty perfection certificate carries the formal legal opinion exhibit",
+    "reaches": [
+     "AB-06",
+     "AB-07",
+     "AB-08",
+     "AB-12",
+     "AB-14",
+     "AB-16",
+     "AB-17",
+     "AB-18",
+     "AB-19",
+     "AB-20",
+     "AB-21",
+     "AB-22",
+     "RB-06",
+     "RB-07",
+     "RB-08",
+     "RB-12",
+     "RB-14",
+     "RB-16",
+     "RB-17",
+     "RB-18",
+     "RB-19",
+     "RB-20",
+     "RB-21",
+     "RB-22"
+    ],
+    "why": "ERB-05 is only partially satisfied: The certificate is on file; the formal legal opinion exhibit it must carry is missing."
+   },
+   "nextOwnerAction": {
+    "kind": "eligible-action",
+    "record": "AB-28",
+    "owner": "N-02 Security Counsel",
+    "statement": "AB-28 may be executed now by N-02 Security Counsel"
+   }
+  }
+ },
+ "datasetSummary": {
+  "SCENARIO-A": {
+   "file": "study/scenario-a.json",
+   "requirements": 25,
+   "actions": 25,
+   "edges": 25
+  },
+  "SCENARIO-B": {
+   "file": "study/scenario-b.json",
+   "requirements": 22,
+   "actions": 28,
+   "edges": 25
+  }
+ },
+ "scoringLedger": {
+  "columns": [
+   "Participant",
+   "Scenario",
+   "Major state",
+   "Top blocker",
+   "Next owner/action",
+   "All three correct",
+   "Elapsed seconds",
+   "Verdict"
+  ],
+  "rows": [
+   [
+    "MGR-01",
+    "A",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-01",
+    "B",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-02",
+    "A",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-02",
+    "B",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-03",
+    "A",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-03",
+    "B",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-04",
+    "B",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-04",
+    "A",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-05",
+    "B",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "MGR-05",
+    "A",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ]
+  ]
+ },
+ "status": "TRIAL_NOT_RUN / AWAITING_HUMAN_TRIAL. No participant has been contacted, no timing has been collected and no usability result is claimed."
+}

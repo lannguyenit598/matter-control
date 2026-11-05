@@ -1,0 +1,26 @@
+{
+  "task": "MC-CONT-01",
+  "user_steering": "WAIT_BE01_F08_F10; continue independent INT-A/UX only",
+  "backend_runtime": "ACTUAL_OWNER_RETURN_RECEIVED / OPERATIONAL_READINESS_VERIFIED",
+  "frontend": "STAGE1_READY_NOT_DISPATCHED",
+  "canonical_cases": {
+    "total": 51,
+    "required": 36,
+    "product_deferred": 14,
+    "external_blocked": 1,
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 51
+  },
+  "UX": {
+    "source_predicates": 162,
+    "pass": 161,
+    "expected_live_history_drift_fail": 1,
+    "rendered": "NOT_RUN / prior target policy retained",
+    "independent_qa": "PENDING"
+  },
+  "external_calls": 0,
+  "runtime_owner_substitution": false,
+  "lifecycle_or_data_mutations": 0,
+  "gates": "UNCHANGED_OPEN / STEP03B_NOT_AUTHORIZED"
+}

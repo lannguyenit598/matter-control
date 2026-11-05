@@ -1,0 +1,36 @@
+{
+  "scope": "actual owner application log samples only; two known synthetic email/name values from41-normal-ops; other supplied request values/config not fully retained",
+  "checks": [
+    {
+      "file": "40-api1.stdout.log",
+      "events": 13,
+      "known_body_values": {
+        "alice.c01@example.test": false,
+        "Alice C01": false
+      },
+      "outage503_with_request_id": 6,
+      "status_counts": {
+        "201": 1,
+        "404": 1,
+        "503": 6,
+        "200": 1
+      }
+    },
+    {
+      "file": "44-api2.stdout.log",
+      "events": 7,
+      "known_body_values": {
+        "alice.c01@example.test": false,
+        "Alice C01": false
+      },
+      "outage503_with_request_id": 2,
+      "status_counts": {
+        "503": 2,
+        "200": 1,
+        "499": 1
+      }
+    }
+  ],
+  "exact_fixture_secret_scan": "owner-asserted, secret not read by Codex",
+  "not_a_general_log_privacy_guarantee": true
+}

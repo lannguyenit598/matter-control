@@ -1,0 +1,37 @@
+[
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T6-W",
+    "requestId": "mc-int-intamvnmoems3pd-T6-W-13",
+    "mode": "wire",
+    "method": "POST",
+    "routeTemplate": "/api/v1/users",
+    "startedAtUTC": "2026-10-25T17:36:47.267Z",
+    "latencyMs": 2,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": null,
+    "value": null,
+    "apiError": {
+      "status": 400,
+      "code": "HTTP_ERROR",
+      "message": "HTTP 400",
+      "details": {
+        "type": "about:blank",
+        "title": "Bad Request",
+        "status": 400,
+        "detail": "request body is not valid JSON",
+        "instance": "/api/v1/users"
+      }
+    },
+    "wire": {
+      "status": 400,
+      "headers": {
+        "content-type": "application/problem+json",
+        "x-request-id": "mc-int-intamvnmoems3pd-T6-W-13"
+      }
+    },
+    "truncated": false
+  }
+]

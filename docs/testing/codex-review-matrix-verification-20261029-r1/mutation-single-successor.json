@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "./internal/adapter/outbound/repotest/mattercontrol",
+    "-run",
+    "TestSuiteReview_MemoryStore",
+    "-count=1",
+    "-race",
+    "-v"
+  ],
+  "cwd": "/private/tmp/mc-review-verifier-20261029-r1/backend",
+  "utc_start": "2026-10-29T12:36:12.972038+00:00",
+  "utc_end": "2026-10-29T12:36:15.116528+00:00",
+  "exit": 1,
+  "mutation": {
+    "file": "internal/adapter/outbound/repotest/mattercontrol/memory_review.go",
+    "before": "if other.SupersedesID == a.SupersedesID {",
+    "after": "if false && other.SupersedesID == a.SupersedesID {",
+    "expected_nonzero": true
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R5-SOURCE-REVIEW-ZCODE",
+  "actor": "Actual ZCode (ZCode Desktop 3.16.3, model self-reported account:zai-start-plan/GLM-5.3-Flash via Z.AI)",
+  "window_utc": { "started": "2026-10-26T16:35:53Z", "completed": "2026-10-26T16:52Z" },
+  "mode_limits": "READ_HASH_STATIC_ONLY; all shell work via rtk proxy; read/hash/diff/grep/sort only; no execution or import of any submitted code; no tests/build/install/copy/download; no sockets/HTTP/port/process probes/signals incl. 0; no PG/Docker/lifecycle/credential access; no git stage/commit; no provider change",
+  "checks": [
+    { "step": "identity + HEAD/branch + handoff dir listing + output-path collision check (3 paths ABSENT)", "utc": "2026-10-26T16:35:53Z", "exit": 0 },
+    { "step": "hash+size verify 18 direct input pins (inputs.json)", "utc": "2026-10-26T16:36Z", "exit": 0, "result": "18/18 MATCH, 158849 bytes" },
+    { "step": "read assignment.json + R5/R4 manifests", "utc": "2026-10-26T16:36Z", "exit": 0, "result": "executor=Actual Antigravity both rounds; R5 declares 22 payloads / 332773 bytes" },
+    { "step": "hash 22 R5 payloads; recompute per-file byte counts", "utc": "2026-10-26T16:37Z", "exit": 0, "result": "22/22 MATCH; byte sum 332773 exactly" },
+    { "step": "hash 22 R4 frozen payloads", "utc": "2026-10-26T16:37Z", "exit": 0, "result": "22/22 MATCH" },
+    { "step": "23 raw/export byte-equality pairs + tree listings (export-R5, export-R4, raw root)", "utc": "2026-10-26T16:37Z", "exit": 0, "result": "23/23 PAIR_OK; 23/23/23 files; undeclared=0" },
+    { "step": "read handoff checks.json, Codex R5 intake, intake findings/stage-preflight/input-pin-disposition/receipt", "utc": "2026-10-26T16:38-16:39Z", "exit": 0 },
+    { "step": "read Antigravity R5 return (22518 B)", "utc": "2026-10-26T16:39Z", "exit": 0, "result": "observed §4 inline inventory hash mismatch for entries 9-22 -> finding R5-Z01" },
+    { "step": "read OpenCode R4 source review (40764 B) — R4 finding definitions", "utc": "2026-10-26T16:40Z", "exit": 0 },
+    { "step": "read runner/coordinator.py + runner/guard-validator-r5.sh", "utc": "2026-10-26T16:41Z", "exit": 0, "result": "I01/I02/I04 confirmed at exact lines (240,296-323,710,773-783; 505-514; 88-157,520,546,575,598,615)" },
+    { "step": "read launcher/harness-dev.mjs + runner/guard_evaluator.py + runner/observer.py", "utc": "2026-10-26T16:42Z", "exit": 0, "result": "I01/I03/I05 confirmed (24-26,65-123,432-449; 126-144; 62-68); R4-C04/C05 fixes verified" },
+    { "step": "read runner/selfcheck-r5.py (full)", "utc": "2026-10-26T16:43Z", "exit": 0, "result": "tests 34/35/36 semantics confirmed; test 44 opt-in; FakeClock only test 39; test 45/46 bare node + substring; test 30 dir-fsync not isolated -> R5-Z02" },
+    { "step": "read launcher/test-launcher-mock.mjs + 3 proposals", "utc": "2026-10-26T16:44Z", "exit": 0, "result": "only isCliEntry helper tested (293-308), real CLI block untested; receipt schemas divergent -> R5-Z03" },
+    { "step": "read r5-test-summary.json, credential-pattern-scan-r5.json, selfcheck-r5.stdout.txt, launcher-mock.stdout.txt", "utc": "2026-10-26T16:45Z", "exit": 0, "result": "46/46 + 17/17 corroborated; suite argv/cwd/exit/version transcripts present; pattern scan honest" },
+    { "step": "parse selfcheck-r5-results.json counts", "utc": "2026-10-26T16:45Z", "exit": "0 with expected-empty final grep", "result": "total 46 / passed 46 / failed 0 / allPassed true; 46 caseIds; 0 fail records" },
+    { "step": "verify 7 R4→R5 diffs via own diff -u line-set SHA-256 comparison", "utc": "2026-10-26T16:46Z", "exit": 0, "result": "7/7 DIFF_EXACT" },
+    { "step": "guard pin check via receipts and in-payload constants (live guard not read/executed)", "utc": "2026-10-26T16:46Z", "exit": 0, "result": "0f5f2453… consistent across stage-preflight receipt, harness-dev.mjs:23, guard_evaluator.py:17, launcher-mock.stdout.txt:37" },
+    { "step": "final HEAD re-check + output collision re-check (3 paths ABSENT)", "utc": "2026-10-26T16:50:24Z", "exit": 0 },
+    { "step": "create QA output dir + write review-inputs.json, checks-log.json; write docs/reviews/inta-zcode-fe-r5-source-review.md", "utc": "2026-10-26T16:52Z", "exit": 0, "mutation": "only the three assigned output files" }
+  ],
+  "adjudications": {
+    "R5-I01": "CONFIRMED (P1) — stage gate default-off, CLI never enables; receipt checks status string only; launcher hard-codes original paths; binding error routes as PROBE_ERROR",
+    "R5-I02": "CONFIRMED (P1) + PROOF_BASIS_BLOCKED — poll-before-probe real; exit-during-probe still counted; no interval retention; test 35 None→1 passes; sampled absence ≠ continuous proof",
+    "R5-I03": "CONFIRMED (P1) — single timestamp, no Next binary hash, no variant/run correlation; no fsync (atomic not durable); writer catches failures; minimal 4-field record passes",
+    "R5-I04": "CONFIRMED (P1) — start-time None disables lstart check; substring identity; bare ps/lsof; 5 cleanup sites, no SIGKILL, later sites can re-signal after failed wait; wait status unclassified",
+    "R5-I05": "CONFIRMED (P2) — hash-before-import real; import re-reads mutable path; module cache conditional risk; no frozen-source binding",
+    "R5-I06": "CONFIRMED (P2) — test 44 opt-in; S1/S3/S4 real; S2 partial; S5 CLI-adapter claim overstated; expected-vs-actual rewriting in 13 cases; test 30 not isolated; bare node + substring; no per-case stderr/time",
+    "reviewer_findings": {
+      "R5-Z01": "P3 — return §4 inline SHA-256 inventory stale for 14/22 payloads (bytes match, entries 1-9 match); authoritative chain intact; author errata required",
+      "R5-Z02": "P3 — test 30 dir-fsync isolation ineffective (global os.fsync mock hits file fsync first, same message)",
+      "R5-Z03": "P3 — stage-receipt schema divergence between the two proposals; coordinator validates only stageStatus; contract unbound",
+      "R5-Z04": "P4 — wrapper default attempt dir under raw evidence root when invoked without args"
+    },
+    "r4_dispositions_after_r5": {
+      "R4-C01": "CLOSED_SOURCE_ONLY for confirmed defect classes; NF-4 continuity PROOF_BASIS_BLOCKED",
+      "R4-C02": "PARTIAL (real pins/private env; no hashes; gate unbound; launcher original paths; fallback)",
+      "R4-C03": "PARTIAL (guard order closed; identity degradable)",
+      "R4-C04": "CLOSED_SOURCE_ONLY (with R5-Z02 test residual)",
+      "R4-C05": "PARTIAL (schema/identity closed; provenance partially improved)",
+      "S1": "CLOSED", "S2": "PARTIAL", "S3": "CLOSED", "S4": "CLOSED", "S5": "PARTIAL", "S6": "PARTIAL",
+      "NF-2": "stays CLOSED", "NF-3": "CLOSED_SOURCE_ONLY (I05 residual)", "NF-5": "PARTIAL", "NF-6": "stays CLOSED"
+    },
+    "stage_disposition": "BLOCKED_CONTRACT_NOT_BINDING — independently confirmed from source; consistent with Codex stage-preflight receipt (stage absent, external node_modules symlink); no stage created; runtime NOT released",
+    "final_verdict": "CHANGES_REQUIRED_SOURCE_ONLY + PROOF_BASIS_BLOCKED; never READY_RUNTIME"
+  },
+  "preserved": {
+    "formal_results": "51 unchanged: 36 required (T11c OUTCOME_UNKNOWN) / 14 product-deferred / 1 production-blocked D-14",
+    "raw_next_cli": "FAIL_OBSERVED_LISTENER stands",
+    "postgres": "stopped/retained per separate Codex evidence; not touched",
+    "gates": "no INT-CONF-01 / 36-acceptance / MC002DONE / Step03B / auth / isolation / production / Cloudflare / $0 / recovery / Mimosa clearance",
+    "prior_reports": "all OpenCode prompts/manifests/review returns byte-identical (pins verified); no memory/global-settings/shared-status writes"
+  },
+  "not_run": [
+    "submitted code/test execution or import (coordinator, evaluator, observer, launcher, wrapper, selfcheck, mock suite, guard, scanner)",
+    "runtime/staging/DB/Docker/process/signal operations (incl. signal 0)",
+    "OpenCode retry or provider/model/account change",
+    "git stage/commit or any repo mutation beyond the three named outputs",
+    "repeat of 36-row audit, product build, 7 stages, backend tests, BE02, or old full reviews"
+  ],
+  "remaining_risk": "sampled-absence gate semantics until criterion decision; uncorrelated/non-durable launcher records; degradable identity; unbinding stage contract; Z01 inventory must not be used as pin source; source review only — no runtime behavior observed"
+}

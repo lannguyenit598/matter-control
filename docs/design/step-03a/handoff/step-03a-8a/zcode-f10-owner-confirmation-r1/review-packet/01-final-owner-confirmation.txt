@@ -1,0 +1,134 @@
+# MC-003A.8A — ZCode final owner technical confirmation: F10 C1/C2/C3 (consolidated recommended addendum)
+
+**Identity**: ZCode Desktop interactive session do human điều hành; model/provider theo session metadata: `GLM-5.3` / `account:zai-start-plan` (session-declared, không attestation độc lập); tool version **UNKNOWN** (không có trong session metadata — không fabricate). Text-only, không lệnh/đọc file mới; supplement vẫn NOT_READ; không claim hash/verification mới.
+
+**Trạng thái của xác nhận này**: đây là **self-confirmation của tác giả candidate** theo reroute trực tiếp của PO («cho zcode xác nhận phần này luôn») cho đúng nhiệm vụ F10 này — **không phải** independent review, **không phải** formal PO approval, **không phải** runtime PASS, **không phải** adopted API, **không đóng F10**. Một reviewer đủ điều kiện khác vẫn phải kiểm tra độc lập bản revision cuối; reroute này chỉ bỏ vòng Claude bắt buộc cho nhiệm vụ này, không đổi vai trò kiến trúc hay QA độc lập.
+
+---
+
+## 1. Consolidated addendum (patch clauses; authority tag mỗi clause)
+
+### C1 — Cycle lifecycle
+
+- **P1.1 (candidate clarification)** — `data-model §5`: `filing-create` tạo filing + `filing_cycles` cycle 1 (`kind=INITIAL`, `opened_in_epoch=0`) trong **một transaction**. *Authority: mở rộng từ RULE-012 (cycle 1 = initial, filing-model §1 đã approved); cơ chế tạo = candidate.*
+- **P1.2 (candidate clarification, tồn tại từ trước)** — Observation/correction: body `cycleNo` (target bind) phải tồn tại dưới filing này (lookup scoped, không leak) → `422 validation`; `expectedCycleNo` = **quan điểm của caller về chu kỳ mở hiện hành**, lệch → `412 stale-revision`. *Authority: `expectedCycleNo` đã có trong api-contracts §1.1 (approved candidate precondition); ngữ nghĩa "current open cycle" = candidate.*
+- **P1.3 (candidate clarification — check ordering, mục MỚI lần này)** — Thứ tự validation command thống nhất: admission → scope lock + authorization → idempotency replay → **preconditions (428/412, gồm If-Match và expectedCycleNo) → state/stage guards (409) → effects**. Hệ quả xác định: concurrent supplement thứ hai gặp **đồng thời** CAS stale (current = n+1 ≠ expected n) **và** stage đã đổi → **412 stale-revision thắng** (precondition kiểm trước guard) — không phải 409; trường hợp ngược lại (stage đổi, CAS còn hợp lệ, ví dụ filing bị chuyển stage mà không mở cycle) → **409 guard-failed**. Lời hứa 412 là **điều kiện theo thứ tự đã pin**, không phải tuyên bố vô điều kiện. *Authority: thứ tự này chưa pin trong nguồn ủy quyền (problem catalogue liệt kê 412/409 không kèm order) → candidate technical decision thường lệ, một khuyến nghị duy nhất, áp dụng đều cho mọi command.*
+- **P1.4 (candidate clarification)** — SUPPLEMENT_REQUEST: client **không** gửi target cycleNo; server derive n+1 trong matter lock (stage guard AUTHORITY_REVIEW → sai `409`; expectedCycleNo lệch → `412`); một transaction: cycle n+1 + observation + evidence links + revision bump + events; rollback toàn phần, không event khi fail (RULE-018; AC-153). **RESPONSE không phải observation type** — được hiện thực bởi FilingSubmission command đã bind cycle qua FK `(matter_id, filing_id, cycle_no)`; **không bịa stage trung gian**; stage vocabulary đầy đủ (9 giá trị) không cần enumerate cho các clause này (chỉ tham chiếu AUTHORITY_REVIEW đã có nguồn). *Authority: RULE-012 + filing-model §3 approved; hình dạng command/derive = candidate.*
+
+### C2 — Correction & effective view
+
+- **P2.1 (giữ nguyên, candidate)** — `POST /filings/{id}/corrections`, body theo `action`: **RETRACT** `{correctsObservationId, reason}` / **REPLACE** `{correctsObservationId, type, cycleNo, evidenceRefs[], observedAt?, reason}`; OWNER + reason bắt buộc (permission matrix: correction OWNER-only — approved); target chỉ observation gốc dưới đúng filing (scoped 422, không leak); latest-seq terminal; replacement của correction superseded mất hiệu lực trong cùng commit; tối đa một replacement hiệu lực/observation gốc; rollback toàn phần.
+- **P2.2 (candidate clarification — pin tường minh)** — **Effective linkage tại asOf** = các evidence link của observation **không bị target bởi correction terminal trong lịch sử đã commit đến snapshot đó**. History append-only bất biến (RULE-019 — approved); effective view là hàm thuần của log tại snapshot, không rewrite gì. **Link lịch sử chưa quét hết không được dùng làm bằng chứng hiện tại**: current unbound/effective total chỉ lấy từ filing read tại **một** snapshot (`unboundObservationEvidenceTotal`); DR-15 scan chỉ là provenance. Receipt ≠ approval (RULE-012 — approved): link event/B3 row không mang ngữ nghĩa verification; satisfaction chỉ qua evidence-model §4 tại proof_epoch hiện hành với exact versions (RULE-011 — approved).
+
+### C3 — Discovery path A (final; B/causeSeq-param **không adopt**)
+
+- **P3.1 (candidate — exact match predicate, MỚI)** — Match normative: `type=filing.observation.evidence_linked ∧ causeSeq==mainSeq ∧ payload.observationId==O7` (**AND**). Invariant cho phép OR-equivalence **có thể trích dẫn** từ chính emission rules đã pin (một observation-command tạo đúng một observation; `causeSeq` = main seq của lệnh riêng; per-matter seq unique — ADR-002 §1.5): do đó mọi event có causeSeq=41 thuộc lệnh của O7. Tuy vậy contract **bắt buộc AND** để đúng-sai không phụ thuộc việc emission rules được chấp nhận/hiện thực đúng (chống drift, ví dụ command đa-observation trong tương lai). *Authority: seq uniqueness/append-only approved (RULE-019, ADR-002); emission rules + predicate = candidate.*
+- **P3.2 (candidate — dedup & grain)** — Event identity = `(matterId, seq)`; event khớp đếm đúng một lần theo seq. Link-table PK `(matter_id, observation_id, evidence_id)` (candidate schema clarification) ⇒ link events của một lệnh là các cặp phân biệt. **`evidenceLinkedCount` grain** = số link event lệnh đó phát (RECORD/REPLACE: links của observation mới; RETRACT: 0; N=0 hợp lệ).
+- **P3.3 (candidate — emission rules)** — Trong transaction của lệnh: **main event có seq trước link events của nó**; link events chỉ phát tại lệnh tạo observation; **không event nào sau đó mang `causeSeq` = mainSeq của lệnh cũ** (correction đi qua `correctsObservationId` trên main event mới của nó). Từ (append-only approved) + rules này: tìm đủ N match ⇒ **command-local completeness vĩnh viễn** — history muộn hơn không bao giờ bổ sung link của lệnh đó, dù chưa quét.
+- **P3.4 (candidate — edge semantics, không bao giờ false zero/completeness)** — **N=0**: hoàn tất ngay (0/0), không phải anomaly. **exhausted<N** (chạm đầu stream mà <N match) hoặc **count>N** hoặc **identity mismatch** (match có observationId ≠ O7): surface trạng thái **INCOMPLETE_HISTORY/ANOMALY**, không render zero, không render complete; current total chỉ từ filing read. Unrelated interleaved (kể cả event derived cùng lệnh nằm giữa hai link) bị predicate loại, không ảnh hưởng count.
+- **P3.5 (candidate — completion semantics)** — **Command-local completeness ≠ global nextCursor exhaustion**: đủ N unique exact-match là xong cho lệnh đó dù history muộn chưa quét; global exhaustion mà k<N là anomaly (P3.4). **sourceRevision đổi giữa các trang**: match đã tìm thấy bất biến (history append-only); mỗi trang nhãn asOf/sourceRevision riêng; **không merge overview, không shared cross-page snapshot, không suy current-effective proof từ scan** — mọi số liệu hiện tại lấy từ một filing read đơn-snapshot. Không dùng `commandKey`/mapping correlationId (không thuộc indexed reviewed set); không filter mới (path A thuần); limit ≤ 200 là page-size (RC-7), không cap dữ liệu.
+
+### Projection (giữ nguyên + pin vocabulary)
+
+- Main payload: `{observationId: UUIDv7, action ∈ {RECORD,RETRACT,REPLACE}, observationType ∈ {AUTHORITY_ACKNOWLEDGEMENT, AUTHORITY_OUTCOME_APPROVAL, AUTHORITY_OUTCOME_NEGATIVE, SUPPLEMENT_REQUEST, STAGE_TRANSITION, CANCEL, REOPEN} (chuỗi cuối thuộc filing-model edit), cycleNo: ℤ≥1|null, proofEpoch: ℤ≥0, correctsObservationId: UUIDv7|null, evidenceLinkedCount: ℤ≥0}`.
+- Link payload: `{observationId: UUIDv7, role ∈ {RECEIPT, OUTCOME, null}, cycleNo: ℤ≥1|null, proofEpoch: ℤ≥0}` — **role null = link của observation roleless, không bao giờ vào B3**.
+- Kế thừa: `seq ℤ≥0`; `recordedAt` RFC3339 offset; `effectiveAt` = observedAt|null; `causeSeq` = mainSeq (link) | null (main); `correlationId` opaque (format/bound không có nguồn → NEEDS_AUTHORIZED_SOURCE hoặc candidate ≤128 chars — tôi đề xuất ≤128, rõ nhãn proposed); `reason` non-null trên RETRACT/REPLACE; **`before`/`after` ∈ null | cùng projection scalar đóng** — không bao giờ mảng. **No-array invariant** trên hai event-type này; không đụng event-type khác.
+- **Bounds số học — dual status**: độ dài `reason`/`observationType`/`correlationId`, kích thước envelope: không có trong ngữ cảnh ủy quyền. Tôi **đề xuất giá trị candidate cụ thể** (reason ≤2000, type ≤64, correlationId ≤128 — ZCode-proposed, rõ nhãn, không phải nguồn), với **alternative NEEDS_AUTHORIZED_SOURCE** nếu owner muốn giới hạn có nguồn (clause còn thiếu: bảng field-length/validation của api-contracts ngoài excerpt). Relation-bounded **không** là constant-byte — giữ nguyên.
+
+## 2. Trace limit=1 — unrelated event nằm **giữa hai match** (E3a/E3b, commandKey ban đầu không biết)
+
+O8 = REPLACE của OBS-04, tạo OBS-09 với N=2 links. Dataset ổn định S0:
+
+| Seq | Event | Trang limit=1 |
+|---|---|---|
+| 40 | unrelated (action.created, lệnh khác) | bị skip |
+| 41 | **main REPLACE** {observationId: OBS-09, action: REPLACE, corrects: OBS-04, cycleNo: 2, epoch 0, **evidenceLinkedCount: 2**} | fetch (biết N=2) |
+| 42 | **link** {OBS-09, role OUTCOME, c2} targetRef={EVIDENCE, **E3a**} | **match 1/2** |
+| 43 | **derived event cùng lệnh** (stage/readiness recompute — không phải link event) | **nằm giữa hai match** — predicate loại; chứng minh không được giả định "event kế tiếp link là link" |
+| 44 | **link** {OBS-09, role OUTCOME, c2} targetRef={EVIDENCE, **E3b**} | **match 2/2 → stop** |
+| 45 | unrelated (lệnh khác) | không cần quét cho lệnh này |
+
+Đúng-sai **không dựa vào contiguous-seq-block**: filter tự loại 43 (và mọi interleaving khác); stop condition tự kết thúc; E3a/E3b discovered từ targetRef; không commandKey/correlation mapping. Sau khi match xong, history từ 45 trở đi vẫn tồn tại nhưng không liên quan lệnh này.
+
+## 3. Acceptance rows (DOCUMENT_EXPECTED / runtime NOT_RUN)
+
+| ID | Case | Expected |
+|---|---|---|
+| A1 | Tạo filing | một txn: filing + cycle1(INITIAL, epoch0) + events; observation bind cycleNo=1 thành công sau đó |
+| A2 | Concurrent supplement: CAS stale + stage đổi | `412 stale-revision` (precondition trước guard theo P1.3) |
+| A3 | Chỉ stage đổi, CAS hợp lệ | `409 guard-failed`; không mutation |
+| A4 | Supplement happy path / injected failure | một txn đủ 5 thành phần / rollback toàn phần, không event |
+| A5 | REPLACE rồi RETRACT cùng target | terminal = latest; replacement của correction superseded mất hiệu lực; history bất biến; tối đa 1 replacement hiệu lực |
+| A6 | Effective tại asOf | link hiệu lực iff observation non-retracted tại snapshot; history một mình không chứng minh current total; filing-read count authoritative |
+| A7 | Trace §2 | chỉ match theo AND-predicate; unrelated (kể cả derived giữa links) skip; đủ N → command-local complete dù history muộn chưa quét |
+| A8 | N=0 / exhausted<N / surplus / identity mismatch | 0/0 = complete; ba case còn lại surface INCOMPLETE_HISTORY/ANOMALY — không false zero, không false completeness |
+| A9 | Projection | no-array invariant; role-null links ngoài B3; per-page sourceRevision labels; không merge/current-effective proof từ scan |
+| A10 | RESPONSE | FilingSubmission command bind cycle qua FK; không observation row; không stage bịa |
+
+## 4. Impact / alternatives / decisions
+
+- **Compatibility/consumer**: consumer filing detail thấy `unboundObservationEvidenceTotal`; provenance qua route events hiện có với client-side filter (path A) — có thể nhiều trang bounded; không cần quyền mới. Data: +1 cột nullable + FK + index + PK link-table + event payload fields; candidate/NOT_IMPLEMENTED nên không có migration dữ liệu sản phẩm. History: append-only nguyên vẹn, correction chỉ thêm event.
+- **ADR**: không cần ADR mới (không đổi snapshot/auth model; payload + column trong mô hình hiện có).
+- **Alternatives chưa adopt**: path B (causeSeq param), L2 link-grain, B35 — đều unadopted; catalogue **giữ 32**; zero route/filter delta nhưng vẫn chứa candidate fields/semantics cần chấp nhận.
+- **Genuine outstanding PO choices** (chỉ những cái thật sự cần PO): (1) adoption của candidate fields (`unboundObservationEvidenceTotal`, event payload blocks) và proposed numeric bounds vs NEEDS_AUTHORIZED_SOURCE — gộp một lượt khi contract lên gate; (2) B35 adoption (nếu có). Các choice kỹ thuật thường lệ (check ordering, AND-predicate, emission order, stop semantics) đã có **một** khuyến nghị, không cần approval loop riêng.
+
+## 5. JSON (unique keys)
+
+```json
+{
+  "task": "MC-003A.8A.f10_c1c2c3_owner_technical_confirmation",
+  "reviewer": "ZCode Desktop interactive session, human-operated (author self-confirmation, not independent review)",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN (not in available session metadata; none fabricated)",
+  "confirmation_scope": "technical consistency confirmation of ZCode-authored C1/C2/C3 per direct PO reroute; not PO approval, not adopted API, not runtime PASS, not F10 CLOSED; independent reviewer still required for the final revision",
+  "c1": {
+    "disposition": "OWNER_TECHNICALLY_CONFIRMED_CANDIDATE",
+    "patches": {
+      "cycle1_creation": "filing-create makes filing + filing_cycles cycle 1 (INITIAL, epoch 0) in one transaction [candidate]",
+      "target_vs_cas": "body cycleNo must exist under filing -> 422 scoped; expectedCycleNo = believed current open cycle, mismatch -> 412 [expectedCycleNo existence approved §1.1; semantics candidate]",
+      "check_ordering": "uniform command order: admission -> authz -> replay -> preconditions (428/412) -> guards (409) -> effects; stale-CAS + changed stage -> 412; stage-only change with valid CAS -> 409 [candidate technical decision, previously unpinned]",
+      "supplement": "server-derived n+1 under matter lock; one txn cycle+observation+links+revision+events; full rollback [candidate on approved RULE-012/filing-model §3]",
+      "response": "RESPONSE is FilingSubmission only (FK cycle binding), never an observation type; no invented intermediate stage; 9-value stage vocabulary not enumerated (not needed by these clauses)"
+    }
+  },
+  "c2": {
+    "disposition": "OWNER_TECHNICALLY_CONFIRMED_CANDIDATE",
+    "patches": {
+      "actions": "RETRACT {correctsObservationId, reason} | REPLACE {correctsObservationId, type, cycleNo, evidenceRefs[], observedAt?, reason}; OWNER+reason; original-target-only; latest-seq terminal; superseded replacement deactivated in same commit [candidate on approved permission matrix/RULE-019]",
+      "effective_view": "effective at asOf = links of observations not targeted by a terminal correction among committed history at that snapshot; pure function of append-only log; no rewrite [candidate derivation on approved RULE-019]",
+      "proof_boundaries": "incomplete historical links never prove current totals; filing-read single-snapshot count authoritative; receipt != approval; satisfaction only via evidence-model §4 at current proof_epoch with exact versions [approved RULE-011/012]"
+    }
+  },
+  "c3": {
+    "disposition": "OWNER_TECHNICALLY_CONFIRMED_CANDIDATE",
+    "patches": {
+      "path": "A only: same-Matter unfiltered seq pages; no commandKey/correlation mapping; no causeSeq query param (B unadopted)",
+      "predicate": "normative AND: type=filing.observation.evidence_linked AND causeSeq==mainSeq AND payload.observationId==O7; OR-equivalence invariant citable (one observation per command, causeSeq=own main seq, per-matter unique seq) but AND pinned for drift-safety [candidate; seq uniqueness approved ADR-002 §1.5]",
+      "dedup_grain": "event identity (matterId, seq), counted once; link PK (matter_id, observation_id, evidence_id); evidenceLinkedCount = link events emitted by the command (RETRACT: 0)",
+      "emission_rules": "main event seq precedes its links within the command; links only at creation; no later event reuses an old mainSeq as causeSeq (corrections reference via correctsObservationId) [candidate; append-only approved]",
+      "edge_semantics": "N=0 complete; exhausted<N, surplus, or identity mismatch -> INCOMPLETE_HISTORY/ANOMALY surfaced; never false zero/completeness [candidate reader contract]",
+      "completion": "command-local completeness (N unique exact matches) independent of global nextCursor exhaustion and of later unrelated history; sourceRevision changes disclose per-page labels; no overview merge, no shared cross-page snapshot, no current-effective proof from scan [candidate; append-only approved]"
+    }
+  },
+  "projection": {
+    "main_payload": "{observationId UUIDv7, action RECORD|RETRACT|REPLACE, observationType closed 7-value candidate set (final strings via filing-model edit), cycleNo int>=1|null, proofEpoch int>=0, correctsObservationId UUIDv7|null, evidenceLinkedCount int>=0}",
+    "link_payload": "{observationId UUIDv7, role RECEIPT|OUTCOME|null (roleless links excluded from B3), cycleNo int>=1|null, proofEpoch int>=0}",
+    "inherited": "seq int>=0; recordedAt RFC3339 offset; effectiveAt=observedAt|null; causeSeq=mainSeq on links|null on mains; correlationId opaque (proposed <=128 chars, NEEDS_AUTHORIZED_SOURCE alternative); reason non-null on RETRACT/REPLACE; before/after in null|same closed scalar projection — never arrays; no-array invariant scoped to these two event types",
+    "numeric_bounds": "dual status: ZCode-proposed candidate values (reason<=2000, type<=64, correlationId<=128) OR NEEDS_AUTHORIZED_SOURCE for sourced limits (missing clause: field-length/validation table beyond authorized excerpts); relation-bounded is not constant-byte; no business cardinality cap; no size-risk accepted for PO"
+  },
+  "acceptance": ["A1 initial filing one-txn", "A2 stale CAS + changed stage -> 412", "A3 stage-only -> 409 no mutation", "A4 supplement happy/failure rollback", "A5 replace-then-retract terminal/deactivation, immutable history", "A6 effective-at-asOf derivation, history insufficient for current totals", "A7 exact-predicate trace with derived event between links", "A8 N=0/exhausted/surplus/mismatch anomaly semantics", "A9 no-array invariant, role-null excluded from B3, per-page labels", "A10 RESPONSE = FilingSubmission only"],
+  "status_flags": { "acceptance": "DOCUMENT_EXPECTED", "runtime": "NOT_RUN", "catalogue": "32 unchanged", "unadopted_alternatives": ["path B causeSeq param", "L2 link-grain", "B35"], "candidate_fields_pending_acceptance": ["unboundObservationEvidenceTotal", "DR-15 scoped payload blocks"], "po_choices_genuine": ["candidate fields + proposed bounds adoption at gate", "B35 adoption"], "adr_needed": false },
+  "preserved": {
+    "f08": "untouched",
+    "ct": "22 IDs, 16+4+1+1",
+    "qa": "Q1..Q8 original dispositions, Q2/Q4/Q6/Q8 conditional",
+    "gates": { "G3": "NOT_VERIFIED", "G4_design_qa": "PENDING", "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY", "G5-B": "FINDINGS_OPEN", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED", "po_architecture_approval_gate": "NOT_PASSED" },
+    "independence": "BE-01 and INT-A flow independent; not restarted or reassigned; no payload/read permission inherited beyond this same-session text assignment"
+  }
+}
+```
+
+## 6. Skipped checks / remaining risks
+
+- **Skipped**: mọi runtime/test/build/DB/browser; không lệnh, không đọc file (kể cả supplement NOT_READ), không write/commit; không verify version/hash mới; không review lại F-08, 11 findings, 32 operations; BE-01/INT-A không đụng.
+- **Remaining risks**: (1) đây là self-confirmation của tác giả — bản revision cuối vẫn cần một reviewer độc lập kiểm tra chính xác văn bản này trước khi coi là đã xác nhận hai lớp; (2) tất cả clause tagged candidate chờ chấp nhận contract (Claude slot đã được PO reroute cho nhiệm vụ này, nhưng gate kiến trúc/PO vẫn nguyên); (3) bounds số học đang ở trạng thái dual (proposed vs NEEDS_AUTHORIZED_SOURCE) — quyết định owner; (4) mọi acceptance là DOCUMENT_EXPECTED, runtime NOT_RUN; (5) Codex intake bản return này — preparation không phải execution.

@@ -1,0 +1,68 @@
+[
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T4",
+    "requestId": "mc-int-intamvnmoems3pd-T4-6",
+    "mode": "app-client",
+    "method": "GET",
+    "routeTemplate": "/api/v1/users/{id}",
+    "startedAtUTC": "2026-10-25T17:36:47.171Z",
+    "latencyMs": 1,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": null,
+    "value": null,
+    "apiError": {
+      "status": 404,
+      "code": "NOT_FOUND",
+      "message": "resource not found",
+      "details": {
+        "type": "about:blank",
+        "title": "Not Found",
+        "status": 404,
+        "detail": "resource not found",
+        "instance": "/api/v1/users/not-a-uuid"
+      }
+    },
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  },
+  {
+    "runId": "intamvnmoems3pd",
+    "caseId": "T4",
+    "requestId": "mc-int-intamvnmoems3pd-T4-7",
+    "mode": "app-client",
+    "method": "GET",
+    "routeTemplate": "/api/v1/users/{id}",
+    "startedAtUTC": "2026-10-25T17:36:47.173Z",
+    "latencyMs": 1,
+    "actualNextVersion": "16.4.2",
+    "harnessRevision": "48cc03e949d66fc47a7d304413621eb79804e6c1",
+    "outcome": "apiError",
+    "classification": null,
+    "value": null,
+    "apiError": {
+      "status": 404,
+      "code": "NOT_FOUND",
+      "message": "resource not found",
+      "details": {
+        "type": "about:blank",
+        "title": "Not Found",
+        "status": 404,
+        "detail": "resource not found",
+        "instance": "/api/v1/users/01A15359-AA28-7A00-A380-000000000001"
+      }
+    },
+    "wire": {
+      "status": null,
+      "headers": null,
+      "note": "not-observable-via-client"
+    },
+    "truncated": false
+  }
+]

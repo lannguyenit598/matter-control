@@ -1,0 +1,135 @@
+{
+  "scope": "backend, ops, architecture and process (UI excluded)",
+  "head": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+  "written_utc": "2026-10-28T16:55:59Z",
+  "actor": "Claude Code (claude-sonnet-5-5), author of part of this source; not independent",
+  "findings": [
+    {
+      "id": "BR-01",
+      "sev": "P1",
+      "area": "process",
+      "title": "No CI runs for this repository",
+      "status": "CONFIRMED",
+      "evidence": "Workflows exist only under apps/backend/.github/workflows/{ci,template}.yml and apps/frontend/.github/workflows/ci.yml. The repository root has no .github directory, and GitHub reads workflows only from the root. The branch was pushed to origin, so none of lint, tests, govulncheck or pnpm audit runs there.",
+      "fix": "Hoist the workflows to <root>/.github/workflows with working-directory/path filters."
+    },
+    {
+      "id": "BR-02",
+      "sev": "P1",
+      "area": "delivery/security",
+      "title": "Every build, image and run path targets the unauthenticated template API, not the product",
+      "status": "CONFIRMED",
+      "evidence": "Dockerfile:13,21 builds and runs ./cmd/userapi; docker-compose.yml, Makefile:18,21,24,63 and ci.yml:69,89 do the same. internal/adapter/inbound/httpapi has no authentication (no Authorization handling). mcapi has no Dockerfile, compose service, migrate job or CI job.",
+      "fix": "Retarget image/compose/Makefile/CI to mcapi, then delete the userapi stack (BR-08)."
+    },
+    {
+      "id": "BR-03",
+      "sev": "P2",
+      "area": "test/CI",
+      "title": "Product PostgreSQL suites are not wired into any CI path",
+      "status": "CONFIRMED",
+      "evidence": "144 tests skip without a database; MC_TEST_DATABASE_URL appears in no CI file, Makefile or compose file. Atomic import, replay and receipt behaviour is only exercised on developer machines.",
+      "fix": "Postgres service container in CI with TEST_DATABASE_URL and MC_TEST_DATABASE_URL; fail the job if the skip count is not zero."
+    },
+    {
+      "id": "BR-04",
+      "sev": "P2",
+      "area": "security hardening",
+      "title": "Issuer and introspection URLs may use plain http on any host",
+      "status": "CONFIRMED",
+      "evidence": "internal/config/product.go:94-95 accepts scheme http or https for MC_OIDC_ISSUER and MC_OIDC_INTROSPECTION_URL with no host rule. A misconfigured non-loopback http URL sends bearer tokens and the client assertion in clear text.",
+      "fix": "Require https unless the host is loopback; test both cases."
+    },
+    {
+      "id": "BR-05",
+      "sev": "P2",
+      "area": "integrity hardening",
+      "title": "One database role owns the schema and runs the application",
+      "status": "CONFIRMED (design)",
+      "evidence": "A single MC_DATABASE_URL serves migrate and serve. Append-only triggers exist on domain_events, security_audit_events and filing_* and receipts are immutable, but they guard against application bugs, not against the role that owns the tables.",
+      "fix": "Separate migrator and runtime roles; runtime without DDL, TRUNCATE or trigger control. Decide whether row-level security is wanted as defence in depth."
+    },
+    {
+      "id": "BR-06",
+      "sev": "P2",
+      "area": "abuse/performance",
+      "title": "No rate or concurrency limits; every request loads the whole Matter graph",
+      "status": "CONFIRMED (absence)",
+      "evidence": "No rate-limit middleware in productapi or app/product.go. Reads and writes load the full graph (LoadGraph) inside a RepeatableRead transaction; import (25 MiB), bulk, export, brief and control room are the heavy paths. Numeric workload targets were deferred by the PO to Step 02.",
+      "fix": "Set workload numbers with the PO, add per-actor limits and a concurrency cap, run TestPerf_LocalWorkloads against fixtures and record budgets."
+    },
+    {
+      "id": "BR-07",
+      "sev": "P3",
+      "area": "latent defect",
+      "title": "A temporal-boundary guard that can wedge a Matter if a future writer appears",
+      "status": "CONFIRMED (latent)",
+      "evidence": "matter.ErrBoundaryDue says processing is \"unsupported in this slice\"; no code or SQL sets next_boundary_at (it stays NULL), so no Matter is stuck today. If a later change writes the column without a processor, every write returns 503 boundary-due with retryable:true and never recovers.",
+      "fix": "Add a test that fails if anything writes next_boundary_at without a processor, and stop calling that 503 retryable."
+    },
+    {
+      "id": "BR-08",
+      "sev": "P3",
+      "area": "residue",
+      "title": "Template stack still in the module",
+      "status": "CONFIRMED",
+      "evidence": "About 7.9k Go/SQL lines (httpapi, user domain/service/repo, outbox, kafka, memory, relay, cmd/userapi), 5 direct dependencies (huma, franz-go, kfake, otelhttp, otelpgx) plus an unauthenticated user CRUD. Detailed in the earlier ponytail audit.",
+      "fix": "After BR-02, delete it and run go mod tidy."
+    },
+    {
+      "id": "BR-09",
+      "sev": "INFO",
+      "area": "verified strengths",
+      "title": "What held up under inspection",
+      "status": "VERIFIED",
+      "evidence": [
+        "The 78 public methods of the product services either reach a central gate (WorkService.execute / readSnapshot: workspace + matter membership, policy.Decide*, hidden resources return NotFound, denials audited) or are scoped to the caller's own rows (MyActions, ListMyWorkspaces). The 5 methods of the template UserService have no gate and are not product code. I read the gate code and 9 representative or exceptional methods, not all 78 bodies; a naive scan missed delegation through the s.w field.",
+        "No dynamic SQL: every Exec/Query uses a literal; matter and workspace rows are locked FOR UPDATE for writes, reads use a RepeatableRead read-only snapshot",
+        "Token verifier: active, pinned issuer, audience membership, non-empty sub, exp with leeway; any infrastructure fault is unavailable, never allow; token never echoed; bounded response size",
+        "Formulas refused on import and neutralised on export; object store is digest-addressed under os.Root with 0700/0600 and verifies the digest on read",
+        "No auth material in logs, no CORS, body and server timeouts set, page limit capped at 200",
+        "Merged coverage with PostgreSQL suites skipped: core/domain 100%, domain/matter 92.3%, policy 100%, service 79.7% (package-local figures of 26-53% are misleading because the contract suites live in another package)"
+      ]
+    }
+  ],
+  "open_items": [
+    {
+      "id": "OI-01",
+      "title": "CR-002 same-key retry does not survive a reload",
+      "owner": "PO",
+      "status": "DECISION_REQUIRED"
+    },
+    {
+      "id": "OI-02",
+      "title": "Cloudflare Free feasibility and production topology (Go server, Postgres over TCP, object store, durable sessions); the frontend BFF keeps sessions and retry slots in process memory, which is not multi-instance or serverless safe",
+      "owner": "PO + architect",
+      "status": "OPEN, needs an ADR"
+    },
+    {
+      "id": "OI-03",
+      "title": "Backend files changed after the last restore run (productapi/handlers.go, server.go, core/port/workspace.go at 16:05Z by Codex); restore evidence covers the earlier bytes",
+      "owner": "Codex/OpenCode",
+      "status": "OPEN, rerun or justify"
+    },
+    {
+      "id": "OI-04",
+      "title": "Repeated unannounced source drift against pinned manifests (three occurrences)",
+      "owner": "orchestration",
+      "status": "OPEN, needs one freeze protocol"
+    },
+    {
+      "id": "OI-05",
+      "title": "Browser, IdP end-to-end, AC-137, final-byte restore and independent review of the latest manifest",
+      "owner": "human + OpenCode",
+      "status": "BLOCKED/PENDING"
+    }
+  ],
+  "not_examined": [
+    "All frontend/UI code (excluded by the user while Codex edits the flow)",
+    "Line-by-line correctness of domain rules (epochs, filing guards, replay) beyond the existing suites",
+    "Behaviour under concurrent load; PostgreSQL suites were not run in this pass",
+    "govulncheck and pnpm audit (not installed / not run; they would be part of BR-01 once CI exists)",
+    "Contract and docs completeness; the backend edits Codex made at 16:05Z",
+    "Dependency freshness and licences"
+  ]
+}

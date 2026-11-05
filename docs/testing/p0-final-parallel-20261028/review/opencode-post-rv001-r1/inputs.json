@@ -1,0 +1,99 @@
+{
+  "task": "MC-P0-CODEX-PRIMARY-REMEDIATION-20261028 — OpenCode post-RV-001 review r1 (delta: RV-001 fix, import-preview error mapping, draft access-loss, test caller coverage, work-item causal navigation)",
+  "reviewer_identity": {
+    "tool": "OpenCode CLI",
+    "cli_version": "v2.1.4",
+    "provider": "opencode",
+    "model": "glm-5.3-flash-free",
+    "identity_evidence": "opencode --version exit 0 at 2026-10-28T15:35Z (+07 observation 22:35 local); model as configured for this session (self-reported, not independently re-verified)",
+    "role": "independent non-author reviewer; author of none of the reviewed bytes; no provider/model switch; no source writes"
+  },
+  "authorship": {
+    "candidate_author": "Claude Code (Anthropic), model claude-sonnet-5-5, per claude-rv001-fix/return.md and inputs.json (declared; not independently verifiable beyond the packet)",
+    "conflict": "none — reviewer is OpenCode, not the author, not Claude/ZCode/Antigravity/Codex; reviewed tree left unchanged by the reviewer"
+  },
+  "repo": {
+    "root": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "branch": "codex/unified-project-flow",
+    "head_open": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+    "head_close": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+    "dirty_uncommitted": true,
+    "worktree_status_unchanged_by_review": true
+  },
+  "candidate_packet": "docs/testing/p0-final-parallel-20261028/claude-rv001-fix/",
+  "packet_pins": {
+    "source-manifest.json": {
+      "sha256": "de8424ead1e9cd911c7a6fe124b48e5d67b6dcc9e519bb10a8b87453b05d4489",
+      "entries": 719,
+      "captured": "2026-10-28T15:11:19.204963+00:00",
+      "head": "2d410816cd9a9b2664ec388a98aa8f5fdb8f00cc",
+      "verified_open": true,
+      "verified_close": true,
+      "member_check": "719/719 member sha256+bytes match filesystem, 0 missing, 0 mismatches (checked at review open ~15:16Z and re-checked at close); 3 untracked symlink dir paths under apps/backend/.claude/skills are outside the manifest (see OR1-006)"
+    },
+    "source-delta.json": {
+      "sha256": "38e9eb4fbd8f27ab256c404df29357176c91643bf73105f84b811b1732633b54",
+      "summary": "4 modified, 0 added, 0 removed; all 4 candidate entries match current filesystem and the candidate manifest"
+    },
+    "return.md sha256": "439529c38412ab31cad509731faf9e3cb73fef169b0fc3b995ac7f07b660f636",
+    "inputs.json sha256": "1e014b669944f9463bd34498676aae61c347eb3f2e614f2b8aeacb70109f2dd1",
+    "checks.json sha256": "8bcfbb5f7614f3c6473e843ba378f4dc44ab6546586f668747cc55870e3f8ff9"
+  },
+  "prior_round_inputs": {
+    "claude-comprehensive-review-r1/findings.json": { "sha256": "f9734568cd11704eb7b5b1f97f7b0345aead8f0c0173ae0df78f4c20160f22dd", "note": "EX-03 ('redirect safety: no finding') is wrong; superseded by comprehensive-delta-r1 — kept immutable, not inherited" },
+    "claude-comprehensive-review-r1/source-manifest.json": { "sha256": "f596b7c64a996ab821747de652485c26ca52910b959c63a4dd215e560d5fb868", "captured": "2026-10-28T10:04:30.553227+00:00", "note": "existing artifact; used for the independent two-artifact diff f596b7c6 -> de8424ea" },
+    "claude-comprehensive-review-r1/source-delta.json sha256": "d7a2ab12249634ecb8c4fc3b0ac666fdc5b46a38f98e0076231a9300719ca4e8",
+    "claude-comprehensive-review-r1/return.md sha256": "cf8ef4920a6deb8cf3701ef31415256891c9b0b56e370585b122ef94048952cd",
+    "review/comprehensive-delta-r1/return.md": { "sha256": "02498b27245675516fe58dddd99ae4d33b5812c8a34283f5bee465b743cb422b", "note": "AUTHOR_SELF_REVIEW_NOT_INDEPENDENT — never inherited as independent; its RV-001..006 notes were re-verified from source, not adopted" },
+    "review/comprehensive-delta-r1/findings.json": { "sha256": "c822507c679255c6f03f18293315dcc1f3257544349fc4862ba06925954b5da2" }
+  },
+  "pre_fix_baseline_f9cbbdf4": {
+    "claim": "author-declared recapture, SHA-256 f9cbbdf496d975d08530552828e48a838535189f92248e510f031f1dacc7d595 with the same selection rule (inputs.json:7, source-delta.json:2)",
+    "actual_artifact": "ABSENT — the hash appears only inside prose (rv001-fix return/inputs/delta, this handoff prompt); no manifest artifact with this hash exists under docs/",
+    "reviewer_disposition": "file-level lineage UNPROVEN (OR1-005); NOT rebuilt per instruction; entry-level lineage independently corroborated through f596b7c6 (see checks C6/C7)"
+  },
+  "governance_read": {
+    "root AGENTS.md": "read (repo-wide routing, evidence and RTK rules)",
+    "apps/frontend/AGENTS.md": "read (auto-loaded; Next 16 template rules; review-only, no code written)",
+    "/Users/nguyenvanlan/.codex/RTK.md": "read; all shell commands prefixed rtk (proxy used where not wrapped)",
+    "docs/ai-sdlc/current-workflow.md": "read; 'Primary P0 remediation — 2026-10-28' section is the current context",
+    "docs/ai-sdlc/project-status.md": "NOT re-read this round; current-workflow + task file + candidate packets used as direct context per assignment",
+    "docs/implementation/tasks/MC-P0-CODEX-PRIMARY-REMEDIATION-20261028.md": "read; scope and verbatim acceptance restored"
+  },
+  "sources_read": [
+    "apps/frontend/src/lib/mc/paths.ts (whole, incl. fix at :16-19)",
+    "apps/frontend/src/lib/mc/paths.test.ts (whole)",
+    "apps/frontend/src/lib/oidc/flow.ts (whole, incl. fix at :109-116, resolveReturnTo :120-122, beginLogin :124-152)",
+    "apps/frontend/src/lib/oidc/flow.test.ts (whole, incl. :206-261)",
+    "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx (whole; :51,55,56,57,92,109,275)",
+    "apps/frontend/src/components/organisms/read-failure.tsx (whole)",
+    "apps/frontend/src/components/organisms/draft-scope.tsx (whole)",
+    "apps/frontend/src/components/organisms/drafts.test.tsx (whole)",
+    "apps/frontend/src/components/organisms/read-failure-callers.test.ts (whole)",
+    "apps/frontend/src/features/data-transfer/actions.ts (whole; CR-001 at :94-109)",
+    "apps/frontend/src/features/data-transfer/pending-attempts.ts (:40-107)",
+    "apps/frontend/src/test/data-transfer-seam.test.ts (whole)",
+    "apps/frontend/src/lib/mc/action-result.ts (whole; toMcFailure)",
+    "apps/frontend/src/app/login/page.tsx (whole)",
+    "apps/frontend/src/app/api/auth/login/route.ts (whole)",
+    "apps/frontend/src/app/api/auth/callback/route.ts (whole)",
+    "apps/frontend/src/components/organisms/intent-form.tsx (:55-75; CR-002 :62,69)",
+    "apps/frontend/src/features/proof/components/document-forms.tsx (:61 via grep; CR-002)",
+    "apps/backend/internal/adapter/inbound/productapi/data_handlers.go (:130-160; readSheetUpload errBadRequest paths)",
+    "apps/backend/internal/core/service/dataops_service.go (:443-466 ErrSheetInvalid sources, via grep)",
+    "apps/backend/internal/adapter/inbound/productapi/problems.go (:50-70 via grep; ErrSheetInvalid mapping)",
+    "apps/backend/internal/core/port/sheet.go (:8-10 via grep)"
+  ],
+  "not_opened_this_round": [
+    "Credentials, .env files, private config",
+    "Docker / PostgreSQL / ZITADEL (runtime owned by Claude in another namespace)",
+    "Browser / Playwright / IdP / AC-137 evidence",
+    "Backend gates (no backend byte changed by this delta)",
+    "Storybook and webpack build (no shared component or route changed)"
+  ],
+  "tool_availability_notes": {
+    "Semble": "unavailable in this OpenCode session — recorded per AGENTS instruction; exact packet-pinned paths and targeted grep were used (known-path reads allowed)",
+    "Context7": "not needed; review-only, no new code or library docs dependency; WHATWG URL dot-segment behavior verified by execution, not memory",
+    "Next.js doc rule": "frontend AGENTS notice acknowledged; no Next.js code written, so the node_modules/next/dist/docs guides were not consulted"
+  }
+}

@@ -1,0 +1,7 @@
+=== RUN   TestVerifierReviewHistorySignalsTruncation
+    verifier_history_test.go:9: history rows=100 envelope=map[limit:100 maxLimit:100 nextCursor:<nil> total:100]
+    verifier_history_test.go:10: 101 recorded answers are silently presented as total=100 with no continuation or partial marker
+--- FAIL: TestVerifierReviewHistorySignalsTruncation (0.01s)
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/inbound/productapi	0.578s
+FAIL

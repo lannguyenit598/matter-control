@@ -1,0 +1,16 @@
+{
+ "run": "verify-V2-2-orphan-check",
+ "argv": [
+  "bash",
+  "-c",
+  "for p in 15432 18083 18093; do lsof -nP -iTCP:$p -sTCP:LISTEN 2>/dev/null | tail -n +2 && echo \"PORT $p STILL HELD\" || echo \"port $p free\"; done; pgrep -fl \"mc-walkthrough\" || echo \"no walkthrough processes\"; rtk docker ps -a --format \"{{.Names}} {{.Status}}\" 2>/dev/null | grep mc-walkthrough || echo \"no mc-walkthrough container\""
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031",
+ "env_file": "NONE",
+ "started_utc": "2026-10-31T17:45:23Z",
+ "ended_utc": "2026-10-31T17:45:23Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": null
+}

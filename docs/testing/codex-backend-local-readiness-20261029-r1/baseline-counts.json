@@ -1,0 +1,33 @@
+{
+  "counts": {
+    "pass": 574,
+    "skip": 5
+  },
+  "nonpass": [
+    {
+      "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres/pgtest",
+      "Test": "TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip",
+      "Action": "skip"
+    },
+    {
+      "Package": "leonx.me/matter-control/internal/adapter/outbound/objectstore",
+      "Test": "TestContract_R2_RealBucket",
+      "Action": "skip"
+    },
+    {
+      "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres",
+      "Test": "TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds",
+      "Action": "skip"
+    },
+    {
+      "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres",
+      "Test": "TestPerf_LocalWorkloads",
+      "Action": "skip"
+    },
+    {
+      "Package": "leonx.me/matter-control/internal/adapter/outbound/postgres",
+      "Test": "TestRestoreRehearsal",
+      "Action": "skip"
+    }
+  ]
+}

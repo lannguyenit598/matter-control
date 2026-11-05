@@ -1,0 +1,66 @@
+
+ RUN  v5.0.5 /private/tmp/mc-review-verifier-20261029-r1/frontend
+
+ ❯ src/features/review/verifier-review-ui.test.tsx (3 tests | 2 failed) 102ms
+   × UNKNOWN retry retains the exact answer expectation even after a refreshed view changes props 81ms
+   × a confirmed loss of access clears the protected cell detail 18ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/review/verifier-review-ui.test.tsx > UNKNOWN retry retains the exact answer expectation even after a refreshed view changes props
+AssertionError: expected { …(11) } to deeply equal { …(11) }
+
+- Expected
++ Received
+
+@@ -1,8 +1,8 @@
+  {
+-   "expectedAnswerId": "",
+-   "expectedQuestionRevision": 1,
++   "expectedAnswerId": "0192b1c4-0000-7000-8000-000000000001",
++   "expectedQuestionRevision": 2,
+    "gridId": "0192b1c4-0000-7000-8000-000000000001",
+    "idempotencyKey": "01a187b0-6405-764d-9e63-9fa664950385",
+    "matterId": "0192b1c4-0000-7000-8000-000000000001",
+    "pageRef": "",
+    "questionId": "0192b1c4-0000-7000-8000-000000000001",
+
+ ❯ src/features/review/verifier-review-ui.test.tsx:25:43
+     23|  fireEvent.click(screen.getByRole('button',{name:/Retry the same reque…
+     24|  await waitFor(()=>expect(actions.record).toHaveBeenCalledTimes(2))
+     25|  expect(actions.record.mock.calls[1]![0]).toEqual(first)
+       |                                           ^
+     26| })
+     27| it('Vietnamese text at every client limit is accepted; one more is ref…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/review/verifier-review-ui.test.tsx > a confirmed loss of access clears the protected cell detail
+AssertionError: expected <dd …(1)></dd> to be null
+
+- Expected:
+null
+
++ Received:
+<dd
+  class="break-words whitespace-pre-line"
+>
+  PRIVATE EXISTING ANSWER
+</dd>
+
+ ❯ src/features/review/verifier-review-ui.test.tsx:44:56
+     42|  fireEvent.click(screen.getByRole('button',{name:'Record answer'}))
+     43|  await screen.findByText('The record is no longer available.')
+     44|  expect(screen.queryByText('PRIVATE EXISTING ANSWER')).toBeNull()
+       |                                                        ^
+     45|  expect(screen.queryByText('PRIVATE QUOTE')).toBeNull()
+     46| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  19:44:05
+   Duration  903ms (environment 50%, import 16%, setup 14%, tests 12%, transform 7%)
+

@@ -1,0 +1,375 @@
+{
+  "actor": "Local Codex",
+  "utc": "2026-10-26T08:21:35.570905+00:00",
+  "scope": "Read/hash/AST/static only; no reviewed code or suite execution",
+  "checks": [
+    {
+      "name": "manifest declared count and bytes",
+      "result": "PASS"
+    },
+    {
+      "name": "payload credential-pattern-scan-r3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export credential-pattern-scan-r3.json",
+      "result": "PASS"
+    },
+    {
+      "name": "payload diffs/coordinator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export diffs/coordinator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "payload diffs/guard-validator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export diffs/guard-validator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "payload diffs/guard_evaluator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export diffs/guard_evaluator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "payload diffs/harness-dev.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export diffs/harness-dev.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "payload diffs/observer.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export diffs/observer.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "payload diffs/selfcheck.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export diffs/selfcheck.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "payload diffs/test-launcher-mock.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export diffs/test-launcher-mock.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "payload launcher/harness-dev.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export launcher/harness-dev.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "payload launcher/test-launcher-mock.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export launcher/test-launcher-mock.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "payload proposals/dependency-isolation-plan-r3.md",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export proposals/dependency-isolation-plan-r3.md",
+      "result": "PASS"
+    },
+    {
+      "name": "payload proposals/pre-listen-launcher-proposal-r3.md",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export proposals/pre-listen-launcher-proposal-r3.md",
+      "result": "PASS"
+    },
+    {
+      "name": "payload r3-test-summary.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export r3-test-summary.json",
+      "result": "PASS"
+    },
+    {
+      "name": "payload runner/coordinator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export runner/coordinator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "payload runner/guard-validator-r3.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export runner/guard-validator-r3.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "payload runner/guard_evaluator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export runner/guard_evaluator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "payload runner/observer.py",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export runner/observer.py",
+      "result": "PASS"
+    },
+    {
+      "name": "payload runner/selfcheck-r3-results.json",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export runner/selfcheck-r3-results.json",
+      "result": "PASS"
+    },
+    {
+      "name": "payload runner/selfcheck-r3.py",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export runner/selfcheck-r3.py",
+      "result": "PASS"
+    },
+    {
+      "name": "payload selfcheck-r3.stdout.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export selfcheck-r3.stdout.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "raw/export manifest",
+      "result": "PASS"
+    },
+    {
+      "name": "no undeclared export files",
+      "result": "PASS"
+    },
+    {
+      "name": "scratch/export runner/coordinator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "Python AST parse runner/coordinator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "scratch/export runner/guard_evaluator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "Python AST parse runner/guard_evaluator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "scratch/export runner/observer.py",
+      "result": "PASS"
+    },
+    {
+      "name": "Python AST parse runner/observer.py",
+      "result": "PASS"
+    },
+    {
+      "name": "scratch/export runner/selfcheck-r3.py",
+      "result": "PASS"
+    },
+    {
+      "name": "Python AST parse runner/selfcheck-r3.py",
+      "result": "PASS"
+    },
+    {
+      "name": "scratch/export launcher/harness-dev.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "scratch/export launcher/test-launcher-mock.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "scratch/export runner/guard-validator-r3.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 credential-pattern-scan-r2.json",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 diffs/guard-validator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 diffs/guard_evaluator.diff",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 launcher/harness-dev.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 launcher/test-launcher-mock.mjs",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 proposals/dependency-isolation-plan-r2.md",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 proposals/pre-listen-launcher-proposal-r2.md",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 r2-test-summary.json",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 runner-scripts/coordinator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 runner-scripts/guard-validator-r2.sh",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 runner-scripts/guard_evaluator.py",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 runner-scripts/observer.py",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 runner-scripts/selfcheck-r2-results.json",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 runner-scripts/selfcheck-r2.py",
+      "result": "PASS"
+    },
+    {
+      "name": "frozen R2 selfcheck-r2.stdout.txt",
+      "result": "PASS"
+    },
+    {
+      "name": "diff body diffs/coordinator.diff",
+      "result": "FAIL",
+      "details": {
+        "header": [
+          "--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/runner-scripts/coordinator.py\t2026-10-26 14:28:26\n",
+          "+++ /tmp/mc002-inta-fe-validation-r3-20261026/runner/coordinator.py\t2026-10-26 15:13:35\n"
+        ]
+      }
+    },
+    {
+      "name": "diff body diffs/guard-validator.diff",
+      "result": "PASS",
+      "details": {
+        "header": [
+          "--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/runner-scripts/guard-validator-r2.sh\t2026-10-26 14:28:26\n",
+          "+++ /tmp/mc002-inta-fe-validation-r3-20261026/runner/guard-validator-r3.sh\t2026-10-26 15:05:04\n"
+        ]
+      }
+    },
+    {
+      "name": "diff body diffs/guard_evaluator.diff",
+      "result": "FAIL",
+      "details": {
+        "header": [
+          "--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/runner-scripts/guard_evaluator.py\t2026-10-26 14:28:26\n",
+          "+++ /tmp/mc002-inta-fe-validation-r3-20261026/runner/guard_evaluator.py\t2026-10-26 15:03:08\n"
+        ]
+      }
+    },
+    {
+      "name": "diff body diffs/observer.diff",
+      "result": "PASS",
+      "details": {
+        "header": [
+          "--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/runner-scripts/observer.py\t2026-10-26 14:28:26\n",
+          "+++ /tmp/mc002-inta-fe-validation-r3-20261026/runner/observer.py\t2026-10-26 15:03:42\n"
+        ]
+      }
+    },
+    {
+      "name": "diff body diffs/harness-dev.diff",
+      "result": "FAIL",
+      "details": {
+        "header": [
+          "--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/launcher/harness-dev.mjs\t2026-10-26 14:28:26\n",
+          "+++ /tmp/mc002-inta-fe-validation-r3-20261026/launcher/harness-dev.mjs\t2026-10-26 15:04:01\n"
+        ]
+      }
+    },
+    {
+      "name": "diff body diffs/test-launcher-mock.diff",
+      "result": "FAIL",
+      "details": {
+        "header": [
+          "--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/launcher/test-launcher-mock.mjs\t2026-10-26 14:28:26\n",
+          "+++ /tmp/mc002-inta-fe-validation-r3-20261026/launcher/test-launcher-mock.mjs\t2026-10-26 15:05:39\n"
+        ]
+      }
+    },
+    {
+      "name": "diff body diffs/selfcheck.diff",
+      "result": "FAIL",
+      "details": {
+        "header": [
+          "--- docs/testing/inta-fe-validation-r2-approval-update-intake/review-snapshot/runner-scripts/selfcheck-r2.py\t2026-10-26 14:28:26\n",
+          "+++ /tmp/mc002-inta-fe-validation-r3-20261026/runner/selfcheck-r3.py\t2026-10-26 15:09:16\n"
+        ]
+      }
+    },
+    {
+      "name": "owner 30 recorded results",
+      "result": "PASS"
+    },
+    {
+      "name": "owner stdout recorded 30 pass",
+      "result": "PASS"
+    },
+    {
+      "name": "guard source retained",
+      "result": "PASS"
+    },
+    {
+      "name": "base head",
+      "result": "PASS"
+    },
+    {
+      "name": "branch",
+      "result": "PASS"
+    }
+  ],
+  "pass": 76,
+  "fail": 5
+}

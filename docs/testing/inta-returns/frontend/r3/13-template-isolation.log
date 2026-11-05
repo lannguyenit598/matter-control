@@ -1,0 +1,23 @@
+=== MC-002-INTA-FE-R3 Template Isolation & Backend Verification ===
+UTC Started: 2026-10-25T07:50:17Z
+===================================================================
+--- Template Git Status (/tmp/mc002-inta-fe) ---
+* codex/mc-002-inta-fe
+clean — nothing to commit
+Template Commit: 3e5a642479acb789eb210e73fba956f3e85082e3
+
+--- Template Typecheck ---
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+
+--- Template Lint ---
+$ eslint .
+
+--- Backend Git Status (/tmp/mc002-inta-be) ---
+* codex/mc-002-inta-be
+clean — nothing to commit
+Backend Commit: 52b60a4617081c41b949f2242e1784238c170f75
+===================================================================
+Exit Code: 0
+UTC Completed: 2026-10-25T07:50:35Z

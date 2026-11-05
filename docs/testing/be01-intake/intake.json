@@ -1,0 +1,180 @@
+{
+  "task": "MC-BE-01",
+  "owner": "Local Codex PM/BA intake and focused counterexample verification",
+  "priority": "P0 enabling slice",
+  "utc": "2026-10-25T18:03:50.175654+00:00",
+  "governance_base": "cb3966538ca0aaace99f8a45008314430f02d981",
+  "source": {
+    "base": "52b60a4617081c41b949f2242e1784238c170f75",
+    "head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+    "branch": "codex/mc-be-01",
+    "worktree": "/private/tmp/mattercontrol-backend-be01",
+    "changed_files": 31,
+    "tracked_clean": true,
+    "protected_C01_INTA_unchanged": true
+  },
+  "return": {
+    "attachment": "/Users/nguyenvanlan/.codex/attachments/92a96c8f-59f7-4c05-a453-8076ff35478c/Pasted text.txt",
+    "archive": "owner-return.txt.gz",
+    "bytes": 16752,
+    "sha256": "6f2c0fc85ee655de76b9cf065364a3119dba34aec4cfd314a24d3e3c81501e90"
+  },
+  "actual_author": "ZCode interactive GLM5.3 account:zai-start-plan, session-declared/versionUNKNOWN",
+  "owner_proposed_status": "IN_REVIEW; T01..10PASS self-reported",
+  "codex_disposition": "REWORK_REQUIRED / THREE_REPRODUCED_BLOCKERS / INDEPENDENT_REVIEW_PENDING",
+  "findings": [
+    {
+      "id": "BE01-F01",
+      "priority": "P1",
+      "classification": "REPRODUCED_WITH_SERVICE_STORE_DOUBLE",
+      "file": "internal/core/service/matter_service.go",
+      "line": 90,
+      "related_lines": [
+        81,
+        84,
+        99,
+        103
+      ],
+      "title": "Authorize every represented Matter before receipt hash comparison/replay",
+      "trigger": "Create receipt in A; revoke actor membership in A; keep actor authorized in B; submit same actor+key in B with a different trusted hash.",
+      "observed": "ErrIdempotencyKeyReuse instead of uniform ErrNotFound; receipt existence is distinguished before checking saved scope/represented-Matter authority.",
+      "cause": "Only target B accessFrom is checked; rcpt.ScopeKind/WorkspaceID/MatterID/Matters are never authorized before comparing hash or reading Snapshot.",
+      "impact": "Violates required replay current authorization and uniform denial; matching inconsistent trusted fingerprints could also return an unauthorized stored body, but no production hash-collision claim is made.",
+      "smallest_fix": "Authorize saved scope and every represented Matter within the locked transaction before age/hash/output; preserve deterministic lock order; no domain effect or body leak on denial.",
+      "probe": "TestCodexBE01ReceiptAuthorizationAcrossMatters",
+      "requirements": [
+        "FR-018",
+        "AC-118",
+        "AC-147",
+        "BE01-T05",
+        "BE01-T06"
+      ]
+    },
+    {
+      "id": "BE01-F02",
+      "priority": "P1",
+      "classification": "REPRODUCED_WITH_SERVICE_STORE_DOUBLE",
+      "file": "internal/core/service/matter_service.go",
+      "line": 78,
+      "related_locations": [
+        "internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql:67"
+      ],
+      "title": "Fail closed on unsupported pending temporal boundary",
+      "trigger": "Matter header has next_boundary_at earlier than t_cmd; call CreateRequirement.",
+      "observed": "Create returns success, CompleteMatter runs, one Requirement is persisted in test double.",
+      "cause": "Service ignores NextBoundaryAt and BoundariesAppliedUntil; SQL CompleteMatter advances fence and clears next_boundary_at=NULL unconditionally.",
+      "impact": "Can silently erase an unevaluated boundary in a populated Matter; contradicts explicit BE01 fail-closed rule even though this slice creates no due dates.",
+      "smallest_fix": "Refuse required unsupported boundary before new mutation/fence clearing; leave rows/history/receipt/fence unchanged; do not implement the later full temporal engine.",
+      "probe": "TestCodexBE01PendingBoundaryFailsClosed",
+      "requirements": [
+        "FR-020",
+        "BE01-T03",
+        "BE01-T08",
+        "backend-fast-track section6"
+      ]
+    },
+    {
+      "id": "BE01-F03",
+      "priority": "P1",
+      "classification": "REPRODUCED_WITH_SERVICE_STORE_DOUBLE",
+      "file": "internal/core/service/matter_service.go",
+      "line": 206,
+      "related_lines": [
+        81,
+        82,
+        208,
+        228
+      ],
+      "title": "Propagate membership storage failures before converting access facts",
+      "trigger": "Requirement read exists, WorkspaceMembership returns ErrUnavailable.",
+      "observed": "GetRequirement returns ErrNotFound.",
+      "cause": "accessFrom treats every non-nil membership error as absent facts, without first propagating non-ErrNotFound errors.",
+      "impact": "Dependency failure becomes false not-found and may purge valid UI context; create path has same normalization seam, though PostgreSQL transaction-abort behavior may surface a later commit error.",
+      "smallest_fix": "Only absent rows become missing facts; propagate unavailable/unexpected errors on read/create/replay and preserve wrapped causes.",
+      "probe": "TestCodexBE01MembershipReadUnavailablePreserved",
+      "requirements": [
+        "BE01-T07",
+        "BE01-T08",
+        "NFR-003"
+      ]
+    }
+  ],
+  "owner_tests": {
+    "owner": "ZCode, self-reported execution; Codex parsed retained artifact",
+    "source_head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+    "events": 1662,
+    "named_pass": 391,
+    "named_fail": 0,
+    "named_skip": 1,
+    "named_skips": [
+      {
+        "package": "github.com/example/userapi/internal/adapter/outbound/postgres/pgtest",
+        "test": "TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip"
+      }
+    ],
+    "no_test_packages": [
+      "github.com/example/userapi/cmd/userapi",
+      "github.com/example/userapi/internal/adapter/outbound/postgres/mcsqlc",
+      "github.com/example/userapi/internal/adapter/outbound/postgres/sqlcgen",
+      "github.com/example/userapi/internal/adapter/outbound/repotest",
+      "github.com/example/userapi/internal/core/port"
+    ],
+    "test_bearing_package_passes": 15,
+    "first_event_time": "2026-10-26T00:42:34.311184+07:00",
+    "last_event_time": "2026-10-26T00:42:43.733131+07:00",
+    "timestamps_note": "JSON timestamps 2026-10-26 00:42:34..43+07 equal2026-10-25 17:42:34..43Z; report17:42:52Z not exact event window",
+    "count_note": "Includes parent tests and subtests; not391independent behavior cases",
+    "hashes": {
+      "domain-first-impl-run.log": {
+        "bytes": 12981,
+        "sha256": "2bc2e95a97a01c60c396731167576bab9367a8c78a5cbe0a34e81295eeadbff3"
+      },
+      "failing-before-domain-matter.log": {
+        "bytes": 928,
+        "sha256": "efac226398f8a4a5fa7e59e92cdd431f059ae3faa7c88746dce0b0665a071a26"
+      },
+      "race-full.stdout": {
+        "bytes": 1393,
+        "sha256": "924055bf74a1c24bbe8f581af36692e2eb99affc7b440287121bb555ea37cbed"
+      },
+      "race-full.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "race-full.json": {
+        "bytes": 392019,
+        "sha256": "6169d6f06e7a171ec0d3e943cb4e7eb2ed1992fe3abbbf35b2bd32773d441830"
+      },
+      "failing-before-service-stub.log": {
+        "bytes": 50887,
+        "sha256": "901d14dd8300215460830018b4c068ce058d40e2c03444e5ab8811174ad97952"
+      }
+    },
+    "make_check": "OWNER_REPORTED_EXIT0; no standalone make-check command/stdout/UTC/exit artifact present in six-file evidence dir",
+    "race_exit": "OWNER_REPORTED_EXIT0; retained JSON has15package passes/0fails and1intentional skip; no separate shell exit metadata retained",
+    "text_copy_note": "race-full.stdout durations differ from race-full.json on15packages; treat as separate unidentified run output, not faithful rendering of the JSON run",
+    "red_before": "Domain missing package retained; service27named failures retained, not every failure proven to share identical not-implemented cause; policy fail-before only narrated",
+    "fixtures": "Allowlisted current ID/image/labels/caps/ports verified; historical empty/credential-creation sequence owner-reported, not proved by current inspect"
+  },
+  "codex_tests": {
+    "tool": "LocalCodex exec / Go1.27.3 darwin-arm64 / RTK1.0.1",
+    "overlay": "Temporary external Go overlay, no source mutation",
+    "DB_vars": "removed; no DB connection",
+    "command_meta": "probe-execution.json",
+    "result": "exit1, three named failures reproduce missing guards",
+    "new_product_code": false
+  },
+  "deviations": {
+    "Makefile": "Minimal2sqlcbundle update reported and inspected; not an automatic scope failure, independent review confirmation needed",
+    "purge_after_nullable": "Unapproved contract deviation; retain for reviewer/architecture disposition, no retention policy inferred",
+    "keyAge_zero": "No-check seam documented; no product entrypoint; must be explicit test-only/injected policy, no production default approval"
+  },
+  "verification_limits": [
+    "No full makecheck/race replay by Codex",
+    "No PostgreSQL mutation/query or fixture lifecycle",
+    "No externalOpenCode/Claude invocation",
+    "Focused service-double probes are not livePG reproduction or full-source approval",
+    "No BE02/productAuth/release/Step03B activation"
+  ],
+  "gates": "MC-BE01 REWORK_REQUIRED; parentMC002/MC003A/architecture/cost/recovery remainOPEN; INT-A baseline and current stage1/restart coordination unchanged"
+}

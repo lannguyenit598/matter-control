@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "MatterControl — Topology triển khai các bên (ADR-006)",
+    "locale": "vi",
+    "output": ".archify/architecture-adr006-deploy-20261030-000243/adr006-deploy-topology.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "users", "type": "external", "icon": "person", "label": "Người dùng pháp lý", "sublabel": "luật sư · synthetic only", "pos": [40, 320], "size": [150, 62] },
+    { "id": "worker", "type": "frontend", "label": "Next.js 16 + BFF", "sublabel": "adapter PoC: vinext vs OpenNext", "pos": [270, 320], "size": [200, 62] },
+    { "id": "zitadel", "type": "security", "label": "ZITADEL (OIDC IdP)", "sublabel": "vùng residency chưa chốt", "pos": [280, 96], "size": [180, 62] },
+    { "id": "api", "type": "backend", "label": "Go API (mcapi)", "sublabel": "Go container · Singapore", "pos": [600, 320], "size": [180, 62] },
+    { "id": "db", "type": "database", "label": "PostgreSQL", "sublabel": "ap-southeast-1 · Singapore", "pos": [910, 320], "size": [170, 62] },
+    { "id": "r2", "type": "cloud", "label": "R2 bucket (private)", "sublabel": "private · không public bucket", "pos": [605, 96], "size": [170, 62] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Cloudflare Workers · global edge", "wraps": ["worker"], "pad": 20 },
+    { "kind": "region", "label": "Cloudflare R2 · apac hint", "wraps": ["r2"], "pad": 20 },
+    { "kind": "region", "label": "Google Cloud Run · asia-southeast1", "wraps": ["api"], "pad": 20 },
+    { "kind": "region", "label": "Supabase · ap-southeast-1", "wraps": ["db"], "pad": 20 }
+  ],
+  "connections": [
+    { "from": "users", "to": "worker", "label": "HTTPS", "variant": "emphasis" },
+    { "from": "worker", "to": "zitadel", "label": "OIDC PKCE", "variant": "security" },
+    { "from": "worker", "to": "api", "label": "bearer", "variant": "emphasis" },
+    { "from": "api", "to": "db", "label": "SQL (pgx)", "variant": "default" },
+    { "from": "api", "to": "r2", "label": "SigV4 PUT/GET", "variant": "default" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Topology ADR-006 đã chọn",
+      "items": [
+        "FE + BFF → Cloudflare Workers; adapter chưa chọn, phải PoC vinext và OpenNext",
+        "Go API → Cloud Run asia-southeast1 (Singapore), container native",
+        "PostgreSQL → Supabase ap-southeast-1; role runtime/migration tách least-privilege",
+        "File → R2 bucket private, hint apac",
+        "Identity → giữ hướng ZITADEL, không đổi provider"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Trạng thái & cổng chặn",
+      "items": [
+        "TOPOLOGY SELECTED — chưa duyệt deploy, purchase, production hay real data",
+        "Mục tiêu $0 chưa giải quyết: Workers Free có hard limits, Cloud Run/R2 có thể phát sinh chi phí, Supabase Free có thể pause",
+        "Chỉ synthetic data; ADR không tạo bất kỳ tài nguyên nào",
+        "Supersede ADR-004 riêng phần frontend Cloud Run"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Residency — giới hạn đã ghi nhận",
+      "items": [
+        "Singapore tường minh: Cloud Run + Supabase primary",
+        "Workers chạy global edge; R2 apac không đảm bảo Singapore",
+        "ZITADEL: vùng, quota, redirect origins chưa chốt",
+        "Chưa phải all-Singapore — cần PO duyệt phạm vi + bằng chứng provider"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Điều kiện bắt buộc trên Workers",
+      "items": [
+        "Cookie chỉ mang opaque handle; token không vào browser storage/log",
+        "Session Map và pending-transfer in-process phải thay bằng durable store",
+        "Trình duyệt không gọi thẳng Go API (không CORS); BFF chuyển tiếp bearer theo user",
+        "Upload gần 25 MiB phải đo limits thật trên Workers, không suy từ Node local"
+      ]
+    }
+  ]
+}

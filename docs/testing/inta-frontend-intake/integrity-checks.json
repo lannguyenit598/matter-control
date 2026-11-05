@@ -1,0 +1,97 @@
+{
+  "task": "MC-002-INTA-FE-INTAKE",
+  "timestamp_utc": "2026-10-25T03:23:31.373376+00:00",
+  "base": "a1448e4828f61cb6d794b2549f09e2394228b721",
+  "owner_identity": "actual Antigravity IDE/Gemini3.8Flash per human-returned report; not independently model attested",
+  "exports": [
+    {
+      "name": "10-harness-meta.txt",
+      "bytes": 958,
+      "sha256": "7d9f2a51721ced6c50e10c870a812ff8ee0edc297ed6e1a927d9fadc34fb9421"
+    },
+    {
+      "name": "11-unit-tests.log",
+      "bytes": 898,
+      "sha256": "82f30633159fa82a6dedbd95f6f6de4e0453c717e76b3799a7bf6d5a8036316e"
+    },
+    {
+      "name": "12-live-guards.log",
+      "bytes": 4597,
+      "sha256": "4117063d6528c60aa7a38979d62d6b559da89b8b0b7c8d16cb3ba2d9b9248c2b"
+    },
+    {
+      "name": "13-template-isolation.log",
+      "bytes": 1012,
+      "sha256": "4a8db42a2e83d92af837f6433288ff86ad4c7f9ce3c116dfdf334af1b9cb29e2"
+    },
+    {
+      "name": "20-source-hashes.txt",
+      "bytes": 1439,
+      "sha256": "6d7b02c92ee60fe39d82958808353dd524cc44a90fe26dd768266af2844aece5"
+    }
+  ],
+  "raw_byte_equal_payloads": 4,
+  "source_manifest_entries": 17,
+  "archive": {
+    "path": "/tmp/mc002-inta-evidence/frontend/harness-source.tar.gz",
+    "bytes": 11077,
+    "sha256": "1deb26e3319b334246bb7f3d9d9688e04afb7bede8f6f7809b54420bd3fe8e82",
+    "non_appledouble_payloads_verified": 21,
+    "payload_paths": [
+      "pnpm-lock.yaml",
+      "next-env.d.ts",
+      ".gitignore",
+      "package.json",
+      "tsconfig.json",
+      "AGENTS.md",
+      "vitest.config.ts",
+      "next.config.ts",
+      "src/executor.ts",
+      "src/fixtures.ts",
+      "src/envelope.ts",
+      "src/request-id.ts",
+      "src/schemas.ts",
+      "src/guards.ts",
+      "tests/fixtures.test.ts",
+      "tests/executor.test.ts",
+      "tests/schemas.test.ts",
+      "tests/request-id.test.ts",
+      "tests/guards.test.ts",
+      "tests/envelope.test.ts",
+      "app/harness/case/route.ts"
+    ],
+    "appledouble_preserved": true
+  },
+  "sources": {
+    "seed": {
+      "path": "/tmp/mattercontrol-step021-frontend",
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "status": ""
+    },
+    "template": {
+      "path": "/tmp/mc002-inta-fe",
+      "head": "3e5a642479acb789eb210e73fba956f3e85082e3",
+      "status": ""
+    },
+    "harness": {
+      "path": "/tmp/mc002-inta-harness",
+      "head": "e25bbc6933264fc46a729e6a364a3bfa02d8038f",
+      "status": ""
+    }
+  },
+  "installed_package_metadata": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "typescript": "5.9.3",
+    "eslint": "9.39.5"
+  },
+  "driver_source_candidates": [],
+  "unit_tests": "Owner log23pass/6files; no Codex replay, no UTC/exit wrapper in retained unit stdout",
+  "live_guards": "Seven captured responses only; no assertion exits/zero-outbound proof; not full36case acceptance",
+  "isolation_log": "Owner manually assembled narrative excerpt, not raw command transcript",
+  "run_id_proposed": "inta20261025a",
+  "request_id_plan_status": "Report differs from actual generator and frozen contract; collision across process restart/run switching needs correction",
+  "runtime_ledger": "51 NOT_RUN pending independent scoped acceptance",
+  "environment": "NOT_CREATED; source/evidence review required before upstream execution",
+  "new_go_pg_tests_by_codex": "NONE"
+}

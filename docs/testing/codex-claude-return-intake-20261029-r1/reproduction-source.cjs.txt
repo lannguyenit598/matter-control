@@ -1,0 +1,31 @@
+const fs = require('node:fs')
+const vm = require('node:vm')
+const assert = require('node:assert/strict')
+const root = '/Users/nguyenvanlan/Documents/code/pet-projects/matter-control'
+const ts = require(root + '/apps/frontend/node_modules/typescript')
+const file = root + '/apps/frontend/src/features/proof/evidence-basis.ts'
+const js = ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText
+const exported = {}
+vm.runInNewContext(js, { exports: exported, Date, Map, Set, Number, Boolean })
+const checklist = {
+  subject: { proofEpoch: 0 }, asOf: '2026-10-29T08:00:00Z', openDisputes: [],
+  criteria: [{ id: 'c', versionRule: 'FIXED', documentId: 'd', fixedVersionId: 'v1', satisfied: true,
+    claims: [{ id: 'claim', evidenceId: 'e', disputed: false, satisfying: true,
+      assessment: { verdict: 'ACCEPTED', subjectEpoch: 0, assessedVersionId: 'v1', effectiveUntil: null, revokedAt: null } }] }],
+  evidence: [{ id: 'e', kind: 'DOCUMENT_VERSION', versionId: 'v1', withdrawnAt: null }],
+}
+const docs = [{ document: { id: 'd', name: 'Synthetic doc', currentVersionId: null },
+  versions: [{ id: 'v1', no: 1, filename: 'synthetic.pdf', current: false, sha256: 'ab'.repeat(32) }] }]
+const fixed = exported.criterionBasis(checklist, docs, 'c')
+assert.equal(fixed.criterion.satisfied, true)
+assert.equal(fixed.claims[0].satisfying, true)
+assert.equal(fixed.claims[0].flags.versionSuperseded, true)
+console.log('CONFIRMED: FIXED satisfied claim on never-promoted v1 is flagged versionSuperseded=true merely because current=false.')
+const absent = exported.criterionBasis(checklist, [], 'c')
+assert.equal(absent.claims[0].evidence.kind, 'DOCUMENT_VERSION')
+assert.equal(absent.claims[0].version, null)
+console.log('CONFIRMED: unresolved document-version details preserve kind=DOCUMENT_VERSION and version=null; component falls through to outside-reference label.')
+checklist.criteria[0].claims[0].assessment.effectiveUntil = checklist.asOf
+const boundary = exported.criterionBasis(checklist, docs, 'c')
+assert.equal(boundary.claims[0].flags.expired, false)
+console.log('CONFIRMED: effectiveUntil == asOf produces expired=false; backend half-open validity expires at equality.')

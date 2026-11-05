@@ -1,0 +1,199 @@
+{
+ "utc_start": "2026-10-28T15:41:57Z",
+ "utc_end": "2026-10-28T15:41:58Z",
+ "targets": {
+  "api": "http://127.0.0.1:8084",
+  "frontend": "http://127.0.0.1:3104"
+ },
+ "cases": [
+  {
+   "case": "api-healthz",
+   "result": "PASS",
+   "status": 200
+  },
+  {
+   "case": "api-readyz",
+   "result": "PASS",
+   "status": 200
+  },
+  {
+   "case": "api-no-token-401",
+   "result": "PASS",
+   "status": 401,
+   "type": "urn:mc:unauthenticated"
+  },
+  {
+   "case": "api-bogus-token-401-via-cloud-introspection",
+   "result": "PASS",
+   "status": 401,
+   "type": "urn:mc:unauthenticated"
+  },
+  {
+   "case": "bff-signed-out-session",
+   "result": "PASS",
+   "status": 200,
+   "authenticated": false
+  },
+  {
+   "case": "login-page",
+   "result": "PASS",
+   "status": 200
+  },
+  {
+   "case": "signed-out /workspaces",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /my-actions",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /workspaces/x",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /requirements/x",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x/work",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x/data",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x/history",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x/planning",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x/filings",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x/documents",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "signed-out /matters/x/control-room",
+   "result": "PASS",
+   "status": 200,
+   "sign_in_required": true
+  },
+  {
+   "case": "callback-missing-params",
+   "result": "PASS",
+   "status": 307,
+   "location": "http://localhost:3104/login?error=denied"
+  },
+  {
+   "case": "callback-unbound-state",
+   "result": "PASS",
+   "status": 307,
+   "location": "http://localhost:3104/login?error=invalid"
+  },
+  {
+   "case": "bff-login-redirect-shape",
+   "result": "PASS",
+   "status": 307,
+   "host": "matter-control-legal-dev-fm2k48.au1.zitadel.cloud",
+   "client_id": [
+    "396983754624613928"
+   ],
+   "challenge_method": [
+    "S256"
+   ],
+   "response_type": [
+    "code"
+   ],
+   "redirect_uri": [
+    "http://localhost:3104/api/auth/callback"
+   ],
+   "has_state": true,
+   "has_nonce": true,
+   "followed": false,
+   "note": "redirect_uri is the unregistered :3104 origin by design; nothing was followed"
+  },
+  {
+   "case": "rv001-protocol-relative-from-refused",
+   "result": "NOT_OBSERVABLE",
+   "status": 200,
+   "from_in_signin_returnTo": null,
+   "expected": "/matters/m1/work",
+   "first_pass_result": "FAIL",
+   "reason": "Probe design error (mine). Signed out, the matters/[matterId] layout (MatterScope) replaces every child page with its own sign-in screen, so the work-item page that sanitizes ?from= is never rendered; the normal-path control cases returned the same null. This is not a product failure and not evidence about RV-001. RV-001 at the rendered Back link needs an authenticated session and a real browser: BLOCKED."
+  },
+  {
+   "case": "rv001-triple-slash-from-refused",
+   "result": "NOT_OBSERVABLE",
+   "status": 200,
+   "from_in_signin_returnTo": null,
+   "expected": "/matters/m1/work",
+   "first_pass_result": "FAIL",
+   "reason": "Probe design error (mine). Signed out, the matters/[matterId] layout (MatterScope) replaces every child page with its own sign-in screen, so the work-item page that sanitizes ?from= is never rendered; the normal-path control cases returned the same null. This is not a product failure and not evidence about RV-001. RV-001 at the rendered Back link needs an authenticated session and a real browser: BLOCKED."
+  },
+  {
+   "case": "rv001-encoded-dots-from-refused",
+   "result": "NOT_OBSERVABLE",
+   "status": 200,
+   "from_in_signin_returnTo": null,
+   "expected": "/matters/m1/work",
+   "first_pass_result": "FAIL",
+   "reason": "Probe design error (mine). Signed out, the matters/[matterId] layout (MatterScope) replaces every child page with its own sign-in screen, so the work-item page that sanitizes ?from= is never rendered; the normal-path control cases returned the same null. This is not a product failure and not evidence about RV-001. RV-001 at the rendered Back link needs an authenticated session and a real browser: BLOCKED."
+  },
+  {
+   "case": "rv001-normal-causal-from-kept",
+   "result": "NOT_OBSERVABLE",
+   "status": 200,
+   "from_in_signin_returnTo": null,
+   "expected": "/matters/m1/work?execution=WAITING",
+   "first_pass_result": "FAIL",
+   "reason": "Probe design error (mine). Signed out, the matters/[matterId] layout (MatterScope) replaces every child page with its own sign-in screen, so the work-item page that sanitizes ?from= is never rendered; the normal-path control cases returned the same null. This is not a product failure and not evidence about RV-001. RV-001 at the rendered Back link needs an authenticated session and a real browser: BLOCKED."
+  },
+  {
+   "case": "rv001-dot-segment-normal-kept",
+   "result": "NOT_OBSERVABLE",
+   "status": 200,
+   "from_in_signin_returnTo": null,
+   "expected": "/matters/m1/planning",
+   "first_pass_result": "FAIL",
+   "reason": "Probe design error (mine). Signed out, the matters/[matterId] layout (MatterScope) replaces every child page with its own sign-in screen, so the work-item page that sanitizes ?from= is never rendered; the normal-path control cases returned the same null. This is not a product failure and not evidence about RV-001. RV-001 at the rendered Back link needs an authenticated session and a real browser: BLOCKED."
+  }
+ ],
+ "summary": {
+  "pass": 21,
+  "fail": 0,
+  "not_observable": 5
+ }
+}

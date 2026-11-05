@@ -1,0 +1,70 @@
+{
+  "task": "MC-003A.8A.corrected",
+  "reviewer": "ZCode Desktop interactive session, human-operated",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN (not in available session metadata)",
+  "corrects_previous_return": ["F-08 totality over evidence-model §4 vectors", "F-08 DISPUTED null-source per accepted R2", "F-08 implicit-component cardinality semantics and withdrawn UNIQUE justification", "F-08 row ordering within component and verification-axis scope", "F-10 bounded/unbounded dimension table, no constant-size claim", "F-10 date-only dueAt example, null-vs-empty array semantics, UNIQUE-as-permission reframe", "metadata errata"],
+  "provenance": {
+    "r2_definitions": "Claude-authored proposals accepted DOCUMENT_ONLY by prior ZCode recheck (return SHA a288b2d40862256c1dbeb93b40a80b17fa23026977284f1693cd552fa6bc7e3c)",
+    "new_proposals_this_round": "ZCode-authored; not independent approval; Claude owns F-08 contract acceptance; PO owns catalogue and residual-risk decisions"
+  },
+  "gates_clarified": { "G4": "independent Design QA, PENDING", "po_architecture_approval_gate": "separate gate, NOT_PASSED", "F-05": "accepted/materialized document-only; implementation unverified" },
+  "f08": {
+    "row_unit": "unchanged: one row per (criterionRevisionRef, componentKey|null, gap code); component grain, not criterion",
+    "claim_state_derivation_total": {
+      "MISSING": "zero claims",
+      "WITHDRAWN": "claim evidence withdrawn_at != nil",
+      "DISPUTED": "open dispute on current accepted assessment",
+      "REJECTED": "current assessment verdict REJECTED",
+      "EXPIRED": "current ACCEPTED, not revoked, no dispute, validity/effective window passed at asOf (half-open)",
+      "not_representable_in_closed_vocabulary": ["current assessment revoked", "valid_from in future at asOf", "version-rule mismatch (CURRENT_AUTHORITATIVE/FIXED) after promotion"]
+    },
+    "totality_invariant": "every unsatisfied in-scope mandatory component yields at least one row; derivation is exhaustive over evidence-model §4; no false zero",
+    "unrepresented_vectors_resolution": {
+      "V1_recommended": "broaden PENDING_REVIEW to 'claim exists but no currently-effective assessment under §4 at asOf' (covers unreviewed, revoked, future validity, version mismatch); no vocabulary change; detail distinctions via DR-07 claims summary and DR-09 history",
+      "V2_alternative": "extend vocabulary with REVOKED, VALIDITY_NOT_STARTED, VERSION_STALE; contract change through Claude + PO gate; new codes follow always-present rule"
+    },
+    "null_source_map_fixed": "DISPUTED sourced from condition own-axis evaluation per accepted R2; evidenceGaps UNAVAILABLE with condition-own success yields EVIDENCE_GAP null and DISPUTED integer; R1 evidenceGaps->DISPUTED mapping not revived",
+    "implicit_component_semantics": "exactly one component with componentKey null; may yield multiple rows (one per gap code), same as explicit components; UNIQUE NULLS NOT DISTINCT is claim-grain on (evidence_id, criterion_revision_id, component_key) only and justifies nothing about gap rows (justification withdrawn)",
+    "counts_distinguished": { "section_total": "component-by-code count (rows)", "component_count": "distinct (revision, componentKey) with gaps; derivable by rollup; choosing it as total means per-component grain, an unapproved alternative" },
+    "identity_stability": "row key includes gap; a code transition removes one row and adds another in the new snapshot; UI groups by (criterionRevisionRef, componentKey) and treats code as per-snapshot attribute",
+    "order_within_component": "MISSING, PENDING_REVIEW, REJECTED, EXPIRED, DISPUTED, WITHDRAWN (example corrected: PENDING_REVIEW before REJECTED)",
+    "verification_axis_scope": "Requirement and Evidence Requirement always; Action and Filing only when proof explicitly required; NOT_REQUIRED or absent axis yields no rows",
+    "acceptance": ["E1 ordering fixed", "E2 dedup two same-code claims", "E3 implicit mixed codes yield two rows", "E4 revision change re-keys rows", "E5 EVIDENCE_GAP null / DISPUTED integer / INCOMPLETE", "E6 successful zero total 0", "E7 no fabricated evidenceRefs", "E8 revoked single claim one row", "E9 future valid_from one row", "E10 version-mismatch one row (AC-128)"]
+  },
+  "f10": {
+    "options_presented": {
+      "A_33_operations": {
+        "shape": "submissions continuation route + submissionsTotal in cycle item; receipt/outcome refs and submittedVersionRefs remain fully embedded",
+        "bounded_by_continuation": ["cycles per filing", "submissions per cycle"],
+        "residual_unbounded_requires_PO_risk_acceptance": ["submittedVersionRefs per submission item (limit=1 still returns N refs)", "receipt/outcome evidence refs per cycle item (M refs)"],
+        "not_constant_size": true
+      },
+      "B_35_operations_recommended": {
+        "routes": [
+          "GET /api/v1/filings/{filingId}/cycles/{cycleNo}/submissions (items {submissionRef, reference, submittedAt, documentVersionsTotal}; submittedAt desc, id asc)",
+          "GET /api/v1/filings/{filingId}/cycles/{cycleNo}/submissions/{submissionId}/document-versions (items {documentVersionRef exact}; id asc; cross-cycle submissionId 404)",
+          "GET /api/v1/filings/{filingId}/cycles/{cycleNo}/observations-evidence (items {evidenceRef, observationKind RECEIPT|OUTCOME}; id asc)"
+        ],
+        "cycle_item": "{cycleNo, requestRef, ownerRef, dueAt instant-with-offset, openedAt, closedAt, submissionsTotal, observationsEvidenceTotal}; no embedded arrays",
+        "bounded_by_continuation": ["cycles per filing", "submissions per cycle", "document-version refs per submission", "receipt/outcome evidence refs per cycle"],
+        "no_hidden_data_cap": "limit<=200 is page size only; all rows reachable; totals in-Matter same snapshot; no completeness claim while nextCursor non-null",
+        "envelope": "{items,total,nextCursor,asOf,sourceRevision} per page; RC-6 cursor binding includes submissionId for route B2; DR-12/RC-1/RC-3 authorization and errors"
+      }
+    },
+    "unique_argument_reframed": "absence of UNIQUE (filing_id, cycle_no) on filing_submissions is candidate schema permission proving storage does not bound the dimension; it is not a conclusion that RULE-012 approved any form of within-cycle resubmission; both options are cardinality-agnostic",
+    "dueAt_example": "2026-07-01T23:59:59+07:00 with stated fixture assumption (server-side resolution, Asia/Ho_Chi_Minh fixture timezone)",
+    "null_vs_empty": "AVAILABLE responses carry arrays only ([] = evaluated zero); null appears only when the enclosing envelope is UNAVAILABLE",
+    "po_sentences": { "A": "approve 32->33 and explicitly accept the two residual unbounded dimensions", "B": "approve 32->35 with three relation routes and totals-only cycle items; no residual embedding" },
+    "external_35op_note": "any separately authored 35-operation proposal is not among the 21 authorized inputs and is not approved; B1-B3 herein are ZCode-derived from the data dimensions; text alignment belongs to Codex/Claude",
+    "catalogue_self_change": "none; 32 unchanged pending PO decision",
+    "acceptance": ["K1 201 submissions reachability", "K2 201 version refs reachability limit=1 (B)", "K3 201 observation evidence refs reachability (B)", "K4 totals-only cycle items (B) / approved residual only (A)", "K5 cross-cycle/foreign 404, cursor 422, revoked 404", "K6 per-page snapshot labels", "K7 receipt-without-outcome not approval; AC-129 v2/v3 retention", "K8 limit>200 422; no hidden cap"]
+  },
+  "preserved": {
+    "ct_ids": "22 with 16/4/1/1",
+    "qa": "Q1..Q8 original dispositions with Q2/Q4/Q6/Q8 conditional",
+    "runtime": "NOT_RUN",
+    "gates": { "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY", "G5-B": "FINDINGS_OPEN", "G3": "NOT_VERIFIED", "G4_design_qa": "PENDING", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED", "po_architecture_approval_gate": "NOT_PASSED" },
+    "be_01": "not modified, not blocked by F-08/F-10 per PO directive; no BE-01 source/test execution claimed"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "start_utc": "2026-10-30T02:58:31.318523+00:00",
+  "end_utc": "2026-10-30T02:58:31.833630+00:00",
+  "argv": [
+    "rtk",
+    "proxy",
+    "docker",
+    "stop",
+    "--time",
+    "10",
+    "11e8da455fcf838fa787bb094073fef76ff1b684a190c412029122c4f6fa496c"
+  ],
+  "exit": 0,
+  "before": {
+    "id": "11e8da455fcf838fa787bb094073fef76ff1b684a190c412029122c4f6fa496c",
+    "name": "/mc-codex-adr006-e73a79343182",
+    "labels": {
+      "mc.owner": "codex-adr006-20261030"
+    },
+    "status": "running"
+  },
+  "after": {
+    "id": "11e8da455fcf838fa787bb094073fef76ff1b684a190c412029122c4f6fa496c",
+    "name": "/mc-codex-adr006-e73a79343182",
+    "labels": {
+      "mc.owner": "codex-adr006-20261030"
+    },
+    "status": "exited"
+  },
+  "disposition": "STOPPED_RETAINED_FOR_QA; no container/volume deletion, no existing resource touched",
+  "private_fixture_dir_mode": "0o700",
+  "private_credential_mode": "0o600"
+}

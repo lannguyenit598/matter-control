@@ -1,0 +1,122 @@
+{
+  "task": "MC-003A",
+  "preflight": "PASS_BEFORE_TRANSMISSION",
+  "checked_at_utc": "2026-10-25T01:12:59.492183+00:00",
+  "governance_base": "e377568ac47f8f1b88e3875a8f13d7e57fc30667",
+  "authorization": "Direct PO message: conditional one-time exact six-file read-only independent QA; no artifact changes or design approval",
+  "payload": [
+    {
+      "path": "docs/design/step-03a/export/mattercontrol-step-03a-ux-concept-review.html",
+      "bytes": 315229,
+      "sha256": "6000190940fe42128009ce06b220a1d858228f346c1022a190c8de4eafa4cd4a",
+      "verified": true,
+      "secret_pattern_hits": {
+        "private_key": 0,
+        "vendor_key": 0,
+        "jwt": 0,
+        "credential_url": 0,
+        "bearer": 0
+      }
+    },
+    {
+      "path": "docs/design/step-03a/export/mattercontrol-step-03a-ux-specifications.md",
+      "bytes": 51903,
+      "sha256": "3b48b195d6623267165f4c94d3dc5522ced3cec14516bc7ab7e48d54d8f30bbd",
+      "verified": true,
+      "secret_pattern_hits": {
+        "private_key": 0,
+        "vendor_key": 0,
+        "jwt": 0,
+        "credential_url": 0,
+        "bearer": 0
+      }
+    },
+    {
+      "path": "docs/design/step-03a/export/mattercontrol-step-03a-handoff-report.md",
+      "bytes": 19686,
+      "sha256": "faf3a981fee1795d7e99d9cd7391703cb1faced429fa8d772aea6a69c649e7f6",
+      "verified": true,
+      "secret_pattern_hits": {
+        "private_key": 0,
+        "vendor_key": 0,
+        "jwt": 0,
+        "credential_url": 0,
+        "bearer": 0
+      }
+    },
+    {
+      "path": "docs/requirements/state-semantics.md",
+      "bytes": 11469,
+      "sha256": "156ca1dd2f75a7374a59d2aa4af4a9815ce62a2f11c03f84977bad2860a2ad51",
+      "verified": true,
+      "secret_pattern_hits": {
+        "private_key": 0,
+        "vendor_key": 0,
+        "jwt": 0,
+        "credential_url": 0,
+        "bearer": 0
+      }
+    },
+    {
+      "path": "docs/requirements/permission-matrix.md",
+      "bytes": 5238,
+      "sha256": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276",
+      "verified": true,
+      "secret_pattern_hits": {
+        "private_key": 0,
+        "vendor_key": 0,
+        "jwt": 0,
+        "credential_url": 0,
+        "bearer": 0
+      }
+    },
+    {
+      "path": "docs/requirements/business-rules.md",
+      "bytes": 11783,
+      "sha256": "96be507d3b0d70f0b9ad1c2b27b3152fd5e2700f13e8a647920c60c220f2aa81",
+      "verified": true,
+      "secret_pattern_hits": {
+        "private_key": 0,
+        "vendor_key": 0,
+        "jwt": 0,
+        "credential_url": 0,
+        "bearer": 0
+      }
+    }
+  ],
+  "packet": {
+    "packet_path": "/tmp/mc003a-independent-review.txt",
+    "packet_bytes": 445728,
+    "packet_sha256": "45be38b88e0f1e053d448ac4b9f9bb36f62609a8ae38b5b70480602d16c2d043"
+  },
+  "destination": {
+    "service": "OpenCode inference gateway",
+    "provider": "opencode",
+    "model_id": "glm-5.3-flash-free",
+    "cli_model": "opencode/glm-5.3-flash-free",
+    "baseURL": "https://opencode.ai/inference/openai/v1",
+    "package": "@opencode/ai/providers/openai-compatible",
+    "verified_from": "Installed2.1.4 CLI GET /api/model metadata; no custom baseURL/provider override in global config",
+    "underlying_gateway_vendor_routing": "Not exposed by metadata; no claim of direct connection to model developer"
+  },
+  "data_review": {
+    "patterns": "No private keys/vendor keys/JWT/credential URL/Bearer matches; prior credential-assignment scan also0",
+    "emails": 0,
+    "external_urls_in_payload": 0,
+    "manual_classification": "Synthetic Atlas design examples and product governance policy; no identified real-client matter data or confidential case evidence",
+    "limit": "Pattern and content inspection is not a universal secret-detection guarantee"
+  },
+  "execution_constraints": {
+    "fresh_session": true,
+    "cwd": "/tmp/mc003a-independent-qa-20261025",
+    "git_repository": false,
+    "tools": "Session wildcard deny, verified before prompt submission",
+    "source_files": 6,
+    "additional_repository_files": "none",
+    "html": "Text only; JavaScript/external resources not executed",
+    "fallback_provider": "prohibited",
+    "global_settings": "unchanged",
+    "claude_and_project_discovery": "disabled per process"
+  },
+  "review_scope_limitation": "Full PRD/SRS/P0 requirement files are outside the six-file authorization; only supplied policies and design-declared P0 coverage can be independently compared."
+}

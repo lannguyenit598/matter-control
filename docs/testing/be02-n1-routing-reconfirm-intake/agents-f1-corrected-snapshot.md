@@ -1,0 +1,47 @@
+# MatterControl — agent instructions
+
+## Product and current boundary
+
+MatterControl is the Control Plane for High-Stakes Legal Work and the System of Operational Truth for Complex Legal Matters. Initial vertical: Transactions & Corporate Legal Work. Discovery is closed; do not reopen positioning.
+
+This repository holds governance, versioned evidence, and the source snapshots imported at the Product Owner's direct request on2026-10-26: apps/backend, apps/frontend and tools/inta-harness. See docs/implementation/source-layout.md and docs/source-import/manifest.json. Source import changes repository layout, not business behavior or implementation/release approval. The Product Owner has explicitly authorized Step 00A: Canonical Product Context, superseding the earlier proposed technical audit. Apply the Step 00 operating model. Product direction and the P0/P1/P2 capability baseline are approved inputs; do not ask for their approval again. Step 00A.1 confirms approved prompts as valid initial product context; originals A/B never existed in this initially empty repository/workspace. Archival is optional, not a Step 01 gate; never invent originals or claim direct verification. See docs/product/context-provenance.md. Preserve Requirement versus Action and independent state axes. Current authorization includes Step 02.1 Technical PoC, Agent Recovery and Feasibility Validation (docs/ai-sdlc/step-02-1-request.md), continuing Step 02. H5/W1/local restore targets are approved under DEC-023..025; current recovery evidence supersedes historical sandbox-only signature conclusions (docs/tooling/step-02-1-recovery.md). Preserve external owner boundaries; manual runtime handoffs are prepared when direct engineering dispatch is unavailable. Codex orchestrates and owns cloud/tooling evidence; actual Claude Code owns Solution Architecture; The latest direct PO instruction restores backend execution to actual ZCode, superseding the temporary MC-COORD-03 backend takeover; Codex retains PostgreSQL, DevOps, privacy/evidence and orchestration. Frontend execution remains Antigravity under MC-002-INTA-FE-VALIDATION. Earlier ZCode/Antigravity authorship remains historical evidence. OpenCode owns independent verification. Preserve approved specifications. No full backend/frontend implementation, high-fidelity UI, production deploy or automatic Step 03; stop at Architecture Approval Gate. The PO explicitly approved OBD-02..08/10/11 recommendations at 572835a on 2026-10-24 and deferred numeric workload/retention/RPO/RTO to Step 02 (docs/ai-sdlc/step-01-approval.md). Do not re-request those approvals. Material new policy changes still require PO approval; feasibility remains unverified. Raise only real semantic, release-criteria or infrastructure trade-offs for additional approval.
+
+## Unified coordination checkout
+
+The Product Owner requested one shared project flow on 2026-10-26. Continue governance, design intake and integration coordination on `codex/unified-project-flow` in `/Users/nguyenvanlan/Documents/code/pet-projects/matter-control`. Start with [the current workflow](docs/ai-sdlc/current-workflow.md) and the project dashboard. Former MC-002/MC-003A coordination branches are historical checkpoints; do not continue new coordination writes there. New source assignments should use apps/backend and apps/frontend after a permitted primary import commit/base is recorded; read each component AGENTS/rules. Historical external source checkouts and already-dispatched runtime assignments retain their exact paths/barriers until explicitly updated. Do not rewrite immutable evidence or silently move a live harness. The latest direct PO owner amendment below restores backend execution to actual ZCode and retains frontend execution with Antigravity; it supersedes the temporary Codex backend takeover. Independent architecture, design and QA responsibilities remain unchanged. Recheck actual HEAD and returns before using historical packet paths or status statements.
+
+## Start and execution
+
+Read docs/ai-sdlc/project-status.md, your assigned task in docs/implementation/tasks/, and its input artifacts. Confirm actual repository, branch, base commit and allowed paths before work. Never overwrite existing changes. One owner per task; use isolated branches/worktrees when parallel work is authorized. Do not create additional agents merely because roles are listed here.
+
+Every task must record requirement IDs, owner, priority, scope, dependencies, inputs, outputs, acceptance criteria, tests, reviewer and completion evidence. Use BACKLOG → READY → IN_PROGRESS → IN_REVIEW → TESTING → DONE, with BLOCKED / REWORK_REQUIRED / WAITING_APPROVAL where appropriate. A report is not a completed review; no DONE without evidence and an independent reviewer. Step 00A stage completion and Step 01 readiness follow the revised PO exit criteria; MC-00A is DONE for baseline 20f12fe after actual OpenCode review PASS; this does not approve Step 01 proposals. MC-001 is DONE for documentation after explicit PO approval and actual REV-01 round 2 PASS. Step 02 is now explicitly assigned as MC-002; track actual external-agent execution and the unresolved architecture/cost/PoC gates separately. Preparing a packet is not completed design, review or PO approval.
+
+## Official roles
+
+- Codex: PM, BA, Cloud, DevOps, orchestration, requirements, backlog, traceability, risks, CI/CD and releases; backend coordination and intake, with actual ZCode owning backend execution and Antigravity owning frontend execution under the latest PO instruction; does not self-approve product/architecture/cost/release decisions.
+- Claude Code: Solution Architect; owns system/domain/data/security architecture, API contracts, ADRs and architecture reviews. Record alternatives, compatibility and risks before design approval.
+- OpenDesign: UI/UX; owns research, flows, information architecture, design system, screens, interactions, prototypes and handoff. Record source revision/export and approval; never treat a preview URL alone as a complete handoff.
+- ZCode: Current backend execution owner, restored by direct PO instruction on 2026-10-26. Preserve actual ZCode and Codex historical authorship, approved contracts, exact source/task boundaries and independent review. Ownership restoration is not verified tool/quota availability, dispatch, a new implementation approval or permission to bypass Mimosa. If unavailable, report BLOCKED; do not automatically transfer backend execution to Codex. Antigravity retains frontend execution.
+- Antigravity: Current frontend execution owner under the latest direct PO reassignment; immediate task MC-002-INTA-FE-VALIDATION. Owns approved Next.js/Atomic Design and frontend integration/tests; preserve prior authorship and all scope/design/QA gates. Read the latest task and exact source paths before execution.
+- OpenCode: independent QA, API/integration/E2E, visual, accessibility, performance and regression checks. Supporting code changes require Codex assignment; another reviewer must approve code OpenCode changes.
+- Human Product Owner: product scope, critical business rules, architecture trade-offs, design direction, infrastructure costs and production release.
+
+These names describe external products and responsibilities, not interchangeable Codex subagents. Never claim an external agent ran without invocation and returned evidence.
+
+## Evidence and security
+
+Use synthetic data. Do not put legal matter data, secrets, tokens or credentials in Git, prompts, screenshots or logs. Redact evidence before committing. Never bypass agent permissions, invalid application signatures or missing credentials. Do not initiate authentication or modify global agent settings during bootstrap.
+
+Record tool/version, environment, timestamp, exact command or UI action, exit/error, input revision and output location. Distinguish documented support, local executable presence, successful invocation, and completed workspace handoff. Static/local evidence never proves production behavior or a $0 infrastructure bill.
+
+## Local command and research rules
+
+On this workstation prefix shell commands with rtk; use rtk proxy for commands it does not wrap. Follow the user's /Users/nguyenvanlan/.codex/RTK.md when available. This machine path is not a portable project dependency.
+
+Before exploring code, use Semble search with the exact repo path/URL (content docs/config/all as relevant). If unavailable, record the failure, then use targeted search. Read exact returned paths; do not repeat the same semantic search with grep. Literal exhaustive checks and known-path reads are allowed.
+
+For library/framework/SDK/API/CLI/cloud documentation, resolve the library through Context7, then query relevant current docs. Use official sources if lookup is unavailable; do not invent supported instruction filenames or CLI flags.
+
+## Delivery
+
+Return task ID, actual agent/tool identity, base/head, changed files, acceptance results, tests run/not run, risks, evidence and proposed next status. Follow docs/ai-sdlc/orchestration-protocol.md. Keep scope minimal. End reports with what was skipped and any remaining risk.

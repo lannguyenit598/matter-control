@@ -1,0 +1,18 @@
+{
+  "identity": "actual Claude Code (claude-opus-5-5)",
+  "label": "apphosting-cloudrun-r1",
+  "fe": "node",
+  "api": "http://127.0.0.1:47880",
+  "fixture": "synthetic OIDC + fake S3 (fixture-server.mjs) + disposable PostgreSQL; no cloud provider",
+  "started_utc": "2026-10-30T03:26:13.304Z",
+  "ended_utc": "2026-10-30T03:26:13.333Z",
+  "passed": 0,
+  "failed": 1,
+  "checks": [
+    {
+      "name": "runtime failure",
+      "pass": false,
+      "error": "seed /workspaces: 401 {\"type\":\"urn:mc:unauthenticated\",\"title\":\"Unauthorized\",\"status\":401,\"detail\":\"authentication is required\",\"instance\":\"/api/v1/workspaces\",\"retryable\":false}"
+    }
+  ]
+}

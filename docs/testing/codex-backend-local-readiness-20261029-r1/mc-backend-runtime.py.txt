@@ -1,0 +1,73 @@
+exec(compile(open('/private/tmp/mc-backend-fixture.py').read().split("mode=sys.argv[1]")[0], '/private/tmp/mc-backend-fixture.py', 'exec'))
+import socket, urllib.request, urllib.error, signal
+events=[]
+def command(args, env=None, timeout=180):
+    code,raw,event=run(args,env,ROOT/'apps/backend',timeout); events.append(event)
+    (OUT/'runtime-commands.json').write_text(json.dumps(events,indent=2)+'\n')
+    assert code==0,raw.decode()
+    return raw
+name=(PRIVATE/'container').read_text()
+port_now=command(['docker','port',name,'5432/tcp']).decode().strip().rsplit(':',1)[1]
+(PRIVATE/'dsn').write_text('postgres://mc_fixture:'+(PRIVATE/'password').read_text()+'@127.0.0.1:'+port_now+'/mc_fixture?sslmode=disable')
+assert command(['docker','inspect','--format','{{ index .Config.Labels "mc.owner" }}',name]).strip()==b'MC-P0-CODEX-BACKEND-LOCAL-20261029'
+command(['openssl','genpkey','-algorithm','RSA','-pkeyopt','rsa_keygen_bits:2048','-out',str(PRIVATE/'oidc.pem')])
+(PRIVATE/'oidc.pem').chmod(0o600)
+(PRIVATE/'oidc.json').write_text(json.dumps({'clientId':'synthetic-local-only','keyId':'synthetic-local-only','key':(PRIVATE/'oidc.pem').read_text()})); (PRIVATE/'oidc.json').chmod(0o600)
+env={k:v for k,v in os.environ.items() if not k.startswith(('MC_','AWS_','OTEL_','K_SERVICE'))}
+env.update(MC_DATABASE_URL=(PRIVATE/'dsn').read_text(),MC_OBJECT_DIR=str(PRIVATE/'objects'),MC_OBJECT_BACKEND='fs',MC_OIDC_ISSUER='http://127.0.0.1:1',MC_OIDC_INTROSPECTION_URL='http://127.0.0.1:1/introspect',MC_OIDC_AUDIENCE='synthetic-local-only',MC_OIDC_API_KEY_FILE=str(PRIVATE/'oidc.json'),MC_SHUTDOWN_TIMEOUT='2s',OTEL_SDK_DISABLED='true')
+sock=socket.socket(); sock.bind(('127.0.0.1',0)); port=sock.getsockname()[1]; sock.close()
+env['MC_HTTP_ADDR']=f'127.0.0.1:{port}'
+command(['go','build','-o',str(PRIVATE/'mcapi'),'./cmd/mcapi'])
+raw=command([str(PRIVATE/'mcapi'),'migrate'],env)
+(OUT/'runtime-migration.log').write_bytes(raw)
+schema=command(['docker','exec',name,'psql','-U','mc_fixture','-d','mc_fixture','-Atc','SELECT max(version_id) FROM goose_db_version WHERE is_applied']).decode().strip()
+start=utc()
+log=(PRIVATE/'api.log').open('wb')
+p=subprocess.Popen([str(PRIVATE/'mcapi')],cwd=ROOT/'apps/backend',env=env,stdout=log,stderr=subprocess.STDOUT)
+(PRIVATE/'api.pid').write_text(str(p.pid))
+base=f'http://127.0.0.1:{port}'
+def probe(path):
+    req=urllib.request.Request(base+path)
+    t=time.monotonic()
+    try:
+        with urllib.request.urlopen(req,timeout=3) as r: code,body=r.status,r.read().decode()
+    except urllib.error.HTTPError as e: code,body=e.code,e.read().decode()
+    return {'utc':utc(),'path':path,'status':code,'body':body,'seconds':round(time.monotonic()-t,4)}
+result={'api_url':base,'owner':'actual Local Codex / MC-P0-CODEX-BACKEND-LOCAL-20261029','pid':p.pid,'start_utc':start,'argv':[str(PRIVATE/'mcapi')],'schema_version':schema,'object_backend':'fs','object_directory':str(PRIVATE/'objects'),'identity':'fresh synthetic signing key; loopback unreachable introspection; no human login or tokens','probes':[]}
+try:
+    for _ in range(100):
+        if p.poll() is not None: raise RuntimeError('fixture API exited before startup')
+        try:
+            r=probe('/readyz')
+            if r['status']==200: break
+        except OSError: pass
+        time.sleep(.1)
+    else: raise RuntimeError('readiness did not become healthy')
+    for path in ['/healthz','/readyz','/api/v1/workspaces']:
+        result['probes'].append(probe(path))
+    assert [x['status'] for x in result['probes']]==[200,200,401]
+    command(['docker','pause',name])
+    for path in ['/healthz','/readyz']:
+        result['probes'].append(probe(path))
+    assert [x['status'] for x in result['probes'][-2:]]==[200,503]
+    command(['docker','unpause',name])
+    for _ in range(100):
+        r=probe('/readyz')
+        if r['status']==200: break
+        time.sleep(.1)
+    assert r['status']==200
+    result['probes'].append(r)
+finally:
+    begin=time.monotonic()
+    p.send_signal(signal.SIGTERM)
+    try: result['api_exit']=p.wait(timeout=8)
+    except subprocess.TimeoutExpired:
+        result['api_cleanup']='FAILED: exceeded bounded shutdown; process retained for operator'
+        raise
+    result['shutdown_seconds']=round(time.monotonic()-begin,4)
+    log.close()
+    raw=(PRIVATE/'api.log').read_bytes().replace((PRIVATE/'password').read_bytes(),b'[REDACTED]')
+    (OUT/'runtime-api.log').write_bytes(raw)
+    result['api_cleanup']='SIGTERM observed, process reaped'
+    (OUT/'runtime-results.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))

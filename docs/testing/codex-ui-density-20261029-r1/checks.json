@@ -1,0 +1,90 @@
+{
+  "identity": "Actual Local Codex; author checks, not independent review",
+  "head": "20feedbf06c859a9806055d609f5b132fe8bb086",
+  "recorded_at": "2026-10-29T12:34:42.572301+00:00",
+  "initial_check": {
+    "exit": 0,
+    "files": 72,
+    "tests": 665,
+    "tool_session": 35797
+  },
+  "intermediate_check": {
+    "exit": 1,
+    "tool_session": 60761,
+    "files": 76,
+    "passed": 690,
+    "failed": 2,
+    "failures": [
+      "proof/components/upload-attempt.test.tsx: different file intent test timed out at 5000ms",
+      "review/components/review-list.test.tsx: same-key retry expected second call not observed"
+    ],
+    "note": "Retained here as observed failure; assertions/timeouts/source were not altered to suppress it. Other feature work increased test inventory during this task."
+  },
+  "focused_retry": {
+    "argv": [
+      "node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/features/proof/components/upload-attempt.test.tsx",
+      "src/features/review/components/review-list.test.tsx"
+    ],
+    "tool_session": 90639,
+    "exit": 0,
+    "files": 2,
+    "tests": 8
+  },
+  "final_check": {
+    "argv": [
+      "pnpm",
+      "check"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend",
+    "start_epoch": 1793277136.8527749,
+    "end_epoch": 1793277230.8478458,
+    "exit": 0,
+    "files": 76,
+    "tests": 692,
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "format": "PASS",
+    "agent_config": "PASS: 17 skills, 3 scoped rules"
+  },
+  "webpack": {
+    "argv": [
+      "node",
+      "/private/tmp/mc-density-build-hdnand3z/frontend/node_modules/next/dist/bin/next",
+      "build",
+      "--webpack"
+    ],
+    "cwd": "/private/tmp/mc-density-build-hdnand3z/frontend",
+    "start_epoch": 1793267485.090485,
+    "end_epoch": 1793267497.488626,
+    "exit": 0,
+    "scoped_snapshot_equality": "6/6 current scoped files match snapshot bytes",
+    "css_guard": "exit 0; 2 assets"
+  },
+  "storybook": {
+    "tool_session": 71113,
+    "exit": 0,
+    "output": "/private/tmp/mc-density-build-hdnand3z/storybook",
+    "note": "Observed tool return; no separately retained Storybook command log. Snapshot output tracing/chunk warnings do not certify a deployable standalone image."
+  },
+  "diff_check": {
+    "argv": [
+      "rtk",
+      "proxy",
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0
+  },
+  "formal_status": "IN_REVIEW_WITH_VERIFICATION_BLOCKERS",
+  "not_run": [
+    "independent review",
+    "populated desktop My Work and dense tables",
+    "screen reader",
+    "full E2E",
+    "release checks"
+  ]
+}

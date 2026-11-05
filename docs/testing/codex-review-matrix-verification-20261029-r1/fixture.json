@@ -1,0 +1,33 @@
+{
+  "provision": {
+    "argv": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "mc-review-verify-pg-20261029-r1",
+      "--label",
+      "mc.owner=MC-EIGENWELT-REVIEW-MATRIX-VERIFY",
+      "--cpus",
+      "1",
+      "--memory",
+      "512m",
+      "--pids-limit",
+      "128",
+      "--publish",
+      "127.0.0.1::5432",
+      "--env-file",
+      "/private/tmp/mc-review-pg-20261029-r1/postgres.env",
+      "898c60cb390d"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control",
+    "utc_start": "2026-10-29T12:33:22.375186+00:00",
+    "utc_end": "2026-10-29T12:33:22.828677+00:00",
+    "exit": 0
+  },
+  "name": "mc-review-verify-pg-20261029-r1",
+  "binding": "127.0.0.1:51866",
+  "ownership_and_limits": "MC-EIGENWELT-REVIEW-MATRIX-VERIFY sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5 536870912 1000000000 128",
+  "ready": true,
+  "private_directory": "/private/tmp/mc-review-pg-20261029-r1"
+}

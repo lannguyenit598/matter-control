@@ -1,0 +1,62 @@
+{
+  "task": "MC-003A-EVIDENCE-INTAKE",
+  "timestamp_utc": "2026-10-25T03:25:45.581790+00:00",
+  "base_commit": "13e8274091e77b2334ac8797d38bfd2919ce8ac8",
+  "supersedes_current_empty_intake_status_of": "rendered-evidence-inventory.json at13e8274; that earlier record remains historical and unchanged",
+  "accepted_visual_attachments": [
+    {
+      "evidence_id": "EV-UI-001",
+      "received_from": "Human user image attachment in this conversation",
+      "source_path": "/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/TemporaryItems/NSIRD_screencaptureui_XggSo8/Screenshot 2026-10-25 at 10.22.41.png",
+      "preserved_path": "docs/design/step-03a/validation/step-03a-4/captures/EV-UI-001-control-room.png",
+      "bytes": 193804,
+      "sha256": "9a730720106035e2639091dae022500b08595881255927093f93134cb9ee95b1",
+      "pixel_dimensions": {
+        "width": 1220,
+        "height": 1586
+      },
+      "css_viewport": null,
+      "zoom": null,
+      "browser_name_version": null,
+      "capture_time_timezone": null,
+      "capture_filename_time": "Screenshot 2026-10-25 at 10.22.41.png; filename only, not verified capture metadata",
+      "device_or_emulation": null,
+      "revision_confirmed_by_user": null,
+      "user_metadata_reply": "không biết",
+      "ambient_context_revision_hint": "local-r1 URL#wireframes; ambient hint only, not proof of image revision",
+      "screen": "Product shell and Control Room critical blocker chain, partial captured region",
+      "surface_classification": "INTERACTIVE_PROTOTYPE appearance captured; no interaction evidence",
+      "interaction_performed": null,
+      "actual_result": "Rendered image contains shell/nav, Project Atlas heading/counts, critical chain RQ-04/AC-05/AC-07/AC-08/AC-09 and separate text state labels. Other Control Room panels are outside the supplied region.",
+      "visual_result": "PARTIAL",
+      "interaction_result": "NOT_TESTED",
+      "source_region_reuse": [
+        {
+          "region": "application shell/Control Room markup",
+          "r1_r2_byte_identical": true,
+          "sha256": "b0c58bfd8bbbe2672cad71a852f8a5c1067b491b9715eccf20eb39ede2629419"
+        },
+        {
+          "region": "inline stylesheet",
+          "r1_r2_byte_identical": true,
+          "sha256": "77fb30722d087f1b8b1ed065f8250e8a723bf12d4c9dc49c3ec175cec230ec11"
+        }
+      ],
+      "local_r2_applicability": "Limited conditional supporting evidence for unchanged shell/Control Room and CSS only; does not prove complete local-r2, different viewport/zoom or changed direction boards.",
+      "limitations": [
+        "Image pixels are not CSS viewport or clickable target geometry.",
+        "No browser/zoom/device metadata; user explicitly does not know.",
+        "No observed keyboard, navigation, editing, focus recovery, scrolling or task-completion sequence.",
+        "A cropped region cannot establish that off-image sections are absent.",
+        "No measured contrast, accessibility or usability verdict."
+      ]
+    }
+  ],
+  "received_manual_action_results": [],
+  "overall_rendered_acceptance": "PARTIAL_EVIDENCE_RECEIVED; formal rendered gate remains incomplete",
+  "local_r2_status": "RENDERED_VALIDATION_PARTIAL / ADDITIONAL_MANUAL_EVIDENCE_REQUIRED",
+  "independent_qa": "PENDING_INDEPENDENT_QA",
+  "mc003a": "REWORK_REQUIRED",
+  "step03b": "NOT_AUTHORIZED",
+  "no_new_browser_actions_or_external_dispatch": true
+}

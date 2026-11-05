@@ -1,0 +1,47 @@
+
+ RUN  v5.0.5 /private/tmp/mc-dialog-corners-20261101-16bq2ao6/red-frontend
+
+ ❯ src/components/molecules/glass-tier-focus.test.tsx (5 tests | 1 failed) 73ms
+   ❯ Dialog form across material tier changes (5)
+     × keeps a liquid form interactive without creating an optical displacement filter 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/molecules/glass-tier-focus.test.tsx > Dialog form across material tier changes > keeps a liquid form interactive without creating an optical displacement filter
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      Object {
+        "height": 300,
+        "optics": Object {
+          "bezel": 18,
+          "radius": 16,
+          "refraction": 12,
+        },
+        "width": 512,
+      },
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/components/molecules/glass-tier-focus.test.tsx:66:32
+     64|     const input = screen.getByRole('textbox', { name: 'Workspace name'…
+     65|     expect(input).toHaveFocus()
+     66|     expect(glass.register).not.toHaveBeenCalled()
+       |                                ^
+     67|   })
+     68|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  16:50:54
+   Duration  776ms (environment 58%, setup 15%, tests 10%, import 9%, transform 7%)
+

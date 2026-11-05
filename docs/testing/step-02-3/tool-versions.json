@@ -1,0 +1,24 @@
+{
+  "timestamp_utc": "2026-10-24T18:06:25.937285+00:00",
+  "claude": {
+    "command": [
+      "rtk",
+      "proxy",
+      "claude",
+      "--version"
+    ],
+    "exit": 0,
+    "version": "2.1.309 (Claude Code)"
+  },
+  "opencode_sandbox_probe": {
+    "command": [
+      "rtk",
+      "proxy",
+      "opencode",
+      "--version"
+    ],
+    "exit": 1,
+    "error": "EPERM opening the existing global opencode log; sandbox restriction, not a packaging/auth diagnosis",
+    "next": "actual authorized provider run requires host permissions and records returned model metadata"
+  }
+}

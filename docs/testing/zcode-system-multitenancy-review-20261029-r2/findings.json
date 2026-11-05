@@ -1,0 +1,68 @@
+{
+  "task": "MC-ZCODE-SYSTEM-MULTITENANCY-REVIEW-20261029-R2",
+  "findings": [
+    {
+      "id": "SYR-F01",
+      "severity": "P3",
+      "confidence": "source-confirmed design gap / decision-required",
+      "title": "No organization/customer entity: independent-firm SaaS tenancy is not modeled",
+      "violated_requirement": "none for approved P0 (workspaces+matters only); this bounds future multi-firm claims",
+      "location": "apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0001_mattercontrol_core.sql (users/workspaces/memberships); no org table anywhere in 0001-0008",
+      "tenant_boundary": "tenant key in code+DB+API = workspace_id (+ matter_id confidentiality). Identity = provisioned (idp_issuer, idp_subject) with UNIQUE constraint. One person may hold memberships in many workspaces; one workspace holds many matters; one ZITADEL issuer can host many independent customer workspaces with no boundary between them.",
+      "impact": "what separates two customer firms today is operational convention (separate deployments/issuers per firm), not a product boundary. Organization lifecycle, per-firm backup/export, residency, billing domain, org-level admin: all absent.",
+      "smallest_fix": "policy decision first: either document 'one deployment (or one issuer+workspace tree) per customer firm' as the tenancy model, or add an organization entity with workspace.org_id and membership inheritance. Do not retrofit silently.",
+      "regression": "none needed now; add tenant-model tests when the decision lands"
+    },
+    {
+      "id": "SYR-F02",
+      "severity": "P3",
+      "confidence": "source-confirmed on corrected bytes (defense-in-depth only; no API bypass reproduced)",
+      "title": "Review-matrix storage invariants enforced by service only (three gaps)",
+      "violated_requirement": "defense-in-depth expectations recorded by the earlier verifier; unchanged by the rework",
+      "location": "migrations_mattercontrol/0008_review_matrix.sql: review_answers.supersedes_id FK is global (REFERENCES review_answers(id)) not (grid,version,question)-scoped; review_question_revisions FK is question_id-only (no matter/grid scoping); review_answers.question_revision has no FK/CHECK tying it to an existing revision row",
+      "impact": "a hypothetical non-service writer (manual SQL, future bulk path, a buggy migration) could persist structurally invalid rows the service layer would then render. The Matter lock + server-side predecessor/revision selection make this unreachable through the API (PG race suite PASS).",
+      "smallest_fix": "add composite FKs/partial unique + CHECK in a new migration when convenient; do not alter immutable 0008",
+      "regression": "PG contract test asserting the new constraints"
+    },
+    {
+      "id": "SYR-F03",
+      "severity": "P3",
+      "confidence": "source-confirmed operational gap (recorded, not urgent)",
+      "title": "No retention policy executor for command_receipts.purge_after and security_audit_events",
+      "violated_requirement": "TB-06 (retention value) is an open PO decision — correctly left null in schema",
+      "location": "0001_mattercontrol_core.sql: command_receipts.purge_after TIMESTAMPTZ (nullable, no default, no purge job); security_audit_events has no retention column",
+      "impact": "receipts grow unbounded in production until a policy + job exist; a privacy/ops item for deployment, not a correctness defect",
+      "smallest_fix": "PO decision on retention; then a bounded purge job + index",
+      "regression": "purge job test when implemented"
+    },
+    {
+      "id": "SYR-F04",
+      "severity": "P3",
+      "confidence": "source-confirmed, policy-classification",
+      "title": "Local people directory is correctly bounded today but becomes cross-workspace org discovery if enabled without an org boundary",
+      "violated_requirement": "none — PO-authorized bounded local/dev scope (prompt-recognized exception)",
+      "location": "config/product.go:85 (default false); productapi/handlers.go:18-29 (gate); queries_mattercontrol/matter.sql:177-190 (same-issuer + workspace-OWNER + excludes-active-members + LIMIT 20)",
+      "impact": "if MC_LOCAL_PEOPLE_DIRECTORY=true in production, a workspace OWNER can discover any provisioned user name on the same issuer across all workspaces. That is the approved local behavior, not a defect; it must not be enabled for independent firms on a shared issuer until SYR-F01's boundary exists.",
+      "smallest_fix": "deployment guardrail: refuse the flag outside loopback/dev (like MC_OBJECT_BACKEND=fs does with K_SERVICE), or gate per-issuer config",
+      "regression": "config test asserting the deployment guard once decided"
+    },
+    {
+      "id": "SYR-F05",
+      "severity": "P3",
+      "confidence": "source-confirmed nit",
+      "title": "pgtest schema names use time.Now().UnixNano() — no tenant relevance, collision-safe in practice",
+      "location": "postgres/pgtest/pgtest.go FreshSchemaDSN",
+      "impact": "none observed; noted for completeness",
+      "smallest_fix": "none required",
+      "regression": "n/a"
+    }
+  ],
+  "rmv_focused_rereview": {
+    "baseline": "corrected 26-file candidate per docs/testing/zcode-review-matrix-rework-20261029-r1/final-source-manifest.csv, re-pinned inside candidate-manifest.csv",
+    "RMV-F01": {"verdict": "INDEPENDENTLY_REVERIFIED", "evidence": "TestReviewGrid_HTTPAnswerExpectationPresence PASS on fresh PG (race); source review: review_service.go:274-279 nil→428 after auth/revision gates; refused command stores no receipt; precedence 401/403/403 verified in the same test"},
+    "RMV-F02": {"verdict": "INDEPENDENTLY_REVERIFIED_AT_SOURCE_AND_UNIT", "limits": "no rendered lost-response journey", "evidence": "answer-form.tsx carries complete command (hidden expectedAnswerId/expectedQuestionRevision; run uses submitted values not fresh props); cell-scoped draftKey; isolated vitest answer-form 4/4 PASS; stored attempt replays original key+values"},
+    "RMV-F03": {"verdict": "INDEPENDENTLY_REVERIFIED", "evidence": "TestReviewGrid_HTTPHistoryPagination PASS on fresh PG (101 answers, bounded 100, total:null, nextCursor, oldest reachable, per-page ACL); contract delta consumer-compatible (frontend pageMeta schema allows null; repository returns {items,nextCursor}); keyset (answeredAt,id) with limit+1; cursor is seek-only (TestSysrevHistoryCursorIsCellScoped PASS)"},
+    "RMV-F04": {"verdict": "INDEPENDENTLY_REVERIFIED_AT_SOURCE_AND_UNIT", "limits": "no second-user rendered revocation", "evidence": "cell-detail.tsx onAccessLoss → clearScopeDrafts(grid-scoped) + surface hiding via ReviewAccessProvider; 412/UNKNOWN keep content; isolated vitest cell-detail 8/8 PASS"},
+    "timing": {"verdict": "MECHANISM_DIAGNOSIS_ACCEPTED_WITH_LIMITS", "evidence": "corrected wait-until-enabled tests (review-list, upload-attempt) PASS in my isolated run; one clean run is not universal proof; no timeouts/assertions weakened (diffed by author, spot-read here)"}
+  }
+}

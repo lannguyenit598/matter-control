@@ -1,0 +1,107 @@
+{
+  "task": "MC-003A.8A",
+  "utc": "2026-10-25T17:42:00.727650+00:00",
+  "base": "b02aa791134041b169ec7bdbec818b004a836d8f",
+  "raw_bytes": 15959,
+  "raw_sha256": "e633c1e7de4ede2cf0d4221c2aaaf10bb42e9491daa173158507b5553c2b2339",
+  "JSON": "VALID_UNIQUE_KEYS",
+  "supplement_read_by_ZCode": "EXPLICITLY_NOT_READ; no retroactive authorization inferred",
+  "source_quote": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json",
+    "sha256": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5",
+    "DR15": {
+      "route": [
+        "GET /api/v1/matters/{matterId}/events?after=|before=&limit=&targetId= (after: seq asc; before: seq desc)"
+      ],
+      "required_data": "events[] {seq, type, actorRef, targetRef, recordedAt, effectiveAt, causeSeq, correlationId, reason, before/after}"
+    }
+  },
+  "logical_counterexamples_only": [
+    {
+      "id": "F10-CYCLE-CREATION",
+      "priority": "P1",
+      "status": "CONTRACT_REWORK_REQUIRED",
+      "location": "binding required_when / command_validation / atomic_persistence",
+      "problem": "SUPPLEMENT_REQUEST must name the cycle it opens, but every nonexistent cycle is rejected422 and atomic steps do not create a cycle. Initial cycle1 is asserted to always exist, while the cited source only defines its ordinal meaning. Pin creation lifecycle and distinguish expected existing cycle CAS from newly created target cycle.",
+      "counterexample": {
+        "existing_cycles": [
+          1
+        ],
+        "operation": "SUPPLEMENT_REQUEST opens2",
+        "body_cycleNo": 2,
+        "generic_rule_result": "422 nonexistent cycle",
+        "required_model_effect": "create cycle2 and bind opening observation atomically"
+      },
+      "acceptance": "Filing creation establishes initial cycle1 if that invariant is chosen; supplement with valid current revision creates exactly next cycle+observation+links+event in one transaction; injected failure rolls all back; no blanket existing-row FK test before new-cycle creation."
+    },
+    {
+      "id": "F10-CORRECTION",
+      "priority": "P1",
+      "status": "CONTRACT_REWORK_REQUIRED",
+      "location": "role table / correction_and_views / G3",
+      "problem": "Meta-correction maps to no role while G3 expects a replacement OUTCOME row. The contract does not distinguish role-bearing replacement from pure retraction, how the old target becomes ineffective append-only, or how multiple/chained corrections choose an effective result.",
+      "counterexample": {
+        "O4": "OUTCOME,c1,E2",
+        "O5": "meta-correction correctsO4, desired rebindc2",
+        "listed_role_for_meta_correction": "none",
+        "G3_expected": "OUTCOME,c2,E2",
+        "gap": "no explicit role inheritance/replacement rule; terminal/nonretracted alone does not define branching or retract-only outcomes"
+      },
+      "acceptance": "Pin operation/kind/fields for RETRACT versus REPLACE and effective-chain rules; same-Matter/Filing/target ordering/OWNER+reason and filing CAS retained; replacement deactivates previous effective association and creates exactly specified new one atomically; old history unchanged."
+    },
+    {
+      "id": "F10-PROVENANCE-REACHABILITY",
+      "priority": "P1",
+      "status": "CONTRACT_REWORK_REQUIRED",
+      "location": "L1 recommendation / unboundObservationEvidenceTotal / DR15 unchanged claim",
+      "problem": "DR15 has a real targetId filter and generic before/after, but does not require observationId,cycleNo,proofEpoch,role,evidence-link and correction fields. A count of unbound links is visibility, not a paged detail path. L1 lossless/history reachability and zero-history-contract-change are not established. Moving an arbitrary evidenceRefs array into one event would retain the original unbounded relation issue.",
+      "counterexample": {
+        "unbound_observation": "O7 -> E3,cycleNULL",
+        "B3_membership": "excluded for every cycle",
+        "filing_field": "unboundObservationEvidenceTotal=1",
+        "DR15_current_guarantee": "events[] {seq, type, actorRef, targetRef, recordedAt, effectiveAt, causeSeq, correlationId, reason, before/after}",
+        "missing_contract": "mandatory per-link detail shape and bounded traversal for unbound/correction/epoch provenance"
+      },
+      "acceptance": "Define exact count grain and bounded reachable details for every relevant link including unbound; choose L1 only with explicit sufficient event schema/continuation, or L2 with complete association/provenance and unbound access. No implicit new route/cap/count approval; present exact route/field delta."
+    }
+  ],
+  "G1_G8": "DOCUMENT_EXPECTED_ONLY / NOT_RUNTIME_EXECUTED",
+  "runtime": "NOT_RUN",
+  "provider_calls": 0,
+  "frozen_inputs": {
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/remaining-context/manifest.json": "d470179ac9f1d137b79fb4601f6b0012fd80f3b8883ad42d48ac630e939db3ba",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/remaining-context/review-feedback.md": "c03fd8bc571df80f397e052252933a40bb886581b86eda9cefe6e7be9546858f",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/remaining-context/open-items.json": "02824ed00273a6c5c04b72c3df003fb23c5fc055b4743179e6bd2415046fb4e1",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/manifest.json": "eed788550530966eea23a66a20e1edd84f18fa024963b60fb132f0a3028f0979",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/00-focused-handoff.md": "827094a44d2c2d020146773c84ed7f1d1f8bb0a0bc4526747632e19d01b3b195",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/01-read-set-index.json": "da50b8557eaef4fff5655bf67e180c14be2a2d3ffd75da07dd6b8887db633ee7",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/02-read-contract-excerpts.json": "95b8d7eb1fe8114fe5b9287e18479f6f78a2628beb8b65eba25194740dac6570",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/03-reference-delta.json": "fdd1f39373bea80665d1d54fff9c17449c34a7eb7eceaa9bf553da033bb251ce",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/04-reference-addendum.md": "cd7923f2e57bb9434b84222bc5e535a518519a80a575a43eecbc0c537744556f",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/05-business-rules.md": "3b6cf5d06b8983bdcba12a74206323829567979f8698d736070f29195d9ebaf0",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/06-state-semantics.md": "bfbb1dad0fb7d31dd45f865cb58906696bcf08d90836c4654dd0e2dfb28a08a3",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/07-srs.md": "1827877168ef3b8b03cc4f29a5f9f6964e3051258c6154353ccd60848bd17929",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/08-acceptance-criteria.md": "1f97c0f1b0c5a7535f966275cf13d588a3baac2d4cccc25ffe0fb9309bf2c269",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/09-permission-matrix.md": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/10-candidate-api.md": "266488cc4ff5ac0a7c8fd4c644b9643ed89321741fac04d963e11864ea45cf50",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/11-candidate-adr-002.md": "a597cd107ef502a252adeb98de6fc1ddfc1097ed485cbdb146626ce2741e5bf4",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/manifest.json": "956946dcb100465f65bce2eb329afecf7cfc90c8506ab65e730cb0156bb7cd2c",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/00-followup.md": "f24a36dd668acfeae8680131b4fd506d7ae20787e86eca02ebc336f742bb465b",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/01-data-model-proof-filing.md": "afc622ce23e38846001e5bcea397f39865bb2338bbdbab2e6b14475a24914b8d",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/02-evidence-lifecycle.md": "958fc321ef92c21997dcab01ef7a082647f947f38aaeec0c0974771cb11db7dd",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/03-filing-cycles.md": "33f10313365bf0785a3cf370582d7e7e3f241ee571293bbf69e3bbfc1079a702",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/04-api-claim-commands.md": "b4979593dc8d19ad1e1c19994e7e943fb88e8ee231205ed2a37c38045ac856d9",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/05-return-excerpts.md": "3999df27cc7d329b11ad06d2855c23286db55055f4e74f1e96ca94da4537a260",
+    "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/06-returned-delta-normalized.json": "9a90e955c3cb453f26943ed9b9cc6099984dae69a51c01cf2b528626b4a47903",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/candidate-read-set.json": "9817f034a76b9c18fada8aeed1e205b7bbdb215d927612089110c3cf2325783b",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/reviewed-clarifications.json": "80620c485fab24bbf61cf09350ae41b7c73ce193f166ae1ef7c6c39077b043fd",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/f11-fixture-reviewed.json": "d6e9d2ef2629e77f8a48a4f9e641b6cad1f0a4f32d3fe3891bb17fdf468b5fa3",
+    "docs/architecture/backend-fast-track.md": "bebcbdbadc1c2c6e2153d29227227522acb2837335f4783dd0246900d4c07352",
+    "docs/implementation/inta-coordination.md": "8ba847d9a7cd6d448bf827dac81528f2fbf06d463f3be97799763a1126699b60",
+    "docs/testing/integration-acceptance-matrix.md": "71578d6f36c0e45f5ee012c7909cad98d4b3059fa77756a67e7e6d356253abe1",
+    "docs/architecture/data-model.md": "873a23b4791a1656a0e54edda5fccf28628c65d432151b5e5ba7faa058badf6f",
+    "docs/architecture/filing-model.md": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+    "docs/architecture/api-contracts.md": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+    "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5"
+  }
+}

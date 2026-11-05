@@ -1,0 +1,47 @@
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+ ❯ src/test/action-entry.test.tsx (12 tests | 1 failed) 570ms
+   ❯ Planning: each section owns its button (3)
+     × keeps a typed draft across close and reopen, then closes on a confirmed save 57ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/test/action-entry.test.tsx > Planning: each section owns its button > keeps a typed draft across close and reopen, then closes on a confirmed save
+Error: expect(element).not.toHaveAttribute("open") // element.hasAttribute("open")
+
+Expected the element not to have attribute:
+  open
+Received:
+  open=""
+ ❯ src/test/action-entry.test.tsx:168:24
+    166|     fireEvent.click(within(dialog).getByRole('button', { name: 'Add wo…
+    167|     await screen.findByText('Workstream added.')
+    168|     expect(dialog).not.toHaveAttribute('open')
+       |                        ^
+    169|     expect(actions.createWorkstream).toHaveBeenCalledOnce()
+    170|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 82 passed | 1 skipped (84)
+      Tests  1 failed | 725 passed | 12 skipped (738)
+   Start at  09:53:08
+   Duration  11.31s (environment 44%, tests 26%, setup 14%, import 10%, transform 5%)
+
+Environment  jsdom was created 84 times · 40.55s total, 44% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

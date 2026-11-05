@@ -1,0 +1,19 @@
+2026-10-24T17:34:55Z
+Name=/mc002be-c01r1-pg-20261024T1734Z
+Id=01933d3db4ba0c6ba1db234142dd8ced87859cdfc78493552beb065a456dcbfa
+Image=postgres:18-alpine
+Labels={"org.mattercontrol.poc":"mc002be-c01-r1"}
+Memory=536870912 NanoCpus=1000000000 PidsLimit=128
+Ports={"5432/tcp":[{"HostIp":"127.0.0.1","HostPort":"15458"}]}
+Networks=mc002be-c01r1-net 
+Mounts=volume:378a6ce70087f53678fc5c7d712d992fd6e0f86d0972e5011f89c2fc246975ee:/var/lib/postgresql 
+Health=healthy StartedAt=2026-10-24T17:34:45.569677458Z
+RepoDigests=["postgres@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873"]
+NetId=ca0c610620e72e73fb16aa0ac7ca7463c95a1cf507c74a2b61fff9951bfff7c7 Driver=bridge
+mc002be_c01_r1|mc002bec01r1
+0
+Pre-assignment verification OK: identity + empty target verified via docker exec (no credential in argv); DSN form postgres://mc002bec01r1:REDACTED@127.0.0.1:15458/mc002be_c01_r1?sslmode=disable; fresh random credential, no tracing, no env dump, never reused.
+mc002be-c01r1-pg-20261024T1734Z Up 9 seconds (healthy)
+mc002be-c01-pg-20261024T1700Z Exited (0) 25 minutes ago
+mc002be-recheck-pg-20261024T1539Z Exited (0) 2 hours ago
+mc002be-pg-20261024T1454Z Exited (0) 3 hours ago

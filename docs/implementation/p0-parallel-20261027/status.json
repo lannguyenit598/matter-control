@@ -1,0 +1,44 @@
+{
+  "task": "MC-P0-PARALLEL-20261027",
+  "updated_utc": "2026-10-27T16:18:10.116497+00:00",
+  "requirements": "Canonical FR001..020 / AC101..163 / NFR001..014 / GW01..03; no scope expansion",
+  "assignments": [
+    {
+      "task": "PRODUCT_W6_W7",
+      "owner": "actual ZCode",
+      "status": "USER_REPORTED_RUNNING_WORKBOARD_ACK_STILL_PENDING",
+      "prompt": "ZCODE-CONTINUE-PROMPT.md",
+      "output": "Existing product task paths only",
+      "update_prompt": "ZCODE-UPDATE-CLOUD-AND-REVIEW-PROMPT.md"
+    },
+    {
+      "task": "MC-P0-IDP-PREFLIGHT",
+      "owner": "Local Codex subagent /root/idp_preflight",
+      "status": "RETURN_RECEIVED_PINS_VERIFIED_SOURCE_OR_PLAN_ONLY",
+      "prompt": "IDP-PROMPT.md",
+      "output": "docs/testing/p0-parallel-20261027/idp/"
+    },
+    {
+      "task": "MC-P0-W1W5-STATIC-QA",
+      "owner": "Local Codex subagent /root/w1w5_source_qa",
+      "status": "RETURN_RECEIVED_PINS_VERIFIED_SOURCE_OR_PLAN_ONLY",
+      "prompt": "QA-PROMPT.md",
+      "output": "docs/testing/p0-parallel-20261027/qa/"
+    },
+    {
+      "task": "MC-P0-ACCEPTANCE-RESTORE-PREP",
+      "owner": "Local Codex subagent /root/acceptance_restore",
+      "status": "RETURN_RECEIVED_PREPARATION_ONLY_NO_TEST_EXECUTION",
+      "prompt": "ACCEPTANCE-RESTORE-PROMPT.md",
+      "output": "docs/testing/p0-parallel-20261027/acceptance-restore/"
+    }
+  ],
+  "snapshot_manifest": "docs/testing/p0-parallel-20261027/snapshot-manifest.json",
+  "scope": "Internal Codex subagents; no external CLI/agent invocation or product edits by coordinator",
+  "reviewer": "Local Codex coordinator intake; source/runtime/design/PO acceptance remain separate",
+  "cloud_preference": "PO suggested Cloud Free for dev/test; migration proposal prepared, no cloud account/instance/config mutation",
+  "cloud_profile": {
+    "path": "docs/implementation/p0-cloud-free-20261027/README.md",
+    "status": "USER_INPUTS_RECEIVED_PUBLIC_DISCOVERY_VERIFIED_AUTH_RUNTIME_PENDING"
+  }
+}

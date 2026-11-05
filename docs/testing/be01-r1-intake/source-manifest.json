@@ -1,0 +1,432 @@
+{
+  "backend_worktree": "/private/tmp/mattercontrol-backend-be01",
+  "branch": "codex/mc-be-01",
+  "accepted_base": "52b60a4617081c41b949f2242e1784238c170f75",
+  "head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+  "head_is_corrected_commit": false,
+  "uncommitted_patch_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e",
+  "source_files": [
+    {
+      "path": ".claude/rules/core.md",
+      "bytes": 1471,
+      "sha256": "7bd286d29816023845bff272d2fcb403e7bc2457929b2c92437989f3aeb86c9c"
+    },
+    {
+      "path": ".claude/rules/persistence.md",
+      "bytes": 3775,
+      "sha256": "74ca3470e6854d73ea86f94a3f78fbfbea0b7aa5f8aebf3f02fe1b50cae9372b"
+    },
+    {
+      "path": ".claude/rules/tests.md",
+      "bytes": 1311,
+      "sha256": "f7a4c0e0a1c64a06eb6138196cc9764c398a010fec2eda857c18bc414053401e"
+    },
+    {
+      "path": ".claude/rules/tooling-and-deps.md",
+      "bytes": 2226,
+      "sha256": "d4d77302ba1f6b7fd54190ec0d183fee06965c5e0c8890d9b21d78f20d15fdfe"
+    },
+    {
+      "path": ".golangci.yml",
+      "bytes": 10745,
+      "sha256": "8b47d2561e65fcac1325b2208ec12cbc95fcb378533e15c01fd36cd773f201a2"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 5653,
+      "sha256": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f"
+    },
+    {
+      "path": "Makefile",
+      "bytes": 3699,
+      "sha256": "c5e0b60fc672fd0f6d3c45a68c4cb51b608cbd442c22154d6ea74de61e0304f3"
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 22768,
+      "sha256": "fd1d17b6ef5c9209406490224121ecec0ae5281d62305ddf18b89a163d7b781a"
+    },
+    {
+      "path": "docs/mattercontrol-backend.md",
+      "bytes": 6151,
+      "sha256": "40f916ae9357b8f9f1b2ff10bd83c53791463d1da9459272f4f9f9878f50e42f"
+    },
+    {
+      "path": "go.mod",
+      "bytes": 2377,
+      "sha256": "63eed6d9405dd929eb48c6dfcb53f9b5f4761185cfd6989d66f72863a14afe30"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/matter_dto.go",
+      "bytes": 7256,
+      "sha256": "feea81d9797365293eb4a6a152c5452f25530723d421bb047df08954c9a72aa2"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/matter_migrate.go",
+      "bytes": 3229,
+      "sha256": "ae389d2e0ccbbdad14c3594839749399dab6c624ffff7a8db05ec43d5589d70f"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/matter_rework_test.go",
+      "bytes": 6222,
+      "sha256": "16c0ecaaec583b1157f1ad4300486e0cfaca7252091d917b0e0af2619cff83cd"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/matter_store.go",
+      "bytes": 14542,
+      "sha256": "97a147af83d97d9b423b5d3f1f8e41bee7412fbe4cda271693fc69f3ec7f1cdb"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/matter_test.go",
+      "bytes": 20771,
+      "sha256": "42754bed6e741aadf667bc553546fd79396bd49f6f78974dbbc045022c4b96ef"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/mcsqlc/db.go",
+      "bytes": 568,
+      "sha256": "87c9ef5a14361d4ee699b2fa3b446a6296a6ff5dcb04ef0f43f3c6c233816439"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/mcsqlc/matter.sql.go",
+      "bytes": 13234,
+      "sha256": "43d1fae7a897c0d977d2a7bddef750eee47633ad070b4b3581bcd5699d80212e"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/mcsqlc/models.go",
+      "bytes": 3878,
+      "sha256": "486bfce14ba96c8087e3005329a2cc6dbc824ce5617f8c3215ced2a4effcf01d"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/migrations_mattercontrol/0001_mattercontrol_core.sql",
+      "bytes": 14024,
+      "sha256": "881d8351ee50792651d41cbf593edfa04a87f04d705fa77c8370827a913647ad"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/pgtest/dsn_test.go",
+      "bytes": 1314,
+      "sha256": "558609f59d8dda60fd77dd0f47e1858e8aed44734d47593ed0d10cea63726d77"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/pgtest/pgtest.go",
+      "bytes": 1975,
+      "sha256": "21bbbc42ea77894740a42c9c88882155bb761cea03122b4a3aa92f34cf6f8015"
+    },
+    {
+      "path": "internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql",
+      "bytes": 3808,
+      "sha256": "fc5399333b6067c5e1cf3d8fe9d46cce6f92c9067aff677a0af959a70a8db796"
+    },
+    {
+      "path": "internal/adapter/outbound/repotest/mattercontrol/contract.go",
+      "bytes": 25784,
+      "sha256": "d5a3f21679488bb7f1186c847502b6141e2a20b7fb0681f99bba0debb18d8c5e"
+    },
+    {
+      "path": "internal/adapter/outbound/repotest/mattercontrol/contract_memory_test.go",
+      "bytes": 705,
+      "sha256": "71c4dd665526aed8e92d477fa2f670840a1c091d491ccb0287e56d0c6c37b630"
+    },
+    {
+      "path": "internal/adapter/outbound/repotest/mattercontrol/memory.go",
+      "bytes": 18631,
+      "sha256": "c029d58eac5cafcca95e8a6d84ad1fe9cce4e02da6d3d422cb17e8c472aeb50c"
+    },
+    {
+      "path": "internal/adapter/outbound/system/record_id_test.go",
+      "bytes": 785,
+      "sha256": "0f7608a8e46e24a8438c6ac2cd70301765876d4ee112904aebcd52878bc24740"
+    },
+    {
+      "path": "internal/adapter/outbound/system/system.go",
+      "bytes": 1497,
+      "sha256": "b7357259d6a639d5f53b1c1449af72008c4109399110d51c74a65eecac66a90c"
+    },
+    {
+      "path": "internal/core/domain/matter/access.go",
+      "bytes": 5533,
+      "sha256": "257c0e38c5d88ea9ed737405b0d6061214818fbb391a6c73ae37f782806b8f67"
+    },
+    {
+      "path": "internal/core/domain/matter/identity.go",
+      "bytes": 4666,
+      "sha256": "9478957209d0c9a9a696913dc3327f71704d1a71fdaa123e98e27e525856cf4a"
+    },
+    {
+      "path": "internal/core/domain/matter/matter_test.go",
+      "bytes": 8710,
+      "sha256": "2d99cb68da74501b79e3d1aefb696769e065bd63973869dc38c29b98c81ca7da"
+    },
+    {
+      "path": "internal/core/domain/matter/requirement.go",
+      "bytes": 5589,
+      "sha256": "b8cb631041faaf64b3b0fe13e4f2a82525a21aabff6edd042b73c2a5876efa71"
+    },
+    {
+      "path": "internal/core/policy/policy.go",
+      "bytes": 2285,
+      "sha256": "68fdab1a7799da8de1e16f0aab025596e33e8c957d9a89de17ee6012655eac4e"
+    },
+    {
+      "path": "internal/core/policy/policy_test.go",
+      "bytes": 3194,
+      "sha256": "4428865bd2b2192a491dfe7e4d9fa7d2462d3227d2cc0ce25cb6af2b1edd1811"
+    },
+    {
+      "path": "internal/core/port/errors.go",
+      "bytes": 1721,
+      "sha256": "493d19f9af491dfb6e5078a384b9e7335d8162baad762ece7d83d8e10dcf208a"
+    },
+    {
+      "path": "internal/core/port/matter.go",
+      "bytes": 6177,
+      "sha256": "e35fa144896da914d68f87b50599e55be39d52af32cc694356e9f2fc2766610c"
+    },
+    {
+      "path": "internal/core/service/matter_service.go",
+      "bytes": 13242,
+      "sha256": "3def660001d16aa3d788772402859e94542ff7001248389b59c7aceb4b41cf46"
+    },
+    {
+      "path": "internal/core/service/matter_service_rework_test.go",
+      "bytes": 10159,
+      "sha256": "9f1e5a289e8079e9df002815b90e63483511db7cf447318e37d9d07987cb57fa"
+    },
+    {
+      "path": "internal/core/service/matter_service_test.go",
+      "bytes": 20945,
+      "sha256": "1018d6c0d49ec83a32645db4b47c1ea863fd5125556583c6bea5830faffe390e"
+    },
+    {
+      "path": "sqlc.yaml",
+      "bytes": 1862,
+      "sha256": "9b7260b804e923a81afa56ae43c738b96b55019c09344bd26fee33d4c686b832"
+    }
+  ],
+  "archive_members": [
+    {
+      "path": "backend/.claude/rules/core.md",
+      "bytes": 1471,
+      "sha256": "7bd286d29816023845bff272d2fcb403e7bc2457929b2c92437989f3aeb86c9c"
+    },
+    {
+      "path": "backend/.claude/rules/persistence.md",
+      "bytes": 3775,
+      "sha256": "74ca3470e6854d73ea86f94a3f78fbfbea0b7aa5f8aebf3f02fe1b50cae9372b"
+    },
+    {
+      "path": "backend/.claude/rules/tests.md",
+      "bytes": 1311,
+      "sha256": "f7a4c0e0a1c64a06eb6138196cc9764c398a010fec2eda857c18bc414053401e"
+    },
+    {
+      "path": "backend/.claude/rules/tooling-and-deps.md",
+      "bytes": 2226,
+      "sha256": "d4d77302ba1f6b7fd54190ec0d183fee06965c5e0c8890d9b21d78f20d15fdfe"
+    },
+    {
+      "path": "backend/.golangci.yml",
+      "bytes": 10745,
+      "sha256": "8b47d2561e65fcac1325b2208ec12cbc95fcb378533e15c01fd36cd773f201a2"
+    },
+    {
+      "path": "backend/AGENTS.md",
+      "bytes": 5653,
+      "sha256": "7076baf9e07f044c51e84a737878c08cb69139a4892ba1f1af5118a408a6721f"
+    },
+    {
+      "path": "backend/Makefile",
+      "bytes": 3699,
+      "sha256": "c5e0b60fc672fd0f6d3c45a68c4cb51b608cbd442c22154d6ea74de61e0304f3"
+    },
+    {
+      "path": "backend/docs/architecture.md",
+      "bytes": 22768,
+      "sha256": "fd1d17b6ef5c9209406490224121ecec0ae5281d62305ddf18b89a163d7b781a"
+    },
+    {
+      "path": "backend/docs/mattercontrol-backend.md",
+      "bytes": 6151,
+      "sha256": "40f916ae9357b8f9f1b2ff10bd83c53791463d1da9459272f4f9f9878f50e42f"
+    },
+    {
+      "path": "backend/go.mod",
+      "bytes": 2377,
+      "sha256": "63eed6d9405dd929eb48c6dfcb53f9b5f4761185cfd6989d66f72863a14afe30"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/matter_dto.go",
+      "bytes": 7256,
+      "sha256": "feea81d9797365293eb4a6a152c5452f25530723d421bb047df08954c9a72aa2"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/matter_migrate.go",
+      "bytes": 3229,
+      "sha256": "ae389d2e0ccbbdad14c3594839749399dab6c624ffff7a8db05ec43d5589d70f"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/matter_rework_test.go",
+      "bytes": 6222,
+      "sha256": "16c0ecaaec583b1157f1ad4300486e0cfaca7252091d917b0e0af2619cff83cd"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/matter_store.go",
+      "bytes": 14542,
+      "sha256": "97a147af83d97d9b423b5d3f1f8e41bee7412fbe4cda271693fc69f3ec7f1cdb"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/matter_test.go",
+      "bytes": 20771,
+      "sha256": "42754bed6e741aadf667bc553546fd79396bd49f6f78974dbbc045022c4b96ef"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/mcsqlc/db.go",
+      "bytes": 568,
+      "sha256": "87c9ef5a14361d4ee699b2fa3b446a6296a6ff5dcb04ef0f43f3c6c233816439"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/mcsqlc/matter.sql.go",
+      "bytes": 13234,
+      "sha256": "43d1fae7a897c0d977d2a7bddef750eee47633ad070b4b3581bcd5699d80212e"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/mcsqlc/models.go",
+      "bytes": 3878,
+      "sha256": "486bfce14ba96c8087e3005329a2cc6dbc824ce5617f8c3215ced2a4effcf01d"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0001_mattercontrol_core.sql",
+      "bytes": 14024,
+      "sha256": "881d8351ee50792651d41cbf593edfa04a87f04d705fa77c8370827a913647ad"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/pgtest/dsn_test.go",
+      "bytes": 1314,
+      "sha256": "558609f59d8dda60fd77dd0f47e1858e8aed44734d47593ed0d10cea63726d77"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/pgtest/pgtest.go",
+      "bytes": 1975,
+      "sha256": "21bbbc42ea77894740a42c9c88882155bb761cea03122b4a3aa92f34cf6f8015"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql",
+      "bytes": 3808,
+      "sha256": "fc5399333b6067c5e1cf3d8fe9d46cce6f92c9067aff677a0af959a70a8db796"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/repotest/mattercontrol/contract.go",
+      "bytes": 25784,
+      "sha256": "d5a3f21679488bb7f1186c847502b6141e2a20b7fb0681f99bba0debb18d8c5e"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/repotest/mattercontrol/contract_memory_test.go",
+      "bytes": 705,
+      "sha256": "71c4dd665526aed8e92d477fa2f670840a1c091d491ccb0287e56d0c6c37b630"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/repotest/mattercontrol/memory.go",
+      "bytes": 18631,
+      "sha256": "c029d58eac5cafcca95e8a6d84ad1fe9cce4e02da6d3d422cb17e8c472aeb50c"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/system/record_id_test.go",
+      "bytes": 785,
+      "sha256": "0f7608a8e46e24a8438c6ac2cd70301765876d4ee112904aebcd52878bc24740"
+    },
+    {
+      "path": "backend/internal/adapter/outbound/system/system.go",
+      "bytes": 1497,
+      "sha256": "b7357259d6a639d5f53b1c1449af72008c4109399110d51c74a65eecac66a90c"
+    },
+    {
+      "path": "backend/internal/core/domain/matter/access.go",
+      "bytes": 5533,
+      "sha256": "257c0e38c5d88ea9ed737405b0d6061214818fbb391a6c73ae37f782806b8f67"
+    },
+    {
+      "path": "backend/internal/core/domain/matter/identity.go",
+      "bytes": 4666,
+      "sha256": "9478957209d0c9a9a696913dc3327f71704d1a71fdaa123e98e27e525856cf4a"
+    },
+    {
+      "path": "backend/internal/core/domain/matter/matter_test.go",
+      "bytes": 8710,
+      "sha256": "2d99cb68da74501b79e3d1aefb696769e065bd63973869dc38c29b98c81ca7da"
+    },
+    {
+      "path": "backend/internal/core/domain/matter/requirement.go",
+      "bytes": 5589,
+      "sha256": "b8cb631041faaf64b3b0fe13e4f2a82525a21aabff6edd042b73c2a5876efa71"
+    },
+    {
+      "path": "backend/internal/core/policy/policy.go",
+      "bytes": 2285,
+      "sha256": "68fdab1a7799da8de1e16f0aab025596e33e8c957d9a89de17ee6012655eac4e"
+    },
+    {
+      "path": "backend/internal/core/policy/policy_test.go",
+      "bytes": 3194,
+      "sha256": "4428865bd2b2192a491dfe7e4d9fa7d2462d3227d2cc0ce25cb6af2b1edd1811"
+    },
+    {
+      "path": "backend/internal/core/port/errors.go",
+      "bytes": 1721,
+      "sha256": "493d19f9af491dfb6e5078a384b9e7335d8162baad762ece7d83d8e10dcf208a"
+    },
+    {
+      "path": "backend/internal/core/port/matter.go",
+      "bytes": 6177,
+      "sha256": "e35fa144896da914d68f87b50599e55be39d52af32cc694356e9f2fc2766610c"
+    },
+    {
+      "path": "backend/internal/core/service/matter_service.go",
+      "bytes": 13242,
+      "sha256": "3def660001d16aa3d788772402859e94542ff7001248389b59c7aceb4b41cf46"
+    },
+    {
+      "path": "backend/internal/core/service/matter_service_rework_test.go",
+      "bytes": 10159,
+      "sha256": "9f1e5a289e8079e9df002815b90e63483511db7cf447318e37d9d07987cb57fa"
+    },
+    {
+      "path": "backend/internal/core/service/matter_service_test.go",
+      "bytes": 20945,
+      "sha256": "1018d6c0d49ec83a32645db4b47c1ea863fd5125556583c6bea5830faffe390e"
+    },
+    {
+      "path": "backend/sqlc.yaml",
+      "bytes": 1862,
+      "sha256": "9b7260b804e923a81afa56ae43c738b96b55019c09344bd26fee33d4c686b832"
+    },
+    {
+      "path": "governance/docs/ai-sdlc/orchestration-protocol.md",
+      "bytes": 4514,
+      "sha256": "dc9ad2ed752e03805f7b399244171afba6be0b89594376aa989e23b7f64241e9"
+    },
+    {
+      "path": "governance/docs/architecture/backend-fast-track.md",
+      "bytes": 12155,
+      "sha256": "bebcbdbadc1c2c6e2153d29227227522acb2837335f4783dd0246900d4c07352"
+    },
+    {
+      "path": "governance/docs/implementation/tasks/MC-BE-01.md",
+      "bytes": 8144,
+      "sha256": "37fec8749bcb68525978d63fb0891cb4aa3515e2255e237ba71a4afb2cb02d55"
+    },
+    {
+      "path": "governance/docs/reviews/be01-intake.md",
+      "bytes": 1724,
+      "sha256": "595c60a0f359beb577511f33699c31d92026208888ea983ed4835b8245915279"
+    },
+    {
+      "path": "governance/docs/testing/be01-intake/MC-BE-01-ZCODE-REWORK-PROMPT.md",
+      "bytes": 4741,
+      "sha256": "60f9b8a4abfcf8e9d0d23f807f4209ec64ad0dcdcafd0340c2b5fe43f26351fb"
+    },
+    {
+      "path": "governance/docs/testing/be01-intake/findings.json",
+      "bytes": 4151,
+      "sha256": "3f01583cc1a56c368f932532c1f4e1911c953836035265c863c0da511a800ae1"
+    }
+  ]
+}

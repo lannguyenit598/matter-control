@@ -1,0 +1,78 @@
+{
+  "scope": "official permitted escalation for selected read-only process/socket metadata only; no env/private config/DB/HTTP or lifecycle",
+  "results": [
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "98134",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "utc": "2026-10-26T03:22:27.356883+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "ps",
+        "-p",
+        "88444,88453",
+        "-o",
+        "pid=,lstart=,command="
+      ],
+      "utc": "2026-10-26T03:22:27.383411+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18085",
+        "-sTCP:LISTEN"
+      ],
+      "utc": "2026-10-26T03:22:27.392597+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "lsof",
+        "-nP",
+        "-iTCP:18086",
+        "-sTCP:LISTEN"
+      ],
+      "utc": "2026-10-26T03:22:27.428031+00:00",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rtk",
+        "proxy",
+        "docker",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .State.Status}} {{json .State.Health.Status}} {{json .State.StartedAt}} {{json .Image}} {{json .Mounts}} {{json .HostConfig.PortBindings}} {{json .HostConfig.Memory}} {{json .HostConfig.NanoCpus}} {{json .HostConfig.PidsLimit}}",
+        "04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01"
+      ],
+      "utc": "2026-10-26T03:22:27.459065+00:00",
+      "exit": 0,
+      "stdout": "\"04552c273cb6be564d8c1deab7498c9f3f0b522e6dc84c1ac5163134ab85bd01\" \"running\" \"healthy\" \"2026-10-26T00:26:58.345144717Z\" \"sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873\" [{\"Destination\":\"/var/lib/postgresql\",\"Driver\":\"local\",\"Mode\":\"z\",\"Name\":\"mc002-inta-data-intamvnmoems3pd\",\"Propagation\":\"\",\"RW\":true,\"Source\":\"/var/lib/docker/volumes/mc002-inta-data-intamvnmoems3pd/_data\",\"Type\":\"volume\"}] {\"5432/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"15457\"}]} 536870912 1000000000 128\n",
+      "stderr": ""
+    }
+  ]
+}

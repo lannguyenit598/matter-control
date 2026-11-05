@@ -6,7 +6,7 @@
 |---|---|
 | Điểm vào | `cmd/mcapi` (`mcapi` chạy API, `mcapi migrate` chạy migration) |
 | Thiết kế | [docs/mattercontrol-backend.md](docs/mattercontrol-backend.md) |
-| Hợp đồng HTTP | [docs/api.md](docs/api.md) và hợp đồng chung ở `../../docs/api/contract.md` |
+| Hợp đồng HTTP | [docs/api.md](docs/api.md) và hợp đồng chung ở `../../docs/implementation/p0-zcode-execution/local-contract.md` |
 | Cấu hình và vận hành | [docs/operations.md](docs/operations.md), [.env.example](.env.example) |
 | Quy tắc cho người đóng góp và agent | [AGENTS.md](AGENTS.md) |
 

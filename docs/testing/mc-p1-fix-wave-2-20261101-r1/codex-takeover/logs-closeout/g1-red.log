@@ -1,0 +1,95 @@
+
+ RUN  v5.0.5 /private/tmp/mc-wave2-codex-z9l4vtqi/project/apps/frontend
+
+ ❯ src/features/proof/components/d9-signature-ui.test.tsx (3 tests | 3 failed) 7ms
+   ❯ D-9 signature purpose through the UI (OV-F1-01) (3)
+     × parses a checklist with a SIGNATURE criterion and the signature part 5ms
+     × shows the signature axis on the panel instead of filtering it out 0ms
+     × offers SIGNATURE in the criterion purpose selector 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/proof/components/d9-signature-ui.test.tsx > D-9 signature purpose through the UI (OV-F1-01) > parses a checklist with a SIGNATURE criterion and the signature part
+ZodError: [
+  {
+    "code": "invalid_value",
+    "values": [
+      "PACKAGE",
+      "OUTCOME"
+    ],
+    "path": [
+      "criteria",
+      1,
+      "purpose"
+    ],
+    "message": "Invalid option: expected one of \"PACKAGE\"|\"OUTCOME\""
+  }
+]
+ ❯ src/features/proof/components/d9-signature-ui.test.tsx:166:36
+    164| describe('D-9 signature purpose through the UI (OV-F1-01)', () => {
+    165|   it('parses a checklist with a SIGNATURE criterion and the signature …
+    166|     const parsed = checklistSchema.parse(signatureChecklistPayload)
+       |                                    ^
+    167|     expect(parsed.signature.declared).toBe(true)
+    168|     expect(parsed.signature.ready).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/features/proof/components/d9-signature-ui.test.tsx > D-9 signature purpose through the UI (OV-F1-01) > shows the signature axis on the panel instead of filtering it out
+ZodError: [
+  {
+    "code": "invalid_value",
+    "values": [
+      "PACKAGE",
+      "OUTCOME"
+    ],
+    "path": [
+      "criteria",
+      1,
+      "purpose"
+    ],
+    "message": "Invalid option: expected one of \"PACKAGE\"|\"OUTCOME\""
+  }
+]
+ ❯ src/features/proof/components/d9-signature-ui.test.tsx:174:51
+    172|
+    173|   it('shows the signature axis on the panel instead of filtering it ou…
+    174|     render(<ProofPanel checklist={checklistSchema.parse(signatureCheck…
+       |                                                   ^
+    175|     const section = screen.getByRole('heading', { name: 'Signature' })…
+    176|     expect(within(section).getByText('Signed filing form')).toBeInTheD…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/features/proof/components/d9-signature-ui.test.tsx > D-9 signature purpose through the UI (OV-F1-01) > offers SIGNATURE in the criterion purpose selector
+ZodError: [
+  {
+    "code": "invalid_value",
+    "values": [
+      "PACKAGE",
+      "OUTCOME"
+    ],
+    "path": [
+      "criteria",
+      1,
+      "purpose"
+    ],
+    "message": "Invalid option: expected one of \"PACKAGE\"|\"OUTCOME\""
+  }
+]
+ ❯ src/features/proof/components/d9-signature-ui.test.tsx:181:51
+    179|
+    180|   it('offers SIGNATURE in the criterion purpose selector', () => {
+    181|     render(<ProofPanel checklist={checklistSchema.parse(signatureCheck…
+       |                                                   ^
+    182|     const select = screen.getByLabelText('What does it prove?')
+    183|     const options = Array.from(select.querySelectorAll('option')).map(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  15:10:31
+   Duration  820ms (environment 58%, import 18%, setup 13%, transform 10%, tests 1%)
+

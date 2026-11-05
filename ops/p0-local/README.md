@@ -1,5 +1,3 @@
-> Operator note: dated observations below are historical. Use the current [operations index](../../docs/operations/README.md) for maintained setup and release boundaries. Historical evidence paths refer to the coordination archive, not this product tree.
-
 # ops/p0-local — task-owned local ZITADEL profile (MC-P0-ZCODE-EXECUTION)
 
 PO-selected local identity provider: **ZITADEL v4.16.0 self-hosted** (official `deploy/compose`
@@ -73,3 +71,4 @@ The BFF requests the project-audience scope (`urn:zitadel:iam:org:project:id:<pr
 
 - `cloud/` — ZITADEL Cloud Free overlay, A/B product-user mapping script and the exact human-login steps (`cloud/README.md`). The local IdP profile above is untouched and remains the rollback.
 - `restore-rehearsal/run.sh` — isolated whole-product restore rehearsal on a fresh database and object root (refuses an existing target; synthetic data only). Evidence: `docs/testing/p0-claude-finish-20261028/restore/`.
+

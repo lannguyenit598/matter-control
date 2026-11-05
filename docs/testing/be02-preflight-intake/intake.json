@@ -1,0 +1,84 @@
+{
+  "task": "MC-BE-02-PREP owner preflight intake",
+  "date": "2026-10-26",
+  "received_utc": "2026-10-26T00:55:32.416504+00:00",
+  "owner": "Local Codex",
+  "source_owner_reported": "actual ZCode account:zai-start-plan/GLM-5.3 via Z.AI, interactive/version not recorded",
+  "identity_basis": "human-returned owner declaration; no Codex invocation/version probe",
+  "status": "OWNER_PREFLIGHT_RECEIVED / TARGETED_TECHNICAL_CORRECTIONS_REQUIRED",
+  "raw_return": {
+    "bytes": 17316,
+    "sha256": "aed0ff2a66fe17586908fa3fc49f6d93d1d94c3bc8d356e931cba049c93613e1",
+    "lossless_export": "owner-return.txt.gz"
+  },
+  "original_input_hashes_verified": 24,
+  "source_head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+  "source_patch_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e",
+  "source_is_staged_uncommitted": true,
+  "BE01_independent_review": "Already PASS_WITH_LIMITATIONS for exact snapshot; commit remains MimosaBLOCKED; no self-review inferred",
+  "per_gap": {
+    "BG-01": "gap confirmed; proposal needs transport-neutral identity boundary; INT-D02 open",
+    "BG-02": "gap confirmed; product mapping remains candidate; INT-D09 open",
+    "BG-03": "gap confirmed; separate product graph/schema proposal retained",
+    "BG-04": "gap confirmed; fingerprint/strict decoder proposal needs status/path decisions",
+    "BG-05": "gap confirmed; JSONB/version/wire fidelity claims require correction",
+    "BG-06": "truthful DB fence proposal retained; evaluated-state representation remains gated",
+    "BG-07": "explicit policy/startup guard proposal retained; no numeric/default adoption",
+    "BG-08": "material representation decision remains; OptionA only coherent if volatile metadata outside actual body"
+  },
+  "owner_read_limits": [
+    "Owner reports requirements/security/state/API-auth source contents hash-verified only, not re-read",
+    "matter_dto.go is not in original24readset; referenced claim not fresh-source-attested there. Codex inspected/pinned it separately, no retrospective owner-read authorization inferred",
+    "Owner all-repo resolver absence wording exceeds inspected-source boundary"
+  ],
+  "Codex_followup_source_pins": [
+    {
+      "path": "/private/tmp/mattercontrol-backend-be01/internal/adapter/outbound/postgres/matter_dto.go",
+      "bytes": 7256,
+      "sha256": "feea81d9797365293eb4a6a152c5452f25530723d421bb047df08954c9a72aa2",
+      "in_original_owner_read_set": false
+    },
+    {
+      "path": "/private/tmp/mattercontrol-backend-be01/internal/adapter/outbound/postgres/matter_store.go",
+      "bytes": 14542,
+      "sha256": "97a147af83d97d9b423b5d3f1f8e41bee7412fbe4cda271693fc69f3ec7f1cdb",
+      "in_original_owner_read_set": true
+    },
+    {
+      "path": "/private/tmp/mattercontrol-backend-be01/internal/adapter/outbound/postgres/migrations_mattercontrol/0001_mattercontrol_core.sql",
+      "bytes": 14024,
+      "sha256": "881d8351ee50792651d41cbf593edfa04a87f04d705fa77c8370827a913647ad",
+      "in_original_owner_read_set": true
+    },
+    {
+      "path": "/private/tmp/mattercontrol-backend-be01/internal/adapter/inbound/httpapi/user_handler.go",
+      "bytes": 12005,
+      "sha256": "aa66c697f626b1c3cfc531e188ab4c1c10f225d6a4a926e58f9e7cee7f2736c3",
+      "in_original_owner_read_set": true
+    },
+    {
+      "path": "/private/tmp/mattercontrol-backend-be01/internal/core/port/matter.go",
+      "bytes": 6177,
+      "sha256": "e35fa144896da914d68f87b50599e55be39d52af32cc694356e9f2fc2766610c",
+      "in_original_owner_read_set": true
+    }
+  ],
+  "standards": [
+    {
+      "title": "PostgreSQL18 JSON Types section8.14",
+      "url": "https://www.postgresql.org/docs/18/datatype-json.html",
+      "verified": "primary source read2026-10-26; JSONB does not retain input whitespace/key order"
+    },
+    {
+      "title": "RFC9110 section8.8.1",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8.1",
+      "verified": "primary source consulted; strong validator applies to selected representation data"
+    }
+  ],
+  "acceptance_plan": "24base+3addendum=27planned cases, allNOT_RUN",
+  "next_action": "Narrow text correction to four recommendations before architecture/PO decision packet; no full preflight restart",
+  "new_provider_calls": false,
+  "source_or_index_mutation": false,
+  "runtime_or_db_actions": false,
+  "numeric_provider_or_architecture_adoption": false
+}

@@ -1,0 +1,1153 @@
+{
+  "manifest": {
+    "started_utc": "2026-10-24T14:29:50.549049+00:00",
+    "task": "MC-002",
+    "scope": "synthetic PostgreSQL tooling only",
+    "endpoint": "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+    "token": "28e17f032857",
+    "commands": [
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "version",
+          "--format",
+          "{{json .}}"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.12381841599926702,
+        "stdout": "00.stdout",
+        "stderr": "00.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "pull",
+          "postgres:18.6-alpine"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 3.5044159590033814,
+        "stdout": "01.stdout",
+        "stderr": "01.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "image",
+          "inspect",
+          "postgres:18.6-alpine"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.05049325000072713,
+        "stdout": "02.stdout",
+        "stderr": "02.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "create",
+          "--name",
+          "mc021-28e17f032857-source",
+          "--label",
+          "mc021.drill=28e17f032857",
+          "--network",
+          "none",
+          "--memory",
+          "256m",
+          "--cpus",
+          "1",
+          "--tmpfs",
+          "/var/lib/postgresql:rw,size=256m",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=trust",
+          "postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.05828995800038683,
+        "stdout": "03.stdout",
+        "stderr": "03.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "inspect",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.032796999999845866,
+        "stdout": "04.stdout",
+        "stderr": "04.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "start",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.08311225000215927,
+        "stdout": "05.stdout",
+        "stderr": "05.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 0.09347866700045415,
+        "stdout": "06.stdout",
+        "stderr": "06.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 0.05345616599879577,
+        "stdout": "07.stdout",
+        "stderr": "07.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 0.11839054200027022,
+        "stdout": "08.stdout",
+        "stderr": "08.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 0.060266459000558825,
+        "stdout": "09.stdout",
+        "stderr": "09.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.08389366700066603,
+        "stdout": "10.stdout",
+        "stderr": "10.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "pg_isready",
+          "-U",
+          "postgres"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.06152437499986263,
+        "stdout": "11.stdout",
+        "stderr": "11.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "createdb",
+          "-U",
+          "postgres",
+          "mc021_source"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.060519667000335176,
+        "stdout": "12.stdout",
+        "stderr": "12.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_source",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.04948333400170668,
+        "stdout": "13.stdout",
+        "stderr": "13.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_source",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.03919708299872582,
+        "stdout": "14.stdout",
+        "stderr": "14.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "pg_dump",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_source",
+          "--format=custom",
+          "--no-owner",
+          "--no-acl"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.06906933299978846,
+        "stdout": "15.stdout",
+        "stderr": "15.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_source",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.036780582999199396,
+        "stdout": "16.stdout",
+        "stderr": "16.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "pg_restore",
+          "--list"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.03765595900040353,
+        "stdout": "17.stdout",
+        "stderr": "17.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "pg_restore",
+          "--list"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 0.034986208000191255,
+        "stdout": "18.stdout",
+        "stderr": "18.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "create",
+          "--name",
+          "mc021-28e17f032857-restore",
+          "--label",
+          "mc021.drill=28e17f032857",
+          "--network",
+          "none",
+          "--memory",
+          "256m",
+          "--cpus",
+          "1",
+          "--tmpfs",
+          "/var/lib/postgresql:rw,size=256m",
+          "-e",
+          "POSTGRES_HOST_AUTH_METHOD=trust",
+          "postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.040990166999108624,
+        "stdout": "19.stdout",
+        "stderr": "19.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "inspect",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.023677041001064936,
+        "stdout": "20.stdout",
+        "stderr": "20.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "start",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.06851862500116113,
+        "stdout": "21.stdout",
+        "stderr": "21.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 0.04452416699859896,
+        "stdout": "22.stdout",
+        "stderr": "22.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 1,
+        "elapsed_seconds": 0.050229332999151666,
+        "stdout": "23.stdout",
+        "stderr": "23.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "sh",
+          "-c",
+          "test \"$(head -n 1 \"$PGDATA/postmaster.pid\")\" = 1 && pg_isready -U postgres"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.08059908299765084,
+        "stdout": "24.stdout",
+        "stderr": "24.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "pg_isready",
+          "-U",
+          "postgres"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.04083045899824356,
+        "stdout": "25.stdout",
+        "stderr": "25.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "createdb",
+          "-U",
+          "postgres",
+          "mc021_restore"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.06274775000201771,
+        "stdout": "26.stdout",
+        "stderr": "26.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_restore",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.04398133399809012,
+        "stdout": "27.stdout",
+        "stderr": "27.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "pg_restore",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_restore",
+          "--single-transaction",
+          "--exit-on-error",
+          "--no-owner",
+          "--no-acl"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.04681775000062771,
+        "stdout": "28.stdout",
+        "stderr": "28.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_restore",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.043390625000029104,
+        "stdout": "29.stdout",
+        "stderr": "29.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_restore",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.03973029099870473,
+        "stdout": "30.stdout",
+        "stderr": "30.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_restore",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 3,
+        "elapsed_seconds": 0.03837741700044717,
+        "stdout": "31.stdout",
+        "stderr": "31.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_restore",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 3,
+        "elapsed_seconds": 0.03823995800121338,
+        "stdout": "32.stdout",
+        "stderr": "32.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_restore",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 3,
+        "elapsed_seconds": 0.03822187500190921,
+        "stdout": "33.stdout",
+        "stderr": "33.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "exec",
+          "-i",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+          "psql",
+          "-U",
+          "postgres",
+          "-d",
+          "mc021_source",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-At"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.036176542002067436,
+        "stdout": "34.stdout",
+        "stderr": "34.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "inspect",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.019777665998844896,
+        "stdout": "35.stdout",
+        "stderr": "35.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "logs",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.030512875000567874,
+        "stdout": "36.stdout",
+        "stderr": "36.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "stop",
+          "--time",
+          "10",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.121846000001824,
+        "stdout": "37.stdout",
+        "stderr": "37.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "inspect",
+          "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.028149082998425,
+        "stdout": "38.stdout",
+        "stderr": "38.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "inspect",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.023734124999464257,
+        "stdout": "39.stdout",
+        "stderr": "39.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "logs",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.022255209001741605,
+        "stdout": "40.stdout",
+        "stderr": "40.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "stop",
+          "--time",
+          "10",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.09142008300113957,
+        "stdout": "41.stdout",
+        "stderr": "41.stderr"
+      },
+      {
+        "argv": [
+          "rtk",
+          "proxy",
+          "docker",
+          "--host",
+          "unix:///Users/nguyenvanlan/.docker/run/docker.sock",
+          "inspect",
+          "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.037070792001031805,
+        "stdout": "42.stdout",
+        "stderr": "42.stderr"
+      }
+    ],
+    "containers": [
+      {
+        "role": "source",
+        "name": "mc021-28e17f032857-source",
+        "id": "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc",
+        "network": "none",
+        "volumes": [],
+        "tmpfs": true
+      },
+      {
+        "role": "restore",
+        "name": "mc021-28e17f032857-restore",
+        "id": "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8",
+        "network": "none",
+        "volumes": [],
+        "tmpfs": true
+      }
+    ],
+    "status": "PASS_LOCAL_TOOLING_DRILL",
+    "backup_cadence": "one manual dump; not scheduled",
+    "product_restore": "NOT_RUN",
+    "production_rpo_rto": "UNVERIFIED",
+    "image": {
+      "tag": "postgres:18.6-alpine",
+      "digest": "postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5",
+      "id": "sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5"
+    },
+    "archive": {
+      "sha256": "a41ab5b6bfe919ea8a6689bc24ed14ea082c752d30f74486905130692206565d",
+      "bytes": 5957,
+      "backup_point_utc": "2026-10-24T14:29:56.041304+00:00"
+    },
+    "restore_only_seconds": 0.046824084001855226,
+    "recovery_to_validated_read_seconds": 1.2475195420011005,
+    "assertions": {
+      "rows": 100,
+      "sum": 35350,
+      "links": 100,
+      "content_md5": "09dfcf311075fead50ae218b48f96be6",
+      "sequence_next": 101,
+      "pre_backup_restored": true,
+      "post_backup_omitted": true,
+      "corrupt_copy_rejected": true,
+      "pk_fk_check_rejected": true,
+      "source_both_markers_preserved": true
+    },
+    "validation_effects": "sequence-check row rolled back; sequence values consumed by validation are not transactional",
+    "elapsed_seconds": 7.295600792000187,
+    "finished_utc": "2026-10-24T14:29:57.844797+00:00",
+    "cleanup": "only owned containers stopped; no volume deletion or pruning; tmpfs discarded"
+  },
+  "outputs": {
+    "00.stderr": {
+      "text": ""
+    },
+    "00.stdout": {
+      "text": "{\"Client\":{\"Version\":\"29.8.2\",\"ApiVersion\":\"1.56\",\"DefaultAPIVersion\":\"1.56\",\"GitCommit\":\"7fc2dff\",\"GoVersion\":\"go1.26.8\",\"Os\":\"darwin\",\"Arch\":\"arm64\",\"BuildTime\":\"Wed Sep 30 19:32:03 2026\",\"Context\":\"default\"},\"Server\":{\"Platform\":{\"Name\":\"Docker Desktop 4.95.0 (242831)\"},\"Version\":\"29.8.2\",\"ApiVersion\":\"1.56\",\"MinAPIVersion\":\"1.40\",\"Os\":\"linux\",\"Arch\":\"arm64\",\"Components\":[{\"Name\":\"Engine\",\"Version\":\"29.8.2\",\"Details\":{\"ApiVersion\":\"1.56\",\"Arch\":\"arm64\",\"BuildTime\":\"Wed Sep 30 19:31:50 2026\",\"Experimental\":\"false\",\"GitCommit\":\"8af9fe3\",\"GoVersion\":\"go1.26.8\",\"KernelVersion\":\"7.0.14-linuxkit\",\"MinAPIVersion\":\"1.40\",\"Module\":\"github.com/moby/moby/v2\",\"ModuleVersion\":\"v2.0.0+unknown\",\"Os\":\"linux\"}},{\"Name\":\"containerd\",\"Version\":\"v2.3.6\",\"Details\":{\"GitCommit\":\"ee2735368117d2eb259779949d5e75cdafec9761\"}},{\"Name\":\"runc\",\"Version\":\"1.5.1\",\"Details\":{\"GitCommit\":\"v1.5.1-0-g8f2685a4\"}},{\"Name\":\"docker-init\",\"Version\":\"0.19.0\",\"Details\":{\"GitCommit\":\"de40ad0\"}}],\"GitCommit\":\"8af9fe3\",\"GoVersion\":\"go1.26.8\",\"KernelVersion\":\"7.0.14-linuxkit\",\"BuildTime\":\"2026-09-30T19:31:50.000000000+00:00\"}}\n"
+    },
+    "01.stderr": {
+      "text": ""
+    },
+    "01.stdout": {
+      "text": "18.6-alpine: Pulling from library/postgres\nDigest: sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\nStatus: Image is up to date for postgres:18.6-alpine\ndocker.io/library/postgres:18.6-alpine\n"
+    },
+    "02.stderr": {
+      "text": ""
+    },
+    "02.stdout": {
+      "text": "[\n    {\n        \"Id\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n        \"RepoTags\": [\n            \"postgres:18.6-alpine\"\n        ],\n        \"RepoDigests\": [\n            \"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\"\n        ],\n        \"Comment\": \"buildkit.dockerfile.v0\",\n        \"Created\": \"2026-10-21T23:19:15.625751537Z\",\n        \"Config\": {\n            \"ExposedPorts\": {\n                \"5432/tcp\": {}\n            },\n            \"Env\": [\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"GOSU_VERSION=1.19\",\n                \"LANG=en_US.utf8\",\n                \"PG_MAJOR=18\",\n                \"PG_VERSION=18.6\",\n                \"PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f\",\n                \"DOCKER_PG_LLVM_DEPS=llvm21-dev \\t\\tclang21\",\n                \"PGDATA=/var/lib/postgresql/18/docker\"\n            ],\n            \"Entrypoint\": [\n                \"docker-entrypoint.sh\"\n            ],\n            \"Cmd\": [\n                \"postgres\"\n            ],\n            \"Volumes\": {\n                \"/var/lib/postgresql\": {}\n            },\n            \"WorkingDir\": \"/\",\n            \"StopSignal\": \"SIGINT\"\n        },\n        \"Architecture\": \"arm64\",\n        \"Variant\": \"v8\",\n        \"Os\": \"linux\",\n        \"Size\": 424762752,\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:a278e6f39431cd0ed74238a3d377893ad0d905d68b676bf9a65529080669756b\",\n                \"sha256:4eb609b5c207767c621bef9f057fc82a5e118a86e2861ec11f0492b68c70e7ff\",\n                \"sha256:43f7e2ffcc6bdf1b5acd5fe65b6d7894db3951e667862c4889fb41543c19a2db\",\n                \"sha256:1e7303f44bd2d940773dbb5b6917a50a804dbcf0d6c44acf3bd6f6b9a4011029\",\n                \"sha256:6e31417a4f55a8dcc81a97bc4d1e04a0b4f4b508c6c75a20e7b5e2a84c2469ad\",\n                \"sha256:9fbe53904c7d5923d1b6aedd807f8d0961e6d1763bee1d2fb38366f7a3268c2c\",\n                \"sha256:97c0e8d2247f3aa5ec54b6351e0f69698e0784381c037ceb59e8450fa4e0f3d0\",\n                \"sha256:c4fb8fcca03809026b9afe7bbcc6562feff8f577a3e319fd686783e1896d8a9f\",\n                \"sha256:2b01aabedbf52058513f6e5433e82842a6457d64fc53eb93033f0cc288b108ce\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"2026-10-24T14:29:54.145911167Z\"\n        },\n        \"Descriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.index.v1+json\",\n            \"digest\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n            \"size\": 10293\n        },\n        \"Identity\": {\n            \"Pull\": [\n                {\n                    \"Repository\": \"docker.io/library/postgres\"\n                }\n            ]\n        }\n    }\n]\n"
+    },
+    "03.stderr": {
+      "text": ""
+    },
+    "03.stdout": {
+      "text": "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc\n"
+    },
+    "04.stderr": {
+      "text": ""
+    },
+    "04.stdout": {
+      "text": "[\n    {\n        \"Id\": \"9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc\",\n        \"Created\": \"2026-10-24T14:29:54.262794209Z\",\n        \"Path\": \"docker-entrypoint.sh\",\n        \"Args\": [\n            \"postgres\"\n        ],\n        \"State\": {\n            \"Status\": \"created\",\n            \"Running\": false,\n            \"Paused\": false,\n            \"Restarting\": false,\n            \"OOMKilled\": false,\n            \"Dead\": false,\n            \"Pid\": 0,\n            \"ExitCode\": 0,\n            \"Error\": \"\",\n            \"StartedAt\": \"0001-01-01T00:00:00Z\",\n            \"FinishedAt\": \"0001-01-01T00:00:00Z\"\n        },\n        \"Image\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n        \"ResolvConfPath\": \"\",\n        \"HostnamePath\": \"\",\n        \"HostsPath\": \"\",\n        \"LogPath\": \"\",\n        \"Name\": \"/mc021-28e17f032857-source\",\n        \"RestartCount\": 0,\n        \"Driver\": \"overlayfs\",\n        \"Platform\": \"linux\",\n        \"MountLabel\": \"\",\n        \"ProcessLabel\": \"\",\n        \"AppArmorProfile\": \"\",\n        \"ExecIDs\": null,\n        \"HostConfig\": {\n            \"Binds\": null,\n            \"ContainerIDFile\": \"\",\n            \"LogConfig\": {\n                \"Type\": \"local\",\n                \"Config\": {}\n            },\n            \"NetworkMode\": \"none\",\n            \"PortBindings\": {},\n            \"RestartPolicy\": {\n                \"Name\": \"no\",\n                \"MaximumRetryCount\": 0\n            },\n            \"AutoRemove\": false,\n            \"VolumeDriver\": \"\",\n            \"VolumesFrom\": null,\n            \"ConsoleSize\": [\n                0,\n                0\n            ],\n            \"CapAdd\": null,\n            \"CapDrop\": null,\n            \"CgroupnsMode\": \"private\",\n            \"Dns\": null,\n            \"DnsOptions\": [],\n            \"DnsSearch\": [],\n            \"ExtraHosts\": null,\n            \"GroupAdd\": null,\n            \"IpcMode\": \"private\",\n            \"Cgroup\": \"\",\n            \"Links\": null,\n            \"OomScoreAdj\": 0,\n            \"PidMode\": \"\",\n            \"Privileged\": false,\n            \"PublishAllPorts\": false,\n            \"ReadonlyRootfs\": false,\n            \"SecurityOpt\": null,\n            \"Tmpfs\": {\n                \"/var/lib/postgresql\": \"rw,size=256m\"\n            },\n            \"UTSMode\": \"\",\n            \"UsernsMode\": \"\",\n            \"ShmSize\": 67108864,\n            \"Runtime\": \"runc\",\n            \"Isolation\": \"\",\n            \"CpuShares\": 0,\n            \"Memory\": 268435456,\n            \"NanoCpus\": 1000000000,\n            \"CgroupParent\": \"\",\n            \"BlkioWeight\": 0,\n            \"BlkioWeightDevice\": [],\n            \"BlkioDeviceReadBps\": [],\n            \"BlkioDeviceWriteBps\": [],\n            \"BlkioDeviceReadIOps\": [],\n            \"BlkioDeviceWriteIOps\": [],\n            \"CpuPeriod\": 0,\n            \"CpuQuota\": 0,\n            \"CpuRealtimePeriod\": 0,\n            \"CpuRealtimeRuntime\": 0,\n            \"CpusetCpus\": \"\",\n            \"CpusetMems\": \"\",\n            \"Devices\": [],\n            \"DeviceCgroupRules\": null,\n            \"DeviceRequests\": null,\n            \"MemoryReservation\": 0,\n            \"MemorySwap\": 536870912,\n            \"MemorySwappiness\": null,\n            \"OomKillDisable\": false,\n            \"PidsLimit\": null,\n            \"Ulimits\": null,\n            \"CpuCount\": 0,\n            \"CpuPercent\": 0,\n            \"IOMaximumIOps\": 0,\n            \"IOMaximumBandwidth\": 0,\n            \"MaskedPaths\": [\n                \"/proc/acpi\",\n                \"/proc/asound\",\n                \"/proc/interrupts\",\n                \"/proc/kcore\",\n                \"/proc/keys\",\n                \"/proc/latency_stats\",\n                \"/proc/sched_debug\",\n                \"/proc/scsi\",\n                \"/proc/timer_list\",\n                \"/proc/timer_stats\",\n                \"/sys/devices/virtual/powercap\",\n                \"/sys/firmware\"\n            ],\n            \"ReadonlyPaths\": [\n                \"/proc/bus\",\n                \"/proc/fs\",\n                \"/proc/irq\",\n                \"/proc/sys\",\n                \"/proc/sysrq-trigger\"\n            ]\n        },\n        \"Storage\": {\n            \"RootFS\": {\n                \"Snapshot\": {\n                    \"Name\": \"overlayfs\"\n                }\n            }\n        },\n        \"Mounts\": [],\n        \"Config\": {\n            \"Hostname\": \"9ab13e5a7ebd\",\n            \"Domainname\": \"\",\n            \"User\": \"\",\n            \"AttachStdin\": false,\n            \"AttachStdout\": true,\n            \"AttachStderr\": true,\n            \"ExposedPorts\": {\n                \"5432/tcp\": {}\n            },\n            \"Tty\": false,\n            \"OpenStdin\": false,\n            \"StdinOnce\": false,\n            \"Env\": [\n                \"POSTGRES_HOST_AUTH_METHOD=trust\",\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"GOSU_VERSION=1.19\",\n                \"LANG=en_US.utf8\",\n                \"PG_MAJOR=18\",\n                \"PG_VERSION=18.6\",\n                \"PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f\",\n                \"DOCKER_PG_LLVM_DEPS=llvm21-dev \\t\\tclang21\",\n                \"PGDATA=/var/lib/postgresql/18/docker\"\n            ],\n            \"Cmd\": [\n                \"postgres\"\n            ],\n            \"Image\": \"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n            \"Volumes\": {\n                \"/var/lib/postgresql\": {}\n            },\n            \"WorkingDir\": \"/\",\n            \"Entrypoint\": [\n                \"docker-entrypoint.sh\"\n            ],\n            \"Labels\": {\n                \"mc021.drill\": \"28e17f032857\"\n            },\n            \"StopSignal\": \"SIGINT\"\n        },\n        \"NetworkSettings\": {\n            \"SandboxID\": \"\",\n            \"SandboxKey\": \"\",\n            \"Ports\": {},\n            \"Networks\": {\n                \"none\": {\n                    \"IPAMConfig\": null,\n                    \"Links\": null,\n                    \"Aliases\": null,\n                    \"DriverOpts\": null,\n                    \"GwPriority\": 0,\n                    \"NetworkID\": \"\",\n                    \"EndpointID\": \"\",\n                    \"Gateway\": \"\",\n                    \"IPAddress\": \"\",\n                    \"MacAddress\": \"\",\n                    \"IPPrefixLen\": 0,\n                    \"IPv6Gateway\": \"\",\n                    \"GlobalIPv6Address\": \"\",\n                    \"GlobalIPv6PrefixLen\": 0,\n                    \"DNSNames\": null\n                }\n            }\n        },\n        \"ImageManifestDescriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:b1c1673a890fba8fae71d37210b4fd9a0b5cd0df8bb994a6bcc01d9cf8e1670c\",\n            \"size\": 2680,\n            \"annotations\": {\n                \"com.docker.official-images.bashbrew.arch\": \"arm64v8\",\n                \"org.opencontainers.image.base.digest\": \"sha256:e311ae748be7f56ae5cba304bc488f0786df68ee507513f654a5cc8597cffb42\",\n                \"org.opencontainers.image.base.name\": \"alpine:3.24\",\n                \"org.opencontainers.image.created\": \"2026-10-21T23:16:44Z\",\n                \"org.opencontainers.image.revision\": \"e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc\",\n                \"org.opencontainers.image.source\": \"https://github.com/docker-library/postgres.git#e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc:18/alpine3.24\",\n                \"org.opencontainers.image.url\": \"https://hub.docker.com/_/postgres\",\n                \"org.opencontainers.image.version\": \"18.6-alpine3.24\"\n            },\n            \"platform\": {\n                \"architecture\": \"arm64\",\n                \"os\": \"linux\",\n                \"variant\": \"v8\"\n            }\n        }\n    }\n]\n"
+    },
+    "05.stderr": {
+      "text": ""
+    },
+    "05.stdout": {
+      "text": "9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc\n"
+    },
+    "06.stderr": {
+      "text": "head: /var/lib/postgresql/18/docker/postmaster.pid: No such file or directory\n"
+    },
+    "06.stdout": {
+      "text": ""
+    },
+    "07.stderr": {
+      "text": ""
+    },
+    "07.stdout": {
+      "text": ""
+    },
+    "08.stderr": {
+      "text": ""
+    },
+    "08.stdout": {
+      "text": ""
+    },
+    "09.stderr": {
+      "text": "head: /var/lib/postgresql/18/docker/postmaster.pid: No such file or directory\n"
+    },
+    "09.stdout": {
+      "text": ""
+    },
+    "10.stderr": {
+      "text": ""
+    },
+    "10.stdout": {
+      "text": "/var/run/postgresql:5432 - accepting connections\n"
+    },
+    "11.stderr": {
+      "text": ""
+    },
+    "11.stdout": {
+      "text": "/var/run/postgresql:5432 - accepting connections\n"
+    },
+    "12.stderr": {
+      "text": ""
+    },
+    "12.stdout": {
+      "text": ""
+    },
+    "13.stderr": {
+      "text": ""
+    },
+    "13.stdout": {
+      "text": "CREATE SCHEMA\nCREATE TABLE\nCREATE TABLE\nINSERT 0 100\nINSERT 0 100\nCREATE TABLE\nINSERT 0 1\n"
+    },
+    "14.stderr": {
+      "text": ""
+    },
+    "14.stdout": {
+      "text": "09dfcf311075fead50ae218b48f96be6\n"
+    },
+    "15.stderr": {
+      "text": ""
+    },
+    "15.stdout": {
+      "artifact": "synthetic-recheck.dump",
+      "sha256": "a41ab5b6bfe919ea8a6689bc24ed14ea082c752d30f74486905130692206565d"
+    },
+    "16.stderr": {
+      "text": ""
+    },
+    "16.stdout": {
+      "text": "INSERT 0 1\n"
+    },
+    "17.stderr": {
+      "text": ""
+    },
+    "17.stdout": {
+      "text": ";\n; Archive created at 2026-10-24 14:29:56 UTC\n;     dbname: mc021_source\n;     TOC Entries: 20\n;     Compression: gzip\n;     Dump Version: 1.16-0\n;     Format: CUSTOM\n;     Integer: 4 bytes\n;     Offset: 8 bytes\n;     Dumped from database version: 18.6\n;     Dumped by pg_dump version: 18.6\n;\n;\n; Selected TOC Entries:\n;\n6; 2615 16385 SCHEMA - drill postgres\n222; 1259 16401 TABLE drill links postgres\n223; 1259 16412 TABLE drill markers postgres\n221; 1259 16387 TABLE drill records postgres\n220; 1259 16386 SEQUENCE drill records_id_seq postgres\n3500; 0 0 SEQUENCE OWNED BY drill records_id_seq postgres\n3332; 2604 16390 DEFAULT drill records id postgres\n3492; 0 16401 TABLE DATA drill links postgres\n3493; 0 16412 TABLE DATA drill markers postgres\n3491; 0 16387 TABLE DATA drill records postgres\n3501; 0 0 SEQUENCE SET drill records_id_seq postgres\n3339; 2606 16406 CONSTRAINT drill links links_pkey postgres\n3341; 2606 16419 CONSTRAINT drill markers markers_pkey postgres\n3335; 2606 16400 CONSTRAINT drill records records_label_key postgres\n3337; 2606 16398 CONSTRAINT drill records records_pkey postgres\n3342; 2606 16407 FK CONSTRAINT drill links links_record_id_fkey postgres\n"
+    },
+    "18.stderr": {
+      "text": "pg_restore: error: input file does not appear to be a valid archive (too short?)\n"
+    },
+    "18.stdout": {
+      "text": ""
+    },
+    "19.stderr": {
+      "text": ""
+    },
+    "19.stdout": {
+      "text": "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8\n"
+    },
+    "20.stderr": {
+      "text": ""
+    },
+    "20.stdout": {
+      "text": "[\n    {\n        \"Id\": \"60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8\",\n        \"Created\": \"2026-10-24T14:29:56.247592252Z\",\n        \"Path\": \"docker-entrypoint.sh\",\n        \"Args\": [\n            \"postgres\"\n        ],\n        \"State\": {\n            \"Status\": \"created\",\n            \"Running\": false,\n            \"Paused\": false,\n            \"Restarting\": false,\n            \"OOMKilled\": false,\n            \"Dead\": false,\n            \"Pid\": 0,\n            \"ExitCode\": 0,\n            \"Error\": \"\",\n            \"StartedAt\": \"0001-01-01T00:00:00Z\",\n            \"FinishedAt\": \"0001-01-01T00:00:00Z\"\n        },\n        \"Image\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n        \"ResolvConfPath\": \"\",\n        \"HostnamePath\": \"\",\n        \"HostsPath\": \"\",\n        \"LogPath\": \"\",\n        \"Name\": \"/mc021-28e17f032857-restore\",\n        \"RestartCount\": 0,\n        \"Driver\": \"overlayfs\",\n        \"Platform\": \"linux\",\n        \"MountLabel\": \"\",\n        \"ProcessLabel\": \"\",\n        \"AppArmorProfile\": \"\",\n        \"ExecIDs\": null,\n        \"HostConfig\": {\n            \"Binds\": null,\n            \"ContainerIDFile\": \"\",\n            \"LogConfig\": {\n                \"Type\": \"local\",\n                \"Config\": {}\n            },\n            \"NetworkMode\": \"none\",\n            \"PortBindings\": {},\n            \"RestartPolicy\": {\n                \"Name\": \"no\",\n                \"MaximumRetryCount\": 0\n            },\n            \"AutoRemove\": false,\n            \"VolumeDriver\": \"\",\n            \"VolumesFrom\": null,\n            \"ConsoleSize\": [\n                0,\n                0\n            ],\n            \"CapAdd\": null,\n            \"CapDrop\": null,\n            \"CgroupnsMode\": \"private\",\n            \"Dns\": null,\n            \"DnsOptions\": [],\n            \"DnsSearch\": [],\n            \"ExtraHosts\": null,\n            \"GroupAdd\": null,\n            \"IpcMode\": \"private\",\n            \"Cgroup\": \"\",\n            \"Links\": null,\n            \"OomScoreAdj\": 0,\n            \"PidMode\": \"\",\n            \"Privileged\": false,\n            \"PublishAllPorts\": false,\n            \"ReadonlyRootfs\": false,\n            \"SecurityOpt\": null,\n            \"Tmpfs\": {\n                \"/var/lib/postgresql\": \"rw,size=256m\"\n            },\n            \"UTSMode\": \"\",\n            \"UsernsMode\": \"\",\n            \"ShmSize\": 67108864,\n            \"Runtime\": \"runc\",\n            \"Isolation\": \"\",\n            \"CpuShares\": 0,\n            \"Memory\": 268435456,\n            \"NanoCpus\": 1000000000,\n            \"CgroupParent\": \"\",\n            \"BlkioWeight\": 0,\n            \"BlkioWeightDevice\": [],\n            \"BlkioDeviceReadBps\": [],\n            \"BlkioDeviceWriteBps\": [],\n            \"BlkioDeviceReadIOps\": [],\n            \"BlkioDeviceWriteIOps\": [],\n            \"CpuPeriod\": 0,\n            \"CpuQuota\": 0,\n            \"CpuRealtimePeriod\": 0,\n            \"CpuRealtimeRuntime\": 0,\n            \"CpusetCpus\": \"\",\n            \"CpusetMems\": \"\",\n            \"Devices\": [],\n            \"DeviceCgroupRules\": null,\n            \"DeviceRequests\": null,\n            \"MemoryReservation\": 0,\n            \"MemorySwap\": 536870912,\n            \"MemorySwappiness\": null,\n            \"OomKillDisable\": false,\n            \"PidsLimit\": null,\n            \"Ulimits\": null,\n            \"CpuCount\": 0,\n            \"CpuPercent\": 0,\n            \"IOMaximumIOps\": 0,\n            \"IOMaximumBandwidth\": 0,\n            \"MaskedPaths\": [\n                \"/proc/acpi\",\n                \"/proc/asound\",\n                \"/proc/interrupts\",\n                \"/proc/kcore\",\n                \"/proc/keys\",\n                \"/proc/latency_stats\",\n                \"/proc/sched_debug\",\n                \"/proc/scsi\",\n                \"/proc/timer_list\",\n                \"/proc/timer_stats\",\n                \"/sys/devices/virtual/powercap\",\n                \"/sys/firmware\"\n            ],\n            \"ReadonlyPaths\": [\n                \"/proc/bus\",\n                \"/proc/fs\",\n                \"/proc/irq\",\n                \"/proc/sys\",\n                \"/proc/sysrq-trigger\"\n            ]\n        },\n        \"Storage\": {\n            \"RootFS\": {\n                \"Snapshot\": {\n                    \"Name\": \"overlayfs\"\n                }\n            }\n        },\n        \"Mounts\": [],\n        \"Config\": {\n            \"Hostname\": \"60a992a1de58\",\n            \"Domainname\": \"\",\n            \"User\": \"\",\n            \"AttachStdin\": false,\n            \"AttachStdout\": true,\n            \"AttachStderr\": true,\n            \"ExposedPorts\": {\n                \"5432/tcp\": {}\n            },\n            \"Tty\": false,\n            \"OpenStdin\": false,\n            \"StdinOnce\": false,\n            \"Env\": [\n                \"POSTGRES_HOST_AUTH_METHOD=trust\",\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"GOSU_VERSION=1.19\",\n                \"LANG=en_US.utf8\",\n                \"PG_MAJOR=18\",\n                \"PG_VERSION=18.6\",\n                \"PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f\",\n                \"DOCKER_PG_LLVM_DEPS=llvm21-dev \\t\\tclang21\",\n                \"PGDATA=/var/lib/postgresql/18/docker\"\n            ],\n            \"Cmd\": [\n                \"postgres\"\n            ],\n            \"Image\": \"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n            \"Volumes\": {\n                \"/var/lib/postgresql\": {}\n            },\n            \"WorkingDir\": \"/\",\n            \"Entrypoint\": [\n                \"docker-entrypoint.sh\"\n            ],\n            \"Labels\": {\n                \"mc021.drill\": \"28e17f032857\"\n            },\n            \"StopSignal\": \"SIGINT\"\n        },\n        \"NetworkSettings\": {\n            \"SandboxID\": \"\",\n            \"SandboxKey\": \"\",\n            \"Ports\": {},\n            \"Networks\": {\n                \"none\": {\n                    \"IPAMConfig\": null,\n                    \"Links\": null,\n                    \"Aliases\": null,\n                    \"DriverOpts\": null,\n                    \"GwPriority\": 0,\n                    \"NetworkID\": \"\",\n                    \"EndpointID\": \"\",\n                    \"Gateway\": \"\",\n                    \"IPAddress\": \"\",\n                    \"MacAddress\": \"\",\n                    \"IPPrefixLen\": 0,\n                    \"IPv6Gateway\": \"\",\n                    \"GlobalIPv6Address\": \"\",\n                    \"GlobalIPv6PrefixLen\": 0,\n                    \"DNSNames\": null\n                }\n            }\n        },\n        \"ImageManifestDescriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:b1c1673a890fba8fae71d37210b4fd9a0b5cd0df8bb994a6bcc01d9cf8e1670c\",\n            \"size\": 2680,\n            \"annotations\": {\n                \"com.docker.official-images.bashbrew.arch\": \"arm64v8\",\n                \"org.opencontainers.image.base.digest\": \"sha256:e311ae748be7f56ae5cba304bc488f0786df68ee507513f654a5cc8597cffb42\",\n                \"org.opencontainers.image.base.name\": \"alpine:3.24\",\n                \"org.opencontainers.image.created\": \"2026-10-21T23:16:44Z\",\n                \"org.opencontainers.image.revision\": \"e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc\",\n                \"org.opencontainers.image.source\": \"https://github.com/docker-library/postgres.git#e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc:18/alpine3.24\",\n                \"org.opencontainers.image.url\": \"https://hub.docker.com/_/postgres\",\n                \"org.opencontainers.image.version\": \"18.6-alpine3.24\"\n            },\n            \"platform\": {\n                \"architecture\": \"arm64\",\n                \"os\": \"linux\",\n                \"variant\": \"v8\"\n            }\n        }\n    }\n]\n"
+    },
+    "21.stderr": {
+      "text": ""
+    },
+    "21.stdout": {
+      "text": "60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8\n"
+    },
+    "22.stderr": {
+      "text": ""
+    },
+    "22.stdout": {
+      "text": ""
+    },
+    "23.stderr": {
+      "text": ""
+    },
+    "23.stdout": {
+      "text": ""
+    },
+    "24.stderr": {
+      "text": ""
+    },
+    "24.stdout": {
+      "text": "/var/run/postgresql:5432 - accepting connections\n"
+    },
+    "25.stderr": {
+      "text": ""
+    },
+    "25.stdout": {
+      "text": "/var/run/postgresql:5432 - accepting connections\n"
+    },
+    "26.stderr": {
+      "text": ""
+    },
+    "26.stdout": {
+      "text": ""
+    },
+    "27.stderr": {
+      "text": ""
+    },
+    "27.stdout": {
+      "text": "0\n"
+    },
+    "28.stderr": {
+      "text": ""
+    },
+    "28.stdout": {
+      "text": ""
+    },
+    "29.stderr": {
+      "text": ""
+    },
+    "29.stdout": {
+      "text": "BEGIN\nDO\n09dfcf311075fead50ae218b48f96be6\n101\nINSERT 0 1\nROLLBACK\n"
+    },
+    "30.stderr": {
+      "text": ""
+    },
+    "30.stdout": {
+      "text": "100\n"
+    },
+    "31.stderr": {
+      "text": "ERROR:  insert or update on table \"links\" violates foreign key constraint \"links_record_id_fkey\"\nDETAIL:  Key (record_id)=(999) is not present in table \"records\".\n"
+    },
+    "31.stdout": {
+      "text": "BEGIN\n"
+    },
+    "32.stderr": {
+      "text": "ERROR:  new row for relation \"records\" violates check constraint \"records_amount_check\"\nDETAIL:  Failing row contains (102, bad, -1).\n"
+    },
+    "32.stdout": {
+      "text": "BEGIN\n"
+    },
+    "33.stderr": {
+      "text": "ERROR:  duplicate key value violates unique constraint \"records_pkey\"\nDETAIL:  Key (id)=(1) already exists.\n"
+    },
+    "33.stdout": {
+      "text": "BEGIN\n"
+    },
+    "34.stderr": {
+      "text": ""
+    },
+    "34.stdout": {
+      "text": "2\n"
+    },
+    "35.stderr": {
+      "text": ""
+    },
+    "35.stdout": {
+      "text": "[\n    {\n        \"Id\": \"9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc\",\n        \"Created\": \"2026-10-24T14:29:54.262794209Z\",\n        \"Path\": \"docker-entrypoint.sh\",\n        \"Args\": [\n            \"postgres\"\n        ],\n        \"State\": {\n            \"Status\": \"running\",\n            \"Running\": true,\n            \"Paused\": false,\n            \"Restarting\": false,\n            \"OOMKilled\": false,\n            \"Dead\": false,\n            \"Pid\": 591,\n            \"ExitCode\": 0,\n            \"Error\": \"\",\n            \"StartedAt\": \"2026-10-24T14:29:54.354328584Z\",\n            \"FinishedAt\": \"0001-01-01T00:00:00Z\"\n        },\n        \"Image\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n        \"ResolvConfPath\": \"/var/lib/docker/containers/9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc/resolv.conf\",\n        \"HostnamePath\": \"/var/lib/docker/containers/9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc/hostname\",\n        \"HostsPath\": \"/var/lib/docker/containers/9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc/hosts\",\n        \"LogPath\": \"\",\n        \"Name\": \"/mc021-28e17f032857-source\",\n        \"RestartCount\": 0,\n        \"Driver\": \"overlayfs\",\n        \"Platform\": \"linux\",\n        \"MountLabel\": \"\",\n        \"ProcessLabel\": \"\",\n        \"AppArmorProfile\": \"\",\n        \"ExecIDs\": null,\n        \"HostConfig\": {\n            \"Binds\": null,\n            \"ContainerIDFile\": \"\",\n            \"LogConfig\": {\n                \"Type\": \"local\",\n                \"Config\": {}\n            },\n            \"NetworkMode\": \"none\",\n            \"PortBindings\": {},\n            \"RestartPolicy\": {\n                \"Name\": \"no\",\n                \"MaximumRetryCount\": 0\n            },\n            \"AutoRemove\": false,\n            \"VolumeDriver\": \"\",\n            \"VolumesFrom\": null,\n            \"ConsoleSize\": [\n                0,\n                0\n            ],\n            \"CapAdd\": null,\n            \"CapDrop\": null,\n            \"CgroupnsMode\": \"private\",\n            \"Dns\": null,\n            \"DnsOptions\": [],\n            \"DnsSearch\": [],\n            \"ExtraHosts\": null,\n            \"GroupAdd\": null,\n            \"IpcMode\": \"private\",\n            \"Cgroup\": \"\",\n            \"Links\": null,\n            \"OomScoreAdj\": 0,\n            \"PidMode\": \"\",\n            \"Privileged\": false,\n            \"PublishAllPorts\": false,\n            \"ReadonlyRootfs\": false,\n            \"SecurityOpt\": null,\n            \"Tmpfs\": {\n                \"/var/lib/postgresql\": \"rw,size=256m\"\n            },\n            \"UTSMode\": \"\",\n            \"UsernsMode\": \"\",\n            \"ShmSize\": 67108864,\n            \"Runtime\": \"runc\",\n            \"Isolation\": \"\",\n            \"CpuShares\": 0,\n            \"Memory\": 268435456,\n            \"NanoCpus\": 1000000000,\n            \"CgroupParent\": \"\",\n            \"BlkioWeight\": 0,\n            \"BlkioWeightDevice\": [],\n            \"BlkioDeviceReadBps\": [],\n            \"BlkioDeviceWriteBps\": [],\n            \"BlkioDeviceReadIOps\": [],\n            \"BlkioDeviceWriteIOps\": [],\n            \"CpuPeriod\": 0,\n            \"CpuQuota\": 0,\n            \"CpuRealtimePeriod\": 0,\n            \"CpuRealtimeRuntime\": 0,\n            \"CpusetCpus\": \"\",\n            \"CpusetMems\": \"\",\n            \"Devices\": [],\n            \"DeviceCgroupRules\": null,\n            \"DeviceRequests\": null,\n            \"MemoryReservation\": 0,\n            \"MemorySwap\": 536870912,\n            \"MemorySwappiness\": null,\n            \"OomKillDisable\": null,\n            \"PidsLimit\": null,\n            \"Ulimits\": null,\n            \"CpuCount\": 0,\n            \"CpuPercent\": 0,\n            \"IOMaximumIOps\": 0,\n            \"IOMaximumBandwidth\": 0,\n            \"MaskedPaths\": [\n                \"/proc/acpi\",\n                \"/proc/asound\",\n                \"/proc/interrupts\",\n                \"/proc/kcore\",\n                \"/proc/keys\",\n                \"/proc/latency_stats\",\n                \"/proc/sched_debug\",\n                \"/proc/scsi\",\n                \"/proc/timer_list\",\n                \"/proc/timer_stats\",\n                \"/sys/devices/virtual/powercap\",\n                \"/sys/firmware\"\n            ],\n            \"ReadonlyPaths\": [\n                \"/proc/bus\",\n                \"/proc/fs\",\n                \"/proc/irq\",\n                \"/proc/sys\",\n                \"/proc/sysrq-trigger\"\n            ]\n        },\n        \"Storage\": {\n            \"RootFS\": {\n                \"Snapshot\": {\n                    \"Name\": \"overlayfs\"\n                }\n            }\n        },\n        \"Mounts\": [],\n        \"Config\": {\n            \"Hostname\": \"9ab13e5a7ebd\",\n            \"Domainname\": \"\",\n            \"User\": \"\",\n            \"AttachStdin\": false,\n            \"AttachStdout\": true,\n            \"AttachStderr\": true,\n            \"ExposedPorts\": {\n                \"5432/tcp\": {}\n            },\n            \"Tty\": false,\n            \"OpenStdin\": false,\n            \"StdinOnce\": false,\n            \"Env\": [\n                \"POSTGRES_HOST_AUTH_METHOD=trust\",\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"GOSU_VERSION=1.19\",\n                \"LANG=en_US.utf8\",\n                \"PG_MAJOR=18\",\n                \"PG_VERSION=18.6\",\n                \"PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f\",\n                \"DOCKER_PG_LLVM_DEPS=llvm21-dev \\t\\tclang21\",\n                \"PGDATA=/var/lib/postgresql/18/docker\"\n            ],\n            \"Cmd\": [\n                \"postgres\"\n            ],\n            \"Image\": \"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n            \"Volumes\": {\n                \"/var/lib/postgresql\": {}\n            },\n            \"WorkingDir\": \"/\",\n            \"Entrypoint\": [\n                \"docker-entrypoint.sh\"\n            ],\n            \"Labels\": {\n                \"mc021.drill\": \"28e17f032857\"\n            },\n            \"StopSignal\": \"SIGINT\"\n        },\n        \"NetworkSettings\": {\n            \"SandboxID\": \"1abaa49e3a1dcfe6355a8ba2831fac949043d82e8137ff3ff86f642b6acbf85a\",\n            \"SandboxKey\": \"/var/run/docker/netns/1abaa49e3a1d\",\n            \"Ports\": {},\n            \"Networks\": {\n                \"none\": {\n                    \"IPAMConfig\": null,\n                    \"Links\": null,\n                    \"Aliases\": null,\n                    \"DriverOpts\": null,\n                    \"GwPriority\": 0,\n                    \"NetworkID\": \"3e7584ccc01e331c23dc0ca49b8e220e465eaf13cc7fcbec34f555e44d24b828\",\n                    \"EndpointID\": \"b4a530efd0dbaa7991bd652683f87ba896bb61650640d9637e4c38cd1ea072a2\",\n                    \"Gateway\": \"\",\n                    \"IPAddress\": \"\",\n                    \"MacAddress\": \"\",\n                    \"IPPrefixLen\": 0,\n                    \"IPv6Gateway\": \"\",\n                    \"GlobalIPv6Address\": \"\",\n                    \"GlobalIPv6PrefixLen\": 0,\n                    \"DNSNames\": null\n                }\n            }\n        },\n        \"ImageManifestDescriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:b1c1673a890fba8fae71d37210b4fd9a0b5cd0df8bb994a6bcc01d9cf8e1670c\",\n            \"size\": 2680,\n            \"annotations\": {\n                \"com.docker.official-images.bashbrew.arch\": \"arm64v8\",\n                \"org.opencontainers.image.base.digest\": \"sha256:e311ae748be7f56ae5cba304bc488f0786df68ee507513f654a5cc8597cffb42\",\n                \"org.opencontainers.image.base.name\": \"alpine:3.24\",\n                \"org.opencontainers.image.created\": \"2026-10-21T23:16:44Z\",\n                \"org.opencontainers.image.revision\": \"e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc\",\n                \"org.opencontainers.image.source\": \"https://github.com/docker-library/postgres.git#e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc:18/alpine3.24\",\n                \"org.opencontainers.image.url\": \"https://hub.docker.com/_/postgres\",\n                \"org.opencontainers.image.version\": \"18.6-alpine3.24\"\n            },\n            \"platform\": {\n                \"architecture\": \"arm64\",\n                \"os\": \"linux\",\n                \"variant\": \"v8\"\n            }\n        }\n    }\n]\n"
+    },
+    "36.stderr": {
+      "text": "********************************************************************************\nWARNING: POSTGRES_HOST_AUTH_METHOD has been set to \"trust\". This will allow\n         anyone with access to the Postgres port to access your database without\n         a password, even if POSTGRES_PASSWORD is set. See PostgreSQL\n         documentation about \"trust\":\n         https://www.postgresql.org/docs/current/auth-trust.html\n         In Docker's default configuration, this is effectively any other\n         container on the same system.\n\n         It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace\n         it with \"-e POSTGRES_PASSWORD=password\" instead to set a password in\n         \"docker run\".\n********************************************************************************\nsh: locale: not found\n2026-10-24 14:29:54.929 UTC [48] WARNING:  no usable system locales were found\ninitdb: warning: enabling \"trust\" authentication for local connections\ninitdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.\n2026-10-24 14:29:55.572 UTC [1] LOG:  starting PostgreSQL 18.6 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit\n2026-10-24 14:29:55.573 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-10-24 14:29:55.573 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-10-24 14:29:55.573 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-10-24 14:29:55.575 UTC [95] LOG:  database system was shut down at 2026-10-24 14:29:55 UTC\n2026-10-24 14:29:55.578 UTC [1] LOG:  database system is ready to accept connections\n"
+    },
+    "36.stdout": {
+      "text": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are enabled.\n\nfixing permissions on existing directory /var/lib/postgresql/18/docker ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\n\nSuccess. You can now start the database server using:\n\n    pg_ctl -D /var/lib/postgresql/18/docker -l logfile start\n\nwaiting for server to start....2026-10-24 14:29:55.363 UTC [68] LOG:  starting PostgreSQL 18.6 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit\n2026-10-24 14:29:55.365 UTC [68] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-10-24 14:29:55.367 UTC [74] LOG:  database system was shut down at 2026-10-24 14:29:55 UTC\n2026-10-24 14:29:55.371 UTC [68] LOG:  database system is ready to accept connections\n done\nserver started\n\n/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\n\nwaiting for server to shut down....2026-10-24 14:29:55.458 UTC [68] LOG:  received fast shutdown request\n2026-10-24 14:29:55.458 UTC [68] LOG:  aborting any active transactions\n2026-10-24 14:29:55.460 UTC [68] LOG:  background worker \"logical replication launcher\" (PID 77) exited with exit code 1\n2026-10-24 14:29:55.461 UTC [72] LOG:  shutting down\n2026-10-24 14:29:55.461 UTC [72] LOG:  checkpoint starting: shutdown immediate\n2026-10-24 14:29:55.462 UTC [72] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.002 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1765F08, redo lsn=0/1765F08\n2026-10-24 14:29:55.469 UTC [68] LOG:  database system is shut down\n done\nserver stopped\n\nPostgreSQL init process complete; ready for start up.\n\n"
+    },
+    "37.stderr": {
+      "text": ""
+    },
+    "37.stdout": {
+      "text": "Flag --time has been deprecated, use --timeout instead\n9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc\n"
+    },
+    "38.stderr": {
+      "text": ""
+    },
+    "38.stdout": {
+      "text": "[\n    {\n        \"Id\": \"9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc\",\n        \"Created\": \"2026-10-24T14:29:54.262794209Z\",\n        \"Path\": \"docker-entrypoint.sh\",\n        \"Args\": [\n            \"postgres\"\n        ],\n        \"State\": {\n            \"Status\": \"exited\",\n            \"Running\": false,\n            \"Paused\": false,\n            \"Restarting\": false,\n            \"OOMKilled\": false,\n            \"Dead\": false,\n            \"Pid\": 0,\n            \"ExitCode\": 0,\n            \"Error\": \"\",\n            \"StartedAt\": \"2026-10-24T14:29:54.354328584Z\",\n            \"FinishedAt\": \"2026-10-24T14:29:57.620503169Z\"\n        },\n        \"Image\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n        \"ResolvConfPath\": \"/var/lib/docker/containers/9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc/resolv.conf\",\n        \"HostnamePath\": \"/var/lib/docker/containers/9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc/hostname\",\n        \"HostsPath\": \"/var/lib/docker/containers/9ab13e5a7ebd0c6798ae36665154c257ecf7c2b5adf26608b0aba2ccf6b408cc/hosts\",\n        \"LogPath\": \"\",\n        \"Name\": \"/mc021-28e17f032857-source\",\n        \"RestartCount\": 0,\n        \"Driver\": \"overlayfs\",\n        \"Platform\": \"linux\",\n        \"MountLabel\": \"\",\n        \"ProcessLabel\": \"\",\n        \"AppArmorProfile\": \"\",\n        \"ExecIDs\": null,\n        \"HostConfig\": {\n            \"Binds\": null,\n            \"ContainerIDFile\": \"\",\n            \"LogConfig\": {\n                \"Type\": \"local\",\n                \"Config\": {}\n            },\n            \"NetworkMode\": \"none\",\n            \"PortBindings\": {},\n            \"RestartPolicy\": {\n                \"Name\": \"no\",\n                \"MaximumRetryCount\": 0\n            },\n            \"AutoRemove\": false,\n            \"VolumeDriver\": \"\",\n            \"VolumesFrom\": null,\n            \"ConsoleSize\": [\n                0,\n                0\n            ],\n            \"CapAdd\": null,\n            \"CapDrop\": null,\n            \"CgroupnsMode\": \"private\",\n            \"Dns\": null,\n            \"DnsOptions\": [],\n            \"DnsSearch\": [],\n            \"ExtraHosts\": null,\n            \"GroupAdd\": null,\n            \"IpcMode\": \"private\",\n            \"Cgroup\": \"\",\n            \"Links\": null,\n            \"OomScoreAdj\": 0,\n            \"PidMode\": \"\",\n            \"Privileged\": false,\n            \"PublishAllPorts\": false,\n            \"ReadonlyRootfs\": false,\n            \"SecurityOpt\": null,\n            \"Tmpfs\": {\n                \"/var/lib/postgresql\": \"rw,size=256m\"\n            },\n            \"UTSMode\": \"\",\n            \"UsernsMode\": \"\",\n            \"ShmSize\": 67108864,\n            \"Runtime\": \"runc\",\n            \"Isolation\": \"\",\n            \"CpuShares\": 0,\n            \"Memory\": 268435456,\n            \"NanoCpus\": 1000000000,\n            \"CgroupParent\": \"\",\n            \"BlkioWeight\": 0,\n            \"BlkioWeightDevice\": [],\n            \"BlkioDeviceReadBps\": [],\n            \"BlkioDeviceWriteBps\": [],\n            \"BlkioDeviceReadIOps\": [],\n            \"BlkioDeviceWriteIOps\": [],\n            \"CpuPeriod\": 0,\n            \"CpuQuota\": 0,\n            \"CpuRealtimePeriod\": 0,\n            \"CpuRealtimeRuntime\": 0,\n            \"CpusetCpus\": \"\",\n            \"CpusetMems\": \"\",\n            \"Devices\": [],\n            \"DeviceCgroupRules\": null,\n            \"DeviceRequests\": null,\n            \"MemoryReservation\": 0,\n            \"MemorySwap\": 536870912,\n            \"MemorySwappiness\": null,\n            \"OomKillDisable\": null,\n            \"PidsLimit\": null,\n            \"Ulimits\": null,\n            \"CpuCount\": 0,\n            \"CpuPercent\": 0,\n            \"IOMaximumIOps\": 0,\n            \"IOMaximumBandwidth\": 0,\n            \"MaskedPaths\": [\n                \"/proc/acpi\",\n                \"/proc/asound\",\n                \"/proc/interrupts\",\n                \"/proc/kcore\",\n                \"/proc/keys\",\n                \"/proc/latency_stats\",\n                \"/proc/sched_debug\",\n                \"/proc/scsi\",\n                \"/proc/timer_list\",\n                \"/proc/timer_stats\",\n                \"/sys/devices/virtual/powercap\",\n                \"/sys/firmware\"\n            ],\n            \"ReadonlyPaths\": [\n                \"/proc/bus\",\n                \"/proc/fs\",\n                \"/proc/irq\",\n                \"/proc/sys\",\n                \"/proc/sysrq-trigger\"\n            ]\n        },\n        \"Storage\": {\n            \"RootFS\": {\n                \"Snapshot\": {\n                    \"Name\": \"overlayfs\"\n                }\n            }\n        },\n        \"Mounts\": [],\n        \"Config\": {\n            \"Hostname\": \"9ab13e5a7ebd\",\n            \"Domainname\": \"\",\n            \"User\": \"\",\n            \"AttachStdin\": false,\n            \"AttachStdout\": true,\n            \"AttachStderr\": true,\n            \"ExposedPorts\": {\n                \"5432/tcp\": {}\n            },\n            \"Tty\": false,\n            \"OpenStdin\": false,\n            \"StdinOnce\": false,\n            \"Env\": [\n                \"POSTGRES_HOST_AUTH_METHOD=trust\",\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"GOSU_VERSION=1.19\",\n                \"LANG=en_US.utf8\",\n                \"PG_MAJOR=18\",\n                \"PG_VERSION=18.6\",\n                \"PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f\",\n                \"DOCKER_PG_LLVM_DEPS=llvm21-dev \\t\\tclang21\",\n                \"PGDATA=/var/lib/postgresql/18/docker\"\n            ],\n            \"Cmd\": [\n                \"postgres\"\n            ],\n            \"Image\": \"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n            \"Volumes\": {\n                \"/var/lib/postgresql\": {}\n            },\n            \"WorkingDir\": \"/\",\n            \"Entrypoint\": [\n                \"docker-entrypoint.sh\"\n            ],\n            \"Labels\": {\n                \"mc021.drill\": \"28e17f032857\"\n            },\n            \"StopSignal\": \"SIGINT\"\n        },\n        \"NetworkSettings\": {\n            \"SandboxID\": \"\",\n            \"SandboxKey\": \"\",\n            \"Ports\": {},\n            \"Networks\": {\n                \"none\": {\n                    \"IPAMConfig\": null,\n                    \"Links\": null,\n                    \"Aliases\": null,\n                    \"DriverOpts\": null,\n                    \"GwPriority\": 0,\n                    \"NetworkID\": \"3e7584ccc01e331c23dc0ca49b8e220e465eaf13cc7fcbec34f555e44d24b828\",\n                    \"EndpointID\": \"\",\n                    \"Gateway\": \"\",\n                    \"IPAddress\": \"\",\n                    \"MacAddress\": \"\",\n                    \"IPPrefixLen\": 0,\n                    \"IPv6Gateway\": \"\",\n                    \"GlobalIPv6Address\": \"\",\n                    \"GlobalIPv6PrefixLen\": 0,\n                    \"DNSNames\": null\n                }\n            }\n        },\n        \"ImageManifestDescriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:b1c1673a890fba8fae71d37210b4fd9a0b5cd0df8bb994a6bcc01d9cf8e1670c\",\n            \"size\": 2680,\n            \"annotations\": {\n                \"com.docker.official-images.bashbrew.arch\": \"arm64v8\",\n                \"org.opencontainers.image.base.digest\": \"sha256:e311ae748be7f56ae5cba304bc488f0786df68ee507513f654a5cc8597cffb42\",\n                \"org.opencontainers.image.base.name\": \"alpine:3.24\",\n                \"org.opencontainers.image.created\": \"2026-10-21T23:16:44Z\",\n                \"org.opencontainers.image.revision\": \"e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc\",\n                \"org.opencontainers.image.source\": \"https://github.com/docker-library/postgres.git#e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc:18/alpine3.24\",\n                \"org.opencontainers.image.url\": \"https://hub.docker.com/_/postgres\",\n                \"org.opencontainers.image.version\": \"18.6-alpine3.24\"\n            },\n            \"platform\": {\n                \"architecture\": \"arm64\",\n                \"os\": \"linux\",\n                \"variant\": \"v8\"\n            }\n        }\n    }\n]\n"
+    },
+    "39.stderr": {
+      "text": ""
+    },
+    "39.stdout": {
+      "text": "[\n    {\n        \"Id\": \"60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8\",\n        \"Created\": \"2026-10-24T14:29:56.247592252Z\",\n        \"Path\": \"docker-entrypoint.sh\",\n        \"Args\": [\n            \"postgres\"\n        ],\n        \"State\": {\n            \"Status\": \"running\",\n            \"Running\": true,\n            \"Paused\": false,\n            \"Restarting\": false,\n            \"OOMKilled\": false,\n            \"Dead\": false,\n            \"Pid\": 950,\n            \"ExitCode\": 0,\n            \"Error\": \"\",\n            \"StartedAt\": \"2026-10-24T14:29:56.314476043Z\",\n            \"FinishedAt\": \"0001-01-01T00:00:00Z\"\n        },\n        \"Image\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n        \"ResolvConfPath\": \"/var/lib/docker/containers/60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8/resolv.conf\",\n        \"HostnamePath\": \"/var/lib/docker/containers/60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8/hostname\",\n        \"HostsPath\": \"/var/lib/docker/containers/60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8/hosts\",\n        \"LogPath\": \"\",\n        \"Name\": \"/mc021-28e17f032857-restore\",\n        \"RestartCount\": 0,\n        \"Driver\": \"overlayfs\",\n        \"Platform\": \"linux\",\n        \"MountLabel\": \"\",\n        \"ProcessLabel\": \"\",\n        \"AppArmorProfile\": \"\",\n        \"ExecIDs\": null,\n        \"HostConfig\": {\n            \"Binds\": null,\n            \"ContainerIDFile\": \"\",\n            \"LogConfig\": {\n                \"Type\": \"local\",\n                \"Config\": {}\n            },\n            \"NetworkMode\": \"none\",\n            \"PortBindings\": {},\n            \"RestartPolicy\": {\n                \"Name\": \"no\",\n                \"MaximumRetryCount\": 0\n            },\n            \"AutoRemove\": false,\n            \"VolumeDriver\": \"\",\n            \"VolumesFrom\": null,\n            \"ConsoleSize\": [\n                0,\n                0\n            ],\n            \"CapAdd\": null,\n            \"CapDrop\": null,\n            \"CgroupnsMode\": \"private\",\n            \"Dns\": null,\n            \"DnsOptions\": [],\n            \"DnsSearch\": [],\n            \"ExtraHosts\": null,\n            \"GroupAdd\": null,\n            \"IpcMode\": \"private\",\n            \"Cgroup\": \"\",\n            \"Links\": null,\n            \"OomScoreAdj\": 0,\n            \"PidMode\": \"\",\n            \"Privileged\": false,\n            \"PublishAllPorts\": false,\n            \"ReadonlyRootfs\": false,\n            \"SecurityOpt\": null,\n            \"Tmpfs\": {\n                \"/var/lib/postgresql\": \"rw,size=256m\"\n            },\n            \"UTSMode\": \"\",\n            \"UsernsMode\": \"\",\n            \"ShmSize\": 67108864,\n            \"Runtime\": \"runc\",\n            \"Isolation\": \"\",\n            \"CpuShares\": 0,\n            \"Memory\": 268435456,\n            \"NanoCpus\": 1000000000,\n            \"CgroupParent\": \"\",\n            \"BlkioWeight\": 0,\n            \"BlkioWeightDevice\": [],\n            \"BlkioDeviceReadBps\": [],\n            \"BlkioDeviceWriteBps\": [],\n            \"BlkioDeviceReadIOps\": [],\n            \"BlkioDeviceWriteIOps\": [],\n            \"CpuPeriod\": 0,\n            \"CpuQuota\": 0,\n            \"CpuRealtimePeriod\": 0,\n            \"CpuRealtimeRuntime\": 0,\n            \"CpusetCpus\": \"\",\n            \"CpusetMems\": \"\",\n            \"Devices\": [],\n            \"DeviceCgroupRules\": null,\n            \"DeviceRequests\": null,\n            \"MemoryReservation\": 0,\n            \"MemorySwap\": 536870912,\n            \"MemorySwappiness\": null,\n            \"OomKillDisable\": null,\n            \"PidsLimit\": null,\n            \"Ulimits\": null,\n            \"CpuCount\": 0,\n            \"CpuPercent\": 0,\n            \"IOMaximumIOps\": 0,\n            \"IOMaximumBandwidth\": 0,\n            \"MaskedPaths\": [\n                \"/proc/acpi\",\n                \"/proc/asound\",\n                \"/proc/interrupts\",\n                \"/proc/kcore\",\n                \"/proc/keys\",\n                \"/proc/latency_stats\",\n                \"/proc/sched_debug\",\n                \"/proc/scsi\",\n                \"/proc/timer_list\",\n                \"/proc/timer_stats\",\n                \"/sys/devices/virtual/powercap\",\n                \"/sys/firmware\"\n            ],\n            \"ReadonlyPaths\": [\n                \"/proc/bus\",\n                \"/proc/fs\",\n                \"/proc/irq\",\n                \"/proc/sys\",\n                \"/proc/sysrq-trigger\"\n            ]\n        },\n        \"Storage\": {\n            \"RootFS\": {\n                \"Snapshot\": {\n                    \"Name\": \"overlayfs\"\n                }\n            }\n        },\n        \"Mounts\": [],\n        \"Config\": {\n            \"Hostname\": \"60a992a1de58\",\n            \"Domainname\": \"\",\n            \"User\": \"\",\n            \"AttachStdin\": false,\n            \"AttachStdout\": true,\n            \"AttachStderr\": true,\n            \"ExposedPorts\": {\n                \"5432/tcp\": {}\n            },\n            \"Tty\": false,\n            \"OpenStdin\": false,\n            \"StdinOnce\": false,\n            \"Env\": [\n                \"POSTGRES_HOST_AUTH_METHOD=trust\",\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"GOSU_VERSION=1.19\",\n                \"LANG=en_US.utf8\",\n                \"PG_MAJOR=18\",\n                \"PG_VERSION=18.6\",\n                \"PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f\",\n                \"DOCKER_PG_LLVM_DEPS=llvm21-dev \\t\\tclang21\",\n                \"PGDATA=/var/lib/postgresql/18/docker\"\n            ],\n            \"Cmd\": [\n                \"postgres\"\n            ],\n            \"Image\": \"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n            \"Volumes\": {\n                \"/var/lib/postgresql\": {}\n            },\n            \"WorkingDir\": \"/\",\n            \"Entrypoint\": [\n                \"docker-entrypoint.sh\"\n            ],\n            \"Labels\": {\n                \"mc021.drill\": \"28e17f032857\"\n            },\n            \"StopSignal\": \"SIGINT\"\n        },\n        \"NetworkSettings\": {\n            \"SandboxID\": \"5d309676d7e3f91de804e418004bbe5f6650f5dda66f691f95cda14ee8b68021\",\n            \"SandboxKey\": \"/var/run/docker/netns/5d309676d7e3\",\n            \"Ports\": {},\n            \"Networks\": {\n                \"none\": {\n                    \"IPAMConfig\": null,\n                    \"Links\": null,\n                    \"Aliases\": null,\n                    \"DriverOpts\": null,\n                    \"GwPriority\": 0,\n                    \"NetworkID\": \"3e7584ccc01e331c23dc0ca49b8e220e465eaf13cc7fcbec34f555e44d24b828\",\n                    \"EndpointID\": \"3d3d77b8b71cf25a2720bc6b3933b86fb7b52156aacc6a7fc9deff0ab49f1c8f\",\n                    \"Gateway\": \"\",\n                    \"IPAddress\": \"\",\n                    \"MacAddress\": \"\",\n                    \"IPPrefixLen\": 0,\n                    \"IPv6Gateway\": \"\",\n                    \"GlobalIPv6Address\": \"\",\n                    \"GlobalIPv6PrefixLen\": 0,\n                    \"DNSNames\": null\n                }\n            }\n        },\n        \"ImageManifestDescriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:b1c1673a890fba8fae71d37210b4fd9a0b5cd0df8bb994a6bcc01d9cf8e1670c\",\n            \"size\": 2680,\n            \"annotations\": {\n                \"com.docker.official-images.bashbrew.arch\": \"arm64v8\",\n                \"org.opencontainers.image.base.digest\": \"sha256:e311ae748be7f56ae5cba304bc488f0786df68ee507513f654a5cc8597cffb42\",\n                \"org.opencontainers.image.base.name\": \"alpine:3.24\",\n                \"org.opencontainers.image.created\": \"2026-10-21T23:16:44Z\",\n                \"org.opencontainers.image.revision\": \"e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc\",\n                \"org.opencontainers.image.source\": \"https://github.com/docker-library/postgres.git#e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc:18/alpine3.24\",\n                \"org.opencontainers.image.url\": \"https://hub.docker.com/_/postgres\",\n                \"org.opencontainers.image.version\": \"18.6-alpine3.24\"\n            },\n            \"platform\": {\n                \"architecture\": \"arm64\",\n                \"os\": \"linux\",\n                \"variant\": \"v8\"\n            }\n        }\n    }\n]\n"
+    },
+    "40.stderr": {
+      "text": "********************************************************************************\nWARNING: POSTGRES_HOST_AUTH_METHOD has been set to \"trust\". This will allow\n         anyone with access to the Postgres port to access your database without\n         a password, even if POSTGRES_PASSWORD is set. See PostgreSQL\n         documentation about \"trust\":\n         https://www.postgresql.org/docs/current/auth-trust.html\n         In Docker's default configuration, this is effectively any other\n         container on the same system.\n\n         It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace\n         it with \"-e POSTGRES_PASSWORD=password\" instead to set a password in\n         \"docker run\".\n********************************************************************************\nsh: locale: not found\n2026-10-24 14:29:56.573 UTC [47] WARNING:  no usable system locales were found\ninitdb: warning: enabling \"trust\" authentication for local connections\ninitdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.\n2026-10-24 14:29:56.998 UTC [1] LOG:  starting PostgreSQL 18.6 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit\n2026-10-24 14:29:56.998 UTC [1] LOG:  listening on IPv4 address \"0.0.0.0\", port 5432\n2026-10-24 14:29:56.998 UTC [1] LOG:  listening on IPv6 address \"::\", port 5432\n2026-10-24 14:29:57.001 UTC [1] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-10-24 14:29:57.003 UTC [80] LOG:  database system was shut down at 2026-10-24 14:29:56 UTC\n2026-10-24 14:29:57.006 UTC [1] LOG:  database system is ready to accept connections\n2026-10-24 14:29:57.351 UTC [140] ERROR:  insert or update on table \"links\" violates foreign key constraint \"links_record_id_fkey\"\n2026-10-24 14:29:57.351 UTC [140] DETAIL:  Key (record_id)=(999) is not present in table \"records\".\n2026-10-24 14:29:57.351 UTC [140] STATEMENT:  INSERT INTO drill.links VALUES (999,999);\n2026-10-24 14:29:57.389 UTC [147] ERROR:  new row for relation \"records\" violates check constraint \"records_amount_check\"\n2026-10-24 14:29:57.389 UTC [147] DETAIL:  Failing row contains (102, bad, -1).\n2026-10-24 14:29:57.389 UTC [147] STATEMENT:  INSERT INTO drill.records(label,amount) VALUES ('bad',-1);\n2026-10-24 14:29:57.426 UTC [154] ERROR:  duplicate key value violates unique constraint \"records_pkey\"\n2026-10-24 14:29:57.426 UTC [154] DETAIL:  Key (id)=(1) already exists.\n2026-10-24 14:29:57.426 UTC [154] STATEMENT:  INSERT INTO drill.records(id,label,amount) VALUES (1,'duplicate',0);\n"
+    },
+    "40.stdout": {
+      "text": "The files belonging to this database system will be owned by user \"postgres\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"en_US.utf8\".\nThe default database encoding has accordingly been set to \"UTF8\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are enabled.\n\nfixing permissions on existing directory /var/lib/postgresql/18/docker ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... posix\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... UTC\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\n\nSuccess. You can now start the database server using:\n\n    pg_ctl -D /var/lib/postgresql/18/docker -l logfile start\n\nwaiting for server to start....2026-10-24 14:29:56.768 UTC [60] LOG:  starting PostgreSQL 18.6 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit\n2026-10-24 14:29:56.768 UTC [60] LOG:  listening on Unix socket \"/var/run/postgresql/.s.PGSQL.5432\"\n2026-10-24 14:29:56.770 UTC [66] LOG:  database system was shut down at 2026-10-24 14:29:56 UTC\n2026-10-24 14:29:56.771 UTC [60] LOG:  database system is ready to accept connections\n done\nserver started\n\n/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*\n\nwaiting for server to shut down....2026-10-24 14:29:56.873 UTC [60] LOG:  received fast shutdown request\n2026-10-24 14:29:56.873 UTC [60] LOG:  aborting any active transactions\n2026-10-24 14:29:56.874 UTC [60] LOG:  background worker \"logical replication launcher\" (PID 69) exited with exit code 1\n2026-10-24 14:29:56.874 UTC [64] LOG:  shutting down\n2026-10-24 14:29:56.874 UTC [64] LOG:  checkpoint starting: shutdown immediate\n2026-10-24 14:29:56.874 UTC [64] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/1765F08, redo lsn=0/1765F08\n2026-10-24 14:29:56.878 UTC [60] LOG:  database system is shut down\n done\nserver stopped\n\nPostgreSQL init process complete; ready for start up.\n\n"
+    },
+    "41.stderr": {
+      "text": ""
+    },
+    "41.stdout": {
+      "text": "Flag --time has been deprecated, use --timeout instead\n60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8\n"
+    },
+    "42.stderr": {
+      "text": ""
+    },
+    "42.stdout": {
+      "text": "[\n    {\n        \"Id\": \"60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8\",\n        \"Created\": \"2026-10-24T14:29:56.247592252Z\",\n        \"Path\": \"docker-entrypoint.sh\",\n        \"Args\": [\n            \"postgres\"\n        ],\n        \"State\": {\n            \"Status\": \"exited\",\n            \"Running\": false,\n            \"Paused\": false,\n            \"Restarting\": false,\n            \"OOMKilled\": false,\n            \"Dead\": false,\n            \"Pid\": 0,\n            \"ExitCode\": 0,\n            \"Error\": \"\",\n            \"StartedAt\": \"2026-10-24T14:29:56.314476043Z\",\n            \"FinishedAt\": \"2026-10-24T14:29:57.764942169Z\"\n        },\n        \"Image\": \"sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n        \"ResolvConfPath\": \"/var/lib/docker/containers/60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8/resolv.conf\",\n        \"HostnamePath\": \"/var/lib/docker/containers/60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8/hostname\",\n        \"HostsPath\": \"/var/lib/docker/containers/60a992a1de580db0d65a27288bd09c9b94912e54a7902a240cceb6f8d358a2f8/hosts\",\n        \"LogPath\": \"\",\n        \"Name\": \"/mc021-28e17f032857-restore\",\n        \"RestartCount\": 0,\n        \"Driver\": \"overlayfs\",\n        \"Platform\": \"linux\",\n        \"MountLabel\": \"\",\n        \"ProcessLabel\": \"\",\n        \"AppArmorProfile\": \"\",\n        \"ExecIDs\": null,\n        \"HostConfig\": {\n            \"Binds\": null,\n            \"ContainerIDFile\": \"\",\n            \"LogConfig\": {\n                \"Type\": \"local\",\n                \"Config\": {}\n            },\n            \"NetworkMode\": \"none\",\n            \"PortBindings\": {},\n            \"RestartPolicy\": {\n                \"Name\": \"no\",\n                \"MaximumRetryCount\": 0\n            },\n            \"AutoRemove\": false,\n            \"VolumeDriver\": \"\",\n            \"VolumesFrom\": null,\n            \"ConsoleSize\": [\n                0,\n                0\n            ],\n            \"CapAdd\": null,\n            \"CapDrop\": null,\n            \"CgroupnsMode\": \"private\",\n            \"Dns\": null,\n            \"DnsOptions\": [],\n            \"DnsSearch\": [],\n            \"ExtraHosts\": null,\n            \"GroupAdd\": null,\n            \"IpcMode\": \"private\",\n            \"Cgroup\": \"\",\n            \"Links\": null,\n            \"OomScoreAdj\": 0,\n            \"PidMode\": \"\",\n            \"Privileged\": false,\n            \"PublishAllPorts\": false,\n            \"ReadonlyRootfs\": false,\n            \"SecurityOpt\": null,\n            \"Tmpfs\": {\n                \"/var/lib/postgresql\": \"rw,size=256m\"\n            },\n            \"UTSMode\": \"\",\n            \"UsernsMode\": \"\",\n            \"ShmSize\": 67108864,\n            \"Runtime\": \"runc\",\n            \"Isolation\": \"\",\n            \"CpuShares\": 0,\n            \"Memory\": 268435456,\n            \"NanoCpus\": 1000000000,\n            \"CgroupParent\": \"\",\n            \"BlkioWeight\": 0,\n            \"BlkioWeightDevice\": [],\n            \"BlkioDeviceReadBps\": [],\n            \"BlkioDeviceWriteBps\": [],\n            \"BlkioDeviceReadIOps\": [],\n            \"BlkioDeviceWriteIOps\": [],\n            \"CpuPeriod\": 0,\n            \"CpuQuota\": 0,\n            \"CpuRealtimePeriod\": 0,\n            \"CpuRealtimeRuntime\": 0,\n            \"CpusetCpus\": \"\",\n            \"CpusetMems\": \"\",\n            \"Devices\": [],\n            \"DeviceCgroupRules\": null,\n            \"DeviceRequests\": null,\n            \"MemoryReservation\": 0,\n            \"MemorySwap\": 536870912,\n            \"MemorySwappiness\": null,\n            \"OomKillDisable\": null,\n            \"PidsLimit\": null,\n            \"Ulimits\": null,\n            \"CpuCount\": 0,\n            \"CpuPercent\": 0,\n            \"IOMaximumIOps\": 0,\n            \"IOMaximumBandwidth\": 0,\n            \"MaskedPaths\": [\n                \"/proc/acpi\",\n                \"/proc/asound\",\n                \"/proc/interrupts\",\n                \"/proc/kcore\",\n                \"/proc/keys\",\n                \"/proc/latency_stats\",\n                \"/proc/sched_debug\",\n                \"/proc/scsi\",\n                \"/proc/timer_list\",\n                \"/proc/timer_stats\",\n                \"/sys/devices/virtual/powercap\",\n                \"/sys/firmware\"\n            ],\n            \"ReadonlyPaths\": [\n                \"/proc/bus\",\n                \"/proc/fs\",\n                \"/proc/irq\",\n                \"/proc/sys\",\n                \"/proc/sysrq-trigger\"\n            ]\n        },\n        \"Storage\": {\n            \"RootFS\": {\n                \"Snapshot\": {\n                    \"Name\": \"overlayfs\"\n                }\n            }\n        },\n        \"Mounts\": [],\n        \"Config\": {\n            \"Hostname\": \"60a992a1de58\",\n            \"Domainname\": \"\",\n            \"User\": \"\",\n            \"AttachStdin\": false,\n            \"AttachStdout\": true,\n            \"AttachStderr\": true,\n            \"ExposedPorts\": {\n                \"5432/tcp\": {}\n            },\n            \"Tty\": false,\n            \"OpenStdin\": false,\n            \"StdinOnce\": false,\n            \"Env\": [\n                \"POSTGRES_HOST_AUTH_METHOD=trust\",\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"GOSU_VERSION=1.19\",\n                \"LANG=en_US.utf8\",\n                \"PG_MAJOR=18\",\n                \"PG_VERSION=18.6\",\n                \"PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f\",\n                \"DOCKER_PG_LLVM_DEPS=llvm21-dev \\t\\tclang21\",\n                \"PGDATA=/var/lib/postgresql/18/docker\"\n            ],\n            \"Cmd\": [\n                \"postgres\"\n            ],\n            \"Image\": \"postgres@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5\",\n            \"Volumes\": {\n                \"/var/lib/postgresql\": {}\n            },\n            \"WorkingDir\": \"/\",\n            \"Entrypoint\": [\n                \"docker-entrypoint.sh\"\n            ],\n            \"Labels\": {\n                \"mc021.drill\": \"28e17f032857\"\n            },\n            \"StopSignal\": \"SIGINT\"\n        },\n        \"NetworkSettings\": {\n            \"SandboxID\": \"\",\n            \"SandboxKey\": \"\",\n            \"Ports\": {},\n            \"Networks\": {\n                \"none\": {\n                    \"IPAMConfig\": null,\n                    \"Links\": null,\n                    \"Aliases\": null,\n                    \"DriverOpts\": null,\n                    \"GwPriority\": 0,\n                    \"NetworkID\": \"3e7584ccc01e331c23dc0ca49b8e220e465eaf13cc7fcbec34f555e44d24b828\",\n                    \"EndpointID\": \"\",\n                    \"Gateway\": \"\",\n                    \"IPAddress\": \"\",\n                    \"MacAddress\": \"\",\n                    \"IPPrefixLen\": 0,\n                    \"IPv6Gateway\": \"\",\n                    \"GlobalIPv6Address\": \"\",\n                    \"GlobalIPv6PrefixLen\": 0,\n                    \"DNSNames\": null\n                }\n            }\n        },\n        \"ImageManifestDescriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:b1c1673a890fba8fae71d37210b4fd9a0b5cd0df8bb994a6bcc01d9cf8e1670c\",\n            \"size\": 2680,\n            \"annotations\": {\n                \"com.docker.official-images.bashbrew.arch\": \"arm64v8\",\n                \"org.opencontainers.image.base.digest\": \"sha256:e311ae748be7f56ae5cba304bc488f0786df68ee507513f654a5cc8597cffb42\",\n                \"org.opencontainers.image.base.name\": \"alpine:3.24\",\n                \"org.opencontainers.image.created\": \"2026-10-21T23:16:44Z\",\n                \"org.opencontainers.image.revision\": \"e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc\",\n                \"org.opencontainers.image.source\": \"https://github.com/docker-library/postgres.git#e00e1bd34ec5c8a8e7ad89b273b3d42efaf6d5bc:18/alpine3.24\",\n                \"org.opencontainers.image.url\": \"https://hub.docker.com/_/postgres\",\n                \"org.opencontainers.image.version\": \"18.6-alpine3.24\"\n            },\n            \"platform\": {\n                \"architecture\": \"arm64\",\n                \"os\": \"linux\",\n                \"variant\": \"v8\"\n            }\n        }\n    }\n]\n"
+    }
+  }
+}

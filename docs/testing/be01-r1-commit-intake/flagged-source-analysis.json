@@ -1,0 +1,22 @@
+{
+  "path": "docs/testing/inta-returns/environment/env-intamvnmoems3pd/provision-command.py",
+  "bytes": 9186,
+  "sha256": "1200bddd386032bab5e820fb119a4e924de1d1c2012c14a697dbb2da9c7f6d12",
+  "method": "read-only AST/line inspection; never execute provision script",
+  "password_assignment_line": 13,
+  "password_assignment": "runtime call secrets.token_hex(32), not a literal credential",
+  "flagged_line": 46,
+  "supporting_lines": {
+    "13": "password=secrets.token_hex(32); dsn=f'postgres://mc002_inta:{password}@127.0.0.1:15457/mc002_inta?sslmode=disable'",
+    "15": "def clean(s):return s.replace(password,'REDACTED').replace(dsn,'REDACTED_DSN')",
+    "16": "def save():",
+    "17": " data=json.dumps(j,indent=2)+'\\n';assert password not in data and dsn not in data",
+    "18": " (raw/'environment.json').write_text(data);(export/'environment.json').write_text(data)",
+    "25": "def private_write(p,text):",
+    "26": " fd=os.open(p,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)",
+    "27": " with os.fdopen(fd,'w') as f:f.write(text)",
+    "28": " assert stat.S_IMODE(p.stat().st_mode)==0o600",
+    "46": " private_write(private/'postgres.env','POSTGRES_PASSWORD='+password+'\\n')"
+  },
+  "authority": "narrow false-positive evidence, not scanner clearance or whole-file security proof"
+}

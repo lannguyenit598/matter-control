@@ -1,0 +1,70 @@
+{
+  "task": "MC-002-INTA-QA-CLOSEOUT-R1",
+  "kind": "outputs manifest + lateral-review collision record + correction disclosures (self-excluding)",
+  "author": "Actual OpenCode (OpenCode harness), model GLM-5.3-Flash Free (provider opencode) — independent nonauthor reviewer, original session of this review task",
+  "base": {"branch": "codex/unified-project-flow", "head": "a62d838791ba188838c4ff00b7b6e265ac775056", "head_unchanged": true},
+  "runtime_statement": "Review executed ZERO application/guard/evaluator/selfcheck/launcher/build/container/DB/HTTP operations; new_runtime_execution=NOT_RUN; no source/config/dependency mutation; no commit; no global agent/provider/account changes.",
+  "outputs_by_this_session": [
+    {"path": "docs/testing/inta-returns/qa/closeout-review-r1/review-inputs-addendum.json", "sha256": "f9b11d3d2726154a9121164a6200af4020978e9690a1def67795a8687b6aa78f", "bytes": 7887, "mtime_utc": "2026-10-26T06:29:54Z*", "note": "frozen byte-exact despite disclosed defects (CORR-01/CORR-02 below + already in-file corrected future-invalid pin stamp) so the lateral attempt's audit description of its state remains valid"},
+    {"path": "docs/testing/inta-returns/qa/closeout-review-r1/required-rows.json", "sha256": "c467e064333e57ad10d87ab3f4870e2b75f4936671256095081537c83b6a590d", "bytes": 68383, "mtime_utc": "2026-10-26T06:53:15Z", "note": "36-row per-row machine coverage; verdicts 33 PARTIAL / 3 INSUFFICIENT_EVIDENCE / 0 SUPPORTED / 0 FAIL"},
+    {"path": "docs/testing/inta-returns/qa/closeout-review-r1/verification-log.json", "sha256": "3979b23d7ce059c1f569b3e324587aabfda8f040630b66a5de44c354b5d3e2e3", "bytes": 16767, "mtime_utc": "2026-10-26T06:55:00Z", "note": "S0..S12 step log (13 steps); final content predates lateral-set discovery, discovery is recorded here"},
+    {"path": "docs/reviews/inta-opencode-closeout-review-r1-original-session.md", "sha256": "dcc0c5bb736b35ca7f7ec6f950bdfeeec377dc39a6f363d27e8dc0763f7874da", "bytes": 22245, "mtime_utc": "2026-10-26T07:05:02Z", "note": "this session's final review narrative under a non-colliding filename; originally reserved filename was occupied by the lateral set (see collision)"}
+  ],
+  "discovered_lateral_review_artifacts": [
+    {"path": "docs/reviews/inta-opencode-closeout-review-r1.md", "sha256": "11d7994b1625f2fca262bc9e725c4ec56f9847d14be37d890f5fb902e9cb6ee5", "bytes": 18228, "mtime_utc": "2026-10-26T06:54:22Z"},
+    {"path": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/inputs-pinned.json", "sha256": "cb20fd2780386e1d19f411c44a23bed2a3251cb70fd411b7c403076da262dcda", "bytes": 8846, "mtime_utc": "2026-10-26T06:49:52Z"},
+    {"path": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/checks-log.json", "sha256": "fc6bdb4e14db7d4a7dd83a72f19f2a18ada5d17f91968b5300b449ef0844ca9e", "bytes": 8101, "mtime_utc": "2026-10-26T06:50:55Z"},
+    {"path": "docs/testing/inta-returns/qa/closeout-review-r1/r1-addendum/required36-coverage.json", "sha256": "7632d7933833cc144caeedb4c98f61586621e925d1763b9af4b4617c9c83fcf8", "bytes": 17846, "mtime_utc": "2026-10-26T06:53:11Z", "internal_utc": "2026-10-26T06:51:26Z"}
+  ],
+  "collision_record": {
+    "reserved_paths_by_this_session": ["docs/reviews/inta-opencode-closeout-review-r1.md", "docs/testing/inta-returns/qa/closeout-review-r1/"],
+    "reservation_evidence": "review-inputs-addendum.json outputs_reserved block (verified absent before creation), pinned early in this session",
+    "what_happened": "a second artifact set appeared claiming the same role (self-description: 'Actual OpenCode (independent nonauthor reviewer), session 2026-10-26 R1-addendum') and wrote the exact reserved review-doc filename while treating this session's outputs as a 'prior incomplete OpenCode attempt' and preserving them unmodified",
+    "this_session_action": "NO overwrite, NO deletion, NO lateral-byte mutation; this session's narrative moved to a distinct filename; decision authority for canonical deliverable is deferred to the Product Owner (via Codex intake)",
+    "invocation_verifiability": "this session has no record of the lateral actor's invocation; per governance, external-agent outputs require verified invocation; PO holds the authority to adjudicate which sessions were launched"
+  },
+  "cross_verification_results_on_lateral_set": {
+    "pin_accuracy": "ALL stated pins match live bytes: 7-input Codex-addendum table (27a2a7e3/b3a677cd/677cd24f/fed373b8/7e8ca27b/82a23090/55989161), 8 runner-source pins (incl. 104abf3f/d018f68f/f9432142), 11 shared-evidence refs (7 stage intakes eb039811/0c3a7eda/246217b9/06f89433/490230d4/5dd3a8dc/7a21ac5e, abcaa7fd, 9b4f7293, b211bef8, 9a47edaa, e1df818a, 6606a5da), packet claims 75/98873 and 18/64321 consistent with this session's own bulk verifications; 'required36.json original matrix pinned 71578d6f' is the embedded original-matrix hash (integration-acceptance-matrix.md), correct usage consistent with this session's own wording",
+    "verdict_agreement": "required36 row-set set-identical to required-rows.json (36 rows); verdict counts identical (33 PARTIAL / 3 INSUFFICIENT_EVIDENCE: INT-PRIV-01, INT-ISO-03, INT-CONF-01); same FEVAL/R1-C line findings as this session's independent determinations",
+    "execution_boundary": "its stated zero-execution boundary is consistent with its checks-log Q01..Q21 (all read-only operations); no runtime execution claimed",
+    "inaccuracies_found_in_lateral_descriptions_of_this_session": [
+      "records pinned_at_utc as 2026-10-26T07:45:00Z — that value was superseded in-file via pinned_at_utc_note + timestamp_correction_utc 2026-10-26T06:40:00Z (current field null); lateral description uses pre-correction state",
+      "characterizes the 63d12ea9 shadow hash as 'unresolved provenance history' and 'stopped without other outputs' — the current in-file bytes carry sha256_at_initial_pin_and_read + sha256_recheck + recheck_note resolving the live-value question (27a2a7e3 == Codex freeze 06:36:44Z; final verdicts anchored on unchanged packet 677cd24f)",
+      "claims credential-pattern-scan-r1.json pin 'malformed (62 hex)' — false as stated: current pin is 64 hex with a one-character value error (position 55: recorded c, live d), and the lateral JSON itself quotes prior_recorded as the live hash (copy error, internally inconsistent)"
+    ]
+  },
+  "corrections_disclosed_by_this_session": {
+    "CORR-01": {
+      "file": "docs/testing/inta-returns/qa/closeout-review-r1/review-inputs-addendum.json",
+      "defect": "credential-pattern-scan-r1.json pin contains a one-hex-character transcription error at position 55 (recorded ...f5e282c6d661b26b, live ...f5e282d6d661b26b); both are 64 hex, so the lateral '62-hex malformed' wording is wrong while its substance (pin != live bytes) is correct",
+      "corrected_value": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df8f5e282d6d661b26b",
+      "verified": "recomputed live this session and identical to the live R1 packet target",
+      "handling": "addendum left byte-frozen; upward-declared here and in the final review narrative (CORR-01)"
+    },
+    "CORR-02": {
+      "file": "docs/testing/inta-returns/qa/closeout-review-r1/review-inputs-addendum.json",
+      "defect": "cites a raw pin-log ('see raw output in closeout-review-r1 pin-log') that was never materialized in the evidence directory",
+      "impact": "dangling reference only; all pin facts reconstructible from verification-log.json S-steps (hash-before-read ordering) and the addendum's own per-file pin list",
+      "handling": "disclosed, not back-filled; addendum stays frozen"
+    },
+    "previously_self_corrected": "future-invalid pinned_at_utc 2026-10-26T07:45:00Z corrected in-file to null with timestamp_correction_utc 2026-10-26T06:40:00Z during the session; no further action"
+  },
+  "time_sequencing_anomaly": "session-local timestamps are mutually inconsistent across phases (07:45:00Z future-invalid stamp vs corrected 06:40Z; addendum mtime 06:29:54Z vs in-file observation references 06:39-06:44Z; lateral checks-log closes 'before 07:10:00Z' with final clock 06:48:35Z while its doc lands 06:54:22Z). Cross-session sequencing must rely on file mtimes (recorded above) and hash-before-read guarantees, not session clock claims. Resp:'unique per-session output suffixes; serialized review rounds' is a Codex orchestration improvement item, not a blocker.",
+  "recommendation_record": {
+    "primary": "CHANGES_REQUIRED — narrow source rework of R1 validation tooling before any new runtime cue: runner import os + typed-JSON marshaling (no bash-boolean interpolation) + negation-safe lsof exit capture + pre_probe_err forwarding + fail-closed unread-verdict handling + set -e discipline + runner-path selfchecks; evaluator listener must be positively False (None=LISTENER_UNKNOWN fail-closed), real-int requestCount (bool rejected), strict cleanShutdown is True, tightened empty-error handling, +3 recorded vectors as regression tests; observer atomic durable writes/bounded wait/identity validation/trap cleanup/per-attempt retention; launcher proposal: real guards load path on installed Node + bounded env allowlist + spawn lifecycle + provenance correction (execution handoff line 38, not contract §2) + nested-symlink privacy check",
+    "parallel_needs_scope_decision": "never-listen/launcher acceptance semantics: contract §2 neither froze a direct-CLI launch literal nor defines launcher-based 22/22 subcheck acceptance; explicit contract §2 amendment decision required (PO-owned; Claude may draft; no self-amendment)",
+    "unchanged_determinations": "FEVAL-F01..F05 CONFIRMED; R1-C01..C04 CONFIRMED; 36-row verdicts 33 PARTIAL / 3 INSUFFICIENT_EVIDENCE / 0 SUPPORTED / 0 FAIL; no 36/36-pass claim; no formal PASS/gate promotion"
+  },
+  "gates_not_released": ["R1 fix assignment (Codex)", "bounded runtime cue (after fixes + scope decision)", "teardown/Next-termination observations", "actual-secret-value scan", "INT-CONF-01 conformance (Claude)", "production/cost (PO)"],
+  "preserved_limits": "T11c OUTCOME_UNKNOWN; Next termination NOT_OBSERVED; owned-PG final stop not executed; Go direct wait NOT_OBSERVED; actual secret scan NOT_ESTABLISHED; hosted CI NOT_RUN; 51x NOT_RUN formal ledger untouched; deferred D-01..D-13,D-15 and blocked D-14 unchanged",
+  "po_adjudication": {
+    "recorded_utc": "2026-10-26T07:07:02Z",
+    "question_asked": "lateral review disposition (three options presented)",
+    "po_response": "Adopt lateral as 2nd round (Recommended) — PO confirms the lateral OpenCode session was legitimately launched",
+    "disposition": "lateral doc + r1-addendum ADOPTED as review round 2 per PO decision; this session's artifacts remain the round-1 record incl. the deepest per-row binding (required-rows.json); Codex intake merges both rounds",
+    "statuses_after_decision": "all four lateral artifacts: PRESERVED-UNMODIFIED then ADOPTED-ROUND-2 (PO); this session's five outputs: REVIEW-ROUND-1-EVIDENCE (current)",
+    "lineage_note": "append-only edits to this manifest for the adjudication record; intermediate hashes: pre-adjudication 7e35c75ca07dd18d9e8c5b253da96456547f6c807a6a0481b203a942353c164c; a first adjudication draft stamped 07:12:00Z was corrected to the observed clock 07:07:02Z before its hash became an anchor (same future-stamp class of error disclosed in review-inputs-addendum.json); final sha256 of this manifest is quoted in the final return message",
+    "supersedes": "the 'needs PO adjudication / pending' wording in collision_record.invocation_verifiability and residual-risk statements in the review narrative remain accurate as of their writing time; this block resolves them forward"
+  },
+  "self_exclusion": "This manifest excludes itself from its own hash list; it mutates nothing and revokes nothing. It is review-owned evidence, not a final 36-case acceptance, not a runtime cue, not an approval."
+}

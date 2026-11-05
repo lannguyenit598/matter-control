@@ -1,0 +1,235 @@
+{
+ "generated_utc": "2026-10-31T15:32:12Z",
+ "identity": "Actual OpenCode independent QA",
+ "task": "MC-OPENCODE-ADR006-INDEPENDENT-TESTING-20261030 (portability addendum)",
+ "candidate_head": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+ "scope": "New reviewer outputs for PORT-01..12 only; prior Stage A outputs unchanged and not re-hashed here.",
+ "safety_note": "'hunter2' appears only as a deliberately invalid credential literal in a fail-closed negative renderer case; 'qa-synth-r2-secret' is a synthetic marker emitted by the owned stub. No real secret or credential is present.",
+ "files": [
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port01-fe-profile-tests/json.copy.json",
+   "bytes": 2786,
+   "sha256": "e23697d4ede0aa793979dceb59c50997e9292af26dbcd2d30500c6e7b3b04540"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port01-fe-profile-tests/meta.json",
+   "bytes": 881,
+   "sha256": "8a521ed5861b177feb05f7a53b5a10d3feca090cd0b177be064c4159a1e7d698"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port01-fe-profile-tests/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port01-fe-profile-tests/stdout.final",
+   "bytes": 207,
+   "sha256": "7f9df499286a0ef3592b0f58db623b9f099d25304f4b0fa8265dee6d80026f75"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port01-renderer/meta.json",
+   "bytes": 553,
+   "sha256": "2100328e7031513660ed133df5f8dde59b72525d6dfd91a6e713daba7043f351"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port01-renderer/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port01-renderer/stdout.final",
+   "bytes": 478,
+   "sha256": "024580bd4a09f7b86d8d1aea50ee1c172d5129d7a4c996798158b825ef34ac1e"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port06-08-render/meta.json",
+   "bytes": 621,
+   "sha256": "d5efa1133bec4da54c766a2951c0c0f1858cdf878567eb6094e079e94b84c090"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port06-08-render/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port06-08-render/stdout.final",
+   "bytes": 7152,
+   "sha256": "cd593a47a72198264fc99f342e0abcd74d1086bde5d0c04754c682e48b5c21ac"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port07-secrets/meta.json",
+   "bytes": 613,
+   "sha256": "a4a511ddbeb0ebc56911b3fd373315bb9abbeecda14c97c467a42e9e4cfd6fc9"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port07-secrets/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port07-secrets/stdout.final",
+   "bytes": 1845,
+   "sha256": "abe7d04b0d4025707af7e90496b88f9f043a2dab3547b672a6dda8c8e4b178d2"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port08-caddy-validate/meta.json",
+   "bytes": 624,
+   "sha256": "3394e82c4e6dc0adf3dcf97b35b6f691bfe352967aae84fbee9bc23154df373d"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port08-caddy-validate/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port08-caddy-validate/stdout.final",
+   "bytes": 2048,
+   "sha256": "97bfb1a91f8dedb11eda520c0a45a3c94e60a62b69a8a40ee2cd5b4765a2375e"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port09-ttl/meta.json",
+   "bytes": 610,
+   "sha256": "3a438a3d1e61b09f01ff7c3969ff8f2692032064d219f5e60ad782036290fac7"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port09-ttl/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port09-ttl/stdout.final",
+   "bytes": 1413,
+   "sha256": "6c416b4617971e5e29e1c8bdbe384f2d54d6aa2ead3da615bf81b3a00df4d6dc"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-durable-composition/json.copy.json",
+   "bytes": 58284,
+   "sha256": "b5bd9df39d97b9c36d17881f807f7078745cd5767a4b59e233160a9144b4cc7e"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-durable-composition/meta.json",
+   "bytes": 1031,
+   "sha256": "22a27ca58784798058a061aed0769c4715bb2f4849aa90129cb07488d2b7ba6a"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-durable-composition/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-durable-composition/stdout.final",
+   "bytes": 210,
+   "sha256": "f848696a9a4b113e767b743cc2590394b13db1ce9e631ddb41a06c234146c151"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-recount/meta.json",
+   "bytes": 610,
+   "sha256": "c39e4e9becb42a1b1d9ec587c1a6d3ce77a40ff77349c0fd4079a725ae9508f4"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-recount/stderr.final",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/commands/portability-port12-recount/stdout.final",
+   "bytes": 9184,
+   "sha256": "ffe7138706d692959ddeb372c8e3e3c799cfa595cee0d344e9fd08eb2c02c45e"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/case-results-portability.json",
+   "bytes": 24860,
+   "sha256": "c1c7f2f91a9e02d2aeef962dae90128af6144fff7b5ed0c4e42010429bff6bab"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/drift-concurrent-writer.json",
+   "bytes": 6106,
+   "sha256": "8a0dd04e588e627b51bb1f1221f444c2285839c46ace4fc284c8d314891de0ac"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/identity.json",
+   "bytes": 1033,
+   "sha256": "7ccdcfa54978181f978ccca5ebb94b9dbfe1ba3ead838e3bbb963f44c020acac"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/input-repins.json",
+   "bytes": 6848,
+   "sha256": "f113968d7f86ba49ed1d6233063fee88da787d7cc3a19100cd21b2bb71c878b5"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/outputs-manifest.json",
+   "bytes": 10550,
+   "sha256": "7a5a086e4c926fc486e9f878e697c0ad57d3b44fa1ca665503e270fbc27b4ea9"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/port06-08-render-matrix.py",
+   "bytes": 7023,
+   "sha256": "e2d2776caee3b6fb52326ea69a0eb7602818f379ce28a20aee923b1aee121fcd"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/port07-secrets-probe.sh",
+   "bytes": 6113,
+   "sha256": "ca62a031e85956f5583e6596c81e7135abe2e491270d6b71a96e935046754ac6"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/port08-caddy-validate.py",
+   "bytes": 1692,
+   "sha256": "f45fb2c89aab2fddacbd29c4cc1e126d29cedb28a7766d9b64acb835b951d170"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/port09-ttl-compare.py",
+   "bytes": 3976,
+   "sha256": "f74b9953d9a9f7d4145886ab66a4c7ad289e9b5144c8d445aab17b585c2ba2d1"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/port12-recount.py",
+   "bytes": 3592,
+   "sha256": "c478c3ce48d83d3f9d2d2502f1d095a20a8ceaac8f62c9fdaeab4ad050b5ed99"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-cloud-run-sa1.json",
+   "bytes": 822,
+   "sha256": "dce154f60da806602e9a2bef174d916e54cf39902105e0e3fe6d7a38071f5274"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-cloud-run-sa2.json",
+   "bytes": 822,
+   "sha256": "a9c8b0d2d454d8a37dfa770ef1ef66f58b5732fc95c08756684424cf34081006"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/qa-values/values-compute-engine.json",
+   "bytes": 1042,
+   "sha256": "af3bb6c521daebba816c2a05477b9c10e4f2999bcbce89f3b362030bbd5b909f"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1/migrate-job.yaml",
+   "bytes": 2097,
+   "sha256": "505489bdcb27b22a1ebaa23dd090bf5c9664a6d84fcc9764e32bc0ae84ee6d17"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa1/service.yaml",
+   "bytes": 3600,
+   "sha256": "595614b9d1003a4ed6f6c42217e445cd9c184e2c19f3fbe27dfe22ac78acacac"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa2/migrate-job.yaml",
+   "bytes": 2097,
+   "sha256": "202a878b7d91862a90d9b2058bfc70fcd773b6e9866ccd1ba7f739c34b3204cc"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/cloud-run-sa2/service.yaml",
+   "bytes": 3600,
+   "sha256": "ca05d9e9f6053a299f7314000db86d82ebbdf77aa5a10057111dfcc33369364b"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/renders/compute-engine/cloud-init.yaml",
+   "bytes": 7115,
+   "sha256": "ce7b89261919b3f54df848dd178eb58a95000abe1f6bad74625bcf723f40a9f3"
+  },
+  {
+   "path": "docs/testing/opencode-adr006-independent-testing-20261030-r1/portability-intake/return.md",
+   "bytes": 9700,
+   "sha256": "bf000ea970f2e52deb53de3c919507dc05ca83520f53236789a313a14357d6bd"
+  }
+ ]
+}

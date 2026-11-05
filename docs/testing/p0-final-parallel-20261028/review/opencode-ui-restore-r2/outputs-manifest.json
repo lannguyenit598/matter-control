@@ -1,0 +1,44 @@
+{
+  "review": "MC-P0-OPENCODE-UI-RESTORE-DELTA-R2 (OpenCode round 2: 20-path CSS/UI source delta + retained claude-runtime-r2 restore evidence)",
+  "directory": "docs/testing/p0-final-parallel-20261028/review/opencode-ui-restore-r2/",
+  "created_utc": "2026-10-28T16:27:05Z",
+  "reviewer_identity": {
+    "tool": "OpenCode CLI v2.1.4",
+    "provider": "opencode",
+    "model": "glm-5.3-flash-free",
+    "identity_probe": "opencode --version exit 0 at 2026-10-28T16:20:53Z",
+    "mode": "independent non-author; no source writes; no provider/model switch"
+  },
+  "verdicts": {
+    "source_delta_20_paths": "PASS_WITH_LIMITATIONS",
+    "retained_restore_evidence_claude_runtime_r2": "PASS_WITH_LIMITATIONS",
+    "manifest_authority_current_tree": "NEEDS_INPUT_REFRESH",
+    "cr002": "DECISION_REQUIRED",
+    "rv001": "CLOSED_SOURCE_ONLY (unchanged round-1 scope)"
+  },
+  "files": [
+    { "path": "return.md", "bytes": 14749, "sha256": "30d39b4ca0999d833365a3ab999e6b096adbae836c842d7cde817926c79378e9" },
+    { "path": "inputs.json", "bytes": 5522, "sha256": "9de9d0532fc49c980a8ad6dd98ea7328130ba18e15ec0b714f6283f237ded5b8" },
+    { "path": "checks.json", "bytes": 17131, "sha256": "28b965e364df2244ca0105f6c6a7b81934878565d6299bb2abfa939e6533ea51" },
+    { "path": "findings.json", "bytes": 7618, "sha256": "d5512bda3362d8f9d516fb42896e14395c4abd6970dcc46038d5e5249a9db240" }
+  ],
+  "outputs_manifest_self_hash": "NOT COMPUTED BY DESIGN (manifest does not hash itself)",
+  "key_member_receipts": {
+    "opening": { "utc_start_observed": "2026-10-28T16:04:59Z", "entries": 721, "missing": 0, "mismatch": 5, "delta_pins": "all 20 matched" },
+    "closing": { "utc": "2026-10-28T16:17:20Z", "entries": 721, "missing": 0, "mismatch": 31, "delta_pins": "all 20 matched" },
+    "stability": { "utc": "2026-10-28T16:22:28Z", "mismatch": 31, "delta_pins": "all 20 matched" },
+    "final_delta_recheck": { "utc": "2026-10-28T16:27:05Z", "result": "ALL-20-MATCH vs C manifest pins (full sha256)" },
+    "claude_runtime_r2_46_pins": { "utc": "2026-10-28T16:18:38Z", "result": "46/46 matched sha256+bytes" },
+    "restore_script_pins": { "utc": "2026-10-28T16:27:05Z", "result": "run.sh/verify.py/test_verify.py MATCH" },
+    "raw_receipt_scratch_paths": [
+      "/private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/r2-close-receipt.json",
+      "/private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/r2-r3-receipt.json",
+      "/private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/r2-verify.py",
+      "/private/var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T/opencode/r2-3way.py"
+    ]
+  },
+  "resolution": {
+    "plan": "re-pin a refreshed candidate manifest covering the 31 drifted entries and 3 new untracked backend files, then re-dispatch; the 20-path delta outcome above stands on its pinned bytes",
+    "footer": "porcelain digest at manifest-write time 8a198f9718ac5542 (changed vs 16:17Z window; includes this reviewer's own 5 new untracked output files and the continuing writer waves)"
+  }
+}

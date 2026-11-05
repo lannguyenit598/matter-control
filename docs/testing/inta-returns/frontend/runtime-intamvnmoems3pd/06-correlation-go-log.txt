@@ -1,0 +1,36 @@
+INT-COR-01 stage1 substep correlation — runId intamvnmoems3pd
+Generated 2026-10-25T17:38:24Z by actual ZCode (frontend runtime owner)
+Scope: Go application log (backend owner evidence, read-only):
+  /tmp/mc002-inta-evidence/backend/runtime-intamvnmoems3pd/20-server.stdout.log
+Method: grep -c per envelope requestId; full matched lines listed below verbatim.
+
+requestId mc-int-intamvnmoems3pd-T1-1: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T2-2: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-W1-3: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-W2-4: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T3-5: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T4-6: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T4-7: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T5-8: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T5-9: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T8-10: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T8-11: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-W3-12: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T6-W-13: 1 matched line(s)
+requestId mc-int-intamvnmoems3pd-T7-W-14: 1 matched line(s)
+
+--- Verbatim matched Go log lines ---
+{"time":"2026-10-26T00:36:47.031835+07:00","level":"INFO","msg":"http_request","method":"POST","path":"/api/v1/users","route":"/api/v1/users","status":201,"latency":41357542,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T1-1"}
+{"time":"2026-10-26T00:36:47.073416+07:00","level":"INFO","msg":"http_request","method":"GET","path":"/api/v1/users/01a17422-e796-7465-a325-1c87c74d8393","route":"/api/v1/users/:id","status":200,"latency":5717459,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T2-2"}
+{"time":"2026-10-26T00:36:47.105489+07:00","level":"INFO","msg":"http_request","method":"POST","path":"/api/v1/users","route":"/api/v1/users","status":201,"latency":1856250,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-W1-3"}
+{"time":"2026-10-26T00:36:47.126519+07:00","level":"INFO","msg":"http_request","method":"GET","path":"/api/v1/users/01a17422-e796-7465-a325-1c87c74d8393","route":"/api/v1/users/:id","status":200,"latency":403000,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-W2-4"}
+{"time":"2026-10-26T00:36:47.150595+07:00","level":"WARN","msg":"http_request","method":"GET","path":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001","route":"/api/v1/users/:id","status":404,"latency":1737333,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T3-5"}
+{"time":"2026-10-26T00:36:47.172192+07:00","level":"WARN","msg":"http_request","method":"GET","path":"/api/v1/users/not-a-uuid","route":"/api/v1/users/:id","status":404,"latency":35917,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T4-6"}
+{"time":"2026-10-26T00:36:47.174099+07:00","level":"WARN","msg":"http_request","method":"GET","path":"/api/v1/users/01A15359-AA28-7A00-A380-000000000001","route":"/api/v1/users/:id","status":404,"latency":70584,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T4-7"}
+{"time":"2026-10-26T00:36:47.197572+07:00","level":"WARN","msg":"http_request","method":"POST","path":"/api/v1/users","route":"/api/v1/users","status":422,"latency":208750,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T5-8"}
+{"time":"2026-10-26T00:36:47.199341+07:00","level":"INFO","msg":"http_request","method":"GET","path":"/api/v1/users/01a17422-e796-7465-a325-1c87c74d8393","route":"/api/v1/users/:id","status":200,"latency":454083,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T5-9"}
+{"time":"2026-10-26T00:36:47.222315+07:00","level":"WARN","msg":"http_request","method":"POST","path":"/api/v1/users","route":"/api/v1/users","status":409,"latency":2740375,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T8-10"}
+{"time":"2026-10-26T00:36:47.225144+07:00","level":"INFO","msg":"http_request","method":"GET","path":"/api/v1/users/01a17422-e796-7465-a325-1c87c74d8393","route":"/api/v1/users/:id","status":200,"latency":1014625,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T8-11"}
+{"time":"2026-10-26T00:36:47.247568+07:00","level":"WARN","msg":"http_request","method":"GET","path":"/api/v1/users/01a15359-aa28-7a00-a380-000000000001","route":"/api/v1/users/:id","status":404,"latency":658875,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-W3-12"}
+{"time":"2026-10-26T00:36:47.268582+07:00","level":"WARN","msg":"http_request","method":"POST","path":"/api/v1/users","route":"/api/v1/users","status":400,"latency":59416,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T6-W-13"}
+{"time":"2026-10-26T00:36:47.294058+07:00","level":"WARN","msg":"http_request","method":"POST","path":"/api/v1/users","route":"/api/v1/users","status":415,"latency":60833,"remote_ip":"127.0.0.1","request_id":"mc-int-intamvnmoems3pd-T7-W-14"}

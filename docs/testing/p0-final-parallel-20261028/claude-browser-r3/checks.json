@@ -1,0 +1,55 @@
+{
+ "checks": [
+  {
+   "id": "C-PINS",
+   "what": "Verify current manifest and member bytes",
+   "result": "f43738bf6c17...1028 matches; 721/721 members matched at that time; HEAD 2d410816...; output dir absent before creation",
+   "utc": "before 2026-10-28T16:04:43Z (exact time not captured; the 16:07Z first written here was wrong)",
+   "note": "the 11 HTTP checks (about 16:07Z-16:08Z) ran after these edits but against processes that predate them (frontend started 15:54:20Z, API 22:26:50 local)"
+  },
+  {
+   "id": "C-CAP",
+   "what": "Fresh browser capability preflight (see cases.json CAP-BROWSER)",
+   "tools": [
+    "mcp__cmux-cua__check_permissions",
+    "mcp__cmux-cua__list_apps",
+    "mcp__cmux-cua__health_report",
+    "mcp__cmux-cua__start_session"
+   ],
+   "result": "BLOCKED_BROWSER_PERMISSION"
+  },
+  {
+   "id": "C-RUNTIME-IDENTITY",
+   "what": "Read-only lsof/ps against runtime.json",
+   "utc": "2026-10-28T16:07:26Z",
+   "result": "next-server pid 72015 (parent 72013) cwd .../frontend-medusa-r1 started 22:54:20 local = 15:54:20Z on 127.0.0.1:3000; mcapi pid 49105 on 127.0.0.1:8081 started 22:26:50 local; both unchanged; no lifecycle action taken"
+  },
+  {
+   "id": "C-HTTP",
+   "what": "probe3.py: 11 read-only HTTP checks (no cookies, no redirects followed, no /api/auth/login)",
+   "result": "11 PASS, 0 FAIL",
+   "detail": "cases.json HTTP-* and API-*",
+   "side_effect": "API-BOGUS-TOKEN-401 made the running API perform one Cloud introspection call for a bogus bearer (same as R2)."
+  },
+  {
+   "id": "C-NOT-DONE",
+   "what": "Not executed",
+   "items": [
+    "restore rerun",
+    "pnpm/npm/install or dependency changes",
+    "any source/package/env/workboard edit",
+    "Git write",
+    "lifecycle action on 3000/8081 or any container",
+    "use of the human's cookie, token or session",
+    "headless or alternate browser, OS capture, server rendering"
+   ]
+  },
+  {
+   "id": "C-PINS-CLOSE",
+   "what": "Re-verify the 721 members at close",
+   "utc": "about 2026-10-28T16:10Z",
+   "result": "710/721 match; 11 members changed between 16:04:43Z and 16:05:58Z (3 backend, 8 frontend) after the opening check and before the HTTP probes; see source-drift.json. Not edited by me."
+  }
+ ],
+ "private_artifacts": "probe script and raw result are in /private/tmp/mc-p0-r2-private (0700); not exported"
+}

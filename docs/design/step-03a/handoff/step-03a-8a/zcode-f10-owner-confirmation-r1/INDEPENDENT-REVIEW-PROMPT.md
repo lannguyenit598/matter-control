@@ -1,0 +1,16 @@
+# F10 final independent document review — prepared manual handoff
+
+PREPARED_NOT_DISPATCHED. Reviewer must be distinct from ZCode, the candidate author. Intended role: actual OpenCode independentQA or a human-designated independent reviewer. No reviewer invoked here; preparing this packet grants no new provider/read/egress permission. Human dispatch must identify exact destination/model/currentquota and permit only the manifest snapshots/text return through the official mechanism. No automatic model/provider switch, login, paidretry, broadsource read or tools/runtime action. Earlier ZCode same-context permission is not OpenCode/otherprovider authorization.
+
+Task MC-003A.8A. Report actual identity/tool/version/model/provider and authorship independence. Read only packet-manifest.json and its exact six snapshots if the scoped dispatch is authorized. Verify bytes/hashes, stop on mismatch; no credentials/fullrepo/source expansion. TEXT_ONLY, no product/schema/runtime/code edits, no otheragentcalls. No fullarchitecture/32route/F08/BE01/INTAreview.
+
+Review the exact final ZCode owner-confirmation delta together with preserved C1/C2R2, C3R3 and scopedDR15/F09 context. Owner self-confirmation is not independentacceptance. Currentcatalogue32; B35/L2/causeSeqfilter unadopted. A1..A10 DOCUMENT_EXPECTED/runtimeNOT_RUN. Human reroute removed the obligatory Claude owner-confirmation round; do not recreate it by source-label inference.
+
+Assess:
+1. C1: initialcycle1 and supplement newcycle+observation+links+revision+events atomicity; target binding vs expectedcurrentcycle; 428/412 before409 only for intended filingfamily unless actual compatible globalcontract authority exists.
+2. C2: originaltarget-only correction, OWNER+reason, sameMatter/Filing, latestterminal, exclude original AND superseded replacements. Canonical fixtures: REPLACE O4->O5 then RETRACT O4 excludes both; repeatedREPLACE leaves only newest; currentproofepoch unaffected by history links.
+3. C3: discover initiallyunknown Evidence IDs through unfiltered sameMatter seqpages; normative ANDtype/causeSeq/observationId; seqdedup/Ncount/emission/role-null; interleaving; command-local completeness versus globalhistoryexhaustion/currenteffective totals and per-pagesnapshots.
+4. Honest anomaly scope: stop-at-N cannot see a later surplus; wrongobservation excluded by AND is not automatically flagged. Recommend smallest contract qualification/separate anomaly predicate if needed, no unbounded rescanning by default.
+5. No-array invariant across main/link and inheritedbefore/after, role/targetRef exact shape and history provenance. proposedreason<=2000/type<=64/correlation<=128 are not approved/sourceproven; missingnumeric/envelope/encodingbounds explicit. No hiddenrelation cap/constantbyte/latencyclaim.
+
+Return PASS_WITH_LIMITATIONS or CHANGES_REQUIRED with exact clause/trigger/impact/minimal correction and acceptance expected cases. State separately documentconsistency, remaining POchoices, testsactuallyrun (normallynone), source/identitylimitations. Do not self-awardF10CLOSED, adoptfields/routes/bounds or change22CT/16+4+1+1,QAconditions/gates/STEP03B. No repeated ownerrewrite unless a concrete finaltext defect is found. Endskipped/risks.

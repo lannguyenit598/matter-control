@@ -1,0 +1,422 @@
+{
+  "scope": "Synthetic contract reference vectors; numeric valid means positive-integral value only, no storage-range approval. Not product/integration tests. All prior T*/CT/INTA states unchanged.",
+  "canonical": [
+    {
+      "id": "N1-C01",
+      "input": "{}",
+      "expected": "{}"
+    },
+    {
+      "id": "N1-C02",
+      "input": "{\"cycleNo\":null}",
+      "expected": "{\"cycleNo\":null}"
+    },
+    {
+      "id": "N1-C03",
+      "input": "{ \"b\":2, \"a\":1 }",
+      "expected": "{\"a\":1,\"b\":2}"
+    },
+    {
+      "id": "N1-C04",
+      "input": "{\"s\":\"\\u0061\"}",
+      "expected": "{\"s\":\"a\"}"
+    },
+    {
+      "id": "N1-C05",
+      "input": "{\"s\":\"a\"}",
+      "expected": "{\"s\":\"a\"}"
+    },
+    {
+      "id": "N1-C06",
+      "input": "{\"s\":\"\\n\\t\\b\\f\\r\"}",
+      "expected": "{\"s\":\"\\u000a\\u0009\\u0008\\u000c\\u000d\"}"
+    },
+    {
+      "id": "N1-C07",
+      "input": "{\"s\":\"\\/\\\\\\\"\"}",
+      "expected": "{\"s\":\"/\\\\\\\"\"}"
+    },
+    {
+      "id": "N1-C08",
+      "input": "{\"s\":\"\\ud83d\\ude00\"}",
+      "expected": "{\"s\":\"😀\"}"
+    },
+    {
+      "id": "N1-C09",
+      "input": "{\"x\":[3,2,1]}",
+      "expected": "{\"x\":[3,2,1]}"
+    },
+    {
+      "id": "N1-C10",
+      "input": "{\"x\":{\"z\":null,\"a\":true}}",
+      "expected": "{\"x\":{\"a\":true,\"z\":null}}"
+    },
+    {
+      "id": "N1-C11",
+      "input": "{\"n\":9007199254740993}",
+      "expected": "{\"n\":9007199254740993}"
+    },
+    {
+      "id": "N1-C12",
+      "input": "{\"n\":1E+000}",
+      "expected": "{\"n\":1E+000}"
+    },
+    {
+      "id": "N1-C13",
+      "input": "{\"n\":-0.0}",
+      "expected": "{\"n\":-0.0}"
+    },
+    {
+      "id": "N1-C14",
+      "input": "{\"😀\":1,\"\":2}",
+      "expected": "{\"\":2,\"😀\":1}"
+    },
+    {
+      "id": "N1-C15",
+      "input": "[null,false,true]",
+      "expected": "[null,false,true]"
+    },
+    {
+      "id": "N1-BAD01",
+      "input": "{\"a\":1,\"a\":2}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD02",
+      "input": "{\"a\":1,\"\\u0061\":2}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD03",
+      "input": "{\"x\":{\"a\":1,\"a\":2}}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD04",
+      "input": "{\"n\":NaN}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD05",
+      "input": "{\"n\":Infinity}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD06",
+      "input": "{\"s\":\"\\ud800\"}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD07",
+      "input": "{\"x\":01}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD08",
+      "input": "{\"x\":1,}",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD09",
+      "input": "",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD-UTF8",
+      "raw_hex": "ff",
+      "admission": 400
+    },
+    {
+      "id": "N1-BAD-BOM",
+      "raw_hex": "efbbbf7b7d",
+      "admission": 400
+    }
+  ],
+  "relations": [
+    {
+      "id": "N1-R01",
+      "left": "{}",
+      "right": "{\"cycleNo\":null}",
+      "same": false
+    },
+    {
+      "id": "N1-R02",
+      "left": "{\"cycleNo\":1}",
+      "right": "{\"cycleNo\":1.0}",
+      "same": false
+    },
+    {
+      "id": "N1-R03",
+      "left": "{\"cycleNo\":1}",
+      "right": "{\"cycleNo\":1e0}",
+      "same": false
+    },
+    {
+      "id": "N1-R04",
+      "left": "{\"cycleNo\":1.0}",
+      "right": "{\"cycleNo\":1e0}",
+      "same": false
+    },
+    {
+      "id": "N1-R05",
+      "left": "{\"b\":2,\"a\":1}",
+      "right": "{ \"a\" : 1, \"b\" : 2 }",
+      "same": true
+    },
+    {
+      "id": "N1-R06",
+      "left": "{\"s\":\"a\"}",
+      "right": "{\"s\":\"\\u0061\"}",
+      "same": true
+    },
+    {
+      "id": "N1-R07",
+      "left": "{\"s\":\"é\"}",
+      "right": "{\"s\":\"é\"}",
+      "same": false
+    },
+    {
+      "id": "N1-R08",
+      "left": "{\"n\":0}",
+      "right": "{\"n\":-0}",
+      "same": false
+    },
+    {
+      "id": "N1-R09",
+      "left": "{}",
+      "right": "{\"expectedRevisions\":{}}",
+      "same": false
+    },
+    {
+      "id": "N1-R10",
+      "left": "{\"expectedRevisions\":{}}",
+      "right": "{\"expectedRevisions\":null}",
+      "same": false
+    },
+    {
+      "id": "N1-R11",
+      "left": "{\"n\":9007199254740992}",
+      "right": "{\"n\":9007199254740993}",
+      "same": false
+    },
+    {
+      "id": "N1-R12",
+      "left": "{\"cycleNo\":1}",
+      "right": "{\"cycleNo\":1,\"unknown\":null}",
+      "same": false
+    },
+    {
+      "id": "N1-R13",
+      "left": "{\"s\":\"x\"}",
+      "right": "{\"s\":\" x \"}",
+      "same": false
+    },
+    {
+      "id": "N1-R14",
+      "left": "{\"s\":\"/\"}",
+      "right": "{\"s\":\"\\/\"}",
+      "same": true
+    },
+    {
+      "id": "N1-R15",
+      "left": "{\"expectedCycleNo\":1}",
+      "right": "{\"expectedCycleNo\":1.0}",
+      "same": false
+    }
+  ],
+  "numeric": [
+    {
+      "id": "N1-V01",
+      "input": "1",
+      "valid_positive_integral": true
+    },
+    {
+      "id": "N1-V02",
+      "input": "1.0",
+      "valid_positive_integral": true
+    },
+    {
+      "id": "N1-V03",
+      "input": "1e0",
+      "valid_positive_integral": true
+    },
+    {
+      "id": "N1-V04",
+      "input": "1E+000",
+      "valid_positive_integral": true
+    },
+    {
+      "id": "N1-V05",
+      "input": "1.5",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V06",
+      "input": "0",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V07",
+      "input": "-1",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V08",
+      "input": "\"1\"",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V09",
+      "input": "null",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V10",
+      "input": "true",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V11",
+      "input": "1e-3",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V12",
+      "input": "1000e-3",
+      "valid_positive_integral": true
+    },
+    {
+      "id": "N1-V13",
+      "input": "9007199254740993",
+      "valid_positive_integral": true
+    },
+    {
+      "id": "N1-V14",
+      "input": "1e309",
+      "valid_positive_integral": true
+    },
+    {
+      "id": "N1-V15",
+      "input": "1e-324",
+      "valid_positive_integral": false
+    },
+    {
+      "id": "N1-V16",
+      "input": "-0",
+      "valid_positive_integral": false
+    }
+  ],
+  "ordering": [
+    {
+      "id": "N1-O01",
+      "input": "{\"cycleNo\":1}",
+      "receipt_body": "{\"cycleNo\":1}",
+      "args": {
+        "if_match": "stale",
+        "expected_cycle": "stale"
+      },
+      "expected": "REPLAY"
+    },
+    {
+      "id": "N1-O02",
+      "input": "{\"cycleNo\":1}",
+      "receipt_body": "{\"cycleNo\":1}",
+      "args": {
+        "authority": false
+      },
+      "expected": "404"
+    },
+    {
+      "id": "N1-O03",
+      "input": "{\"cycleNo\":1.0}",
+      "receipt_body": "{\"cycleNo\":1}",
+      "expected": "422-reuse"
+    },
+    {
+      "id": "N1-O04",
+      "input": "{\"cycleNo\":null}",
+      "receipt_body": "{}",
+      "expected": "422-reuse"
+    },
+    {
+      "id": "N1-O05",
+      "input": "{\"cycleNo\":1.5}",
+      "args": {
+        "if_match": "missing"
+      },
+      "expected": "422-body"
+    },
+    {
+      "id": "N1-O06",
+      "input": "{\"cycleNo\":1}",
+      "args": {
+        "if_match": "missing",
+        "expected_cycle": "missing"
+      },
+      "expected": "428"
+    },
+    {
+      "id": "N1-O07",
+      "input": "{\"cycleNo\":1}",
+      "args": {
+        "expected_cycle": "missing"
+      },
+      "expected": "422-expected"
+    },
+    {
+      "id": "N1-O08",
+      "input": "{\"cycleNo\":1}",
+      "args": {
+        "if_match": "stale",
+        "expected_cycle": "missing"
+      },
+      "expected": "412"
+    },
+    {
+      "id": "N1-O09",
+      "input": "{\"cycleNo\":null}",
+      "args": {
+        "expected_cycle": "stale"
+      },
+      "expected": "412"
+    },
+    {
+      "id": "N1-O10",
+      "input": "{}",
+      "args": {
+        "cycle_required": true,
+        "if_match": "missing"
+      },
+      "expected": "422-body"
+    },
+    {
+      "id": "N1-O11",
+      "input": "{\"cycleNo\":1.5}",
+      "args": {
+        "authority": false
+      },
+      "expected": "404"
+    },
+    {
+      "id": "N1-O12",
+      "input": "{\"a\":1,\"a\":2}",
+      "args": {
+        "authority": false
+      },
+      "expected": "400"
+    },
+    {
+      "id": "N1-O13",
+      "input": "[]",
+      "args": {
+        "if_match": "missing"
+      },
+      "expected": "422-body"
+    },
+    {
+      "id": "N1-O14",
+      "input": "{\"cycleNo\":1.0}",
+      "expected": "PROCEED"
+    }
+  ]
+}

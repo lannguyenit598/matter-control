@@ -1,0 +1,14 @@
+{
+  "name": "mc002-inta-harness",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1 -p 18085",
+    "driver": "node src/driver.ts",
+    "guards": "node scripts/live-guards.ts",
+    "stop": "bash scripts/stop-harness.sh",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  }
+}

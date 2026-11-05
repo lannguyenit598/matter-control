@@ -1,0 +1,47 @@
+=== MC-002-INTA-FE-R3 Unit Tests ===
+UTC Started: 2026-10-25T07:47:33Z
+Command: rtk pnpm test
+Working Directory: /tmp/mc002-inta-harness
+Git Branch: codex/mc-002-inta-harness-r3
+Git Commit: cfec8694799634b05438764aec56858dc26c8764
+======================================
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/mc002-inta-harness
+
+ ✓ tests/fixtures.test.ts (2 tests) 2ms
+ ✓ tests/envelope.test.ts (6 tests) 4ms
+ ✓ tests/guards.test.ts (34 tests) 8ms
+ ✓ tests/request-id.test.ts (6 tests) 16ms
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 2 paused: Go restart confirmation missing.
+Set MC_INTA_CONFIRM_GO_RESTARTED=1 or pass --confirm-go-restarted after ZCode restarts Go.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 3 paused: PostgreSQL restart confirmation missing.
+Set MC_INTA_CONFIRM_PG_RESTARTED=1 or pass --confirm-pg-restarted after Codex restarts PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 5 paused: PostgreSQL outage stop confirmation missing.
+Set MC_INTA_CONFIRM_PG_STOPPED=1 or pass --confirm-pg-stopped after Codex stops PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 6 paused: PostgreSQL recovery confirmation missing.
+Set MC_INTA_CONFIRM_PG_RECOVERED=1 or pass --confirm-pg-recovered after Codex restarts PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 7 paused: Go stop confirmation missing.
+Set MC_INTA_CONFIRM_GO_STOPPED=1 or pass --confirm-go-stopped after ZCode stops Go.
+
+ ✓ tests/schemas.test.ts (11 tests) 6ms
+ ✓ tests/driver.test.ts (20 tests) 53ms
+ ✓ tests/executor.test.ts (8 tests) 109ms
+
+ Test Files  7 passed (7)
+      Tests  87 passed (87)
+   Start at  14:47:33
+   Duration  301ms (tests 46%, import 36%, transform 13%, worker 5%)
+
+======================================
+Exit Code: 0
+UTC Completed: 2026-10-25T07:47:34Z

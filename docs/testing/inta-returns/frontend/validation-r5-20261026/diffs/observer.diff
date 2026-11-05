@@ -1,0 +1,80 @@
+--- docs/testing/inta-returns/frontend/validation-r4-20261026/runner/observer.py	2026-10-26 16:37:20
++++ /tmp/mc002-inta-fe-validation-r5-20261026/runner/observer.py	2026-10-26 21:47:17
+@@ -1,11 +1,12 @@
+ #!/usr/bin/env python3
+ """
+-MC-002-INTA-FE-VALIDATION-R3: Upstream HTTP Observer
+-Durable, fail-closed loopback observer addressing R1-C03.
+-- Atomic updates on every request using tempfile + fsync + os.replace.
++MC-002-INTA-FE-VALIDATION-R5: Upstream HTTP Observer
++Durable, fail-closed loopback observer addressing R4-C04, Finding 3, Finding 4:
++- Atomic updates on every request using tempfile + fsync + os.replace + parent directory fsync.
++- Propagates directory open/fsync/close failures rather than swallowing them into false durability.
+ - Explicit signal handling (SIGTERM, SIGINT) ensuring cleanShutdown state is flushed.
++- Deterministic non-PASS exit (code 1) if signal arrives before server bind completes.
+ - Structured PID, variant, isFinal flag, and UTC timestamp metadata.
+-- Propagates write failures rather than swallowing them.
+ """
+ 
+ import argparse
+@@ -35,8 +36,9 @@
+         is_final: bool = False,
+     ) -> None:
+         """
+-        Atomically writes observer state to disk in the SAME directory.
+-        Uses fsync and os.replace to guarantee durability across process abrupt terminations.
++        Atomically writes observer state to disk in the target directory.
++        Uses fsync, os.replace, and parent directory fsync to guarantee durability.
++        Propagates all filesystem errors (open, fsync, replace, close) to fail closed.
+         """
+         payload = {
+             "variant": self.variant,
+@@ -56,16 +58,14 @@
+                 f.flush()
+                 os.fsync(f.fileno())
+             os.replace(tmp_path, self.target_path)
+-            # R3-N06: Parent directory durability across atomic renames
++
++            # R5 durability: parent directory fsync - propagate failures (R4-C04)
++            parent_dir = os.path.dirname(os.path.abspath(self.target_path))
++            dir_fd = os.open(parent_dir, os.O_RDONLY)
+             try:
+-                parent_dir = os.path.dirname(os.path.abspath(self.target_path))
+-                dir_fd = os.open(parent_dir, os.O_RDONLY)
+-                try:
+-                    os.fsync(dir_fd)
+-                finally:
+-                    os.close(dir_fd)
+-            except Exception:
+-                pass
++                os.fsync(dir_fd)
++            finally:
++                os.close(dir_fd)
+ 
+ 
+ class ObserverHandler(BaseHTTPRequestHandler):
+@@ -139,10 +139,23 @@
+                     clean_shutdown=True,
+                     is_final=True,
+                 )
+-            except Exception as e:
++            except Exception:
+                 # If writing fails, exit with error code 2
+                 sys.exit(2)
+             sys.exit(0)
++        else:
++            # Signal arrived before server bind completed (Finding 3 / Item 3 fix):
++            # Deterministic non-PASS exit rather than no-op or hanging
++            try:
++                writer.write_state(
++                    request_count=0,
++                    clean_shutdown=False,
++                    error=f"Terminated by signal {sig} before server bind completed",
++                    is_final=True,
++                )
++            except Exception:
++                pass
++            sys.exit(1)
+ 
+     signal.signal(signal.SIGTERM, handle_signal)
+     signal.signal(signal.SIGINT, handle_signal)

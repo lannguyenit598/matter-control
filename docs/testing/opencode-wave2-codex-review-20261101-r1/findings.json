@@ -1,0 +1,77 @@
+{
+  "utc": "2026-11-01T08:53:00.000000+00:00",
+  "reviewer": "actual OpenCode (independent QA, non-author)",
+  "status": "INDEPENDENT_REVIEW_COMPLETE_WITH_BLOCKERS",
+  "findings": [
+    {
+      "id": "OV-F1-01",
+      "unit": "G1",
+      "priority": "P1",
+      "title": "D-9 is not operable through the UI (omitted SIGNATURE purpose in schemas/panel)",
+      "disposition": "FIXED_PENDING_VERIFY",
+      "review_state": "SOURCE_VERIFIED_BROWSER_BLOCKED",
+      "evidence": "Zod contracts updated in schemas.ts, signature part added to checklistSchema, ProofPanel renders Signature axis and options; d9-signature-ui.test.tsx 3/3 PASS; backend contract w4 and filing_server_test.go enforce accepted PACKAGE+SIGNATURE before SUBMISSION with pending OUTCOME.",
+      "remaining_gate": "Actual browser Filing submission is BLOCKED_NOT_RUN because official browser is disabled in Work settings; non-author UI smoke pending browser enablement."
+    },
+    {
+      "id": "OV-R8-01",
+      "unit": "G2",
+      "priority": "P1",
+      "title": "Release preflight probeFactory received probe-shaped object instead of content string (content sentinels missed, TypeError on env file)",
+      "disposition": "FIXED_VERIFIED",
+      "review_state": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "evidence": "Both real-main content readers now return content string directly; 5/5 unit tests and 4/4 integration tests pass; independent synthetic CLI plants with PEM in normal-named files, sentinel in normal-named files, and .env files reproduce nonzero exit (code 1), 3 findings each, 0 TypeErrors, and 0 echoed values for both artifact scan and git-tracked scan. Full repository git scan is clean.",
+      "remaining_gate": "None. Fix verified independently."
+    },
+    {
+      "id": "OV-F1-02",
+      "unit": "G3",
+      "priority": "P2",
+      "title": "brief_proof.go purposeOf folded SIGNATURE into PACKAGE on event replay",
+      "disposition": "FIXED_VERIFIED",
+      "review_state": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "evidence": "brief_proof.go purposeOf explicitly preserves PurposeSignature; legacy empty string maps to PurposePackage; TestReplayBrief_PurposeOfKeepsSignature and all 12 replay tests in brief_replay_test.go pass (0.424s).",
+      "remaining_gate": "None. Fix verified independently."
+    },
+    {
+      "id": "OV-F1-03",
+      "unit": "G4",
+      "priority": "P2",
+      "title": "Migration 0011 Down fails 23514 check constraint violation with any SIGNATURE row",
+      "disposition": "FIXED_VERIFIED",
+      "review_state": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "evidence": "Migration 0011 Down maps SIGNATURE rows to legacy PACKAGE prior to reinstating the 2-value check constraint; verified on fresh owned disposable PostgreSQL 18.6 fixture via TestCriterionPurposeMigration0011DownIsDataSafe (0.23s, exit 0). Lossy downgrade documented; original manual/QA DB untouched.",
+      "remaining_gate": "None. Note: Lossy downgrade behavior is verified as documented (retains rows/relations by mapping to legacy PACKAGE); not a lossless restoration of SIGNATURE label."
+    },
+    {
+      "id": "OV-R12-01",
+      "unit": "G5",
+      "priority": "P2",
+      "title": "scheduled-dump.sh quoted command substitution made prune loop a no-op with >=2 stale archives and miscounted pruned",
+      "disposition": "FIXED_VERIFIED",
+      "review_state": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "evidence": "scheduled-dump.sh uses unquoted process substitution while IFS= read -r old loop; g5-dump-prune-probe.sh verifies 4 old + 1 new / RETAIN 2 leaves exactly 2 archives and 2 sidecars with pruned:3; empty directory yields 1 archive with pruned:0.",
+      "remaining_gate": "Fake-tool test only; real job execution and provider reliability were not tested and remain cloud/operator responsibility."
+    },
+    {
+      "id": "OV-F1-04",
+      "unit": "G6",
+      "priority": "P3",
+      "title": "Refusal text omitted package+signature joint naming; StageResponse lacked D-9 re-submission gate; missing 0011 migration tests",
+      "disposition": "FIXED_VERIFIED",
+      "review_state": "CLOSED_INDEPENDENTLY_VERIFIED",
+      "evidence": "filing.go StageSubmission and StageResponse enforce combined package and signature refusal; filing-guard-copy.test.tsx verifies OpenDesign friendly localized copy without technical codes; all 33 domain/matter tests pass.",
+      "remaining_gate": "None. Fix verified independently."
+    },
+    {
+      "id": "F8/P-09",
+      "unit": "G7",
+      "priority": "P1",
+      "title": "Action announcements missing shell-level persistent polite/atomic live region",
+      "disposition": "FIXED_PENDING_VERIFY",
+      "review_state": "SOURCE_VERIFIED_SR_BLOCKED",
+      "evidence": "ActionAnnouncer mounted in layout.tsx provides persistent polite/atomic sr-only region, initially empty, sequence key DOM updates on identical repeated messages, fixed EN/VI copy, UNKNOWN never called Saved, CAS warns 'Do not resend', no raw server text relayed, callers wired in IntentForm, ConfirmActionButton, InlineEdit, FormDialog, and Alert (suppressing duplicate live notices inside shell). Vitest suites pass across action-announcer.test.tsx, form-dialog.test.tsx, intent-attempt.test.tsx, and recovery.test.tsx (27 tests total).",
+      "remaining_gate": "Actual assistive-technology / screen-reader audio smoke is BLOCKED_NOT_RUN because official browser is disabled in Work settings; DOM assertions verified."
+    }
+  ]
+}

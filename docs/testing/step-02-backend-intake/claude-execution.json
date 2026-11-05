@@ -1,0 +1,45 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "claude",
+    "-p",
+    "--output-format",
+    "json",
+    "--tools",
+    "",
+    "--restricted",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--disable-slash-commands",
+    "--no-chrome",
+    "--no-session-persistence"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 68.99463891983032,
+  "scope": "sanitized packet-only architecture finding review, tools/MCP disabled",
+  "session_id": "d4633b32-7d45-4576-bd6b-22c73c716cc1",
+  "subtype": "success",
+  "is_error": false,
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 6516,
+      "cacheReadInputTokens": 649,
+      "cacheCreationInputTokens": 38027,
+      "webSearchRequests": 0,
+      "costUSD": 0.4346738,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 3498,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "result_sha256": "5a8700362ac25a8b5da1ad64ea8de84a5ba7c675b8403064b7f560e3fedc6dfe",
+  "normative_changes": "NONE; implementation obligation under unchanged contract",
+  "runtime_replay": false
+}

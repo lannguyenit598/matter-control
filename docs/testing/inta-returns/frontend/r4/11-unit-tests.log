@@ -1,0 +1,132 @@
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/mc002-inta-harness
+
+ ✓ tests/fixtures.test.ts (2 tests) 2ms
+ ✓ tests/guards.test.ts (34 tests) 7ms
+ ✓ tests/envelope.test.ts (6 tests) 4ms
+ ✓ tests/request-id.test.ts (6 tests) 16ms
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 2 paused: Go restart confirmation missing.
+Set MC_INTA_CONFIRM_GO_RESTARTED=1 or pass --confirm-go-restarted after ZCode restarts Go.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 3 paused: PostgreSQL restart confirmation missing.
+Set MC_INTA_CONFIRM_PG_RESTARTED=1 or pass --confirm-pg-restarted after Codex restarts PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 5 paused: PostgreSQL outage stop confirmation missing.
+Set MC_INTA_CONFIRM_PG_STOPPED=1 or pass --confirm-pg-stopped after Codex stops PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 6 paused: PostgreSQL recovery confirmation missing.
+Set MC_INTA_CONFIRM_PG_RECOVERED=1 or pass --confirm-pg-recovered after Codex restarts PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > enforces explicit operator confirmation barriers before restart-dependent stages (R2-F01)
+[DRIVER_PAUSED] Stage 7 paused: Go stop confirmation missing.
+Set MC_INTA_CONFIRM_GO_STOPPED=1 or pass --confirm-go-stopped after ZCode stops Go.
+
+ ✓ tests/schemas.test.ts (11 tests) 4ms
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER_PAUSED] Stage 1 paused: upstream environment not verified ready.
+Set MC_INTA_ENV_READY=1 or pass --env-ready after Codex/ZCode verified handoff.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 1 (Baseline & Initial Negatives) for runId faketransport1...
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+
+[LIFECYCLE_BARRIER] Stage 1 completed successfully.
+Baseline Checkpoint User A persisted to /private/tmp/mc002-inta-harness/.test-driver-state/checkpoints/faketransport1/checkpointA.baseline.json
+>>> External owner action required: ZCode restart Go binary (INT-PERS-01). <<<
+>>> Resume Stage 2 by passing --confirm-go-restarted after Go restart is verified. <<<
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER_PAUSED] Stage 2 paused: Go restart confirmation missing.
+Set MC_INTA_CONFIRM_GO_RESTARTED=1 or pass --confirm-go-restarted after ZCode restarts Go.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 2 (INT-PERS-01 after Go restart) for runId faketransport1...
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+
+[LIFECYCLE_BARRIER] Stage 2 completed successfully.
+User A verified unchanged after Go restart alone.
+>>> External owner action required: Codex stop and restart same PostgreSQL container (INT-PERS-02). <<<
+>>> Resume Stage 3 by passing --confirm-pg-restarted after PostgreSQL restart is verified. <<<
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER_PAUSED] Stage 3 paused: PostgreSQL restart confirmation missing.
+Set MC_INTA_CONFIRM_PG_RESTARTED=1 or pass --confirm-pg-restarted after Codex restarts PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 3 (INT-PERS-02 after PG restart) for runId faketransport1...
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+
+[LIFECYCLE_BARRIER] Stage 3 completed successfully.
+User A verified unchanged after PostgreSQL restart.
+Next: Run Stage 4 for mutations and stale update.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 4 (Mutations & Stale Update) for runId faketransport1...
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+
+[LIFECYCLE_BARRIER] Stage 4 completed successfully.
+User A updated to version 2 (name INTA_A_UPDATED). Stale update 412 verified.
+>>> External owner action required: Codex stop PostgreSQL container (T11 outage with Go running). <<<
+>>> Resume Stage 5 by passing --confirm-pg-stopped after PostgreSQL is stopped. <<<
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER_PAUSED] Stage 5 paused: PostgreSQL outage stop confirmation missing.
+Set MC_INTA_CONFIRM_PG_STOPPED=1 or pass --confirm-pg-stopped after Codex stops PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 5 (Outage Cases) for runId faketransport1...
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+
+[LIFECYCLE_BARRIER] Stage 5 completed successfully.
+Outage 503 verified for T11a/b/c, W11; User X outcome marked OUTCOME_UNKNOWN.
+>>> External owner action required: Codex restart PostgreSQL container without restarting Go. <<<
+>>> Resume Stage 6 by passing --confirm-pg-recovered after PostgreSQL is running. <<<
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER_PAUSED] Stage 6 paused: PostgreSQL recovery confirmation missing.
+Set MC_INTA_CONFIRM_PG_RECOVERED=1 or pass --confirm-pg-recovered after Codex restarts PG.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 6 (Recovery Reads) for runId faketransport1...
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+
+[LIFECYCLE_BARRIER] Stage 6 completed successfully.
+User A recovery state verified (version 2 preserved).
+>>> External owner action required: ZCode stop Go binary for T12. <<<
+>>> Resume Stage 7 by passing --confirm-go-stopped after Go is stopped. <<<
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER_PAUSED] Stage 7 paused: Go stop confirmation missing.
+Set MC_INTA_CONFIRM_GO_STOPPED=1 or pass --confirm-go-stopped after ZCode stops Go.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 7 (Shutdown Case T12) for runId faketransport1...
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+
+[LIFECYCLE_SUMMARY] Stage 7 completed successfully.
+All 23 companion endpoint cases completed and asserted.
+13 external-owner procedures (INT-ENV-01..07, INT-COR-01, INT-PRIV-01, INT-ISO-01..03, INT-CONF-01) remain pending external-owner evidence.
+
+stdout | tests/driver.test.ts > HarnessDriver (INTA-FE-R02) > deterministic fake-transport runner fixture exercises full stage1..7 orchestration in causal order (R3-F04)
+[DRIVER] Executing Stage 1 (Baseline & Initial Negatives) for runId crashsim123...
+
+ ✓ tests/executor.test.ts (8 tests) 107ms
+ ✓ tests/driver.test.ts (24 tests) 361ms
+
+ Test Files  7 passed (7)
+      Tests  91 passed (91)
+   Start at  15:51:39
+   Duration  492ms (tests 71%, import 20%, transform 7%, worker 3%)
+

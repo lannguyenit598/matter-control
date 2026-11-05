@@ -1,0 +1,52 @@
+{
+  "task": "MC-002-INT-ARCH",
+  "argv": [
+    "rtk",
+    "proxy",
+    "claude",
+    "-p",
+    "--output-format",
+    "json",
+    "--tools",
+    "",
+    "--restricted",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--disable-slash-commands",
+    "--no-chrome",
+    "--no-session-persistence"
+  ],
+  "start_utc": "2026-10-24T17:57:12.409468+00:00",
+  "end_utc": "2026-10-24T18:01:10.881716+00:00",
+  "exit": 0,
+  "elapsed_seconds": 238.47177787499822,
+  "scope": "packet-only architecture proposals; tools/MCP disabled; runtime NOT_RUN",
+  "input_manifest": "claude-input-manifest.json",
+  "stdout_sha256": "d21a3ac58f1481d6524f1d9497c39497e9952137c013c06629db7a8644bdb3b8",
+  "session_id": "1aa5f9c4-9e72-477d-8c77-fcd9e3effe2a",
+  "subtype": "success",
+  "is_error": false,
+  "modelUsage": {
+    "claude-opus-5-5": {
+      "inputTokens": 2,
+      "outputTokens": 24659,
+      "cacheReadInputTokens": 1383,
+      "cacheCreationInputTokens": 52622,
+      "webSearchRequests": 0,
+      "costUSD": 0.9144406,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 10474,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "permission_denials": [],
+  "summary": "Recommendation: the PO should select INT-A, a transport-only local harness. It is a test-only, server-side runner in the frontend repo that uses the frontend's HTTP client. It calls the unchanged, C01-accepted Go native /api/v1/users routes at 52b60a4, which run on a fresh disposable loopback PostgreSQL. It proves only local client\u2192REST\u2192Go\u2192PostgreSQL compatibility: problem+json classification, native 503 outage/recovery without false success or empty results, native ETag/412 CAS, persistence across restarts, and X-Request-Id correlation. It adds no backend change, no route, page or screen, and no Task-to-User alias. It uses no session bypass, demo or anonymous mode, or shared token. Authentication, authorization and Workspace/Matter isolation are explicitly excluded and remain product gates. INT-B (authenticated temporary harness) is not recommended; fail-closed conditions are specified in case the PO chooses it anyway. INT-C (defer) is the fallback. The analysis covers proposal decisions INT-D01 to D09 (integration scope; identity; authorization/isolation; hosting H1-H5; adapter F1-F4; PostgreSQL/storage/recovery; retention; workload/cost; product error conventions), each with all 16 fields. It also covers the C01-NATIVE vs C01-PRODUCT boundary and a minimal PO package with no production, IdP, paid or $0 commitments. Limitations: packet-only; http-client.ts and test-runner behavior are unverified; all tests are NOT_RUN; the architecture documents remain candidate and not PO-approved; local results do not prove Cloudflare viability or cost.",
+  "outputs": {
+    "docs/architecture/integration-scope-proposal.md": "d8181d52ebebc560f4bc86c4fc8f72e957497b9016e3eeeaa9319c5f4ffe9855",
+    "docs/architecture/api-auth-decision-analysis.md": "57e72a96099a8f65dba6e328de417fb1c6d899b0efcdbbe792724297d6324de3"
+  }
+}

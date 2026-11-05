@@ -1,0 +1,166 @@
+{
+  "task": "MC-002-INTA-FE-VALIDATION-R4-SOURCE-REVIEW",
+  "actor": "Actual OpenCode (independent nonauthor; opencode CLI v2.1.4; model opencode/deepseek-v4.1-flash-free; provider opencode)",
+  "mode": "READ_HASH_STATIC_ONLY",
+  "runtime": "NOT_RUN",
+  "base_head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "branch": "codex/unified-project-flow",
+  "generated_utc": "2026-10-26T14:20:34.903256+00:00",
+  "timing_legend": "exact = UTC clock read by this session at/near the action; approximate = reconstructed from the session window and retained command output, not a clock read for that individual action.",
+  "tooling": "rtk-wrapped shell where wrapped; git rev-parse/status (read-only); shasum -a 256; stat/find; python3 standard library JSON/hash/text processing; patch -o on temporary copies. No reviewed source imported or executed; no network/probe/signal/HTTP/SQL/Docker/credential/provider/external-agent call; no staging/commit/merge/push.",
+  "checks": [
+    {
+      "id": "C-01",
+      "utc": "2026-10-26T10:08Z (approx)",
+      "action": "Workspace identity",
+      "command": "git rev-parse --abbrev-ref HEAD; git rev-parse HEAD",
+      "exit": 0,
+      "result": "codex/unified-project-flow; a62d838791ba188838c4ff00b7b6e265ac775056"
+    },
+    {
+      "id": "C-02",
+      "utc": "2026-10-26T10:08Z (approx)",
+      "action": "Output targets absent before writing",
+      "command": "test -e docs/reviews/inta-opencode-fe-r4-source-review.md; test -e docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026",
+      "exit": 0,
+      "result": "both absent"
+    },
+    {
+      "id": "C-03",
+      "utc": "2026-10-26T10:10:18Z",
+      "action": "Direct intake pins",
+      "command": "python3 stdlib: stat + SHA-256 over 18 review-inputs paths",
+      "exit": 0,
+      "result": "18/18 MATCH; 162,934 bytes; 0 mismatches"
+    },
+    {
+      "id": "C-04",
+      "utc": "2026-10-26T10:10:18Z",
+      "action": "R4 payload pins",
+      "command": "python3 stdlib: 22 manifest payloads vs bytes/SHA-256",
+      "exit": 0,
+      "result": "22/22 MATCH; 285,768 bytes; declared 285,768; 0 mismatches"
+    },
+    {
+      "id": "C-05",
+      "utc": "2026-10-26T10:10:18Z",
+      "action": "R3 baseline payload pins",
+      "command": "python3 stdlib: 20 manifest payloads vs bytes/SHA-256",
+      "exit": 0,
+      "result": "20/20 MATCH; 225,606 bytes; declared 225,606; 0 mismatches"
+    },
+    {
+      "id": "C-06",
+      "utc": "2026-10-26T10:11Z (approx)",
+      "action": "Raw vs export tree equality",
+      "command": "find | wc -l; diff -r RAW EXP; path-normalized shasum comparison",
+      "exit": 0,
+      "result": "23 files each; diff -r exit 0; 0 path-normalized hash mismatches"
+    },
+    {
+      "id": "C-07",
+      "utc": "2026-10-26T10:12Z (approx)",
+      "action": "Seven R3\u2192R4 semantic reconstructions",
+      "command": "patch -s -o /tmp/mc-r4-recon/<file> <R3 source> <R4 diff>; shasum -a 256 vs R4 target",
+      "exit": 0,
+      "result": "7/7 exact byte-equal (coordinator, guard-validator, guard_evaluator, harness-dev, observer, selfcheck, test-launcher-mock)"
+    },
+    {
+      "id": "C-08",
+      "utc": "2026-10-26T10:13Z (approx)",
+      "action": "Owner selfcheck result read",
+      "command": "json.load runner/selfcheck-r4-results.json",
+      "exit": 0,
+      "result": "total 46; passed 46; failed 0; allPassed true"
+    },
+    {
+      "id": "C-09",
+      "utc": "2026-10-26T10:13Z (approx)",
+      "action": "Owner launcher mock summary read",
+      "command": "read launcher-mock.stdout.txt",
+      "exit": 0,
+      "result": "SUMMARY: 13 PASS / 0 FAIL out of 13 cases"
+    },
+    {
+      "id": "C-10",
+      "utc": "2026-10-26T10:13Z (approx)",
+      "action": "Canonical plan count",
+      "command": "read coordinator.py PLAN_VARIANTS_25",
+      "exit": 0,
+      "result": "25 tuples; NODE_ENV=production present at L58"
+    },
+    {
+      "id": "C-11",
+      "utc": "2026-10-26T10:14:08Z",
+      "action": "Reviewer tool identity",
+      "command": "opencode --version; date -u",
+      "exit": 0,
+      "result": "opencode v2.1.4; timestamp read"
+    },
+    {
+      "id": "C-12",
+      "utc": "2026-10-26T10:15Z\u201314:15Z (approx)",
+      "action": "Static source reads and line-level finding verification",
+      "command": "read/grep only over pinned sources; no execution/import",
+      "exit": 0,
+      "result": "C01..C04, R2-I01..I06, R3-N01..N06, NF-1..NF-6, R4-C01..C05, S1..S6 dispositions recorded in report"
+    },
+    {
+      "id": "C-13",
+      "utc": "2026-10-26T14:17:47Z",
+      "action": "Post-write input re-verification (pass B)",
+      "command": "python3 stdlib: 18 direct + 22 R4 + 20 R3 bytes/SHA-256",
+      "exit": 0,
+      "result": "60/60 MATCH; 0 mismatches; R4 285,768; R3 225,606"
+    },
+    {
+      "id": "C-14",
+      "utc": "2026-10-26T14:20:34.903256+00:00",
+      "action": "Final report and review-inputs hashes",
+      "command": "shasum -a 256; wc -c",
+      "exit": 0,
+      "result": {
+        "report": {
+          "sha256": "423adc018f148c3667e20cae1f1ed1349a37f908e31a60e5a3589ed350744b96",
+          "bytes": 40764
+        },
+        "review_inputs": {
+          "sha256": "b6272d7b7faae293df94c7d506b8bcc2e16aa104a787b7e4df90b1396dff00c2",
+          "bytes": 15826
+        }
+      }
+    },
+    {
+      "id": "C-15",
+      "utc": "2026-10-26T14:19Z (approx)",
+      "action": "Output boundary / no mutation check",
+      "command": "git status --porcelain on the two output paths; git diff --cached --name-only",
+      "exit": 0,
+      "result": "report and QA directory untracked (??); 0 staged files; no source/index/history/status/contract edits"
+    }
+  ],
+  "provenance_gaps": [
+    "No retained exact suite command line, numeric exit code, or stderr transcript; only stdout/summary JSON.",
+    "Node v24.22.1 / Python 3.14.4 versions are owner-declared, not retained as command transcripts.",
+    "Selfcheck stdout says results saved under /tmp/mc002-inta-fe-validation-r4-20261026/runner/... while raw evidence is under /tmp/mc002-inta-evidence/frontend/validation-r4-20261026; pins are byte-equal but exact tested argv is unretained."
+  ],
+  "deliverables": {
+    "report": {
+      "path": "docs/reviews/inta-opencode-fe-r4-source-review.md",
+      "sha256": "423adc018f148c3667e20cae1f1ed1349a37f908e31a60e5a3589ed350744b96",
+      "bytes": 40764
+    },
+    "review_inputs": {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026/review-inputs.json",
+      "sha256": "b6272d7b7faae293df94c7d506b8bcc2e16aa104a787b7e4df90b1396dff00c2",
+      "bytes": 15826
+    },
+    "checks_log": {
+      "path": "docs/testing/inta-returns/qa/fe-validation-r4-source-review-20261026/checks-log.json",
+      "sha256": null,
+      "bytes": null,
+      "note": "self-hash/bytes intentionally excluded; reported in the human completion message to avoid self-reference"
+    }
+  },
+  "not_self_referencing_note": "This log hashes the report and review-inputs but not itself. All three output hashes/bytes are reported in the human completion message."
+}

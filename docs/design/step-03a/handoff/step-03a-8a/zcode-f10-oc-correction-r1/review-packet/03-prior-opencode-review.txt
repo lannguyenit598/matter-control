@@ -1,0 +1,240 @@
+# MC-003A.8A — F10 Independent Review (OpenCode)
+
+## 0. Identity, authorization, independence
+
+- **Actual reviewer/tool**: OpenCode, CLI `v2.1.4` (`opencode --version`).
+- **Provider/model**: provider `opencode`; model `DeepSeek V4.1 Flash Free`; model ID `deepseek-v4.1-flash-free`.
+- **Destination**: current OpenCode session only. Exact service URL was **not independently exposed/attested** in-session; I do not claim one. No model/provider/login/settings change, no paid retry, no billing change, no other agent invoked.
+- **Authorization**: the human’s direct prompt is the manual dispatch and explicitly authorizes this exact 6-snapshot packet (49,688 bytes) through the current OpenCode provider, read-only, text return. Codex’s file preparation is **not** treated as dispatch.
+- **Independence**: I did not author, co-author, edit, or contribute to C1/C2/C3, the final confirmation, R2/R3, the packet, or its manifest. ZCode’s final is **author self-confirmation**, not independent approval. I am not Claude/architecture owner and not the Product Owner.
+- **Scope**: six pinned snapshots plus manifest; no whole-repo read, no `.env`, credentials, source backend/frontend, or runtime logs. No write/commit. No secrets, credentials, or real client matter data observed in the six files.
+
+---
+
+## 1. Packet / hash verification
+
+Commands run (read-only): `rtk shasum -a 256`, `rtk wc -c`, `rtk opencode --version`, and Git metadata checks. No errors.
+
+| File | Bytes | Expected | SHA256 match |
+|---|---:|---:|---|
+| `packet-manifest.json` | 1797 | 1797 | ✅ `6d670d82…4ff7cd` |
+| `01-final-owner-confirmation.txt` | 22015 | 22015 | ✅ `39eab0fa…66cc2f` |
+| `02-final-delta.json` | 6709 | 6709 | ✅ `72e4d081…aa8f17` |
+| `03-C1-C2-R2-delta.json` | 6949 | 6949 | ✅ `d2b03fe5…b39ed2` |
+| `04-C3-R3-delta.json` | 5351 | 5351 | ✅ `bcb89b22…a202eb2` |
+| `05-reviewed-context.json` | 3691 | 3691 | ✅ `4f724952…a79cfdb` |
+| `06-intake-review-focus.json` | 4973 | 4973 | ✅ `56969554…b4755c` |
+
+- **Snapshot total**: 49,688 bytes exactly. **Manifest total including manifest**: 51,485 bytes.
+- **Mismatch**: none. No silently added file. The manifest’s `snapshot_count=6` and `payload_bytes=49688` are consistent.
+- **Provenance note**: workspace HEAD is `1381601d52c40da3475aac8cf5e3d3cffd1e9f19` on `codex/unified-project-flow`; the packet’s declared base `767f548f19b367a6893a3b8e0983107b5d509474` exists and is an ancestor. The F10 prompt did not pin a frozen baseline; the six file hashes are the binding payload evidence. The packet/manifest is tracked and clean; the manifest’s `PREPARED_NOT_DISPATCHED` status is a preparation status, while the human prompt is the actual dispatch record.
+
+**Hash/byte verification: PASS. Contract review: see verdict below.**
+
+---
+
+## 2. Reviewed depth and limitations
+
+- Read all six snapshots in full: final confirmation, final JSON delta, C1/C2 R2 delta, C3 R3 delta, reviewed context, intake focus.
+- Reviewed depth: internal consistency, clause-level precision, contract testability, and the two mandated limitations. I did **not** re-read the cited source contracts (`api-contracts`, `ADR-002`, `RULE-*`, filing model). Therefore I cannot independently confirm the packet’s source quotations or whether the candidate clauses are compatible with the full existing contract. Source citations are treated as packet-internal references, not independently verified approval.
+- No runtime, build, DB, integration, server, browser, HTML, or product test was run. All packet acceptance rows remain `DOCUMENT_EXPECTED / NOT_RUN`.
+- No security, authorization, performance, or production behavior is proven by this review.
+
+---
+
+## 3. The two mandated limitations
+
+### L1 — Stop-at-N does not observe surplus after the stop
+
+**Status: NOT RESOLVED.**
+
+The packet says the reader stops after collecting `N` matches and claims `count>N` or surplus becomes `INCOMPLETE_HISTORY/ANOMALY` and “never false zero/completeness” (final P3.4/P3.5; `02-final-delta.json` `c3.patches.edge_semantics`). With the packet’s own `limit=1` trace, the reader stops at the Nth match. A later duplicate/surplus link event is unread and therefore invisible. The unconditional corruption-detection claim is unsupported.
+
+The packet’s own `06-intake-review-focus.json` already records the counterexample `late_surplus_not_observable_after_stop` with `complete: true`, and says the claimed corruption detection “must be conditional or have an explicit broader anomaly predicate/window.” The final does not add that qualification.
+
+**Smallest correction needed:** qualify command-local completeness to the **observed window**, or pin a bounded post-stop anomaly window (for example, process the whole page containing the Nth match, optionally one lookahead page). Do not require an unbounded scan. Separate “healthy-producer command completeness” from “corruption detection.”
+
+### L2 — AND-filter does not self-flag wrong identity
+
+**Status: NOT RESOLVED.**
+
+The match predicate is strictly `type=filing.observation.evidence_linked ∧ causeSeq==mainSeq ∧ payload.observationId==O7` (final P3.1). A link event with `causeSeq=41` but `payload.observationId=O8` simply fails the predicate and is skipped. It is not reported as a mismatch. Yet final P3.4 claims “identity mismatch (match có observationId ≠ O7)” surfaces `ANOMALY`. That is internally contradictory: a row with `observationId != O7` is not a match under the AND predicate.
+
+The packet’s own `06-intake-review-focus.json` records `wrong_identity_rejected_by_match_but_not_reported` with `complete: true`. The final does not define a separate anomaly predicate.
+
+**Smallest correction needed:** keep the AND predicate for matching, and define a **separate** anomaly predicate over the scanned window, e.g. any event with `causeSeq==mainSeq`, `type=filing.observation.evidence_linked`, and `payload.observationId != O7` → `INCOMPLETE_HISTORY/ANOMALY`. Alternatively, explicitly drop the identity-mismatch detection claim and state it is not detected. Do not weaken the match predicate from AND to OR.
+
+---
+
+## 4. Findings
+
+Summary:
+
+| ID | Severity | Area | Disposition |
+|---|---|---|---|
+| F10-OC-01 | High | C2 effective view | CHANGES_REQUIRED |
+| F10-OC-02 | High | C3 stop-at-N | CHANGES_REQUIRED |
+| F10-OC-03 | High | C3 identity mismatch | CHANGES_REQUIRED |
+| F10-OC-04 | High | C1 order/scope/422 | CHANGES_REQUIRED |
+| F10-OC-05 | Medium | C2 terminal scope | CHANGES_REQUIRED |
+| F10-OC-06 | Low | Numeric bounds units | Clarification |
+| F10-OC-07 | Low | Cross-document status | Process consistency |
+
+### F10-OC-01 — [High] C2 effective-view derivation omits superseded replacement observations
+
+- **Location**: `01-final-owner-confirmation.txt` §1 C2 **P2.2**; `02-final-delta.json` `c2.patches.effective_view`; `03-C1-C2-R2-delta.json` `clause2_correction.terminal_rule`.
+- **Exact clause**: P2.2 defines effective linkage as “các evidence link của observation **không bị target bởi correction terminal** trong lịch sử đã commit đến snapshot đó.” P2.1 separately says “replacement của correction superseded mất hiệu lực trong cùng commit; tối đa một replacement hiệu lực/observation gốc.”
+- **Trigger A**: O4 has links; C1 `REPLACE O4→O5`; C2 `RETRACT O4` (terminal). P2.2 excludes O4 because it is targeted, but O5 is **not** targeted by a correction. Read literally, O5’s links remain effective, contradicting the R2 example that O4 and O5 are both ineffective.
+- **Trigger B**: C1 `REPLACE O4→O5`; C2 `REPLACE O4→O6`. O5 is not targeted; P2.2 would keep O5 and O6 effective, violating “at most one effective replacement.”
+- **Impact**: Effective/unbound totals and B3/provenance can include stale replacement links. A5/A6 cannot pass as written. History immutability itself is not broken; the derivation is.
+- **Smallest correction**: replace P2.2 with one explicit per-original derivation: for each original observation, find the terminal correction (maximum `seq` among corrections whose `correctsObservationId` equals that original); no correction → original links effective; `RETRACT` → none; `REPLACE` → only links of the replacement observation created by that terminal correction; all replacement observations created by superseded corrections are ineffective; corrections targeting replacement observations → 422. Put this in P2.1/P2.2 and the JSON, not only in R2.
+- **Expected cases**:
+  - A5a `REPLACE O4→O5` then `RETRACT O4`: zero effective links from the O4/O5 lineage.
+  - A5b `REPLACE O4→O5` then `REPLACE O4→O6`: only O6 effective; O5 ineffective.
+  - A5c two originals with interleaved corrections: terminal is per original, not the latest correction in the filing.
+  - A5d correction targeting O5: 422, no correction-of-correction.
+  - A6 asOf before/between/after corrections: derived view changes without history rewrite.
+- **Owner**: Claude (contract derivation) + Codex (document intake). This is an integration fix, not a new policy.
+
+### F10-OC-02 — [High] C3 “never false completeness” overclaims surplus detection after stop
+
+- **Location**: `01-final-owner-confirmation.txt` §1 C3 **P3.3–P3.5**; `02-final-delta.json` `c3.patches.emission_rules`, `c3.patches.edge_semantics`, `c3.patches.completion`; `04-C3-R3-delta.json` `path_A_recommended.stop_condition`.
+- **Exact clause**: P3.4 says “`exhausted<N` … hoặc `count>N` hoặc `identity mismatch` → surface `INCOMPLETE_HISTORY/ANOMALY`; never false zero/completeness.” P3.5 says finding N unique exact matches is command-local complete even if later history is unscanned.
+- **Trigger**: main event N=2; matches at seq 42 and 44; the reader stops. A third matching link event at seq 46 (duplicate/corrupt producer history) is never read; the reader reports complete. The packet’s `limit=1` trace makes this concrete.
+- **Impact**: The unconditional “never false completeness” and the A8 surplus case are not achievable with stop-at-N. A corrupt producer can pass as complete. Command-local completeness under the healthy emission invariant remains sound; the defect is the overbroad corruption guarantee.
+- **Smallest correction**: state that completeness is guaranteed **within the observed window** and define the window (e.g. through the page containing the Nth match, with an optional one-page lookahead). Define `surplus` as an observed matching event after N within that window. State that later surplus is outside the guarantee and does not invalidate the healthy-producer command-local completion. Do not require an unbounded scan. Update A8 to separate healthy completion from corruption detection.
+- **Expected cases**:
+  - A8a N=0: complete 0/0, no link scan, no false anomaly.
+  - A8b exhausted<N: `INCOMPLETE_HISTORY/ANOMALY`.
+  - A8c observed match count > N within the pinned window: anomaly.
+  - A8d surplus only after the stop page: **not claimed detected**; no “corruption-free” assertion.
+  - A8e page boundary at the Nth match: window definition and result are deterministic.
+- **Owner**: Claude (reader contract) + Codex (document intake).
+
+### F10-OC-03 — [High] C3 AND predicate cannot produce the claimed identity-mismatch anomaly
+
+- **Location**: `01-final-owner-confirmation.txt` §1 C3 **P3.1 vs P3.4**; `02-final-delta.json` `c3.patches.predicate` vs `c3.patches.edge_semantics`; `04-C3-R3-delta.json` `path_A_recommended.discovery`.
+- **Exact clause**: P3.1 makes `payload.observationId==O7` part of the normative AND. P3.4 nevertheless says identity mismatch “match có observationId ≠ O7” → `ANOMALY`.
+- **Trigger**: link event with `causeSeq=41`, `type=filing.observation.evidence_linked`, `payload.observationId=O8`. The AND predicate rejects it as a non-match; no anomaly is emitted; the reader completes using O7’s N matches.
+- **Impact**: Cross-observation or corrupt link rows are silently ignored. The identity-mismatch anomaly case in A8 cannot pass as specified. This is a direct contradiction, not merely a residual limitation.
+- **Smallest correction**: separate the **match** predicate (AND, unchanged) from an **anomaly** predicate over the scanned window. Anomaly candidate: any scanned event with `causeSeq==mainSeq` and `type=filing.observation.evidence_linked` whose `payload.observationId != O7` (and/or whose target is not in the expected link set) → `INCOMPLETE_HISTORY/ANOMALY`. Or explicitly remove the identity-mismatch guarantee and state it is not detected. Pin the scan window in either case.
+- **Expected cases**:
+  - A8f O8 link under causeSeq 41: anomaly (if anomaly predicate adopted) or explicit “not detected.”
+  - A8g unrelated event with causeSeq 41 but different type: ignored, no anomaly.
+  - A8h unrelated link with causeSeq != 41: ignored, no anomaly.
+  - A7 normal interleaving with a derived event between links: no false anomaly.
+  - Page boundary around the mismatched row: deterministic result.
+- **Owner**: Claude (reader contract) + Codex (document intake).
+
+### F10-OC-04 — [High] C1 P1.3 is global, incomplete on 422, and lacks a per-command CAS/precondition matrix
+
+- **Location**: `01-final-owner-confirmation.txt` §1 C1 **P1.3** (and P1.2); `02-final-delta.json` `c1.patches.check_ordering`; `03-C1-C2-R2-delta.json` `clause1_lifecycle.observation_target_vs_cas` / `supplement_request`.
+- **Exact clause**: P1.3 defines “admission → scope lock + authorization → idempotency replay → preconditions (428/412, gồm If-Match và expectedCycleNo) → state/stage guards (409) → effects” and says it applies “đều cho mọi command.” P1.2 says a body `cycleNo` that does not exist under the filing is `422 validation`.
+- **Trigger A — scope**: any command outside filing/observation/correction. P1.3 would impose a global command-order change, contrary to the F10 boundary “không áp global command order ngoài phạm vi” and the review focus IR-F10-03.
+- **Trigger B — missing 422 placement**: a request with an invalid target `cycleNo`, a stale `expectedCycleNo`, and a changed stage. P1.3 lists 428/412 preconditions and 409 guards, but does not place the 422 target-binding validation. The outcome is not deterministic; if 422 is placed in “admission” before authz, it may leak target existence.
+- **Trigger C — per-command CAS ambiguity**: supplement is described with `expectedCycleNo`; corrections are described in R2 with `If-Match` filing revision + `expectedCycleNo`; P1.3 says “gồm If-Match và expectedCycleNo” without saying which command uses which. Missing `If-Match`/`expectedCycleNo` also has no pinned 422/428 behavior.
+- **Impact**: Unscoped global contract change; nondeterministic 422/412/409 precedence; possible authorization/existence leak; A2/A3 are insufficient to test the order.
+- **Smallest correction**: scope P1.3 explicitly to the filing family (filing-create, supplement, observation, corrections); state other commands keep their existing contracts. Add a small per-command matrix for: body target binding (422), `If-Match` (428 missing / 412 stale), `expectedCycleNo` (422 missing / 412 stale), stage guard (409), and idempotency replay. Place the 422 target-binding check after authorization and replay, with an explicit 422-vs-412-vs-409 precedence. If a truly global order is desired, route it as a separate Claude/PO change, not this F10 addendum.
+- **Expected cases**:
+  - A2 concurrent supplement, stale CAS + changed stage → 412.
+  - A2b invalid target cycleNo + stale expectedCycleNo → the pinned precedence (422 or 412; must be explicit).
+  - A2c invalid target cycleNo + changed stage → the pinned precedence (422 or 409).
+  - A2d missing expectedCycleNo → 422/428 as pinned.
+  - A3 stage-only change + valid CAS → 409, no mutation.
+  - A4 injected failure → full rollback, no event.
+  - A2e correction: missing If-Match → 428; stale → 412; target not original → 422; stage guard → 409.
+  - A non-filing command regression check confirms its existing order is unchanged.
+- **Owner**: Claude (command contract) + Codex (document intake).
+
+### F10-OC-05 — [Medium] C2 “latest-seq terminal” is not explicitly scoped per original
+
+- **Location**: `01-final-owner-confirmation.txt` §1 C2 **P2.1/P2.2**; `02-final-delta.json` `c2.patches.actions`; `03-C1-C2-R2-delta.json` `clause2_correction.terminal_rule`.
+- **Exact clause**: P2.1 says “latest-seq terminal” and P2.2 says “correction terminal,” but neither states that “latest” means **latest correction targeting the same original observation**, not the latest correction in the filing.
+- **Trigger**: two originals O4 and O9 have interleaved corrections. A literal global “latest correction by seq” would select only one terminal for the filing and leave the other original’s corrections misclassified. A correction targeting a replacement observation O5 could also be read as allowed unless explicitly rejected.
+- **Impact**: Wrong terminal selection; nondeterministic effective view; correction-of-correction ambiguity.
+- **Smallest correction**: state “terminal correction = maximum `seq` among corrections whose `correctsObservationId` equals the same original observation; latest is per original, not per filing; corrections targeting replacement observations are rejected 422.” Add to P2.1/P2.2 and A5.
+- **Expected cases**:
+  - A5e interleaved corrections on O4/O9: each original has its own terminal.
+  - A5f correction targeting O5: 422.
+  - A5g repeated REPLACE on the same original: latest terminal only; earlier replacement ineffective.
+- **Owner**: Claude/Codex.
+
+### F10-OC-06 — [Low] Proposed numeric bounds lack units and envelope definition
+
+- **Location**: `01-final-owner-confirmation.txt` §1 Projection (numeric bounds); `02-final-delta.json` `projection.numeric_bounds`.
+- **Exact clause**: proposed `reason<=2000`, `type<=64`, `correlationId<=128`; `correlationId` says “chars,” but `reason`/`type` do not state Unicode code points vs UTF-8 bytes, inclusive/exclusive limit, or envelope size.
+- **Trigger**: a 2000-character reason with multi-byte UTF-8; a 2000-byte reason; an envelope larger than an unstated server limit. Client and server can disagree at the boundary.
+- **Impact**: Cross-language validation ambiguity; proposed bounds are not fully testable; the packet correctly avoids a constant-byte claim, but the bounds are not yet a precise proposed contract.
+- **Smallest correction**: state the unit and inclusivity for each proposed bound; either propose an envelope bound or explicitly mark it `NEEDS_AUTHORIZED_SOURCE`; keep the “proposed, not source-proven” label.
+- **Expected cases**: P5a boundary at 2000 code points vs 2000 UTF-8 bytes; P5b envelope oversize/deferred; P5c correlationId 128 chars; no constant-byte claim.
+- **Owner**: Codex (document) / PO at the contract gate.
+
+### F10-OC-07 — [Low] Cross-document status inconsistency
+
+- **Location**: `04-C3-R3-delta.json` `remaining_decisions` (A vs B); `01-final-owner-confirmation.txt` P3.1 (A final, B unadopted); `packet-manifest.json` `status`.
+- **Exact issue**: R3 still lists “A vs B (contract delta decision: Claude/PO)” as open, while the final declares path A final and B/causeSeq-param unadopted. The manifest still says `PREPARED_NOT_DISPATCHED`, while the human prompt is the actual dispatch.
+- **Impact**: An implementer reading R3 may treat B as open; an intake reader may treat the packet as not dispatched. This is a status/provenance ambiguity, not a C1/C2/C3 semantic defect.
+- **Smallest correction**: add a supersession note to R3/final: “R3 A-vs-B decision closed by final P3.1: A final, B unadopted; B35/L2 remain unadopted.” Record the human dispatch separately or update the manifest status. Do not change the contract semantics.
+- **Expected cases**: document consistency check only.
+- **Owner**: Codex intake.
+
+---
+
+## 5. What is sound (subject to the findings)
+
+- **C1 atomicity/rollback**: `filing-create` one transaction for filing + cycle 1; supplement one transaction for cycle + observation + links + revision + events; full rollback. Coherent as candidate.
+- **C2 original-target-only, immutable history, receipt ≠ approval**: target original only, no correction-of-correction, append-only history, current proof epoch, exact evidence versions. Coherent, subject to F10-OC-01/05.
+- **C3 path A**: same-Matter unfiltered seq pages; AND match; dedup by `(matterId, seq)`; main event before links; links only at creation; per-page `asOf/sourceRevision`; no overview merge; current totals only from filing read. Coherent, subject to F10-OC-02/03.
+- **Projection / scope**: no-array invariant scoped to the two event types; no constant-byte claim; numeric bounds labeled proposed/dual; catalogue stays 32; B35/L2/causeSeq filter unadopted; F08/BE01/INTA untouched.
+- **No P1/P2 expansion observed.**
+
+---
+
+## 6. Residual decisions and ownership
+
+- **PO choices**: adoption of candidate fields (`unboundObservationEvidenceTotal`, scoped DR-15 event payload blocks) and proposed numeric bounds vs `NEEDS_AUTHORIZED_SOURCE`; B35 adoption, if any. These remain unapproved.
+- **Claude/architecture**: C2 effective-view derivation; C3 anomaly predicate/window; C1 filing-family order and 422/412/409 precedence; role mapping and link-table role assumption; ADR disposition. The packet’s `adr_needed: false` is an author recommendation, not approved by this review.
+- **Codex**: document intake, status/supersession correction, traceability, and scoped clarification routing.
+- **ZCode**: author input only if separately assigned; no self-approval, no full rewrite request. Any author response is evidence for re-review, not the verdict.
+- **A vs B**: final P3.1 declares A final/B unadopted; the R3 open decision should be recorded as superseded. B35/L2 remain unadopted.
+
+---
+
+## 7. Verdict
+
+**CHANGES_REQUIRED (document-only).**
+
+Not `PASS_WITH_LIMITATIONS`, because the two mandated limitations are not merely residual: the packet’s own normative clauses still overclaim surplus/identity detection, and the C2 effective-view derivation is incomplete for the required `REPLACE→RETRACT` and repeated-`REPLACE` cases. Not `BLOCKED`, because the corrections are narrow and the packet is otherwise coherent. Not `PASS`, because F10-OC-01 through F10-OC-04 need correction and independent re-review.
+
+**Re-review scope**: only the changed clauses and their expected cases, with a new exact manifest/hash. No full architecture audit is requested. This is not a request for the author to rewrite the whole packet.
+
+**Status preserved**:
+- F10 remains **OPEN**; this review does not close it.
+- G5-A remains as recorded; this review does not revalidate it.
+- G5-B remains **pending findings disposition**; this is the independent return, not approval.
+- G3/G4 remain separate (`NOT_VERIFIED` / `PENDING`); G6 remains `REWORK_REQUIRED`; STEP03B remains **NOT_AUTHORIZED**.
+- 22 CT IDs, Q1..Q8, 32-operation catalogue, routes, fields, and bounds are **not changed or approved** by this review.
+- No candidate field, route, numeric bound, or architecture decision is approved here.
+
+---
+
+## 8. Tests run / not run
+
+**Run (read-only):**
+- Byte and SHA256 verification of manifest + six snapshots: **PASS**, no mismatch; total 49,688 bytes.
+- `opencode --version`: `v2.1.4`.
+- Git metadata: branch/HEAD/base existence; packet tracked/clean. No errors.
+
+**Not run:**
+- All runtime scenarios, builds, DB, integration, server, browser, HTML, product tests, security/performance tests, rendered UX, and design QA.
+- No source-document re-read; no independent verification of cited RULE/ADR/filing-model text.
+- No supplement review; no F08/BE01/INTA review; no implementation or migration.
+
+---
+
+## 9. Skipped / remaining risks
+
+- **Skipped**: runtime/security/performance evidence; full source compatibility audit; author-session internals; production behavior; all acceptance execution.
+- **Remaining risks**: document-only conclusions; cited source text not re-read; ZCode’s self-confirmation is not independent approval; the C2/C3 defects could propagate if implemented before correction; packet status metadata is stale; numeric bounds remain proposed; role mapping/link-table assumptions remain unresolved; no runtime or security PASS.
+
+**Final position**: the packet is structurally useful and the ZCode self-confirmation is honest about its limits, but it is **not yet independently confirmed**. The narrow corrections above are required before G5-B disposition or any downstream implementation use.

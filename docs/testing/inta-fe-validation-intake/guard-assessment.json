@@ -1,0 +1,628 @@
+{
+  "rows": [
+    {
+      "key": "API_TOKEN",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": true,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "95c5943cb72adc76e3928fddb3fc9ecaa9e4e041f41158bb13c21a79679cc7ac"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_nonempty/stderr.log",
+          "bytes": 296,
+          "sha256": "12853f7e8196f6f79dc2d7430e55c11e16064e786480d1f4c9832b28494e7b15"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_nonempty/meta.json",
+          "bytes": 365,
+          "sha256": "e78f7f37e5c1acbbe2f524147863f5401d3962b9196bf69110e0e9ffc486ea57"
+        }
+      ],
+      "codex_contract_result": "FAIL_OBSERVED_LISTENER"
+    },
+    {
+      "key": "API_TOKEN",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "083211cdbc433fd19d782c64a3dd4075b06f656c0ae831f01379d2ca69c3ac55"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_empty/stderr.log",
+          "bytes": 296,
+          "sha256": "12853f7e8196f6f79dc2d7430e55c11e16064e786480d1f4c9832b28494e7b15"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TOKEN_empty/meta.json",
+          "bytes": 363,
+          "sha256": "d208c217d5e492851dee3e6c41a23c3f5fcbc9714702a0f7ca5f04912e0c9d2a"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "API_BASE_URL",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_BASE_URL_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "b23b7f49f982d354dbf5ea674b27f769c01d73f6e0fb2b41237d6127f61a51d0"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_BASE_URL_nonempty/stderr.log",
+          "bytes": 299,
+          "sha256": "1fc27f10c89a39d3ffdfcbcb28ef55f70217793481e2c63559cb76c10046c32f"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_BASE_URL_nonempty/meta.json",
+          "bytes": 368,
+          "sha256": "acc7a9ccef4a9ddb7c8b77d0561733645832460f6a7c44135d12661b6e9d9486"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "API_BASE_URL",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_BASE_URL_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "19bf4d8c9cb9124d49a19590c0afb46702ba68e9f4e25a2d8230a6437d3f4785"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_BASE_URL_empty/stderr.log",
+          "bytes": 299,
+          "sha256": "1fc27f10c89a39d3ffdfcbcb28ef55f70217793481e2c63559cb76c10046c32f"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_BASE_URL_empty/meta.json",
+          "bytes": 366,
+          "sha256": "866039e5ef5896d0a65d0527aade6be71fe75abeb46f4bd7e9165f5bcff01ddd"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "AUTH_ALLOW_ANONYMOUS",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_ALLOW_ANONYMOUS_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "083211cdbc433fd19d782c64a3dd4075b06f656c0ae831f01379d2ca69c3ac55"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_ALLOW_ANONYMOUS_nonempty/stderr.log",
+          "bytes": 307,
+          "sha256": "a181fb692a6b0e58e6efe403c5a366a58f53312e79da7cc44ac8df3687fcf1a6"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_ALLOW_ANONYMOUS_nonempty/meta.json",
+          "bytes": 376,
+          "sha256": "d152cdf68d4f09c78bd31ca94ad12bd77a985fd71b5576a0239ffb3f357257a0"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "AUTH_ALLOW_ANONYMOUS",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_ALLOW_ANONYMOUS_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "8d097c20ae3a1208ac9ecf11d5c1676ce32212c55f9f89b9d701adc0fc7e7a52"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_ALLOW_ANONYMOUS_empty/stderr.log",
+          "bytes": 307,
+          "sha256": "a181fb692a6b0e58e6efe403c5a366a58f53312e79da7cc44ac8df3687fcf1a6"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_ALLOW_ANONYMOUS_empty/meta.json",
+          "bytes": 374,
+          "sha256": "4c574faa35872fb949c6056a9c42b6926c5e37fa0043f6e203494bab4633d524"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "API_TIMEOUT_MS",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TIMEOUT_MS_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "68340e2da9f0f80f7fcebbc93f4fca66075ba4984ed4e15fdb7f98804e88dd72"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TIMEOUT_MS_nonempty/stderr.log",
+          "bytes": 301,
+          "sha256": "8e102adaaff7ea47b24c26f9e88ad620611b012ae032f4380eaa1ba12c135dc6"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TIMEOUT_MS_nonempty/meta.json",
+          "bytes": 370,
+          "sha256": "9ff639a940dfe892ca148c4e8d997c5a2ab1c73206f11551fdbac880faf20d65"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "API_TIMEOUT_MS",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TIMEOUT_MS_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "cf1d40d15cccbca3214094dfb5e1bf388705a9fa582a9c61a6a787bb836a724e"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TIMEOUT_MS_empty/stderr.log",
+          "bytes": 301,
+          "sha256": "8e102adaaff7ea47b24c26f9e88ad620611b012ae032f4380eaa1ba12c135dc6"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/API_TIMEOUT_MS_empty/meta.json",
+          "bytes": 368,
+          "sha256": "c586def7be6e3230fcd43ed3c95353a93646fc964bffc36a1fa0ecaab22ba131"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "AUTH_SECRET",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_SECRET_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "67c41fbf48bc511f7d422833ddfbe1056ca08ce205d89f32aca421667cbd1999"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_SECRET_nonempty/stderr.log",
+          "bytes": 298,
+          "sha256": "db6cd9fa7752a551365c3fb6dfe7fa7a9f08531491df78708eb9cd05d407afcb"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_SECRET_nonempty/meta.json",
+          "bytes": 367,
+          "sha256": "ffa708c310b337fac2696d587f34c0802e3e65d88e05be55c220e3fbaa4074a8"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "AUTH_SECRET",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_SECRET_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "5422d9f829552d148243a7f2346c2f8b568905f96deb8ac7d9406edaad844a4f"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_SECRET_empty/stderr.log",
+          "bytes": 298,
+          "sha256": "db6cd9fa7752a551365c3fb6dfe7fa7a9f08531491df78708eb9cd05d407afcb"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/AUTH_SECRET_empty/meta.json",
+          "bytes": 365,
+          "sha256": "ac008cadaca8dbb45fd7a43a3e4725f1444c01d4b0654c19f85722fdb0827c50"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "NEXTAUTH_SECRET",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/NEXTAUTH_SECRET_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "67c41fbf48bc511f7d422833ddfbe1056ca08ce205d89f32aca421667cbd1999"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/NEXTAUTH_SECRET_nonempty/stderr.log",
+          "bytes": 302,
+          "sha256": "37362023fabde3cbacd677cc624e899ce6b095e2b0dfa04ccb107a09471262f7"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/NEXTAUTH_SECRET_nonempty/meta.json",
+          "bytes": 371,
+          "sha256": "c954691ba595ae1f24ec7c476d98470524ae1e6dcec43f9fba4b724608d756e1"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "NEXTAUTH_SECRET",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/NEXTAUTH_SECRET_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "19bf4d8c9cb9124d49a19590c0afb46702ba68e9f4e25a2d8230a6437d3f4785"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/NEXTAUTH_SECRET_empty/stderr.log",
+          "bytes": 302,
+          "sha256": "37362023fabde3cbacd677cc624e899ce6b095e2b0dfa04ccb107a09471262f7"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/NEXTAUTH_SECRET_empty/meta.json",
+          "bytes": 369,
+          "sha256": "993601f429da6b71306022cb870473de5fe3c5da9473786d0f6289eef444c88d"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "CLERK_SECRET_KEY",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/CLERK_SECRET_KEY_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "5422d9f829552d148243a7f2346c2f8b568905f96deb8ac7d9406edaad844a4f"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/CLERK_SECRET_KEY_nonempty/stderr.log",
+          "bytes": 303,
+          "sha256": "eba473a367a88beee9be5b32c4c2475a50becfe4c163bc4a45d9b0338e2a5736"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/CLERK_SECRET_KEY_nonempty/meta.json",
+          "bytes": 372,
+          "sha256": "b8828e2d3bab11e255b1bc6b0004a5b85204aeb15f6d477e4f1ba278d12a3481"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "CLERK_SECRET_KEY",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/CLERK_SECRET_KEY_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "67c41fbf48bc511f7d422833ddfbe1056ca08ce205d89f32aca421667cbd1999"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/CLERK_SECRET_KEY_empty/stderr.log",
+          "bytes": 303,
+          "sha256": "eba473a367a88beee9be5b32c4c2475a50becfe4c163bc4a45d9b0338e2a5736"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/CLERK_SECRET_KEY_empty/meta.json",
+          "bytes": 370,
+          "sha256": "7078a8c369bd42d4dc1fe0bc1e043777b9d6afefddf805c24609b3ec8eb79aff"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "SESSION_SECRET",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/SESSION_SECRET_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "67c41fbf48bc511f7d422833ddfbe1056ca08ce205d89f32aca421667cbd1999"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/SESSION_SECRET_nonempty/stderr.log",
+          "bytes": 301,
+          "sha256": "d59e31fe531ee35d9e85c83c7337b7cfa0bc3bd46783e302324fbecc72e100e6"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/SESSION_SECRET_nonempty/meta.json",
+          "bytes": 370,
+          "sha256": "2d2aaf6dec2cef3c1007b5a3033e1e24ebdb948f6d1025b77b6ccdac2359aee4"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "SESSION_SECRET",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/SESSION_SECRET_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "67c41fbf48bc511f7d422833ddfbe1056ca08ce205d89f32aca421667cbd1999"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/SESSION_SECRET_empty/stderr.log",
+          "bytes": 301,
+          "sha256": "d59e31fe531ee35d9e85c83c7337b7cfa0bc3bd46783e302324fbecc72e100e6"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/SESSION_SECRET_empty/meta.json",
+          "bytes": 368,
+          "sha256": "a10b7a13c33a68933a6cf8a671af0fe39374689ada9ceb41c4b210dd9cf1729f"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "COOKIE_SECRET",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/COOKIE_SECRET_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "cf1d40d15cccbca3214094dfb5e1bf388705a9fa582a9c61a6a787bb836a724e"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/COOKIE_SECRET_nonempty/stderr.log",
+          "bytes": 300,
+          "sha256": "88f0888633b3885758cabae4fa2ee98c60f058818387bdcc9898a47a5ab5c0ce"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/COOKIE_SECRET_nonempty/meta.json",
+          "bytes": 369,
+          "sha256": "6e09c59525d0113d59f1419e575f69c67b99a3e9e4af43be88f51d5bb1378ae0"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "COOKIE_SECRET",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/COOKIE_SECRET_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "67c41fbf48bc511f7d422833ddfbe1056ca08ce205d89f32aca421667cbd1999"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/COOKIE_SECRET_empty/stderr.log",
+          "bytes": 300,
+          "sha256": "88f0888633b3885758cabae4fa2ee98c60f058818387bdcc9898a47a5ab5c0ce"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/COOKIE_SECRET_empty/meta.json",
+          "bytes": 367,
+          "sha256": "62598db83ccfad37b460fb3b0cd726c6091ebb2d3a48dc7671c1a40ece0de03d"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "DATABASE_URL",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/DATABASE_URL_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "cf1d40d15cccbca3214094dfb5e1bf388705a9fa582a9c61a6a787bb836a724e"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/DATABASE_URL_nonempty/stderr.log",
+          "bytes": 299,
+          "sha256": "64d5dfecd52988448030462198cce67cad4cbdd857eadca8d41c392d01493a16"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/DATABASE_URL_nonempty/meta.json",
+          "bytes": 368,
+          "sha256": "7ebbcc3b8adfcf66bbf25c859e8cd37dd860a251a565c7d65f19f75690f2f401"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "DATABASE_URL",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/DATABASE_URL_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "67c41fbf48bc511f7d422833ddfbe1056ca08ce205d89f32aca421667cbd1999"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/DATABASE_URL_empty/stderr.log",
+          "bytes": 299,
+          "sha256": "64d5dfecd52988448030462198cce67cad4cbdd857eadca8d41c392d01493a16"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/DATABASE_URL_empty/meta.json",
+          "bytes": 366,
+          "sha256": "306c5c4848a678286946db5898051b12e1ba7d6a5139081c2a38a50056183817"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "JWT_SECRET",
+      "variant": "nonempty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/JWT_SECRET_nonempty/stdout.log",
+          "bytes": 135,
+          "sha256": "19bf4d8c9cb9124d49a19590c0afb46702ba68e9f4e25a2d8230a6437d3f4785"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/JWT_SECRET_nonempty/stderr.log",
+          "bytes": 297,
+          "sha256": "6f4e52d80640c399e86b20b31be06e4b2d5eabf8b72b9a4282af271de26547ba"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/JWT_SECRET_nonempty/meta.json",
+          "bytes": 366,
+          "sha256": "ee02159fe05f8547e0405825d39b657b1b87712ea7913dabf9c80df49ecc510f"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    },
+    {
+      "key": "JWT_SECRET",
+      "variant": "empty",
+      "owner_verdict": "PASS",
+      "exit_code_reported": 1,
+      "expected_phrase_in_stderr": true,
+      "listener_observed": false,
+      "observer_file_exists": false,
+      "codex_zero_upstream_status": "NOT_ESTABLISHED",
+      "pins": [
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/JWT_SECRET_empty/stdout.log",
+          "bytes": 135,
+          "sha256": "cf1d40d15cccbca3214094dfb5e1bf388705a9fa582a9c61a6a787bb836a724e"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/JWT_SECRET_empty/stderr.log",
+          "bytes": 297,
+          "sha256": "6f4e52d80640c399e86b20b31be06e4b2d5eabf8b72b9a4282af271de26547ba"
+        },
+        {
+          "path": "/tmp/mc002-inta-fe-validation-20261026/output/guard-variants/JWT_SECRET_empty/meta.json",
+          "bytes": 364,
+          "sha256": "a83429578eb7469f6c5cbfc8bc4fe4d494cc1d6a99667a76b7fb76075bf25a31"
+        }
+      ],
+      "codex_contract_result": "INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN"
+    }
+  ],
+  "summary": {
+    "refusal_phrases_verified": 22,
+    "owner_pass": 22,
+    "codex_full_guard_pass": 0,
+    "explicit_contract_failure": 1,
+    "observer_files_missing": 22
+  },
+  "finding": "No missing file/default0 counts as measured zero. Sampled no-listener observation is not a proof that no short listener occurred. No new Next guard execution by Codex."
+}

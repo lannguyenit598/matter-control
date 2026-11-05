@@ -1,0 +1,7 @@
+R1 redaction scan — corrected run, single invocation with live credential variable, $(date -u +%Y-%m-%dT%H:%M:%SZ).
+NOTE: a first scan attempt in the previous shell invocation was INVALID (the credential variable was unset between invocations, so grep ran with an empty pattern and matched every file; its counts are meaningless and are discarded). This file is the authoritative scan.
+files_containing_fixture_password (must be 0):        0
+postgres:// occurrences (expect only the manifest REDACTED form):
+/tmp/mc002be-c01-r1/21-fixture-manifest.log:15:Pre-assignment verification OK: identity + empty target verified via docker exec (no credential in argv); DSN form postgres://mc002bec01r1:REDACTED@127.0.0.1:15458/mc002be_c01_r1?sslmode=disable; fresh random credential, no tracing, no env dump, never reused.
+/tmp/mc002be-c01-r1/41-redaction.txt:4:postgres:// occurrences (expect only the manifest REDACTED form):
+total_occurrences_of_password_in_r1_dir (must be 0):        0

@@ -1,0 +1,44 @@
+2026-10-28T03:18:12Z
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+ ❯ src/features/data-transfer/components/data-transfer-ui.test.tsx (16 tests | 1 failed) 5487ms
+   ❯ BulkSection (7)
+     × keeps a lost answer UNKNOWN, locks the rows and retries with the SAME keys 5018ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/data-transfer/components/data-transfer-ui.test.tsx > BulkSection > keeps a lost answer UNKNOWN, locks the rows and retries with the SAME keys
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/data-transfer/components/data-transfer-ui.test.tsx:102:3
+    100|   })
+    101|
+    102|   it('keeps a lost answer UNKNOWN, locks the rows and retries with the…
+       |   ^
+    103|     await readyBulk()
+    104|     actions.bulkCommit.mockResolvedValueOnce({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 37 passed (38)
+      Tests  1 failed | 407 passed (408)
+   Start at  10:18:49
+   Duration  6.78s (environment 40%, tests 37%, setup 11%, import 10%, transform 3%)
+
+Environment  jsdom was created 38 times · 20.17s total, 40% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[ELIFECYCLE] Test failed. See above for more details.
+[ELIFECYCLE] Command failed with exit code 1.

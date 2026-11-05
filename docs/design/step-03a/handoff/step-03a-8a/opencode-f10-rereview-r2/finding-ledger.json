@@ -1,0 +1,79 @@
+{
+  "task": "MC-003A.8A F10",
+  "review_verdict": "PASS_WITH_LIMITATIONS_DOCUMENT_ONLY",
+  "findings": [
+    {
+      "id": "F10-OC-01",
+      "severity_reported": "High",
+      "original_title": "C2 effective-view derivation omits superseded replacement observations",
+      "corrected_delta_key": "oc01_oc05_terminal_derivation",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "CLOSED_DOCUMENT_ONLY",
+      "closure": "CLOSED_DOCUMENT_ONLY",
+      "review_evidence": "reviewer-return.txt.gz"
+    },
+    {
+      "id": "F10-OC-02",
+      "severity_reported": "High",
+      "original_title": "C3 \u201cnever false completeness\u201d overclaims surplus detection after stop",
+      "corrected_delta_key": "oc02_observed_window",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "CLOSED_DOCUMENT_ONLY",
+      "closure": "CLOSED_DOCUMENT_ONLY",
+      "review_evidence": "reviewer-return.txt.gz"
+    },
+    {
+      "id": "F10-OC-03",
+      "severity_reported": "High",
+      "original_title": "C3 AND predicate cannot produce the claimed identity-mismatch anomaly",
+      "corrected_delta_key": "oc03_anomaly_predicate",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "CLOSED_DOCUMENT_ONLY",
+      "closure": "CLOSED_DOCUMENT_ONLY",
+      "review_evidence": "reviewer-return.txt.gz"
+    },
+    {
+      "id": "F10-OC-04",
+      "severity_reported": "High",
+      "original_title": "C1 P1.3 is global, incomplete on 422, and lacks a per-command CAS/precondition matrix",
+      "corrected_delta_key": "oc04_scoped_pipeline",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "CLOSED_DOCUMENT_ONLY",
+      "closure": "CLOSED_DOCUMENT_ONLY",
+      "review_evidence": "reviewer-return.txt.gz"
+    },
+    {
+      "id": "F10-OC-05",
+      "severity_reported": "Medium",
+      "original_title": "C2 \u201clatest-seq terminal\u201d is not explicitly scoped per original",
+      "corrected_delta_key": "oc01_oc05_terminal_derivation",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "CLOSED_DOCUMENT_ONLY",
+      "closure": "CLOSED_DOCUMENT_ONLY",
+      "review_evidence": "reviewer-return.txt.gz"
+    },
+    {
+      "id": "F10-OC-06",
+      "severity_reported": "Low",
+      "original_title": "Proposed numeric bounds lack units and envelope definition",
+      "corrected_delta_key": "oc06_bounds",
+      "owner_correction": "CLAUSE_RETURNED",
+      "independent_disposition": "CLOSED_DOCUMENT_ONLY",
+      "closure": "CLOSED_DOCUMENT_ONLY",
+      "review_evidence": "reviewer-return.txt.gz"
+    },
+    {
+      "id": "F10-OC-07",
+      "severity_reported": "Low",
+      "original_title": "Cross-document status inconsistency",
+      "corrected_delta_key": "oc07_precedence + separate Codex dispatch-and-supersession.json",
+      "owner_correction": "PRECEDENCE_RETURNED / PROCESS_DISPOSITION_RECORDED",
+      "independent_disposition": "CLOSED_DOCUMENT_ONLY",
+      "closure": "CLOSED_DOCUMENT_ONLY",
+      "review_evidence": "reviewer-return.txt.gz"
+    }
+  ],
+  "F10": "OPEN",
+  "G5_B": "FINDINGS_OPEN for remaining F08/source/decision items; F10 OC01..07 document rereview complete",
+  "new_candidate_semantic_blockers": 0
+}

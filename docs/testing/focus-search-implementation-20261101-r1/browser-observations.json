@@ -1,0 +1,74 @@
+{
+  "observations": [
+    {
+      "case": "synthetic-login",
+      "time": "2026-11-02T01:24:48.933Z",
+      "result": "My Work Ready 12; no stored session revived after artifact replacement"
+    },
+    {
+      "case": "start",
+      "time": "2026-11-02T01:25:05.136Z",
+      "result": "RUNNING, exact authorized title/Matter and countdown visible after one activation"
+    },
+    {
+      "case": "pause-extend",
+      "time": "2026-11-02T01:25:18.833Z",
+      "result": "24:43 PAUSED -> +5 -> 29:43 PAUSED"
+    },
+    {
+      "case": "two-tabs",
+      "time": "2026-11-02T01:25:50.898Z",
+      "result": "Tab2 reauthorized same target RUNNING; Pause in Tab2 converged to 29:20 PAUSED in both tabs"
+    },
+    {
+      "case": "reload-navigation",
+      "time": "2026-11-02T01:26:16.810Z",
+      "result": "29:20 PAUSED persisted through reload and client navigation to Matter; same exact target after fresh check"
+    }
+  ],
+  "search": {
+    "query": "hOp dOnG",
+    "observedCounts": [
+      5,
+      10
+    ],
+    "result": "Authorized Vietnamese matches, work outcome/execution and document version/upload metadata; URL unchanged"
+  },
+  "interruption": "Official browser handle reported browser.user unavailable after a new input; remaining cases not yet observed",
+  "finalFollowup": {
+    "utc": "2026-11-02T06:15:45.639Z",
+    "search": {
+      "counts": [
+        5,
+        10,
+        14
+      ],
+      "uniqueWorkHrefs": 14,
+      "query": "hOp dOnG",
+      "staleCursor": "After long interruption, expired cursor produced Results changed; explicit Refresh restored results",
+      "escape": "First Escape clears query; second closes and returns focus to trigger"
+    },
+    "focus": {
+      "end": "Summary states no work complete; sibling became idle; reload allowed new Start without reviving ended session",
+      "logout": "Started fresh 25 minute session, signed out through actual form; sibling immediately hid all labels and disabled Focus; new OIDC login did not revive the session"
+    },
+    "localeTheme": "EN/light and VI/dark actual dialog inspected",
+    "responsive": {
+      "status": "BLOCKED_TOOL_CAPABILITY",
+      "requestedWidths": [
+        320,
+        390,
+        800,
+        801
+      ],
+      "observedInnerWidth": 1280,
+      "reason": "Advertised viewport override did not change this tab; no mobile PASS inferred",
+      "additionalObservation": "A later UI read reported574px, but requested breakpoint control was not reliable; no target-width PASS. Viewport override reset."
+    },
+    "notes": "Official tool reset restored tab connection; no alternate browser or hidden-state reads used",
+    "console": {
+      "observed": "One React418 HTML hydration warning at 2026-11-02T06:15:06.985Z; fresh reload and another complete logout/login produced no additional warning",
+      "status": "OBSERVED_NOT_REPRODUCED_ROOT_CAUSE_UNCONFIRMED"
+    }
+  }
+}

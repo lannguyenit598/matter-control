@@ -1,0 +1,74 @@
+{
+  "task": "MC-BE01-MIMOSA-ZCODE-INVESTIGATION-R1-INTAKE",
+  "actor": "actual Local Codex",
+  "recorded_at_utc": "2026-10-26T15:01:13.996575+00:00",
+  "branch": "codex/unified-project-flow",
+  "head": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "status": "BLOCKED_NO_DISPOSITION_INTERFACE / COMMIT_PERMISSION_NOT_ESTABLISHED",
+  "owner_identity_as_returned": {
+    "tool": "ZCode (ZCode Desktop app 3.16.3, darwin 27.0.0 arm64)",
+    "model_self_reported": "account:zai-start-plan/GLM-5.3-Flash via Z.AI",
+    "session": "interactive; no login/provider/model/account change performed",
+    "quota_block": false
+  },
+  "outputs": [
+    {
+      "path": "docs/testing/be01-zcode-mimosa-investigation-r1/report.md",
+      "bytes": 10952,
+      "sha256": "758bff61de1c6c68f7d129970e1f92861174b9111b6b0afce131feac7a3e96ba"
+    },
+    {
+      "path": "docs/testing/be01-zcode-mimosa-investigation-r1/evidence.json",
+      "bytes": 14882,
+      "sha256": "dd56814e5437dab1ec87333d96e3cbd2f7cc205cc5972e9fac84dc8b05e5ebaa"
+    }
+  ],
+  "output_integrity_basis": "Codex computed current output hashes; human return supplied paths but no final output hashes. No independent pre-delivery output hash comparison is claimed.",
+  "source_preservation": {
+    "root": "/private/tmp/mattercontrol-backend-be01",
+    "head": "136eae6ad403ae3ede797faf6a0d6179c3b95685",
+    "branch": "codex/mc-be-01",
+    "staged_paths": [
+      "internal/adapter/outbound/postgres/matter_rework_test.go",
+      "internal/adapter/outbound/postgres/matter_test.go",
+      "internal/adapter/outbound/postgres/mcsqlc/matter.sql.go",
+      "internal/adapter/outbound/postgres/queries_mattercontrol/matter.sql",
+      "internal/adapter/outbound/repotest/mattercontrol/contract.go",
+      "internal/adapter/outbound/repotest/mattercontrol/memory.go",
+      "internal/core/domain/matter/access.go",
+      "internal/core/service/matter_service.go",
+      "internal/core/service/matter_service_rework_test.go"
+    ],
+    "staged_patch_bytes": 53067,
+    "staged_patch_sha256": "33297560f457375f0eeae13f2e8c83e739f239e41b285e82bd3652cc5999633e",
+    "unstaged_bytes": 0,
+    "untracked_count": 0
+  },
+  "accepted": {
+    "investigation_return": "Received; exposes no supported scoped disposition in examined owner interfaces",
+    "actual_finding_disposition": "NONE",
+    "normal_commit_permission": "NOT_ESTABLISHED",
+    "historical_source_review": "PASS_WITH_LIMITATIONS retained"
+  },
+  "limits": [
+    "Plugin identity/hook/CLI/store observations are owner-reported; native receipts/full plugin sources were not supplied as separately hashed retained artifacts or re-read by Codex.",
+    "Empty ledger and no references do not prove live re-detection or absence of other gate stores. Gate internals remain unknown.",
+    "No repository-native Mimosa hooks observed by owner does not establish every other enforcement route absent.",
+    "Owner narrative mentions project-memory update outside the two-output-only assignment; path/diff not disclosed in evidence.json. Scope compliance of that write is NOT_ESTABLISHED; Codex did not read private memory or undo anything.",
+    "Owner validate command is reported refused; no successful validator execution or authoritative clearance receipt exists. Narrative aggregate UTC/exit entries are not exact retained per-command stdout/stderr."
+  ],
+  "disallowed_followups": [
+    "new equivalent scan/commit retry",
+    "hook/policy/env weakening",
+    "ledger or finding state fabrication",
+    "immutable evidence rewrite to hide finding",
+    "agent/context/host switch for commit"
+  ],
+  "next": "Maintainer verifies original gate/rule path and supplies a supported audited finding disposition or rule/dataflow correction; later scan/commit requires a separate bounded task and actual receipts.",
+  "gates_unchanged": [
+    "MC-BE-01 IN_REVIEW with commit blocked",
+    "BE02 accepted corrected base and contract decisions pending",
+    "MC-002 open",
+    "Step03B NOT_AUTHORIZED"
+  ]
+}

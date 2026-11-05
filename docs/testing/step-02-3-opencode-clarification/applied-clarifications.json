@@ -1,0 +1,102 @@
+{
+  "source_session": "ses_e8f4bedd9ffeBel5Ii2z3P6ejo",
+  "origin": "Actual OpenCode under direct human round override",
+  "edits": [
+    {
+      "path": "docs/architecture/integration-scope-proposal.md",
+      "old": "- Method, path template, headers and body are fixed per case. Nothing caller-supplied becomes a URL, path, header, method or body, so the endpoint is **not a proxy**.",
+      "new": "- Caller input is limited to three Zod-validated fields \u2014 `runId` (`[A-Za-z0-9]{8,32}`), `caseId` (fixed \u00a74 allowlist) and `refId` (lowercase UUID, supplied only for cases that address a record) \u2014 and only the validated `refId` fills the single `{id}` parameter of the fixed `/api/v1/users/{id}` route template, never a caller-supplied URL or path. All other method, path template, header and body values are fixed per case; arbitrary caller-supplied URL, path, method, header or body overrides are forbidden, so the endpoint is **not a proxy**."
+    },
+    {
+      "path": "docs/architecture/integration-scope-proposal.md",
+      "old": "- **App-client:** `outcome` (`value` / `apiError` / `abort`), `apiError.{status, code, message, details}`, `classification`.",
+      "new": "- **App-client:** `outcome` (`value` / `apiError` / `abort`); when `outcome` is `value`, `value` carries the harness-local Zod-validated native User object (properties per \u00a74 expectations) and `apiError` is `null`; when `outcome` is `apiError`, `value` is `null` and `apiError.{status, code, message, details}` is present; a caller `signal` abort leaves `value` and `apiError` `null` (client timeouts are `apiError` code `TIMEOUT`, not aborts, per client source); `classification` per \u00a75.5. The shared client returns schema-validated body only on success \u2014 success HTTP status and response headers are not observable through it \u2014 so wire fields stay `null` (`not-observable-via-client`); wire evidence keeps its own request IDs/records; the shared client is unmodified."
+    },
+    {
+      "path": "docs/architecture/integration-scope-proposal.md",
+      "old": "- Bodies are capped at 16 KiB, with truncation flagged. Synthetic data only.",
+      "new": "- Retained bodies (`value`, wire `upstream.body`) are capped at 16 KiB with a `truncated` flag set when capped. Truncation is an envelope-retention boundary only \u2014 the client parses and schema-validates the complete response body in memory \u2014 but a truncated retained value is never evidence of a complete response: rows asserting full-body equality (T2), field-for-field persistence comparison (INT-PERS-01/02 checkpoints) or full validated/persisted state are recorded BLOCKED (assertion not established, never PASS) unless the retained body is untruncated. Synthetic data only."
+    },
+    {
+      "path": "docs/architecture/integration-scope-proposal.md",
+      "old": "Evidence path: **C** = app-client mode, **W** = wire mode (\u00a75.3). Expected values are the native contract (`docs/api.md` at the pinned head).",
+      "new": "> **Native 503 source pin (accepted `52b60a4`):** every native unavailable problem returns exactly `type` `/problems/unavailable`, `detail` `\"service temporarily unavailable\"`, integer `retryAfter` `1` and `title` \"Service Unavailable\", pinned by `docs/api.md` L148\u2013163, `internal/adapter/inbound/httpapi/errors.go` L58\u201378 (`unavailableDetail`, `retryAfterSeconds`) and `testdata/unavailable.golden` L1\u201315, with Codex-recorded file hashes in `docs/testing/step-02-3/native-503-source-pin.json`. Source pin only: no runtime replay, no new product `retryAfter`/`Retry-After` convention (product units/range/header remain deferred to D-11/G-5).\n\nEvidence path: **C** = app-client mode, **W** = wire mode (\u00a75.3). Expected values are the native contract (`docs/api.md` at the pinned head)."
+    },
+    {
+      "path": "docs/architecture/integration-scope-proposal.md",
+      "old": "**Antigravity confirms before implementation** (deviations are reported, not worked around):",
+      "new": "**OpenCode source-only clarification, this round:** Source-supplied `src/lib/api/http-client.ts` confirms at static source level: `headers?: HeadersInit` is supported (merged via `new Headers(options.headers)`; the client authoritatively sets `Accept: application/json` always and `Content-Type: application/json` whenever a body is given); `init` accepts `cache: 'no-store'` (typed `Omit<RequestInit, 'method' | 'body' | 'headers' | 'signal'>` and spread first in `fetch`, so it cannot override method/body/headers/signal); error mapping is `404\u2192NOT_FOUND`, `400/422\u2192VALIDATION_ERROR`, otherwise `HTTP_ERROR` (consistent with T8/T10/T11a asserting `HTTP_ERROR` on 409/412/503), transport failure `NETWORK_ERROR` status 0, timeout `TIMEOUT`, 2xx schema failure `INVALID_RESPONSE`. This closes the source-level gap for the pinned file only; it is not a runtime or test result, and INT-ENV-07's Next caching/cross-root/binding/dynamicity items remain NOT_RUN.\n\n**Antigravity confirms before implementation** (deviations are reported, not worked around):"
+    },
+    {
+      "path": "docs/architecture/integration-scope-proposal.md",
+      "old": "- **No implementation before PO selection.**",
+      "new": "- **No implementation before PO selection.**\n- **Bounded clarification update:** actual OpenCode reviewed and supplied the section4/5 wording under the human [this-round routing override](../ai-sdlc/step-02-3-review-routing.md). Historical Claude authorship is preserved; this update is attributed to OpenCode, not an unexecuted Claude return. Runtime checks remain NOT_RUN."
+    },
+    {
+      "path": "docs/testing/integration-acceptance-matrix.md",
+      "old": "## 2. Section A \u2014 Environment and isolation preconditions (APPLICABLE if INT-A selected)",
+      "new": "**Optional strict-no-change fixture evidence:** Strict no-change variant of T11b is optional and permitted only with this recorded causal chain: (1) the failed PATCH is a single known-ID `PATCH` with current `If-Match`; the POST case (T11c) always stays OUTCOME_UNKNOWN; (2) Codex-recorded PostgreSQL stop command, exit code and UTC timestamp, followed by a verified stopped-state check (container status / no owned listener), with UTC strictly earlier than the PATCH envelope `startedAt`; (3) stopped state re-verified after the failed PATCH and before restart, so the failure window contains no running DB; (4) container ID and storage identity recorded before stop and equal after start; (5) the harness is the sole writer of the owned DB during the window; (6) after recovery, read-only GET of A (INT-PERS-04) shows the pre-outage checkpoint (`id`, `version`, timestamps, current name) and no committed change. The unchanged conclusion cites this chain and its request IDs, never the 503 alone. If this class is not executable at ARCH-FINAL, drop the strict variant and keep OUTCOME_UNKNOWN with read-only reconciliation only.\n\n## 2. Section A \u2014 Environment and isolation preconditions (APPLICABLE if INT-A selected)"
+    },
+    {
+      "path": "docs/testing/integration-acceptance-matrix.md",
+      "old": "- Pre-dispatch prerequisites recorded 2026-10-25: (a) the exact app-client success `value` field wording (proposal \u00a75.4) and (b) the validated-`refId` scope wording of INT-ENV-04 require explicit ARCH-FINAL clarification in Claude's proposal before owner dispatch; this note makes no claim that the proposal text has been amended.",
+      "new": "- PREREQ-01 (value/body-cap wording) and PREREQ-02 (validated-refId fixed-path wording) are CLOSED at documentation level by the actual OpenCode [clarification review](../reviews/step-02-3-opencode-clarification-review.md), applied to proposal section5.2/5.4 under the human [this-round override](../ai-sdlc/step-02-3-review-routing.md). No supplemental Claude sign-off is required for these current items. PO selection, final contract freeze and all execution gates remain required; all51runtime rows remain NOT_RUN."
+    },
+    {
+      "path": "docs/ai-sdlc/step-02-decision-package.md",
+      "old": "A supplemental actual Claude call for three bounded wording clarifications returned exit1/is_error=true, \u201cNot logged in\u201d; read-only auth status confirms it. The successful proposal/correction remains the architect input. The [complete manual Claude prompt](../implementation/handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md) is PREPARED, not dispatched; its return and OpenCode check are pre-dispatch prerequisites within ARCH-FINAL. No login or settings change was initiated.",
+      "new": "The human explicitly reassigned the remaining Claude clarification/review portion to OpenCode and skipped Claude review for this round. Actual OpenCode returned PASS_DOCUMENT_ONLY and closed the value/refId wording plus source-option and DB-stop evidence issues; Codex applied its bounded documentation clarifications. The [routing override](step-02-3-review-routing.md) supersedes the old manual Claude handoff for these current items. The historical Claude failure is retained; no Claude return/login is awaited for this current round. PO selection, final contract freeze and later execution/conformance gates remain required."
+    },
+    {
+      "path": "docs/implementation/step-02-integration-task-plan.md",
+      "old": "Current route note: a supplemental Claude call now reports Not logged in; no authentication or settings mutation. The bounded [manual Claude clarification prompt](handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md) is prepared, not dispatched. Its actual return/independent check must precede engineering readiness. Prior successful architect proposal/correction are preserved.",
+      "new": "Current-round routing: the human reassigned the remaining bounded clarification/review to actual OpenCode and skipped Claude review this round. Returned wording is applied; PREREQ-01/02 and F1..F4 are closed at documentation/source-evidence level. The [override](../ai-sdlc/step-02-3-review-routing.md) supersedes the manual Claude prompt for these items. No Claude login/return is awaited for this current round; future material architecture and post-approval contract/conformance gates retain their owners."
+    },
+    {
+      "path": "docs/ai-sdlc/project-status.md",
+      "old": "Bounded value/refId/golden wording awaits the [prepared manual Claude prompt](../implementation/handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md) before engineering dispatch; not sent/executed. No auth flow/settings change.",
+      "new": "The subsequent human [routing override](step-02-3-review-routing.md) supersedes the unsent Claude prompt for this round. Actual OpenCode reviewed/supplied the bounded value/refId/golden clarification, which is applied; PREREQ-01/02 are documentation-CLOSED. No supplemental Claude review/login is awaited for these current items. No auth flow/settings change."
+    },
+    {
+      "path": "docs/ai-sdlc/step-02-remaining-gates.md",
+      "old": "Bounded value/refId/golden wording awaits the [prepared manual Claude prompt](../implementation/handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md) before engineering dispatch; not sent/executed. No auth flow/settings change.",
+      "new": "The subsequent human [routing override](step-02-3-review-routing.md) supersedes the unsent Claude prompt for this round. Actual OpenCode reviewed/supplied the bounded value/refId/golden clarification, which is applied; PREREQ-01/02 are documentation-CLOSED. No supplemental Claude review/login is awaited for these current items. No auth flow/settings change."
+    },
+    {
+      "path": "docs/ai-sdlc/step-02-3-review-routing.md",
+      "old": "The actual result and remaining gates will be recorded in [the review](../reviews/step-02-3-opencode-clarification-review.md) and execution evidence when returned.",
+      "new": "Actual OpenCode/configured opencode/glm-5.3-flash-free returned session ses_e8f4bedd9ffeBel5Ii2z3P6ejo, exit0, PASS_DOCUMENT_ONLY. F1..F4 closed at documentation/source-evidence level; Codex applied the bounded wording and superseded the unsent Claude prompt. [Actual review](../reviews/step-02-3-opencode-clarification-review.md), [execution](../testing/step-02-3-opencode-clarification/execution.json). PREREQ-01/02 no longer wait for a Claude return. PO scope selection, contract freeze and later runtime/conformance remain pending."
+    }
+  ],
+  "changed_paths": [
+    "docs/ai-sdlc/project-status.md",
+    "docs/ai-sdlc/risk-register.md",
+    "docs/ai-sdlc/step-02-3-review-routing.md",
+    "docs/ai-sdlc/step-02-decision-package.md",
+    "docs/ai-sdlc/step-02-remaining-gates.md",
+    "docs/architecture/api-auth-decision-analysis.md",
+    "docs/architecture/integration-scope-proposal.md",
+    "docs/implementation/agent-handoffs.md",
+    "docs/implementation/handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md",
+    "docs/implementation/step-02-integration-task-plan.md",
+    "docs/implementation/tasks/MC-002-INT-DEC.md",
+    "docs/testing/integration-acceptance-matrix.md"
+  ],
+  "outputs_sha256": {
+    "docs/architecture/integration-scope-proposal.md": "8fe1b5fd8f1630427722cd51fe8d9a55d3bd525613a2d15d79e4d1705d5d5e19",
+    "docs/testing/integration-acceptance-matrix.md": "71578d6f36c0e45f5ee012c7909cad98d4b3059fa77756a67e7e6d356253abe1",
+    "docs/ai-sdlc/step-02-decision-package.md": "4f37137651f1209d729a2dbc51a3d180bbdd831331b0aaafa2b1d15e8a2d98fa",
+    "docs/implementation/step-02-integration-task-plan.md": "0c35b143be08afe921456b1dd4634e4f91a6c66953472d0e2af32aea7e11dc81",
+    "docs/implementation/handoffs/MC-002-INT-CLAUDE-CLARIFICATION-PROMPT.md": "23cdf59459efc29f623a65c84d4fd510e514cb6fd944e98a788f0f38a4537c61",
+    "docs/ai-sdlc/project-status.md": "2d9eaa986ea77ff860ae3c04090c94c9647eef365c9824972e4f968d55ea2375",
+    "docs/ai-sdlc/step-02-remaining-gates.md": "6037ea1d66d346f0f9918cbdbfbb4601b827ff38a09153ee4ea1cf921967ea0b",
+    "docs/implementation/agent-handoffs.md": "a6aaa242a2b62dc08977c5b79212af3415817020663f20cee71935331ce9b8f1",
+    "docs/implementation/tasks/MC-002-INT-DEC.md": "62f0e7ade14c13104f8b39b2310b58a7338c0260e217f4a5830d66e7219ecffc",
+    "docs/architecture/api-auth-decision-analysis.md": "1f2a86ea5bf34a1fb3113a812e0f44dfc099efa8d5b282aa13c4290d69589400",
+    "docs/ai-sdlc/risk-register.md": "fbfd14dfab551679f11be2759c6be4ac6c242645bad07cd74eb651c36ffdf5f6",
+    "docs/ai-sdlc/step-02-3-review-routing.md": "292d144ad741ac98706d752fac0ffc16b5b0ef0744f90d4a3ed53877ed7ab1a7"
+  },
+  "runtime_rows": 51,
+  "runtime_results": "NOT_RUN",
+  "claude_review_this_round": "SKIPPED_BY_HUMAN"
+}

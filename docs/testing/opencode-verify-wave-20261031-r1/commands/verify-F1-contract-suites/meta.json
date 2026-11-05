@@ -1,0 +1,26 @@
+{
+ "run": "verify-F1-contract-suites",
+ "argv": [
+  "rtk",
+  "proxy",
+  "go",
+  "test",
+  "-count=1",
+  "-timeout",
+  "15m",
+  "./internal/adapter/outbound/postgres/",
+  "-run",
+  "TestMatterSuiteW4_Postgres|TestMatterSuiteW6_Postgres|TestMatterSuiteW7QA_Postgres|TestMatterSuiteGW_Postgres|TestMatterSuiteBF_Postgres"
+ ],
+ "cwd": "/private/tmp/mc-opencode-verify-wave-20261031/f1-tree/apps/backend",
+ "env_file": "/private/tmp/mc-opencode-verify-wave-20261031/private/dsn.env",
+ "started_utc": "2026-11-01T00:54:51Z",
+ "ended_utc": "2026-11-01T00:55:16Z",
+ "exit": 0,
+ "identity": "OpenCode independent QA",
+ "sanitize": "DSN/password URLs scrubbed in .final copies; secret VALUES never captured in argv; env file never copied",
+ "env_keys": [
+  "MC_BFF_TEST_DATABASE_URL",
+  "MC_TEST_DATABASE_URL"
+ ]
+}

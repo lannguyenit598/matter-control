@@ -1,5 +1,3 @@
-> Operator note: dated observations below are historical. Use the current [operations index](../../../docs/operations/README.md) for maintained setup and release boundaries. Historical evidence paths refer to the coordination archive, not this product tree.
-
 # Local walkthrough environment — MatterControl (CO-17, decision D-1(b))
 
 One standard, documented path to run MatterControl locally with real backend +

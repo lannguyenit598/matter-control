@@ -1,0 +1,63 @@
+▲ Next.js 16.4.2 (webpack)
+✓ Running next.config.ts took 103ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.4s
+  Running TypeScript ...
+  Finished TypeScript in 3.8s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/24) ...
+  Generating static pages using 9 workers (6/24) 
+  Generating static pages using 9 workers (12/24) 
+  Generating static pages using 9 workers (18/24) 
+✓ Generating static pages using 9 workers (24/24) in 564ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/callback
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/session
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions
+├ ƒ /api/matters/[matterId]/documents/[documentId]/versions/[versionId]/content
+├ ƒ /api/matters/[matterId]/export
+├ ◐ /login
+├   /matters/[matterId]
+│ └ ◐ /matters/[matterId]
+├   /matters/[matterId]/control-room
+│ └ ◐ /matters/[matterId]/control-room
+├   /matters/[matterId]/data
+│ └ ◐ /matters/[matterId]/data
+├   /matters/[matterId]/documents
+│ └ ◐ /matters/[matterId]/documents
+├   /matters/[matterId]/documents/[documentId]
+│ └ ◐ /matters/[matterId]/documents/[documentId]
+├   /matters/[matterId]/filings
+│ └ ◐ /matters/[matterId]/filings
+├   /matters/[matterId]/filings/[filingId]
+│ └ ◐ /matters/[matterId]/filings/[filingId]
+├   /matters/[matterId]/history
+│ └ ◐ /matters/[matterId]/history
+├   /matters/[matterId]/planning
+│ └ ◐ /matters/[matterId]/planning
+├   /matters/[matterId]/work
+│ └ ◐ /matters/[matterId]/work
+├   /matters/[matterId]/work/[itemId]
+│ └ ◐ /matters/[matterId]/work/[itemId]
+├ ◐ /my-actions
+├   /requirements/[requirementId]
+│ └ ◐ /requirements/[requirementId]
+├ ◐ /workspaces
+└   /workspaces/[workspaceId]
+  └ ◐ /workspaces/[workspaceId]
+
+
+○  (Static)             prerendered as static content
+◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content
+ƒ  (Dynamic)            server-rendered on demand
+

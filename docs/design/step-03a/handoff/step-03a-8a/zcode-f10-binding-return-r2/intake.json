@@ -1,0 +1,106 @@
+{
+  "task": "MC-003A.8A / F10 binding R2",
+  "owner": "Local Codex PM/BA intake; ZCode candidate author; Claude contract authority; PO decisions; independent QA separate",
+  "priority": "P0",
+  "base": "1e876935e73d58cf8ee6a72bdfe2e5384327a6ea",
+  "utc": "2026-10-25T17:54:37.777471+00:00",
+  "status": "RECONCILED_CANDIDATE_RECEIVED / PROVENANCE_CLARIFICATION_REQUIRED / NOT_ADOPTED",
+  "return": {
+    "bytes": 19716,
+    "sha256": "b7700c31bd56d4c064b4a7175046ffa828406c4c9b112f33dfcdcc24da6a123e",
+    "json": "VALID_UNIQUE_KEYS"
+  },
+  "identity": "ZCode Desktop / GLM-5.3 account:zai-start-plan self-reported; version UNKNOWN",
+  "author_execution": "TEXT_ONLY; no fresh tools/source reads/runtime reported; source-gap-note and supplement manifest explicitly NOT_READ",
+  "clause_dispositions": {
+    "C1": "Cycle1/supplement create-and-bind atomicity and target vs CAS now explicitly proposed; not accepted.",
+    "C2": "RETRACT/REPLACE and terminal original-target correction lineage now explicitly proposed; not accepted.",
+    "C3": "Scalar main/link payload and unbound grain proposed; two discovery/projection residuals remain."
+  },
+  "issues": [
+    {
+      "id": "F10-PROVENANCE-DISCOVERY",
+      "priority": "P1",
+      "location": "Clause3 L1 traversal / unbound_reachability_O7_E3 / GP1",
+      "status": "NEEDS_CONTRACT_CLARIFICATION",
+      "problem": "Main event exposes observationId/count, but not unknown evidence IDs or a discoverable commandKey. targetId=E3 needs E3 already known; correlationId is not pinned as commandKey. Therefore the claimed no-guess <=2-filter path is not established.",
+      "source_distinction": "commandKey exists in broader api-contracts candidate and DR15 existing_coverage, but is omitted from indexed reviewed_operations. Explicit filter/key discoverability/auth/binding reconciliation is needed, not an assertion that it is absent everywhere.",
+      "minimal_option_not_adopted": "Existing same-Matter unfiltered seq pages can discover link targetRef by matching causeSeq/main seq plus observationId; may need many bounded pages. Remove <=2-filter guarantee. Stable-dataset completion only; changing sourceRevision cannot imply coherent traversal.",
+      "acceptance": "Reader knows filingId/O7/main seq, but neither E3 nor original command key; limit1 with unrelated interleaved events must discover E3 without guessing."
+    },
+    {
+      "id": "F10-PROVENANCE-LEGACY-BOUNDS",
+      "priority": "P1",
+      "location": "Clause3 main/link payload vs inherited DR15 reason/before/after",
+      "status": "NEEDS_CONTRACT_CLARIFICATION",
+      "problem": "A scalar-only new payload does not prohibit copying the whole evidenceRefs/replacement relation into inherited before/after fields. Whole-event relation expansion remains unpinned.",
+      "minimal_option_not_adopted": "Define closed scalar before/after projections for these event types, exclude full relation arrays, cite applicable scalar length/size rules or mark numeric bounds NEEDS_AUTHORIZED_SOURCE. No business cardinality cap or constant-byte claim.",
+      "acceptance": "More evidence links means more paginated link events, never one event with an expanding nested refs array hidden in payload/before/after."
+    }
+  ],
+  "architect_acceptance_assertions": [
+    "Pin stale filing/cycle CAS versus stage-guard precedence when a concurrent supplement sees both stale current cycle and changed stage.",
+    "Pin terminal correction and superseded-replacement effective lineage at a fixed asOf; historical links alone are not current binding proof."
+  ],
+  "acceptance_ids": [
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "GL1",
+    "GL2",
+    "GL3",
+    "GC1",
+    "GC2",
+    "GP1",
+    "GP2"
+  ],
+  "acceptance_status": "DOCUMENT_EXPECTED / runtime NOT_RUN",
+  "catalogue": "32 current; B35 remains proposed. Zero extra routes does not imply zero query/field/schema/semantic changes.",
+  "F08": "UNCHANGED clarified candidate; no rereview",
+  "CT": "22 IDs / original16+4+1+1 partition preserved; runtimeNOT_RUN",
+  "QA": "Q1..Q8 preserved; Q2/Q4/Q6/Q8 conditional",
+  "gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4_design_qa": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP03B": "NOT_AUTHORIZED",
+    "po_architecture_approval_gate": "NOT_PASSED"
+  },
+  "BE01_INTA": "INDEPENDENT_UNCHANGED; pending Go restart cue unaffected",
+  "next": "Provenance-only text correction prepared, NOT_DISPATCHED; architect/PO decisions follow separately",
+  "provider_calls": 0,
+  "checks": {
+    "unique_key_json": "PASS",
+    "acceptance15": "PASS",
+    "unchanged_prior_input_hashes": 33,
+    "mutable_prior_input_drift": [
+      {
+        "path": "docs/implementation/inta-coordination.md",
+        "status": "MUTABLE_COORDINATION_CHANGED_BY_ACCEPTED_STAGE1_INTAKE",
+        "historical_hash_verified_at": "b02aa791134041b169ec7bdbec818b004a836d8f"
+      }
+    ],
+    "protected_hashes": {
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/candidate-read-set.json": "9817f034a76b9c18fada8aeed1e205b7bbdb215d927612089110c3cf2325783b",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/reviewed-clarifications.json": "80620c485fab24bbf61cf09350ae41b7c73ce193f166ae1ef7c6c39077b043fd",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/f11-fixture-reviewed.json": "d6e9d2ef2629e77f8a48a4f9e641b6cad1f0a4f32d3fe3891bb17fdf468b5fa3",
+      "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5",
+      "docs/architecture/api-contracts.md": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "docs/architecture/filing-model.md": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "docs/testing/inta-stage1-intake/canonical-case-checkpoint.json": "8583f45f643f9d250d7f61983cf2844f641685fffdb336dc4bb57fe4d136a9c5"
+    },
+    "secret_pattern_counts": {
+      "private_key": 0,
+      "credential_uri": 0,
+      "api_key": 0
+    },
+    "limitation": "Static source/text counterexamples only; no runtime tests or independent review"
+  }
+}

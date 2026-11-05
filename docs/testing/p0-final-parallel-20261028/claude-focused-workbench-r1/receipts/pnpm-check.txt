@@ -1,0 +1,29 @@
+utc_start: 2026-10-29T08:27:17Z
+cwd: apps/frontend
+argv: rtk pnpm check
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/frontend
+
+
+ Test Files  67 passed (67)
+      Tests  631 passed (631)
+   Start at  15:28:12
+   Duration  8.93s (environment 42%, tests 32%, setup 12%, import 11%, transform 2%)
+
+Environment  jsdom was created 67 times · 30.28s total, 42% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+$ node scripts/sync-agent-config.mjs --check
+agent config OK: 17 skills, 3 scoped rules
+exit: not captured (shell pipe status unavailable); success is shown by the final lines above
+utc_end: 2026-10-29T08:28:21Z

@@ -1,0 +1,40 @@
+{
+  "checked_at_utc": "2026-10-24T14:09:13.085023+00:00",
+  "environment": "host, prior successful codesign verifies",
+  "invocations": [
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "/Users/nguyenvanlan/.local/bin/agy",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "1.4.7\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "/Users/nguyenvanlan/.local/bin/agy",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Usage of agy:\n  --add-dir                       Add a directory to the workspace (repeatable) (default [])\n  --agent                         Agent for the current CLI session\n  -c                              Short alias for --continue\n  --continue                      Continue the most recent conversation\n  --conversation                  Resume a previous conversation by ID\n  --dangerously-skip-permissions  Auto-approve all tool permission requests without prompting\n  --disable-slash-commands        Disable slash command and skill expansion in print mode\n  --effort                        Reasoning effort for the current CLI session (low|medium|high|xhigh|max)\n  -i                              Short alias for --prompt-interactive\n  --input-format                  Input format for print mode (text, stream-json). stream-json reads one NDJSON message per line from stdin and runs a turn for each; it requires --output-format stream-json (default text)\n  --json-schema                   Optional JSON schema string or path to a schema file to enforce structured output (for stream-json, only applicable to the final result)\n  --log-file                      Override CLI log file path\n  --mode                          Set the agent execution mode for this session (accept-edits, auto, plan)\n  --model                         Model for the current CLI session\n  --new-project                   Create a new project for this session\n  --output-format                 Output format for print mode (text, json, stream-json) (default text)\n  -p                              Short alias for --print\n  --print                         Run a single prompt non-interactively and print the response\n  --print-timeout                 Optional time limit for print mode; 0 waits until the turn completes (default 0s)\n  --project                       Project ID or project name for the current CLI session\n  --prompt                        Alias for --print\n  --prompt-interactive            Run an initial prompt interactively and continue the session\n  --remote-control                Create a remote connection for the CLI session on start up\n  --sandbox                       Run in a sandbox with terminal restrictions enabled\n\nAvailable subcommands:\n  agent           List available agents\n  agents          List available agents\n  changelog       Show changelog and release notes\n  help            Show help for subcommands\n  install         Configure environment paths and shell settings\n  mcp             Manage MCP servers (add, remove, list, enable, disable)\n  mic-serve       Serve this machine's microphone to a CLI on another host\n  models          List available models\n  plugin          Manage plugins (install, uninstall, list, enable, disable)\n  plugins         Alias for plugin\n  remote-control  Manage the remote-control background daemon (start, status, stop)\n  update          Update CLI\n"
+    },
+    {
+      "command": [
+        "rtk",
+        "proxy",
+        "node",
+        "/Applications/ZCode.app/Contents/Resources/glm/zcode.cjs",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "zcode 0.17.0\n\nUsage:\n  zcode [command] [options]\n\nWith no command, zcode opens the full-screen TUI.\n\nCommands:\n  app-server Run the ZCode Protocol stdio app server\n  commands   List custom slash commands (`commands list`)\n  doctor     Inspect runtime and packaging assumptions\n  login [zai|bigmodel]  Sign in through browser authorization\n  logout     Remove the shared Z.AI login credentials\n  plugins    Manage plugins and marketplaces (`plugins list|install|uninstall|enable|disable|update|validate|marketplace ...`; alias: plugin)\n  skills     List local skills (`skills list`)\n  tui        Open the terminal UI\n  version    Print the CLI version\n\nOptions:\n  -h, --help       Show help\n  -v, --version    Show version\n  -p, --prompt <text>  Run a single prompt without opening the TUI\n  --memory-bench   With --prompt, enable automatic Memory extraction and wait before exiting (requires Memory enabled)\n  --browser-use <mode> Enable Browser Use backend (supported: headless)\n  --surface <surface>  Presentation surface for headless prompts/app-server: terminal or desktop\n  --browser-executable <path> Chrome/Chromium executable for headless Browser Use\n  --attach <path>  Attach a local file to --prompt; repeat for multiple files\n  --cwd <path>     Run this command from the given directory\n  --disallowed-tools, --disallowedTools <tools...>\n    Remove whole tools for this prompt/TUI run only; saved settings are unchanged.\n    Comma or space-separated tool names, e.g. \"Bash Edit\".\n    \"Bash(git *)\" removes all of Bash; command patterns are not matched.\n  --toolsearch-mode <auto|native|local|off> ToolSearch mode (default: off; this launch only)\n  --force-mcs      Force mid-conversation system projection for Anthropic providers\n  --locale <locale>  UI locale: en-US, zh-CN, or auto\n  --mode <mode>    Permission mode for prompts: build, edit, plan, yolo, or guarded (default: yolo for --prompt)\n  --resume <sessionId>  Resume a persisted session by sessionId (sess_...)\n  --target <text>  Run or set the session goal in headless mode\n  --target-replace Replace any existing session goal set by --target\n  --workflow-mode <mode>  Dynamic workflows for prompts/TUI: disabled, onDemand, or alwaysOn (default: disabled)\n  -c, --continue        Resume the latest session for the current directory\n  --json           Print machine-readable JSON where supported\n  --no-browser     Print the OAuth URL without opening a browser\n  --no-color       Disable ANSI colors\n  --verbose        Print extra diagnostic detail\n\nSlash Commands:\n  /help [command]       Show slash command help\n  /login                Choose Z.AI or BigModel browser login\n  /logout               Remove the shared Z.AI login credentials\n  /compact [instructions]  Compact the current conversation\n  /expert [status|resume|stop|<task>]  Run or manage the expert workflow\n  /dwf [list|cancel|resume]  List, cancel, or resume dynamic workflow runs\n  /fork [latest|checkpointId]  Fork a new session from a workspace checkpoint\n  /mcp [list|status|connect|disconnect]  Show or manage MCP servers\n  /mode [mode]          Show or switch permission mode: build, edit, plan, yolo, or guarded\n  /model [id]           Show or switch the current session model\n  /new                  Start a fresh session in the TUI\n  /resume [sessionId]   Resume a session by sessionId; omit it for latest in cwd\n  /rewind [latest|checkpointId]  Show latest checkpoint or restore workspace files\n  /skill [name] [task]  List skills, or force the next prompt to load one\n  /goal [action]        Show or set the current session goal\n",
+      "stderr": ""
+    }
+  ]
+}

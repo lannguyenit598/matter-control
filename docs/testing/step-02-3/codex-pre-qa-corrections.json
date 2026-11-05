@@ -1,0 +1,33 @@
+{
+  "reviewer": "Codex orchestration pre-QA inspection",
+  "initial_architect_execution": "claude-execution.json",
+  "runtime_tests": "NOT_RUN",
+  "correction_packet": "claude-correction-input-manifest.json",
+  "items": [
+    {
+      "id": "INT-CX1",
+      "issue": "Node-only client did not execute through actual Next runtime requested by user",
+      "required": "isolated temporary Next runtime seam or explicit smaller exception"
+    },
+    {
+      "id": "INT-CX2",
+      "issue": "HTTP primitive returns body only and serializes JSON; cannot observe wire headers/malformedJSON through it alone",
+      "required": "distinguish app-client observations from raw Next-mediated wire controls"
+    },
+    {
+      "id": "INT-CX3",
+      "issue": "local $0, adapter preservation and cost rankings lacked evidence",
+      "required": "qualify as dated candidate facts or unknown; no new spike/restore scope"
+    },
+    {
+      "id": "INT-CX4",
+      "issue": "PATCH version2 requires actual change and restart durability needs persistent disposable storage",
+      "required": "state fixture/storage prerequisites and no baseline resource mutation"
+    },
+    {
+      "id": "INT-CX5",
+      "issue": "candidate formula/standards/cache notes needed precise approval and token-format limits",
+      "required": "preserve proposal/approval and IDToken/access-token distinctions"
+    }
+  ]
+}

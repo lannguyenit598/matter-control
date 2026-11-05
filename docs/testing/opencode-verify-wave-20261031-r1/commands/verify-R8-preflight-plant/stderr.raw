@@ -1,0 +1,20 @@
+warning: not a git checkout; skipping the tracked-files scan
+warning: not a git checkout; skipping the tracked-files scan
+file:///private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend/scripts/worker-build-env.mjs:10
+  for (const line of text.split('\n')) {
+                          ^
+
+TypeError: text.split is not a function or its return value is not iterable
+    at findRuntimeSecret (file:///private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend/scripts/worker-build-env.mjs:10:27)
+    at file:///private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend/scripts/release-preflight.mjs:69:35
+    at async scanFiles (file:///private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend/scripts/release-preflight.mjs:42:18)
+    at async main (file:///private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend/scripts/release-preflight.mjs:129:11)
+    at async file:///private/tmp/mc-opencode-verify-wave-20261031/snapshot-commit2/apps/frontend/scripts/release-preflight.mjs:156:3
+
+Node.js v24.22.1
+warning: not a git checkout; skipping the tracked-files scan
+release preflight: 1 forbidden finding(s):
+  /private/tmp/mc-opencode-verify-wave-20261031/r8/does-not-exist: artifact directory missing (build did not run?)
+Values are never printed. Remove the files from the artifact/source, not from this scan.
+warning: not a git checkout; skipping the tracked-files scan
+warning: artifact directory /private/tmp/mc-opencode-verify-wave-20261031/r8/does-not-exist not found; skipping

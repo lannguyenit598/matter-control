@@ -1,0 +1,91 @@
+2026-10-24T14:57:53Z
+### GET /healthz
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Request-Id: OJqYfwyoBqJVfGqQzLQQZVNDQqugfxxn
+Date: Sat, 24 Oct 2026 14:57:53 GMT
+Content-Length: 16
+
+{"status":"ok"}
+
+### GET /readyz
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Request-Id: rtIbvqMfKgaUcdCpvnmHaUztAWJEMKlI
+Date: Sat, 24 Oct 2026 14:57:53 GMT
+Content-Length: 19
+
+{"status":"ready"}
+
+### POST /api/v1/users (synthetic)
+HTTP/1.1 201 Created
+Content-Type: application/json
+Etag: "1"
+Location: /api/v1/users/01a16e6b-25fd-72e6-8217-1eb9a1ed6644
+X-Request-Id: dqhBPgtniDfAlqWquWrykCPZEbulvGHg
+Date: Sat, 24 Oct 2026 14:57:58 GMT
+Content-Length: 196
+
+{"id":"01a16e6b-25fd-72e6-8217-1eb9a1ed6644","email":"alice.poc@example.test","name":"Alice Poc","created_at":"2026-10-24T14:57:58.269191Z","updated_at":"2026-10-24T14:57:58.269191Z","version":1}
+
+### GET list
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Request-Id: toOGegPFqeTCEYzTlxLdAGZFqejOnmrR
+Date: Sat, 24 Oct 2026 14:57:58 GMT
+Content-Length: 437
+
+{"data":[{"id":"01a16e69-fab2-7249-8b76-1f507e103491","email":"race@example.com","name":"Worker 2","created_at":"2026-10-24T14:56:41.650151Z","updated_at":"2026-10-24T14:56:41.675037Z","version":7},{"id":"01a16e6b-25fd-72e6-8217-1eb9a1ed6644","email":"alice.poc@example.test","name":"Alice Poc","created_at":"2026-10-24T14:57:58.269191Z","updated_at":"2026-10-24T14:57:58.269191Z","version":1}],"meta":{"limit":20,"offset":0,"total":2}}
+
+### GET /api/v1/users/01a16e6b-25fd-72e6-8217-1eb9a1ed6644 (readback)
+HTTP/1.1 200 OK
+Content-Type: application/json
+Etag: "1"
+X-Request-Id: PnzNHvKSsKxnkdQYLerzgQrHBkoyKbkS
+Date: Sat, 24 Oct 2026 14:58:17 GMT
+Content-Length: 196
+
+{"id":"01a16e6b-25fd-72e6-8217-1eb9a1ed6644","email":"alice.poc@example.test","name":"Alice Poc","created_at":"2026-10-24T14:57:58.269191Z","updated_at":"2026-10-24T14:57:58.269191Z","version":1}
+
+### GET unknown id (expect 404)
+HTTP/1.1 404 Not Found
+Content-Type: application/problem+json
+X-Request-Id: CjwKqkxAupXLuEyYpUDllLwhufvXSTvn
+Date: Sat, 24 Oct 2026 14:58:17 GMT
+Content-Length: 149
+
+{"type":"about:blank","title":"Not Found","status":404,"detail":"resource not found","instance":"/api/v1/users/01a16e6b-25fd-72e6-8217-1eb9a1ed6699"}
+### POST invalid email (expect 422)
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/problem+json
+X-Request-Id: aKjiZcPOdcLIqxVXlShPMjmmoDYgdwEB
+Date: Sat, 24 Oct 2026 14:58:17 GMT
+Content-Length: 201
+
+{"type":"about:blank","title":"Unprocessable Entity","status":422,"detail":"request failed validation","instance":"/api/v1/users","errors":[{"field":"email","message":"must be a valid email address"}]}
+### POST duplicate email (expect 409)
+HTTP/1.1 409 Conflict
+Content-Type: application/problem+json
+X-Request-Id: xPXeIAFslCeanlKglbVeFAZkGWFuUytM
+Date: Sat, 24 Oct 2026 14:58:17 GMT
+Content-Length: 130
+
+{"type":"about:blank","title":"Conflict","status":409,"detail":"a user with this email already exists","instance":"/api/v1/users"}
+### PATCH with If-Match "1" (expect 200, version 2)
+HTTP/1.1 200 OK
+Content-Type: application/json
+Etag: "2"
+X-Request-Id: VnPyonBWsRuNGqiRIpDwLlhpRbCMFDje
+Date: Sat, 24 Oct 2026 14:58:25 GMT
+Content-Length: 202
+
+{"id":"01a16e6b-25fd-72e6-8217-1eb9a1ed6644","email":"alice.poc@example.test","name":"Alice Poc Updated","created_at":"2026-10-24T14:57:58.269191Z","updated_at":"2026-10-24T14:58:25.0931Z","version":2}
+
+### PATCH with stale If-Match "1" (expect 412)
+HTTP/1.1 412 Precondition Failed
+Content-Type: application/problem+json
+X-Request-Id: LQdpiLMkauVsDbGvsgxxXomcxaFqleVc
+Date: Sat, 24 Oct 2026 14:58:25 GMT
+Content-Length: 200
+
+{"type":"about:blank","title":"Precondition Failed","status":412,"detail":"If-Match does not match the current version of the resource","instance":"/api/v1/users/01a16e6b-25fd-72e6-8217-1eb9a1ed6644"}

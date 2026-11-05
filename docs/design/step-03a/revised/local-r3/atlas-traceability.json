@@ -1,0 +1,73 @@
+{
+  "snapshot": "2026-06-15T09:00:00+07:00",
+  "source": "docs/product/project-atlas-dataset.md",
+  "board_c": [
+    {
+      "id": "RQ-02",
+      "exec": "COMPLETED",
+      "ver": "UNVERIFIED",
+      "due": "2026-06-14T17:00:00+07:00",
+      "source_section": "§4",
+      "target": "HTML [data-atlas-id=RQ-02]"
+    },
+    {
+      "id": "RQ-04",
+      "exec": "WAITING",
+      "ver": "UNVERIFIED",
+      "due": "2026-06-14T17:00:00+07:00",
+      "source_section": "§4",
+      "target": "HTML [data-atlas-id=RQ-04]"
+    },
+    {
+      "id": "AC-05",
+      "exec": "WAITING",
+      "ver": "NOT_REQUIRED",
+      "due": "2026-06-16T17:00:00+07:00",
+      "source_section": "§4",
+      "target": "HTML [data-atlas-id=AC-05]"
+    },
+    {
+      "id": "AC-07",
+      "exec": "NOT_STARTED",
+      "ver": "NOT_REQUIRED",
+      "due": "2026-06-17T17:00:00+07:00",
+      "source_section": "§4",
+      "target": "HTML [data-atlas-id=AC-07]"
+    },
+    {
+      "id": "AC-09",
+      "exec": "NOT_STARTED",
+      "ver": "NOT_REQUIRED",
+      "due": "2026-06-19T17:00:00+07:00",
+      "source_section": "§4",
+      "target": "HTML [data-atlas-id=AC-09]"
+    }
+  ],
+  "shared_truth": {
+    "critical_chain": [
+      "RQ-04",
+      "AC-05",
+      "AC-07",
+      "AC-08",
+      "AC-09"
+    ],
+    "decisions": {
+      "DEC-AT-01": "OPEN",
+      "DEC-AT-02": "OPEN"
+    },
+    "filing": {
+      "FIL-02": {
+        "stage": "Authority Review",
+        "exec": "WAITING",
+        "ver": "PARTIALLY_VERIFIED",
+        "evidence": "EV-10 receipt; outcome missing"
+      }
+    },
+    "document": "DOC-03 v3 CURRENT, signatures1/2",
+    "missing_evidence": [
+      "ER-02",
+      "ER-04"
+    ]
+  },
+  "policy_overlay": "Historical EV-03/05 self-review is not current valid proof; preserve fixture provenance, prohibit new self-review."
+}

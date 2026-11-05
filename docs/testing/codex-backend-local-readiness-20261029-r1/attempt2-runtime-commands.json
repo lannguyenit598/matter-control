@@ -1,0 +1,96 @@
+[
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "--format",
+      "{{ index .Config.Labels \"mc.owner\" }}",
+      "mc-codex-be-local-20261029-r2"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:13:27.816688+00:00",
+    "utc_end": "2026-10-29T08:13:27.846293+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "openssl",
+      "genpkey",
+      "-algorithm",
+      "RSA",
+      "-pkeyopt",
+      "rsa_keygen_bits:2048",
+      "-out",
+      "/private/tmp/mc-codex-backend-local-20261029-r2/oidc.pem"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:13:27.846582+00:00",
+    "utc_end": "2026-10-29T08:13:27.885778+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "go",
+      "build",
+      "-o",
+      "/private/tmp/mc-codex-backend-local-20261029-r2/mcapi",
+      "./cmd/mcapi"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:13:27.886320+00:00",
+    "utc_end": "2026-10-29T08:13:30.298264+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/mc-codex-backend-local-20261029-r2/mcapi",
+      "migrate"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:13:30.298483+00:00",
+    "utc_end": "2026-10-29T08:13:31.520622+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "docker",
+      "exec",
+      "mc-codex-be-local-20261029-r2",
+      "psql",
+      "-U",
+      "mc_fixture",
+      "-d",
+      "mc_fixture",
+      "-Atc",
+      "SELECT max(version_id) FROM goose_db_version WHERE is_applied"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:13:31.521019+00:00",
+    "utc_end": "2026-10-29T08:13:31.569608+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "docker",
+      "stop",
+      "--time",
+      "5",
+      "mc-codex-be-local-20261029-r2"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:13:31.691563+00:00",
+    "utc_end": "2026-10-29T08:13:32.457009+00:00",
+    "exit": 0
+  },
+  {
+    "argv": [
+      "docker",
+      "start",
+      "mc-codex-be-local-20261029-r2"
+    ],
+    "cwd": "/Users/nguyenvanlan/Documents/code/pet-projects/matter-control/apps/backend",
+    "utc_start": "2026-10-29T08:13:32.459427+00:00",
+    "utc_end": "2026-10-29T08:13:32.559381+00:00",
+    "exit": 0
+  }
+]

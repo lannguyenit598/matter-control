@@ -1,0 +1,94 @@
+{
+  "task": "MC-002-INT-CLARIFY-OC",
+  "base": "3ebc0f0e8daa6dc7682e02dfa61b8fa6b9ca20fb",
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.3 delegated clarification review",
+    "--file",
+    "/tmp/mc002-step023-oc-clarify-input.txt",
+    "Review the remaining Claude clarification portion under the explicit human round override. Return the packet JSON with bounded documentation wording and dispositions. No tools or runtime."
+  ],
+  "start_utc": "2026-10-25T01:36:51.271052+00:00",
+  "end_utc": "2026-10-25T01:38:31.372526+00:00",
+  "exit": 0,
+  "elapsed_seconds": 100.10139499999786,
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "runtime_tests": "NOT_RUN",
+  "claude_invocation": "NONE",
+  "session_id": "ses_e8f4bedd9ffeBel5Ii2z3P6ejo",
+  "event_types": [
+    "step_start",
+    "text"
+  ],
+  "verdict": "PASS_DOCUMENT_ONLY",
+  "findings": [],
+  "dispositions": [
+    {
+      "id": "F1",
+      "status": "CLOSED",
+      "reason": "Replacement two-sentence \u00a75.2 rule supplied (ref_id_rule): Zod-validated lowercase-UUID refId fills only the single {id} parameter of the fixed /api/v1/users/{id} template; arbitrary URL/path/method/header/body overrides remain forbidden; not-a-proxy preserved; matrix INT-ENV-04 already matches this wording; no new endpoint or permission model."
+    },
+    {
+      "id": "F2",
+      "status": "CLOSED",
+      "reason": "Complete \u00a75.4 app-client bullet and bounded body-cap bullet supplied: success outcome carries named value field (harness-local Zod-validated native User), error/abort field null-conditions defined per client source, truncated retained bodies never satisfy full-body equality/schema/persistence assertions; body-only client observations and wire null/not-observable fields preserved; shared client unchanged."
+    },
+    {
+      "id": "F3",
+      "status": "CLOSED",
+      "reason": "CLOSED at source level only: the supplied pinned src/lib/api/http-client.ts confirms the headers option (HeadersInit merged, Accept always set by client, Content-Type set on any body), init pass-through (Omit<RequestInit,'method'|'body'|'headers'|'signal'> spread first, so cache:'no-store' is honored), and the exact status\u2192code mapping (404 NOT_FOUND; 400/422 VALIDATION_ERROR; else HTTP_ERROR, covering 409/412/503) used by T8/T10/T11a/T12. No new test result created; Next caching, cross-root import, loopback binding, dynamic handler and runtime behavior remain NOT_RUN under INT-ENV-07."
+    },
+    {
+      "id": "F4",
+      "status": "CLOSED",
+      "reason": "Named evidence class for the OPTIONAL strict no-change variant (db_stop_evidence): ordered recorded stop completion and verified stopped identity strictly before PATCH dispatch, stopped state re-verified through the failure window, container/storage identity equality, sole-writer scope, post-recovery read-only reconciliation of A; unchanged is never inferred from the 503 alone. Strict variant is dropped if this class cannot be executed at ARCH-FINAL; general unknown-write rule (POST stays OUTCOME_UNKNOWN) untouched."
+    }
+  ],
+  "clarifications": {
+    "ref_id_rule": "Caller input is limited to three Zod-validated fields \u2014 `runId` (`[A-Za-z0-9]{8,32}`), `caseId` (fixed \u00a74 allowlist) and `refId` (lowercase UUID, supplied only for cases that address a record) \u2014 and only the validated `refId` fills the single `{id}` parameter of the fixed `/api/v1/users/{id}` route template, never a caller-supplied URL or path. All other method, path template, header and body values are fixed per case; arbitrary caller-supplied URL, path, method, header or body overrides are forbidden, so the endpoint is **not a proxy**.",
+    "app_client_envelope": "- **App-client:** `outcome` (`value` / `apiError` / `abort`); when `outcome` is `value`, `value` carries the harness-local Zod-validated native User object (properties per \u00a74 expectations) and `apiError` is `null`; when `outcome` is `apiError`, `value` is `null` and `apiError.{status, code, message, details}` is present; a caller `signal` abort leaves `value` and `apiError` `null` (client timeouts are `apiError` code `TIMEOUT`, not aborts, per client source); `classification` per \u00a75.5. The shared client returns schema-validated body only on success \u2014 success HTTP status and response headers are not observable through it \u2014 so wire fields stay `null` (`not-observable-via-client`); wire evidence keeps its own request IDs/records; the shared client is unmodified.",
+    "body_cap_rule": "- Retained bodies (`value`, wire `upstream.body`) are capped at 16 KiB with a `truncated` flag set when capped. Truncation is an envelope-retention boundary only \u2014 the client parses and schema-validates the complete response body in memory \u2014 but a truncated retained value is never evidence of a complete response: rows asserting full-body equality (T2), field-for-field persistence comparison (INT-PERS-01/02 checkpoints) or full validated/persisted state are recorded BLOCKED (assertion not established, never PASS) unless the retained body is untruncated. Synthetic data only.",
+    "native_503_pin": "> **Native 503 source pin (accepted `52b60a4`):** every native unavailable problem returns exactly `type` `/problems/unavailable`, `detail` `\"service temporarily unavailable\"`, integer `retryAfter` `1` and `title` \"Service Unavailable\", pinned by `docs/api.md` L148\u2013163, `internal/adapter/inbound/httpapi/errors.go` L58\u201378 (`unavailableDetail`, `retryAfterSeconds`) and `testdata/unavailable.golden` L1\u201315, with Codex-recorded file hashes in `docs/testing/step-02-3/native-503-source-pin.json`. Source pin only: no runtime replay, no new product `retryAfter`/`Retry-After` convention (product units/range/header remain deferred to D-11/G-5).",
+    "client_source_support": "Source-supplied `src/lib/api/http-client.ts` confirms at static source level: `headers?: HeadersInit` is supported (merged via `new Headers(options.headers)`; the client authoritatively sets `Accept: application/json` always and `Content-Type: application/json` whenever a body is given); `init` accepts `cache: 'no-store'` (typed `Omit<RequestInit, 'method' | 'body' | 'headers' | 'signal'>` and spread first in `fetch`, so it cannot override method/body/headers/signal); error mapping is `404\u2192NOT_FOUND`, `400/422\u2192VALIDATION_ERROR`, otherwise `HTTP_ERROR` (consistent with T8/T10/T11a asserting `HTTP_ERROR` on 409/412/503), transport failure `NETWORK_ERROR` status 0, timeout `TIMEOUT`, 2xx schema failure `INVALID_RESPONSE`. This closes the source-level gap for the pinned file only; it is not a runtime or test result, and INT-ENV-07's Next caching/cross-root/binding/dynamicity items remain NOT_RUN.",
+    "db_stop_evidence": "Strict no-change variant of T11b is optional and permitted only with this recorded causal chain: (1) the failed PATCH is a single known-ID `PATCH` with current `If-Match`; the POST case (T11c) always stays OUTCOME_UNKNOWN; (2) Codex-recorded PostgreSQL stop command, exit code and UTC timestamp, followed by a verified stopped-state check (container status / no owned listener), with UTC strictly earlier than the PATCH envelope `startedAt`; (3) stopped state re-verified after the failed PATCH and before restart, so the failure window contains no running DB; (4) container ID and storage identity recorded before stop and equal after start; (5) the harness is the sole writer of the owned DB during the window; (6) after recovery, read-only GET of A (INT-PERS-04) shows the pre-outage checkpoint (`id`, `version`, timestamps, current name) and no committed change. The unchanged conclusion cites this chain and its request IDs, never the 503 alone. If this class is not executable at ARCH-FINAL, drop the strict variant and keep OUTCOME_UNKNOWN with read-only reconciliation only."
+  },
+  "intake_repair": {
+    "provider_exit": 0,
+    "initial_intake_exit": 1,
+    "reason": "Invalid enclosing JSON braces; individual unique named values were valid JSON strings/arrays",
+    "recovery": "Decode each unique expected field with JSONDecoder.raw_decode; reassemble expected schema; remove four trailing serialization characters and quote-escape presentation from native source-note field only. Raw reply unchanged."
+  },
+  "report_sha256": "9274c0a2d4638a09566175242843038b7a74465a46ac1a50b2046014770409e5",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e8f4bedd9ffeBel5Ii2z3P6ejo"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "input_integrity": "PASS"
+}

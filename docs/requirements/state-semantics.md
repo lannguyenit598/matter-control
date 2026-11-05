@@ -1,8 +1,6 @@
-> Maintained reference: approved business semantics are preserved from the coordination baseline. Dated implementation/approval observations below are historical; use the [application contract](../api/contract.md) and [architecture](../architecture/README.md) for current source behavior. No production acceptance is implied.
-
 # Five State Dimensions — Business Semantics
 
-Owner: Codex. Vocabulary/separation: APPROVED_INPUT. Applicability, transitions, guards and side effects below: **APPROVED_BY_PO**, 2026-10-24, under OBD-02/04/05/06/11 at `572835a`; [approval record](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/docs/ai-sdlc/step-01-approval.md). Not a storage/API design. Authoritative evaluation belongs to the system business rules; the frontend displays returned state/reasons and cannot independently establish verification/readiness.
+Owner: Codex. Vocabulary/separation: APPROVED_INPUT. Applicability, transitions, guards and side effects below: **APPROVED_BY_PO**, 2026-10-24, under OBD-02/04/05/06/11 at `572835a`; [approval record](../ai-sdlc/step-01-approval.md). Not a storage/API design. Authoritative evaluation belongs to the system business rules; the frontend displays returned state/reasons and cannot independently establish verification/readiness.
 
 ## Applicability and defaults
 

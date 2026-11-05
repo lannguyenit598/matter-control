@@ -1,0 +1,843 @@
+{
+  "task": "MC-002-INTA-QA-CLOSEOUT-R1",
+  "produced_by": "Actual OpenCode (OpenCode harness), model GLM-5.3-Flash Free (provider opencode) — independent nonauthor reviewer",
+  "generated_at_utc": "2026-10-26T06:50:00Z",
+  "review_scope_note": "Read-only source/evidence review defined by docs/implementation/handoffs/MC-002-INTA-OPENCODE-CLOSEOUT-REVIEW-PROMPT.md plus the late addendum handoff docs/implementation/handoffs/MC-002-INTA-OPENCODE-R1-ADDENDUM-PROMPT.md. No runtime, HTTP, container or lifecycle action was executed by the reviewer; every observation below is anchored to pinned owner/operator evidence or pinned packet artifacts.",
+  "base": "a62d838791ba188838c4ff00b7b6e265ac775056",
+  "branch": "codex/unified-project-flow",
+  "semantics": {
+    "expected_mode": "expected_mode repeats the original row expectation from docs/testing/inta-closeout-continuation/required36.json (pinned: original matrix sha256 71578d6f36c0e45f5ee012c7909cad98d4b3059fa77756a67e7e6d356253abe1); full expectation text lives in required36.json and is not duplicated per row.",
+    "observation_basis_vocabulary": {
+      "OWNER_RUNTIME_EVIDENCE": "Observations recorded by the owner/operator during execution and exported as pinned evidence; independently re-verified by this reviewer only by comparing pinned artifacts, not by re-execution.",
+      "CODEX_OPERATIONAL_EVIDENCE": "Operational evidence produced and frozen by Local Codex (environment fixture, migration, server operation, intake checks).",
+      "RTK_PROXY_BASH_SEMANTICS_PROBE": "Reviewer-executed isolated shell-semantics probe (single bash expression, no owner code execution) used to reproduce a language-level defect claim.",
+      "ARTIFACT_ONLY": "Reviewer read a frozen packet artifact (manifest, report, scan output) without access to the underlying execution.",
+      "SOURCE_ONLY": "Reviewer read frozen source/plan text; no execution or artifact of execution is claimed.",
+      "NONE": "No usable independent or owner evidence exists for the criterion."
+    },
+    "reviewer_personal_runtime_execution": "NOT_run_and_no_runtime_claim — the reviewer executed no product, harness, observer, server or database lifecycle action. Reviewer-executed probes are limited to: pure read/hash operations, generic-manifest verification scripts, a 2-expression bash `if !` semantics probe, and lstat/readlink on an existing symlink.",
+    "verdict_vocabulary": {
+      "SUPPORTED": "All criterion clauses independently evidenced.",
+      "PARTIAL": "Material sub-evidence exists (some clauses evidenced), but acceptance-blocking gaps (independent QA pending, owner-vs-original-assignee deviations, or corrected-disposition runtime gaps) remain.",
+      "FAIL": "A criterion clause is directly contradicted by verified evidence.",
+      "INSUFFICIENT_EVIDENCE": "The retained evidence cannot establish the criterion clause."
+    },
+    "canonical_status_guard": "All 36 rows below carry independent_verdict values from THIS review only; the canonical formal ledger docs/testing/inta-runtime-status.json (51 x NOT_RUN, verified unchanged, sha256 b4dd23c397ed469519706935bac8e637fa4871fe5339775122e9e227506ed4eb) was NOT edited, and none of these verdicts awards formales PASS, INT-A DONE, Step 03 or runtime release."
+  },
+  "anchor_map": {
+    "RC": {"shorthand_source": "docs/testing/inta-stage7-intake/request-correlation.json", "sha256": "abcaa7fd15e526a0b6fdeecdb16a9912b130a1732ac4c98930da0bc0b1666655"},
+    "CP": {"shorthand_source": "docs/testing/inta-stage7-intake/canonical-case-checkpoint.json", "sha256": "9b4f7293042133190637f9463e215fbe0ca97a74024c8fd2fd1d78c2a7c43ac1"},
+    "LED": {"shorthand_source": "docs/testing/inta-runtime-status.json", "sha256": "b4dd23c397ed469519706935bac8e637fa4871fe5339775122e9e227506ed4eb"},
+    "GOLOG": {"shorthand_source": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log", "sha256": "be937aa52f8d7b1092571d93fd4e67d884c27583b4be676444736f7384b01a25"},
+    "OBS": {"shorthand_source": "docs/testing/inta-stage7-intake/go-stdout-observed.log", "sha256": "7e0d97426cf506db97445977b0c9ab462bf030eb2a7c7f9aef4d8bedaf453c2f"},
+    "ENV": {"shorthand_source": "docs/testing/inta-returns/environment/env-intamvnmoems3pd/environment.json", "sha256": "bd80ddfb2a92bfce384573f5e28e006a79b9c916a997fe4045aa64bb32dcd6ea"},
+    "ENVC": {"shorthand_source": "docs/testing/inta-returns/environment/env-intamvnmoems3pd/checks.json", "sha256": "a3a2acd72e5b355d8299c3d1c4b9e2b2204cfb767b4c22d3c5ccbe7dae97356e"},
+    "BE09M": {"shorthand_source": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/09-migrate-attempt1.meta.txt", "sha256": "11e27e45efa2348bfeb40cae6e3cfed56831060e0db270101c747f186aa28c0a"},
+    "BE10M": {"shorthand_source": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/10-migrate.meta.txt", "sha256": "986abac50fdc8028e79f96c9346da678a5443f02462744912b3773c82f6ef639"},
+    "BE10S": {"shorthand_source": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/10-migrate.stdout.log", "sha256": "e54649ec78ea723950caa9f11d2d843c1cfd0d2b73478fa1ecf318e4e744e49d"},
+    "BE20S": {"shorthand_source": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/20-server-start.meta.txt", "sha256": "5823be0118de4e4a924806297269b32cd629e33dbc1037e2e9093e0ddd473eb6"},
+    "BE20I": {"shorthand_source": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/20-server-identity.txt", "sha256": "4eff80770ca7ab0d612d421cab3c946d51f3d644dd2d2775dc5e4f6f1bd2b0cb"},
+    "BERID": {"shorthand_source": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/23-restart-identity.txt", "sha256": "a916c58b5eca2943fbb19e2672cd6b59c8ac71d567e68bb15b1d8af8fe0448b1"},
+    "ST1": {"shorthand_base": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/", "files": {
+      "03-launch-meta.txt": "658c8e06a283fd158c76f5d4b4ecec90ea750f2f3cc4eebbe6e93b26d55a5634",
+      "04-stage1-stdout.log": "cde591e736df29a9fee2df1ed6592c48377638ba947bbbac7c2595009aa99320",
+      "04-stage1-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "05-stage1-envelope-summary.txt": "abdf12fdcb33c38244e537ee9e157c9b8442aa0dfb213430a78329296bcf9868",
+      "06-correlation-go-log.txt": "e185248b5a7d72a8ba628499c9954649ff3ae920df7e241c09e32e09f7aea694",
+      "07-redaction-scan.txt": "d96076cc8d697801399369f19b8ea2b18219add3942196c4847d6d2de996b022",
+      "30-hashes.txt": "19397e7af679945bfcf3317a68695809c9de72fca8b9109fd1456dd8d84272a0",
+      "01-next-stdout.log": "82f9c556acd7ca5b3fc5ecb87f0b1a6205fe68676c29b9edc873e7d0ba2a26cb",
+      "01-next-stderr.log": "7feb1594e0c33a47ed6e9e237573f7c4d7384dda04eb15de438f600db57ffa7e",
+      "02-next-stdout.log": "b02d4378cd09bdf45ccf0e97ae4dd8f36a0e9748ca41cc98e216f7e3a1fe69c9"
+    }},
+    "ST2": {"shorthand_base": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage2/", "files": {
+      "10-driver.meta.txt": "d78dbec3bcfd58e05f2961df41efbce94450bca6932c97e62e1e483399e20d45",
+      "10-driver.stdout.log": "a22385c1f4fef26272e9f93e9405ac971756cdf45893e8ab6de8b6082934a49a",
+      "11-state-after.sha256": "3a680c15cb3f2990a536afb5b390538592f902453ec3f64b5aaf44107457bb67",
+      "12-go-restart-log-after.log": "ce7f9c4872597c90fa14da027e6818f92a20430410354a3e2644815e35ea6763",
+      "13-privacy-scan.txt": "837e2b462d773e21320b62761733de8138cee6454abb5554c716c0386084aaa9",
+      "30-hashes.txt": "2e979187481c680ba8469032d8ee7674920bf86cd59bc4315ca90206ceb6ce93"
+    }},
+    "ST3": {"shorthand_base": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage3/", "files": {
+      "10-driver.meta.txt": "6b8ffd932c16c9129308537275f98490159006c64e6e8becc77ae6db602011ea",
+      "10-driver.stdout.log": "43c97b30612e0f15483aaaa4acc3a5ad3ebe3728d79cacad894c67d783ad3645",
+      "11-state-after.sha256": "12439aded4806111bcfb49748a2971871ee54f3f8ad3eeaa3ec8367f69fe59b7",
+      "13-privacy-scan.txt": "804b07f17075f0bb4b10d21e53ac5552d04d13de2fc995a3c6697aeabcf85696",
+      "30-hashes.txt": "affdbea22c325276aed5e3e2b8e3629da145a5347101db5d25ddee3d65eb98d2"
+    }},
+    "ST4": {"shorthand_base": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage4/", "files": {
+      "10-driver.meta.txt": "11dcdb0e70673c5cb091ebff3955057933fef865d1a36dbbd484bb19f1bb6fd3",
+      "10-driver.stdout.log": "49524a93c5db1310097762cdaa8079d1d6b267dfc5ec1dcc54c75613f51612af",
+      "11-state-after.sha256": "0bd3462830ef2dbfb13f123befc3efa20d59da9db80b5b742cae6bee00be7383",
+      "13-privacy-scan.txt": "ffeee03560c5d3deaae464b42494240d0d899392ad0552fac9915d9b6f3dd52e",
+      "30-hashes.txt": "8c9030f7ee9ddcfa907b2117273b60f2f62e8652079c6648632f8b74261a7a8a"
+    }},
+    "ST5": {"shorthand_base": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage5/", "files": {
+      "00-driver-meta.txt": "9457f906c0ae38e431715fae2aa9473b16b70d60f173e1eb049427a489c4bb9e",
+      "05-state-after.sha256": "e05683f2660e2a25b0b14bf10478cf11ce5b9e0c8564b3d3ab1c6ca9e781cf44",
+      "10-driver.stdout.log": "0fd8c85888df787204be459b7af3d9b4afcb30dc14c63c37e35e3e6973ed4ab8",
+      "12-privacy-scan.txt": "be78ddbd583112d47bc6712c8e644a2ee8062a8c612e4a3758a0ba909892fd4c",
+      "30-hashes.txt": "5061649f5f6662be7eae00917d68ebca795fb9544b0332e0ec2be96287674096"
+    }},
+    "ST6": {"shorthand_base": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage6/", "files": {
+      "00-driver-meta.txt": "4c7253002e70b6c6028d2e390a1485438290b3db9c4e79b8699b7807934fc2cb",
+      "05-state-after.sha256": "e05cb4560b1e1c545d9e21aad1f0d0bf54d74126a48c5286ab22d5d431fb7bb0",
+      "10-driver.stdout.log": "66e0155d095c2d33054806b0d16651ae9068ec2230587a9bb64d3f5143289ab9",
+      "12-privacy-scan.txt": "4becb981b011955f3be0a80a5845fe81df4826c880e8da3bd1341e2f47e41d05",
+      "30-hashes.txt": "f886a1b95d89ba4b2ff411025d7931ab330be32449e910b32d3a300bc6a6bf32"
+    }},
+    "ST7": {"shorthand_base": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/stage7/", "files": {
+      "00-driver-meta.txt": "063b31aaffeeb96016b91eda344c52ee8e167df7b727166884ba949eb60c435b",
+      "05-ledger-after.sha256": "ae4e4c8030dbc6b8de59020cd692729a1101ae123b1f98ed8d7eb239668a357d",
+      "10-driver.stdout.log": "a3b9595bff48cae2aa35c36eed699e044eb86b33bbda6cc44d12c00310738f76",
+      "12-privacy-scan.txt": "5c29d9caf935c0840e6db3d4126461b173ba12b599612e78dff4736b6f38184e",
+      "30-hashes.txt": "eaac6702d0aa574ef5975b309b783e39af1402050cf8b12bcda55c017c449886"
+    }},
+    "SUBCHECKS": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/guard-startup-subchecks.json", "sha256": "82c76096ee285e49ddd07d05a456a35f5b003602e39d942e20db0e40c7683c53"},
+    "ORIGRUN": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/runner-scripts/guard-validator.sh", "sha256": "34931b024dbd898d19643bc124f79bbfd4f3d8a6b46a0a22ae43893e2116e36b"},
+    "R1SUB": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/guard-startup-subchecks-r1.json", "sha256": "97f1eefc807595e5442a74b3516535fb090443274b28656b5e6a835dd4714f3b"},
+    "R1RUN": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/guard-validator-r1.sh", "sha256": "104abf3fd2317095d69205ec63501f9e02f5040cf32d23a55bca60a491b9e55e"},
+    "R1EV": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/guard_evaluator.py", "sha256": "d018f68f969ee08468c224c695fa37a5b9d646d24add114c7dd5636643a5737b"},
+    "R1SC": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/selfcheck-r1.py", "sha256": "f9432142802927fa3fd9f8a9b7268e6a047980b28ad38c879343dc2c52244827"},
+    "R1SCRES": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/selfcheck-r1-results.json", "sha256": "be070bfcfe516a837308a682837e940def0a743b2d3533a42ea8fd07cda64599"},
+    "R1PROP": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/pre-listen-launcher-proposal.md", "sha256": "0a206d286aabe72851f353c9440893e37760745206254b0bc018b5f41c67f495"},
+    "R1DEP": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/runner-scripts/dependency-isolation-plan.md", "sha256": "0c57caf669c109dcbbc14857a8804cd772bde5467984879dde64bb2b34a2983b"},
+    "R1ERR": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/report-errata-reconciliation.json", "sha256": "9cde7f93642c2cfb34557d959df3888b358c0314d55d4d9491d5f0b1db4cd922"},
+    "R1CRED": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/credential-pattern-scan-r1.json", "sha256": "e36b9c01772cfec7cd0c5354fb04b25faf3933a15f8c7df8f5e282c6d661b26b"},
+    "R1MAN": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-r1-20261026/manifest.json", "sha256": "677cd24f61bae83ace965aa24c7d4783ec53d38b67a8d0af8309b592f043a2bb"},
+    "R1RETD": {"shorthand_source": "docs/reviews/inta-fe-validation-r1-antigravity-return.md", "sha256_initial_pin": "63d12ea9a45ff62950c3d3bda3c44d3c15084627194f0e59c9970d42c8db514f", "sha256_recheck_20261026": "27a2a7e3a2de9f332c0562c95a3301ab67452d09925782f3813923da0755a555"},
+    "R1INTK": {"shorthand_source": "docs/reviews/inta-fe-validation-r1-intake.md", "sha256": "b3a677cda465a6631faff16b79f39d2f69f9217faaf93b70dac54d4060be238b"},
+    "R1IPROB": {"shorthand_source": "docs/testing/inta-fe-validation-r1-intake/additional-failclosed-probes.json", "sha256": "82a23090ff60720a34c8a998e0a7f4e81e899d20c3120c998f03642479f439f5"},
+    "R1LANG": {"shorthand_source": "docs/testing/inta-fe-validation-r1-intake/runner-language-probes.json", "sha256": "55989161185d7c736130b7d9217570f44356c1f67f6a30eaadde115e657e6d72"},
+    "R1IXEC": {"shorthand_source": "docs/testing/inta-fe-validation-r1-intake/execution.json", "sha256": "7e8ca27bc9e1ec1672fe2afc75e1d8446ca508d857923e8161b285c8cc8fcc89"},
+    "R1ISTEP": {"shorthand_source": "docs/testing/inta-fe-validation-r1-intake/standalone-probe-execution.json", "sha256": "e1a80040574c3611c5d30ec3274b07fd130ea6a0f66e2eefe91241366254f4be"},
+    "INTK": {"shorthand_source": "docs/testing/inta-fe-validation-intake/manifest.json", "sha256": "4a1606e3bfd6e76eae4a0315d47d13f0408e623a29022c93c66e6123f649e758"},
+    "IAGUARD": {"shorthand_source": "docs/testing/inta-fe-validation-intake/guard-assessment.json", "sha256": "7648b535e453790f644cb849e2a2a8fc6ee980fb7d29910a6435c12898cd850d"},
+    "IERR": {"shorthand_source": "docs/testing/inta-fe-validation-intake/report-errata.json", "sha256": "3d7f6b58005e41fc20de160f22802b6c8669e3afe9ff60113eef5d6bd5131241"},
+    "IBOOT": {"shorthand_source": "docs/testing/inta-fe-validation-intake/next-bootstrap-source-pin.json", "sha256": "90b4964bc996b56b7b6fbea83bcea7184fa8790841e53e84e5a880bd90b691aa"},
+    "IPROD": {"shorthand_source": "docs/testing/inta-fe-validation-intake/product-artifact-assessment.json", "sha256": "849784ac093f25fe65543d0d9055fec7f4bde173d125b365b38a06d631a80c11"},
+    "IPERX": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/product-exclusion-report.json", "sha256": "7caa60a85ecaefa8c7fa36a8a16a4c1d7947c5eb162299efbc3f8e3d40ed2c2b"},
+    "IEMIT": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/emitted-assets-inventory.json", "sha256": "10ba4f0af0aefa31141eb155d54a106c33915dcdb6646ea6bdbacae7e88a59b8"},
+    "IRUT": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/routes-manifest.json", "sha256": "df4eb0a430ef3643e3698fa07d6c114d70a1cfd2a4a3efd0a0e0d807c4d5764f"},
+    "INFT": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/nft-traces-summary.json", "sha256": "bae911e1e76ed50c1f8973c6effd2f2a5a1b8c06cd4d1318fb7c574af980bfc5"},
+    "IVIT": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/vitest-list.stdout.json", "sha256": "7b3289cceba4ee5f4784f616965039fa4d4e051ff6674dc83e2ace91f5e474a8"},
+    "ICRED": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/credential-pattern-scan.json", "sha256": "995e90c4539afb461dfcc7e3a50935b9b581756260d400f8885c88bbe3073f52"},
+    "IPRE": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/prerender-manifest.json", "sha256": "ca29a62c846c57c40a181065042d4bb6798d911846ad8dbc1b2ac77ff502aa29"},
+    "IRRD": {"shorthand_source": "docs/testing/inta-returns/frontend/validation-20261026/resource-and-process-disposition.json", "sha256": "c4a3063182a91ec86a31d731d9c75d91bf0ca1897d95f7ab5e5ff882b47da8f3"},
+    "CLRP": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/ledger-preservation.json", "sha256": "abcaf11db3342c49d11a8f07ede11605e01ac4f9db9acbc58e111d47aa12be4e"},
+    "CLENV": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/envelope-audit.json", "sha256": "331830fad296f55391994719c0c52549825edc315375189e88ebd283e7d829d5"},
+    "CLMRK": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/application-log-marker-scan.json", "sha256": "762b2674306078b24c19d605b56696f1b61b042e9cda8a5c3e9a595073866a3f"},
+    "CLARC": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/archive-credential-pattern-scan.json", "sha256": "2d3512fd3891208a1ae7cabb4626730037525cc0ec597a2236865138a9d97360"},
+    "CLCRD": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/credential-pattern-scan.json", "sha256": "8c00a4a6da4040f5e13a626301e830fec5a0c1a5f908b564e327c79c334971d5"},
+    "CLDEP": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/dependency-and-binary-pins.json", "sha256": "5b0dc3b9f817686f68ee595384032ee42ea8ac0c81f0bcbb65775c4a40183a5b"},
+    "CLSRC": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/source-state.json", "sha256": "3d6657e08f810e80222032e42cc1d37c23698db61cb3c42877f9639080f0519b"},
+    "CLRES": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/resource-observation.json", "sha256": "0862eba74017bfed71b9e402ff8c8d39b9c2a02489e6a23509c9af95bdfc6d7f"},
+    "CLEXT": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/completion-codex/source-excerpts.json", "sha256": "463d316e709c55ceeca6252c160eb0a117951837e6dffabcbe3f284aaab92d7a"},
+    "CLRID": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/evidence-copies/r4/12-live-guards.log", "sha256": "0a8733016a2091a79e48cef87d01a1e908c256127d625c28ad07327ba8a838e9"},
+    "CLTID": {"shorthand_source": "docs/testing/inta-returns/frontend/runtime-intamvnmoems3pd/closeout-readiness/evidence-copies/r4/13-template-isolation.log", "sha256": "77071fb0548eb1f682efbd591f9114879e29eb1d5316bc78a66b61de00338b1d"},
+    "CONTRACT": {"shorthand_source": "docs/implementation/inta-approved-contract.md", "sha256": "6606a5da131567274f858b84a0c51ac66607a6c5a8eb12213ac7dcca585eb155"},
+    "REQ36": {"shorthand_source": "docs/testing/inta-closeout-continuation/required36.json", "embedded_original_matrix_sha256": "71578d6f36c0e45f5ee012c7909cad98d4b3059fa77756a67e7e6d356253abe1", "note": "required36.json is the new continuation file added AFTER the frozen review-inputs manifest; its own bytes were read+validated (36 required / 15 excluded / counts block) and its embedded original matrix sha equals the pinned matrix hash in review-inputs.json entry #4 and the contract's canonical_matrix_sha256 in the formal ledger."},
+    "STAGE2INTK": {"shorthand_source": "docs/reviews/inta-frontend-runtime-stage2-intake.md", "sha256": "0c3a7eda308e19984534b4bd5480d8014176980186b5122e937a934e7401ae95"},
+    "STAGE3INTK": {"shorthand_source": "docs/reviews/inta-frontend-runtime-stage3-intake.md", "sha256": "246217b99b050b992971f85ba1c275f430a797df1eaaa18b6536fd71d4a973ac"},
+    "STAGE4INTK": {"shorthand_source": "docs/reviews/inta-frontend-runtime-stage4-intake.md", "sha256": "06f8943381e740456f065f74978c8201d89f4c9769e2e1b712001d88a42c367c"},
+    "STAGE5INTK": {"shorthand_source": "docs/reviews/inta-frontend-runtime-stage5-intake.md", "sha256": "490230d406588fcefb62480f47dc95ba349ef65867d80b11ef3fb3adefa57fc6"},
+    "STAGE6INTK": {"shorthand_source": "docs/reviews/inta-frontend-runtime-stage6-intake.md", "sha256": "5dd3a8dc8b5700f16cb0385ae9be018d29998da57f3ac85e1e6ef0e1b82438de"},
+    "STAGE7INTK": {"shorthand_source": "docs/reviews/inta-frontend-runtime-stage7-intake.md", "sha256": "7a21ac5efc61a94fefedfd9c03b4ebf4d9d9df359b898ed8969f071493d6e6e8"},
+    "STAGE1INTK": {"shorthand_source": "docs/reviews/inta-frontend-runtime-stage1-intake.md", "sha256": "eb0398116dbf64c19cbd8fea68873fe623bc73b5b73d4cb708caf76ea76b762b"}
+  },
+  "counts": {
+    "required_rows_reviewed": 36,
+    "SUPPORTED": 0,
+    "PARTIAL": 33,
+    "FAIL": 0,
+    "INSUFFICIENT_EVIDENCE": 3,
+    "deferred_product_rows_unchanged": 14,
+    "blocked_external_rows_unchanged": 1,
+    "formal_ledger_rows_untouched": "51 x NOT_RUN (verified)"
+  },
+  "rows": [
+    {
+      "id": "INT-ENV-01",
+      "original_expectation_pointer": "REQ36: required36.json /required/0 (matrix line 25)",
+      "expected_mode": "SUPPORT_RUNTIME_ENVIRONMENT",
+      "observed": "Codex environment packet proves a disposable owned PostgreSQL fixture (container mc002-inta-pg-intamvnmoems3pd, image digest sha256:77f58511..., dedicated volume mc002-inta-data-intamvnmoems3pd, loopback-only publication) with checks.json marking healthy_empty_verified once; formal row remains NOT_RUN because the full create/label/cap assertion evidence and independent observation was never recorded as canonical runtime evidence.",
+      "evidence": [
+        {"anchor": "ENV", "pointer": "/ (whole file; container/image/volume identifiers)"},
+        {"anchor": "ENVC", "pointer": "/ (healthy_empty_verified)"},
+        {"anchor": "LED", "pointer": "/rows/0 (NOT_RUN + sub_evidence ACTUAL_CODEX_FIXTURE_VERIFICATION_EXECUTED"}
+      ],
+      "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "No independent observation of the owned-container creation contract (name-availability pre-check, no-reuse/cap enforce at creation time); original row owner Codex is also the operator who produced the evidence, so operator/independent separation is unresolved.",
+      "smallest_follow_up": "Codex freezes a bounded env-attest packet (creation argv/exits/UTC + conflict pre-checks) and OpenCode observes one fixture lifecycle without executing it."
+    },
+    {
+      "id": "INT-ENV-02",
+      "original_expectation_pointer": "REQ36: required36.json /required/1 (matrix line 26)",
+      "expected_mode": "SUPPORT_MIGRATION",
+      "observed": "Two migrate attempts recorded: attempt 1 failed through a wrapper bug (09-migrate-attempt1.meta.txt), attempt 2 exited 0 and applied the migrations (10-migrate.meta.txt + stdout), against head 52b60a4 only.",
+      "evidence": [
+        {"anchor": "BE09M", "pointer": "/"},
+        {"anchor": "BE10M", "pointer": "/"},
+        {"anchor": "BE10S", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/1"}
+      ],
+      "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Original assignee included ZCode for migration operation; ZCode remained unavailable and Codex is the interim operator (owner amendment) — role deviation is disclosed, and migration was never re-run against a freshly recreated/starting database state under later recovery stages for full NFR-012 acceptance.",
+      "smallest_follow_up": "Record an amended ownership acknowledgement (Codex as interim operator is already PO-approved) and one clean fresh-state migrate+rollback-or-reapply capture."
+    },
+    {
+      "id": "INT-ENV-03",
+      "original_expectation_pointer": "REQ36: required36.json /required/2 (matrix line 27)",
+      "expected_mode": "SUPPORT_GO_SERVER",
+      "observed": "Go server operated by Codex: start meta records PID 77632; restart identity evidence shows same binary sha256 f3bcdc2f... under PID 98134 listening on 127.0.0.1:18086; go-initial/go-final stdout/stderr retained in closeout packet; loopback binding and API-docs-disabled claimed by owner and corroborated by zero-change state pins.",
+      "evidence": [
+        {"anchor": "BE20S", "pointer": "/"},
+        {"anchor": "BE20I", "pointer": "/"},
+        {"anchor": "BERID", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/2"},
+        {"anchor": "CLSRC", "pointer": "/ (backend head 52b60a4, FE 3e5a642, harness 48cc03e pins)"}
+      ],
+      "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Original row owner ZCode operated-the-server criterion was executed by Codex instead (disclosed amendment); no independent conformance check of `git diff` vs 52b60a4 was re-run by OpenCode in this review (owner pins relied on), and Claude conformance disposition absent.",
+      "smallest_follow_up": "OpenCode verifies backend diff emptiness against a pinned backend snapshot path list (read-only) or owners re-record start/stop with both identities present."
+    },
+    {
+      "id": "INT-ENV-04",
+      "original_expectation_pointer": "REQ36: required36.json /required/3 (matrix line 28)",
+      "expected_mode": "SUPPORT_HARNESS_ENDPOINT",
+      "observed": "Harness built once (Next 16.4.2/Turbopack build logs, pnpm-build.stdout/stderr) with Zod allowlist, loopback-literal re-check per call, harness envelope Cache-Control: no-store enforced; driver launched 27 attempts with 0 silent retry method/URL flexibility; other-method/unknown-caseId rejections evidenced by 404/400/415 wire cases (T3/T4/T6-W/T7-W) — but the corrected guard validation proved a transient listener behavior that boundaries the original endpoint semantics.",
+      "evidence": [
+        {"anchor": "ST1", "pointer": "/04-stage1-stdout.log"},
+        {"anchor": "ST1", "pointer": "/05-stage1-envelope-summary.txt"},
+        {"anchor": "IAGUARD", "pointer": "/"},
+        {"anchor": "IBOOT", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/3"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Harness endpoint behavior depends on the corrected guard configurations/evaluator whose runner currently cannot execute correctly (R1-C01/02 defects CONFIRMED), so the never-listen/nonacceptance contract for future runs is unresolved; owner was Antigravity (per actual owner), but the full one-request-per-case/caller-input-bound assertion was never independently re-verified.",
+      "smallest_follow_up": "Fix R1-C01/C02 in the corrected runner (evaluator wiring + strict typed observer inputs) then one bounded launcher-based re-capture of a single variant before considering full 22-variant rerun."
+    },
+    {
+      "id": "INT-ENV-05",
+      "original_expectation_pointer": "REQ36: required36.json /required/4 (matrix line 29)",
+      "expected_mode": "SUPPORT_DEFAULT_OFF_REFUSAL",
+      "observed": "Guard negatives were partially executed then formally corrected: 22 original row verdicts were PASS but are invalid — API_TOKEN/nonempty shows listenerObservedOn18085: true alongside verdict PASS (invalid under never-listen) and was re-labeled FAIL_OBSERVED_LISTENER; the other 21 have no observer.json (zero-upstream/never-listen unverified) and were re-labeled INSUFFICIENT_EVIDENCE_ZERO_UPSTREAM_AND_NEVER_LISTEN. stdout for the retained variant shows 'Ready in 178ms' concurring with the listener; stderr contains the exact refusal phrase in both variants. R1 supplied corrected evaluator/runner/selfcheck sources but reviewer confirms R1-C01..C03 defects prevent executing them as written; R1-C04 prevents the current launcher import path.",
+      "evidence": [
+        {"anchor": "SUBCHECKS", "pointer": "/1 (API_TOKEN nonempty listenerObservedOn18085:true + verdict PASS)"},
+        {"anchor": "ORIGRUN", "pointer": "/106-109 (observer write only in finally)"},
+        {"anchor": "ORIGRUN", "pointer": "/125-129 (stop_observer has no signal-handler prerequisite)"},
+        {"anchor": "ORIGRUN", "pointer": "/263-266 (missing observer defaulted to 0)"},
+        {"anchor": "ORIGRUN", "pointer": "/271-274 (mere key-name acceptance)"},
+        {"anchor": "ORIGRUN", "pointer": "/281-295 (verdict chain includes listener_after_exit/observer_requests but not listener_appeared)"},
+        {"anchor": "R1SUB", "pointer": "/"},
+        {"anchor": "R1EV", "pointer": "/66-78,111-115,139-159"},
+        {"anchor": "R1RUN", "pointer": "/167-173,214-218,244-248,281-285,309,313-315"},
+        {"anchor": "R1PROP", "pointer": "/2.1,3.3"},
+        {"anchor": "R1DEP", "pointer": "/ (cp -cR plan + realpath preflight)"},
+        {"anchor": "R1IPROB", "pointer": "/ vectors"},
+        {"anchor": "IPERX", "pointer": "/"}
+      ],
+      "observation_basis": "SOURCE_ONLY",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Default-off refusal was evidenced only by the stderr phrase and FINITE exit=1 rows; evidence for '(b) NODE_ENV=production' refusal, exact refusal enforcement, and durable 'never-listen' is NOT complete: corrected evaluator accepts unknown listener states, boolean counters and truthy shutdown strings (3 unsafe PASS vectors CONFIRMED); corrected runner has NameError probes in metadata/evalerator interpolation plus $_ negation capture defect (R1-C01 CONFIRMED); observer write/presence/atomicity/cleanup gaps (R1-C03 CONFIRMED); launcher import path refs nonexistent guards.js (R1-C04 CONFIRMED); actual-secret scan not established.",
+      "smallest_follow_up": "Consolidate R1-C01..C04 fixes in one bounded runner/evaluator revision; freeze strict-typed evaluator regression tests (including the 3 vector cases) before any runtime cue; keep direct-CLI never-listen scope decision separate (see recommendation)."
+    },
+    {
+      "id": "INT-ENV-06",
+      "original_expectation_pointer": "REQ36: required36.json /required/5 (matrix line 30)",
+      "expected_mode": "SUPPORT_DRIVER",
+      "observed": "Driver executed 7 stages over exactly the fixed case table (23 logical cases / 27 unique request-ID attempts, T12 unreachable), one upstream request per case evidenced by 26 Go access-log row matches; envelopes retained with state snapshots; no caller-defined routing or silent retry is implied by the retained artifacts; R1 median latency retraces are not part of the criterion.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/"},
+        {"anchor": "CP", "pointer": "/note"},
+        {"anchor": "ST1", "pointer": "/03-launch-meta.txt"},
+        {"anchor": "ST5", "pointer": "/00-driver-meta.txt"},
+        {"anchor": "ST6", "pointer": "/00-driver-meta.txt"},
+        {"anchor": "ST7", "pointer": "/00-driver-meta.txt"},
+        {"anchor": "CLENV", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/5"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent QA of envelope completeness/body truncation bounds for each of the 27 attempts has not been executed (envelopes retained in stage state copies were not independently re-parsed in this review); stage order repristination conflicts with the original T5/T8/T9 parametric ordering when compared with the checkpoint; every confirmation remains owner-reported with intake corroboration only.",
+      "smallest_follow_up": "OpenCode re-verifies 2-3 attempts end-to-end from retained artifacts (request ID → envelope → Go row) as a bounded independent QA sample before future acceptance."
+    },
+    {
+      "id": "INT-ENV-07",
+      "original_expectation_pointer": "REQ36: required36.json /required/6 (matrix line 31)",
+      "expected_mode": "SUPPORT_NEXT_RUNTIME_CHECKS",
+      "observed": "Next runtime behavior under the harness config was exercised during 7 driver stages; documented loopback binding and dynamic handler evidenced; envelope nextVersion presence carried in Go-log correlation rows; webpack-mode variance recorded as a limitation in the check narrative; TS/lint/test glob pickup verification was achieved via vitest (18 test paths) and build logs rather than running Next under the harness config label re-verified each time.",
+      "evidence": [
+        {"anchor": "ST1", "pointer": "/01-next-stdout.log"},
+        {"anchor": "ST1", "pointer": "/02-next-stdout.log"},
+        {"anchor": "IVIT", "pointer": "/"},
+        {"anchor": "IBOOT", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/6"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Full criterion includes overhead-correctness under the pinned front-end config with independent verification of 'no fetch result caching/reuse' at request level; independent re-observation of `cache: 'no-store'` on the retained transport envelope headers is pending; variance (webpack mode) remains reported, never independently dispositioned.",
+      "smallest_follow_up": "Owner re-captures one running variant's response envelope headers (no-store confirmation) and Codex records the variance disposition separately."
+    },
+    {
+      "id": "T1",
+      "original_expectation_pointer": "REQ36: required36.json /required/7 (matrix line 39)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "POST /users create (user A) via harness client path hit Go 201; request ID mc-int-intamvnmoems3pd-T1-1; envelope-summary retained; checkpoint records owner-executed stage-1 packet as export-verified; schema-possession attributes are in retained envelope data.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/0"},
+        {"anchor": "CP", "pointer": "/cases/7"},
+        {"anchor": "GOLOG", "pointer": "/"},
+        {"anchor": "ST1", "pointer": "/05-stage1-envelope-summary.txt"},
+        {"anchor": "ST1", "pointer": "/30-hashes.txt"},
+        {"anchor": "LED", "pointer": "/rows/7"},
+        {"anchor": "STAGE1INTK", "pointer": "/"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent verification did not re-execute; claim rests on owner-exported artifacts plus intake/intake-intake consistent chain (canonical bytes verified).",
+      "smallest_follow_up": "Bounded independent contract-observation of 1 stage-1 attempt under a corrected runner or claude-owned conformance signature."
+    },
+    {
+      "id": "T2",
+      "original_expectation_pointer": "REQ36: required36.json /required/8 (matrix line 40)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "GET /users/{id} equals T1 field-for-field per retained stage-1 equivalence assertion (Int-Pers-01 later revalidated the same user with equality against the same state).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/1"},
+        {"anchor": "CP", "pointer": "/cases/8"},
+        {"anchor": "STAGE2INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/8"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Same as other stage-1 cases: owner evidence chain is intact but independently unverified at runtime level.",
+      "smallest_follow_up": "Include T1/T2 equality in the independent bounded runtime sample when correcting runner is re-dispatched."
+    },
+    {
+      "id": "T3",
+      "original_expectation_pointer": "REQ36: required36.json /required/9 (matrix line 41)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "GET never-created UUIDv7 → ApiError 404 NOT_FOUND with RFC 9457 details per retained envelope; Go log row 404 matched the request ID.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/4"},
+        {"anchor": "CP", "pointer": "/cases/9"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/9"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "details containing no other record's data was not independently checked from raw artifact bytes in this review.",
+      "smallest_follow_up": "Add the no-leak detail check into OpenCode's independent artifact re-verification pass."
+    },
+    {
+      "id": "T4",
+      "original_expectation_pointer": "REQ36: required36.json /required/10 (matrix line 42)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Two attempts with malformed/uppercase literal IDs (attempts -6 and -7) each 404/NOT_FOUND — canonicalization rejection behavior recorded with both ID classes.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/5"},
+        {"anchor": "RC", "pointer": "/6"},
+        {"anchor": "CP", "pointer": "/cases/10"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/10"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Runtime re-observation never executed by independent QA; both attempts are owner-retained only.",
+      "smallest_follow_up": "Include T4 in the independent correction-loop sample."
+    },
+    {
+      "id": "T5",
+      "original_expectation_pointer": "REQ36: required36.json /required/11 (matrix line 43)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Empty name POST → 422 VALIDATION_ERROR (attempt -8) and follow-up GET A unchanged (attempt -9 shows 200 and stage-2 equality confirms version stability).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/7"},
+        {"anchor": "RC", "pointer": "/8"},
+        {"anchor": "CP", "pointer": "/cases/11"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "STAGE2INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/11"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent runtime verification pending; details-presentnt assertion relies on envelope content not re-parsed here.",
+      "smallest_follow_up": "Include T5 in the independent sample."
+    },
+    {
+      "id": "T8",
+      "original_expectation_pointer": "REQ36: required36.json /required/12 (matrix line 44)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Duplicate-email POST → 409 (attempt -10) and subsequent GET A (attempt -11) confirm version stability after the 409.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/9"},
+        {"anchor": "RC", "pointer": "/10"},
+        {"anchor": "CP", "pointer": "/cases/12"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/12"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent runtime verification pending; 409 mapping depends on client status-mapping behavior accepted as ownerenswert and unverified independently.",
+      "smallest_follow_up": "Include T8 in the independent sample."
+    },
+    {
+      "id": "T9",
+      "original_expectation_pointer": "REQ36: required36.json /required/13 (matrix line 45)",
+      "expected_mode": "SUPPORT_MUTATION",
+      "observed": "PATCH A with If-Match=1 and new name → 200 body version 2 name applied (attempt -17); stage-4 packet records prior state before and after (W9 then re-checks ETag 2).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/16"},
+        {"anchor": "CP", "pointer": "/cases/13"},
+        {"anchor": "ST4", "pointer": "/10-driver.stdout.log"},
+        {"anchor": "ST4", "pointer": "/11-state-after.sha256"},
+        {"anchor": "STAGE4INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/13"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent runtime verification pending; mutation is also referenced by later stage-5 state-after hashes.",
+      "smallest_follow_up": "Include T9 in the independent sample."
+    },
+    {
+      "id": "T10",
+      "original_expectation_pointer": "REQ36: required36.json /required/14 (matrix line 46)",
+      "expected_mode": "SUPPORT_MUTATION_NEGATIVE",
+      "observed": "PATCH A stale If-Match=1 (second stale attempt) → 412 (attempt -19); follow-up GET correct (attempt -20) shows version 2 with the T9 name (no partial write).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/18"},
+        {"anchor": "RC", "pointer": "/19"},
+        {"anchor": "CP", "pointer": "/cases/14"},
+        {"anchor": "ST4", "pointer": "/10-driver.stdout.log"},
+        {"anchor": "STAGE4INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/14"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent runtime verification pending; the 'no partial write' clause rests on owner state snapshots alone.",
+      "smallest_follow_up": "Add a re-hash of stage4 00-state-before / 11-state-after artifacts to the independent verification pass."
+    },
+    {
+      "id": "T11a",
+      "original_expectation_pointer": "REQ36: required36.json /required/15 (matrix line 47)",
+      "expected_mode": "SUPPORT_OUTAGE_READ",
+      "observed": "GET A during PG outage → 503 HTTP_ERROR with unavailable classification and details.type /problems/unavailable, retryAfter=1; Go log row 503 correlated with the request ID; golden 503 detail matched C01 per intake correlation verification.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/20"},
+        {"anchor": "CP", "pointer": "/cases/15"},
+        {"anchor": "OBS", "pointer": "/"},
+        {"anchor": "STAGE5INTK", "pointer": "/"},
+        {"anchor": "ST5", "pointer": "/10-driver.stdout.log"},
+        {"anchor": "LED", "pointer": "/rows/15"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "RetryAfter and detail bytes were not independently re-parsed from envelopes here; golden detail equality is intake-corroborated, not QAd.",
+      "smallest_follow_up": "Re-parse the retained T11a envelope and diff against the C01 golden body in a bounded independent pass."
+    },
+    {
+      "id": "T11b",
+      "original_expectation_pointer": "REQ36: required36.json /required/16 (matrix line 48)",
+      "expected_mode": "SUPPORT_OUTAGE_WRITE",
+      "observed": "PATCH A during outage → 503 unavailable, identical unavailable assertions (attempt -22); per the native unknown-write rule no committed/not-committed inference is allowed from the 503 alone — this holds and reconciliation is deferred to INT-PERS-04 (read-only).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/21"},
+        {"anchor": "CP", "pointer": "/cases/16"},
+        {"anchor": "STAGE5INTK", "pointer": "/"},
+        {"anchor": "STAGE6INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/16"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Actual final state equality/outcome verification relied on stage-6 output retained by owner; not independently re-parsed in this review.",
+      "smallest_follow_up": "Bounded independent re-verification of the stage-6 state equality vs pinned before/after hashes."
+    },
+    {
+      "id": "T11c",
+      "original_expectation_pointer": "REQ36: required36.json /required/17 (matrix line 49)",
+      "expected_mode": "SUPPORT_OUTAGE_CREATE",
+      "observed": "POST new user X during outage → 503 unavailable assertions visible in correlation (attempt -23); outcome recorded OUTCOME_UNKNOWN pending INT-PERS-04 — and per the contract no later re-POST or receipt would prove behavior; the known-unknown status is retained as OPEN (not resolved to success/fail).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/22"},
+        {"anchor": "CP", "pointer": "/cases/17"},
+        {"anchor": "STAGE5INTK", "pointer": "/"},
+        {"anchor": "STAGE6INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/17"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Reviewer's own re-observation of the CREATE outcome is not achievable without the owner runtime; the open OUTCOME_UNKNOWN status itself cannot be closed by read-only review and stays open (preserves the limits note for D-09; do NOT reinterpret absentobserver as 0 or unknown as known).",
+      "smallest_follow_up": "Owner records explicit reconciliation imperative in the stage-6 packet amendment and OpenCode then re-verifies the READ of A only (no re-POST/retry/state expansion)."
+    },
+    {
+      "id": "T12",
+      "original_expectation_pointer": "REQ36: required36.json /required/18 (matrix line 50)",
+      "expected_mode": "SUPPORT_TRANSPORT_FAILURE",
+      "observed": "GET A with Go stopped → client ApiError NETWORK_ERROR, status 0 (attempt -27, genuinely fired); Go no-log row (go_matches 0) with no driver retry; stage-7 packet preserves this attempt with go-stdout-before/after silent; the checkpoint mentions this is unreachable-not-retried behavior. Not a Go-log row in the 26-row set (by design).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/26"},
+        {"anchor": "CP", "pointer": "/cases/18"},
+        {"anchor": "ST7", "pointer": "/10-driver.stdout.log"},
+        {"anchor": "ST7", "pointer": "/00-driver-meta.txt"},
+        {"anchor": "ST7", "pointer": "/05-ledger-after.sha256"},
+        {"anchor": "STAGE7INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/18"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent verification of never-success/never-empty behavior from raw artifact bytes is pending; the status 0 client outcome is owner-reported with packet corroboration only.",
+      "smallest_follow_up": "Add T12 to the independent envelope-based sample."
+    },
+    {
+      "id": "W1",
+      "original_expectation_pointer": "REQ36: required36.json /required/19 (matrix line 58)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Wire POST user B (distinct email/name, own request ID) with response 201 and ETag/location/x-request-id header set recorded in retained wire-mode envelope; row applies to B only.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/2"},
+        {"anchor": "CP", "pointer": "/cases/19"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/19"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Header-by-header independent re-verification from envelope bytes is not done in this review; owner-exported retained artifacts alone.",
+      "smallest_follow_up": "Add W1 to the independent envelope sample."
+    },
+    {
+      "id": "W2",
+      "original_expectation_pointer": "REQ36: required36.json /required/20 (matrix line 59)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Wire GET A returns ETag \"<current version>\" plus request-ID echo per retained envelope; attempt row confirms via correlation (mode wire).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/3"},
+        {"anchor": "CP", "pointer": "/cases/20"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/20"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent verification pending.",
+      "smallest_follow_up": "Include W2 in the independent sample."
+    },
+    {
+      "id": "W3",
+      "original_expectation_pointer": "REQ36: required36.json /required/21 (matrix line 60)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Wire GET never-created id → 404 application/problem+json with request-ID echo (attempt -12); no other record's data evidenced by row isolation across separate attempts.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/11"},
+        {"anchor": "CP", "pointer": "/cases/21"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/21"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent header/media-type verification from envelope bytes pending.",
+      "smallest_follow_up": "Include W3 in the independent sample."
+    },
+    {
+      "id": "T6-W",
+      "original_expectation_pointer": "REQ36: required36.json /required/22 (matrix line 61)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Wire POST malformed JSON with JSON Content-Type → 400 problem+json (attempt -13) with request-ID echo recorded in the Go-log row match.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/12"},
+        {"anchor": "CP", "pointer": "/cases/22"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/22"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent verification pending.",
+      "smallest_follow_up": "Include T6-W in the independent sample."
+    },
+    {
+      "id": "T7-W",
+      "original_expectation_pointer": "REQ36: required36.json /required/23 (matrix line 62)",
+      "expected_mode": "SUPPORT_ATTEMPT_NEGATIVE",
+      "observed": "Wire POST valid JSON bytes as Uint8Array body without Content-Type → 415 problem+json (attempt -14); sent headers recorded as constructed per owner packet note and intake assessment; deviation free recording (any non-415 would be a finding) preserved.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/13"},
+        {"anchor": "CP", "pointer": "/cases/23"},
+        {"anchor": "STAGE1INTK", "pointer": "/"},
+        {"anchor": "IAGUARD", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/23"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent verification pending; the Fetch-period gap note is intake-narrated without independent reproduction.",
+      "smallest_follow_up": "Include T7-W in the independent sample."
+    },
+    {
+      "id": "W9",
+      "original_expectation_pointer": "REQ36: required36.json /required/24 (matrix line 63)",
+      "expected_mode": "SUPPORT_ATTEMPT",
+      "observed": "Wire GET A after update → ETag \"2\" with request-ID echo; attempt row -18 recorded post-T9.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/17"},
+        {"anchor": "CP", "pointer": "/cases/24"},
+        {"anchor": "STAGE4INTK", "pointer": "/"},
+        {"anchor": "ST4", "pointer": "/10-driver.stdout.log"},
+        {"anchor": "LED", "pointer": "/rows/24"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent verification pending.",
+      "smallest_follow_up": "Include W9 in the independent sample."
+    },
+    {
+      "id": "W11",
+      "original_expectation_pointer": "REQ36: required36.json /required/25 (matrix line 64)",
+      "expected_mode": "SUPPORT_OUTAGE_WIRE",
+      "observed": "Wire GET A during outage → 503 problem+json with echo, Retry-After header NOT asserted (deferred to D-11 as planned).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/23"},
+        {"anchor": "CP", "pointer": "/cases/25"},
+        {"anchor": "STAGE5INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/25"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent verification pending.",
+      "smallest_follow_up": "Include W11 in the independent sample."
+    },
+    {
+      "id": "INT-PERS-01",
+      "original_expectation_pointer": "REQ36: required36.json /required/26 (matrix line 70)",
+      "expected_mode": "SUPPORT_PERSISTENCE",
+      "observed": "Cross-restart equality packet: pre-restart checkpoint state, restart log before/after, Go restart record; state equality recorded by owner (state after contains unchanged A).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/14"},
+        {"anchor": "CP", "pointer": "/cases/26"},
+        {"anchor": "ST2", "pointer": "/00-state-before.sha256"},
+        {"anchor": "ST2", "pointer": "/11-state-after.sha256"},
+        {"anchor": "ST2", "pointer": "/12-go-restart-log-after.log"},
+        {"anchor": "STAGE2INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/26"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Independent hash re-check of state-before vs state-after artifacts pending (owner-recorder only).",
+      "smallest_follow_up": "OpenCode independently re-computes the two state sha256 files and diffs them."
+    },
+    {
+      "id": "INT-PERS-02",
+      "original_expectation_pointer": "REQ36: required36.json /required/27 (matrix line 71)",
+      "expected_mode": "SUPPORT_PERSISTENCE",
+      "observed": "Same-container PG stop/start round with container/storage identity preserved pre/post (owner-recorded identity); state equality after rebuild recorded.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/15"},
+        {"anchor": "CP", "pointer": "/cases/27"},
+        {"anchor": "ST3", "pointer": "/11-state-after.sha256"},
+        {"anchor": "ST3", "pointer": "/30-hashes.txt"},
+        {"anchor": "STAGE3INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/27"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Owner-recorded storage identity was never independently re-read in this review; the environment checks.json healthy_empty_verified only covers initial state.",
+      "smallest_follow_up": "OpenCode re-reads the container/storage identity records and compares with stage3 snapshot hashes."
+    },
+    {
+      "id": "INT-PERS-03",
+      "original_expectation_pointer": "REQ36: required36.json /required/28 (matrix line 72)",
+      "expected_mode": "SUPPORT_RECOVERY",
+      "observed": "GET A after PG restart without any Go restart → 200/classification success per stage-6 packet; Go/Next stdout logs retained as evidence of no restart (go-logs before/after flow contiguity).",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/24"},
+        {"anchor": "CP", "pointer": "/cases/28"},
+        {"anchor": "ST6", "pointer": "/10-driver.stdout.log"},
+        {"anchor": "ST6", "pointer": "/12-privacy-scan.txt"},
+        {"anchor": "STAGE6INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/28"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Recovery without Go restart is evidenced by log contiguity; independent log-flow continuation re-verification pending.",
+      "smallest_follow_up": "OpenCode re-verifies the stage6 log-flow continuity (before/after log identities)."
+    },
+    {
+      "id": "INT-PERS-04",
+      "original_expectation_pointer": "REQ36: required36.json /required/29 (matrix line 73)",
+      "expected_mode": "SUPPORT_RECONCILIATION",
+      "observed": "Read-only GET reconciliation recorded post-recovery; T11b-PATCH actual state captured; T11c-user-X stays OUTCOME_UNKNOWN with no re-POST/retry/state expansion applied in the owner packet.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/25"},
+        {"anchor": "CP", "pointer": "/cases/29"},
+        {"anchor": "ST6", "pointer": "/00-driver-meta.txt"},
+        {"anchor": "STAGE6INTK", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/29"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "T11c resolution remains OUTCOME_UNKNOWN and is an intentional state; independent confirmation of no re-POST/retry/list scope expansion could not be completed without additional artifact slice re-checks.",
+      "smallest_follow_up": "OpenCode re-verifies the stage-6 retained packet for absence of re-POST/list-expansion attempts."
+    },
+    {
+      "id": "INT-COR-01",
+      "original_expectation_pointer": "REQ36: required36.json /required/30 (matrix line 79)",
+      "expected_mode": "SUPPORT_OBSERVABILITY",
+      "observed": "26 unique Go rows matched the 27 request IDs stage-by-stage (26 rows; 23 logical cases, one unreachable T12), each ID found exactly once per outcome; a NOT-OBSERVABLE template fallback is not needed because IDs were found.",
+      "evidence": [
+        {"anchor": "RC", "pointer": "/"},
+        {"anchor": "GOLOG", "pointer": "/"},
+        {"anchor": "OBS", "pointer": "/"},
+        {"anchor": "ST1", "pointer": "/06-correlation-go-log.txt"},
+        {"anchor": "LED", "pointer": "/rows/30"}
+      ],
+      "observation_basis": "OWNER_RUNTIME_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Reviewer counts are consistent with intake counts, but a full independent replay of all 26 log-row match counts was not executed (a spot sample only).",
+      "smallest_follow_up": "OpenCode runs a bounded file-level count cross-check (already partially done in this review) recorded in verification-log.json."
+    },
+    {
+      "id": "INT-PRIV-01",
+      "original_expectation_pointer": "REQ36: required36.json /required/31 (matrix line 80)",
+      "expected_mode": "SUPPORT_PRIVACY",
+      "observed": "Bounded synthetic-body marker scans ran over 61 retained logs (names/emails/routes) with zero marker hits in the retained copies; pattern-based credentials scan over 17 packets files found zero matches; envelope-size truncation flags present in the audit — BUT actual_secret_value_scan is explicitly NOT_ESTABLISHED (R1 correction) and basis was extend only to retained copies of logs.",
+      "evidence": [
+        {"anchor": "ST1", "pointer": "/07-redaction-scan.txt"},
+        {"anchor": "ST2", "pointer": "/13-privacy-scan.txt"},
+        {"anchor": "ST3", "pointer": "/13-privacy-scan.txt"},
+        {"anchor": "ST4", "pointer": "/13-privacy-scan.txt"},
+        {"anchor": "ST5", "pointer": "/12-privacy-scan.txt"},
+        {"anchor": "ST6", "pointer": "/12-privacy-scan.txt"},
+        {"anchor": "ST7", "pointer": "/12-privacy-scan.txt"},
+        {"anchor": "CLMRK", "pointer": "/logs (count 61)"},
+        {"anchor": "CLARC", "pointer": "/"},
+        {"anchor": "CLCRD", "pointer": "/"},
+        {"anchor": "R1ERR", "pointer": "/credentialCoverageClarification"},
+        {"anchor": "R1CRED", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/31"}
+      ],
+      "observation_basis": "ARTIFACT_ONLY",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "INSUFFICIENT_EVIDENCE",
+      "gap": "Criterion requires credential/DSN/password/token values absent from EVERY artifact including envelopes; pattern-scan absence plus marker scan are strictly narrower. Actual secret-value scan of backend env/Config.Env was never executed (owner responsibility; R1 confirms ACTUAL_SECRET_SCAN_NOT_ESTABLISHED); no independent privacy review is possible on pattern evidence alone.",
+      "smallest_follow_up": "Codex executes the actual secret-value scan across env/config artifacts redacting results; owner code-reviewing OpenCode then records an independent privacy return."
+    },
+    {
+      "id": "INT-ISO-01",
+      "original_expectation_pointer": "REQ36: required36.json /required/32 (matrix line 81)",
+      "expected_mode": "SUPPORT_ISOLATION",
+      "observed": "r4 live-guards and template-isolation outputs in closeout packet demonstrate the harness-is NOTHING model-compilation of shared client within product allowed-paths; ledger/source pins state FE 3e5a642, harness 48cc03e, BE 52b60a4 with adjacent unchanged paths; Go CORS configuration absence matches the server-to-server scope note (no browser surface claimed).",
+      "evidence": [
+        {"anchor": "CLRID", "pointer": "/"},
+        {"anchor": "CLTID", "pointer": "/"},
+        {"anchor": "CLSRC", "pointer": "/"},
+        {"anchor": "CLRP", "pointer": "/"},
+        {"anchor": "CLDEP", "pointer": "/"},
+        {"anchor": "IBOOT", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/32"}
+      ],
+      "observation_basis": "CODEX_OPERATIONAL_EVIDENCE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "Criterion requests explicitly computed empty diffs vs the three pinned revisions; owner's diff computations were not independently re-executed by this reviewer (read-only byte/hash verify does not equal diff replay); Go zero-CORS claim relies on source pins rather than a fresh independent confirmation.",
+      "smallest_follow_up": "Codex freezes a computed-diff attestation packet or grants a bounded read-only diff replay by OpenCode."
+    },
+    {
+      "id": "INT-ISO-02",
+      "original_expectation_pointer": "REQ36: required36.json /required/33 (matrix line 82)",
+      "expected_mode": "SUPPORT_PROD_EXCLUSION",
+      "observed": "Product exclusion verified from the packet: 31 emitted assets inventoried (18 JS + 15 chunk JS + non-chunk manifest split), 8 NFT traces with zero harness references in manifest, static routes manifest with 5 static product routes and no /harness/case entry, vitest listing 18 product test paths all under product-snapshot/src, and 17 file credential-pattern scan with 0 matches; cross-referenced with the intake assessment and R1 reconciliation corrections.",
+      "evidence": [
+        {"anchor": "IPERX", "pointer": "/"},
+        {"anchor": "IEMIT", "pointer": "/"},
+        {"anchor": "IRUT", "pointer": "/"},
+        {"anchor": "INFT", "pointer": "/"},
+        {"anchor": "IVIT", "pointer": "/"},
+        {"anchor": "ICRED", "pointer": "/"},
+        {"anchor": "IPRE", "pointer": "/"},
+        {"anchor": "IPROD", "pointer": "/"},
+        {"anchor": "R1ERR", "pointer": "/assetCountCorrections"},
+        {"anchor": "LED", "pointer": "/rows/33"}
+      ],
+      "observation_basis": "ARTIFACT_ONLY",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "PARTIAL",
+      "gap": "All exclusion observations are artifact-derived from one captured build; an independent build/test re-capture to re-verify exclusion on fresh output is not yet requested or executed; deviations reporting framework remains intake-side.",
+      "smallest_follow_up": "OpenCode re-verifies exclusion on any future rebuild artifact (no rerun restricted now), or owner freeze-records a second capture on a different seed."
+    },
+    {
+      "id": "INT-ISO-03",
+      "original_expectation_pointer": "REQ36: required36.json /required/34 (matrix line 83)",
+      "expected_mode": "SUPPORT_TEARDOWN",
+      "observed": "No teardown was executed; resource-and-process-disposition.json records the resource/process after initial validation but does not verify zero owned listeners; prefinal resource-observation in closeout tracks running resources; teardown finalization belongs to Codex governance after this milestone and was never performed for INT-A.",
+      "evidence": [
+        {"anchor": "IRRD", "pointer": "/"},
+        {"anchor": "CLRES", "pointer": "/"},
+        {"anchor": "LED", "pointer": "/rows/34"},
+        {"anchor": "R1RETD", "pointer": "/7 (Next teardown NOT_OBSERVED historical)"}
+      ],
+      "observation_basis": "ARTIFACT_ONLY",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "INSUFFICIENT_EVIDENCE",
+      "gap": "row cannot be supported: zero-owned-listeners proof, removal vs retention decision, and resource ownership close-out are unperformed; Next termination and owned-PG final stop remain NOT_OBSERVED in the historical record.",
+      "smallest_follow_up": "Codex, not OpenCode, records the controlled teardown (argv/exit/UTC per process/container) under a separate assigned task with OpenCode as observer."
+    },
+    {
+      "id": "INT-CONF-01",
+      "original_expectation_pointer": "REQ36: required36.json /required/35 (matrix line 84)",
+      "expected_mode": "SUPPORT_CONFORMANCE",
+      "observed": "No Claude reviews of executed evidence against the ARCH-FINAL contract exist in the retained evidence set; neither a per-boundary conformance record nor a variance disposition table exists yet for the HARNESS endpoint semantics in relation to FEVAL/R1 corrections.",
+      "evidence": [{"anchor": "LED", "pointer": "/rows/35"}],
+      "observation_basis": "NONE",
+      "reviewer_personally_executed_runtime": "NOT_RUN",
+      "verdict": "INSUFFICIENT_EVIDENCE",
+      "gap": "Claude was never assigned/executed this row in the existing evidence chain; no artifact exists for this review to verify across.",
+      "smallest_follow_up": "Claude Code (Solution Architecture) per original row row-owner assignment reviews the executed evidence and issues a conformance disposition before any external criteria closeout; not an OpenCode authority."
+    }
+  ],
+  "excluded_rows_unchanged": {
+    "count": 15,
+    "classification_counts": {"DEPENDS_ON_LATER_PRODUCT_IMPLEMENTATION": 14, "BLOCKED_BY_EXTERNAL_FEASIBILITY": 1},
+    "ids": ["D-01", "D-02", "D-03", "D-04", "D-05", "D-06", "D-07", "D-08", "D-09", "D-10", "D-11", "D-12", "D-13", "D-14", "D-15"],
+    "pivot": "Only canonical counts from CP: 14 deferred + D-14 blocked external; reviewer changed no scope and no exclusion."
+  },
+  "preserved_limits": {
+    "T11c": "OUTCOME_UNKNOWN remains open; a 503 on a non-GET proves nothing about commit; any later 201/409 on a re-POST would never prove behavior (contract unknown-write rule); unresolved at this review.",
+    "next_termination": "NOT_OBSERVED historically — evidence lacks a recorded Next dev-server teardown; INT-ISO-03 supports exactly this.",
+    "go_direct_teardown": "owned Go/PG final-stop lifecycle remains NOT_OBSERVED for the purposes of the full INT-A closeout (go-final logs captured unrelated to governed teardown).",
+    "actual_secret_scan": "NOT_ESTABLISHED — pattern abstinence only; real secret-value scan remains Codex's responsibility (R1 correction INT-PRIV-01).",
+    "hosted_CI": "NOT_RUN — no hosted-CI or $0-bill evidence exists for this review; D-14 constraints continue.",
+    "51_formal": "The canonical 51-row ledger remains exactly NOT_RUN; nothing in this review mutates it or grants INT-A DONE/Step-03/cost/production/auth gates."
+  }
+}

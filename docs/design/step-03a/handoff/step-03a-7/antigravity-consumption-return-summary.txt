@@ -1,0 +1,205 @@
+Ran check review head commit details
+Ran show recent commits on task/MC-003A-remediation
+Ran check commit cd30600 stat
+Ran check Semble CLI availability · Exited with code 1
+Ran verify primary frontend reference checkout · Exited with code 128
+Ran print current working directory
+Ran verify frontend reference checkout via cd · Exited with code 128
+Ran check git status in current workspace
+Ran check git status with git-dir flag · Exited with code 128
+Analyzing .git:L1-20
+Analyzed HEAD:L1
+Analyzed main:L1
+Analyzed config:L1-14
+Analyzing HEAD:L1-20
+Analyzed .git:L1
+Analyzed HEAD:L1
+Analyzed MC-002-fe-poc:L1
+Analyzed targeted-review-intake.md:L1-40
+Analyzed targeted-review-intake.json:L1-100
+Ran verify sha256 of targeted-claude-review and reviewed-read-contract
+Analyzed targeted-claude-review.md:L1-100
+Analyzed targeted-claude-review.md:L101-211
+Ran inspect reviewed-read-contract.json structure · Exited with code 1
+Ran inspect reviewed-read-contract.json via stdin · Exited with code 1
+Ran check navigation_review and testability_review
+Ran print replaced DR rows and reference kinds · Exited with code 1
+Ran print details of DR-02, DR-03, DR-08, DR-13
+Ran inspect navigation_review items · Exited with code 1
+Ran print navigation_review list
+Ran print NAV-01 structure
+Ran print all NAV entries
+Ran print candidate tests list
+Ran print CT-01 dump
+Ran list all 22 CT scenarios · Exited with code 1
+Ran list all 22 CT scenarios cleanly
+Ran search claims in reviewed_read_operations · Exited with code 1
+Ran inspect reviewed_read_operations elements
+Ran list all 30 reviewed read operations
+Ran print reference definition
+Ran inspect Control Room sections and continuation routes · Exited with code 1
+Ran print Control Room sections cleanly · Exited with code 1
+Ran print control_room keys
+Ran print control_room meta and envelope
+Ran print details of all 8 sections
+Ran print blockers section definition
+Ran print all sections continuation and order
+Analyzing antigravity-read-consumption-reconciliation.md:L1-10
+Created antigravity-read-consumption-reconciliation.md
+Edited antigravity-read-consumption-reconciliation.md
+Analyzed antigravity-read-consumption-reconciliation.md:L1-40
+Edited task_tracking.md
+
+# MC-003A-READ-CONSUMPTION — Antigravity Focused Reconciliation
+
+The read-only feasibility reconciliation of the actual Claude Code reviewed candidate read contract has been performed and committed to the governance repository at [`docs/design/step-03a/handoff/step-03a-7/antigravity-read-consumption-reconciliation.md`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/handoff/step-03a-7/antigravity-read-consumption-reconciliation.md).
+
+---
+
+## 1. Environment, Identity & Baseline Hash Verification
+
+| Dimension | Recorded Evidence |
+|---|---|
+| **Actual Agent & Role** | **Antigravity** — MatterControl Frontend Owner |
+| **Model & Platform** | Gemini 3.8 Flash (High) (interactive Antigravity session on macOS Darwin 24.3.0) |
+| **Execution Environment** | Standard Sandbox Mode (isolated local execution; no external payload egress, no model/provider switch, zero charges, no credential acquisition) |
+| **Tooling & Proxies** | `rtk 1.0.1` active. Semble CLI not on `$PATH` and `uvx` sandboxed access restricted; fallback to direct path inspection executed. |
+| **Governance Checkout** | `/Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control`<br>Branch `task/MC-003A-remediation` at Review Head `9262e6ea6f289ba83d70ef0016a55de9aeca6822` (Intake commit: `cd30600dc8b88b80fb10b96d4049e84787c4cf47`) |
+| **Input Artifact Hashes** | - [`targeted-claude-review.md`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/handoff/step-03a-7/targeted-claude-review.md): SHA256 `263718e7b7cf2554594de5bfa73e331ad3cfe4d9d97c3a7d2bfabfd45402c203` (**EXACT MATCH**)<br>- [`reviewed-read-contract.json`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json): SHA256 `ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5` (**EXACT MATCH**)<br>- [`targeted-return-summary.txt`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/handoff/step-03a-7/targeted-return-summary.txt): SHA256 `b4bd1da67f09518fd153bdb26cea871e4bbc192572ee9c2bcaf9f91b8fb99fda` (**EXACT MATCH**) |
+| **Primary Reference Checkout** | `/tmp/mattercontrol-step02-frontend`<br>Commit: `3e5a642479acb789eb210e73fba956f3e85082e3`, Branch: `main`, Origin: `https://github.com/lannguyenit598/nextjs-atomic-starter` (**CLEAN**) |
+| **Alternate Reference Checkout** | `/tmp/mattercontrol-step021-frontend`<br>Commit: `3e5a642479acb789eb210e73fba956f3e85082e3`, Branch: `task/MC-002-fe-poc` (linked git worktree, **CLEAN**) |
+| **Task Scope & Governance Limits** | Read-only reconciliation of candidate contracts. TQ-02, TQ-08, and TQ-06 are resolved only as `REVIEWED_CANDIDATE_DOCUMENT_ONLY`. TQ-01, TQ-03, TQ-04, TQ-05, and TQ-07 remain **OPEN**. All endpoints and fields remain unapproved candidate specifications. The PO Architecture Approval Gate has **NOT** passed. MC-003A is **NOT** marked DONE. Production UI and API implementation remain **NOT_AUTHORIZED**. |
+
+---
+
+## 2. Reconciled Control Room Architecture (8 Server Sections + 2 Embedded Groups)
+
+```
++----------------------------------------------------------------------------------------------------+
+| CONTROL ROOM SERVER SNAPSHOT (One asOf, One sourceRevision, One historyMaterializedThrough)         |
++----------------------------------------------------------------------------------------------------+
+| 1. condition:    { matterRef, label, completeness: COMPLETE|INCOMPLETE, exceptions: [{code,count}]} |
+| 2. blockers:     [ Upstream Cause Cards (rootCause: bool, axes, waitRef, failingGates) ]            |
+| 3. nextActions:  [ Action Cards (RULE-021 rank) ] + excluded: [{ref, reason: WAITING|BLOCKED|...}] |
+| 4. waitingOn:    [ Wait Cards (partyRef|condition, internalOwnerRef, openedAt, openedEventSeq) ]    |
+| 5. milestones:   [ Milestone Cards (readiness: READY|NOT_READY|UNASSESSED, satisfied, total) ]     |
+| 6. evidenceGaps: [ Gap Cards (MISSING|PENDING_REVIEW|REJECTED|EXPIRED|DISPUTED|WITHDRAWN) ]         |
+| 7. decisions:    [ Open Decision Cards (label: question, lifecycle, relatedRefs) ]                  |
+| 8. recentChanges:[ Chronological Audit Events (seq descending, targetRef, correlationId) ]          |
++----------------------------------------------------------------------------------------------------+
+| Embedded in every card: [CRI-09 Actionability (permittedActions?)] + [CRI-10 Navigation (ref, relatedRefs)] |
++----------------------------------------------------------------------------------------------------+
+```
+
+1. **Single Snapshot Boundaries**:
+   `GET /api/v1/matters/{matterId}/control-room` returns a single `REPEATABLE READ READ ONLY` projection sharing `meta.asOf`, `meta.sourceRevision`, and `meta.historyMaterializedThrough`. The client never stitches together legal truth from independent section queries.
+2. **Server Availability (`AVAILABLE` vs. `UNAVAILABLE`)**:
+   - `AVAILABLE + []` = **True Zero** (authorized, successfully evaluated empty set).
+   - `UNAVAILABLE + null` = **Evaluation Failure** (never rendered as zero or ready). Renders a section error container.
+   - Root returns HTTP `200 OK` when at least one section is `AVAILABLE`; returns HTTP `503 Service Unavailable` (`/problems/unavailable`) when the snapshot cannot open or all sections fail.
+   - `condition.completeness` displays `INCOMPLETE` if any contributing section is `UNAVAILABLE`. Exception counts sourced from an unavailable section are `count: null` (rendered as "Unknown", never `0`).
+3. **Client-Owned `STALE` State**:
+   `STALE` is client-managed. When background polling fails, the client retains the prior authorized response, tags the view `STALE`, and renders it with its **original `asOf` timestamp**. It is never presented as current truth.
+4. **Immediate Revocation Purge**:
+   HTTP `401` or uniform `404 /problems/not-found` (returned identically for non-members and missing matters) forces the client to **immediately purge all cached matter detail and memory**.
+5. **Upstream Blocker Causes**:
+   Blocker cards represent **unsatisfied upstream causes**, displaying the cause's own WAITING/READY axes and `waitRef`. `rootCause: true` is highlighted prominently (e.g., Atlas T0 RQ-04 WAITING · READY failing DEP-01). Downstream targets are reached via DR-06.
+6. **Next Actions & Atlas T0 Exclusions**:
+   Requirements **never** enter `nextActions`. When candidate actions are empty at Atlas T0, the section carries `excluded: [{ref, reason: WAITING|BLOCKED|UNASSIGNED}]`, which the client renders via [`EmptyState`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/empty-state.tsx#L1-L43) without inventing tasks.
+7. **Embedded Actionability & Navigation**:
+   - `permittedActions` is an advisory hint. When absent, actions are treated as unknown, offered safely, and subject to backend command authorization; no permission is inferred. `viewerRole` drives UI affordances only.
+   - All navigation uses typed `{kind, id}` references from a closed 25-kind enum; no raw URLs or harness IDs.
+
+---
+
+## 3. Detail Read Catalogue (DR-01..17), 30 Operations & Material Route Gaps
+
+All 17 DR capabilities and 30 read operations were reconciled against frontend consumption patterns. We identified **two material gaps** and **one clarification** regarding the 4 replaced detail routes:
+
+```
++---------------------------------------------------------------------------------------------------------+
+| REPLACED ROUTE EVALUATION & MATERIAL GAPS                                                               |
++---------------------------------------------------------------------------------------------------------+
+| DR-02: /workstreams/{id} rejected  --> List /workstreams + Grid filter. Small list (<=200). Safe.      |
+| DR-03: /milestones/{id} rejected    --> Extended /milestones/{id}/readiness point lookup. Safe.         |
+| DR-08: /evidence/{id}/claims rej.  --> Claims inline in /evidence/{id}. GAP on orphan claimRef.        |
+| DR-13: /external-parties/{id} rej. --> List /external-parties (paginated). MATERIAL GAP on party lookup.|
++---------------------------------------------------------------------------------------------------------+
+```
+
+### Material Gaps & Targeted Questions for Claude Code:
+
+1. **Material Gap 1 (DR-13 — `EXTERNAL_PARTY` Reference Resolution Across Pagination)**:
+   - *Observation*: Proposed `GET /external-parties/{id}` was rejected in favor of collection `GET /api/v1/matters/{matterId}/external-parties` (keyset paginated: `after`, `limit <= 200`) and `GET /api/v1/matters/{matterId}/waits?partyId={id}`.
+   - *Failure Mode*: In large corporate transactions with $> 200$ external parties (syndicate lenders, local counsel, regulatory contacts), clicking `{kind: "EXTERNAL_PARTY", id: "ep-999"}` from a wait or filing card cannot resolve the party's label, contact info, or `inactive` flag if it resides on page 2+. Keyset cursors cannot jump to an arbitrary ID without $O(N)$ sequential page fetches, and no `?id=` filter is defined on the collection.
+   - **Smallest Concrete Question for Claude**:
+     > *"For DR-13, when resolving a clicked `EXTERNAL_PARTY` reference `{kind: 'EXTERNAL_PARTY', id}` across a paginated collection, should `GET /api/v1/matters/{matterId}/external-parties` support an `id` query filter (`?id={id}`) returning a 1-item page, or should point-lookup `GET /api/v1/external-parties/{id}` be reinstated to avoid client-side sequential cursor traversal?"*
+
+2. **Material Gap 2 (DR-08 — Orphan `EVIDENCE_CLAIM` Reference Resolution)**:
+   - *Observation*: Proposed `GET /evidence/{id}/claims` was rejected; claims are provided inline inside `GET /api/v1/evidence/{id}` as `claims[]`. The catalogue provides `GET /api/v1/evidence-claims/{id}/assessments` (DR-09).
+   - *Failure Mode*: `EVIDENCE_CLAIM` is an explicit member of the 25 typed reference kinds. If an audit log (`recentChanges`), dispute record, or assessment history cites `{kind: "EVIDENCE_CLAIM", id: "claim-456"}` without an explicit parent `evidenceRef`, the frontend cannot resolve the claim entity. `GET /api/v1/evidence/{id}` requires an `evidenceId`, not a `claimId`, and DR-09 returns assessment history, not the claim entity definition.
+   - **Smallest Concrete Question for Claude**:
+     > *"Does every reference of kind `EVIDENCE_CLAIM` contractually guarantee the presence of its parent `evidenceRef`, or does `GET /api/v1/evidence-claims/{id}/assessments` return the parent claim definition inline to prevent unresolvable orphan claim references?"*
+
+3. **Clarification 3 (DR-02 — Workstream Collection Boundedness)**:
+   - *Observation*: Workstream member navigation via `grid?workstreamId={id}` is safe. However, looking up a workstream's label from an ID requires querying `/workstreams`.
+   - **Smallest Concrete Question for Claude**:
+     > *"Is `GET /api/v1/matters/{matterId}/workstreams` contractually guaranteed to be bounded ($\le 200$ items) and unpaginated per Matter so clients can safely cache all workstream labels in a single read?"*
+
+4. **DR-03 (Milestones — Verified Safe)**:
+   - Extending `GET /api/v1/milestones/{id}/readiness` with `label`, `dueAt`, and `critical` provides a direct, unpaginated point lookup by ID, completely avoiding collection pagination issues.
+
+---
+
+## 4. Review §7 Architectural Constraints & Component Mapping
+
+Each constraint from §7 of [`targeted-claude-review.md`](file:///Users/nguyenvanlan/.codex/worktrees/mattercontrol-step-03a-remediation/matter-control/docs/design/step-03a/handoff/step-03a-7/targeted-claude-review.md#L171-L183) is mapped to consumer state, starter component adaptations, and verifiable acceptance hooks:
+
+| Review §7 Constraint | Consumer Presentation & State Handling | Component Adaptation Obligation | Acceptance Hook |
+|---|---|---|---|
+| **1. Section-by-Section Handling** | Root 200 is not "all fresh". Render each section by `availability`. `UNAVAILABLE + null` renders error container. `condition.completeness = INCOMPLETE` rendered explicitly; exception counts with `null` display "Unknown". | Adapt [`Alert`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/alert.tsx#L1-L43) and [`Skeleton`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/skeleton.tsx#L1-L10). Create `SectionErrorBoundary`. | **HOOK-CR-01**: Inject `availability: UNAVAILABLE` into `blockers`. Assert: Blocker count shows "Unknown", Condition shows `INCOMPLETE`, zero blockers is NOT displayed. |
+| **2. Blockers are Causes** | Blocker cards render unsatisfied upstream causes, displaying their own WAITING/READY axes and `rootCause` flag prominently. Blocked targets are navigated via DR-06. | Adapt [`Card`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/card.tsx#L1-L30) into `BlockerNodeCard`. Highlight `rootCause: true` with prominent indicator. | **HOOK-CR-02**: Load Atlas T0 fixture. Assert: RQ-04 (WAITING · READY, failing DEP-01) renders as the top root cause blocker card. |
+| **3. Client-Owned STALE** | `STALE` is never expected from server. When background refetch fails, client retains prior authorized response, tags view `STALE`, and displays its original `asOf` timestamp. | Adapt [`PageHeader`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/page-header.tsx#L1-L23) to show a persistent `StaleIndicator` badge alongside the as-of time. | **HOOK-CR-03**: Simulate failed periodic poll. Assert: Stale banner appears with original `asOf`; data is retained; view is not cleared or marked error. |
+| **4. Continuation Boundaries** | Continuation page or detail read carries its own `sourceRevision`. If newer than overview, render a "Changed since overview" banner. Never silently merge into the initial snapshot. | Create `SnapshotBoundaryNotice` molecule in drawers. | **HOOK-CR-04**: Open detail drawer with `sourceRevision > overview.sourceRevision`. Assert: "Changed since overview" notice renders; parent overview unchanged. |
+| **5. No Client-Side Legal Truth** | Client never computes readiness percentages, milestone gates, eligibility, or exception aggregates. All state is displayed verbatim from server payloads. | Replace any client-calculated badges with pure server state projection. | **HOOK-CR-05**: Audit codebase for client-side state machine derivations. Assert: Zero client status transition logic; all display derives from server axes. |
+| **6. Exact Ref Typing & Lineage** | Ref resolution strictly follows kind enum. Never substitute `document.currentVersion` for `submittedVersionRef` or `assessedDocumentVersionRef`. Gaps without evidence stay gaps. | Typed routing helper `resolveRefUrl(ref)` mapping 25 kinds to exact DR routes. | **HOOK-CR-06**: In Filing Detail, click document link for FIL-02 cycle. Assert: Navigates to DOC-03 v2 (submitted version), NOT DOC-03 v3 (current draft). |
+| **7. Uniform Not-Found & Revocation** | Every HTTP 404 renders an identical generic "Not Available" screen with no leaked title or count. On 404 after membership revocation, purge all cached matter detail. | Adapt [`EmptyState`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/empty-state.tsx#L1-L43) into `UniformNotFoundState`. Clear client query cache on 404. | **HOOK-CR-07**: Revoke user membership and request matter route. Assert: Uniform 404 rendered; all previous matter memory/cache is purged. |
+| **8. Opaque Cursors & Totals** | Cursors are opaque strings: client never inspects or constructs them. Display `total` only when present in the response envelope; otherwise render "—". | Adapt [`Pagination`](file:///tmp/mattercontrol-step02-frontend/src/components/molecules/pagination.tsx#L1-L100) to support cursor-based `nextCursor` / `prevCursor` without page math. | **HOOK-CR-08**: Inspect collection requests. Assert: `after` query param uses verbatim server cursor string; total count omitted if server returns `null`. |
+| **9. Advisory Actionability** | `permittedActions` is an advisory hint. When missing or unknown, the action is treated as unknown: offered safely, with server error handling. `viewerRole` drives affordance visibility only. | Adapt [`Button`](file:///tmp/mattercontrol-step02-frontend/src/components/atoms/button.tsx#L1-L58) to handle unknown permission states gracefully. | **HOOK-CR-09**: Render action card with `permittedActions: undefined` for VIEWER. Assert: Action button disabled with "Read-only access" tooltip; no grant inferred. |
+| **10. Request Mechanics** | Never send `If-Match` on GET requests. Maintain transport abstraction seam ([`backendRequest`](file:///tmp/mattercontrol-step02-frontend/src/lib/api/backend.ts#L16-L34)). Record `X-Request-ID` response header for diagnostic display without logging payloads. | Inspect [`http-client.ts`](file:///tmp/mattercontrol-step02-frontend/src/lib/api/http-client.ts) and [`backend.ts`](file:///tmp/mattercontrol-step02-frontend/src/lib/api/backend.ts). | **HOOK-CR-10**: Inspect outgoing network request headers. Assert: No `If-Match` header on any GET; `X-Request-ID` captured and available for diagnostics. |
+
+---
+
+## 5. Candidate Tests (CT-01..22) & OpenCode Testability
+
+All 22 Candidate Test rows (CT-01..22) remain **`NOT_RUN`**. The 8 testability questions formulated by Claude Code were evaluated from a frontend consumption perspective and confirmed to be **100% testable**:
+- **Q1 (Uniform 404)**: Client renders identical `UniformNotFoundState` on 404 across both non-existent matters and unauthorized matters, ensuring zero information leakage.
+- **Q2 (Fault-injected partial 200)**: Consumer renders the section error container while other sections remain interactive; `condition.completeness` displays `INCOMPLETE`.
+- **Q3 (Single sourceRevision drift)**: Consumer compares `meta.sourceRevision` across views; when a detail read returns a newer revision, a "Changed since overview" notification renders.
+- **Q4 (Keyset cursor reachability)**: Consumer passes cursor strings as opaque parameters without parsing; validates that pagination can traverse all matching records.
+- **Q5 (Filing submitted version ref)**: Consumer navigates to the exact `submittedVersionRef` linked in the filing cycle, proving it does not default to the document's `currentVersion`.
+- **Q6 (Atlas T0 exclusion rendering)**: Consumer renders the empty Next Actions queue with explicit excluded reasons (`WAITING`, `BLOCKED`, `UNASSIGNED`) and surfaces RQ-04 as the top root cause blocker.
+- **Q7 (Read side-effect freedom)**: Inspecting event sequence counters before and after read operations confirms that read consumption creates zero domain events.
+- **Q8 (Kind-mismatched ID 404)**: Passing an Action ID to a Requirement route returns 404, which the client handles gracefully via its standard not-found component.
+
+---
+
+## 6. Scoped Feasibility Verdict & Governance Non-Closure Statement
+
+### Feasibility Verdict
+**`FEASIBLE_WITH_CANDIDATE_READ_CONTRACT_SUBJECT_TO_PAGINATION_CLARIFICATIONS`** (Document-Level Feasibility Only).
+
+The candidate read contract reviewed by Claude Code (`reviewed-read-contract.json`) provides a coherent, robust, and semantically sound projection for the Matter Control Room and detail inspection. It respects all core domain invariants (Requirement $\neq$ Action, Criterion $\neq$ Evidence, COMPLETED $\neq$ VERIFIED, WAITING $\neq$ BLOCKED, five independent state axes, and single-snapshot boundaries).
+
+Subject to clarifying the two pagination resolution questions for Claude Code (specifically `EXTERNAL_PARTY` lookup in DR-13 and orphan `EVIDENCE_CLAIM` lookup in DR-08), the frontend architecture is fully capable of consuming these candidate contracts.
+
+### Explicit Governance Boundary
+- This feasibility verdict does **NOT** constitute Product Owner architecture approval.
+- It does **NOT** claim runtime pass, browser rendering pass, security validation, or independent QA acceptance.
+- MC-003A remains **`REWORK_REQUIRED`** at the overall gate.
+- Production UI and API implementation remain **`NOT_AUTHORIZED`**.
+
+### Recommended Next Path
+1. **Codex Intake**: Codex intakes this reconciliation report into the governance audit trail.
+2. **Claude Code Contract Clarification**: Submit the targeted pagination questions (DR-13, DR-08, DR-02) to Claude Code for candidate contract resolution.
+3. **OpenCode Testability Handoff**: Forward CT-01..22 and the 8 testability questions to OpenCode when independent verification execution is authorized.

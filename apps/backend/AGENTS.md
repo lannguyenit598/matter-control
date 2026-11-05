@@ -1,6 +1,6 @@
 # MatterControl backend (`mcapi`): instructions for AI agents
 
-The MatterControl product API in Go 1.26 + Echo v5 + PostgreSQL through pgx/v5 and sqlc (generated typed queries), with Hexagonal Architecture. Entry point: `cmd/mcapi`. References: `docs/mattercontrol-backend.md` (design), `docs/api.md` (HTTP contract), `docs/operations.md` (configuration and operations), and the shared contract `../../docs/api/contract.md`.
+The MatterControl product API in Go 1.26 + Echo v5 + PostgreSQL through pgx/v5 and sqlc (generated typed queries), with Hexagonal Architecture. Entry point: `cmd/mcapi`. References: `docs/mattercontrol-backend.md` (design), `docs/api.md` (HTTP contract), `docs/operations.md` (configuration and operations), and the shared contract `../../docs/implementation/p0-zcode-execution/local-contract.md`.
 
 ## Commands
 

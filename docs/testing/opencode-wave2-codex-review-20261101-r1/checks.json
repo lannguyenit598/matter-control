@@ -1,0 +1,187 @@
+{
+  "utc": "2026-11-01T08:52:00.000000+00:00",
+  "reviewer": "actual OpenCode (independent QA, non-author)",
+  "checks": [
+    {
+      "id": "CANDIDATE_PATCH_INTEGRITY",
+      "target": "docs/testing/mc-p1-fix-wave-2-20261101-r1/codex-takeover/candidate-source.patch",
+      "expected_sha256": "60f018eb3dcf7cc25bf2e6921ef319f9d69fec7c85e9a5ee6ed62433f8a6fd01",
+      "expected_bytes": 38271,
+      "actual_sha256": "60f018eb3dcf7cc25bf2e6921ef319f9d69fec7c85e9a5ee6ed62433f8a6fd01",
+      "actual_bytes": 38271,
+      "head_diff_sha256": "60f018eb3dcf7cc25bf2e6921ef319f9d69fec7c85e9a5ee6ed62433f8a6fd01",
+      "verdict": "PASS",
+      "details": "git diff 64b9e03 978d8fc matches candidate-source.patch sha256 byte-for-byte"
+    },
+    {
+      "id": "G1_OV_F1_01_UI_SCHEMA_CONTRACT",
+      "target": "apps/frontend/src/features/proof/components/d9-signature-ui.test.tsx",
+      "command": "pnpm --dir apps/frontend test src/features/proof/components/d9-signature-ui.test.tsx",
+      "exit_code": 0,
+      "tests_passed": 3,
+      "tests_failed": 0,
+      "pre_g1_reproduction": "ZodError: Invalid option: expected one of \"PACKAGE\"|\"OUTCOME\" at path criteria.1.purpose",
+      "corrected_result": "PASS: parsed checklist with SIGNATURE, signature axis rendered in panel, SIGNATURE offered in purpose selector",
+      "backend_http_contract": "contract_w4.go / filing_server_test.go: proof-required filing requires accepted PACKAGE and SIGNATURE before SUBMISSION; OUTCOME axis remains pending",
+      "browser_smoke": "BLOCKED_NOT_RUN",
+      "browser_smoke_reason": "Official browser disabled in Work settings",
+      "verdict": "SOURCE_PASS_BROWSER_BLOCKED"
+    },
+    {
+      "id": "G2_OV_R8_01_PREFLIGHT_CONTENT_READERS",
+      "target": "apps/frontend/scripts/release-preflight.mjs",
+      "readers_inspected": [
+        "tracked: probeFactory((rel) => readFile(join(root, rel), 'utf8').catch(() => null))",
+        "artifacts: probeFactory((rel) => readFile(join(dir, rel), 'utf8').catch(() => null))"
+      ],
+      "unit_tests": {
+        "command": "node apps/frontend/scripts/release-preflight.test.mjs",
+        "exit_code": 0,
+        "tests_passed": 5,
+        "tests_failed": 0
+      },
+      "integration_tests": {
+        "command": "node apps/frontend/scripts/release-preflight-integration.test.mjs",
+        "exit_code": 0,
+        "tests_passed": 4,
+        "tests_failed": 0
+      },
+      "synthetic_plants": {
+        "artifact_scan": {
+          "planted": ["sentinel.txt (MC-RELEASE-SENTINEL)", "normal-key.txt (PEM private key)", ".env.local (API_KEY=PLANTED_SECRET_VALUE_DO_NOT_ECHO_98765)"],
+          "exit_code": 1,
+          "findings_count": 3,
+          "sentinel_detected": true,
+          "pem_detected": true,
+          "env_detected": true,
+          "secret_value_echoed": false,
+          "type_error_thrown": false
+        },
+        "git_tracked_scan": {
+          "planted": ["tracked-sentinel.txt", "tracked-pem.dat", ".env.staging"],
+          "exit_code": 1,
+          "findings_count": 3,
+          "sentinel_detected": true,
+          "pem_detected": true,
+          "env_detected": true,
+          "secret_value_echoed": false,
+          "type_error_thrown": false
+        }
+      },
+      "full_repo_scan": {
+        "command": "node apps/frontend/scripts/release-preflight.mjs",
+        "exit_code": 0,
+        "output": "release preflight: clean (tracked files)"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "G3_OV_F1_02_REPLAY_PURPOSE_MAPPING",
+      "target": "apps/backend/internal/core/service/brief_proof.go",
+      "implementation_check": "purposeOf maps PurposeSignature to PurposeSignature, PurposeOutcome to PurposeOutcome, and fallback to PurposePackage",
+      "command": "cd apps/backend && go test -v ./internal/core/service -run 'TestReplayBrief_.*'",
+      "exit_code": 0,
+      "tests_passed": 12,
+      "tests_failed": 0,
+      "regression_check": "Legacy empty string maps to PurposePackage; SIGNATURE survives replay instead of collapsing into PACKAGE",
+      "verdict": "PASS"
+    },
+    {
+      "id": "G4_OV_F1_03_MIGRATION_0011_DOWN_DATA_SAFE",
+      "target": "apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0011_criterion_purpose_signature.sql",
+      "fixture": "disposable PostgreSQL 18.6-alpine container mc-opencode-g4-fixture on 127.0.0.1:55449",
+      "command": "MC_TEST_DATABASE_URL=... go test -v -count=1 ./internal/adapter/outbound/postgres -run TestCriterionPurposeMigration0011DownIsDataSafe",
+      "exit_code": 0,
+      "execution_time_seconds": 0.23,
+      "down_migration_behavior": "UPDATE criteria SET purpose = 'PACKAGE' WHERE purpose = 'SIGNATURE'; row retained, foreign keys/relations intact, 23514 prevented",
+      "documented_lossy_downgrade_validated": true,
+      "fixture_status": "stopped and removed immediately after test; no production or manual/QA DB touched",
+      "verdict": "PASS"
+    },
+    {
+      "id": "G5_OV_R12_01_SCHEDULED_DUMP_RETENTION",
+      "target": "ops/backup/scheduled-dump.sh",
+      "command": "bash docs/testing/mc-p1-fix-wave-2-20261101-r1/commands/g5-dump-prune-probe.sh",
+      "exit_code": 0,
+      "case1_result": "4 old + 1 new / RETAIN 2 => dumps=2 sidecars=2 pruned=3 (PASS)",
+      "case2_result": "empty dir / 1 new => dumps=1 pruned=0 (PASS)",
+      "caveat": "Probe uses fake pg_dump/pg_restore; script retention logic verified, but real backup job/provider reliability is not established by fake-tool test",
+      "verdict": "PASS"
+    },
+    {
+      "id": "G6_OV_F1_04_COMBINED_REFUSAL_AND_GUARD_COPY",
+      "backend_domain": {
+        "target": "apps/backend/internal/core/domain/matter/filing.go",
+        "scope": "StageSubmission and StageResponse",
+        "combined_message": "package criteria are not satisfied: ...; signature criteria are not declared: ...",
+        "command": "cd apps/backend && go test -v ./internal/core/domain/matter",
+        "exit_code": 0,
+        "tests_passed": 33,
+        "tests_failed": 0
+      },
+      "frontend_copy": {
+        "target": "apps/frontend/src/features/filings/components/filing-guard-copy.test.tsx",
+        "command": "pnpm --dir apps/frontend test src/features/filings/components/filing-guard-copy.test.tsx",
+        "exit_code": 0,
+        "tests_passed": 4,
+        "tests_failed": 0,
+        "conformance": "Matches OpenDesign ux-copy-for-guards.md specification exactly"
+      },
+      "verdict": "PASS"
+    },
+    {
+      "id": "G7_F8_P09_ACTION_ANNOUNCER_SHELL",
+      "target": "apps/frontend/src/components/organisms/action-announcer.tsx",
+      "announcer_properties": {
+        "persistent_region": true,
+        "aria_live": "polite",
+        "aria_atomic": "true",
+        "role": "status",
+        "sr_only": true,
+        "initially_empty": true,
+        "repeated_message_dom_updates": true,
+        "fixed_copy_en_vi": true,
+        "unknown_never_called_saved": true,
+        "cas_warns_do_not_resend": true,
+        "no_raw_server_text_relayed": true,
+        "no_focus_steal": true,
+        "local_fallback_outside_shell": true,
+        "no_duplicate_dialog_announcements": true,
+        "restored_unknown_pending_attempt_recovery": true
+      },
+      "callers_verified": [
+        "apps/frontend/src/app/(app)/layout.tsx",
+        "apps/frontend/src/components/organisms/intent-form.tsx",
+        "apps/frontend/src/components/organisms/confirm-action-button.tsx",
+        "apps/frontend/src/components/organisms/inline-edit.tsx",
+        "apps/frontend/src/components/organisms/form-dialog.tsx",
+        "apps/frontend/src/components/molecules/alert.tsx"
+      ],
+      "vitest_results": [
+        { "file": "src/components/organisms/action-announcer.test.tsx", "passed": 6 },
+        { "file": "src/components/organisms/form-dialog.test.tsx", "passed": 5 },
+        { "file": "src/components/organisms/intent-attempt.test.tsx", "passed": 8 },
+        { "file": "src/components/organisms/recovery.test.tsx", "passed": 8 }
+      ],
+      "screen_reader_smoke": "BLOCKED_NOT_RUN",
+      "screen_reader_smoke_reason": "Official browser and assistive-technology testing disabled in Work settings",
+      "verdict": "SOURCE_PASS_SR_BLOCKED"
+    },
+    {
+      "id": "FULL_PRIMARY_FRONTEND_CHECK",
+      "command": "pnpm --dir apps/frontend test && pnpm --dir apps/frontend run agents:check",
+      "exit_code": 0,
+      "vitest_passed": 858,
+      "vitest_skipped": 12,
+      "agents_check": "PASS (17 skills, 3 scoped rules)",
+      "prettier_product_src": "CLEAN (all matched files use Prettier code style)"
+    },
+    {
+      "id": "BACKEND_PRECOMMIT_CHECKS",
+      "gofmt": "CLEAN",
+      "go_mod_tidy": "CLEAN",
+      "golangci_lint": "0 issues (CLEAN)",
+      "sqlc_check": "PASS"
+    }
+  ]
+}

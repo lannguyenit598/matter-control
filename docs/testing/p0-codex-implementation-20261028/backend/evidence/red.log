@@ -1,0 +1,66 @@
+=== RUN   TestSuiteW6_MemoryStore
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk
+    contract_w6.go:137: incompatible intent: SUCCESS_REPLAYED/
+    contract_w6.go:137: incompatible intent: SUCCESS_REPLAYED/
+    contract_w6.go:143: forbidden
+=== RUN   TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import
+    contract_w6.go:137: incompatible intent: SUCCESS_REPLAYED/
+    contract_w6.go:137: incompatible intent: SUCCESS_REPLAYED/
+    contract_w6.go:137: incompatible intent: FAILURE/content-conflict
+    contract_w6.go:141: changed source: SUCCESS_REPLAYED//01a18089-6c15-7340-96fa-204840f21668
+    contract_w6.go:143: forbidden
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+=== RUN   TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows
+    contract_w6.go:168: preview must return sheet validation: <nil>
+    contract_w6.go:170: commit must return sheet validation: <nil>
+--- FAIL: TestSuiteW6_MemoryStore (0.00s)
+    --- FAIL: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/bulk (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/receipt_intent_binds_bulk_rows_and_import_scope_source_and_row/import (0.00s)
+    --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/format (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/csv (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/xlsx (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/empty (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rowkey (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/kind (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/title (0.00s)
+        --- FAIL: TestSuiteW6_MemoryStore/whole_sheet_failures_refuse_preview_and_commit_without_writes/rows (0.00s)
+FAIL
+FAIL	github.com/example/userapi/internal/adapter/outbound/repotest/mattercontrol	0.438s
+=== RUN   TestImport_WholeSheetFailureIsBadRequest
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/#00
+    data_server_test.go:218: status = 200, want 400; body={"sourceName":"counsel.csv","rows":[],"groups":[],"asOf":"2026-10-25T12:00:06Z"}
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/kind,title_ACTION,T_
+    data_server_test.go:218: status = 200, want 400; body={"sourceName":"counsel.csv","rows":[],"groups":[],"asOf":"2026-10-25T12:00:06Z"}
+=== RUN   TestImport_WholeSheetFailureIsBadRequest/rowkey,kind,title_"unterminated
+    data_server_test.go:218: status = 200, want 400; body={"sourceName":"counsel.csv","rows":[],"groups":[],"asOf":"2026-10-25T12:00:06Z"}
+--- FAIL: TestImport_WholeSheetFailureIsBadRequest (0.00s)
+    --- FAIL: TestImport_WholeSheetFailureIsBadRequest/#00 (0.00s)
+    --- FAIL: TestImport_WholeSheetFailureIsBadRequest/kind,title_ACTION,T_ (0.00s)
+    --- FAIL: TestImport_WholeSheetFailureIsBadRequest/rowkey,kind,title_"unterminated (0.00s)
+FAIL
+FAIL	github.com/example/userapi/internal/adapter/inbound/productapi	0.460s
+FAIL

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "node",
+    "docs/testing/p0-claude-w1-review-20261027/reviewer-probes.cjs"
+  ],
+  "completed_utc": "2026-10-27T07:44:48.180619+00:00",
+  "exit": 0,
+  "stdout": "{\n  \"return_to\": {\n    \"input\": \"\\\"/\\\\t/attacker.invalid\\\"\",\n    \"accepted\": \"\\\"/\\\\t/attacker.invalid\\\"\",\n    \"redirect\": \"http://attacker.invalid/\",\n    \"result\": \"cross-origin redirect after URL whitespace normalization\"\n  },\n  \"non_receipted_membership_unknown\": {\n    \"kind\": \"outcome-unknown\",\n    \"retrySameKey\": true,\n    \"message\": \"We could not confirm whether this was saved, and we are not assuming it failed. Retry to confirm: the same request is safe to send again.\",\n    \"callsite_binding\": \"Grant membership uses IntentForm; repository sends no idempotency key.\"\n  },\n  \"truncated_command_response\": {\n    \"status_before_body_read\": 201,\n    \"thrown_name\": \"TypeError\",\n    \"action_kind\": \"error\",\n    \"message\": \"Something went wrong. Please try again.\"\n  },\n  \"limits\": \"Actual reviewed functions with synthetic stubs only; no live request, browser, IdP or DB.\"\n}\n",
+  "stderr": ""
+}

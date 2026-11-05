@@ -1,0 +1,107 @@
+{
+  "scope": "16 original recommendation rows; bounded current-source inventory",
+  "groups": {
+    "implemented_bounded": 4,
+    "partial_foundation": 4,
+    "not_implemented": 7,
+    "intentionally_deferred": 1
+  },
+  "rows": [
+    {
+      "recommendation": "Focused workbench",
+      "status": "IMPLEMENTED_CORE / UX_ACCEPTANCE_PENDING",
+      "gap": "My Work queues, current item, next step, scoped navigation and incremental compact UI exist. Rendered legal-team acceptance is incomplete.",
+      "source": "apps/frontend/src/features/work/components/my-actions-view.tsx"
+    },
+    {
+      "recommendation": "Task context / instructions / attachments",
+      "status": "PARTIAL",
+      "gap": "Outcome, criteria, documents and exact-version basis exist; no consolidated task-context/attachment workspace.",
+      "source": "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx"
+    },
+    {
+      "recommendation": "Source/evidence drawer",
+      "status": "IMPLEMENTED_CRITERION_SCOPE",
+      "gap": "Criterion, exact version, provenance and verifier facts use authorized reads. Page/quote anchors are not a validated evidence contract.",
+      "source": "apps/frontend/src/features/proof/components/evidence-basis.tsx"
+    },
+    {
+      "recommendation": "Explainable manual review matrix",
+      "status": "IMPLEMENTED / REWORK_FINAL_VERIFICATION_PENDING",
+      "gap": "BE service, PG tables, API, FE matrix/history exist. F01..04 corrections match author checkpoints; independent final closure and browser recovery/revoked paths remain unverified here. Automated extraction is not implemented.",
+      "source": "apps/backend/internal/core/service/review_service.go"
+    },
+    {
+      "recommendation": "Versioned firm playbooks/templates",
+      "status": "NOT_IMPLEMENTED",
+      "gap": "No persisted playbook/version/preview-instantiation feature located; roadmap slice3 only.",
+      "source": "docs/superpowers/plans/2026-10-29-eigenwelt-features-roadmap.md"
+    },
+    {
+      "recommendation": "Human-triaged intake",
+      "status": "NOT_IMPLEMENTED",
+      "gap": "No legal intake entity, triage UI or lifecycle located; roadmap slice4 is a proposal/default, not implementation.",
+      "source": "docs/superpowers/plans/2026-10-29-eigenwelt-features-roadmap.md"
+    },
+    {
+      "recommendation": "Document redlines/review editing",
+      "status": "PARTIAL_FOUNDATION",
+      "gap": "Stored versions, manual review and promotion exist; no tracked-change/redline editor or document comparison integration.",
+      "source": "apps/frontend/src/features/proof/components/document-forms.tsx"
+    },
+    {
+      "recommendation": "Calendar/deadline view",
+      "status": "IMPLEMENTED_MATTER_READ_ONLY",
+      "gap": "Dedicated per-Matter agenda with source links and device zone. Only bounded pages; no cross-Matter My Agenda or external sync/reminder delivery.",
+      "source": "apps/frontend/src/app/(app)/matters/[matterId]/agenda/page.tsx"
+    },
+    {
+      "recommendation": "Reusable saved dashboards/views/snapshots",
+      "status": "PARTIAL_FOUNDATION",
+      "gap": "URL filters and Brief/export exist. No named persisted saved view or immutable dashboard snapshot feature located.",
+      "source": "apps/frontend/src/features/work/components/work-filters.tsx"
+    },
+    {
+      "recommendation": "Firm wiki/knowledge retrieval",
+      "status": "NOT_IMPLEMENTED",
+      "gap": "Context kinds remain DECISION/FINDING/RISK/ENTITY; no GUIDANCE/draft-publish/firm library or authorized retrieval feature located.",
+      "source": "apps/backend/internal/core/domain/matter/context.go"
+    },
+    {
+      "recommendation": "External storage connections",
+      "status": "NOT_IMPLEMENTED_CONNECTOR",
+      "gap": "Filesystem/R2 store MatterControl objects; no selected external Drive/DMS import connector or external ACL mapping.",
+      "source": "apps/backend/internal/adapter/outbound/objectstore/store.go"
+    },
+    {
+      "recommendation": "Office add-in",
+      "status": "NOT_IMPLEMENTED",
+      "gap": "No product Office channel located in authoritative frontend/backend module and route inventories.",
+      "source": "docs/superpowers/plans/2026-10-29-eigenwelt-features-roadmap.md"
+    },
+    {
+      "recommendation": "Private evaluations",
+      "status": "PARTIAL",
+      "gap": "Deterministic contract suites and feature tests exist. No completed new connected Golden Workflow browser suite or model-evaluation product service.",
+      "source": "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go"
+    },
+    {
+      "recommendation": "Scheduled reminders",
+      "status": "NOT_IMPLEMENTED",
+      "gap": "Due dates and agenda are read models, not scheduler/notification delivery. No recipient/channel/retry feature located.",
+      "source": "apps/frontend/src/app/(app)/matters/[matterId]/agenda/page.tsx"
+    },
+    {
+      "recommendation": "Read-only assistant/MCP/LegalMemory",
+      "status": "NOT_IMPLEMENTED / DEPENDENCY_GATED",
+      "gap": "No user-facing bridge/knowledge-provider integration. Developer MCP tools are not this feature; AI extraction/assistant/contradiction remain P2.",
+      "source": "docs/research/eigenwelt-20261029/mattercontrol-integration-assessment.md"
+    },
+    {
+      "recommendation": "Voice/remote workers/model fusion",
+      "status": "INTENTIONALLY_DEFERRED",
+      "gap": "Explicitly deferred by the assessment; not missing P0 implementation.",
+      "source": "docs/research/eigenwelt-20261029/mattercontrol-integration-assessment.md"
+    }
+  ]
+}

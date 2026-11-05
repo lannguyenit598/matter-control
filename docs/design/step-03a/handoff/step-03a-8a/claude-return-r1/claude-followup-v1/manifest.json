@@ -1,0 +1,312 @@
+{
+  "task": "MC-003A.8A / Claude R1 targeted follow-up",
+  "status": "PREPARED / WAITING_SCOPED_AUTHORIZATION / NOT_DISPATCHED",
+  "source_head": "838fde6f3eabb35471a95d9066ea933297c6e8c2",
+  "contract_baseline": "97356ce45c2b10070e9303f7c2ab39a425fad7a5",
+  "prior_authorized_packet_manifest_sha256": "eed788550530966eea23a66a20e1edd84f18fa024963b60fb132f0a3028f0979",
+  "destination_proposed": "same human-operated Claude Code interactive session / Anthropic",
+  "model_proposed": "claude-opus-5-5, recipient verifies current session metadata; no switch",
+  "permissions_proposed": "Read this manifest and named seven snapshots plus prior twelve authorized snapshots; local hash/file-metadata checks only; no original repository reads, writes, runtime, extra tools/MCP or agent/provider dispatch; return text only",
+  "cost_proposed": "Existing interactive session and included quota only; no new paid API jobs/retries/credits/overage; actual marginal cost UNKNOWN, stop if outside limit",
+  "source_expansion": [
+    {
+      "path": "docs/architecture/data-model.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            5
+          ],
+          [
+            127,
+            128
+          ],
+          [
+            159,
+            209
+          ],
+          [
+            211,
+            214
+          ],
+          [
+            216,
+            222
+          ]
+        ],
+        "reason": "Claim/assessment/dispute/withdrawal schema and filing submission-item cardinality; bind existing candidate meaning instead of inventing it",
+        "findings": [
+          "F-07",
+          "F-10"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_sha256": "873a23b4791a1656a0e54edda5fccf28628c65d432151b5e5ba7faa058badf6f",
+      "snapshot": "01-data-model-proof-filing.md",
+      "reason": "Claim/assessment/dispute/withdrawal schema and filing submission-item cardinality; bind existing candidate meaning instead of inventing it"
+    },
+    {
+      "path": "docs/architecture/evidence-model.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            26
+          ],
+          [
+            40,
+            77
+          ]
+        ],
+        "reason": "Claim-vs-assessment/aggregate, current epoch/verdict, validity/version/withdrawal/dispute guards",
+        "findings": [
+          "F-07"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_sha256": "38fa1508a35a7ec53313e5c8f9b353c6c345373f656c814022494101876ea919",
+      "snapshot": "02-evidence-lifecycle.md",
+      "reason": "Claim-vs-assessment/aggregate, current epoch/verdict, validity/version/withdrawal/dispute guards"
+    },
+    {
+      "path": "docs/architecture/filing-model.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            18
+          ],
+          [
+            46,
+            49
+          ]
+        ],
+        "reason": "FilingSubmission/package/cycle cardinality; no arbitrary cap or unproved complete embedding",
+        "findings": [
+          "F-10"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "snapshot": "03-filing-cycles.md",
+      "reason": "FilingSubmission/package/cycle cardinality; no arbitrary cap or unproved complete embedding"
+    },
+    {
+      "path": "docs/architecture/api-contracts.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            5
+          ],
+          [
+            49,
+            71
+          ],
+          [
+            99,
+            104
+          ]
+        ],
+        "reason": "Requested CAS and withdraw/assessment/revoke/dispute command sections outside old excerpt",
+        "findings": [
+          "F-07"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "snapshot": "04-api-claim-commands.md",
+      "reason": "Requested CAS and withdraw/assessment/revoke/dispute command sections outside old excerpt"
+    }
+  ],
+  "snapshots": [
+    {
+      "snapshot": "00-followup.md",
+      "source": "Codex targeted intake R1",
+      "selection": {
+        "scope": "INT-R1 observations and precise owner follow-up only; original eleven finding IDs preserved"
+      },
+      "source_bytes": 7920,
+      "source_sha256": "f24a36dd668acfeae8680131b4fd506d7ae20787e86eca02ebc336f742bb465b",
+      "bytes": 7920,
+      "sha256": "f24a36dd668acfeae8680131b4fd506d7ae20787e86eca02ebc336f742bb465b"
+    },
+    {
+      "snapshot": "01-data-model-proof-filing.md",
+      "source": "docs/architecture/data-model.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            5
+          ],
+          [
+            127,
+            128
+          ],
+          [
+            159,
+            209
+          ],
+          [
+            211,
+            214
+          ],
+          [
+            216,
+            222
+          ]
+        ],
+        "reason": "Claim/assessment/dispute/withdrawal schema and filing submission-item cardinality; bind existing candidate meaning instead of inventing it",
+        "findings": [
+          "F-07",
+          "F-10"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_bytes": 34371,
+      "source_sha256": "873a23b4791a1656a0e54edda5fccf28628c65d432151b5e5ba7faa058badf6f",
+      "bytes": 8476,
+      "sha256": "afc622ce23e38846001e5bcea397f39865bb2338bbdbab2e6b14475a24914b8d"
+    },
+    {
+      "snapshot": "02-evidence-lifecycle.md",
+      "source": "docs/architecture/evidence-model.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            26
+          ],
+          [
+            40,
+            77
+          ]
+        ],
+        "reason": "Claim-vs-assessment/aggregate, current epoch/verdict, validity/version/withdrawal/dispute guards",
+        "findings": [
+          "F-07"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_bytes": 11121,
+      "source_sha256": "38fa1508a35a7ec53313e5c8f9b353c6c345373f656c814022494101876ea919",
+      "bytes": 7097,
+      "sha256": "958fc321ef92c21997dcab01ef7a082647f947f38aaeec0c0974771cb11db7dd"
+    },
+    {
+      "snapshot": "03-filing-cycles.md",
+      "source": "docs/architecture/filing-model.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            18
+          ],
+          [
+            46,
+            49
+          ]
+        ],
+        "reason": "FilingSubmission/package/cycle cardinality; no arbitrary cap or unproved complete embedding",
+        "findings": [
+          "F-10"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_bytes": 7652,
+      "source_sha256": "632f9c8670c98de2065f40a28ed34f31257c1615a1e73cfd25fcafc7a90c60dd",
+      "bytes": 1873,
+      "sha256": "33f10313365bf0785a3cf370582d7e7e3f241ee571293bbf69e3bbfc1079a702"
+    },
+    {
+      "snapshot": "04-api-claim-commands.md",
+      "source": "docs/architecture/api-contracts.md",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            1,
+            5
+          ],
+          [
+            49,
+            71
+          ],
+          [
+            99,
+            104
+          ]
+        ],
+        "reason": "Requested CAS and withdraw/assessment/revoke/dispute command sections outside old excerpt",
+        "findings": [
+          "F-07"
+        ],
+        "formatting": "excerpt markers added; trailing EOF blank separators trimmed"
+      },
+      "source_bytes": 25038,
+      "source_sha256": "49ec8aa506386df03c4995a53553d51dd615e1fd0e1fd02f4fd45d146d576e75",
+      "bytes": 4267,
+      "sha256": "b4979593dc8d19ad1e1c19994e7e943fb88e8ee231205ed2a37c38045ac856d9"
+    },
+    {
+      "snapshot": "05-return-excerpts.md",
+      "source": "/Users/nguyenvanlan/.codex/attachments/8a92b2db-9a3c-4ec6-8f56-e11bdd94e7e5/Pasted text.txt",
+      "selection": {
+        "line_ranges_inclusive": [
+          [
+            125,
+            150
+          ],
+          [
+            167,
+            172
+          ],
+          [
+            174,
+            211
+          ],
+          [
+            229,
+            237
+          ],
+          [
+            414,
+            440
+          ],
+          [
+            454,
+            460
+          ],
+          [
+            505,
+            535
+          ],
+          [
+            542,
+            548
+          ]
+        ],
+        "formatting": "only Unicode box borders/padding removed; table cell content retained"
+      },
+      "source_bytes": 88364,
+      "source_sha256": "7945caae8f73c3f465b9ddbb7f7e7bbb223c78481755bd65787365164526eb86",
+      "bytes": 11031,
+      "sha256": "3999df27cc7d329b11ad06d2855c23286db55055f4e74f1e96ca94da4537a260"
+    },
+    {
+      "snapshot": "06-returned-delta-normalized.json",
+      "source": "Claude original return, section 3",
+      "selection": {
+        "edit": "Only first truncated preserved member removed, see intake"
+      },
+      "source_bytes": 88364,
+      "source_sha256": "7945caae8f73c3f465b9ddbb7f7e7bbb223c78481755bd65787365164526eb86",
+      "bytes": 6951,
+      "sha256": "9a90e955c3cb453f26943ed9b9cc6099984dae69a51c01cf2b528626b4a47903"
+    }
+  ],
+  "snapshot_count": 7,
+  "snapshot_bytes": 47615,
+  "scope_limit": "No full 32-operation review, dependency-engine.md, original unrelated report, legal data, credentials or additional source",
+  "approval": "This is a prepared proposal, not PO authorization"
+}

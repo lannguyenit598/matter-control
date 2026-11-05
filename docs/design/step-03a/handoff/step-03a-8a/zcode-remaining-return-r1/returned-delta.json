@@ -1,0 +1,51 @@
+{
+  "task": "MC-003A.8A",
+  "reviewer": "ZCode Desktop interactive session, human-operated",
+  "model_session_declared": "GLM-5.3 / account:zai-start-plan (session metadata; not independently attested)",
+  "tool_version": "UNKNOWN (not present in available session metadata)",
+  "authorship": "F-08 unit and F-10 nested proposals authored by ZCode in this round; not independent approval; Claude owns F-08 contract acceptance, PO owns F-10 catalogue/residual-risk decision",
+  "baseline": "97356ce45c2b10070e9303f7c2ab39a425fad7a5",
+  "f08": {
+    "subpart": "EVIDENCE_GAP row unit",
+    "row_unit": "component; one row per (criterionRevisionRef, componentKey|null, gap code)",
+    "row_key": ["criterionRevisionRef", "componentKey|null", "gap"],
+    "component_null_meaning": "implicit single component iff revision declares none (matches DDL claim_component_shape and RC-REF-02 claim envelope)",
+    "dedup": "distinct triple; multiple claims with same code collapse to one row; multiple codes on one component yield multiple rows",
+    "code_derivation": "per claim: WITHDRAWN evidence-withdrawn; REJECTED current assessment rejected; DISPUTED open dispute on accepted current assessment; EXPIRED accepted but validity/effective window passed at asOf; PENDING_REVIEW no current assessment; MISSING zero claims",
+    "order": "subject critical, subject dueAt asc (none last), evidence-requirement id, componentKey (null first), gap in baseline vocabulary order",
+    "total_semantics": "evidenceGaps.total = row count, in-Matter, same snapshot; condition EVIDENCE_GAP count = evidenceGaps.total; null iff evidenceGaps evaluator UNAVAILABLE",
+    "scope": "subjects with verification axis; applicable mandatory criteria; current revision only; NOT_REQUIRED and proof_required=false produce no rows; satisfied components produce no rows",
+    "card_shape_change": "none; all baseline fields kept verbatim; gap stays single-valued",
+    "count_meaning_tradeoff": "one component with multiple codes contributes more than one to total; disclosed and accepted as part of the unit choice",
+    "flag_for_claude": "ACCEPTED-but-version-rule-mismatch (AC-128 CURRENT_AUTHORITATIVE after promotion) proposed to map to PENDING_REVIEW; needs actual Claude Code confirmation, vocabulary is closed",
+    "acceptance_ids_proposed": ["E1", "E2", "E3", "E4", "E5", "E6", "E7"],
+    "status": "RECOMMENDED_CANDIDATE_DOCUMENT_ONLY; awaiting Claude contract acceptance; PO gate applies at G4"
+  },
+  "f10": {
+    "subpart": "nested submissions[] and submittedVersionRefs",
+    "recommendation": "O1-narrow: one new nested route; slim cycle items",
+    "route": "GET /api/v1/filings/{filingId}/cycles/{cycleNo}/submissions?after=&limit=",
+    "ids": "filingId UUIDv7; cycleNo integer >=1; identity (filingId, cycleNo) reused, no new cycle id",
+    "order": "submittedAt desc, submissionRef.id asc",
+    "queries": "after opaque RC-6 cursor bound actor/matter/filing/cycle/collection/sort; limit <= 200 inherited RC-7",
+    "response_item_shape": "{submissionRef, reference, submittedAt, submittedVersionRefs (exact)} unchanged from baseline DR-12",
+    "cycle_item_change": "submissions[] replaced by submissionsTotal; receipt/outcome evidence refs remain at cycle item; applies identically to /filings/{id} embedded page and /filings/{id}/cycles items",
+    "operations_before": 32,
+    "operations_after": 33,
+    "authorization": "DR-12/RC-1/RC-3 unchanged; 401 then uniform 404 (foreign/nonexistent/malformed cycleNo); 422 cursor/query; 503 evaluator; no 403 on P0 reads",
+    "residual_embedding_disclosed": ["submittedVersionRefs fully embedded per submission item", "receipt/outcome evidence refs at cycle item"],
+    "residual_risk_owner": "PO; explicit approval sentence provided; no silent complete-embedding acceptance",
+    "alternatives_rejected": ["O3 complete embedding (unbounded product of three unbounded dimensions; risk acceptance is PO's)", "O2 domain UNIQUE/bound (invents domain rule contradicting DDL and RULE-012; still unbounded items)", "O4 prefix without continuation (reachability)", "first-page embed variant (multiplicative 200x200)"],
+    "adr": "none required; ADR-002 §1.6 single-snapshot read projection unchanged",
+    "supersede_note": "amends R2-accepted line '/cycles items have the identical shape, including submissions[]' to 'including submissionsTotal'",
+    "acceptance_ids_proposed": ["K1", "K2", "K3", "K4", "K5", "K6", "K7"],
+    "status": "DECISION_REQUIRED_PENDING_PO; recommendation is not approval"
+  },
+  "preserved": {
+    "ct_ids": "22 with 16/4/1/1 classification",
+    "qa": "Q1..Q8 original dispositions; Q2/Q4/Q6/Q8 conditional",
+    "runtime": "NOT_RUN",
+    "gates": { "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY", "G5-B": "FINDINGS_OPEN", "G3": "NOT_VERIFIED", "G4": "PENDING", "G6": "REWORK_REQUIRED", "STEP03B": "NOT_AUTHORIZED" },
+    "not_re_reviewed": ["F-01..F-07", "F-09", "F-11", "32-operation catalogue", "F-07 mechanical alignment"]
+  }
+}

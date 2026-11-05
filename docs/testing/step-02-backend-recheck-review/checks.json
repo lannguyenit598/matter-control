@@ -1,0 +1,227 @@
+{
+  "task": "MC-002-BE-R01-R02-CLOSURE",
+  "collector": "Codex; artifact validation only, no runtime replay",
+  "base": "74fbdec9a661f4dcfd68fb835c20106c7fc5f421",
+  "checked_at_utc": "2026-10-24T15:53:40.554862+00:00",
+  "files": [
+    {
+      "name": "10-fixture-manifest.log",
+      "bytes": 1457,
+      "sha256": "86f7ade132ec1c700e0b3aaa480156f69253e72a7d67a8b634bc165683f8c93c",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "20-r01-run-meta.txt",
+      "bytes": 326,
+      "sha256": "5aeeea9fb6cfd0ee86f8806c0d008b495a78f9cbe9b63ff99b9b64ab02b237a4",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "21-r01-gotest.stdout.json",
+      "bytes": 195376,
+      "sha256": "6f5f76363d1070ed12d3b16c302e554fe45089308b6cb95c4d7d1174649993fc",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "22-r01-gotest.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "23-r01-parse-summary.txt",
+      "bytes": 1246,
+      "sha256": "e2809e87237205a3f8edce588d98cbe1463e1b35a9fb6830ce37837d26fb970e",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c1-storage-postgres-no-dburl-meta.txt",
+      "bytes": 230,
+      "sha256": "8ae96d44368bb4314d3df28f64d6cdce8d7a9aae779b4c6920191f8a97c13abb",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c1-storage-postgres-no-dburl-stderr.log",
+      "bytes": 103,
+      "sha256": "370a54fbffb99cc683bbcf705975477cabd089a3a2db004e8cfa8b351d9a2ac5",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c1-storage-postgres-no-dburl-stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c2-storage-bogus-meta.txt",
+      "bytes": 247,
+      "sha256": "680744af164364706497cead813724bfa2495c81890cb115fb63c94a72a90e01",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c2-storage-bogus-stderr.log",
+      "bytes": 114,
+      "sha256": "ed63cdb9cfa5d8c3c7291aaed87561f3cb0f72ec8f5255f59d0df395147310fd",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c2-storage-bogus-stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c3-loglevel-bogus-meta.txt",
+      "bytes": 233,
+      "sha256": "95a5638dd0608ef7d5b3c84441f586765d03c2cdf4a2de72cfdd17698dd1d82f",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c3-loglevel-bogus-stderr.log",
+      "bytes": 110,
+      "sha256": "f8e9429cce1d9df1e90a8b178af4a3f176dded8a4f34f85953d37291ef116970",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c3-loglevel-bogus-stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c4-migrate-no-dburl-meta.txt",
+      "bytes": 190,
+      "sha256": "422ac675433e0306fa74f258e04f64b6d25db0af1465a53693b40e673531b180",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c4-migrate-no-dburl-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "3x-r02-c4-migrate-no-dburl-stdout.log",
+      "bytes": 142,
+      "sha256": "dbe86b29665c59d58e5c285c2c74970a9077e1a4ceadae80762dac4862a96d88",
+      "matches_tmp_original": true
+    },
+    {
+      "name": "40-sha256.txt",
+      "bytes": 1702,
+      "sha256": "f712c5097b0f3ccb252c2615d040f1b0b918222a16742a2fb02a080a7265f053",
+      "matches_tmp_original": true
+    }
+  ],
+  "sha_list_entries_verified": 17,
+  "go_json_lines": 880,
+  "named_test_terminal_events": {
+    "pass": 205
+  },
+  "counts_include_named_parent_tests_and_subtests": true,
+  "duplicate_terminal_events": 0,
+  "by_package": {
+    "github.com/example/userapi/internal/adapter/outbound/memory": {
+      "pass": 10
+    },
+    "github.com/example/userapi/internal/adapter/outbound/system": {
+      "pass": 2
+    },
+    "github.com/example/userapi/internal/adapter/inbound/httpapi": {
+      "pass": 65
+    },
+    "github.com/example/userapi/internal/adapter/outbound/kafka": {
+      "pass": 10
+    },
+    "github.com/example/userapi/internal/config": {
+      "pass": 6
+    },
+    "github.com/example/userapi/internal/core/domain": {
+      "pass": 14
+    },
+    "github.com/example/userapi/internal/core/service": {
+      "pass": 14
+    },
+    "github.com/example/userapi/internal/adapter/outbound/postgres": {
+      "pass": 43
+    },
+    "github.com/example/userapi/internal/observability": {
+      "pass": 3
+    },
+    "github.com/example/userapi/internal/app": {
+      "pass": 20
+    },
+    "github.com/example/userapi/internal/outbox": {
+      "pass": 18
+    }
+  },
+  "package_terminal_events": {
+    "skip": 5,
+    "pass": 11
+  },
+  "named_skipped_tests": [],
+  "r01_stderr_bytes": 0,
+  "r02_cases": [
+    {
+      "case": "c1-storage-postgres-no-dburl",
+      "exit": 1,
+      "argv": "env -u DATABASE_URL -u TEST_DATABASE_URL HTTP_ADDR=127.0.0.1:0 STORAGE=postgres ./bin/userapi",
+      "utc_start": "2026-10-24T15:41:17Z",
+      "utc_end": "2026-10-24T15:41:17Z",
+      "watchdog_fired": false,
+      "output_stream": "stderr"
+    },
+    {
+      "case": "c2-storage-bogus",
+      "exit": 1,
+      "argv": "env -u DATABASE_URL -u TEST_DATABASE_URL HTTP_ADDR=127.0.0.1:0 STORAGE=bogus DATABASE_URL=postgres://invalid ./bin/userapi",
+      "utc_start": "2026-10-24T15:41:17Z",
+      "utc_end": "2026-10-24T15:41:17Z",
+      "watchdog_fired": false,
+      "output_stream": "stderr"
+    },
+    {
+      "case": "c3-loglevel-bogus",
+      "exit": 1,
+      "argv": "env -u DATABASE_URL -u TEST_DATABASE_URL HTTP_ADDR=127.0.0.1:0 STORAGE=memory LOG_LEVEL=bogus ./bin/userapi",
+      "utc_start": "2026-10-24T15:41:17Z",
+      "utc_end": "2026-10-24T15:41:17Z",
+      "watchdog_fired": false,
+      "output_stream": "stderr"
+    },
+    {
+      "case": "c4-migrate-no-dburl",
+      "exit": 1,
+      "argv": "env -u DATABASE_URL -u TEST_DATABASE_URL ./bin/userapi migrate",
+      "utc_start": "2026-10-24T15:41:17Z",
+      "utc_end": "2026-10-24T15:41:17Z",
+      "watchdog_fired": false,
+      "output_stream": "stdout"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/tmp/mattercontrol-step02-backend",
+      "sha": "d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b",
+      "clean": true
+    },
+    {
+      "path": "/tmp/mattercontrol-step021-backend",
+      "sha": "d024e3ec9dd96abf9ada1d7516f1b2f0e8cba67b",
+      "clean": true
+    }
+  ],
+  "binary_sha256": "ff973fb7883c16898e5cfef6bb4e80df0252abc17ff5235c52fdc7ebabd9ad03",
+  "dsn_scan": [
+    {
+      "file": "10-fixture-manifest.log",
+      "classification": "redacted placeholder"
+    },
+    {
+      "file": "3x-r02-c2-storage-bogus-meta.txt",
+      "classification": "invalid literal"
+    }
+  ],
+  "credential_check_scope": "Owner asserts exact fixture-value scan; Codex verifies benign DSN shapes/common token patterns, does not read Config.Env secret values. Not a whole-workstation audit.",
+  "proposed_status": "Actual independent review PASS_WITH_LIMITATIONS, R01/R02 CLOSED; MC002 overall NOT_DONE"
+}

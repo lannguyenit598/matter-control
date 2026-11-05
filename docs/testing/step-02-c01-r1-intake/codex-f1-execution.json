@@ -1,0 +1,27 @@
+{
+  "executor": "Codex independent focused check, not OpenCode replay",
+  "source_head": "52b60a4617081c41b949f2242e1784238c170f75",
+  "argv": [
+    "rtk",
+    "proxy",
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./internal/adapter/outbound/postgres",
+    "-run",
+    "^TestMapError_UnavailableClassification$/^cancelled_connect_keeps_the_cause_for_inbound_499$"
+  ],
+  "start_utc": "2026-10-24T17:40:28.649425+00:00",
+  "end_utc": "2026-10-24T17:40:32.077067+00:00",
+  "exit": 0,
+  "elapsed_seconds": 3.4275741250021383,
+  "named_terminal_counts": {
+    "pass": 2
+  },
+  "DB_environment_removed": true,
+  "GOPROXY": "off",
+  "database_execution": false,
+  "full_suite_replay": false
+}

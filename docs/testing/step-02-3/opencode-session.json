@@ -1,0 +1,117 @@
+{
+  "info": {
+    "id": "ses_e90e5cf7bffeqtOKafnvhwOwFK",
+    "projectID": "56512bc17ede1f94831e6c5716d9c01aa1a12b0d",
+    "agent": "plan",
+    "cost": 0,
+    "tokens": {
+      "input": 48640,
+      "output": 6822,
+      "reasoning": 23088,
+      "cache": {
+        "read": 4352,
+        "write": 0
+      }
+    },
+    "outcome": "succeeded",
+    "time": {
+      "created": 1792865349952,
+      "updated": 1792865780034,
+      "idle": 1792865780049
+    },
+    "title": "[redacted:session-title:ses_e90e5cf7bffeqtOKafnvhwOwFK]",
+    "location": {
+      "directory": "/[redacted:session-directory:ses_e90e5cf7bffeqtOKafnvhwOwFK]"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_16f1a314b001kxVIeBRkgoJpZh",
+      "time": {
+        "created": 1792865349963
+      },
+      "type": "agent-switched",
+      "agent": "plan",
+      "previous": "plan"
+    },
+    {
+      "id": "msg_16f1a3143001nucSnV7g1DDACA",
+      "time": {
+        "created": 1792865350317
+      },
+      "text": "[redacted:synthetic:msg_16f1a3143001nucSnV7g1DDACA]",
+      "type": "synthetic"
+    },
+    {
+      "id": "msg_16f1a314a001JWmIQ5kOU7Rv5H",
+      "time": {
+        "created": 1792865350318
+      },
+      "text": "[redacted:text:msg_16f1a314a001JWmIQ5kOU7Rv5H]",
+      "files": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_16f1a32b5001LpzcIEfZiW2rrs",
+      "time": {
+        "created": 1792865350331,
+        "streamed": 1792865779845,
+        "completed": 1792865780034
+      },
+      "type": "assistant",
+      "agent": "plan",
+      "model": {
+        "id": "glm-5.3-flash-free",
+        "providerID": "opencode"
+      },
+      "content": [
+        {
+          "type": "reasoning",
+          "text": "[redacted:reasoning:msg_16f1a32b5001LpzcIEfZiW2rrs]",
+          "native": {
+            "redacted": "reasoning-native:msg_16f1a32b5001LpzcIEfZiW2rrs"
+          },
+          "time": {
+            "created": 1792865353458,
+            "completed": 1792865779814
+          }
+        },
+        {
+          "type": "text",
+          "text": "[redacted:text:msg_16f1a32b5001LpzcIEfZiW2rrs]"
+        }
+      ],
+      "snapshot": {
+        "start": "8a28128ad50762c7bc7260afd5ad38bcf2ea8b6e",
+        "end": "0f3696c84a320a3b7cc13953e4ee716eb0618807",
+        "files": [
+          "docs/design/step-03a/intake-checklist.md",
+          "docs/testing/step-02-3/claude-correction-run.py",
+          "docs/testing/step-02-3/claude-run.py",
+          "docs/testing/step-02-3/decision-field-checks.json",
+          "docs/testing/step-02-3/opencode-run.py"
+        ]
+      },
+      "finish": "stop",
+      "rawFinish": "stop",
+      "cost": 0,
+      "tokens": {
+        "input": 48640,
+        "output": 6822,
+        "reasoning": 23088,
+        "cache": {
+          "read": 4352,
+          "write": 0
+        }
+      }
+    },
+    {
+      "id": "msg_16f20c151001fn2LqUS6oo6v9O",
+      "time": {
+        "created": 1792865780049
+      },
+      "type": "idle",
+      "outcome": "succeeded"
+    }
+  ]
+}

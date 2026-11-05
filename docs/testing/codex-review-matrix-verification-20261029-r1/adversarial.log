@@ -1,0 +1,26 @@
+=== RUN   TestVerifierReviewPostgres
+=== RUN   TestVerifierReviewPostgres/concurrent_same_predecessor
+=== RUN   TestVerifierReviewPostgres/answer_races_question_revision
+    contract_verifier.go:32: answer result=RECORD_REVIEW_ANSWER: postgres: precondition failed, revised column stale=false
+=== RUN   TestVerifierReviewPostgres/concurrent_structure
+=== RUN   TestVerifierReviewPostgres/fifty_by_twenty_five_and_Vietnamese_limits
+    contract_verifier.go:39: grid versions=50 questions=25 cells=1250 read=8.067417ms
+--- PASS: TestVerifierReviewPostgres (3.12s)
+    --- PASS: TestVerifierReviewPostgres/concurrent_same_predecessor (0.54s)
+    --- PASS: TestVerifierReviewPostgres/answer_races_question_revision (0.48s)
+    --- PASS: TestVerifierReviewPostgres/concurrent_structure (0.40s)
+    --- PASS: TestVerifierReviewPostgres/fifty_by_twenty_five_and_Vietnamese_limits (1.69s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	4.722s
+=== RUN   TestVerifierReviewHTTPHidden
+=== RUN   TestVerifierReviewHTTPHidden/nonmember
+=== RUN   TestVerifierReviewHTTPHidden/revoked
+--- PASS: TestVerifierReviewHTTPHidden (0.01s)
+    --- PASS: TestVerifierReviewHTTPHidden/nonmember (0.01s)
+    --- PASS: TestVerifierReviewHTTPHidden/revoked (0.00s)
+=== RUN   TestVerifierReviewHTTPMissingExpectation
+    verifier_review_test.go:18: status = 201, want 428; body={"id":"01a187a8-4a9a-7c21-87b0-31a35f5448a0","kind":"REVIEW_ANSWER","seq":8}
+--- FAIL: TestVerifierReviewHTTPMissingExpectation (0.00s)
+FAIL
+FAIL	leonx.me/matter-control/internal/adapter/inbound/productapi	0.579s
+FAIL

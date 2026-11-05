@@ -1,0 +1,109 @@
+================================================================================
+MC-002-INTA-FE-R1 Authoritative Live Harness Guard Verification Log
+Timestamp Start: 2026-10-25T03:57:03Z
+Command: node scripts/live-guards.ts
+Base Commit: e25bbc6933264fc46a729e6a364a3bfa02d8038f
+Head Commit: 6e2f65b51e7ead3c84274e717f8f3bcaeccf9b91
+Branch: codex/mc-002-inta-harness-r1
+================================================================================
+================================================================================
+MC-002-INTA-FE Authoritative Live Harness Guard Verification (R1)
+UTC Started: 2026-10-25T03:57:03.224Z
+Host: 127.0.0.1:18085
+Target runId: inta20261025a
+================================================================================
+
+--- Starting Synthetic Upstream Call Observer on 127.0.0.1:18086 ---
+NOTE: Pure synthetic double for guard verification only — not real Go/PG.
+Upstream observer listening on 127.0.0.1:18086
+
+================================================================================
+=== Phase 1: Checks 1–5 with MC_INTA_ENABLE=1 (Enabled) ===
+================================================================================
+Next.js dev server spawned (PID 96672) on 127.0.0.1:18085
+[Next Dev stdout]: - Local:         http://127.0.0.1:18085
+[Next Dev stdout]: - Network:       http://127.0.0.1:18085
+✓ Ready in 184ms
+Harness server ready at http://127.0.0.1:18085/harness/case
+
+--- Check 1: GET /harness/case -> Expected 405 Method Not Allowed ---
+curl -X GET "http://127.0.0.1:18085/harness/case"
+HTTP Status: 405 Method Not Allowed
+Headers: cache-control=no-store, no-cache, must-revalidate, allow=POST
+Body: {"error":"Method Not Allowed"}
+Computed Verdict: PASS
+
+--- Check 2: POST /harness/case with non-JSON body -> Expected 400 Bad Request ---
+curl -X POST "http://127.0.0.1:18085/harness/case" -H "Content-Type: application/json" -d "this is not json"
+HTTP Status: 400 Bad Request
+Body: {"error":"Invalid JSON body"}
+Computed Verdict: PASS
+
+--- Check 3: POST /harness/case with valid runId and unknown caseId -> Expected 400 Bad Request ---
+curl -X POST "http://127.0.0.1:18085/harness/case" -H "Content-Type: application/json" -d '{"runId":"inta20261025a","caseId":"UNKNOWN_99"}'
+HTTP Status: 400 Bad Request
+Body: {"error":"Bad Request: validation failed","details":[{"path":["caseId"],"message":"Invalid option: expected one of \"T1\"|\"T2\"|\"T3\"|\"T4\"|\"T5\"|\"T8\"|\"T9\"|\"T10\"|\"T11a\"|\"T11b\"|\"T11c\"|\"T12\"|\"W1\"|\"W2\"|\"W3\"|\"T6-W\"|\"T7-W\"|\"W9\"|\"W11\"|\"INT-PERS-01\"|\"INT-PERS-02\"|\"INT-PERS-03\"|\"INT-PERS-04\""}]}
+Computed Verdict: PASS (hasCaseIdIssue=true, noRunIdConfounding=true)
+
+--- Check 4: POST /harness/case with valid runId, valid caseId, and extra prohibited field -> Expected 400 Bad Request ---
+curl -X POST "http://127.0.0.1:18085/harness/case" -H "Content-Type: application/json" -d '{"runId":"inta20261025a","caseId":"T1","prohibitedProxyField":"malicious"}'
+HTTP Status: 400 Bad Request
+Body: {"error":"Bad Request: validation failed","details":[{"path":[],"message":"Unrecognized key: \"prohibitedProxyField\""}]}
+Computed Verdict: PASS (hasExtraFieldIssue=true, noRunIdConfounding=true)
+
+--- Check 5: POST /harness/case with invalid runId pattern -> Expected 400 Bad Request ---
+curl -X POST "http://127.0.0.1:18085/harness/case" -H "Content-Type: application/json" -d '{"runId":"bad_pattern!","caseId":"T1"}'
+HTTP Status: 400 Bad Request
+Body: {"error":"Bad Request: validation failed","details":[{"path":["runId"],"message":"runId must be 8-32 alphanumeric characters"}]}
+Computed Verdict: PASS (hasRunIdIssue=true, validCaseIdAccepted=true)
+[2026-10-25T03:57:05.397Z] Sending SIGTERM to owned PID 96672...
+[2026-10-25T03:57:05.498Z] Owned PID 96672 stopped gracefully.
+
+================================================================================
+=== Phase 2: Check 6 without MC_INTA_ENABLE (Disabled, Default) ===
+================================================================================
+Next.js dev server spawned without MC_INTA_ENABLE (PID 96685)
+
+--- Check 6: POST /harness/case when disabled -> Expected 404 Not Found ---
+curl -X POST "http://127.0.0.1:18085/harness/case" -H "Content-Type: application/json" -d '{"runId":"inta20261025a","caseId":"T1"}'
+HTTP Status: 404 Not Found
+Body: {"error":"Harness disabled: MC_INTA_ENABLE=1 is required"}
+Computed Verdict: PASS
+[2026-10-25T03:57:07.459Z] Sending SIGTERM to owned PID 96685...
+[2026-10-25T03:57:07.560Z] Owned PID 96685 stopped gracefully.
+
+================================================================================
+=== Phase 3: Check 7 Startup Refusal with Product Auth Env (INTA-FE-R07) ===
+================================================================================
+Attempting to boot Next.js dev server with API_MODE=demo...
+argv: /private/tmp/mc002-inta-harness/node_modules/.bin/next dev -H 127.0.0.1 -p 18085 --webpack
+Process Exit Code: 1
+Process stderr: ⨯ Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error
+Error: Harness startup refused: product auth/secret env vars present (API_MODE)
+    at validateHarnessStartup (src/guards.ts:94:15)
+    at Object.<anonymous> (next.config.compiled.js:15:40)
+Port 18085 remained closed: true
+Computed Verdict: PASS
+
+================================================================================
+MC-002-INTA-FE Authoritative Guard Verification Summary
+================================================================================
+Check 1: [PASS] GET method not allowed (Expected 405, got 405)
+Check 2: [PASS] Non-JSON body rejection (Expected 400, got 400)
+Check 3: [PASS] Unknown caseId rejection without runId confounding (Expected 400, got 400)
+Check 4: [PASS] Extra prohibited field rejection without runId confounding (Expected 400, got 400)
+Check 5: [PASS] Invalid runId pattern rejection (Expected 400, got 400)
+Check 6: [PASS] Opt-in flag missing 404 refusal (Expected 404, got 404)
+Check 7: [PASS] Startup refusal before listen on product auth env (INTA-FE-R07) (Expected EXIT_NONZERO_BEFORE_LISTEN, got EXIT_1)
+
+--- Measured Upstream Calls ---
+Total HTTP requests received by synthetic upstream observer (127.0.0.1:18086): 0
+Zero Upstream Assertion: PASS
+Port 18085 closed verification: PASS
+
+OVERALL RESULT: 7/7 LIVE GUARD CHECKS PASS + ZERO UPSTREAM CALLS MEASURED
+UTC Completed: 2026-10-25T03:57:07.813Z
+================================================================================
+Exit Code: 0
+Timestamp End: 2026-10-25T03:57:07Z
+================================================================================

@@ -1,0 +1,559 @@
+{
+  "task": "MC-003A.8A / F-11",
+  "authority": "ADOPTED_DOCUMENT_ACCEPTANCE_FIXTURE_ONLY",
+  "status": "REVIEWED_DOCUMENT_FIXTURE_DEFINED / RUNTIME_NOT_RUN",
+  "runtime": "NOT_RUN",
+  "source": "docs/product/project-atlas-dataset.md sections 2/4/5; approved RULE-003/008/010/021; candidate blocker sort from reviewed-read-contract.json",
+  "asOf": "2026-06-15T09:00:00+07:00",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "canonical_ids": {
+    "RQ-01": "019ec934-1100-7000-8000-000000000001",
+    "RQ-02": "019ec934-1100-7000-8000-000000000002",
+    "RQ-03": "019ec934-1100-7000-8000-000000000003",
+    "RQ-04": "019ec934-1100-7000-8000-000000000004",
+    "RQ-05": "019ec934-1100-7000-8000-000000000005",
+    "RQ-06": "019ec934-1100-7000-8000-000000000006",
+    "RQ-07": "019ec934-1100-7000-8000-000000000007",
+    "RQ-08": "019ec934-1100-7000-8000-000000000008",
+    "RQ-09": "019ec934-1100-7000-8000-000000000009",
+    "RQ-10": "019ec934-1100-7000-8000-00000000000a",
+    "RQ-11": "019ec934-1100-7000-8000-00000000000b",
+    "RQ-12": "019ec934-1100-7000-8000-00000000000c",
+    "AC-01": "019ec934-1100-7000-8000-00000000000d",
+    "AC-02": "019ec934-1100-7000-8000-00000000000e",
+    "AC-03": "019ec934-1100-7000-8000-00000000000f",
+    "AC-04": "019ec934-1100-7000-8000-000000000010",
+    "AC-05": "019ec934-1100-7000-8000-000000000011",
+    "AC-06": "019ec934-1100-7000-8000-000000000012",
+    "AC-07": "019ec934-1100-7000-8000-000000000013",
+    "AC-08": "019ec934-1100-7000-8000-000000000014",
+    "AC-09": "019ec934-1100-7000-8000-000000000015",
+    "AC-10": "019ec934-1100-7000-8000-000000000016",
+    "AC-11": "019ec934-1100-7000-8000-000000000017",
+    "AC-12": "019ec934-1100-7000-8000-000000000018",
+    "MS-01": "019ec934-1100-7000-8000-000000000019",
+    "MS-02": "019ec934-1100-7000-8000-00000000001a",
+    "MS-03": "019ec934-1100-7000-8000-00000000001b",
+    "DEP-01": "019ec934-1100-7000-8000-00000000001c",
+    "DEP-02": "019ec934-1100-7000-8000-00000000001d",
+    "DEP-03": "019ec934-1100-7000-8000-00000000001e",
+    "DEP-04": "019ec934-1100-7000-8000-00000000001f",
+    "DEP-05": "019ec934-1100-7000-8000-000000000020",
+    "DEP-06": "019ec934-1100-7000-8000-000000000021",
+    "DEP-07": "019ec934-1100-7000-8000-000000000022",
+    "W1": "019ec934-1100-7000-8000-000000000023",
+    "M1": "019ec934-1100-7000-8000-000000000024"
+  },
+  "identity_note": "Atlas IDs remain canonical fixture aliases; refs in this proposed API fixture use the explicit deterministic UUIDv7 map. No runtime records or new dependency edges are created.",
+  "nodes": [
+    {
+      "atlas_id": "RQ-01",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-01",
+      "execution": "COMPLETED",
+      "verification": "VERIFIED",
+      "dueAt": "2026-06-13T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000001"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-01",
+      "kind": "ACTION",
+      "workstream": "WS-01",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-13T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-00000000000d"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-02",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-01",
+      "execution": "COMPLETED",
+      "verification": "UNVERIFIED",
+      "dueAt": "2026-06-14T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000002"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-02",
+      "kind": "ACTION",
+      "workstream": "WS-01",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-14T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-00000000000e"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-03",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-02",
+      "execution": "COMPLETED",
+      "verification": "VERIFIED",
+      "dueAt": "2026-06-14T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000003"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-03",
+      "kind": "ACTION",
+      "workstream": "WS-02",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-14T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-00000000000f"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-04",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-02",
+      "execution": "WAITING",
+      "verification": "UNVERIFIED",
+      "dueAt": "2026-06-14T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000004"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-04",
+      "kind": "ACTION",
+      "workstream": "WS-02",
+      "execution": "WAITING",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-14T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000010"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-05",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-03",
+      "execution": "COMPLETED",
+      "verification": "VERIFIED",
+      "dueAt": "2026-06-15T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000005"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-05",
+      "kind": "ACTION",
+      "workstream": "WS-03",
+      "execution": "WAITING",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-16T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000011"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-06",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-03",
+      "execution": "IN_PROGRESS",
+      "verification": "PARTIALLY_VERIFIED",
+      "dueAt": "2026-06-16T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000006"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-06",
+      "kind": "ACTION",
+      "workstream": "WS-03",
+      "execution": "COMPLETED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-15T08:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000012"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-07",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-04",
+      "execution": "NOT_STARTED",
+      "verification": "UNVERIFIED",
+      "dueAt": "2026-06-17T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000007"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-07",
+      "kind": "ACTION",
+      "workstream": "WS-04",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-17T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000013"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-08",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-04",
+      "execution": "NOT_STARTED",
+      "verification": "UNVERIFIED",
+      "dueAt": "2026-06-18T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000008"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-08",
+      "kind": "ACTION",
+      "workstream": "WS-04",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-18T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000014"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-09",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-05",
+      "execution": "NOT_STARTED",
+      "verification": "UNVERIFIED",
+      "dueAt": "2026-06-22T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-000000000009"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-09",
+      "kind": "ACTION",
+      "workstream": "WS-05",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-19T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000015"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-10",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-05",
+      "execution": "WAITING",
+      "verification": "PARTIALLY_VERIFIED",
+      "dueAt": "2026-06-20T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-00000000000a"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-10",
+      "kind": "ACTION",
+      "workstream": "WS-05",
+      "execution": "WAITING",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-20T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000016"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-11",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-06",
+      "execution": "NOT_STARTED",
+      "verification": "UNVERIFIED",
+      "dueAt": "2026-06-21T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-00000000000b"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-11",
+      "kind": "ACTION",
+      "workstream": "WS-06",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-21T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000017"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "RQ-12",
+      "kind": "REQUIREMENT",
+      "workstream": "WS-06",
+      "execution": "NOT_STARTED",
+      "verification": "UNVERIFIED",
+      "dueAt": "2026-06-22T17:00:00+07:00",
+      "ref": {
+        "kind": "REQUIREMENT",
+        "id": "019ec934-1100-7000-8000-00000000000c"
+      },
+      "ownerCriticalEscalation": false
+    },
+    {
+      "atlas_id": "AC-12",
+      "kind": "ACTION",
+      "workstream": "WS-06",
+      "execution": "NOT_STARTED",
+      "verification": "NOT_REQUIRED",
+      "dueAt": "2026-06-22T17:00:00+07:00",
+      "ref": {
+        "kind": "ACTION",
+        "id": "019ec934-1100-7000-8000-000000000018"
+      },
+      "ownerCriticalEscalation": false
+    }
+  ],
+  "edges": [
+    {
+      "atlas_id": "DEP-01",
+      "upstream": "RQ-04",
+      "downstream": "AC-05",
+      "gate": "COMPLETION_AND_VERIFIED",
+      "atlas_label": "Verification = VERIFIED",
+      "id": "019ec934-1100-7000-8000-00000000001c",
+      "upstreamRef": "019ec934-1100-7000-8000-000000000004",
+      "downstreamRef": "019ec934-1100-7000-8000-000000000011",
+      "status_at_T0": "UNSATISFIED"
+    },
+    {
+      "atlas_id": "DEP-02",
+      "upstream": "AC-05",
+      "downstream": "AC-07",
+      "gate": "COMPLETION",
+      "atlas_label": "Execution = COMPLETED",
+      "id": "019ec934-1100-7000-8000-00000000001d",
+      "upstreamRef": "019ec934-1100-7000-8000-000000000011",
+      "downstreamRef": "019ec934-1100-7000-8000-000000000013",
+      "status_at_T0": "UNSATISFIED"
+    },
+    {
+      "atlas_id": "DEP-03",
+      "upstream": "AC-07",
+      "downstream": "AC-08",
+      "gate": "COMPLETION",
+      "atlas_label": "Execution = COMPLETED",
+      "id": "019ec934-1100-7000-8000-00000000001e",
+      "upstreamRef": "019ec934-1100-7000-8000-000000000013",
+      "downstreamRef": "019ec934-1100-7000-8000-000000000014",
+      "status_at_T0": "UNSATISFIED"
+    },
+    {
+      "atlas_id": "DEP-04",
+      "upstream": "AC-08",
+      "downstream": "AC-09",
+      "gate": "COMPLETION",
+      "atlas_label": "Execution = COMPLETED",
+      "id": "019ec934-1100-7000-8000-00000000001f",
+      "upstreamRef": "019ec934-1100-7000-8000-000000000014",
+      "downstreamRef": "019ec934-1100-7000-8000-000000000015",
+      "status_at_T0": "UNSATISFIED"
+    },
+    {
+      "atlas_id": "DEP-05",
+      "upstream": "RQ-05",
+      "downstream": "AC-05",
+      "gate": "COMPLETION_AND_VERIFIED",
+      "atlas_label": "Verification = VERIFIED",
+      "id": "019ec934-1100-7000-8000-000000000020",
+      "upstreamRef": "019ec934-1100-7000-8000-000000000005",
+      "downstreamRef": "019ec934-1100-7000-8000-000000000011",
+      "status_at_T0": "SATISFIED"
+    },
+    {
+      "atlas_id": "DEP-06",
+      "upstream": "AC-10",
+      "downstream": "AC-11",
+      "gate": "COMPLETION",
+      "atlas_label": "Execution = COMPLETED",
+      "id": "019ec934-1100-7000-8000-000000000021",
+      "upstreamRef": "019ec934-1100-7000-8000-000000000016",
+      "downstreamRef": "019ec934-1100-7000-8000-000000000017",
+      "status_at_T0": "UNSATISFIED"
+    },
+    {
+      "atlas_id": "DEP-07",
+      "upstream": "RQ-11",
+      "downstream": "AC-12",
+      "gate": "COMPLETION_AND_VERIFIED",
+      "atlas_label": "Verification = VERIFIED",
+      "id": "019ec934-1100-7000-8000-000000000022",
+      "upstreamRef": "019ec934-1100-7000-8000-00000000000b",
+      "downstreamRef": "019ec934-1100-7000-8000-000000000018",
+      "status_at_T0": "UNSATISFIED"
+    }
+  ],
+  "gate_adaptation": "Atlas Verification=VERIFIED shorthand is normalized to approved COMPLETION_AND_VERIFIED, requiring READY+COMPLETED+VERIFIED. Completion edges also require READY. Outcomes at T0 are unchanged.",
+  "milestones": [
+    {
+      "atlas_id": "MS-01",
+      "id": "019ec934-1100-7000-8000-000000000019",
+      "critical": false,
+      "prerequisites": []
+    },
+    {
+      "atlas_id": "MS-02",
+      "id": "019ec934-1100-7000-8000-00000000001a",
+      "critical": false,
+      "prerequisites": []
+    },
+    {
+      "atlas_id": "MS-03",
+      "id": "019ec934-1100-7000-8000-00000000001b",
+      "critical": false,
+      "prerequisites": []
+    }
+  ],
+  "no_other_edges": true,
+  "sort": [
+    "critical-unsatisfied first (candidate dependency-engine section 5, not new approval)",
+    "rootCause true first",
+    "dueAt ascending, null last",
+    "canonical UUID bytes ascending"
+  ],
+  "baseline_expected": {
+    "critical_unsatisfied": [],
+    "blocked": [
+      "AC-05",
+      "AC-07",
+      "AC-08",
+      "AC-09",
+      "AC-11",
+      "AC-12"
+    ],
+    "rootCause": [
+      "RQ-04",
+      "AC-10",
+      "RQ-11"
+    ],
+    "intermediate": [
+      "AC-05",
+      "AC-07",
+      "AC-08"
+    ],
+    "blocker_order": [
+      "RQ-04",
+      "AC-10",
+      "RQ-11",
+      "AC-05",
+      "AC-07",
+      "AC-08"
+    ],
+    "path_to_RQ08": null,
+    "path_to_AC08": [
+      "RQ-04",
+      "AC-05",
+      "AC-07",
+      "AC-08"
+    ],
+    "path_to_AC09": [
+      "RQ-04",
+      "AC-05",
+      "AC-07",
+      "AC-08",
+      "AC-09"
+    ],
+    "all_runtime": "NOT_RUN"
+  },
+  "paired_critical_isolation_proposal": {
+    "shared_overrides": {
+      "RQ04_dueAt": "2026-06-23T17:00:00+07:00",
+      "MS02_prerequisites": [
+        "RQ-04"
+      ],
+      "other_due_dates": "unchanged",
+      "all_other_inputs": "identical between variants; graph and rootCause unchanged; no owner escalation"
+    },
+    "variant0": {
+      "MS02_critical": false,
+      "expected_critical_unsatisfied": [],
+      "expected_order": [
+        "AC-10",
+        "RQ-11",
+        "RQ-04",
+        "AC-05",
+        "AC-07",
+        "AC-08"
+      ]
+    },
+    "variant1": {
+      "MS02_critical": true,
+      "expected_critical_unsatisfied": [
+        "RQ-04"
+      ],
+      "expected_order": [
+        "RQ-04",
+        "AC-10",
+        "RQ-11",
+        "AC-05",
+        "AC-07",
+        "AC-08"
+      ]
+    },
+    "limitation": "Only demonstrates critical-prerequisite priority under the candidate comparator. Does not manufacture a path into RQ-08 or make every downstream Action critical. Requires adoption/recheck; no new milestone-to-Action edge."
+  },
+  "adoption": {
+    "owner": "Codex BA/fixture owner under human MC-003A.8A section 5",
+    "independent_review": "Human-returned actual ZCode ACCEPTED_DOCUMENT_ONLY for Codex-authored fixture; reviewer corrected own earlier finding, did not author this fixture",
+    "scope": "Defines future synthetic document acceptance inputs only; no actual Matter, database, milestone or production setting changed. This is not PO product/architecture approval.",
+    "source_proposal": "docs/design/step-03a/handoff/step-03a-8a/f11-fixture-proposal.json",
+    "source_proposal_sha256": "065fc91208b62ef67ba4f960e745bfb7b144ee94b87105bd2fb922268fd0752c",
+    "review_return_sha256": "a288b2d40862256c1dbeb93b40a80b17fa23026977284f1693cd552fa6bc7e3c",
+    "note": "Reviewer recommendation for Codex/PO adoption is recorded; no new policy is selected. Codex adopts the documentation fixture within assigned section-5 ownership, not product/runtime readiness."
+  }
+}

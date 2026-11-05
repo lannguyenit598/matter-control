@@ -1,0 +1,19 @@
+# github.com/example/userapi/internal/adapter/outbound/postgres [github.com/example/userapi/internal/adapter/outbound/postgres.test]
+internal/adapter/outbound/postgres/faults_test.go:232:12: cannot use fmt.Errorf("begin: %w", err) (value of interface type error) as struct{} value in send
+internal/adapter/outbound/postgres/faults_test.go:238:12: cannot use fmt.Errorf("lock read: %w", err) (value of interface type error) as struct{} value in send
+internal/adapter/outbound/postgres/faults_test.go:250:12: cannot use fmt.Errorf("lock update: %w", err) (value of interface type error) as struct{} value in send
+internal/adapter/outbound/postgres/faults_test.go:258:27: invalid operation: err != nil (mismatched types struct{} and untyped nil)
+# github.com/example/userapi/internal/adapter/inbound/httpapi [github.com/example/userapi/internal/adapter/inbound/httpapi.test]
+internal/adapter/inbound/httpapi/errors_test.go:75:66: not enough arguments in call to echo.NewHTTPError
+	have (number)
+	want (int, string)
+internal/adapter/inbound/httpapi/errors_test.go:81:29: too many arguments in call to toProblem
+	have (context.Context, error, bool)
+	want (error)
+internal/adapter/inbound/httpapi/errors_test.go:91:11: got.RetryAfter undefined (type problem has no field or method RetryAfter)
+internal/adapter/inbound/httpapi/errors_test.go:92:46: got.RetryAfter undefined (type problem has no field or method RetryAfter)
+internal/adapter/inbound/httpapi/errors_test.go:163:13: newErrorHandler(logger)(c, echo.ErrServiceUnavailable) (no value) used as value
+internal/adapter/inbound/httpapi/errors_test.go:182:23: cannot use func(c *echo.Context, err error) error {…} (value of type func(c *echo.Context, err error) error) as echo.HTTPErrorHandler value in assignment
+internal/adapter/inbound/httpapi/errors_test.go:205:42: too many arguments in call to toProblem
+	have (context.Context, error, bool)
+	want (error)

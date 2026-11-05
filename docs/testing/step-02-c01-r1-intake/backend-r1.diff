@@ -1,0 +1,51 @@
+diff --git a/.claude/rules/persistence.md b/.claude/rules/persistence.md
+index e538fc8..b9440a0 100644
+--- a/.claude/rules/persistence.md
++++ b/.claude/rules/persistence.md
+@@ -10,7 +10,7 @@ paths:
+ 
+ - Outbound adapters are independent: no other outbound adapters, inbound adapters, Echo, or `internal/app` imports (enforced by depguard). Add new adapter paths to `outbound-adapters` in `.golangci.yml`.
+ - Repositories must satisfy the `port.UserRepository` comment contract and **pass `repotest.Run`**. Add new behavior to the shared suite first so every adapter is checked.
+-- Return bare sentinels (`port.ErrNotFound`, `port.ErrVersionConflict`, `domain.ErrEmailAlreadyExists`). Translate driver errors in `mapError`; never leak `pgx`/`pgconn`. Map database timeouts (`57014`, `statement_timeout`) to `context.DeadlineExceeded` for HTTP 503.
++- Return bare sentinels (`port.ErrNotFound`, `port.ErrVersionConflict`, `domain.ErrEmailAlreadyExists`). Translate driver errors in `mapError`; never leak `pgx`/`pgconn`. Classify SQLSTATE first: wrap retryable codes (class `08`, `57P01`–`57P03`, `53300`, `40P01`, `40001`, `55P03`, `57014`) with `port.ErrUnavailable` (HTTP 503); every other `*pgconn.PgError` stays unexpected (500); a `*pgconn.ConnectError` maps to `port.ErrUnavailable` only when no `PgError` is in the chain; never classify by error text.
+ - `Update` uses compare-and-set on `version` in **one** `UPDATE ... WHERE id = $1 AND version = $n`, without `SELECT ... FOR UPDATE`. With outbox enabled, the update and event insert share a short transaction (`r.write`).
+ - New repository writes use `r.write` and call `r.appendEvent` on success so events commit with data (see `.claude/rules/messaging.md`).
+ - Runtime SQL lives in `postgres/queries/*.sql` as named sqlc queries with explicit columns; run `make sqlc-generate` and commit `sqlcgen/` with the change. Never edit `sqlcgen/` by hand, and do not duplicate generated SQL in Go. Handwritten SQL stays only in Goose (migrations, `PendingMigrations`) and tests.
+diff --git a/docs/api.md b/docs/api.md
+index a9626d7..59590c0 100644
+--- a/docs/api.md
++++ b/docs/api.md
+@@ -175,7 +175,7 @@ Retryable unavailability (503) returns a fixed body with a `retryAfter` hint:
+ | 413 | Body exceeds 1 MiB | |
+ | 415 | POST/PATCH has a body without `application/json` Content-Type (missing, form, XML...) | |
+ | 422 | Invalid input with per-field `errors` | `request failed validation` |
+-| 499 | Client disconnects before response, or requests are canceled after shutdown timeout. The client receives no such response; 499 appears only in logs. A disconnect also wins over any timeout classification | |
++| 499 | Client disconnects before response, or requests are canceled after shutdown timeout. The client receives no such response; 499 appears only in logs. A disconnect wins over every other classification | |
+ | 500 | Unexpected error, including authentication/privilege/schema faults (these are never retryable 503s) | (empty) |
+ | 503 | Storage temporarily unavailable: request exceeds `REQUEST_TIMEOUT`, SQL exceeds `DB_STATEMENT_TIMEOUT`, connection failure or termination, pool exhaustion, or lock/deadlock conditions | `service temporarily unavailable` (+ `retryAfter`) |
+ | 503 | `/readyz` when the pod is not ready | (empty) |
+diff --git a/internal/adapter/outbound/postgres/map_error_test.go b/internal/adapter/outbound/postgres/map_error_test.go
+index 87421c9..b2272b7 100644
+--- a/internal/adapter/outbound/postgres/map_error_test.go
++++ b/internal/adapter/outbound/postgres/map_error_test.go
+@@ -91,6 +91,20 @@ func TestMapError_UnavailableClassification(t *testing.T) {
+ 		}
+ 	})
+ 
++	// C01-R1 (architect F1): a cancelled connect must keep the driver cause reachable
++	// through the ErrUnavailable wrap, so the inbound mapping can answer 499 (edge-case
++	// table row "ConnectError wrapping context.Canceled → 499"). This asserts the invariant
++	// on already-correct code; it must fail if a future change drops the cause.
++	t.Run("cancelled connect keeps the cause for inbound 499", func(t *testing.T) {
++		mapped := mapError(combinedChain{errs: []error{&pgconn.ConnectError{}, context.Canceled}})
++		if !errors.Is(mapped, context.Canceled) {
++			t.Fatalf("context.Canceled must survive the ErrUnavailable wrap, got %v", mapped)
++		}
++		if !errors.Is(mapped, port.ErrUnavailable) {
++			t.Fatalf("a cancelled connect must still classify as unavailable, got %v", mapped)
++		}
++	})
++
+ 	// SQLSTATE wins over a wrapping ConnectError: the PgError in the chain decides.
+ 	for _, tc := range []struct {
+ 		code        string

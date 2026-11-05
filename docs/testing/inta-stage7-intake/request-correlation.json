@@ -1,0 +1,272 @@
+[
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T1-1",
+    "case_id": "T1",
+    "method": "POST",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 201,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T2-2",
+    "case_id": "T2",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-W1-3",
+    "case_id": "W1",
+    "method": "POST",
+    "mode": "wire",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 201,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-W2-4",
+    "case_id": "W2",
+    "method": "GET",
+    "mode": "wire",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T3-5",
+    "case_id": "T3",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 404,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T4-6",
+    "case_id": "T4",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 404,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T4-7",
+    "case_id": "T4",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 404,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T5-8",
+    "case_id": "T5",
+    "method": "POST",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 422,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T5-9",
+    "case_id": "T5",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T8-10",
+    "case_id": "T8",
+    "method": "POST",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 409,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T8-11",
+    "case_id": "T8",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-W3-12",
+    "case_id": "W3",
+    "method": "GET",
+    "mode": "wire",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 404,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T6-W-13",
+    "case_id": "T6-W",
+    "method": "POST",
+    "mode": "wire",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 400,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T7-W-14",
+    "case_id": "T7-W",
+    "method": "POST",
+    "mode": "wire",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 415,
+    "go_log": "docs/testing/inta-returns/backend/runtime-intamvnmoems3pd/go-restart-01/00-pre-stop/server-stdout.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-INT-PERS-01-15",
+    "case_id": "INT-PERS-01",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-INT-PERS-02-16",
+    "case_id": "INT-PERS-02",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T9-17",
+    "case_id": "T9",
+    "method": "PATCH",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-W9-18",
+    "case_id": "W9",
+    "method": "GET",
+    "mode": "wire",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T10-19",
+    "case_id": "T10",
+    "method": "PATCH",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 412,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T10-20",
+    "case_id": "T10",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T11a-21",
+    "case_id": "T11a",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 503,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T11b-22",
+    "case_id": "T11b",
+    "method": "PATCH",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 503,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T11c-23",
+    "case_id": "T11c",
+    "method": "POST",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 503,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-W11-24",
+    "case_id": "W11",
+    "method": "GET",
+    "mode": "wire",
+    "client_outcome": "apiError",
+    "go_matches": 1,
+    "go_status": 503,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-INT-PERS-03-25",
+    "case_id": "INT-PERS-03",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-INT-PERS-04-26",
+    "case_id": "INT-PERS-04",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "value",
+    "go_matches": 1,
+    "go_status": 200,
+    "go_log": "go-stdout-observed.log"
+  },
+  {
+    "request_id": "mc-int-intamvnmoems3pd-T12-27",
+    "case_id": "T12",
+    "method": "GET",
+    "mode": "app-client",
+    "client_outcome": "apiError",
+    "go_matches": 0,
+    "go_status": null,
+    "go_log": null
+  }
+]

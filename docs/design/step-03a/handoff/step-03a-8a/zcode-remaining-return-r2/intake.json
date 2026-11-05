@@ -1,0 +1,437 @@
+{
+  "task": "MC-003A.8A corrected ZCode addendum intake",
+  "actual_intake_agent": "Local Codex / PM-BA document intake",
+  "utc": "2026-10-25T17:09:59.458315+00:00",
+  "base": "8c4d47eb4f59d9013aad6221d2c52c8d11594ba6",
+  "return": {
+    "attachment": "/Users/nguyenvanlan/.codex/attachments/21280e8d-dbef-43d6-88fe-3821914ec9bb/Pasted text.txt",
+    "archive": "review-original.txt.gz",
+    "bytes": 29375,
+    "sha256": "7bc8cabfbd8cba0fe77990da495145747f4444b2c8168aebfa8215c9368094fe"
+  },
+  "reviewer_identity": "Human-returned ZCode Desktop / GLM-5.3 account:zai-start-plan; tool version UNKNOWN; session-declared, not independently attested",
+  "review_execution": "ZCode reports no new commands/reads/writes/runtime; reused prior context. Codex verified current intended input bytes; this does not attest earlier ZCode command logs.",
+  "disposition": "CORRECTED_DOCUMENT_PROPOSAL_RECEIVED / TWO_TARGETED_CLARIFICATIONS / NO_APPROVAL",
+  "corrected_document_items": [
+    "DISPUTED own-axis null-source and evidenceGaps failure example",
+    "Implicit component can have multiple distinct-code rows; claim UNIQUE rationale withdrawn",
+    "PENDING_REVIEW-before-REJECTED example order and Action proof-required applicability",
+    "Component-by-code count and row identity change disclosed",
+    "Missing-vector cases explicitly acknowledged; V1/V2 proposed rather than approved",
+    "Option A residual unbounded dimensions disclosed and Option B35 recommended",
+    "Date-only wire example replaced; null-versus-empty and schema permission clarified",
+    "Printed hash/count/provenance/F05/G4 metadata errata corrected in prose"
+  ],
+  "pending": [
+    {
+      "id": "F08-DETERMINISM",
+      "finding": "F-08",
+      "status": "NEEDS_CONTRACT_CLARIFICATION",
+      "detail": "V1 broad definition also describes withdrawn/rejected/expired/disputed claims that already have dedicated codes. Return an explicit ordered/disjoint classifier with current defined per subject epoch, residual reasons and multi-failure examples; keep component-level satisfied=>no-gap first. No mapping or new row unit adopted.",
+      "counterexample": {
+        "withdrawn_accepted": [
+          "WITHDRAWN",
+          "PENDING_REVIEW"
+        ],
+        "rejected_current": [
+          "REJECTED",
+          "PENDING_REVIEW"
+        ],
+        "expired_accepted": [
+          "EXPIRED",
+          "PENDING_REVIEW"
+        ],
+        "disputed_accepted": [
+          "DISPUTED",
+          "PENDING_REVIEW"
+        ]
+      }
+    },
+    {
+      "id": "F10-B3-IDENTITY",
+      "finding": "F-10",
+      "status": "NEEDS_CONTRACT_CLARIFICATION",
+      "detail": "B3 projects evidenceRef+observationKind, ordered by evidenceRef.id alone. Authorized schema has observation-to-evidence relation and no documented evidence-only uniqueness per cycle. Same evidence across receipt/outcome (or repeated same-role observations) needs explicit row grain, unique total ordering/cursor, dedup/count semantics and cycle/epoch/observation association. A strict after=E1 cursor with limit1 can omit another E1 row; a non-strict cursor can repeat. This is a conditional document counterexample, not runtime reproduction.",
+      "counterexample": {
+        "rows": [
+          {
+            "evidence": "E1",
+            "kind": "RECEIPT",
+            "observation": "O1"
+          },
+          {
+            "evidence": "E1",
+            "kind": "OUTCOME",
+            "observation": "O2"
+          }
+        ],
+        "page_size": 1,
+        "page1": [
+          {
+            "evidence": "E1",
+            "kind": "RECEIPT",
+            "observation": "O1"
+          }
+        ],
+        "strict_after_E1": []
+      }
+    },
+    {
+      "id": "F08-DECISION",
+      "finding": "F-08",
+      "status": "CANDIDATE_NOT_ADOPTED",
+      "detail": "Component-by-code versus component total and V1 broadened PENDING_REVIEW versus V2 vocabulary extension remain real contract choices. Gap vocabulary is distinct from the condition-code catalogue: do not automatically add a Condition count entry for every new gap code. F07 claim.status/filter removal is already materialized; detail reachability must use the accepted parent/summary/history without restoring claim.status."
+    },
+    {
+      "id": "F10-DECISION",
+      "finding": "F-10",
+      "status": "CANDIDATE_NOT_ADOPTED",
+      "detail": "A33 explicitly accepts two unbounded relation dimensions; B35 removes unbounded relation cardinality via continuation subject to B3 precision. Neither is approved. Bounded relation count does not prove constant payload bytes: scalar reference lengths/limits and actual latency remain unverified. dueAt instant is a declared fixture assumption, not a new universal end-of-day policy."
+    }
+  ],
+  "f08": "NEEDS_CONTRACT_CLARIFICATION_AND_DECISION",
+  "f10": "NEEDS_B3_CLARIFICATION_AND_PO_DECISION",
+  "catalogue": {
+    "current": 32,
+    "proposals": {
+      "A": 33,
+      "B_recommended_by_ZCode": 35
+    },
+    "adopted_new_routes": 0
+  },
+  "checks": {
+    "json_unique_keys": true,
+    "content_inputs_verified": 21,
+    "content_input_bytes": 220806,
+    "manifest_files_verified": 3,
+    "document_counterexamples_only": true,
+    "runtime": "NOT_RUN",
+    "frozen_inputs": {
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/remaining-context/manifest.json": "d470179ac9f1d137b79fb4601f6b0012fd80f3b8883ad42d48ac630e939db3ba",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/remaining-context/review-feedback.md": "c03fd8bc571df80f397e052252933a40bb886581b86eda9cefe6e7be9546858f",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/remaining-context/open-items.json": "02824ed00273a6c5c04b72c3df003fb23c5fc055b4743179e6bd2415046fb4e1",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/manifest.json": "eed788550530966eea23a66a20e1edd84f18fa024963b60fb132f0a3028f0979",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/00-focused-handoff.md": "827094a44d2c2d020146773c84ed7f1d1f8bb0a0bc4526747632e19d01b3b195",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/01-read-set-index.json": "da50b8557eaef4fff5655bf67e180c14be2a2d3ffd75da07dd6b8887db633ee7",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/02-read-contract-excerpts.json": "95b8d7eb1fe8114fe5b9287e18479f6f78a2628beb8b65eba25194740dac6570",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/03-reference-delta.json": "fdd1f39373bea80665d1d54fff9c17449c34a7eb7eceaa9bf553da033bb251ce",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/04-reference-addendum.md": "cd7923f2e57bb9434b84222bc5e535a518519a80a575a43eecbc0c537744556f",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/05-business-rules.md": "3b6cf5d06b8983bdcba12a74206323829567979f8698d736070f29195d9ebaf0",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/06-state-semantics.md": "bfbb1dad0fb7d31dd45f865cb58906696bcf08d90836c4654dd0e2dfb28a08a3",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/07-srs.md": "1827877168ef3b8b03cc4f29a5f9f6964e3051258c6154353ccd60848bd17929",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/08-acceptance-criteria.md": "1f97c0f1b0c5a7535f966275cf13d588a3baac2d4cccc25ffe0fb9309bf2c269",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/09-permission-matrix.md": "f352fcf0f1f2617b5d5c072c34472f84619f4bda555c855dbdf1871b469b0276",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/10-candidate-api.md": "266488cc4ff5ac0a7c8fd4c644b9643ed89321741fac04d963e11864ea45cf50",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-packet-v1/11-candidate-adr-002.md": "a597cd107ef502a252adeb98de6fc1ddfc1097ed485cbdb146626ce2741e5bf4",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/manifest.json": "956946dcb100465f65bce2eb329afecf7cfc90c8506ab65e730cb0156bb7cd2c",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/00-followup.md": "f24a36dd668acfeae8680131b4fd506d7ae20787e86eca02ebc336f742bb465b",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/01-data-model-proof-filing.md": "afc622ce23e38846001e5bcea397f39865bb2338bbdbab2e6b14475a24914b8d",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/02-evidence-lifecycle.md": "958fc321ef92c21997dcab01ef7a082647f947f38aaeec0c0974771cb11db7dd",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/03-filing-cycles.md": "33f10313365bf0785a3cf370582d7e7e3f241ee571293bbf69e3bbfc1079a702",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/04-api-claim-commands.md": "b4979593dc8d19ad1e1c19994e7e943fb88e8ee231205ed2a37c38045ac856d9",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/05-return-excerpts.md": "3999df27cc7d329b11ad06d2855c23286db55055f4e74f1e96ca94da4537a260",
+      "docs/design/step-03a/handoff/step-03a-8a/claude-return-r1/claude-followup-v1/06-returned-delta-normalized.json": "9a90e955c3cb453f26943ed9b9cc6099984dae69a51c01cf2b528626b4a47903",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/candidate-read-set.json": "9817f034a76b9c18fada8aeed1e205b7bbdb215d927612089110c3cf2325783b",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/reviewed-clarifications.json": "80620c485fab24bbf61cf09350ae41b7c73ce193f166ae1ef7c6c39077b043fd",
+      "docs/design/step-03a/handoff/step-03a-8a/zcode-return-r1/f11-fixture-reviewed.json": "d6e9d2ef2629e77f8a48a4f9e641b6cad1f0a4f32d3fe3891bb17fdf468b5fa3",
+      "docs/architecture/backend-fast-track.md": "bebcbdbadc1c2c6e2153d29227227522acb2837335f4783dd0246900d4c07352",
+      "docs/implementation/tasks/MC-BE-01.md": "a02cd5619acde201ba9c1eac0a723a9f35f7c3cd892acef95213339838b616ff",
+      "docs/implementation/handoffs/MC-BE-01-ZCODE-PROMPT.md": "21b494a8323b2bd6cf658fce67c6846e3e93d4ec27a57a23e714a6e79d7efb92"
+    }
+  },
+  "scenarios": [
+    {
+      "id": "CT-01",
+      "original_review_text": "- **CT-01 Authorized Matter read — TESTABLE_AS_SPECIFIED.** Ops: control-room + OP-01. Pre: U0 member of M1 at T0. Expected: 200, meta{matterRef, asOf, sourceRevision, historyMaterializedThrough}, 8 sections, one asOf, X-Request-ID. Neg: 401 no token. Setup: deployed API + seeded matter + token. Deps: A-01..04, A-08. Evidence: full response, no-mutation event check.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-02",
+      "original_review_text": "- **CT-02 Unauthorized Matter read — TESTABLE_AS_SPECIFIED.** RC-1/RC-3. Non-member and nonexistent Matter → byte-identical 404; Workspace-OWNER-without-membership → 404 (no implicit grant). Evidence: byte comparison of both bodies.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-03",
+      "original_review_text": "- **CT-03 Resource not found — TESTABLE_AS_SPECIFIED.** RC-3, every singleton (OP-01, 04, 05, 06, 07, 09, 11, 12, 14, 16, 19, 20, 22, 24, 27, 29, 31): nonexistent id → uniform 404, byte-identical across routes.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-04",
+      "original_review_text": "- **CT-04 Cross-workspace reference — TESTABLE_AS_SPECIFIED.** Foreign-Matter resource id → 404; responses never emit foreign refs (approved RULE-003/017). Fixture W2/M2.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-05",
+      "original_review_text": "- **CT-05 Missing/invalid reference — NEEDS_CONTRACT_CLARIFICATION (F-05).** Other-kind id → 404 is specified; the malformed path-id convention (404 vs framework 422) is unpinned. Clarify, then executable on all singletons.",
+      "classification": "NEEDS_CONTRACT_CLARIFICATION",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-05"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-06",
+      "original_review_text": "- **CT-06 Empty sections — TESTABLE_AS_SPECIFIED.** Fixture variant with zero matches per section: AVAILABLE+`[]`+total 0; condition exceptions `[]` with COMPLETE; 503 never for empty. F-08 caveat on condition `total`.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-08"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-07",
+      "original_review_text": "- **CT-07 Multiple blockers — NEEDS_FIXTURE_DEFINITION (F-11).** Card set specified (RQ-04 rootCause WAITING+READY failing DEP-01; AC-05/07/08 intermediate causes; partial downstream page carries nextCursor); the \"RQ-04 top\" ordering additionally requires the critical-milestone designation that no input defines.",
+      "classification": "NEEDS_FIXTURE_DEFINITION",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-11"
+      ],
+      "owner": "Codex / ZCode recheck"
+    },
+    {
+      "id": "CT-08",
+      "original_review_text": "- **CT-08 Completed but unverified — TESTABLE_AS_SPECIFIED.** RQ-02 axes COMPLETED+UNVERIFIED; condition exception COMPLETED_UNVERIFIED; no proof gate satisfied (AC-105/121 cross-check).",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-09",
+      "original_review_text": "- **CT-09 Waiting on party — TESTABLE_AS_SPECIFIED.** OP-26/27/22: RQ-04/AC-04 waits → EP-01 with `partyLabel`, internal owner, follow-up; `openedAt`/`openedEventSeq` from the opening transition (TQ-06 resolution); subject dependency stays independently computed (WAITING ≠ BLOCKED).",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-06"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-10",
+      "original_review_text": "- **CT-10 Detail permission filtering/revocation — TESTABLE_AS_SPECIFIED.** Revoke between card and detail → uniform 404; cursor after revocation → 404 (RC-1 order); client purges retained detail for that Matter.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-11",
+      "original_review_text": "- **CT-11 Missing Evidence — TESTABLE_AS_SPECIFIED.** ER-02/ER-04 gap MISSING with actual-only `evidenceRefs: []`; criterion ≠ Evidence; no fabricated attachment.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-07"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-12",
+      "original_review_text": "- **CT-12 Superseded/version proof — TESTABLE_AS_SPECIFIED.** Assessment on DOC v-current, then OWNER promotes a new version: `assessedDocumentVersionRef` keeps the exact assessed version (OP-12); fixed-version criterion unaffected (approved AC-128); requires runtime upload/promote commands.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-13",
+      "original_review_text": "- **CT-13 Filing/document references — TESTABLE_AS_SPECIFIED.** FIL-02 cycles: `submittedVersionRefs` = DOC-05 v2 exactly (**not** DOC-03); EV-10 = receipt + DOC-05 v2; receipt without outcome ≠ approval; NAV-07 never substitutes the current pointer. F-10 caveat on embedded cycles bound.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-06",
+        "F-10"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-14",
+      "original_review_text": "- **CT-14 Partial/unavailable section — NEEDS_CONTRACT_CLARIFICATION (F-02).** Structural behavior fully specified (one section UNAVAILABLE+null, others AVAILABLE on the same asOf; condition INCOMPLETE with that exception count null-not-0; root still 200; all-fail → 503); the section reason-code vocabulary and the fault-injection seam are undefined (DG-13 provides the fault-injection precedent for evaluator failure).",
+      "classification": "NEEDS_CONTRACT_CLARIFICATION",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-02"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-15",
+      "original_review_text": "- **CT-15 Freshness/mixed snapshots — TESTABLE_AS_SPECIFIED.** One meta.asOf/sourceRevision across AVAILABLE sections; a continuation page fetched after a runtime mutation carries a newer sourceRevision and is labeled, never merged; point lookups never patch the overview.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-16",
+      "original_review_text": "- **CT-16 Collection bounds/cursor — TESTABLE_AS_SPECIFIED.** Synthetic 201-record matters (parties/workstreams per RC-REF-01/03; no production-workload claim); section `nextCursor` reaches every row on its continuation route (order-equality invariant); limit ≤ 200 with explicit `limit` in tests; foreign-actor/Matter cursor → 422 without detail; revoked → 404. DR-06 variant gated by F-01; events seq params per F-09.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-01",
+        "F-09"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-17",
+      "original_review_text": "- **CT-17 Golden connected navigation — TESTABLE_AS_SPECIFIED (API part).** NAV-01..10 each map to exactly one op; NAV-07 follows `submittedVersionRefs`; NAV-03 uses the provided evidenceRef or the RC-REF-02 claim path; zero-assessment claim renders as existing-not-404 (status assertions need F-07). Keyboard/focus/render explicitly out of scope (G3/G4, NOT_TESTED).",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-07"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-18",
+      "original_review_text": "- **CT-18 Decision namespaces/lifecycle — TESTABLE_AS_SPECIFIED.** DEC-AT-01/02 OPEN with `ownerRef: null` shown as unassigned, never inferred; `open=true` filter; open decisions only in the section; no dependency/proof override. F-04 caveat for mixed due/no-due ordering.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-04"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-19",
+      "original_review_text": "- **CT-19 Recent changes versus outstanding — NEEDS_CONTRACT_CLARIFICATION (TQ-05 open).** Seq ordering (after asc / before desc, OP-25) and the changes-vs-outstanding separation (recentChanges vs blockers sections) are testable now; any 'since T-1 09:00' time-window mapping awaits the open TQ-05 decision (owner Claude) and must not be improvised.",
+      "classification": "NEEDS_CONTRACT_CLARIFICATION",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "TQ-05"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-20",
+      "original_review_text": "- **CT-20 Document content retrieval — BLOCKED_BY_ARCHITECTURE_DECISION (TB-05).** Authorization semantics are specified and testable now (membership rechecked per retrieval; denial leaks no filename; no presigned GET; private no-store); actual content streaming awaits the open TB-05 storage-provider decision (DR-11 dependency).",
+      "classification": "BLOCKED_BY_ARCHITECTURE_DECISION",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "TB-05"
+      ],
+      "owner": "Claude / applicable PO storage decision"
+    },
+    {
+      "id": "CT-21",
+      "original_review_text": "- **CT-21 Actionability and no candidate — NEEDS_CONTRACT_CLARIFICATION (F-03; fixture F-11).** AtlasT0: nextActions `items: []` with `excluded[]` covering AC-04/05/07/08/09/10/11/12; Requirements never appear (RQ-06 absent); RQ-04 visible as the top root-cause blocker card; `permittedActions` absent = unknown, never allowed. The exact excluded reason for AC-05 (WAITING vs BLOCKED) needs F-03.",
+      "classification": "NEEDS_CONTRACT_CLARIFICATION",
+      "runtime": "NOT_RUN",
+      "dependencies": [
+        "F-03",
+        "F-11",
+        "TQ-03 (advisory-only)"
+      ],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    },
+    {
+      "id": "CT-22",
+      "original_review_text": "- **CT-22 Correlation/privacy/no mutation — TESTABLE_AS_SPECIFIED.** X-Request-ID echoed; matter event count unchanged after a read-only run; denials write restricted security audit only (approved) and never appear in DR-15 events; log scan shows no tokens or legal payloads.",
+      "classification": "TESTABLE_AS_SPECIFIED",
+      "runtime": "NOT_RUN",
+      "dependencies": [],
+      "owner": "Claude for listed contract findings; independent QA remains separate"
+    }
+  ],
+  "qa": [
+    {
+      "id": "Q1",
+      "original_review_text": "- **Q1 Uniform missing/non-member responses incl. revoked cursors — RESOLVED_IN_REVIEWED_CANDIDATE.** Ambiguity: 404 vs 422 for a revoked member's still-valid cursor. Exact source: RC-1 (check order), RC-3, RC-6; approved permission-matrix sensitive-denial and revocation-recheck rules. Answer: byte-identical 404 for non-member, nonexistent, foreign and kind-mismatched ids and for a revoked caller presenting a valid cursor (membership precedes cursor validation); no 403 on reads. Smallest correction: none; optionally add the cursor-after-revocation example line. Owner: none (documented) / Codex intake.",
+      "original_disposition": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "intake_status": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "dependencies": [],
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "Q2",
+      "original_review_text": "- **Q2 Partial section failure within the single overview boundary — RESOLVED_IN_REVIEWED_CANDIDATE.** Ambiguity: what distinguishes section failure reasons. Source: READ-02; FR-009 approved error behavior; AC-156 approved distinguishability. Answer: root 200 with per-section availability; UNAVAILABLE+null; null counts never 0; condition INCOMPLETE; STALE client-only; 503 only for snapshot-open failure or zero available sections. Correction: F-02 (code vocabulary). Owner: Claude.",
+      "original_disposition": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "intake_status": "ANSWER_CONDITIONAL_ON_FINDING_RESOLUTION",
+      "dependencies": [
+        "F-02"
+      ],
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "Q3",
+      "original_review_text": "- **Q3 Shared overview revision; newer pages labeled, not merged — RESOLVED_IN_REVIEWED_CANDIDATE.** Ambiguity: none material. Source: READ-02, addendum snapshot semantics, NAV rules. Answer: every continuation/detail response is its own boundary with its own asOf/sourceRevision, labeled \"changed since overview\" when newer, never merged; point lookups never patch the overview. Correction: none.",
+      "original_disposition": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "intake_status": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "dependencies": [],
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "Q4",
+      "original_review_text": "- **Q4 Complete cursor reachability and actor/Matter binding — RESOLVED_IN_REVIEWED_CANDIDATE (F-01 open).** Source: RC-6/RC-7 + the section/continuation order-equality invariant. Answer: yes for the seven paginated sections via their named routes; opaque cursors bound to actor/matter/collection/filter/sort; mismatch → 422 without detail; revoked → 404. Correction: F-01 for the DR-06 two-sided envelope. Owner: Claude.",
+      "original_disposition": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "intake_status": "ANSWER_CONDITIONAL_ON_FINDING_RESOLUTION",
+      "dependencies": [
+        "F-01"
+      ],
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "Q5",
+      "original_review_text": "- **Q5 Exact assessment/submission versions after promotion — ANSWERED_FROM_APPROVED_SOURCE.** Source: approved RULE-011 and AC-128; contract reference rules make it wire-level. Answer: exact `assessedDocumentVersionRef`, `submittedVersionRefs`, `criterionRevisionRef`, `submissionId` are retained; the current pointer is never substituted (NAV-07); fixed-version criteria unaffected. Correction: none.",
+      "original_disposition": "ANSWERED_FROM_APPROVED_SOURCE",
+      "intake_status": "ANSWERED_FROM_APPROVED_SOURCE",
+      "dependencies": [],
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "Q6",
+      "original_review_text": "- **Q6 AtlasT0 empty Next Actions and RQ-04 root-cause visibility — RESOLVED_IN_REVIEWED_CANDIDATE (F-03/F-11 open).** Source: approved RULE-021, READ-02 `excluded[]`, dependency-engine §5/§7, blockers rootCause rule. Answer: `items: []` explained by `excluded[]`; no Requirements, no invented work; RQ-04 appears as root-cause blocker card (WAITING+READY, failing DEP-01); no metric invented. Corrections: F-03 (reason precedence), F-11 (critical designation). Owners: Claude / Codex.",
+      "original_disposition": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "intake_status": "ANSWER_CONDITIONAL_ON_FINDING_RESOLUTION",
+      "dependencies": [
+        "F-03",
+        "F-11"
+      ],
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "Q7",
+      "original_review_text": "- **Q7 No domain-history/verification mutation or payload logging on reads — RESOLVED_IN_REVIEWED_CANDIDATE.** Ambiguity: whether denial-audit is a \"mutation\". Source: RC-9, ADR-002 §1.6 (reads never write), approved permission-matrix audit rule, FR-008. Answer: reads create no domain event, verification or history; the only write is the approved restricted security audit on denial; no tokens/payloads in logs; security audit never appears in DR-15 events. Correction: none.",
+      "original_disposition": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "intake_status": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "dependencies": [],
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "Q8",
+      "original_review_text": "- **Q8 Uniform not-found for kind-mismatched resource IDs — RESOLVED_IN_REVIEWED_CANDIDATE (F-05 adjacent).** Source: RC-3, addendum authorization blocks, CT-05. Answer: an Action id on `/requirements/{id}`, a claimId on `/evidence/{id}`, an edgeRef on `/nodes/{id}` all return the same byte-identical 404. Correction: F-05 pins the separate malformed-id case. Owner: Claude.",
+      "original_disposition": "RESOLVED_IN_REVIEWED_CANDIDATE",
+      "intake_status": "ANSWER_CONDITIONAL_ON_FINDING_RESOLUTION",
+      "dependencies": [
+        "F-05 (adjacent malformed-ID convention)"
+      ],
+      "runtime": "NOT_RUN"
+    }
+  ],
+  "gates": {
+    "G5-A": "ARCHITECTURE_COMPATIBLE_WITH_CONSTRAINTS_DOCUMENT_ONLY",
+    "G5-B": "REVIEW_RETURN_RECEIVED / FINDINGS_OPEN",
+    "G3": "NOT_VERIFIED",
+    "G4": "PENDING",
+    "G6": "REWORK_REQUIRED",
+    "STEP_03B": "NOT_AUTHORIZED"
+  },
+  "BE01": "Unified workflow records PO report of work performed. This F08/F10 return contains no implementation evidence. Reconcile latest BE01 source/test return separately; do not reassign original task. Not blocked by F08/F10.",
+  "new_provider_invocations_by_Codex": 0,
+  "new_handoff": "ZCODE-FINAL-CLARIFICATION-PROMPT.md / READY_NOT_DISPATCHED",
+  "skipped": "No implementation/runtime/database/container/browser/provider invocation, full re-review, route/unit adoption or PO approval."
+}

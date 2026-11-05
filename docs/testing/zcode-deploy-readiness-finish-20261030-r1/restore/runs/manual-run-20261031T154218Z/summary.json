@@ -1,0 +1,35 @@
+{
+ "stamp": "20261031T154218Z",
+ "source": {
+  "container": "mc-zcode-rr-product-test",
+  "database": "mc_rr_src_20261031t154218z"
+ },
+ "target": {
+  "container": "mc-zcode-rr-restore-target",
+  "database": "mc_rr_dst_20261031t154218z"
+ },
+ "boundary": "2026-10-31 15:42:33.953442+00 seq-sum 12488",
+ "backup_seconds": 0.277,
+ "restore_seconds": 0.383,
+ "archive_bytes": 256971,
+ "archive_sha256": "832048ae4038ba3025cc4d905234734290decf5523d053732ee8582efe2df8a7",
+ "census": "IDENTICAL",
+ "objects": "IDENTICAL",
+ "marker_in_source": "1",
+ "marker_in_restore": "0",
+ "readback_restored_vs_source": "IDENTICAL",
+ "readback_after_restart": "IDENTICAL",
+ "altered_object_readback_exit": 1,
+ "missing_object": "DETECTED",
+ "archive_refusals": {
+  "corrupt": {
+   "exit": 1,
+   "tables_left": 0
+  },
+  "truncated": {
+   "exit": 1,
+   "tables_left": 0
+  }
+ },
+ "scope": "local synthetic rehearsal; not a production RPO/RTO commitment; IdP recovery is a separate scope"
+}

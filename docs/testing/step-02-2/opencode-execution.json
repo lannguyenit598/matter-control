@@ -1,0 +1,61 @@
+{
+  "argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "run",
+    "--standalone",
+    "--agent",
+    "plan",
+    "--format",
+    "json",
+    "--title",
+    "MatterControl Step02.2 C01 handoff review",
+    "--file",
+    "/tmp/mc002-step022-opencode-input.txt",
+    "Review exact supplied Step02.2 handoff documents only, no tools or runtime. Return scoped verdict and findings."
+  ],
+  "exit": 0,
+  "start_utc": "2026-10-24T16:23:58.603523+00:00",
+  "end_utc": "2026-10-24T16:24:53.921113+00:00",
+  "elapsed_seconds": 55.31741991699528,
+  "session_id": "ses_e91461a9bffeB9pJ0699jJSv7r",
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "deny"
+    }
+  ],
+  "stdin": "DEVNULL",
+  "scope": "document handoff review only; no C01 implementation accepted",
+  "runtime_replay": false,
+  "stdout_sha256": "d3bcc297c4c384f76ab016bc7eefaa376069e4b8ba2638ef9fbeb2d09011e147",
+  "export_exit": 0,
+  "export_argv": [
+    "rtk",
+    "proxy",
+    "opencode",
+    "session",
+    "export",
+    "--sanitize",
+    "ses_e91461a9bffeB9pJ0699jJSv7r"
+  ],
+  "models": [
+    {
+      "id": "glm-5.3-flash-free",
+      "providerID": "opencode"
+    }
+  ],
+  "event_types": [
+    "step_start",
+    "text"
+  ],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "findings": {
+    "1": "MEDIUM pending prompt precision correction",
+    "2": "LOW pending stop condition",
+    "3": "LOW pending API-shape assertions"
+  },
+  "implementation_verified": false
+}

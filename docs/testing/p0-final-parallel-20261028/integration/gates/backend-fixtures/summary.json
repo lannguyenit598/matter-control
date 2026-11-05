@@ -1,0 +1,26 @@
+{
+  "counts": {
+    "pass": 765,
+    "fail": 0,
+    "skip": 4
+  },
+  "malformed_json_lines": 0,
+  "skipped_tests": [
+    {
+      "package": "github.com/example/userapi/internal/adapter/outbound/postgres/pgtest",
+      "test": "TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip"
+    },
+    {
+      "package": "github.com/example/userapi/internal/adapter/outbound/postgres",
+      "test": "TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds"
+    },
+    {
+      "package": "github.com/example/userapi/internal/adapter/outbound/postgres",
+      "test": "TestPerf_LocalWorkloads"
+    },
+    {
+      "package": "github.com/example/userapi/internal/adapter/outbound/postgres",
+      "test": "TestRestoreRehearsal"
+    }
+  ]
+}

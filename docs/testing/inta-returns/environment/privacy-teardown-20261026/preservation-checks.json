@@ -1,0 +1,109 @@
+{
+  "checks": [
+    {
+      "name": "exact container exited",
+      "result": "PASS"
+    },
+    {
+      "name": "container exit 0",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged Name",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged Image",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged Labels",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged StartedAt",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged Memory",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged NanoCpus",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged PidsLimit",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged Ports",
+      "result": "PASS"
+    },
+    {
+      "name": "unchanged Mounts",
+      "result": "PASS"
+    },
+    {
+      "name": "absent post-stop ['rtk', 'proxy', 'lsof', '-nP', '-iTCP:15457', '-sTCP:LISTEN']",
+      "result": "PASS"
+    },
+    {
+      "name": "absent post-stop ['rtk', 'proxy', 'lsof', '-nP', '-iTCP:15457', '-sTCP:ESTABLISHED']",
+      "result": "PASS"
+    },
+    {
+      "name": "absent post-stop ['rtk', 'proxy', 'lsof', '-nP', '-iTCP:18085', '-sTCP:LISTEN']",
+      "result": "PASS"
+    },
+    {
+      "name": "absent post-stop ['rtk', 'proxy', 'lsof', '-nP', '-iTCP:18085', '-sTCP:ESTABLISHED']",
+      "result": "PASS"
+    },
+    {
+      "name": "absent post-stop ['rtk', 'proxy', 'lsof', '-nP', '-iTCP:18086', '-sTCP:LISTEN']",
+      "result": "PASS"
+    },
+    {
+      "name": "absent post-stop ['rtk', 'proxy', 'lsof', '-nP', '-iTCP:18086', '-sTCP:ESTABLISHED']",
+      "result": "PASS"
+    },
+    {
+      "name": "absent post-stop ['rtk', 'proxy', 'ps', '-p', '98134,88444,88453', '-o', 'pid=,ppid=,lstart=,comm=']",
+      "result": "PASS"
+    },
+    {
+      "name": "ledger 59 preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "source head/clean /tmp/mc002-inta-be",
+      "result": "PASS"
+    },
+    {
+      "name": "source head/clean /tmp/mc002-inta-fe",
+      "result": "PASS"
+    },
+    {
+      "name": "source head/clean /tmp/mc002-inta-harness",
+      "result": "PASS"
+    },
+    {
+      "name": "governance HEAD unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "all originally scanned artifacts unchanged after stop",
+      "result": "PASS"
+    },
+    {
+      "name": "archive catalog count matches scan",
+      "result": "PASS"
+    }
+  ],
+  "pass": 25,
+  "fail": 0,
+  "finished_utc": "2026-10-26T08:51:19.809934924Z",
+  "container_exit_code": 0,
+  "changes_in_scanned_artifacts": []
+}

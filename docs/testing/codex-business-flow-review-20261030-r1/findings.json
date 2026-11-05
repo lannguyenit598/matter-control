@@ -1,0 +1,309 @@
+{
+  "status": "REVIEWED_SOURCE_FINDINGS_NOT_FIXED",
+  "findings": [
+    {
+      "id": "BF-01",
+      "priority": "P1",
+      "kind": "Business semantics / model mismatch",
+      "title": "Filing package verification and authority-outcome verification share one aggregate",
+      "sources": [
+        [
+          "apps/backend/internal/core/domain/matter/filing.go",
+          236
+        ],
+        [
+          "apps/backend/internal/core/domain/matter/filing.go",
+          373
+        ],
+        [
+          "apps/backend/internal/core/domain/matter/filing.go",
+          431
+        ],
+        [
+          "apps/backend/internal/core/domain/matter/evidence.go",
+          275
+        ],
+        [
+          "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go",
+          229
+        ],
+        [
+          "apps/backend/internal/adapter/outbound/repotest/mattercontrol/contract_gw.go",
+          341
+        ]
+      ],
+      "requirement": "state-semantics.md stage table; GW-03 / AC-163; BR-005",
+      "scenario": "The coordinator satisfies the package/signature criteria, submits, and later records an authority decision as outcome evidence without an independent assessment of that outcome.",
+      "actual": "Submission checks every active mandatory filing criterion; the same criteria drive the work-item verification aggregate. The executed GW suite expects VERIFIED before submission and still VERIFIED at approval after recording outcome evidence. There is no criterion purpose separating pre-submission package readiness from final outcome. Making an outcome criterion mandatory up front instead prevents submission until a future fact exists. The linked Requirement remains separate and is NOT automatically completed or verified: this finding is about the filing proof model, not propagation to that Requirement.",
+      "expected": "Package readiness must allow submission while outcome verification can remain pending after approval observation. Recording outcome evidence alone does not establish its independent acceptance.",
+      "correction": "Design the smallest explicit package/signature versus outcome criterion boundary; keep both independently attributable, version/epoch-aware and preserve existing submissions. Update contract/schema only after compatibility review; no silent reinterpretation of existing criteria.",
+      "acceptance": "A filing passes package gates, reaches APPROVAL with actual outcome evidence but pending independent outcome assessment, and displays that pending outcome distinctly. Independent outcome acceptance updates the correct proof state; reopen requires new-epoch outcome evidence/assessment. Add the negative-path regression before changing SuiteGW expectations."
+    },
+    {
+      "id": "BF-02",
+      "priority": "P1",
+      "kind": "Disconnected frontend/backend journey",
+      "title": "The offered no-proof filing option cannot declare the package required to progress",
+      "sources": [
+        [
+          "apps/frontend/src/features/filings/components/filing-forms.tsx",
+          166
+        ],
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          72
+        ],
+        [
+          "apps/frontend/src/features/proof/components/proof-panel.tsx",
+          240
+        ],
+        [
+          "apps/backend/internal/core/domain/matter/filing.go",
+          347
+        ],
+        [
+          "apps/backend/internal/core/service/evidence_service.go",
+          432
+        ]
+      ],
+      "requirement": "GW-03 / AC-163; BR-003/005",
+      "scenario": "Create a filing with proofRequired=no, then use Record the next step to start Package Preparation.",
+      "actual": "Creation explicitly offers No: only the authority outcome evidence is needed. Backend still requires at least one package criterion and deliberately permits criteria for filings regardless of proofRequired. The filing detail links to the generic work detail for proof, but that page skips the checklist read and the panel hides add-criterion/evidence controls when proofRequired=false. The selectable branch has no UI path to its backend prerequisite.",
+      "expected": "Every offered creation choice has a reachable authorized path to satisfy its package criteria; signature applicability is a separate OWNER decision.",
+      "correction": "Drive filing checklist visibility/capabilities from filing semantics, not solely the aggregate proofRequired flag. Clarify the creation label; do not weaken the backend package/signature guards. Coordinate with BF-01.",
+      "acceptance": "OWNER/EDITOR can create the no-outcome-proof variant, declare and satisfy a package checklist, record signature or OWNER no-signature applicability, then submit; VIEWER still cannot mutate."
+    },
+    {
+      "id": "BF-03",
+      "priority": "P2",
+      "kind": "Time-entry / user decision mismatch",
+      "title": "Date entry still defaults to manual UTC instead of the client zone",
+      "sources": [
+        [
+          "apps/frontend/src/features/work/components/due-field.tsx",
+          19
+        ],
+        [
+          "apps/frontend/src/features/work/components/due-field.tsx",
+          29
+        ],
+        [
+          "apps/frontend/src/features/work/components/due-field.tsx",
+          48
+        ],
+        [
+          "apps/frontend/src/features/work/components/execution-panel.tsx",
+          64
+        ],
+        [
+          "apps/frontend/src/features/work/components/execution-panel.tsx",
+          165
+        ],
+        [
+          "apps/frontend/src/hooks/use-time-zone.ts",
+          23
+        ]
+      ],
+      "requirement": "Direct PO client-timezone instruction; visible time-zone requirement; BR-003/006",
+      "scenario": "A Vietnam user enters 10:00 as the local due/completion time and leaves the default offset unchanged.",
+      "actual": "The form appends +00:00, producing 10:00Z instead of 03:00Z. The offset dropdown is explicit, so this is a misleading/default UX risk rather than hidden backend conversion. Read displays already use the detected zone, which exposes inconsistent input/output behavior. Editing slices current into the field instead of converting into the client zone.",
+      "expected": "Input uses the detected device zone by default, with a read-only visible zone and correct instant conversion at the selected date.",
+      "correction": "Reuse useTimeZone and existing date helpers. Remove the manual offset dropdown, convert local wall time with DST-aware validation, preserve the exact original instant on an unchanged edit and preserve pending intent.",
+      "acceptance": "Test Asia/Ho_Chi_Minh (+07), UTC and a DST-observing zone, including non-hour offsets/gap/overlap policy; untouched edits preserve the instant; completion and due dates use the same rule."
+    },
+    {
+      "id": "BF-04",
+      "priority": "P2",
+      "kind": "Incomplete relationship selection",
+      "title": "Dependency and filing-Requirement pickers silently stop at the first 200 records",
+      "sources": [
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          70
+        ],
+        [
+          "apps/frontend/src/features/work/components/dependency-panel.tsx",
+          124
+        ],
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/filings/new/page.tsx",
+          42
+        ]
+      ],
+      "requirement": "BR-002/003/004; bounded-pagination honesty; approved W1 workload up to300 records/Matter",
+      "scenario": "The desired prerequisite or filing Requirement lies after page one.",
+      "actual": "The pages build options from one list(limit200) response and discard continuation; the selection control has no indication or way to reach later valid records.",
+      "expected": "An authorized user can find every eligible related record within the supported data size without an unbounded fetch.",
+      "correction": "Use a bounded paginated/search selector; retain current selections and truthful loading/error/end/truncation states. Do not change authorization or reveal inaccessible names/counts.",
+      "acceptance": "With >200 records, choose an eligible item beyond page one; revoked/foreign records stay unavailable; search does not submit the parent form or replace the whole page."
+    },
+    {
+      "id": "BF-05",
+      "priority": "P2",
+      "kind": "Product workflow gap",
+      "title": "An independent verifier has no pending-assessment queue",
+      "sources": [
+        [
+          "apps/backend/internal/core/service/work_service.go",
+          1269
+        ],
+        [
+          "apps/frontend/src/features/work/my-work-selection.ts",
+          3
+        ],
+        [
+          "apps/frontend/src/features/proof/components/proof-panel.tsx",
+          137
+        ]
+      ],
+      "requirement": "Review-and-prove journey; BR-005; GW-01/02/03",
+      "scenario": "A contributor submits evidence and a different designated verifier is expected to assess it.",
+      "actual": "My Work includes only items owned by the actor; its four queues have no assessment queue. The assessment control is available only after the verifier locates the exact item/criterion. No pending-review dispatch surface was located.",
+      "expected": "The verifier can discover their pending review without knowing the item in advance.",
+      "correction": "Propose an authorized pending-assessment read model and Reviews due queue. This is a product flow/read-model extension, not an allegation that the existing owner-assignment endpoint violates its declared contract.",
+      "acceptance": "A designated independent verifier sees the pending claim/version and opens its exact context; submitter cannot self-assess; revoked access removes rows and derived counts."
+    },
+    {
+      "id": "BF-06",
+      "priority": "P2",
+      "kind": "Entry-point inconsistency",
+      "title": "Root and default login return open Workspaces instead of My Work",
+      "sources": [
+        [
+          "apps/frontend/src/app/page.tsx",
+          3
+        ],
+        [
+          "apps/frontend/src/lib/oidc/flow.ts",
+          85
+        ],
+        [
+          "docs/design/legal-team-experience-20261029/product-design-brief.md",
+          217
+        ]
+      ],
+      "requirement": "Selected focused-workbench / My Work-first experience",
+      "scenario": "A returning contributor signs in without a deep-link return target.",
+      "actual": "Root and OIDC fallback target /workspaces, adding workspace/Matter browsing before assigned work.",
+      "expected": "Default arrival exposes the current next work; explicit valid deep links keep their target.",
+      "correction": "Align both defaults to /my-actions with existing safeReturnTo behavior. Keep new-user empty-state guidance to workspace creation.",
+      "acceptance": "Root and default login land on My Work; authorized deep links and safe fallback remain correct; no-work users have a clear path forward."
+    },
+    {
+      "id": "BF-07",
+      "priority": "P2",
+      "kind": "Information architecture / operational comprehension",
+      "title": "Matter root does not expose the operational brief already available in Control Room",
+      "sources": [
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+          108
+        ],
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/page.tsx",
+          124
+        ],
+        [
+          "apps/frontend/src/features/control/components/control-room-view.tsx",
+          82
+        ],
+        [
+          "apps/frontend/src/features/matters/components/matter-tabs.tsx",
+          22
+        ]
+      ],
+      "requirement": "Morning comprehension journey; BR-001/002; AC-137",
+      "scenario": "A transaction lead opens a Matter to learn what changed, what blocks closing and who acts next.",
+      "actual": "The root shows a limited attention/own-work surface plus member administration/history; Control Room is another of ten peer tabs. Critical exposure requires the user to know which destination contains operational truth.",
+      "expected": "Matter arrival surfaces current truth, cause, next actor, proof/filing exposure, meaningful date and changes with secondary administration behind intentional navigation.",
+      "correction": "Design Matter root as the operational brief using existing reads, and reduce navigation choices through grouping. Preserve deep links, membership management and history. This is a design recommendation, not permission to remove functions.",
+      "acceptance": "Run the approved comprehension protocol; users answer the required questions from the landing screen, with unknown/stale states explicit."
+    },
+    {
+      "id": "BF-08",
+      "priority": "P2",
+      "kind": "Matter discovery gap",
+      "title": "The primary Matters destination first lists Workspaces",
+      "sources": [
+        [
+          "apps/frontend/src/app/(app)/workspaces/page.tsx",
+          17
+        ],
+        [
+          "apps/frontend/src/features/workspaces/components/workspace-list.tsx",
+          20
+        ],
+        [
+          "apps/frontend/src/features/matters/components/matter-list.tsx",
+          48
+        ],
+        [
+          "apps/frontend/src/features/matters/schemas.ts",
+          7
+        ]
+      ],
+      "requirement": "Legal-team navigation / readable context",
+      "scenario": "A manager knows a Matter title or attention state but not which Workspace contains it.",
+      "actual": "Discovery is Workspace then title/role Matter list; no one-step cross-workspace search with owner/due/attention context.",
+      "expected": "A named Matter is discoverable from the primary Matters entry without guessing its container.",
+      "correction": "First align labels with current scope; separately design a bounded authorized cross-workspace Matter discovery read model if adopted. No frontend fan-out that bypasses authorization.",
+      "acceptance": "Find an accessible Matter by name from one entry; show Workspace context and honest pagination. Optional owner/attention search requires explicit read-model support."
+    },
+    {
+      "id": "BF-09",
+      "priority": "P2",
+      "kind": "Task decision load",
+      "title": "Work detail presents several valid control groups without one primary next operation",
+      "sources": [
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          128
+        ],
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          218
+        ],
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          244
+        ],
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/work/[itemId]/page.tsx",
+          302
+        ]
+      ],
+      "requirement": "Selected focused-workbench experience; execution journey; BR-003",
+      "scenario": "An editor opens a Ready Action and must decide between execution, proof, dependencies and metadata controls.",
+      "actual": "State/outcome/execution/proof/dependency/detail/escalation regions are composed sequentially. The user must derive the meaningful next operation.",
+      "expected": "Why now, required outcome and one appropriate primary action lead; secondary/owner-only changes remain discoverable.",
+      "correction": "Use current state/role-derived capabilities for the primary operation and progressive disclosure for secondary controls, without inventing a generic merged task lifecycle.",
+      "acceptance": "Users correctly predict the operation and its consequence; blocked/waiting/view-only records show an honest reason/path, not a misleading enabled completion action."
+    },
+    {
+      "id": "BF-10",
+      "priority": "P2",
+      "kind": "Manager reporting usability",
+      "title": "Status Brief requires technical timestamps and renders raw event/target identifiers",
+      "sources": [
+        [
+          "apps/frontend/src/app/(app)/matters/[matterId]/data/page.tsx",
+          48
+        ],
+        [
+          "apps/frontend/src/features/data-transfer/components/brief-section.tsx",
+          38
+        ],
+        [
+          "apps/frontend/src/features/data-transfer/components/brief-section.tsx",
+          133
+        ]
+      ],
+      "requirement": "Communicate progress journey; BR-007",
+      "scenario": "A manager wants changes this week and outstanding work at the end of that period.",
+      "actual": "Brief lives in Data with import/export, uses t1/t2 RFC3339 inputs, and renders event type/target kind/raw targetId as primary change descriptions.",
+      "expected": "Ordinary date-range selection and readable object names/links; exact provenance remains available in details.",
+      "correction": "Expose Create status brief from Matter context, use the same client-zone input model, map historical targets to safe attributable labels without inventing unavailable historic titles.",
+      "acceptance": "A manager produces a readable draft without typing timestamps or interpreting IDs; changes versus outstanding-at-t2 and late-recorded/effective dates remain distinct; export remains permission scoped."
+    }
+  ]
+}

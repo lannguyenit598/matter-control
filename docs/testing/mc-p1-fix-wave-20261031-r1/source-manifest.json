@@ -1,0 +1,27 @@
+{
+  "wave": "MC-ZCODE-P1-FIX-WAVE-20261031",
+  "recorded_at_utc": "2026-10-31T16:49Z",
+  "agent": "actual ZCode (fix-wave executor, per PO 'zcode thực hiện hết')",
+  "base_commit": "0de3e5dbb8ef578c7288ba9c49ecaeddbbcbdcee",
+  "baseline_commit": "4b6a65f372b49a95d0bea3d9ff617a7d8445846d",
+  "baseline_tree": "c73e8b2a8a99af848a133f9535a2ecc71a8ca390",
+  "baseline_commit_message": "P0 local candidate baseline @0de3e5d+dirty, known defects Z-F-01/02 + PI-01..04 pending verify — see workboard-findings.md",
+  "baseline_delta_files": 883,
+  "pin_method": "per-file sha256 of every file in the 0de3e5d..4b6a65f delta, in source-manifest.sha256; OpenCode verify-wave must re-run sha256 -c against the same commit before any test",
+  "freeze_verification": {
+    "checked_at_utc": "2026-10-31T16:41:42Z",
+    "apps_source_writers_after_1630Z": "none",
+    "coordinator_doc_writes_concurrent": [
+      "docs/implementation/plans/MC-MIMOSA-GATE-COMMIT-PLAYBOOK-20261031.md (16:46:32Z)",
+      "docs/testing/opencode-verify-wave-20261031-r1/identity.json (16:45:52Z)",
+      "docs/implementation/workboard-findings.md DEC-01 contingency note (post-commit, uncommitted)"
+    ],
+    "note": "Concurrent writes are coordinator-session docs only; no apps/** writes by any other session. Commit landed BEFORE those writes, so 4b6a65f does not contain them — that is the pinned byte state for the verify wave."
+  },
+  "mimosa_git_gate": {
+    "blocked": false,
+    "note": "Commit executed by agent on codex/unified-project-flow without gate refusal. R1 precedent (codex/mc-be-01 sealed-build refusal) did not reproduce; playbook MC-MIMOSA-GATE-COMMIT-PLAYBOOK-20261031.md step 1 resolved."
+  },
+  "known_defects_at_baseline": ["Z-F-01", "Z-F-02", "Z-F-03", "UX-L-01", "UX-L-02", "UX-L-04", "UX-L-05", "UX-L-06"],
+  "rules": "Commit cục bộ duy nhất của wave là baseline + 1 commit/fix-unit; KHÔNG push; KHÔNG self-close CLOSED_VERIFIED."
+}

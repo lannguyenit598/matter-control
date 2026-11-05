@@ -1,6 +1,6 @@
 # Rules: Security (R-SEC)
 
-Detailed auth contract: [`docs/api-integration.md`](../../api-integration.md) section 8. History and evidence: [historical production-readiness audit](https://github.com/lannguyenit598/matter-control/blob/6172f234be5a25393cddffaf841cc0370b587334/apps/frontend/docs/audits/production-readiness-audit.md).
+Detailed auth contract: [`docs/api-integration.md`](../../api-integration.md) section 8. History and evidence: [`docs/audits/production-readiness-audit.md`](../../audits/production-readiness-audit.md).
 
 | ID       | Level  | Rule                                                                                                                                                                                                                                                                                                                                        | Why                                                            | Verified by                                    |
 | -------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------- |

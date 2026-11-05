@@ -1,0 +1,134 @@
+{
+  "purpose": "Current reviewed candidate input index; not merged OpenAPI/schema, executableJSONpatch or implementation",
+  "authority": "REVIEWED_CANDIDATE_DOCUMENT_ONLY; POArchitectureApprovalGateNOT_PASSED",
+  "read_order": [
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/reviewed-read-contract.json",
+      "bytes": 77882,
+      "sha256": "ac2b3851e55143d9e5df8fa5df77be7ceb4255b42024aefe888f06389fe5c7f5"
+    },
+    {
+      "path": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-delta.json",
+      "bytes": 14094,
+      "sha256": "fdd1f39373bea80665d1d54fff9c17449c34a7eb7eceaa9bf553da033bb251ce"
+    }
+  ],
+  "supporting_report": {
+    "path": "docs/design/step-03a/handoff/step-03a-7/reference-resolution-addendum.md",
+    "bytes": 10706,
+    "sha256": "cd7923f2e57bb9434b84222bc5e535a518519a80a575a43eecbc0c537744556f"
+  },
+  "precedence": "Apply delta only to named DR02/13pointrejections,DR09response and listed siblingcontextfields. Allotherbaseconstraintsremain. Supersedes entries are documented locations, not executableJSONpointers. Do not consume oldrejectionsalone.",
+  "supersedes": [
+    {
+      "question": "RC-REF-01",
+      "references": [
+        "reviewed-read-contract.json detail_read_catalogue DR-13 review_note (rejection of GET /external-parties/{id})",
+        "targeted-claude-review.md §4 table row DR-13"
+      ]
+    },
+    {
+      "question": "RC-REF-02",
+      "references": [
+        "reviewed-read-contract.json detail_read_catalogue DR-09 required_data (adds claim envelope)",
+        "DR-15 events / recentChanges card shape (adds claimRef sibling for ASSESSMENT/DISPUTE targets)"
+      ]
+    },
+    {
+      "question": "RC-REF-03",
+      "references": [
+        "reviewed-read-contract.json detail_read_catalogue DR-02 review_note (rejection of GET /workstreams/{id})",
+        "targeted-claude-review.md §4 table row DR-02"
+      ]
+    }
+  ],
+  "operation_count": 32,
+  "new_point_reads": [
+    "GET /api/v1/external-parties/{id}",
+    "GET /api/v1/workstreams/{id}"
+  ],
+  "extended_read": [
+    "GET /api/v1/evidence-claims/{id}/assessments"
+  ],
+  "not_a_universal_25_kind_resolver": true,
+  "questions": [
+    {
+      "id": "RC-REF-01",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "owner": "Claude (contract), ZCode (API), Antigravity (consumer), OpenCode (negative tests)",
+      "affected_dr": [
+        "DR-13",
+        "DR-16",
+        "DR-12"
+      ],
+      "affected_nav": [
+        "NAV-08"
+      ],
+      "acceptance": [
+        "Clicking a partyRef from a wait/filing issues exactly one GET /external-parties/{id}; no list scan",
+        "Overview wait cards render party labels with no follow-up request",
+        "Party #201 in the synthetic 201-party Matter resolves in one request",
+        "Revoked member gets the same 404 as nonexistent; client purges cached party detail for that Matter"
+      ],
+      "acceptance_result": "NOT_RUN"
+    },
+    {
+      "id": "RC-REF-02",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "owner": "Claude (contract), ZCode (API), Antigravity (consumer), OpenCode (negative tests)",
+      "affected_dr": [
+        "DR-08",
+        "DR-09",
+        "DR-15"
+      ],
+      "affected_nav": [
+        "NAV-03",
+        "NAV-04",
+        "NAV-10"
+      ],
+      "acceptance": [
+        "A claimRef from recentChanges resolves to claim + parent evidence in at most two requests, without guessing ids",
+        "A claimId sent to /evidence/{id} returns 404 (RC-3); the consumer never does this",
+        "Zero-assessment claim renders as an existing claim with no review, not as not-found",
+        "After promotion the assessment keeps the exact assessedDocumentVersionRef (CT-12)",
+        "A dispute or assessment-revocation event in recentChanges resolves to its claim and parent evidence without guessed ids (CT-19)"
+      ],
+      "acceptance_result": "NOT_RUN"
+    },
+    {
+      "id": "RC-REF-03",
+      "status": "RESOLVED_AS_REVIEWED_CANDIDATE_DOCUMENT_ONLY",
+      "owner": "Claude (contract), ZCode (API), Antigravity (consumer)",
+      "affected_dr": [
+        "DR-02",
+        "DR-04",
+        "DR-05"
+      ],
+      "affected_nav": [
+        "NAV-01",
+        "NAV-05",
+        "NAV-06"
+      ],
+      "acceptance": [
+        "Requirement/Action drawers show the workstream label without an extra request",
+        "Restoring grid?workstreamId= resolves the chip label with one GET /workstreams/{id}",
+        "Workstream #201 in the synthetic 201-workstream Matter resolves in one request",
+        "Client never assumes the first list page is complete"
+      ],
+      "acceptance_result": "NOT_RUN"
+    }
+  ],
+  "candidate_tqs_resolved": [
+    "TQ-02",
+    "TQ-06",
+    "TQ-08"
+  ],
+  "tqs_open": [
+    "TQ-01",
+    "TQ-03",
+    "TQ-04",
+    "TQ-05",
+    "TQ-07"
+  ],
+  "all_runtime_acceptance": "NOT_RUN"
+}

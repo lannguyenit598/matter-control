@@ -13,7 +13,7 @@ STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 LSTAMP="$(printf %s "$STAMP" | tr A-Z a-z)"
 SRC_DB="mc_rr_src_${LSTAMP}"; DST_DB="mc_rr_dst_${LSTAMP}"; NEG_DB="mc_rr_neg_${LSTAMP}"
 WORK="${MC_RR_WORK:-/tmp/mc-rr-${STAMP}}"
-OUT="${MC_RR_OUT:-${TMPDIR:-/tmp}/mc-restore-evidence-${STAMP}}"
+OUT="${MC_RR_OUT:-$ROOT/docs/testing/p0-codex-remediation-20261028/restore/runs/${STAMP}}"
 VERIFY="$ROOT/ops/p0-local/restore-rehearsal/verify.py"
 [ ! -e "$OUT" ] && [ ! -e "$WORK" ] || { echo "evidence and work directories must be new" >&2; exit 2; }
 mkdir -p "$OUT" "$WORK"; chmod 700 "$WORK"
