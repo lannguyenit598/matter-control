@@ -1,8 +1,7 @@
 -- +goose Up
 -- B2 (ADR-006 zero-trust addendum) + SQL-review F-02: secondary indexes for the measured access
--- paths. Additive only; no query text changes, so sqlc regeneration is not required. Measured on
--- the disposable fixture (EXPLAIN ANALYZE, docs/testing/zcode-adr006-cloud-readiness-20261030-r1/
--- b2-index-plan-events.json and docs/testing/zcode-sql-review-fixes-20261030-r1/):
+-- paths. Additive only; no query text changes, so sqlc regeneration is not required. Measured with
+-- EXPLAIN ANALYZE on the disposable fixture:
 -- ReviewHistoryCell 1.194 ms -> 0.022 ms (~54x) with the review_answers ordering index;
 -- ListMattersOfActor 25.4 -> 6.3 ms (4x) at 4.8k memberships with matter_memberships(user_id, …);
 -- parity at tiny scales (the recorded counter-evidence stays in the packets).

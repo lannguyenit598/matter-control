@@ -250,8 +250,8 @@ function Checks({ name, legend, options }: { name: string; legend: string; optio
  * and answers a refusal with the reason; nothing here pre-judges it.
  */
 /**
- * The D-9 guard refusal in the OpenDesign guard copy (docs/testing/opendesign-ux-plan-review-
- * 20261101-r1/ux-copy-for-guards.md): one message names why the submission is blocked and what to
+ * The D-9 guard refusal, per the OpenDesign guard copy: one message names why the submission is
+ * blocked and what to
  * attach, never a code. The technical criterion names follow underneath via the default
  * rejection body, so the lawyer can still see exactly which criterion to satisfy.
  */

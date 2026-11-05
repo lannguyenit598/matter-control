@@ -50,7 +50,7 @@ async function MyActions({ searchParams }: Pick<PageProps<'/my-actions'>, 'searc
   })
   // Bounded, authorized, server-side: the selected item's detail and the names of the (at most
   // four) Matters on screen. A failed read leaves the name or cause out; it is never replaced by an
-  // id. A name field on /me/actions would remove these calls (docs/testing/.../backend-requests.md).
+  // id. A name field on /me/actions would remove these calls.
   const shown = [selection.selected, ...selection.upNext].filter((a) => a !== null)
   const matterIds = [...new Set(shown.map((a) => a.matterId))]
   const [detail, names] = await Promise.all([
