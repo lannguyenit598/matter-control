@@ -1,6 +1,6 @@
 # MC-PREFLIGHT-01 — Filing Package Pre-flight v1
 
-- **Status:** BACKLOG — intake accepted; implementation NOT_STARTED; DoR dependencies open.
+- **Status:** AUTHOR_COMPLETE_PENDING_INDEPENDENT_REVIEW — implementation EXISTS in tree (see Status history 2026-11-05); independent review NOT dispatched. Intake body below is retained verbatim; only this status line and the status history are corrected.
 - **Requirement references:** REQ-MC-P0-06/07/16/20; approved D-9 purpose semantics; AC-145; design D-15/D-16 and §4. This is a display-only extension adjacent to P1 delivery, not a reclassification of the P0 baseline.
 - **Coordination/intake owner:** actual Local Codex.
 - **Assigned future implementation owner:** actual Local Codex, backend/API/frontend, after the readiness conditions below. This intake does not authorize code execution. No ZCode implementation reroute is issued by this task.
@@ -79,3 +79,5 @@ If a future normal commit is refused, retain/classify the actual refusal and use
 ## Status history
 
 2026-11-03 local: PROPOSED_DISPATCH intake → ACCEPTED_BY_LOCAL_CODEX → task BACKLOG, with PF-DEP-01/02 and contract clarifications recorded. Future implementation NOT_STARTED; reviewer PLANNED_NOT_DISPATCHED. Exact UTC and hashes are in the intake receipts. No implementation or product DONE claimed.
+
+2026-11-05 (status correction — found stale during MC-ZCODE-CERT-01 setup, PO instruction "sửa 2 phát hiện"): the record above said implementation NOT_STARTED, but a pre-flight implementation EXISTS in the tree — commit `ceb958c3` "feat(filings): add filing preflight checks across backend and frontend" (domain `filing_preflight.go` + route + `PreflightPanel`), reached main via merge `c7ee772c`. Author records attribute it to ZCode under a PO reroute; this entry records that discrepancy instead of rewriting the intake's assignment text. Author-reported gates (session/workboard records, NOT independently re-verified here): backend `make check` with PG + race green, FE vitest/build/storybook green, composition bench ≈682µs/100 criteria. The PF-AC matrix above remains NOT_RUN pending the non-author review. The review handoff `docs/implementation/handoffs/MC-OPENCODE-PREFLIGHT-IMPL-REVIEW-20261103-PROMPT.md` is still PROPOSED_DISPATCH — dispatch is a PO/Codex action item. MC-ZCODE-CERT-01 stays gated on that review returning PASS. No DONE, no product acceptance, no intake-text rewrite.
