@@ -138,14 +138,14 @@ Chưa có `src/hooks/`, `src/providers/`, `src/types/` vì chưa có code nào c
 ```bash
 pnpm test                 # unit + component (jsdom)
 pnpm exec playwright install chromium   # một lần
-pnpm test:e2e             # E2E: local chạy `pnpm dev`, CI chạy `pnpm start`
+pnpm test:e2e             # E2E: chế độ demo trên máy chủ phát triển
 ```
 
-| Loại      | Vị trí                      | Test gì                                                                      |
-| --------- | --------------------------- | ---------------------------------------------------------------------------- |
-| Unit      | `*.test.ts` cạnh file nguồn | Schema, repository, HTTP client, Server Actions (đã mock repository)         |
-| Component | `*.test.tsx` cạnh component | Hành vi và accessibility: role, label, trạng thái disabled/error             |
-| E2E       | `e2e/*.spec.ts`             | Luồng thật trên trình duyệt: CRUD task, filter, focus của dialog, mobile nav |
+| Loại      | Vị trí                      | Test gì                                                              |
+| --------- | --------------------------- | -------------------------------------------------------------------- |
+| Unit      | `*.test.ts` cạnh file nguồn | Schema, repository, HTTP client, Server Actions (đã mock repository) |
+| Component | `*.test.tsx` cạnh component | Hành vi và accessibility: role, label, trạng thái disabled/error     |
+| E2E       | `e2e/*.spec.ts`             | Điều hướng, focus hộp thoại, lỗi đọc, CSP và tải trước               |
 
 Quy ước:
 

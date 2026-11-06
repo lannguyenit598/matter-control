@@ -229,7 +229,7 @@ Never put tokens or internal URLs in `NEXT_PUBLIC_*` variables: those are inline
 - Query by role and label (`getByRole('button', { name: 'Save' })`), never by CSS class.
 - Async Server Components can't be rendered in Vitest: test their schema, repository and actions, and cover the page with E2E.
 - E2E specs import `test` and `expect` from `e2e/fixtures.ts`, not from `@playwright/test`.
-- E2E always runs in demo mode against one shared server, so tests run serially and create uniquely named data. Locally Playwright starts `pnpm dev` (or reuses a running one); in CI it runs `pnpm start` after `pnpm build`.
+- The CI browser job runs the demo suite serially with a fresh `pnpm dev` server and no retries. Locally Playwright can reuse a running server. The suite covers the workbench shell and unavailable reads. A separate browser step tests prefetch on a production build in signed-out REST mode. Matter transactions require an authenticated REST integration environment. The quality and Worker jobs build the release artifacts separately.
 - Action tests mock the repository, `next/cache` and `requireSession`, and include negative cases (not signed in, forbidden, invalid input): see `src/features/tasks/actions.test.ts`.
 
 ## 10. Remove the demo

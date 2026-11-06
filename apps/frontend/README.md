@@ -136,14 +136,14 @@ There is no `src/hooks/`, `src/providers/` or `src/types/` yet because no code n
 ```bash
 pnpm test                 # unit + component (jsdom)
 pnpm exec playwright install chromium   # once
-pnpm test:e2e             # E2E: runs `pnpm dev` locally, `pnpm start` in CI
+pnpm test:e2e             # E2E: demo mode on the development server
 ```
 
 | Type      | Location                           | What it tests                                                                 |
 | --------- | ---------------------------------- | ----------------------------------------------------------------------------- |
 | Unit      | `*.test.ts` next to the source     | Schemas, repositories, HTTP client, Server Actions (with a mocked repository) |
 | Component | `*.test.tsx` next to the component | Behavior and accessibility: roles, labels, disabled/error states              |
-| E2E       | `e2e/*.spec.ts`                    | Real browser flows: task CRUD, filters, dialog focus, mobile nav              |
+| E2E       | `e2e/*.spec.ts`                    | Workbench navigation, dialog focus, unavailable reads, CSP, prefetch          |
 
 Conventions:
 

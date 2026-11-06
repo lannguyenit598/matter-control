@@ -71,26 +71,67 @@ jobs:
           cache-dependency-path: apps/backend/go.sum
       - name: Test (unit, HTTP, memory and PostgreSQL contract suites)
         run: |
-          set -o pipefail # a failing test must fail the step, not be hidden by tee
+          set -euo pipefail
+          # Keep the existing contract database. This second instance is only for pgx verify-full.
+          fixture=$(mktemp -d /tmp/mc-pg-tls.XXXXXX)
+          tls_db=
+          trap 'if [ -n "$tls_db" ]; then docker stop "$tls_db" >/dev/null || true; fi; rm -rf "$fixture"' EXIT
+          openssl req -x509 -newkey rsa:2048 -nodes -sha256 -days 1 -subj /CN=mc-ci-ca \
+            -addext basicConstraints=critical,CA:TRUE -keyout "$fixture/ca.key" -out "$fixture/ca.pem"
+          openssl req -new -newkey rsa:2048 -nodes -subj /CN=localhost \
+            -keyout "$fixture/server.key" -out "$fixture/server.csr"
+          openssl x509 -req -sha256 -days 1 -set_serial 1 -in "$fixture/server.csr" \
+            -CA "$fixture/ca.pem" -CAkey "$fixture/ca.key" -out "$fixture/server.pem" \
+            -extfile <(printf 'subjectAltName=DNS:localhost\n')
+          tls_password=$(openssl rand -hex 16)
+          tls_db=$(docker run --rm -d -p 127.0.0.1::5432 --entrypoint sh \
+            -e POSTGRES_PASSWORD="$tls_password" \
+            -v "$fixture/server.key:/fixture/server.key:ro" -v "$fixture/server.pem:/fixture/server.pem:ro" \
+            postgres:18-alpine -ec '
+              cp /fixture/server.key /fixture/server.pem /tmp/
+              chown postgres:postgres /tmp/server.key
+              chmod 600 /tmp/server.key
+              exec docker-entrypoint.sh postgres -c ssl=on \
+                -c ssl_cert_file=/tmp/server.pem -c ssl_key_file=/tmp/server.key
+            ')
+          binding=$(docker port "$tls_db" 5432/tcp)
+          for attempt in {1..30}; do
+            if docker exec "$tls_db" pg_isready -h 127.0.0.1 -U postgres >/dev/null 2>&1; then
+              break
+            fi
+            sleep 1
+          done
+          docker exec "$tls_db" pg_isready -h 127.0.0.1 -U postgres
+          export MC_TLS_TEST_DATABASE_URL="postgres://postgres:$tls_password@localhost:${binding##*:}/postgres"
+          export MC_TLS_TEST_CA_FILE="$fixture/ca.pem"
           go test -race -count=1 -json -coverprofile=coverage.out ./... | tee test.json
       - name: Coverage
         run: go tool cover -func=coverage.out | tail -1
-      # A skipped PostgreSQL test would silently hide a product-database regression. Only tests
-      # that need an extra environment (performance run, restore rehearsal, the self-skip check, the
-      # one fault case that needs a second connection) may skip.
+      # Required PostgreSQL contract and TLS tests must execute.
       - name: No unexpected skips
         run: |
           python3 - <<'PY'
-          import json, re, sys
-          allowed = re.compile(r"^(TestPerf_LocalWorkloads|TestRestoreRehearsal|TestFreshSchemaDSNFrom_SkipsWithoutEnv|TestMatterSuiteW6_Postgres)(/|$)")
+          import json, sys
+          postgres = "adapter/outbound/postgres"
+          allowed = {
+              ("adapter/outbound/objectstore", "TestContract_R2_RealBucket"),  # Real provider.
+              (postgres, "TestAccessPathExplainVerification"),  # Opt-in workload.
+              (postgres, "TestPerf_LocalWorkloads"),  # Opt-in workload.
+              (postgres, "TestRestoreRehearsal"),  # Separate recovery drill.
+              (postgres + "/pgtest", "TestFreshSchemaDSNFrom_SkipsWithoutEnv/skip"),  # Self-test.
+              # The transaction adapter has no memory-only step injection seam.
+              (postgres, "TestMatterSuiteW6_Postgres/a_failure_inside_the_group_rolls_back_every_row;_a_retry_then_succeeds"),
+          }
           skipped = []
-          for line in open("test.json"):
-              try:
-                  e = json.loads(line)
-              except ValueError:
-                  continue
-              if e.get("Action") == "skip" and e.get("Test") and not allowed.match(e["Test"]):
-                  skipped.append(e["Package"].split("/internal/")[-1] + " :: " + e["Test"])
+          with open("test.json") as events:
+              for line in events:
+                  event = json.loads(line)
+                  if event.get("Action") != "skip" or not event.get("Test"):
+                      continue
+                  package = event["Package"].split("/internal/", 1)[-1]
+                  test = event["Test"]
+                  if (package, test) not in allowed:
+                      skipped.append(f"{package} :: {test}")
           if skipped:
               print("Unexpected skipped tests:", *skipped, sep="\n  ")
               sys.exit(1)

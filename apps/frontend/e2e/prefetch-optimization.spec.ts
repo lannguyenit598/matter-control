@@ -1,69 +1,34 @@
-import { expect, test } from '@playwright/test'
 import { instant } from '@next/playwright'
 
+import { expect, test } from './fixtures'
+
 test.describe('Partial Prefetching Optimization', () => {
-  test('navigates from /my-actions to /my-reviews with instant shell', async ({ page }) => {
-    await page.goto('/my-actions')
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  for (const [path, heading] of [
+    ['/my-reviews', /reviews due|cần xác minh/i],
+    ['/matters', /matters|hồ sơ/i],
+    ['/workspaces', /workspaces|không gian làm việc/i],
+  ] as const) {
+    test(`navigates from /my-actions to ${path} with instant shell`, async ({ page }) => {
+      // Next sends the per-link runtime shell separately from the route tree.
+      const prefetched = page.waitForResponse(
+        (response) =>
+          new URL(response.url()).pathname === path &&
+          response.request().headers()['next-router-prefetch'] === '3' &&
+          response.ok(),
+      )
+      await page.goto('/my-actions')
+      await prefetched
 
-    await instant(page, async () => {
-      await page.click('a[href="/my-reviews"]')
-      await page.waitForURL((url) => url.pathname === '/my-reviews')
+      const link = page.getByRole('complementary').getByRole('link', { name: heading })
+      const signIn = page.getByRole('heading', { name: 'Sign-in required', exact: true })
+      await instant(page, async () => {
+        await link.click()
+        await expect(page).toHaveURL((url) => url.pathname === path)
+        await expect(page.getByRole('heading', { name: heading, level: 1 })).toBeVisible()
+        await expect(signIn).toHaveCount(0)
+      })
 
-      // Positive assertion: App Shell heading is ready immediately
-      await expect(
-        page.getByRole('heading', { name: /reviews due|cần xác minh/i, level: 1 }),
-      ).toBeVisible()
-
-      // Negative assertion: Dynamic streaming content (ReviewQueue or ReadFailure) is absent under lock
-      await expect(page.getByTestId('review-queue-content')).toHaveCount(0)
+      await expect(signIn).toBeVisible()
     })
-
-    // After instant lock releases, page finishes rendering
-    await expect(
-      page.getByRole('heading', { name: /reviews due|cần xác minh/i, level: 1 }),
-    ).toBeVisible()
-  })
-
-  test('navigates from /my-actions to /matters with instant shell', async ({ page }) => {
-    await page.goto('/my-actions')
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-
-    await instant(page, async () => {
-      await page.click('a[href="/matters"]')
-      await page.waitForURL((url) => url.pathname === '/matters')
-
-      // Positive assertion: App Shell heading is ready immediately
-      await expect(page.getByRole('heading', { name: /matters|hồ sơ/i, level: 1 })).toBeVisible()
-
-      // Negative assertion: Dynamic streaming content is absent under lock
-      await expect(page.getByTestId('matters-discovery-content')).toHaveCount(0)
-    })
-
-    // After lock releases, page finishes rendering
-    await expect(page.getByRole('heading', { name: /matters|hồ sơ/i, level: 1 })).toBeVisible()
-  })
-
-  test('navigates from /my-actions to /workspaces with instant shell', async ({ page }) => {
-    await page.goto('/my-actions')
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-
-    await instant(page, async () => {
-      await page.click('a[href="/workspaces"]')
-      await page.waitForURL((url) => url.pathname === '/workspaces')
-
-      // Positive assertion: App Shell heading is ready immediately
-      await expect(
-        page.getByRole('heading', { name: /workspaces|không gian làm việc/i, level: 1 }),
-      ).toBeVisible()
-
-      // Negative assertion: Dynamic streaming content is absent under lock
-      await expect(page.getByTestId('workspace-list-content')).toHaveCount(0)
-    })
-
-    // After lock releases, page finishes rendering
-    await expect(
-      page.getByRole('heading', { name: /workspaces|không gian làm việc/i, level: 1 }),
-    ).toBeVisible()
-  })
+  }
 })

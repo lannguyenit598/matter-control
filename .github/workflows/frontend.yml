@@ -134,8 +134,22 @@ jobs:
           cache-dependency-path: apps/frontend/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm build
-      - run: pnpm test:e2e
+      - name: Workbench demo
+        run: pnpm test:e2e --retries=0
+        env:
+          NODE_ENV: development
+      # This build exposes the navigation lock only inside the browser test job.
+      - name: Build for prefetch tests
+        run: pnpm build
+        env:
+          EXPOSE_TESTING_API: '1'
+      - name: Production prefetch with signed-out REST
+        run: pnpm test:e2e e2e/prefetch-optimization.spec.ts --retries=0
+        env:
+          NODE_ENV: production
+          API_MODE: rest
+          API_BASE_URL: http://127.0.0.1:1/api/v1
+          AUTH_ALLOW_ANONYMOUS: 'false'
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: failure()
         with:
