@@ -1,0 +1,34 @@
+# MC-FE-DESIGN-REVIEW-20261106 — command transcript (condensed)
+
+All shell commands prefixed with `rtk` per host rule (RTK.md present; `rtk proxy` semantics used for raw pass-through). Shell vars do not persist between calls (macOS/zsh note). No timeout command available.
+
+## Pre-flight (2026-11-06)
+- `git rev-parse HEAD` → first dispatch: `41098a4d8690a1f3ce3864ace50fc20ca1221caa` (== pin); re-dispatch check: shared checkout HEAD had MOVED to `26680dc14aa50b384a08019acdec3dc9f0261b75` on `zcode/r2-storage-fix-20261106` (foreign R2 workstream committed) → verdicts bound to pinned bytes via isolated worktree (ADDENDUM-1).
+- `git status --porcelain` → recorded (3 handoff prompts untracked at re-dispatch; earlier 5 M + 2 ?? committed by the R2 workstream).
+- `lsof -i :3000 / :6006 / :3100` → free at start; Chrome PRESENT; Node v24.22.1; puppeteer-core NOT INSTALLED (recorded; nothing installed).
+
+## Worktree + bootstrap
+- `git worktree add --detach /private/tmp/mc-fe-design-review-20261106/wt-41098a4d 41098a4d…` → OK (detached at pin).
+- `pnpm -C <wt> install --frozen-lockfile` → exit 0 (803 packages, store-cached, ~1 min).
+- `git -C <wt> restore --source 151543b5 -- docs/testing/opendesign-ux-plan-review-20261101-r1 docs/testing/uiux-lawyer-experience-audit-20261030-r1` → reference docs (D-3, ux-copy-for-guards, V-01..V-14, P-01..P-15, contrast-results) restored from history into the disposable worktree for reading (28a205ee pruned them from the pin lineage).
+
+## Servers (transient)
+- `pnpm -C <wt>/apps/frontend run storybook --ci` → Storybook 10.6.3 READY on 127.0.0.1:6006 (manager 127 ms / preview 1.31 s; 72/72 stories render; recurring console 404 in `atoms-badge--variants` only).
+- `pnpm -C <wt>/apps/frontend exec next dev -p 3100` → Next 16.4.2 (Turbopack) Ready.
+- Teardown (2026-11-07): PIDs on :6006/:3100 killed; worktree removed (`git worktree remove --force`); evidence preserved under docs/testing/fe-design-review-20261106-r1/.
+
+## Capture / measurement scripts (written into the disposable worktree, executed via system Chrome `channel:'chrome'`, headless)
+- `capture-design-review.mjs <round> [--dark=ids]` → 77/74/74 shots for lens1/lens2/lens3 (+5/2/2 forced-dark) → evidence/screens/<round>/ (_results.json per round).
+- `capture-app.mjs <round>` → 6 IdP-free app surfaces with `ui-locale=vi` cookie probe (lang/h1/URL/console recorded) → app/_results.json.
+- `capture-mobile.mjs pass4-guidelines` → 7×390×844 captures with horizontal-overflow probe (all false).
+- `sticky-check.mjs` / `sticky-check2.mjs` → toolbar/sidebar rects, `axesCollide:false`, docHeight=900.
+- `contrast-probe{,2,3,4}.mjs` + `dump-colors.mjs` → v1..v3 iterated on computed-color serialisation (rgb → oklch → Chrome canonicalises to **lab()**); v4 = rgb/oklch/lab parser, both themes forced via `data-theme` → `evidence/contrast-results-r1.json` (light 22/24, dark 22/24).
+
+## Skill invocations (each its own round, single-lens sequencing)
+- `/design-taste-frontend` (+ inspect.mjs --app ×2), `/impeccable` (+ context, detect --json), `/hallmark` (+ sloplint lint-tier), `/web-design-guidelines` (guidelines fetched from vercel-labs raw URL) then `/frontend-design`, `/design-testing-strategy` + `/browser-use:web-gui-tester` (+ control-browser; IAB backend; screenshots emitted in-cell per skill rules).
+
+## Interactive QA (IAB) — deviations recorded
+- Trigger click: 1st attempt actionability-timeout, retry OK (transient init latency, recorded).
+- Clicks inside native `<dialog>` (showModal): actionability-timeout ×3 despite verified geometry (visible/enabled/unoccluded/stable bbox/no animation) → Close path UNTESTABLE; runtime limitation recorded.
+- `cua.scroll` timeout on app page; sticky measurement completed via Playwright script instead.
+- Cross-port goto stale-frame observed once (url/title new, frame old) → re-based on settled page.

@@ -1,0 +1,21 @@
+# Phase 2 — improvement backlog (MC-FE-DESIGN-REVIEW-20261106)
+
+**SELF-REVIEW / OWNER-CONFIRMATION** — ADDENDUM-2. Proposals only; applying anything is a separate implementation dispatch. LANE-B requires explicit PO approval; **no LANE-B items are proposed** — every item stays inside the approved Solid Glass intent, D-3 terminology and the existing token system (refinement, not replacement — per the 2026-11-01 adjudication).
+
+| ID | Lens(es) | Surface + file:line | Evidence | Proposal | Effort | Lane | Depends on |
+|---|---|---|---|---|---|---|---|
+| UX-B-01 | design-taste | App fail/empty branches (`app/(app)/*/page.tsx` ReadFailure) + `dashboard-template.stories.tsx` | `taste-inspect/app-matters/report.json` (`hero-void` 39–40%) | Close the first-screen void on fail states: vertically centre the fail card at canvas height or add one secondary context line under it | S | A | none |
+| UX-B-02 | design-taste | `dashboard-template.stories.tsx` liquid fixture + glass CSS | `taste-inspect/dashboard-story/report.json` (`heavy-borders` #57606d on #f1f2f5, 5.69:1) | Align fixture panel borders to `--workbench-border`/`--glass-edge` whisper range (1.1–1.3:1) | S | A | none |
+| UX-B-03 | design-taste | Glass/workbench shadow tokens (`globals.css`, `pane-workbench.css`) | `taste-inspect/dashboard-story/report.json` (`heavy-shadow` rgba(38,44,57,0.1)) | Tune glass panel shadows 10%→≤8% alpha, or record the Solid-Glass thickness defence in the token comment (choose one, in the next fix-wave) | S | A | none |
+| UX-B-04 | design-taste | `*.stories.tsx` fixtures | `templates-dashboardtemplate--default.png` ("Acme Admin"/"Page title") | Fixture copy sweep to product voice + D-3 terms so Storybook stays a faithful design-review surface | S–M | A | none |
+| UX-B-05 | impeccable | `molecules/form-field.stories.tsx`, `atoms/select.stories.tsx` | `lens2-impeccable/molecules-formfield--with-error.png` (full-1440 inputs) | Give form stories a realistic max-width container (~420px) | S | A | none |
+| UX-B-06 | impeccable | `organisms/inline-edit.tsx` | `lens2-impeccable/organisms-inline-edit--default.png` | Bring the edit affordance into text proximity / hover-reveal near the text | S | A | none |
+| UX-B-07 | impeccable | `molecules/form-field.tsx` | `lens2-impeccable/molecules-formfield--with-error.png` | Give the error line visual precedence over helper text when both render (weight/icon) | S | A | none |
+| UX-B-08 | hallmark | `globals.css:815-897`, `pane-workbench.css:290,373` | sloplint 36 off-4px-scale NOTEs | Normalise off-scale paddings/gaps to the 4px grid (P-14 spacing adoption) | M | A | none |
+| UX-B-09 | guidelines | `src/app/layout.tsx` | grep: no `theme-color` meta | Emit `<meta name="theme-color">` per theme | S | A | none |
+| UX-B-10 | guidelines | globals layer for interactive elements | grep: no `touch-action` | Add `touch-action: manipulation` to controls (mobile tap latency) | S | A | none |
+| UX-B-11 | design QA + hallmark | `--field-face` tokens (`globals.css:76-77`, dark counterpart) | `contrast-results-r1.json` (1.037/1.188 vs 3:1) | Strengthen field-face vs glass composite to ≥3:1 (deeper inset tint per theme) or ratify rim-only affordance in the token comment (P-10/V-03 closure path) | S–M | A | populated walkthrough env for the final on-dialog measure |
+| UX-B-12 | quality/hallmark | `atoms/badge.stories.tsx` | console 404 every round | Fix the 404 resource in the badge story (Storybook hygiene) | S | A | none |
+| UX-B-13 | design QA | `components/molecules/dialog.tsx:67-70` + palette story wiring | T1 Escape repro (2 attempts) vs `onCancel` present | Verify Escape-close independently (Playwright-local/human); fix wiring if the discrepancy is real in-app | S (verify-first) | A | non-author verification of UX-R1-25 |
+
+**Deliberately not proposed (already-adjudicated space):** glass-everywhere, radius changes, rainbow/overshoot/58px-title directions, new motion/refraction systems, new dependencies. **Quick-win patch files:** skipped this round — see report §skipped (every S-lane item above touches design-system files authored inside the waived non-author scope; preparing diffs without a non-author reviewer adds risk without value).
