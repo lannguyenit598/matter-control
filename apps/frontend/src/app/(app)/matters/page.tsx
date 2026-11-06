@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
@@ -10,8 +9,9 @@ import { MatterDiscovery } from '@/features/matters/components/matter-discovery'
 import { matterRepository } from '@/features/matters/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Matters' }
+export const generateMetadata = pageMetadata('Matters', 'Hồ sơ')
 
 const first = (v: string | string[] | undefined, max: number) =>
   typeof v === 'string' && v.length <= max ? v : ''

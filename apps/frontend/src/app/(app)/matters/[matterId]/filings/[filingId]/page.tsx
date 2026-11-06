@@ -33,12 +33,13 @@ import { proofRepository } from '@/features/proof/repository'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { localizedTitle } from '@/lib/page-metadata'
 
 export async function generateMetadata({
   params,
 }: PageProps<'/matters/[matterId]/filings/[filingId]'>): Promise<Metadata> {
   const { filingId } = await params
-  return { title: `Filing \u00b7 ${filingId}` }
+  return { title: await localizedTitle(`Filing \u00b7 ${filingId}`, `Thủ tục \u00b7 ${filingId}`) }
 }
 
 type Props = PageProps<'/matters/[matterId]/filings/[filingId]'>

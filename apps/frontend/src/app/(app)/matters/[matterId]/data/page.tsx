@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { Skeleton } from '@/components/atoms/skeleton'
@@ -9,8 +8,9 @@ import { matterRepository } from '@/features/matters/repository'
 import { workRepository } from '@/features/work/repository'
 import { attempt } from '@/lib/mc/errors'
 import { ReadFailure } from '@/components/organisms/read-failure'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Data' }
+export const generateMetadata = pageMetadata('Data', 'Dữ liệu')
 
 export default function DataPage({ params }: PageProps<'/matters/[matterId]/data'>) {
   return (

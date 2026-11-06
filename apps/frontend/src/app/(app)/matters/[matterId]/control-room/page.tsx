@@ -1,6 +1,5 @@
 import { FilePlus } from 'lucide-react'
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/atoms/card'
@@ -17,8 +16,9 @@ import { matterRepository } from '@/features/matters/repository'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Control Room' }
+export const generateMetadata = pageMetadata('Control Room', 'Phòng điều hành')
 
 export default function ControlRoomPage({ params }: PageProps<'/matters/[matterId]/control-room'>) {
   return (

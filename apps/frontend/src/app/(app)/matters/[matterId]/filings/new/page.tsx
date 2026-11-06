@@ -1,6 +1,5 @@
 import { ArrowLeft } from 'lucide-react'
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -13,8 +12,9 @@ import { searchWorkItemsAction } from '@/features/work/actions'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'New filing' }
+export const generateMetadata = pageMetadata('New filing', 'Thủ tục mới')
 
 export default function NewFilingPage({ params }: PageProps<'/matters/[matterId]/filings/new'>) {
   return (

@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
@@ -10,8 +9,9 @@ import { ReviewQueue } from '@/features/proof/components/review-queue'
 import { proofRepository } from '@/features/proof/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Reviews due' }
+export const generateMetadata = pageMetadata('Reviews due', 'Cần xác minh')
 
 export default function MyReviewsPage({ searchParams }: PageProps<'/my-reviews'>) {
   return (

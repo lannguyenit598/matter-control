@@ -1,6 +1,5 @@
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
@@ -13,8 +12,9 @@ import { selectMyWork } from '@/features/work/my-work-selection'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'My Work' }
+export const generateMetadata = pageMetadata('My Work', 'Việc của tôi')
 
 export default function MyActionsPage({ searchParams }: PageProps<'/my-actions'>) {
   return (

@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import { connection } from 'next/server'
@@ -17,8 +16,9 @@ import { WorkspaceMembers } from '@/features/workspaces/components/workspace-mem
 import { workspaceRepository } from '@/features/workspaces/repository'
 import { getSession } from '@/lib/auth'
 import { attempt, McError } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Workspace' }
+export const generateMetadata = pageMetadata('Workspace', 'Không gian làm việc')
 
 export default function WorkspacePage({ params }: PageProps<'/workspaces/[workspaceId]'>) {
   return (

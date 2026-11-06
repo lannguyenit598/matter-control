@@ -19,12 +19,15 @@ import { formatBytes } from '@/features/proof/labels'
 import { proofRepository } from '@/features/proof/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { localizedTitle } from '@/lib/page-metadata'
 
 export async function generateMetadata({
   params,
 }: PageProps<'/matters/[matterId]/documents/[documentId]'>): Promise<Metadata> {
   const { documentId } = await params
-  return { title: `Document \u00b7 ${documentId}` }
+  return {
+    title: await localizedTitle(`Document \u00b7 ${documentId}`, `Tài liệu \u00b7 ${documentId}`),
+  }
 }
 
 type Props = PageProps<'/matters/[matterId]/documents/[documentId]'>

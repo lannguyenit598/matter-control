@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -10,8 +9,9 @@ import { RequirementDetail } from '@/features/requirements/components/requiremen
 import { requirementRepository } from '@/features/requirements/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Requirement' }
+export const generateMetadata = pageMetadata('Requirement', 'Yêu cầu')
 
 export default function RequirementPage({ params }: PageProps<'/requirements/[requirementId]'>) {
   return (

@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ChevronDown, Rows2, Rows3 } from 'lucide-react'
 import { Suspense } from 'react'
@@ -25,8 +24,9 @@ import { workRepository } from '@/features/work/repository'
 import { gridQuerySchema } from '@/features/work/schemas'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Work' }
+export const generateMetadata = pageMetadata('Work', 'Công việc')
 
 export default function WorkPage({ params, searchParams }: PageProps<'/matters/[matterId]/work'>) {
   return (

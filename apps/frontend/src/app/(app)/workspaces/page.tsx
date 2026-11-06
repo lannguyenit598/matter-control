@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
@@ -11,8 +10,9 @@ import { WorkspaceList } from '@/features/workspaces/components/workspace-list'
 import { workspaceRepository } from '@/features/workspaces/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Workspaces' }
+export const generateMetadata = pageMetadata('Workspaces', 'Không gian làm việc')
 
 export default function WorkspacesPage() {
   return (

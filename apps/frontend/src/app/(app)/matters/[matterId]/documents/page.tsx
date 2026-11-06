@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -12,8 +11,9 @@ import { CreateDocumentForm } from '@/features/proof/components/document-forms'
 import { proofRepository } from '@/features/proof/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Documents' }
+export const generateMetadata = pageMetadata('Documents', 'Tài liệu')
 
 export default function DocumentsPage({ params }: PageProps<'/matters/[matterId]/documents'>) {
   return (

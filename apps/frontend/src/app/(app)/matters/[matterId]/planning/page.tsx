@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { Skeleton } from '@/components/atoms/skeleton'
@@ -15,8 +14,9 @@ import {
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Planning' }
+export const generateMetadata = pageMetadata('Planning', 'Kế hoạch')
 
 export default function PlanningPage({ params }: PageProps<'/matters/[matterId]/planning'>) {
   return (

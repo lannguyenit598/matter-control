@@ -24,6 +24,7 @@ import { CreateActionForm } from '@/features/work/components/create-action-form'
 import { AddWorkDialog } from '@/features/work/components/add-work-dialog'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { localizedTitle } from '@/lib/page-metadata'
 
 export async function generateMetadata({
   params,
@@ -31,7 +32,7 @@ export async function generateMetadata({
   // The matter title is not worth a second read at the metadata boundary: the id names the route
   // until a page that already loaded the matter shows the title itself.
   const { matterId } = await params
-  return { title: `Matter \u00b7 ${matterId}` }
+  return { title: await localizedTitle(`Matter \u00b7 ${matterId}`, `Hồ sơ \u00b7 ${matterId}`) }
 }
 
 export default function MatterPage({ params, searchParams }: PageProps<'/matters/[matterId]'>) {

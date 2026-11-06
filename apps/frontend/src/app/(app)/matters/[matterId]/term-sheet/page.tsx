@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import { connection } from 'next/server'
 import { Suspense } from 'react'
 
@@ -12,8 +11,9 @@ import { termSheetRepository } from '@/features/term-sheet/repository'
 import { toSheetLine } from '@/features/term-sheet/schemas'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Term sheet' }
+export const generateMetadata = pageMetadata('Term sheet', 'Bảng điều khoản')
 
 export default function TermSheetPage({ params }: PageProps<'/matters/[matterId]/term-sheet'>) {
   return (

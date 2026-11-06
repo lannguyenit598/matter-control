@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -14,8 +13,9 @@ import { buildAgenda, parseAgendaQuery } from '@/features/work/agenda'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Agenda' }
+export const generateMetadata = pageMetadata('Agenda', 'Lịch')
 
 export default function AgendaPage({
   params,

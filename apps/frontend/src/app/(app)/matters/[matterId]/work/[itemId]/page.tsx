@@ -35,12 +35,13 @@ import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 import { safeInternalPath, withFrom } from '@/lib/mc/paths'
+import { localizedTitle } from '@/lib/page-metadata'
 
 export async function generateMetadata({
   params,
 }: PageProps<'/matters/[matterId]/work/[itemId]'>): Promise<Metadata> {
   const { itemId } = await params
-  return { title: `Work item \u00b7 ${itemId}` }
+  return { title: await localizedTitle(`Work item \u00b7 ${itemId}`, `Công việc \u00b7 ${itemId}`) }
 }
 
 export default function WorkItemPage({

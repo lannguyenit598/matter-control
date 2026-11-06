@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -20,8 +19,9 @@ import { parseCell, parseMatrixFilter } from '@/features/review/matrix'
 import { reviewRepository } from '@/features/review/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Reviews' }
+export const generateMetadata = pageMetadata('Reviews', 'Rà soát')
 
 const ID = /^[A-Za-z0-9_-]{1,100}$/
 

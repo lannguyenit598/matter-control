@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
@@ -15,8 +14,9 @@ import { matterRepository } from '@/features/matters/repository'
 import { workRepository } from '@/features/work/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Filings' }
+export const generateMetadata = pageMetadata('Filings', 'Thủ tục')
 
 export default function FilingsPage({ params }: PageProps<'/matters/[matterId]/filings'>) {
   return (

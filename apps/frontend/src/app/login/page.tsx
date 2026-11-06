@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { ArrowRight, Scale } from 'lucide-react'
 
@@ -8,8 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert } from '@/components/molecules/alert'
 import { siteConfig } from '@/config/site'
 import { safeReturnTo } from '@/lib/oidc/flow'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Sign in' }
+export const generateMetadata = pageMetadata('Sign in', 'Đăng nhập')
 
 const MESSAGES: Record<string, string> = {
   denied: 'Sign-in was cancelled or refused.',

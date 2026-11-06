@@ -1,5 +1,4 @@
 import { LocalizedText } from '@/components/molecules/localized-text'
-import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 import { PageHeader } from '@/components/molecules/page-header'
@@ -9,8 +8,9 @@ import { MatterHistory } from '@/features/matters/components/matter-history'
 import { matterRepository } from '@/features/matters/repository'
 import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
+import { pageMetadata } from '@/lib/page-metadata'
 
-export const metadata: Metadata = { title: 'Matter history' }
+export const generateMetadata = pageMetadata('Matter history', 'Lịch sử')
 
 export default function HistoryPage(props: PageProps<'/matters/[matterId]/history'>) {
   return (
