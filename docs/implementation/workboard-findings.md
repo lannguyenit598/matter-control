@@ -164,7 +164,7 @@ PO dispatch trực tiếp ("zcode thực hiện hết cho phần backend"), 4 wo
 
 Open restated: org tenancy (PO product decision) · real-bucket B3 (cần PO bucket/token) · gitleaks docs/ history classification (coordinator) · non-author confirmation pass cho cả ECHO review lẫn wave này.
 
-## 13. FE design review intake — 2026-11-07
+## 14. FE design review intake — 2026-11-07
 
 MC-FE-DESIGN-REVIEW-20261106 RETURNED 2026-11-07: **PASS_WITH_LIMITATIONS** (nhãn SELF-REVIEW / OWNER-CONFIRMATION theo ADDENDUM-2 — PO waiver), [report](../testing/fe-design-review-20261106-r1/report.md) + 5 lens files + [backlog](../testing/fe-design-review-20261106-r1/backlog.md) (13 UX-B, **0 LANE-B**) + ~240 evidence PNG/JSON + contrast sweep + command transcript. Reviewer chạy trong isolated worktree clean-at-pin `41098a4d` (ADDENDUM-1); shared HEAD move 26680dc1→276a1e68 trong lúc review — ngoài verdicts; 0 commit/push của reviewer, servers dừng, worktree removed.
 
@@ -172,4 +172,4 @@ Kết quả: 0 P0/P1. P2 ×3: fail/empty canvas void 39–40%; form stories fixt
 
 **PO instruction 2026-11-07**: intake + commit + chạy confirmation ngay qua **fresh-context ZCode subagent** → [ADDENDUM-3](handoffs/MC-FE-DESIGN-REVIEW-CONFIRMATION-PROMPT.md): nhãn bắt buộc `CONFIRMATION_REVIEW (PROXY)`, OpenCode/OpenDesign vẫn khuyến nghị trước release-level gate. Confirmation gồm 5 mục nhẹ + 1 repro độc lập UX-R1-25 (REAL_BUG / RUNTIME_ARTIFACT / UNRESOLVED đều là kết quả hợp lệ). FE fix-wave prompt (batch đề xuất: B-01 + B-11 + B-09/B-10 + P-08) viết sau khi confirmation xong. FE Next.js review vẫn PREPARED_NOT_DISPATCHED.
 
-Evidence + prompt + confirmation prompt committed: `e4670708` (278 files). Register entry này: commit riêng ngay sau.
+Evidence + prompt + confirmation prompt committed: `e4670708` (278 files). Register entry này bị sweep vào commit docs fix-wave `d7c521bd` (concurrent writer) — renumber 13→14 để tránh trùng số với §13 fix-wave. Ghi nhận lệch nhỏ chưa adjudicate: ERRATUM-1 + §12 liệt kê `apps/backend/docs/api.md.orig` là sibling leftover (xuất phát từ `git ls-files` tại `276a1e68`), fix-wave §13 W4 trả NOT_FOUND — một trong hai quan sát sai/stale; giữ nguyên cả hai, chỉnh ERRATUM-1 ở lần chạm sau.
