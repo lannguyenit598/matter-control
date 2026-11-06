@@ -1,0 +1,18 @@
+# Migration apply log — captured from the foreground session output (not a saved task log)
+
+Command (exit 0, 2026-11-06 23:18 local):
+MC_DATABASE_URL="postgres://mattercontrol:mattercontrol@localhost:5434/mattercontrol?sslmode=disable&search_path=becho_explain" \
+MC_OIDC_ISSUER="http://localhost:8080" MC_OIDC_INTROSPECTION_URL="http://localhost:8080/oauth/v2/introspect" \
+MC_OIDC_AUDIENCE="synthetic" MC_OIDC_API_KEY_FILE="/tmp/synthetic-key" \
+MC_OBJECT_BACKEND=fs MC_OBJECT_DIR="/tmp/becho-objects" \
+go run ./cmd/mcapi migrate
+
+Captured tail (logger lines, timestamps 2026-11-06T23:18:03.35x+07:00):
+{"level":"INFO","msg":"mattercontrol migration applied","version":14,"file":"0014_playbooks.sql","duration":"8.526625ms"}
+{"level":"INFO","msg":"mattercontrol migration applied","version":15,"file":"0015_intake.sql","duration":"4.03075ms"}
+{"level":"INFO","msg":"mattercontrol migration applied","version":16,"file":"0016_guidance.sql","duration":"5.922958ms"}
+{"level":"INFO","msg":"mattercontrol migration applied","version":17,"file":"0017_contract_term_lines.sql","duration":"4.086417ms"}
+
+Schema `becho_explain` created immediately before via `CREATE SCHEMA IF NOT EXISTS`; goose applied
+0001–0017 in order (tail shows the final four). `goose_db_version` present in the schema afterwards
+(17 rows) — this is the schema the EXPLAIN probe ran against.

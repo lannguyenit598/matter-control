@@ -1,0 +1,87 @@
+=== Symbol Results ===
+
+Vulnerability #1: GO-2026-6844
+    Echo: BodyDump can discard BodyLimit overflow errors for unknown-length
+    requests in github.com/labstack/echo
+  More info: https://pkg.go.dev/vuln/GO-2026-6844
+  Module: github.com/labstack/echo/v5
+    Found in: github.com/labstack/echo/v5@v5.4.0
+    Fixed in: github.com/labstack/echo/v5@v5.4.1
+    Example traces found:
+      #1: internal/adapter/inbound/productapi/server.go:96:38: productapi.NewServer calls middleware.BodyLimitWithConfig
+      #2: internal/adapter/inbound/productapi/server.go:108:43: productapi.NewServer calls middleware.ContextTimeoutWithConfig
+      #3: internal/core/domain/matter/intake_guidance.go:121:22: matter.ParseGuidanceSourceRefs calls json.Decoder.Decode, which calls middleware.PanicStackError.Error
+      #4: internal/adapter/inbound/productapi/server.go:95:26: productapi.NewServer calls middleware.Recover
+      #5: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.Write
+      #6: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.WriteHeader
+      #7: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.Write
+      #8: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.WriteHeader
+      #9: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedGzipReader.Read
+      #10: internal/adapter/outbound/objectstore/store.go:137:53: objectstore.verifying.Close calls middleware.limitedReader.Close
+      #11: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedReader.Read
+
+Vulnerability #2: GO-2026-6841
+    Echo: X-Real-IP extractor trusts the header value instead of the sending
+    peer in github.com/labstack/echo
+  More info: https://pkg.go.dev/vuln/GO-2026-6841
+  Module: github.com/labstack/echo/v5
+    Found in: github.com/labstack/echo/v5@v5.4.0
+    Fixed in: github.com/labstack/echo/v5@v5.4.1
+    Example traces found:
+      #1: internal/adapter/inbound/productapi/server.go:96:38: productapi.NewServer calls middleware.BodyLimitWithConfig
+      #2: internal/adapter/inbound/productapi/server.go:108:43: productapi.NewServer calls middleware.ContextTimeoutWithConfig
+      #3: internal/core/domain/matter/intake_guidance.go:121:22: matter.ParseGuidanceSourceRefs calls json.Decoder.Decode, which calls middleware.PanicStackError.Error
+      #4: internal/adapter/inbound/productapi/server.go:95:26: productapi.NewServer calls middleware.Recover
+      #5: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.Write
+      #6: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.WriteHeader
+      #7: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.Write
+      #8: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.WriteHeader
+      #9: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedGzipReader.Read
+      #10: internal/adapter/outbound/objectstore/store.go:137:53: objectstore.verifying.Close calls middleware.limitedReader.Close
+      #11: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedReader.Read
+
+Vulnerability #3: GO-2026-6839
+    Echo: Rejected WebSocket upgrades can bypass Echo route-level access
+    controls in github.com/labstack/echo
+  More info: https://pkg.go.dev/vuln/GO-2026-6839
+  Module: github.com/labstack/echo/v5
+    Found in: github.com/labstack/echo/v5@v5.4.0
+    Fixed in: github.com/labstack/echo/v5@v5.4.1
+    Example traces found:
+      #1: internal/adapter/inbound/productapi/server.go:96:38: productapi.NewServer calls middleware.BodyLimitWithConfig
+      #2: internal/adapter/inbound/productapi/server.go:108:43: productapi.NewServer calls middleware.ContextTimeoutWithConfig
+      #3: internal/core/domain/matter/intake_guidance.go:121:22: matter.ParseGuidanceSourceRefs calls json.Decoder.Decode, which calls middleware.PanicStackError.Error
+      #4: internal/adapter/inbound/productapi/server.go:95:26: productapi.NewServer calls middleware.Recover
+      #5: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.Write
+      #6: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.WriteHeader
+      #7: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.Write
+      #8: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.WriteHeader
+      #9: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedGzipReader.Read
+      #10: internal/adapter/outbound/objectstore/store.go:137:53: objectstore.verifying.Close calls middleware.limitedReader.Close
+      #11: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedReader.Read
+
+Vulnerability #4: GO-2026-6838
+    Echo: WebSocket proxy can retain connections and handlers after client
+    disconnect in github.com/labstack/echo
+  More info: https://pkg.go.dev/vuln/GO-2026-6838
+  Module: github.com/labstack/echo/v5
+    Found in: github.com/labstack/echo/v5@v5.4.0
+    Fixed in: github.com/labstack/echo/v5@v5.4.1
+    Example traces found:
+      #1: internal/adapter/inbound/productapi/server.go:96:38: productapi.NewServer calls middleware.BodyLimitWithConfig
+      #2: internal/adapter/inbound/productapi/server.go:108:43: productapi.NewServer calls middleware.ContextTimeoutWithConfig
+      #3: internal/core/domain/matter/intake_guidance.go:121:22: matter.ParseGuidanceSourceRefs calls json.Decoder.Decode, which calls middleware.PanicStackError.Error
+      #4: internal/adapter/inbound/productapi/server.go:95:26: productapi.NewServer calls middleware.Recover
+      #5: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.Write
+      #6: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.bodyDumpResponseWriter.WriteHeader
+      #7: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.Write
+      #8: internal/adapter/outbound/objectstore/store.go:67:19: objectstore.Store.Put calls io.Copy, which eventually calls middleware.gzipResponseWriter.WriteHeader
+      #9: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedGzipReader.Read
+      #10: internal/adapter/outbound/objectstore/store.go:137:53: objectstore.verifying.Close calls middleware.limitedReader.Close
+      #11: internal/core/service/evidence_service.go:1447:29: service.incidentReader.Read calls middleware.limitedReader.Read
+
+Your code is affected by 4 vulnerabilities from 1 module.
+This scan also found 0 vulnerabilities in packages you import and 2
+vulnerabilities in modules you require, but your code doesn't appear to call
+these vulnerabilities.
+Use '-show verbose' for more details.
