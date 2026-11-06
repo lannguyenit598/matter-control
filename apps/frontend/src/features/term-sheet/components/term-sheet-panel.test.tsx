@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh: vi.fn() }) }))
+const { refresh } = vi.hoisted(() => ({ refresh: vi.fn() }))
+vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh }) }))
 
 import { TermSheetPanel } from './term-sheet-panel'
 import type { TermSheetLine } from '../schemas'
@@ -28,6 +29,7 @@ describe('TermSheetPanel', () => {
       <TermSheetPanel
         matterId="m1"
         matterRevision={1}
+        canEdit
         lines={[
           line({}),
           line({
@@ -49,7 +51,7 @@ describe('TermSheetPanel', () => {
   })
 
   it('shows the empty state and keeps the import form reachable', () => {
-    render(<TermSheetPanel matterId="m1" matterRevision={1} lines={[]} />)
+    render(<TermSheetPanel matterId="m1" matterRevision={1} canEdit lines={[]} />)
     expect(screen.getByText(/No term lines yet/)).toBeInTheDocument()
     expect(screen.getByLabelText('Source document version id')).toBeInTheDocument()
     expect(screen.getByLabelText('Spreadsheet (CSV/XLSX)')).toBeInTheDocument()
@@ -61,6 +63,7 @@ describe('TermSheetPanel', () => {
       <TermSheetPanel
         matterId="m1"
         matterRevision={1}
+        canEdit
         lines={[
           line({}),
           line({
@@ -93,18 +96,63 @@ describe('TermSheetPanel', () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true)
     try {
       const { rerender } = render(
-        <TermSheetPanel matterId="m1" matterRevision={1} lines={[line({})]} />,
+        <TermSheetPanel matterId="m1" matterRevision={1} canEdit lines={[line({})]} />,
       )
       fireEvent.click(screen.getByRole('button', { name: 'Promote' }))
       await screen.findByText('Retry with the same key.')
-      rerender(<TermSheetPanel matterId="m1" matterRevision={2} lines={[]} />)
-      fireEvent.click(screen.getByRole('button', { name: 'Confirm pending promotion' }))
+      rerender(<TermSheetPanel matterId="m1" matterRevision={2} canEdit lines={[]} />)
+      fireEvent.click(await screen.findByRole('button', { name: 'Confirm pending promotion' }))
       expect(await screen.findByRole('link', { name: 'Open confirmed draft' })).toHaveAttribute(
         'href',
         '/matters/m1/work/draft-id',
       )
       expect(promote.mock.calls[0]?.[0].idempotencyKey).toMatch(/^[0-9a-f-]{14}7/)
       expect(promote.mock.calls[1]).toEqual(promote.mock.calls[0])
+    } finally {
+      confirm.mockRestore()
+    }
+  })
+
+  it('hides import and promote from a reader without edit rights', () => {
+    render(<TermSheetPanel matterId="m1" matterRevision={1} canEdit={false} lines={[line({})]} />)
+    expect(screen.queryByRole('button', { name: 'Import' })).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Spreadsheet (CSV/XLSX)')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Promote' })).not.toBeInTheDocument()
+    expect(screen.getByText(/read-only/)).toBeInTheDocument()
+  })
+
+  it('reloads the current revision after a stale refusal', async () => {
+    refresh.mockClear()
+    vi.mocked(promoteTermLineAction).mockResolvedValueOnce({
+      ok: false,
+      kind: 'stale',
+      error: 'Changed since you read it.',
+    })
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true)
+    try {
+      render(<TermSheetPanel matterId="m1" matterRevision={1} canEdit lines={[line({})]} />)
+      fireEvent.click(screen.getByRole('button', { name: 'Promote' }))
+      await screen.findByText('Changed since you read it.')
+      expect(refresh).toHaveBeenCalled()
+    } finally {
+      confirm.mockRestore()
+    }
+  })
+
+  it('never offers to drop a promotion whose outcome stays unknown', async () => {
+    vi.mocked(promoteTermLineAction).mockResolvedValueOnce({
+      ok: false,
+      kind: 'outcome-unknown',
+      error: 'Retry with the same key.',
+    })
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true)
+    try {
+      render(<TermSheetPanel matterId="m1" matterRevision={1} canEdit lines={[line({})]} />)
+      fireEvent.click(screen.getByRole('button', { name: 'Promote' }))
+      await screen.findByText('Retry with the same key.')
+      expect(screen.queryByRole('button', { name: /discard/i })).not.toBeInTheDocument()
+      expect(await screen.findByRole('button', { name: 'Confirm pending promotion' })).toBeEnabled()
+      expect(screen.getByRole('button', { name: 'Promote' })).toBeDisabled()
     } finally {
       confirm.mockRestore()
     }

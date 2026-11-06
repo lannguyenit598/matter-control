@@ -112,6 +112,10 @@ type TermLine struct {
 	Revision     int64
 }
 
+// partyValueMaxBytes keeps a PARTY promotable: its Entity title is "PARTY: <value>" and a context
+// record title is capped, so a longer value would import but could never be promoted.
+const partyValueMaxBytes = contextTitleMaxBytes - len("PARTY: ")
+
 // termFieldWantsText reports whether the field carries its value in ValueText (the rest carry a
 // contract date in ValueDate).
 func termFieldWantsText(f TermField) bool {
@@ -129,6 +133,8 @@ func ValidateTermValue(f TermField, valueText string, valueDate *time.Time) erro
 		}
 		if t := strings.TrimSpace(valueText); t == "" || len(t) > 500 {
 			v.Add("valueText", "must be 1..500 characters for a text field")
+		} else if f == TermParty && len(t) > partyValueMaxBytes {
+			v.Add("valueText", fmt.Sprintf("must be at most %d bytes for PARTY so its promoted Entity title fits", partyValueMaxBytes))
 		}
 	} else {
 		if valueText != "" {

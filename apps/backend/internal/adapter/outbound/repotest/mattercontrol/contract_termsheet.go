@@ -5,6 +5,7 @@ package mattercontrol
 
 import (
 	"errors"
+	"io"
 	"strings"
 	"testing"
 
@@ -45,7 +46,7 @@ func SuiteTermSheets(t *testing.T, newBundle Factory) {
 			t.Fatalf("expected uniform not-found: %v", err)
 		}
 	})
-	t.Run("promotion receipt survives source replacement", func(t *testing.T) {
+	t.Run("promotion receipt survives a source line lost before the promoted-line guard", func(t *testing.T) {
 		e := newW2Env(t, newBundle)
 		svc := termSheetService(e)
 		version := termSheetVersion(e)
@@ -59,10 +60,37 @@ func SuiteTermSheets(t *testing.T, newBundle Factory) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		importTermSheet(t, e, svc, e.owner, version, termSheetCSV("n1,NOTE,replaced,"))
+		// Data written before the guard existed: the promoted source line is gone while its
+		// receipt and draft remain. Production imports can no longer reach this state, so the
+		// fixture removes the line through the store seam directly.
+		if err := e.b.Store.Execute(e.ctx, e.m, func(tx port.MatterTx) error {
+			tt, ok := tx.(port.MatterTermSheetTx)
+			if !ok {
+				return errors.New("store transaction does not support term lines")
+			}
+			return tt.ReplaceTermLinesOfDocumentVersion(e.ctx, e.m, version, nil)
+		}); err != nil {
+			t.Fatalf("remove the source line: %v", err)
+		}
+		if lines := listTermLines(t, e, svc, e.owner); len(lines) != 0 {
+			t.Fatalf("the source line must be gone before the replay: %+v", lines)
+		}
 		replay, err := svc.PromoteTermLine(e.ctx, cmd)
-		if err != nil || !replay.Replayed || replay.TargetID != first.TargetID || replay.TargetMissing {
-			t.Fatalf("receipt did not replay after source replacement: %+v, %v", replay, err)
+		if err != nil || !replay.Replayed || replay.TargetID != first.TargetID || replay.TargetKind != first.TargetKind || replay.TargetMissing {
+			t.Fatalf("receipt did not replay after the source line was lost: %+v, %v", replay, err)
+		}
+		page, err := e.work.ListWorkItems(e.ctx, port.ListWorkItemsQuery{ActorID: e.owner.String(), MatterID: e.m.String()})
+		if err != nil {
+			t.Fatal(err)
+		}
+		drafts := 0
+		for _, v := range page.Items {
+			if v.Item.Title == "NOTE: original" {
+				drafts++
+			}
+		}
+		if drafts != 1 {
+			t.Fatalf("replay must keep exactly one draft, found %d", drafts)
 		}
 	})
 	t.Helper()
@@ -104,6 +132,35 @@ func SuiteTermSheets(t *testing.T, newBundle Factory) {
 		cmd.Sheet = strings.NewReader(original)
 		if _, err := svc.ImportTermSheet(e.ctx, cmd); !errors.Is(err, port.ErrNotFound) {
 			t.Fatalf("receipt must be hidden after access revocation: %v", err)
+		}
+	})
+	t.Run("promoted lines are locked against replacement", func(t *testing.T) { termSheetPromotedLockContract(t, newBundle) })
+	t.Run("promotion requires an expected revision", func(t *testing.T) {
+		e := newW2Env(t, newBundle)
+		svc := termSheetService(e)
+		importTermSheet(t, e, svc, e.owner, termSheetVersion(e), termSheetCSV("n1,NOTE,x,"))
+		line := listTermLines(t, e, svc, e.owner)[0]
+		_, err := svc.PromoteTermLine(e.ctx, port.PromoteTermLineCmd{
+			ActorID: e.owner.String(), MatterID: e.m.String(), TermLineID: line.ID.String(),
+			IdempotencyKey: newKey(), RequestHash: anyHash,
+		})
+		if !errors.Is(err, port.ErrPreconditionRequired) {
+			t.Fatalf("missing expectedRevision must be precondition-required: %v", err)
+		}
+	})
+	t.Run("import decodes only after authorization", func(t *testing.T) {
+		e := newW2Env(t, newBundle)
+		codec := &countingCodec{SheetCodec: sheet.Codec{}}
+		svc := service.NewTermSheetService(e.work, codec)
+		version := termSheetVersion(e)
+		for _, actor := range []matter.ActorID{e.viewer, e.out} {
+			cmd := termSheetCommand(t, e, termSheetService(e), actor, version, termSheetCSV("p1,PARTY,Bên A,"))
+			if _, err := svc.ImportTermSheet(e.ctx, cmd); err == nil {
+				t.Fatalf("%s import must be refused", actor)
+			}
+		}
+		if codec.calls != 0 {
+			t.Fatalf("an unauthorized import decoded the sheet %d times", codec.calls)
 		}
 	})
 	t.Run("import idempotency and replace", func(t *testing.T) { termSheetImportContract(t, newBundle) })
@@ -311,5 +368,71 @@ func termSheetPromotionContract(t *testing.T, newBundle Factory) {
 		IdempotencyKey: newKey(), RequestHash: anyHash, ExpectedRevision: byField[matter.TermEffectiveDate].Revision,
 	}); err == nil {
 		t.Fatal("a stale revision must be a conflict")
+	}
+}
+
+// countingCodec records how often a sheet is decoded.
+type countingCodec struct {
+	port.SheetCodec
+	calls int
+}
+
+func (c *countingCodec) Decode(format string, r io.Reader, maxBytes int64) (port.Table, error) {
+	c.calls++
+	return c.SheetCodec.Decode(format, r, maxBytes)
+}
+
+// termSheetPromotedLockContract: a re-import may neither change nor drop a promoted fact; the whole
+// import is refused and names the fact, so promotion links survive and no duplicate draft appears.
+func termSheetPromotedLockContract(t *testing.T, newBundle Factory) {
+	e := newW2Env(t, newBundle)
+	svc := termSheetService(e)
+	version := termSheetVersion(e)
+	importTermSheet(t, e, svc, e.owner, version, termSheetCSV("n1,NOTE,original,", "n2,NOTE,other,"))
+	var promoted matter.TermLine
+	for _, l := range listTermLines(t, e, svc, e.owner) {
+		if l.RowKey == "n1" {
+			promoted = l
+		}
+	}
+	if _, err := svc.PromoteTermLine(e.ctx, port.PromoteTermLineCmd{
+		ActorID: e.owner.String(), MatterID: e.m.String(), TermLineID: promoted.ID.String(),
+		IdempotencyKey: newKey(), RequestHash: anyHash, ExpectedRevision: promoted.Revision,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	promoted = listTermLines(t, e, svc, e.owner)[0]
+	if promoted.RowKey != "n1" || promoted.PromotedRef == "" {
+		t.Fatalf("promoted line: %+v", promoted)
+	}
+	revision := termSheetCommand(t, e, svc, e.owner, version, "").ExpectedRevision
+
+	// Changing the promoted row is refused by sheet position.
+	res := importTermSheet(t, e, svc, e.owner, version, termSheetCSV("n1,NOTE,changed,", "n2,NOTE,other,"))
+	if len(res.Rejected) != 1 || res.Rejected[0].RowKey != "row-2" || res.Rejected[0].Code != "promoted" {
+		t.Fatalf("changed promoted row must be refused by position: %+v", res)
+	}
+	// Dropping the promoted row is refused by its stored identity.
+	res = importTermSheet(t, e, svc, e.owner, version, termSheetCSV("n2,NOTE,other,"))
+	if len(res.Rejected) != 1 || res.Rejected[0].RowKey != "NOTE:n1" || res.Rejected[0].Code != "promoted" {
+		t.Fatalf("dropped promoted row must be refused by identity: %+v", res)
+	}
+	lines := listTermLines(t, e, svc, e.owner)
+	if len(lines) != 2 || lines[0].ID != promoted.ID || lines[0].PromotedRef != promoted.PromotedRef || lines[0].ValueText != "original" {
+		t.Fatalf("refused imports must write nothing: %+v", lines)
+	}
+	if got := termSheetCommand(t, e, svc, e.owner, version, "").ExpectedRevision; got != revision {
+		t.Fatalf("refused imports moved the matter revision %d -> %d", revision, got)
+	}
+
+	// Other rows still change; the promoted fact keeps its identity and link.
+	res = importTermSheet(t, e, svc, e.owner, version, termSheetCSV("n1,NOTE,original,", "n2,NOTE,changed,"))
+	if len(res.Rejected) != 0 || res.Created != 1 || res.Unchanged != 1 {
+		t.Fatalf("unpromoted rows must stay replaceable: %+v", res)
+	}
+	for _, l := range listTermLines(t, e, svc, e.owner) {
+		if l.RowKey == "n1" && (l.ID != promoted.ID || l.PromotedRef != promoted.PromotedRef) {
+			t.Fatalf("promoted fact lost its link: %+v", l)
+		}
 	}
 }

@@ -173,3 +173,19 @@ func TestParseTermField(t *testing.T) {
 		t.Fatal("unknown field accepted")
 	}
 }
+
+// A PARTY promotes to an Entity context record titled "PARTY: <value>", whose title is capped at
+// 200 bytes, so the import must refuse a value that could never be promoted.
+func TestValidateTermValuePartyFitsPromotionTitle(t *testing.T) {
+	t.Parallel()
+	limit := 200 - len("PARTY: ")
+	if err := ValidateTermValue(TermParty, strings.Repeat("a", limit), nil); err != nil {
+		t.Fatalf("a party at the title limit must pass: %v", err)
+	}
+	if err := ValidateTermValue(TermParty, strings.Repeat("a", limit+1), nil); err == nil {
+		t.Fatal("a party longer than the promotion title allows must be refused")
+	}
+	if err := ValidateTermValue(TermNote, strings.Repeat("a", 500), nil); err != nil {
+		t.Fatalf("other text fields keep the 500-byte limit: %v", err)
+	}
+}

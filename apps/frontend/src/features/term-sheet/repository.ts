@@ -6,6 +6,7 @@ import {
   termLinePageSchema,
   termSheetImportResultSchema,
   termSheetPromoteResultSchema,
+  termSheetReceiptSchema,
 } from './schemas'
 
 const m = (id: string) => `/matters/${pathId(id)}`
@@ -27,6 +28,15 @@ export const termSheetRepository = {
         idempotencyKey: key,
         schema: termSheetImportResultSchema,
         timeoutMs: 120_000,
+      })
+    ).data,
+
+  /** Reads (never re-applies) the caller's receipt for `key`; 404 while none is stored. */
+  reconcile: async (matterId: string, key: string) =>
+    (
+      await mcRequest(`${m(matterId)}/operations/${pathId(key)}/reconciliation`, {
+        method: 'POST',
+        schema: termSheetReceiptSchema,
       })
     ).data,
 

@@ -55,6 +55,7 @@ func termSheetHeader() []string {
 
 // termRow is one parsed sheet row before it becomes a stored line.
 type termRow struct {
+	RowNo     int // 1-based sheet position including the header row
 	RowKey    string
 	Field     matter.TermField
 	ValueText string
@@ -148,7 +149,7 @@ func parseTermSheet(t port.Table) ([]termRow, []port.TermSheetRowError) {
 			continue
 		}
 		seen[identity] = true
-		rows = append(rows, termRow{RowKey: rowKey, Field: field, ValueText: valueText, ValueDate: valueDate})
+		rows = append(rows, termRow{RowNo: rowNo, RowKey: rowKey, Field: field, ValueText: valueText, ValueDate: valueDate})
 	}
 	// An empty sheet would DELETE every line of the version while looking like a success; that
 	// is never an acceptable reading of "replace per version" (safety over convenience).
@@ -191,13 +192,6 @@ func (s *TermSheets) ImportTermSheet(ctx context.Context, cmd port.ImportTermShe
 	if cmd.Sheet == nil {
 		return port.TermSheetImportResult{}, fmt.Errorf("%w: term sheet body is required", port.ErrSheetInvalid)
 	}
-	// Decode before taking the lock, but return row and format errors only after authorization.
-	table, decodeErr := s.codec.Decode(cmd.Format, cmd.Sheet, min(cmd.MaxBytes, port.MaxTermSheetBytes))
-	var rows []termRow
-	var rejected []port.TermSheetRowError
-	if decodeErr == nil {
-		rows, rejected = parseTermSheet(table)
-	}
 	res := port.TermSheetImportResult{DocumentVersionID: docV.String()}
 	err = s.w.execute(ctx, cmd.ActorID, cmd.MatterID, "TERM_SHEET_IMPORT", policy.DecideCreateRequirement, func(env *workEnv) error {
 		rcpt, err := env.tx.Receipt(ctx, actor, key)
@@ -236,15 +230,22 @@ func (s *TermSheets) ImportTermSheet(ctx context.Context, cmd port.ImportTermShe
 		if _, ok := findVersion(graph.Evidence, docV.String()); !ok {
 			return port.ErrNotFound
 		}
-		if decodeErr != nil {
-			return fmt.Errorf("%w: %w", port.ErrSheetInvalid, decodeErr)
+		// Decode only after authorization, so a caller without write access cannot spend the
+		// decoder's CPU and memory (up to the codec's unzip limits). Costs lock time instead.
+		table, err := s.codec.Decode(cmd.Format, cmd.Sheet, min(cmd.MaxBytes, port.MaxTermSheetBytes))
+		if err != nil {
+			return fmt.Errorf("%w: %w", port.ErrSheetInvalid, err)
 		}
+		rows, rejected := parseTermSheet(table)
 		if len(rejected) > 0 {
 			res.Rejected = rejected
 			return nil
 		}
 		if err := replaceTermSheet(ctx, env, docV, rows, &res); err != nil {
 			return err
+		}
+		if len(res.Rejected) > 0 { // a promoted fact would change or vanish: nothing written
+			return nil
 		}
 		mID := env.header.MatterID
 		return env.tx.StoreReceipt(ctx, matter.Receipt{
@@ -281,6 +282,26 @@ func replaceTermSheet(ctx context.Context, env *workEnv, version matter.VersionI
 		if line.DocumentVersionID == version {
 			prevByKey[rowIdentity{line.Field, line.RowKey}] = line
 		}
+	}
+	// A promoted fact is the provenance of a draft record: a re-import may neither change nor drop
+	// it, or the draft would lose its source and the new line could be promoted a second time.
+	inSheet := make(map[rowIdentity]bool, len(rows))
+	for _, row := range rows {
+		id := rowIdentity{row.Field, row.RowKey}
+		inSheet[id] = true
+		if prev, ok := prevByKey[id]; ok && prev.PromotedRef != "" && prev.SourceHash != termRowHash(row) {
+			res.Rejected = append(res.Rejected, port.TermSheetRowError{RowKey: fmt.Sprintf("row-%d", row.RowNo), Code: "promoted",
+				Detail: "this fact already promoted a draft record and cannot change"})
+		}
+	}
+	for _, line := range existing { // stored order keeps the rejections deterministic
+		if line.DocumentVersionID == version && line.PromotedRef != "" && !inSheet[rowIdentity{line.Field, line.RowKey}] {
+			res.Rejected = append(res.Rejected, port.TermSheetRowError{RowKey: line.Field.String() + ":" + line.RowKey, Code: "promoted",
+				Detail: "this fact already promoted a draft record and must stay in the sheet"})
+		}
+	}
+	if len(res.Rejected) > 0 {
+		return nil
 	}
 	lines := make([]matter.TermLine, 0, len(rows))
 	for _, row := range rows {
@@ -431,6 +452,9 @@ func (s *TermSheets) PromoteTermLine(ctx context.Context, cmd port.PromoteTermLi
 			return err
 		}
 		created, err := s.w.createdReceipt(ctx, env, actor, key, hash, func() (matter.CreatedResult, error) {
+			if cmd.ExpectedRevision == 0 {
+				return matter.CreatedResult{}, port.ErrPreconditionRequired
+			}
 			line, err := tt.LoadTermLine(ctx, env.header.MatterID, lineID)
 			if err != nil {
 				return matter.CreatedResult{}, err

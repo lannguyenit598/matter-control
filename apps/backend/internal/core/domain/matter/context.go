@@ -73,6 +73,9 @@ func (s ContextSet) Linked(kind ContextKind, item NodeID) []ContextRecord {
 	return out
 }
 
+// contextTitleMaxBytes caps a context record title (term-sheet PARTY promotion depends on it).
+const contextTitleMaxBytes = 200
+
 // NewContextRecord validates the user-supplied parts of a record.
 func NewContextRecord(id string, m MatterID, kind ContextKind, title, body string, links []NodeID, by ActorID, at time.Time) (ContextRecord, error) {
 	v := &domain.ValidationError{}
@@ -80,7 +83,7 @@ func NewContextRecord(id string, m MatterID, kind ContextKind, title, body strin
 		v.Add("kind", "must be DECISION, FINDING, RISK or ENTITY")
 	}
 	t := strings.TrimSpace(title)
-	if t == "" || len(t) > 200 {
+	if t == "" || len(t) > contextTitleMaxBytes {
 		v.Add("title", "must be 1 to 200 characters")
 	}
 	b := strings.TrimSpace(body)

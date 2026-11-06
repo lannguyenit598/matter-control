@@ -14,7 +14,7 @@ import { clearAttempt, saveAttempt, type PendingAttempt } from '@/lib/mc/drafts'
 import { newIdempotencyKey } from '@/lib/mc/idempotency'
 import { usePendingAttempt } from '@/lib/mc/use-attempt'
 
-import { promoteTermLineAction } from '../actions'
+import { promoteTermLineAction, reconcileTermSheetImportAction } from '../actions'
 import { TERM_FIELDS, type TermField, type TermSheetLine } from '../schemas'
 
 /*
@@ -54,10 +54,13 @@ const MAX_SHEET_BYTES = 5 * 1024 * 1024
 export function TermSheetPanel({
   matterId,
   matterRevision,
+  canEdit,
   lines,
 }: {
   matterId: string
   matterRevision: number
+  /** OWNER/EDITOR: the API refuses import and promotion to anyone else, so the UI hides them. */
+  canEdit: boolean
   lines: TermSheetLine[]
 }) {
   const [message, setMessage] = useState<{ en: string; vi: string } | null>(null)
@@ -84,18 +87,29 @@ export function TermSheetPanel({
     else clearAttempt(namespace, scope)
   }
 
-  function finish(result: McActionResult) {
-    if (result.ok || !['outcome-unknown', 'unavailable', 'error'].includes(result.kind))
-      remember(null)
+  function finish(result: McActionResult, isRetry: boolean) {
+    // Keep the key whenever the earlier outcome may still be unknown. An expired session is
+    // refused by the BFF before the API sees the retry, so it settles nothing; logout purges it.
+    // A 403 on a RETRY only means the retry was refused — the first attempt may have committed.
+    // A 403 on a FRESH send is a definitive refusal of that attempt, so its key can be cleared.
+    const keepKey =
+      !result.ok &&
+      (['outcome-unknown', 'unavailable', 'error', 'unauthenticated'].includes(result.kind) ||
+        (isRetry && result.kind === 'forbidden'))
+    if (result.ok || !keepKey) remember(null)
     setRowErrors(result.ok ? {} : (result.fieldErrors ?? {}))
+    // The revision or line this page holds is outdated: reload it so the next attempt can succeed.
+    if (!result.ok && ['stale', 'not-found', 'key-conflict'].includes(result.kind)) router.refresh()
     if (!result.ok) {
       setMessage({
         en: result.error,
-        vi: ['outcome-unknown', 'unavailable', 'error'].includes(result.kind)
+        vi: ['outcome-unknown', 'unavailable', 'error', 'unauthenticated'].includes(result.kind)
           ? 'Chưa xác nhận được kết quả. Hãy thử lại cùng yêu cầu.'
           : result.kind === 'stale'
             ? 'Dữ liệu đã thay đổi. Hãy tải lại rồi xác nhận lại.'
-            : 'Yêu cầu bị từ chối. Hãy kiểm tra thông tin.',
+            : isRetry && result.kind === 'forbidden'
+              ? 'Cần quyền ghi để xác nhận lại. Yêu cầu trước đó vẫn đang chờ kết quả.'
+              : 'Yêu cầu bị từ chối. Hãy kiểm tra thông tin.',
       })
     }
   }
@@ -105,7 +119,8 @@ export function TermSheetPanel({
     if (pending || attempt?.values.kind === 'promote') return
     const form = event.currentTarget
     const input = new FormData(form)
-    const file = input.get('file')
+    // Read the chosen file from the input's own FileList and send exactly that one.
+    const file = (form.elements.namedItem('file') as HTMLInputElement | null)?.files?.[0]
     const version = String(input.get('documentVersionId') ?? '').trim()
     const format = file instanceof File ? file.name.split('.').at(-1)?.toLowerCase() : undefined
     if (
@@ -148,11 +163,13 @@ export function TermSheetPanel({
         })
         return
       }
+      const isRetry = !!attempt
       const next = attempt ?? {
         key: newIdempotencyKey(),
         values: { kind: 'import', digest, version, format, revision: String(matterRevision) },
       }
       remember(next)
+      input.set('file', file)
       input.set('documentVersionId', next.values.version!)
       input.set('format', next.values.format!)
       input.set('expectedRevision', next.values.revision!)
@@ -170,7 +187,7 @@ export function TermSheetPanel({
         },
         { receipted: true },
       )
-      finish(result)
+      finish(result, isRetry)
       if (result.ok) {
         setMessage({
           en: 'Import completed; the list below shows the current facts.',
@@ -183,7 +200,7 @@ export function TermSheetPanel({
     })
   }
 
-  function submitPromotion(next: PendingAttempt) {
+  function submitPromotion(next: PendingAttempt, isRetry: boolean) {
     if (pending) return
     startTransition(async () => {
       remember(next)
@@ -204,7 +221,7 @@ export function TermSheetPanel({
         },
         { receipted: true },
       )
-      finish(result)
+      finish(result, isRetry)
       if (result.ok && result.id) {
         setTarget(missing ? null : { id: result.id, kind })
         setMessage({
@@ -213,6 +230,31 @@ export function TermSheetPanel({
             : 'Draft record confirmed.',
           vi: missing ? 'Bản nháp ban đầu không còn trong hồ sơ này.' : 'Đã xác nhận bản nháp.',
         })
+        router.refresh()
+      }
+    })
+  }
+
+  // A lost import whose file is gone is settled from its receipt; the key is never dropped while
+  // the outcome is unknown, so a new intent waits for this one.
+  function checkImport(pendingAttempt: PendingAttempt) {
+    startTransition(async () => {
+      const result = (await callMcAction(
+        () =>
+          reconcileTermSheetImportAction({
+            matterId,
+            idempotencyKey: pendingAttempt.key,
+            documentVersionId: pendingAttempt.values.version!,
+          }),
+        { receipted: true },
+      )) as McActionResult & { created?: number; replaced?: number; unchanged?: number }
+      finish(result, true)
+      if (result.ok) {
+        setMessage({
+          en: `The earlier import was applied: ${result.created ?? 0} created, ${result.replaced ?? 0} replaced, ${result.unchanged ?? 0} unchanged.`,
+          vi: `Lượt nhập trước đã được áp dụng: ${result.created ?? 0} tạo mới, ${result.replaced ?? 0} thay thế, ${result.unchanged ?? 0} giữ nguyên.`,
+        })
+        setSourceVersion('')
         router.refresh()
       }
     })
@@ -228,44 +270,57 @@ export function TermSheetPanel({
       )
     )
       return
-    submitPromotion({
-      key: newIdempotencyKey(),
-      values: { kind: 'promote', lineId: line.id, revision: String(line.revision) },
-    })
+    submitPromotion(
+      {
+        key: newIdempotencyKey(),
+        values: { kind: 'promote', lineId: line.id, revision: String(line.revision) },
+      },
+      false,
+    )
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <section aria-labelledby="term-sheet-import" className="flex flex-col gap-3">
-        <h3 id="term-sheet-import" className="text-sm font-semibold">
-          <LocalizedText en="Import term sheet" vi="Nhập bảng điều khoản" />
-        </h3>
-        <form onSubmit={submitImport} className="flex flex-wrap items-end gap-3">
-          <label className="flex flex-col gap-1 text-sm">
-            <LocalizedText en="Source document version id" vi="Mã phiên bản tài liệu nguồn" />
-            <input
-              name="documentVersionId"
-              value={
-                sourceVersion ?? (attempt?.values.kind === 'import' ? attempt.values.version : '')
-              }
-              onChange={(event) => setSourceVersion(event.target.value)}
-              required
-              className="w-72 rounded-md border bg-background px-3 py-2 text-sm"
-            />
-          </label>
-          <label className="flex flex-col gap-1 text-sm">
-            <LocalizedText en="Spreadsheet (CSV/XLSX)" vi="Bảng tính (CSV/XLSX)" />
-            <input type="file" name="file" required accept=".csv,.xlsx" className="text-sm" />
-          </label>
-          <Button type="submit" disabled={pending || attempt?.values.kind === 'promote'}>
-            {attempt?.values.kind === 'import' ? (
-              <LocalizedText en="Confirm pending import" vi="Xác nhận lượt nhập đang chờ" />
-            ) : (
-              <LocalizedText en="Import" vi="Nhập" />
-            )}
-          </Button>
-        </form>
-      </section>
+      {!canEdit && (
+        <p className="text-sm text-muted-foreground">
+          <LocalizedText
+            en="You have read-only access: only owners and editors can import or promote term lines."
+            vi="Bạn chỉ có quyền xem (read-only): chỉ chủ sở hữu và người chỉnh sửa mới nhập hoặc tạo bản nháp."
+          />
+        </p>
+      )}
+      {canEdit && (
+        <section aria-labelledby="term-sheet-import" className="flex flex-col gap-3">
+          <h3 id="term-sheet-import" className="text-sm font-semibold">
+            <LocalizedText en="Import term sheet" vi="Nhập bảng điều khoản" />
+          </h3>
+          <form onSubmit={submitImport} className="flex flex-wrap items-end gap-3">
+            <label className="flex flex-col gap-1 text-sm">
+              <LocalizedText en="Source document version id" vi="Mã phiên bản tài liệu nguồn" />
+              <input
+                name="documentVersionId"
+                value={
+                  sourceVersion ?? (attempt?.values.kind === 'import' ? attempt.values.version : '')
+                }
+                onChange={(event) => setSourceVersion(event.target.value)}
+                required
+                className="w-72 rounded-md border bg-background px-3 py-2 text-sm"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-sm">
+              <LocalizedText en="Spreadsheet (CSV/XLSX)" vi="Bảng tính (CSV/XLSX)" />
+              <input type="file" name="file" required accept=".csv,.xlsx" className="text-sm" />
+            </label>
+            <Button type="submit" disabled={pending || attempt?.values.kind === 'promote'}>
+              {attempt?.values.kind === 'import' ? (
+                <LocalizedText en="Confirm pending import" vi="Xác nhận lượt nhập đang chờ" />
+              ) : (
+                <LocalizedText en="Import" vi="Nhập" />
+              )}
+            </Button>
+          </form>
+        </section>
+      )}
 
       {/* The live region stays mounted; only its content changes, so a screen reader announces. */}
       <p role="status" aria-live="polite" className="text-sm text-muted-foreground">
@@ -281,10 +336,47 @@ export function TermSheetPanel({
           ))}
         </ul>
       )}
-      {attempt?.values.kind === 'promote' && (
-        <Button variant="outline" disabled={pending} onClick={() => submitPromotion(attempt)}>
-          <LocalizedText en="Confirm pending promotion" vi="Xác nhận lượt tạo bản nháp đang chờ" />
-        </Button>
+      {attempt && (
+        <div className="flex flex-wrap items-center gap-3">
+          <p className="text-sm">
+            {attempt.values.kind === 'import' ? (
+              <LocalizedText
+                en="An earlier import has no confirmed outcome. Retry it with the same file, or check its result."
+                vi="Lượt nhập trước chưa có kết quả xác nhận. Hãy thử lại với đúng file đó, hoặc kiểm tra kết quả."
+              />
+            ) : (
+              <LocalizedText
+                en="An earlier promotion has no confirmed outcome. Confirm it to replay the same request."
+                vi="Lượt tạo bản nháp trước chưa có kết quả xác nhận. Hãy xác nhận để gửi lại đúng yêu cầu đó."
+              />
+            )}
+          </p>
+          {attempt.values.kind === 'promote' && canEdit && (
+            <Button
+              variant="outline"
+              disabled={pending}
+              onClick={() => submitPromotion(attempt, true)}
+            >
+              <LocalizedText
+                en="Confirm pending promotion"
+                vi="Xác nhận lượt tạo bản nháp đang chờ"
+              />
+            </Button>
+          )}
+          {attempt.values.kind === 'promote' && !canEdit && (
+            <p className="text-sm text-muted-foreground">
+              <LocalizedText
+                en="Write access is needed to confirm the pending promotion."
+                vi="Cần quyền ghi để xác nhận lượt tạo bản nháp đang chờ."
+              />
+            </p>
+          )}
+          {attempt.values.kind === 'import' && (
+            <Button variant="outline" disabled={pending} onClick={() => checkImport(attempt)}>
+              <LocalizedText en="Check import result" vi="Kiểm tra kết quả nhập" />
+            </Button>
+          )}
+        </div>
       )}
       {target && (
         <p className="text-sm">
@@ -367,7 +459,7 @@ export function TermSheetPanel({
                   <span className="font-mono text-xs text-muted-foreground">
                     {line.promotedRef.slice(0, 8)}…
                   </span>
-                ) : (
+                ) : canEdit ? (
                   <Button
                     variant="outline"
                     size="sm"
@@ -376,7 +468,7 @@ export function TermSheetPanel({
                   >
                     <LocalizedText en="Promote" vi="Tạo bản nháp" />
                   </Button>
-                )}
+                ) : null}
               </td>
             </tr>
           ))}

@@ -158,6 +158,8 @@ export async function callMcAction(
  */
 export function describeRejection(code: string): string {
   switch (code) {
+    case 'term-already-promoted':
+      return 'This term line already created its draft record. Open the existing draft instead. Nothing was changed.'
     case 'dependency-blocked':
       return 'This cannot proceed yet: prerequisites are not satisfied. Nothing was changed.'
     case 'transition-not-allowed':

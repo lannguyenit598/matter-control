@@ -27,7 +27,7 @@ type ListTermLinesQuery struct {
 // A rejected row never aborts a well-formed sheet silently — the result lists every rejection.
 type TermSheetRowError struct {
 	RowKey string
-	Code   string // "validation" — the only v1 rejection reason
+	Code   string // "validation", or "promoted" when a re-import would change or drop a promoted fact
 	Detail string
 }
 

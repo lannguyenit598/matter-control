@@ -99,6 +99,19 @@ func TestTermSheetMultipartRevisionAndReceipts(t *testing.T) {
 	if got := lines[0].(map[string]any)["valueText"]; got != "New synthetic value" {
 		t.Fatalf("replay overwrote the newer sheet: %v", got)
 	}
+	// A client that lost both the answer and the file settles the import from its own receipt:
+	// the Matter-scoped reconciliation read needs no Idempotency-Key and re-applies nothing.
+	settled := e.do("POST", base+"/operations/"+originalKey+"/reconciliation", "t-alice", nil, "")
+	e.expect(settled, 200, "")
+	receipt := settled.json()
+	termSheet, _ := receipt["termSheet"].(map[string]any)
+	if receipt["idempotencyKey"] != originalKey || receipt["kind"] != "TERM_SHEET_IMPORTED" ||
+		termSheet["documentVersionId"] != sourceID || termSheet["created"] != float64(1) || revision() != initial+2 {
+		t.Fatalf("reconciliation must return the stored term-sheet receipt: %s", settled.Body)
+	}
+	e.expect(e.do("POST", "/api/v1/matters/"+uuid.NewString()+"/operations/"+originalKey+"/reconciliation", "t-alice", nil, ""),
+		404, "urn:mc:not-found")
+	e.expect(e.do("POST", base+"/operations/"+fresh()+"/reconciliation", "t-alice", nil, ""), 404, "urn:mc:not-found")
 	events := e.do("GET", base+"/events", "t-alice", nil, "").Body.String()
 	if strings.Count(events, "term_sheet.imported") != 2 || strings.Contains(events, "synthetic value") {
 		t.Fatalf("history must carry two sanitized import events: %s", events)

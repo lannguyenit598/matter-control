@@ -76,6 +76,20 @@ export const termSheetImportResultSchema = z.object({
 })
 export type TermSheetImportResult = z.infer<typeof termSheetImportResultSchema>
 
+/** The caller's own receipt for one key, as the Matter-scoped reconciliation route returns it. */
+export const termSheetReceiptSchema = z.object({
+  idempotencyKey: z.string(),
+  kind: z.string(),
+  termSheet: z
+    .object({
+      documentVersionId: z.string(),
+      created: z.number().int(),
+      replaced: z.number().int(),
+      unchanged: z.number().int(),
+    })
+    .nullish(),
+})
+
 export const termSheetPromoteResultSchema = z.object({
   termLineId: z.string(),
   targetId: z.string(),
