@@ -4,7 +4,7 @@ import localFont from 'next/font/local'
 import { LocaleProvider } from '@/components/molecules/locale-provider'
 import { siteConfig } from '@/config/site'
 import { uiLocale } from '@/lib/locale-server'
-import { themeInitScript } from '@/lib/theme'
+import { THEME_COLORS, themeInitScript } from '@/lib/theme'
 
 import './globals.css'
 
@@ -38,6 +38,9 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
     // data-theme is set by themeInitScript before hydration, hence suppressHydrationWarning.
     <html lang={locale} suppressHydrationWarning>
       <head>
+        {/* W3 (UX-B-09): browser-chrome color per theme; themeInitScript below re-syncs it
+            pre-paint so a saved dark choice never paints a light bar. */}
+        <meta name="theme-color" content={THEME_COLORS.light} />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className={uiFont.variable}>

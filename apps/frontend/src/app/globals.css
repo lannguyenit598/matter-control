@@ -468,6 +468,18 @@
   }
 }
 
+/* W4 (UX-B-10): drop the double-tap zoom delay on interactive controls. Scoped to the controls,
+   so pinch zoom and page pan stay untouched (touch-action is per-element, not global). */
+button,
+a,
+summary,
+.control-target,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
 .app-header :focus-visible {
   outline-color: var(--header-foreground);
 }
