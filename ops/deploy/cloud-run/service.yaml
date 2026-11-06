@@ -26,10 +26,10 @@ spec:
         autoscaling.knative.dev/maxScale: '{{MAX_INSTANCES}}'
     spec:
       serviceAccountName: {{SERVICE_ACCOUNT}}
-      # Uploads are buffered (<= 25 MiB) before the R2 PUT: concurrency x 25 MiB must fit memory.
-      containerConcurrency: 10
-      # >= MC_TRANSFER_TIMEOUT (60s) + write margin, or the platform cuts transfers first.
-      timeoutSeconds: 75
+      # Uploads are buffered (<= 25 MiB) before the R2 PUT: 4 x 25 MiB = 100 MiB must fit memory.
+      containerConcurrency: 4
+      # >= MC_TRANSFER_TIMEOUT (300s) + write margin, or the platform cuts transfers first.
+      timeoutSeconds: 330
       containers:
         - image: {{IMAGE}}
           ports:
@@ -51,8 +51,8 @@ spec:
             - { name: MC_OIDC_API_KEY_FILE, value: /secrets/oidc/api-key.json }
             - { name: MC_OIDC_CACHE_TTL, value: 30s }
             - { name: MC_REQUEST_TIMEOUT, value: 10s }
-            - { name: MC_TRANSFER_TIMEOUT, value: 60s }
-            - { name: MC_MAX_IN_FLIGHT, value: '10' }
+            - { name: MC_TRANSFER_TIMEOUT, value: 300s }
+            - { name: MC_MAX_IN_FLIGHT, value: '4' }
             # SIGTERM -> SIGKILL is 10 s on Cloud Run; it stops routing before SIGTERM, so no delay.
             - { name: MC_SHUTDOWN_DELAY, value: 0s }
             - { name: MC_SHUTDOWN_TIMEOUT, value: 8s }

@@ -22,8 +22,8 @@ write_files:
       MC_OIDC_API_KEY_FILE=/run/secrets/oidc/api-key.json
       MC_OIDC_CACHE_TTL=30s
       MC_REQUEST_TIMEOUT=10s
-      MC_TRANSFER_TIMEOUT=60s
-      MC_MAX_IN_FLIGHT=10
+      MC_TRANSFER_TIMEOUT=300s
+      MC_MAX_IN_FLIGHT=4
       MC_SHUTDOWN_DELAY=0s
       MC_SHUTDOWN_TIMEOUT=65s
 

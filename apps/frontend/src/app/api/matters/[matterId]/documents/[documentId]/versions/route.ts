@@ -61,7 +61,7 @@ export async function POST(
         },
         idempotencyKey: key,
         schema: createdSchema,
-        timeoutMs: 120_000,
+        timeoutMs: 330_000,
       },
     )
     return NextResponse.json(
