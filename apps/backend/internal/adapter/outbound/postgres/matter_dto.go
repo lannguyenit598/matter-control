@@ -259,8 +259,25 @@ type workspaceCreatedDTO struct {
 	RecordedAt string           `json:"recordedAt"`
 }
 
+type termSheetReceiptDTO struct {
+	Kind              matter.SnapshotKind `json:"kind"`
+	DocumentVersionID string              `json:"documentVersionId"`
+	Created           int                 `json:"created"`
+	Replaced          int                 `json:"replaced"`
+	Unchanged         int                 `json:"unchanged"`
+}
+
 func encodeReceiptResponse(rc matter.Receipt) ([]byte, error) {
 	switch rc.Kind {
+	case matter.SnapshotTermSheetImported:
+		res := rc.TermSheetSnapshot
+		if res == nil {
+			return nil, fmt.Errorf("nil term sheet receipt snapshot")
+		}
+		return json.Marshal(termSheetReceiptDTO{
+			Kind: rc.Kind, DocumentVersionID: res.VersionID.String(),
+			Created: res.Created, Replaced: res.Replaced, Unchanged: res.Unchanged,
+		})
 	case "", matter.SnapshotRequirementCreate:
 		return encodeCreatedResultJSON(rc.Snapshot)
 	case matter.SnapshotCreated:
@@ -338,6 +355,16 @@ func decodeReceiptResponse(rc *matter.Receipt, b []byte) error {
 		return fmt.Errorf("unmarshal receipt kind: %w", err)
 	}
 	switch matter.SnapshotKind(peek.Kind) {
+	case matter.SnapshotTermSheetImported:
+		var dto termSheetReceiptDTO
+		if err := json.Unmarshal(b, &dto); err != nil {
+			return fmt.Errorf("unmarshal term sheet receipt snapshot: %w", err)
+		}
+		rc.Kind, rc.TermSheetSnapshot = dto.Kind, &matter.TermSheetImported{
+			VersionID: matter.VersionID(dto.DocumentVersionID),
+			Created:   dto.Created, Replaced: dto.Replaced, Unchanged: dto.Unchanged,
+		}
+		return nil
 	case "", matter.SnapshotRequirementCreate:
 		res, err := decodeCreatedResult(b)
 		if err != nil {

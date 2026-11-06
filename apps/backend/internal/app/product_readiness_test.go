@@ -99,7 +99,7 @@ func TestProductShutdown_DrainsOrCancelsRequests(t *testing.T) {
 			defer ln.Close()
 			srv := newProductHTTPServer(lc, config.ProductConfig{HTTPAddr: "127.0.0.1:0", RequestTimeout: time.Second,
 				TransferTimeout: 2 * time.Second, ShutdownTimeout: 100 * time.Millisecond},
-				slog.New(slog.DiscardHandler), ProductOptions{Listener: ln}, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, pool, make(fatal, 1))
+				slog.New(slog.DiscardHandler), ProductOptions{Listener: ln}, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, pool, make(fatal, 1))
 			if srv.WriteTimeout != 7*time.Second || srv.ReadTimeout != 30*time.Second {
 				t.Fatalf("server budgets read=%v write=%v", srv.ReadTimeout, srv.WriteTimeout)
 			}

@@ -15,6 +15,10 @@ IDs remain stable wire/route keys; user-facing pickers and scope navigation use 
 
 Reference for API clients. Default local base URL: `http://localhost:8080`. Example requests: [`api.http`](../api.http). With `API_DOCS_ENABLED=true`, the server also publishes an OpenAPI 3.1 document at `/openapi.json` and SwaggerUI at `/docs` ([operations.md](operations.md#api-documentation)); this page remains the reference for behavior the schema cannot express, such as normalization and `If-Match` rules.
 
+## Product Term Sheet
+
+The [Term Sheet contract](../../../docs/implementation/p0-zcode-execution/local-contract.md#28-contract-term-sheet) defines the product routes, multipart input, 5 MiB limit, row errors and same-key replay.
+
 ## General conventions
 
 | Item | Convention |

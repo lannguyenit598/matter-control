@@ -114,10 +114,8 @@ func b1ProfileSQL() []string {
 }
 
 // b1RuntimeGrants returns the per-table-class DML the runtime actually needs (B1: exact grants,
-// not blanket ALL). Append-only legal history gets read/append only. DELETE exists in exactly
-// four product queries (replace-on-save semantics): context_links, dependency_edges,
-// milestone_prerequisites and review_grid_versions — granted on those tables only, matching the
-// discovered contract (the B1 test proves any missing grant empirically).
+// not blanket ALL). Append-only legal history gets read/append only. DELETE is limited to the
+// tables whose contracts replace or remove rows.
 func b1RuntimeGrants(schema string, tables []string) []string {
 	var out []string
 	appendOnly := map[string]bool{
@@ -125,7 +123,7 @@ func b1RuntimeGrants(schema string, tables []string) []string {
 		"security_audit_events": true,
 	}
 	deletable := map[string]bool{
-		"context_links": true, "dependency_edges": true,
+		"context_links": true, "contract_term_lines": true, "dependency_edges": true,
 		"milestone_prerequisites": true, "review_grid_versions": true,
 		// RLF-04: a saved view is a private row its owner may remove; DELETE is part of
 		// its discovered contract (DeleteSavedView), granted on this table only.
@@ -484,7 +482,7 @@ func TestB1LeastPrivilegeProfile(t *testing.T) {
 			"security_audit_events": true,
 		}
 		deletable := map[string]bool{
-			"context_links": true, "dependency_edges": true,
+			"context_links": true, "contract_term_lines": true, "dependency_edges": true,
 			"milestone_prerequisites": true, "review_grid_versions": true,
 			// RLF-04: a saved view is a private row its owner may remove; DELETE is part of
 			// its discovered contract (DeleteSavedView), granted on this table only.
@@ -628,6 +626,7 @@ func TestB1LeastPrivilegeProfile(t *testing.T) {
 		mattercontrol.Suite(t, newRuntimeBundle)
 		mattercontrol.SuiteW4(t, newRuntimeBundle)
 		mattercontrol.SuiteReview(t, newRuntimeBundle)
+		mattercontrol.SuiteTermSheets(t, newRuntimeBundle)
 		mattercontrol.SuiteSearch(t, newRuntimeBundle, func(b mattercontrol.Bundle) port.SearchStore {
 			return b.Store.(*faultCapableStore).inner
 		})

@@ -705,6 +705,14 @@ func TestMatterSuitePlaybooks_Postgres(t *testing.T) {
 	})
 }
 
+// TestMatterSuiteTermSheets_Postgres runs the MC-ZCODE-TERMSHEET-01 contracts against the real adapter.
+func TestMatterSuiteTermSheets_Postgres(t *testing.T) {
+	mattercontrol.SuiteTermSheets(t, func(t *testing.T) mattercontrol.Bundle {
+		b, _ := newProductStore(t)
+		return b
+	})
+}
+
 // TestMatterSuiteSavedViews_Postgres runs the RLF-04 Saved Views contracts against the real adapter.
 func TestMatterSuiteSavedViews_Postgres(t *testing.T) {
 	mattercontrol.SuiteSavedViews(t, func(t *testing.T) mattercontrol.Bundle {

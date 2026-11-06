@@ -185,8 +185,16 @@ type receiptBody struct {
 	Requirement    *requirementBody `json:"requirement"`
 	// BulkRow and ImportRow carry what a per-row W6 receipt committed, so a lost answer can be
 	// settled from the receipt alone (no content hash, no payload).
-	BulkRow   *rowReceiptBody `json:"bulkRow,omitempty"`
-	ImportRow *rowReceiptBody `json:"importRow,omitempty"`
+	BulkRow   *rowReceiptBody       `json:"bulkRow,omitempty"`
+	ImportRow *rowReceiptBody       `json:"importRow,omitempty"`
+	TermSheet *termSheetReceiptBody `json:"termSheet,omitempty"`
+}
+
+type termSheetReceiptBody struct {
+	DocumentVersionID string `json:"documentVersionId"`
+	Created           int    `json:"created"`
+	Replaced          int    `json:"replaced"`
+	Unchanged         int    `json:"unchanged"`
 }
 
 type rowReceiptBody struct {
@@ -215,6 +223,9 @@ func receiptDTO(rc matter.Receipt) receiptBody {
 	}
 	if s := rc.ImportSnapshot; s != nil {
 		b.ImportRow = &rowReceiptBody{ItemID: s.ItemID, Kind: s.Kind, Revision: s.Revision, RowKey: s.RowKey}
+	}
+	if s := rc.TermSheetSnapshot; s != nil {
+		b.TermSheet = &termSheetReceiptBody{DocumentVersionID: s.VersionID.String(), Created: s.Created, Replaced: s.Replaced, Unchanged: s.Unchanged}
 	}
 	return b
 }

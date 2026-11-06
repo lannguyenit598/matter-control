@@ -182,6 +182,19 @@ func TestSuitePlaybooks_MemoryStore(t *testing.T) {
 	})
 }
 
+// The MC-ZCODE-TERMSHEET-01 term-sheet contracts run against the same in-memory double.
+func TestSuiteTermSheets_MemoryStore(t *testing.T) {
+	mattercontrol.SuiteTermSheets(t, func(t *testing.T) mattercontrol.Bundle {
+		base := time.Now().UTC().Add(-time.Minute)
+		n := 0
+		store := mattercontrol.NewMemoryStore(func() time.Time {
+			n++
+			return base.Add(time.Duration(n) * time.Millisecond)
+		})
+		return mattercontrol.Bundle{Store: store, World: mattercontrol.NewMemoryWorld(store)}
+	})
+}
+
 // The RLF-04 Saved Views contracts run against the same in-memory double.
 func TestSuiteSavedViews_MemoryStore(t *testing.T) {
 	mattercontrol.SuiteSavedViews(t, func(t *testing.T) mattercontrol.Bundle {

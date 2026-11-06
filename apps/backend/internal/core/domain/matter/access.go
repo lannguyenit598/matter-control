@@ -120,6 +120,7 @@ type Receipt struct {
 	CreatedSnapshot    *CreatedResult
 	BulkSnapshot       *BulkRowApplied
 	ImportSnapshot     *ImportRowApplied
+	TermSheetSnapshot  *TermSheetImported
 }
 
 // Node is a work-graph node row.
