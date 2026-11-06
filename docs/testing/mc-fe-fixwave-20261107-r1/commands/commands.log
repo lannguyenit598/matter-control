@@ -1,0 +1,36 @@
+# MC-FE-FIXWAVE-20261107 — command transcript (condensed; all commands rtk-prefixed)
+
+## Pre-flight (2026-11-07)
+- `git rev-parse HEAD` → `5a00dbc162d3f8fd4d38cbcba1cc98122a4dd301` on `develop` — **== pin, no re-pin**.
+- `git status --porcelain` → 4 untracked handoff prompts (other flows) + my fe-nextjs-review COI return; no dirty source.
+- Tools: node v24.22.1 · pnpm present · apps/frontend/node_modules PRESENT (no install) · Chrome PRESENT · :3000/:6006 free.
+
+## W1 (no code change — guard fired)
+- `node fieldface-math.mjs` (script in commands/, source tokens from globals.css @5a00dbc1) → evidence/fieldface-math-output.txt (light: face-vs-composite 1.033, 3:1 needs face ≈59L*; dark: 1.111, lighter path needs ≈52L*, darker impossible; rim 1.062/1.246, edge 1.218/1.635).
+- Wrote D-23-field-face-contrast.md (options A/B/C, recommendation C).
+
+## W2 (before/after via stash of tracked src changes)
+- `git stash push -m fixwave-before-captures -- apps/frontend/src` → BEFORE = exact HEAD bytes.
+- `node fixwave-probe.mjs before` → evidence/before/{probe.json, story-liquid-workbench.png, app-matters-vi.png} (first run caught a dev-compile transient — rerun clean; void 430px = 47.8%).
+- `git stash pop` → all changes restored (verified porcelain).
+- `node fixwave-probe.mjs after` → evidence/after/{...} (void 177px = 19.7%; title vi `Hồ sơ · MatterControl`; en unchanged; theme-color #fafbfc/#0d0d10; touch-action manipulation).
+- `inspect.mjs --app http://127.0.0.1:3100/matters` → hero-void 39-40% → 35% (evidence/inspect-after/).
+
+## W3/W4/W5 implementation
+- Edits via Edit tool (no sed/perl -i): theme.ts (THEME_COLORS + init-script sync + toggleTheme), root-shell.tsx (meta tag), globals.css (touch-action layer), read-failure.tsx (centering), dashboard-template.stories.tsx (fixture band), 20 page metadata conversions + lib/page-metadata.ts + test.
+- Dark hex derived from the token: oklch(0.16 0.005 285.8) → #0d0d10 (cross-checked against Chrome's lab() resolve from the design-review dump).
+
+## W6
+- `node w6-repro-404.mjs` → 404 URL captured: `http://127.0.0.1:6006/favicon.ico` (favicon missing from Storybook staticDirs; public/ empty; Chrome fetches once per origin-session).
+- Fix: `.storybook/static/favicon.ico` (copy of src/app/favicon.ico, `file` → MS Windows icon resource, 3 icons 48/32px) + main.ts `staticDirs: ['../public', './static']`; Storybook restarted.
+- `node w6-repro-404.mjs` again → **0 404s**.
+
+## Gates
+- `pnpm exec prettier --write` on all changed files (1 file reformatted).
+- First `pnpm check` run: failed format:check on my 3 temp probe scripts living in apps/frontend root — moved to evidence/commands/ (out of source scope), rerun.
+- Final `pnpm check` **exit 0**: typegen+tsc ✓ · eslint 0 errors ✓ · prettier ✓ · vitest **954 passed | 12 skipped (125 files)** (incl. page-metadata.test.ts 3/3) · agents:check ✓.
+- Shared-.next discipline: `lsof -i :3100` writer stopped BEFORE `next typegen`; Storybook (:6006, Vite cache separate from app .next) kept for render checks, stopped before commits.
+- `node changed-stories-check.mjs` → 5/5 changed stories render, 0 console errors (evidence/changed-stories-render.json). Full 72-story sweep NOT_RUN this round.
+
+## Commits
+- Recorded per commit in the git log bodies (item IDs cited); hashes appended here after landing.
