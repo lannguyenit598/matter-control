@@ -1,0 +1,35 @@
+# govulncheck after the echo bump (run in apps/backend, 2026-11-07 ~00:3x +07:00)
+
+Command: `rtk go run golang.org/x/vuln/cmd/govulncheck@latest ./...`
+
+```
+=== Symbol Results ===
+
+No vulnerabilities found.
+
+Your code is affected by 0 vulnerabilities.
+This scan also found 0 vulnerabilities in packages you import and 2
+vulnerabilities in modules you require, but your code doesn't appear to call
+these vulnerabilities.
+Use '-show verbose' for more details.
+```
+
+INFO — the 2 required-but-not-called module entries (`-show verbose`):
+
+```
+Vulnerability #1: GO-2026-6866
+  Module: golang.org/x/net
+    Found in: golang.org/x/net@v0.61.0
+    Fixed in: golang.org/x/net@v0.62.0
+Vulnerability #2: GO-2026-6860
+  Module: golang.org/x/net
+    Found in: golang.org/x/net@v0.61.0
+    Fixed in: golang.org/x/net@v0.62.0
+```
+
+Not bumped in this wave: the dispatch limits dependency changes to the echo patch bump
+(non-goals §6). Recorded for a future dependency intake.
+
+"Before" evidence: `docs/testing/be-echo-review-20261106-r1/evidence/govulncheck-followup.txt`
+(symbol traces GO-2026-6844/6841/6839/6838 found-in v5.4.0 fixed-in v5.4.1 — code call paths
+confirmed, e.g. productapi middleware chain and objectstore io.Copy paths).
