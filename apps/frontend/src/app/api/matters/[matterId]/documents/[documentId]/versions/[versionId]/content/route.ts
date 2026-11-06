@@ -23,7 +23,7 @@ export async function GET(
     const { matterId, documentId, versionId } = await ctx.params
     const upstream = await mcDownload(
       `/matters/${pathId(matterId)}/documents/${pathId(documentId)}/versions/${pathId(versionId)}/content`,
-      120_000,
+      330_000,
     )
     const headers = new Headers({ 'Content-Type': 'application/octet-stream' })
     for (const h of PASS) {

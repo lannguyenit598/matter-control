@@ -15,7 +15,7 @@ export async function GET(request: NextRequest, ctx: { params: Promise<{ matterI
     const format = request.nextUrl.searchParams.get('format') === 'csv' ? 'csv' : 'xlsx'
     const upstream = await mcDownload(
       `/matters/${pathId(matterId)}/export?format=${encodeURIComponent(format)}`,
-      120_000,
+      330_000,
     )
     const headers = new Headers({
       'Content-Type':
