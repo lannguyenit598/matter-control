@@ -5,8 +5,8 @@
 | **Requirement** | Fix D-01/D-02 từ audit lưu trữ file R2 2026-11-06; đóng điều kiện tiên quyết gate B3 (free-phase-deploy-checklist) |
 | **Owner** | ZCode (backend execution owner, PO restore 2026-10-26; FE 3 dòng thuộc assignment P0 BE+FE) |
 | **Priority** | P2 (deployment-blocking cho pilot Phase 2-6) |
-| **Status** | AUTHOR_COMPLETE_PENDING_INDEPENDENT_REVIEW — uncommitted trên branch |
-| **Base / Head** | base `develop@41098a4d` → branch `zcode/r2-storage-fix-20261106` (uncommitted) |
+| **Status** | COMMITTED — interim fresh-context review PASS_WITH_LIMITATIONS (R2F-01/02 đã fix); formal external review qua dispatch packet khi PO cần verdict binding; B3 chờ PO provision |
+| **Base / Head** | base `develop@41098a4d` → head `zcode/r2-storage-fix-20261106@38ae2458` (commit 2026-11-06, Mimosa gate không chặn) |
 | **Scope** | Config/manifest + 1-dòng FE ×3 + guide B3 + task record. **0 dòng Go** |
 | **Dependencies** | Design MC-ZCODE-R2-STORAGE-FIX-DESIGN-20261106 (DESIGN_VALIDATED_BY_PO từng phần, 2026-11-06) |
 | **Inputs** | Audit findings D-01..D-08 (memory `mc-r2-storage-audit-20261106`); ADR-006/007; free-phase-deploy-checklist B3/B68-69 |
