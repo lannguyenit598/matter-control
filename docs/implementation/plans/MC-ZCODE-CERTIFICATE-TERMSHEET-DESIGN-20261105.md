@@ -81,11 +81,17 @@ Hiệu năng: certificate render < 1s/matter (preflight 682µs/100 criteria); im
 | 7 | Term-Sheet = Approach A (TermLine riêng) | B metadata JSON (vi phạm Principle 4), C context record (bẻ cong semantics) | Fact ≠ obligation; enum đóng tường minh |
 | 8 | Lưu artifact = document version pipeline (S3) | Hash-only (không tái tạo được) | Immutability + lineage + Documents tab miễn phí |
 | 9 | vi label "Kiểm soát sẵn sàng"/"Bảng điều khoản" qua R10 | "Tờ trình…" (va term đã ratify — S4) | Tránh va chạm terminology |
+| 10 | Import TermSheet = đường riêng (SheetCodec + hash pattern), không đụng parseSheet | Mở rộng parseSheet với sheet-kind mới | Registry như design giả định không tồn tại; đường riêng = blast radius 0; Erratum 1 |
 
 ## Phần 5 — Rủi ro & điều kiện mở
 
-- **Preflight review** chưa PASS — gate thật của Certificate.
-- **Import registry shape** cần verify tại bước code (design giả định pattern 0006).
+- **Preflight review** chưa PASS — gate thật của Certificate. *(Verify 2026-11-05: MC-PREFLIGHT-01 record ghi BACKLOG/NOT_STARTED dù implementation đã trong tree; review handoff `MC-OPENCODE-PREFLIGHT-IMPL-REVIEW-20261103-PROMPT.md` vẫn PROPOSED_DISPATCH — chưa gửi. Action item cho PO/Codex: dispatch review.)*
 - **R10 terminology** pending — vi label tạm EN key, không block EN.
 - AI workbench phase: Term-Sheet là rails; extraction chỉ mount khi PO mở phase (quyết định 2026-10-29 còn hiệu lực).
 - Triển khai phải qua workflow hiện hành: task record → assignment → independent review → DONE kèm evidence.
+
+## Erratum 1 (2026-11-05, sau khi verify import registry — pre-step §2.2)
+
+Design §2.2 giả định "bundle type mới trong registry hiện có". Verify thật: import pipeline là `ImportPreview`/`ImportCommit` (dataops_service.go:391/672) — `parseSheet` map sheet rows → `ImportRowPlan` (work items) trực tiếp; **không có bundle-type registry**. `SheetCodec` (port/sheet.go) decode csv/xlsx an toàn (formula-safe, maxBytes); hash-replay qua `registerImportSource`/`lookupImportSource` (:748/:733).
+
+**Điều chỉnh (giữ nguyên Approach A, chỉ đổi cơ chế import)**: v1 dùng **đường import TermSheet riêng biệt** trong cùng `DataOpsService` — tự gọi `SheetCodec.Decode` + tái dùng pattern hash-registration của `registerImportSource`, ghi vào `term_lines`. KHÔNG đụng `parseSheet` (blast radius 0 với import hiện hành). Erratum này do pre-step trong design dự liệu; ghi Decision Log #10 và đưa vào review trả lời.
