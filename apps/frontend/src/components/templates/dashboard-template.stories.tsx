@@ -88,6 +88,34 @@ export const LiquidWorkbench: Story = {
             },
           ]}
         />
+        {/* W2 (UX-B-01): close the canvas with the workbench's secondary bands so the fixture
+            stops reading as a half-empty screen (taste-inspect hero-void 40%). */}
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Waiting on</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="flex flex-col gap-2 text-sm">
+                <li>Notary — certified copy of the charter, due Friday</li>
+                <li>Registry — filing fee confirmation</li>
+                <li>Buyer counsel — signed disclosure letter</li>
+              </ul>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent changes</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="flex flex-col gap-2 text-sm">
+                <li>Proof attached — charter certified copy</li>
+                <li>Milestone advanced — signing completed</li>
+                <li>Evidence criterion verified — board resolution</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     ),
   },

@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 import { buttonVariants } from '@/components/atoms/button'
 import { EmptyState } from '@/components/molecules/empty-state'
+import { cn } from '@/lib/utils'
 
 import { PurgeDrafts } from './draft-scope'
 
@@ -63,7 +64,15 @@ export function ReadFailure({ partial, heading, ...props }: ReadFailureProps) {
       {lost && (
         <PurgeDrafts reason={props.kind === 'sign-in' ? 'session-ended' : 'access-recheck'} />
       )}
-      <div className="flex flex-col gap-4">
+      {/* W2 (UX-B-01): a whole-page failure is the only content on the canvas — centre it in the
+          remaining viewport height instead of leaving a ~40% void under the card. Partial
+          section denials stay inline: they sit inside a page the user can still read. */}
+      <div
+        className={cn(
+          'flex flex-col gap-4',
+          !partial && 'min-h-[calc(100dvh-8rem)] justify-center',
+        )}
+      >
         {heading && <h1 className="text-2xl font-semibold tracking-tight">{heading}</h1>}
         <ReadFailureState {...props} />
       </div>
