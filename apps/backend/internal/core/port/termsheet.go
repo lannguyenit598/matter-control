@@ -31,14 +31,17 @@ type TermSheetRowError struct {
 	Detail string
 }
 
-// TermSheetImportResult is the readback of one import: how many lines were created, how many
-// existing lines changed bytes and were replaced, how many were byte-identical no-ops, and which
-// rows were rejected.
+// TermSheetImportResult is the readback of one import: how many rows were written as new line
+// records (Created), how many of this version's prior lines did not survive the replace
+// (Replaced — changed bytes re-created, plus lines the sheet dropped outright), how many were
+// byte-identical no-ops (Unchanged), how many prior lines the sheet dropped outright (Deleted),
+// and which rows were rejected.
 type TermSheetImportResult struct {
 	DocumentVersionID string
 	Created           int
 	Replaced          int
 	Unchanged         int
+	Deleted           int
 	Rejected          []TermSheetRowError
 	Replayed          bool
 }

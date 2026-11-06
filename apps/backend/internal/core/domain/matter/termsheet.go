@@ -10,12 +10,15 @@ import (
 
 // ---------- Contract term lines (MC-ZCODE-TERMSHEET-01, design 2026-11-05 §2.2) ----------
 
-// TermSheetImported records an accepted import without contractual content.
+// TermSheetImported records an accepted import without contractual content. Deleted counts the
+// prior lines the replace dropped; receipts stored before MC-BE-FIXWAVE-20261106 carry no value
+// for it (JSON decodes to 0), so a replay of an old receipt reports Deleted=0 by construction.
 type TermSheetImported struct {
 	VersionID VersionID
 	Created   int
 	Replaced  int
 	Unchanged int
+	Deleted   int
 }
 
 // TermLineID identifies one contract term line.

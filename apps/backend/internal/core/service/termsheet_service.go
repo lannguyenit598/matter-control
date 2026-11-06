@@ -210,7 +210,7 @@ func (s *TermSheets) ImportTermSheet(ctx context.Context, cmd port.ImportTermShe
 			stored := rcpt.TermSheetSnapshot
 			res = port.TermSheetImportResult{
 				DocumentVersionID: stored.VersionID.String(), Created: stored.Created,
-				Replaced: stored.Replaced, Unchanged: stored.Unchanged, Replayed: true,
+				Replaced: stored.Replaced, Unchanged: stored.Unchanged, Deleted: stored.Deleted, Replayed: true,
 			}
 			return nil
 		}
@@ -253,7 +253,7 @@ func (s *TermSheets) ImportTermSheet(ctx context.Context, cmd port.ImportTermShe
 			WorkspaceID: env.header.WorkspaceID, MatterID: &mID, Matters: []matter.MatterID{mID},
 			StatusCode: 200, CommittedAt: env.tCmd, Kind: matter.SnapshotTermSheetImported,
 			TermSheetSnapshot: &matter.TermSheetImported{
-				VersionID: docV, Created: res.Created, Replaced: res.Replaced, Unchanged: res.Unchanged,
+				VersionID: docV, Created: res.Created, Replaced: res.Replaced, Unchanged: res.Unchanged, Deleted: res.Deleted,
 			},
 		})
 	})
@@ -304,6 +304,7 @@ func replaceTermSheet(ctx context.Context, env *workEnv, version matter.VersionI
 		return nil
 	}
 	lines := make([]matter.TermLine, 0, len(rows))
+	changedPrior := 0 // prior identities whose bytes changed and were re-created under a new ID
 	for _, row := range rows {
 		rowHash := termRowHash(row)
 		prev, ok := prevByKey[rowIdentity{row.Field, row.RowKey}]
@@ -311,6 +312,9 @@ func replaceTermSheet(ctx context.Context, env *workEnv, version matter.VersionI
 			res.Unchanged++
 			lines = append(lines, prev)
 			continue
+		}
+		if ok {
+			changedPrior++
 		}
 		line := matter.TermLine{
 			ID: matter.TermLineID(env.ids.NewRecordID()), MatterID: mID, DocumentVersionID: version,
@@ -323,15 +327,19 @@ func replaceTermSheet(ctx context.Context, env *workEnv, version matter.VersionI
 		lines = append(lines, line)
 		res.Created++
 	}
+	// Replaced keeps its contract meaning: this version's prior lines that did not survive
+	// (changed bytes re-created, plus lines dropped outright). Deleted names the dropped part so a
+	// silent erasure becomes visible (BE-R1-01).
 	res.Replaced = len(prevByKey) - res.Unchanged
-	if res.Created == 0 && res.Replaced == 0 {
+	res.Deleted = res.Replaced - changedPrior
+	if res.Created == 0 && res.Replaced == 0 && res.Deleted == 0 {
 		return nil
 	}
 	if err := tt.ReplaceTermLinesOfDocumentVersion(ctx, mID, version, lines); err != nil {
 		return err
 	}
 	_, err = env.emit(ctx, "term_sheet.imported", "DOCUMENT_VERSION", version.String(), "", nil,
-		map[string]int{"created": res.Created, "replaced": res.Replaced, "unchanged": res.Unchanged}, nil)
+		map[string]int{"created": res.Created, "replaced": res.Replaced, "unchanged": res.Unchanged, "deleted": res.Deleted}, nil)
 	return err
 }
 

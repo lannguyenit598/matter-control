@@ -110,7 +110,8 @@ func (s *server) importTermSheet(c *echo.Context) error {
 	}
 	_, err = respond(c, http.StatusOK, map[string]any{
 		"documentVersionId": res.DocumentVersionID, "created": res.Created,
-		"replaced": res.Replaced, "unchanged": res.Unchanged, "rejected": rejected, "replayed": res.Replayed,
+		"replaced": res.Replaced, "unchanged": res.Unchanged, "deleted": res.Deleted,
+		"rejected": rejected, "replayed": res.Replayed,
 	}, false)
 	return err
 }

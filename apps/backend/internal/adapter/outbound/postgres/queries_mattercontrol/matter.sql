@@ -144,8 +144,7 @@ SELECT matter_id, seq, id, type, schema_version, actor_kind, actor_id, target_ki
        reason, before, after
 FROM domain_events
 WHERE matter_id = sqlc.arg(matter_id)::uuid
-  AND (recorded_at > sqlc.arg(after_recorded_at)::timestamptz
-       OR (recorded_at = sqlc.arg(after_recorded_at)::timestamptz AND seq > sqlc.arg(after_seq)::bigint))
+  AND (recorded_at, seq) > (sqlc.arg(after_recorded_at)::timestamptz, sqlc.arg(after_seq)::bigint)
 ORDER BY recorded_at, seq
 LIMIT sqlc.arg(page_limit)::int;
 

@@ -2042,8 +2042,7 @@ SELECT matter_id, seq, id, type, schema_version, actor_kind, actor_id, target_ki
        reason, before, after
 FROM domain_events
 WHERE matter_id = $1::uuid
-  AND (recorded_at > $2::timestamptz
-       OR (recorded_at = $2::timestamptz AND seq > $3::bigint))
+  AND (recorded_at, seq) > ($2::timestamptz, $3::bigint)
 ORDER BY recorded_at, seq
 LIMIT $4::int
 `
