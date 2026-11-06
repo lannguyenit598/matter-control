@@ -27,6 +27,7 @@ func TestTimeout_TransferRoutesHaveSeparateBudget(t *testing.T) {
 		{http.MethodPost, "/api/v1/matters/m/documents/d/versions", 60 * time.Second},
 		{http.MethodGet, "/api/v1/matters/m/documents/d/versions/v/content", 60 * time.Second},
 		{http.MethodPost, "/api/v1/matters/m/import/preview", 60 * time.Second},
+		{http.MethodPost, "/api/v1/matters/m/term-lines/import", 60 * time.Second},
 		{http.MethodPost, "/api/v1/matters/m/import/commit", 60 * time.Second},
 		{http.MethodPost, "/api/v1/matters/m/bulk/commit", 60 * time.Second},
 		{http.MethodGet, "/api/v1/matters/m/export", 60 * time.Second},

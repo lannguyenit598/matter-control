@@ -1,7 +1,7 @@
 # MC-ZCODE-TERMSHEET-01 — Contract Term-Sheet Grid v1 (deterministic)
 
 - Owner/reviewer: ZCode owns implementation; independent non-author reviewer required before any DONE (OpenCode or other, TBD at review dispatch).
-- Priority: P1. Status: READY (implementation may start; landing on main after review).
+- Priority: P1. Status: INTEGRATED_ON_DEVELOP. The reviewed Term Sheet implementation is in `fc367ce1`. Release qualification is pending.
 - Requirements: PO-selected feature pair 2026-11-05; design `docs/implementation/plans/MC-ZCODE-CERTIFICATE-TERMSHEET-DESIGN-20261105.md` §2 (DESIGN_APPROVED_IN_DIALOG); PRODUCT.md Principle 3 (deterministic) and Principle 4 (no generic metadata blob); import content-hash replay pattern (0006); permission matrix; WCAG 2.2 AA + vi/EN parity.
 - Authorization: PO instruction 2026-11-05 ("apply" the two selected features); local implementation authority per latest PO owner amendment; no push/deploy/release approval.
 - Base: `fcc7ee1aaf024e5d2007a278a29f3961259240c8` (main), branch `zcode/cert-termsheet-20261105`.

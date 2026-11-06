@@ -67,7 +67,8 @@ const (
 	SnapshotActionCreate      SnapshotKind = "ACTION_CREATED"
 	// SnapshotCreated stores only what a creation produced (record kind, id, history seq): a
 	// replay returns the same id and the caller re-reads the record with its own rights.
-	SnapshotCreated SnapshotKind = "RECORD_CREATED"
+	SnapshotCreated           SnapshotKind = "RECORD_CREATED"
+	SnapshotTermSheetImported SnapshotKind = "TERM_SHEET_IMPORTED"
 )
 
 // EventRecord is one append-only history row as returned by reads. Before/After stay

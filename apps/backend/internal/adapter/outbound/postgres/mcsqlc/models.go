@@ -96,6 +96,24 @@ type ContextRecord struct {
 	Revision     int64
 }
 
+type ContractTermLine struct {
+	ID                string
+	MatterID          string
+	DocumentVersionID string
+	Field             string
+	ValueText         pgtype.Text
+	ValueDate         pgtype.Timestamptz
+	RowKey            string
+	ContentHash       string
+	PromotedRef       pgtype.UUID
+	PromotedKind      pgtype.Text
+	PromotedAt        pgtype.Timestamptz
+	ImportedBy        string
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
+	Revision          int64
+}
+
 type Criterium struct {
 	ID              string
 	MatterID        string

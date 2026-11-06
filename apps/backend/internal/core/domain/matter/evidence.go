@@ -25,6 +25,9 @@ func (id ClaimID) String() string      { return string(id) }
 func (id AssessmentID) String() string { return string(id) }
 func (id DisputeID) String() string    { return string(id) }
 
+// NewVersionID validates and returns a VersionID (typed UUID, MC-ZCODE-TERMSHEET-01).
+func NewVersionID(s string) (VersionID, error) { return newUUID[VersionID](s, "documentVersionId") }
+
 // Document is a stable identity whose content lives in immutable versions. Upload never
 // promotes: exactly one version is current, chosen explicitly by an OWNER (RULE-011).
 type Document struct {

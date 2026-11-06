@@ -94,6 +94,7 @@ func newEnvSized(t *testing.T, maxUpload int64, localDirectory ...bool) *env {
 		Guidances:            service.NewGuidanceService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{})),
 		DataOps:              service.NewDataOpsService(store, ids, sheet.Codec{}, logger),
 		DataOpsCodec:         sheet.Codec{},
+		TermSheets:           service.NewTermSheetService(service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{}), sheet.Codec{}),
 		MaxUploadBytes:       maxUpload,
 		Verifier:             e.verifier, Identities: res, Logger: logger,
 	})

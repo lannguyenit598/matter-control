@@ -115,6 +115,8 @@ type Store struct {
 	playbooks         map[matter.PlaybookID]matter.Playbook
 	playbookRevs      map[matter.PlaybookRevisionID]matter.PlaybookRevision
 	playbookInstances []matter.PlaybookInstance
+	// MC-ZCODE-TERMSHEET-01 contract term lines: typed facts per document version.
+	termLines []matter.TermLine
 	// RLF-06 + RLF-07: intake records and versioned guidance.
 	intakeRecords map[matter.IntakeID]matter.IntakeRecord
 	guidanceDocs  map[matter.GuidanceDocumentID]matter.GuidanceDocument
@@ -291,6 +293,7 @@ func (s *Store) snapshot() *Store {
 	cp.playbooks = copyMap(s.playbooks)
 	cp.playbookRevs = copyMap(s.playbookRevs)
 	cp.playbookInstances = append([]matter.PlaybookInstance(nil), s.playbookInstances...)
+	cp.termLines = append([]matter.TermLine(nil), s.termLines...)
 	cp.intakeRecords = copyMap(s.intakeRecords)
 	cp.guidanceDocs = copyMap(s.guidanceDocs)
 	cp.guidanceRevs = copyMap(s.guidanceRevs)
@@ -401,6 +404,7 @@ func (s *Store) adopt(work *Store) {
 	s.contexts = work.contexts
 	s.savedViews = work.savedViews
 	s.playbooks, s.playbookRevs, s.playbookInstances = work.playbooks, work.playbookRevs, work.playbookInstances
+	s.termLines = work.termLines
 	s.intakeRecords, s.guidanceDocs, s.guidanceRevs = work.intakeRecords, work.guidanceDocs, work.guidanceRevs
 	s.reviewGrids, s.reviewAnswers, s.reviewQuestionRevs = work.reviewGrids, work.reviewAnswers, work.reviewQuestionRevs
 	s.events = work.events

@@ -24,11 +24,12 @@ import (
 const (
 	bodyLimit = 1 << 20
 	// maxPageLimit is declared in every page envelope: no hidden cap (contract §2).
-	maxPageLimit   = 200
-	actorKey       = "mc.actor"
-	apiPrefix      = "/api/v1"
-	hdrIdempotency = "Idempotency-Key"
-	uploadRoute    = "/matters/:id/documents/:docId/versions"
+	maxPageLimit         = 200
+	actorKey             = "mc.actor"
+	apiPrefix            = "/api/v1"
+	hdrIdempotency       = "Idempotency-Key"
+	uploadRoute          = "/matters/:id/documents/:docId/versions"
+	termSheetImportRoute = "/matters/:id/term-lines/import"
 )
 
 // Deps are the inbound ports and identity collaborators the adapter needs.
@@ -43,6 +44,7 @@ type Deps struct {
 	Review               port.ReviewService
 	SavedViews           port.SavedViewService
 	Playbooks            port.PlaybookService
+	TermSheets           port.TermSheetService
 	Intakes              port.IntakeService
 	Guidances            port.GuidanceService
 	DataOps              port.DataOpsService
@@ -98,7 +100,7 @@ func NewServer(d Deps) *echo.Echo {
 			if c.Request().Method != http.MethodPost {
 				return false
 			}
-			return c.Path() == apiPrefix+uploadRoute ||
+			return c.Path() == apiPrefix+uploadRoute || c.Path() == apiPrefix+termSheetImportRoute ||
 				c.Path() == apiPrefix+"/matters/:id/import/preview" ||
 				c.Path() == apiPrefix+"/matters/:id/import/commit"
 		},
@@ -148,6 +150,9 @@ func NewServer(d Deps) *echo.Echo {
 	v1.POST("/workspaces/:id/playbooks", s.createPlaybook)
 	v1.GET("/workspaces/:id/playbooks/:playbookId", s.getPlaybook)
 	v1.POST("/workspaces/:id/playbooks/:playbookId/revisions", s.publishPlaybookRevision)
+	v1.GET("/matters/:id/term-lines", s.listTermLines)
+	v1.POST(termSheetImportRoute, s.importTermSheet)
+	v1.POST("/matters/:id/term-lines/:termLineId/promotion", s.promoteTermLine)
 	v1.GET("/matters/:id/saved-views", s.listSavedViews)
 	v1.POST("/matters/:id/saved-views", s.createSavedView)
 	v1.PATCH("/matters/:id/saved-views/:viewId", s.updateSavedView)
@@ -241,7 +246,7 @@ func transferRequest(c *echo.Context) bool {
 	switch c.Request().Method {
 	case http.MethodPost:
 		switch c.Path() {
-		case apiPrefix + uploadRoute, apiPrefix + "/matters/:id/import/preview",
+		case apiPrefix + uploadRoute, apiPrefix + termSheetImportRoute, apiPrefix + "/matters/:id/import/preview",
 			apiPrefix + "/matters/:id/import/commit", apiPrefix + "/matters/:id/bulk/commit":
 			return true
 		}

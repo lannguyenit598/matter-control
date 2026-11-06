@@ -204,6 +204,18 @@ All routes are matter-scoped and require an ACTIVE workspace AND matter membersh
 
 Bulk/import commit responses carry the attempt/run key and per-row status; `UNKNOWN` rows must be resolved by their own receipt key (`GET /operations/{rowKey}` with the same Idempotency-Key) or the import receipt replay, never inferred from a 412 or a later state read.
 
+### 2.8 Contract Term Sheet
+
+| Route | Receipt / CAS | Roles | Notes |
+| --- | --- | --- | --- |
+| `GET /matters/{id}/term-lines` | read | VIEWER+ | Returns `{items, page, matterRevision}` from the same authorized snapshot. |
+| `POST /matters/{id}/term-lines/import` | UUIDv7 `Idempotency-Key` and Matter revision | EDITOR+ | Multipart fields are `file`, `format` (`csv` or `xlsx`), `documentVersionId`, and `expectedRevision`. A source version must belong to this Matter. |
+| `POST /matters/{id}/term-lines/{termLineId}/promotion` | UUIDv7 `Idempotency-Key` and Term Line revision | EDITOR+ | JSON request has `expectedRevision`. The outcome contains `termLineId`, `targetId`, `targetKind`, `targetMissing` and `replayed`. Replay returns the original draft ID even after source replacement. |
+
+Import accepts files up to 5 MiB, or a lower configured upload limit. Its structured response contains `documentVersionId`, `created`, `replaced`, `unchanged`, `rejected` and `replayed`. `rejected` is always an array of `{rowKey, code, detail}`. A nonempty array means the entire sheet was refused and no facts were applied. An effective replacement adds one sanitized Matter history event. A matching sheet leaves facts and revision unchanged. Both accepted outcomes are receipted.
+
+A stale Import revision returns 412. A missing revision returns 428. Hidden source versions or Term Lines return the standard 404. On an unknown outcome, repeat the original request with the original key and exact file bytes. A newer sheet does not invalidate the saved Import outcome.
+
 ## 3. DTO, decode, fingerprint, error and replay semantics
 
 - **DTO presence policy:** every field explicitly typed; server-owned fields (revision, seq, recordedAt, states) are always present; `owner`, `dueAt`, `workstreamId`, `applicabilityReason` are `null` until set — client renders explicit "—"/unassigned, never invents values. Producer ownership: only the command that owns a field writes it; read models never merge unrelated sources.

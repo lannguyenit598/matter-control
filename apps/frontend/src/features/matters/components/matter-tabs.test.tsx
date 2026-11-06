@@ -20,6 +20,7 @@ it.each([
   ['/matters/m1/reviews', 'Reviews'],
   ['/matters/m1/control-room', 'Control Room'],
   ['/matters/m1/data', 'Data'],
+  ['/matters/m1/term-sheet', 'Term sheet'],
 ])('marks the section for %s as current', (pathname, label) => {
   nav.pathname = pathname
   render(<MatterTabs matterId="m1" />)
@@ -37,7 +38,7 @@ it('links every section with a real internal href', () => {
     'href',
     '/matters/m1/reviews',
   )
-  expect(screen.getAllByRole('link')).toHaveLength(10)
+  expect(screen.getAllByRole('link')).toHaveLength(11)
 })
 
 it('keeps every section in one row, with records, data and history after a divider (no menu)', () => {
@@ -51,6 +52,7 @@ it('keeps every section in one row, with records, data and history after a divid
     'Overview',
     'Work',
     'Documents',
+    'Term sheet',
     'Reviews',
     'Filings',
     'Planning',

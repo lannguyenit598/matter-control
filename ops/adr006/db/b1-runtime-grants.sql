@@ -27,6 +27,8 @@ GRANT SELECT, INSERT ON mcapp.security_audit_events TO mc_runtime;
 -- Replace-on-save tables: the only product tables whose contracts DELETE (rebuild row sets).
 GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.context_links TO mc_runtime;
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.contract_term_lines TO mc_runtime;
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.dependency_edges TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.milestone_prerequisites TO mc_runtime;
