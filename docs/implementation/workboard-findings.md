@@ -252,3 +252,19 @@ PO dispatch (handoffs/MC-ENABLE-E2-E4-20261107-PROMPT.md), executor: actual ZCod
 - **E-4 DONE**: faultproxy mode-file (off/latency-ms/status), loopback-pinned cả listen lẫn upstream; demo đủ 13 bước (e4-results.json + 5 PNG): 503 injected (upstream never called), latency 2007ms vs 3–11ms baseline, api-stop → 502 upstream_unavailable, restores 200. UI trong fault: ReadFailure "Temporarily unavailable / Your session is unaffected" + Try again (h1+sidebar giữ — corroborate UX-L-05 fix).
 - **Gates**: cold cycle từ runbook alone PASS 4 stage — down CLEAN (0 listener/0 container) → up CLEAN → browser-check PASS cả 2 user → down CLEAN. Receipts: mc-enable-e2-e4-20261107-r1/commands/cold-{1,2,3,4}-*.log. Mimosa advisory trên down.sh L66 (kill pid) — already-hardened (numeric-pid case guard, tiền lệ m2-mimosa-findings).
 - **Không khẳng định**: IdP hardening, production behavior, $0 bill, TLS/multi-tenant, aud decoded out-of-band, matter-level two-actor (G1) done. Skipped: M1–M5 dataset alignment (spec file never committed — mất cùng docs cleanup, không reconstruct được), Storybook/prod build (out of scope), gitleaks (task riêng §20).
+
+## 22. Coordinator intake: enablement E-2/E-4 — 2026-11-07
+
+MC-ENABLE-E2-E4-20261107 (§21) — **intake nhận, commit `5a537f3e` khớp return; status → IN_REVIEW** (non-author review = rerun cold cycle từ runbook + đối receipts, prompt không cần riêng — §Return đã ghi đúng path).
+
+Chất lượng đáng ghi nhận:
+- **Stale-finding check đúng thứ tự**: probe authorize TRƯỚC khi "sửa" → phát hiện redirect_uri blocker 2026-10-27 đã tự hết (302 → Login UI) → erratum thay vì re-fix tránh được một admin-side change không cần thiết.
+- **Seed qua UI command path** trên bảng event-sourced (không SQL trực tiếp) — đúng invariant discipline; ghi nhận trung thực cả M1 duplicate lẫn giới hạn matter-level grant.
+- **E-4 thiết kế đúng biên**: faultproxy trên :8082 (port `.env.local` đã trỏ) = transparent cho product, 0 product change; UX-L-05 corroboration là bonus validation có giá trị.
+- Cold-start gate 4 stage PASS + Mimosa advisory disposition có tiền lệ.
+
+**Governance finding hệ thống (thứ 2 cùng pattern)**: US-PREP M1–M5 dataset spec **chưa bao giờ được commit** → mất vĩnh viễn cùng docs cleanup 05-11 (trước đó: usability-prep r1 cũng uncommitted). Bài học: evidence/work product phải commit trước khi cleanup chạy — cleanup không được nhận工作 product chưa commit làm "stale".
+
+**Mở khóa thực tế (RUNNABLE, chưa done)**: D-1(b) on-dialog final measure cho D-23 (gộp vào session đo + confirmation pass W1 no-op reading) · V-01..V-14 populated checklist · G1 positive two-actor path (tự grant matter-level trong session) · T10 replay (với dataset synthetic thay M1–M5, ghi nhận lệch).
+
+Pending không đổi: OpenCode batch-2 return intake (chờ paste) · confirmation gộp (fixwave 1+2 + W1 no-op) · D-3 proposed terms (OpenDesign) · gitleaks 2 PO decisions (§20) · B3 / org-tenancy / push (PO).
