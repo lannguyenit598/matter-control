@@ -34,6 +34,13 @@ Also reproduced from the review sweep: face vs page background = 1.037 (light) /
 
 **Recommendation: C** (WCAG-correct, intent-preserving, small token delta in field contexts), with B as the fallback if the PO prefers zero visual change.
 
+## Disposition — PO DECIDED (2026-11-07)
+
+- **Option C adopted** (recorded by the coordinator ZCode session on the PO's explicit answer). A stays rejected by the guard math; B is recorded as the unchosen fallback.
+- **Amended criterion wording (V-03 — replaces the face wording):** "On glass surfaces, a form field's **boundary indicator** (the rim/edge combination acting as the component boundary) achieves **≥3:1 against the adjacent glass composite** (WCAG 1.4.11 non-text contrast). The field **face** remains a near-opaque text plane per the Solid Glass intent and is exempt from the 3:1 non-text rule — it is not the boundary indicator."
+- **Implementation scope (S — fold into the next FE dispatch):** darken `--glass-field-rim`/`--glass-edge` **in field contexts only** to reach edge-vs-composite ≥3:1 per theme (current edge 1.218 light / 1.635 dark); update the token comment + any active V-03 checklist instance to the amended wording at implementation time (this doc is the decision record; the original wording lives in lineage-pruned docs); re-measure with the same compositing method (`fieldface-math.mjs`); the D-1(b) on-dialog final measure stays the open limitation.
+- OpenCode confirmation of the fix-wave (batch 2) must treat the D-23 decision as **post-dating** the wave: W1's no-code-change outcome is confirmed as correct process, not as a criterion closure.
+
 ## Known limitation (unchanged)
 
 The final on-dialog measurement (populated dialog on Liquid Glass backdrop) still awaits the walkthrough env (D-1(b) — E-2 stub-IdP browser login, E-4 fault-injection remain unowned gaps). All numbers here are token-level composites, not populated-dialog measurements.

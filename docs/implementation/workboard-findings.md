@@ -152,7 +152,7 @@ MC-BE-ECHO-REVIEW-20261106 RETURNED: **PASS_WITH_LIMITATIONS** (0 P0/P1/P2, 4 P3
 
 Hygiene: container `mc-r2-check-pg:5434` teardown sau intake. gitleaks 1171 docs/ history prose-FP vẫn chờ coordinator classify (riêng, không chặn). Cite verdict vào readiness gate chỉ được với attribution "owner-confirmed, pending non-author confirmation".
 
-## 13. Fix-wave MC-BE-FIXWAVE-20261106 — AUTHOR_COMPLETE_PENDING_INDEPENDENT_REVIEW (2026-11-07)
+## 13. Fix-wave MC-BE-FIXWAVE-20261106 — AUTHOR_COMPLETE → CONFIRMED_WITH_NOTES (OpenCode §16; W4 corrected per erratum; closure 2026-11-07)
 
 PO dispatch trực tiếp ("zcode thực hiện hết cho phần backend"), 4 work items, task-scoped commits pre-authorized. Pin `276a1e68` (không lệch). Executor: ZCode session (self-authored — **không đóng bất kỳ finding nào là independently verified**; confirmation pass riêng vẫn mở).
 
@@ -196,3 +196,10 @@ MC-OPENCODE-CONFIRM-20261107 RETURNED: **3× CONFIRMED_WITH_NOTES** (independent
 - **Gates**: `make check` exit 0 trên `mc-oc-confirm-pg:5436` (attempt đầu fail do docker arg-order bug của chính OpenCode — recorded honestly trong cả 2 BE files, corrected rerun). Teardown sạch (container removed, Storybook killed, ports free).
 - Ghi nhận: dispatch prompt dính 1 dòng stray "Model minimax/minimax-m3.1-flash does not exist." (artifact paste) — OpenCode ignore đúng, không routing effect.
 - Pending sau intake này: formal closure W1–W4 BE fix-wave (owner action — confirmation đã có); D-23 chờ PO (W1 FE guard fired đúng thiết kế — option C recommended); FE fix-wave §15 chờ non-author confirmation (gom batch OpenCode tiếp); FE Next.js review evidence dir xuất hiện chưa được intake (`fe-nextjs-review-20261106-r1/` untracked — chờ return được paste).
+
+## 17. PO decisions: D-23 + FE Next.js routing — 2026-11-07
+
+- **D-23 = Option C** (PO trả lời trực tiếp qua coordinator): amend V-03 sang WCAG 1.4.11 boundary framing + strengthen field edge ≥3:1 trong field contexts; A giữ rejected, B là fallback không chọn. Disposition + amended wording + implementation scope (S) ghi tại [D-23 doc](../testing/mc-fe-fixwave-20261107-r1/D-23-field-face-contrast.md) — implementation gom vào FE dispatch kế tiếp; D-1(b) on-dialog final measure vẫn là limitation mở.
+- **FE Next.js review → OpenCode** (batch 2): prompt [MC-OPENCODE-BATCH2-20261107-PROMPT.md](handoffs/MC-OPENCODE-BATCH2-20261107-PROMPT.md) PREPARED_NOT_DISPATCHED — Task 1 execute FE Next.js review prompt nguyên văn (non-author ✓; giữ nguyên RETURN-COI record của attempt trước), Task 2 = FE fix-wave confirmation (6 items + verify D-3 deviation flag; D-23-C out of scope).
+- Formal closure BE fix-wave W1–W4: confirmation đã có (§16) — closure là owner action, thực hiện cùng batch docs này bằng annotation §13 header status.
+- Housekeeping: 4 dispatch prompt file trước đó chưa track được commit cùng batch này (`MC-BE-FIXWAVE`, `MC-FE-NEXTJS-REVIEW`, `MC-OPENCODE-CONFIRM`, `MC-FE-FIXWAVE`) + batch-2 prompt + D-23 disposition.
