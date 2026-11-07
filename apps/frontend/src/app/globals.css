@@ -72,7 +72,9 @@
   --liquid-sheen: oklch(1 0 0 / 0.42);
   --liquid-action-sheen: oklch(1 0 0 / 0.08);
   --dialog-muted: #465468;
-  /* Light: a cool inset tint that sits slightly below the glass, not a white plate. */
+  /* Light: a cool inset tint that sits slightly below the glass, not a white plate.
+     V-03 amended (D-23-C): the face is the near-opaque text plane and is EXEMPT from the
+     3:1 non-text rule — the boundary indicator is the --input border + inset rim. */
   --field-face: oklch(0.96 0.008 255 / 0.66);
   --field-hover: oklch(0.96 0.01 255 / 0.75);
   --liquid-shadow: 0 8px 28px -16px var(--glass-shade);
@@ -338,13 +340,13 @@
 }
 
 .control-room-section h2 {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-size: 1rem;
   letter-spacing: -0.015em;
 }
 
 .control-room-section :is(ul, ol):not(ul ul):not(ol ul) > li {
-  padding: 10px 12px;
+  padding: 12px 12px;
   border: 1px solid var(--glass-edge);
   border-radius: 10px;
   background: color-mix(in oklab, var(--card) 35%, transparent);
@@ -403,10 +405,10 @@
 }
 
 [data-slot='matter-tabs'] {
-  padding: 5px;
+  padding: 4px;
   border: 1px solid var(--glass-edge);
   border-radius: 18px;
-  gap: 3px;
+  gap: 4px;
 }
 
 [data-slot='matter-tabs'] > a {
@@ -510,7 +512,7 @@ textarea {
 }
 
 .app-sidebar {
-  padding: 20px 14px;
+  padding: 20px 16px;
   background: var(--liquid-face);
   border: 1px solid var(--glass-rim);
   border-radius: 20px;
@@ -542,12 +544,12 @@ textarea {
 }
 
 .app-navigation ul {
-  gap: 7px;
+  gap: 8px;
 }
 
 .app-navigation .app-nav-link {
   gap: 12px;
-  padding: 11px 14px;
+  padding: 12px 16px;
   font-size: 14px;
 }
 
@@ -605,7 +607,7 @@ textarea {
 }
 
 .work-queues {
-  column-gap: 18px;
+  column-gap: 20px;
   min-height: 44px;
 }
 
@@ -615,7 +617,7 @@ textarea {
 
 .work-queues > a {
   gap: 8px;
-  padding: 0 10px 12px;
+  padding: 0 12px 12px;
   font-size: 14px;
 }
 
@@ -637,14 +639,14 @@ textarea {
 }
 
 .work-sequence {
-  padding: 10px 14px;
+  padding: 12px 16px;
   background: var(--muted);
   color: var(--muted-foreground);
 }
 
 .work-sequence .control-target {
-  padding: 3px 0;
-  gap: 10px;
+  padding: 4px 0;
+  gap: 12px;
 }
 
 .work-identity {
@@ -679,14 +681,14 @@ textarea {
 }
 
 .work-actions {
-  gap: 14px;
-  margin: 18px 4px 24px;
+  gap: 16px;
+  margin: 20px 4px 24px;
 }
 
 .work-actions .work-primary {
   min-width: min(160px, 100%);
   min-height: 44px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-size: 14px;
 }
 
@@ -697,11 +699,11 @@ textarea {
 .work-needs dl {
   grid-template-columns: 160px minmax(0, 1fr);
   gap: 12px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .work-disclosure > summary {
-  padding: 18px 4px;
+  padding: 20px 4px;
   font-size: 14px;
 }
 
@@ -736,7 +738,7 @@ textarea {
     padding-inline: 8px;
   }
   .app-main {
-    padding: 26px 23px;
+    padding: 28px 24px;
   }
   .work-columns {
     grid-template-columns: minmax(0, 1fr) 190px;
@@ -748,11 +750,11 @@ textarea {
     font-size: 26px;
   }
   .work-queues {
-    column-gap: 14px;
+    column-gap: 16px;
   }
   .work-queues > a {
-    padding-inline: 7px;
-    gap: 7px;
+    padding-inline: 8px;
+    gap: 8px;
   }
   .work-needs dl {
     grid-template-columns: 145px minmax(0, 1fr);
@@ -770,7 +772,7 @@ textarea {
     display: block;
   }
   .app-main {
-    padding: 24px 18px;
+    padding: 24px 20px;
   }
   .app-main .page-heading h1 {
     font-size: 24px;
@@ -789,8 +791,8 @@ textarea {
     justify-content: space-between;
   }
   .work-queues > a {
-    padding: 0 6px 14px;
-    gap: 7px;
+    padding: 0 8px 16px;
+    gap: 8px;
     font-size: 14px;
   }
   .work-queues > a > span {
@@ -814,7 +816,7 @@ textarea {
     padding-inline: 0;
   }
   .work-why {
-    padding-top: 26px;
+    padding-top: 28px;
   }
   .work-why > p {
     font-size: 16px;
@@ -824,7 +826,7 @@ textarea {
     gap: 20px;
   }
   .work-sequence {
-    padding: 10px;
+    padding: 12px;
     font-size: 12px;
   }
   .work-sequence .control-target {
@@ -832,20 +834,20 @@ textarea {
     font-size: 12px;
   }
   .work-needs {
-    padding: 25px 0;
+    padding: 24px 0;
   }
   .work-needs dl {
     grid-template-columns: minmax(0, 1fr);
-    gap: 5px;
+    gap: 4px;
   }
   .work-up-next {
     border-left: 0;
     border-top: 1px solid var(--border);
-    margin-top: 22px;
-    padding: 22px 0 0;
+    margin-top: 24px;
+    padding: 24px 0 0;
   }
   .work-up-next-link {
-    padding-block: 15px;
+    padding-block: 16px;
   }
   .work-disclosure > summary {
     font-size: 14px;
@@ -856,8 +858,8 @@ textarea {
 @media (max-width: 420px) {
   .work-queues > a {
     font-size: 13px;
-    padding-inline: 5px;
-    gap: 6px;
+    padding-inline: 4px;
+    gap: 8px;
   }
   .work-queues > a > svg {
     width: 16px;
@@ -906,7 +908,7 @@ textarea {
   gap: 12px;
   width: 100%;
   min-height: 36px;
-  padding: 8px 10px;
+  padding: 8px 12px;
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -1100,7 +1102,18 @@ textarea {
   }
 }
 
-/* Dense readable content inside the refracting rim; controls use a quiet inset material. */
+/* Dense readable content inside the refracting rim; controls use a quiet inset material.
+ *
+ * V-03 (amended wording, D-23 Option C — carried verbatim from the decision record):
+ * "On glass surfaces, a form field's boundary indicator (the rim/edge combination acting
+ * as the component boundary) achieves ≥3:1 against the adjacent glass composite (WCAG
+ * 1.4.11 non-text contrast). The field face remains a near-opaque text plane per the
+ * Solid Glass intent and is exempt from the 3:1 non-text rule — it is not the boundary
+ * indicator."
+ * The boundary indicator here is the 1px `--input` border (plus the inset rim hairline);
+ * measured vs the glass composites: 3.646 light / 5.676 dark (panel), 3.842 / 5.445
+ * (popover) — ≥3:1 in both themes (mc-fe-fixwave2-20261107-r1 evidence). `--glass-edge`
+ * (1.218/1.635) is the pane decoration, not this boundary. */
 [data-slot='dialog-panel'] {
   --muted-foreground: var(--dialog-muted);
   color: var(--foreground);
