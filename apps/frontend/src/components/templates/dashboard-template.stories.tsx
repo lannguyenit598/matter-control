@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { LayoutDashboard, Settings, Users } from 'lucide-react'
+import { Building2, FolderClosed, ListTodo } from 'lucide-react'
 
 import { Skeleton } from '@/components/atoms/skeleton'
 import { Button } from '@/components/atoms/button'
@@ -13,23 +13,28 @@ import { MobileNav } from '@/components/organisms/mobile-nav'
 
 import { DashboardTemplate } from './dashboard-template'
 
+// W5 (UX-B-04): product voice instead of template furniture — the fixture speaks like
+// the shipped workbench (D-3 EN terms) so Storybook stays a faithful review surface.
 const nav = [
-  { href: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard /> },
-  { href: '/users', label: 'Users', icon: <Users /> },
-  { href: '/settings', label: 'Settings', icon: <Settings /> },
+  { href: '/my-actions', label: 'My work', icon: <ListTodo /> },
+  { href: '/matters', label: 'Matters', icon: <FolderClosed /> },
+  { href: '/workspaces', label: 'Workspaces', icon: <Building2 /> },
 ]
 
 const meta = {
   title: 'Templates/DashboardTemplate',
   component: DashboardTemplate,
-  parameters: { layout: 'fullscreen', nextjs: { navigation: { pathname: '/dashboard' } } },
+  parameters: { layout: 'fullscreen', nextjs: { navigation: { pathname: '/my-actions' } } },
   args: {
-    sidebar: <AppSidebar brand="Acme Admin" items={nav} />,
+    sidebar: <AppSidebar brand="MatterControl" items={nav} />,
     header: <AppHeader start={<MobileNav items={nav} />} end={<ThemeToggle />} />,
     // Template = structure with placeholder content; real content belongs to the Page.
     children: (
       <div className="flex flex-col gap-6">
-        <PageHeader title="Page title" description="Page description" />
+        <PageHeader
+          title="My work"
+          description="Every item with its context. Only ready actions are proposed."
+        />
         <div className="grid gap-4 sm:grid-cols-3">
           <Skeleton className="h-28" />
           <Skeleton className="h-28" />
@@ -56,12 +61,16 @@ export const LiquidWorkbench: Story = {
           actions={<Button>New record</Button>}
         />
         <div className="grid gap-4 sm:grid-cols-3">
-          {['Ready for review', 'Awaiting proof', 'Next milestone'].map((title) => (
+          {[
+            ['Ready for review', 'Two items wait on a reviewer.'],
+            ['Awaiting proof', 'One milestone lacks its evidence.'],
+            ['Next milestone', 'Signing, scheduled Friday.'],
+          ].map(([title, line]) => (
             <Card key={title}>
               <CardHeader>
                 <CardTitle>{title}</CardTitle>
               </CardHeader>
-              <CardContent>Operational truth, in context.</CardContent>
+              <CardContent>{line}</CardContent>
             </Card>
           ))}
         </div>

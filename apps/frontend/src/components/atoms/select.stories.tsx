@@ -7,6 +7,14 @@ const meta = {
   component: Select,
   // This native control has no Next.js routing dependency.
   parameters: { nextjs: { appDirectory: false } },
+  // W6 (UX-B-05): realistic control width instead of the full canvas.
+  decorators: [
+    (Story) => (
+      <div className="max-w-[420px]">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     'aria-label': 'Person',
     placeholder: 'Select a person…',

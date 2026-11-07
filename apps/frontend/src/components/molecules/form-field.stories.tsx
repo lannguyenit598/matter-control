@@ -7,6 +7,14 @@ import { FormField } from './form-field'
 const meta = {
   title: 'Molecules/FormField',
   component: FormField,
+  // W6 (UX-B-05): realistic field measure — a form field never spans the 1440px canvas.
+  decorators: [
+    (Story) => (
+      <div className="max-w-[420px]">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     label: 'Email',
     hint: 'We never share your email.',
