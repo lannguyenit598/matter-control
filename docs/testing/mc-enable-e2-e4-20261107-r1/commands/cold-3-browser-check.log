@@ -1,0 +1,41 @@
+# cold cycle stage 3: browser-check (both users, cold-started env)
+2026-11-07T04:22:31Z
+[
+  {
+    "user": "mc-alice",
+    "key": "alice",
+    "timings": {
+      "authorize_loaded_ms": 22628,
+      "callback_landed_ms": 1560,
+      "workspaces_loaded_ms": 35595
+    },
+    "sessionCookie": true,
+    "ok": true,
+    "loginNameAttempts": [
+      {
+        "candidate": "mc-alice@localhost",
+        "error": "User not found in the system"
+      }
+    ],
+    "finalUrl": "http://localhost:3000/workspaces"
+  },
+  {
+    "user": "mc-bob",
+    "key": "bob",
+    "timings": {
+      "authorize_loaded_ms": 20506,
+      "callback_landed_ms": 1039,
+      "workspaces_loaded_ms": 32733
+    },
+    "sessionCookie": true,
+    "ok": true,
+    "loginNameAttempts": [
+      {
+        "candidate": "mc-bob@localhost",
+        "error": "User not found in the system"
+      }
+    ],
+    "finalUrl": "http://localhost:3000/workspaces"
+  }
+]
+check exit=0

@@ -1,0 +1,24 @@
+# cold cycle stage 2: up from runbook (cold)
+2026-11-07T04:21:49Z
+[up] starting ZITADEL compose stack (mc-p0-idp)
+[up] IdP discovery ready (200)
+[up] creating container mc-p0-claude-pg (retained volume mc-p0-claude-pgdata)
+[up] product DB ready on 127.0.0.1:55440
+[up] building mcapi from tree
+[up] applying migrations
+[up] seeding synthetic product users (idempotent)
+[up] mcapi ready (200)
+[up] fault proxy (pass-through) ready (200)
+[up] starting next dev on 127.0.0.1:3000 (log /var/folders/9b/zd6k4tc179587w4ntkqvvlqr0000gn/T//mc-browser-walkthrough/frontend.log)
+[up] frontend ready (HTTP 307)
+
+[up] BROWSER WALKTHROUGH ENV UP (loopback-only)
+[up]   IdP        http://localhost:8080            (mc-p0-idp compose)
+[up]   Product DB 127.0.0.1:55440        (container mc-p0-claude-pg)
+[up]   mcapi      http://127.0.0.1:8083 (direct; via proxy below)
+[up]   Fault proxy http://127.0.0.1:8082  (frontend API_BASE_URL target; mode: off)
+[up]   Frontend   http://localhost:3000        (registered OIDC callback origin)
+[up] Login: open http://localhost:3000 — seeded users mc-alice / mc-bob
+[up] Faults: ./fault-latency.sh / ./fault-5xx.sh / ./fault-restore.sh
+[up] Teardown (mandatory): ./down.sh
+up exit=0
