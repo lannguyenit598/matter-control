@@ -68,8 +68,10 @@ export function InlineEdit({
 
   if (!editing) {
     return (
+      // W7 (UX-B-06): the affordance hugs the text instead of being pushed to the far
+      // container edge; no hover-hide, so touch and keyboard reachability are unchanged.
       <span className="inline-flex w-full min-w-0 items-start gap-1">
-        <span className="min-w-0 flex-1 break-words">{display ?? value}</span>
+        <span className="min-w-0 break-words">{display ?? value}</span>
         {canEdit && (
           <Button
             size="icon"

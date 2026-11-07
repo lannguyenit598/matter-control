@@ -1,3 +1,4 @@
+import { CircleAlert } from 'lucide-react'
 import { useId, type ReactNode } from 'react'
 
 import { Label } from '@/components/atoms/label'
@@ -43,7 +44,10 @@ export function FormField({ label, hint, error, required, className, children }:
         </p>
       )}
       {error && (
-        <p id={errorId} className="text-xs font-medium text-destructive">
+        /* W8 (UX-B-07): icon + weight give the error unambiguous precedence when the
+           hint renders alongside it; the hint itself is unchanged. */
+        <p id={errorId} className="flex items-start gap-1 text-xs font-medium text-destructive">
+          <CircleAlert aria-hidden className="mt-px size-3.5 shrink-0" />
           {error}
         </p>
       )}
