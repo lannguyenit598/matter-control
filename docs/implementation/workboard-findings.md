@@ -268,3 +268,9 @@ Chất lượng đáng ghi nhận:
 **Mở khóa thực tế (RUNNABLE, chưa done)**: D-1(b) on-dialog final measure cho D-23 (gộp vào session đo + confirmation pass W1 no-op reading) · V-01..V-14 populated checklist · G1 positive two-actor path (tự grant matter-level trong session) · T10 replay (với dataset synthetic thay M1–M5, ghi nhận lệch).
 
 Pending không đổi: OpenCode batch-2 return intake (chờ paste) · confirmation gộp (fixwave 1+2 + W1 no-op) · D-3 proposed terms (OpenDesign) · gitleaks 2 PO decisions (§20) · B3 / org-tenancy / push (PO).
+
+## 23. Confirmation-gộp status check + prompt — 2026-11-07
+
+PO hỏi "confirmation pass gộp đã có kết quả chưa". **Disk check: CHƯA — không output nào tồn tại**: `fe-nextjs-review-20261106-r1/` chỉ có RETURN-COI (không report.md); `mc-fe-fixwave-20261107-r1/` không có confirmation.md; `mc-fe-fixwave2-20261107-r1/` không có confirmation.md; git không có commit OpenCode nào sau `fa4f591e`. Batch-2 OpenCode (FE Next.js review + fixwave-batch-1 confirm) chưa landing output trong checkout này — nếu session đó đã chạy ở nơi khác, chờ paste return.
+
+Đã viết [MC-OPENCODE-FE-CONFIRM-GROUP-20261107-PROMPT.md](handoffs/MC-OPENCODE-FE-CONFIRM-GROUP-20261107-PROMPT.md) PREPARED_NOT_DISPATCHED — Task 0 disk-check (FE Next.js review: có report → verify-only; không → execute nguyên văn), Task 1 = batch-1 confirm (tái dùng batch-2 Task 2 spec), **Task 2 = batch-2 confirm + W1 no-op ADJUDICATION** (OpenCode đo độc lập `--input` boundary → UPHELD = D-23 đóng không cần token change / REFUTED = reopen implementation), Task 3 = FE Next.js review theo Task 0. Sau Tasks 1–2: cả 2 fixwave citable "owner + non-author confirmed" và câu hỏi implementation D-23 đóng bằng đo.
