@@ -1,0 +1,132 @@
+# ============================================================================
+# ADOPTED 2026-11-07 per PO decision (register §24) — MC-DOCS-GITLEAKS-CLASSIFY-20261107 r1.
+# Full adopt of allowlist-proposal.toml (dry-run validated 1187→12) + value-targeted
+# NR-A / NR-B entries (PO accepted both as dead credentials — recorded individually).
+#
+# Semantics: [extend] useDefault loads all DEFAULT gitleaks rules; the two
+# re-declared rule ids below extend their default definitions (documented
+# pattern, validated against gitleaks 8.30.1). Every allowlist uses
+# condition="AND" + path scoping, so a credential in CODE or any other path
+# is NOT muted — only the classified docs/-archive families are.
+#
+# CAVEAT (report §6, accepted with this adoption): a REAL credential shaped
+# exactly like a UUID record-key or a sha256-manifest digest, sitting inside
+# the listed docs/ archive paths, would be muted. Mitigations in force:
+# synthetic-data policy + the hygiene rule that raw run transcripts with
+# Secret fields are not committed (mask or git-ignored path instead).
+#
+# Classification evidence: docs/testing/gitleaks-classify-20261107-r1/
+# (1187 history = 1171 + 16 self-meta reconciled; 1184 FP / 3 NR / 0 TRUE_POSITIVE;
+# NR dispositions: DISPOSITION-20261107.md in the same dir).
+# ============================================================================
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+  # --- F1: UUIDv7 record / command / idempotency keys in local test-run
+  # transcripts (1056 hits). A UUID authenticates nothing anywhere.
+  [[rules.allowlists]]
+  description = "F1 (mc-docs-classify-20261107): UUID record/idempotency keys in docs/ run transcripts"
+  condition = "AND"
+  regexTarget = "match"
+  regexes = [
+    '''(?i)(key|CommandKey|commandKey|idempotencyKey|attemptKey|expectedAssessmentId)"?\s*:\s*"?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"?''',
+  ]
+  paths = [
+    '''^docs/(testing|design|tooling|reviews)/.*\.(json|jsonl|log|md)$''',
+  ]
+
+  # --- F2: sha256 file-integrity manifests — "<file.ext>": "<64-hex>" (102
+  # hits, incl. digests OF local password/secret snapshots — the committed
+  # value is a hash, never the file itself).
+  [[rules.allowlists]]
+  description = "F2 (mc-docs-classify-20261107): sha256 file-manifest digests in docs/ evidence manifests"
+  condition = "AND"
+  regexTarget = "match"
+  regexes = [
+    '''(?i)[\w.\-]*\.(md|json|jsonl|sql|css|ts|tsx|go|log|txt|pid|gz|golden|orig)"?\s*:\s*"?[0-9a-f]{64}"?''',
+  ]
+  paths = [
+    '''^docs/(testing|design|tooling|reviews)/.*\.(json|jsonl)$''',
+    '''^docs/reviews/.*\.md$''',
+  ]
+
+  # --- F3: Go module checksums (h1:…) inside git-ignored .mimosa/hook-state/
+  # artifacts and the committed evidence JSON that recorded them (16 history
+  # + 8 tree hits). Published values, not secrets.
+  [[rules.allowlists]]
+  description = "F3 (mc-docs-classify-20261107): go.sum h1: module checksums in tool artifacts and evidence"
+  condition = "AND"
+  regexTarget = "match"
+  regexes = [
+    '''h1:[A-Za-z0-9+/]{43}=''',
+    '''(?i)Secret": "[A-Za-z0-9+/]{43}=''',
+  ]
+  paths = [
+    '''\.mimosa/''',
+    '''^docs/testing/be-echo-review-20261106-r1/''',
+  ]
+
+  # --- F5: tokens quoted from published standards/docs — OIDC Core example
+  # JWT (kid "1e9gdk7") + adjacent OAuth-docs example access_token (2 hits).
+  [[rules.allowlists]]
+  description = "F5 (mc-docs-classify-20261107): OIDC/OAuth spec example tokens quoted in documentation research"
+  condition = "AND"
+  regexes = [
+    '''(?i)jHkWEdUXMU1BwAsC4vtUsZwnNvTIxEl0z9K3vx5KF0Y''',
+    '''(?i)eyJraWQiOiIxZTlnZGs3Ii''',
+  ]
+  paths = [
+    '''^docs/.*\.(json|md)$''',
+  ]
+
+  # --- NR-A (accepted dead 2026-11-07): opaque token captured from the
+  # loopback-local mcapi during the BA-flow walkthrough; that runtime was
+  # torn down at flow close — dead by construction. Value-targeted so any
+  # OTHER 64-hex token in these paths stays visible.
+  [[rules.allowlists]]
+  description = "NR-A (accepted dead 2026-11-07): local mcapi walkthrough token, runtime torn down"
+  condition = "AND"
+  regexTarget = "match"
+  regexes = [
+    '''245ccb4ef7888bcc7e5bce7d5dbab478ce1f79afbfb2e7b17aa5a05e13b902cc''',
+  ]
+  paths = [
+    '''^docs/testing/.*''',
+  ]
+
+  # --- NR-B (accepted dead 2026-11-07): Next.js preview-mode keys from a
+  # LOCAL validation build — preview mode never deployed; keys rotate per
+  # build. Key+value-shape targeted, path-scoped to the two manifest files.
+  [[rules.allowlists]]
+  description = "NR-B (accepted dead 2026-11-07): Next.js preview-mode keys, local validation build only"
+  condition = "AND"
+  regexTarget = "match"
+  regexes = [
+    '''(?i)previewMode(Signing|Encryption)Key"?\s*:\s*"[0-9a-f]{64}"''',
+  ]
+  paths = [
+    '''^docs/testing/inta-returns/.*prerender-manifest\.json$''',
+  ]
+
+[[rules]]
+id = "curl-auth-header"
+
+  # --- F6: documented dummy smoke token (synthetic user name baked into the
+  # literal; loopback endpoint on the same line) (1 hit).
+  [[rules.allowlists]]
+  description = "F6 (mc-docs-classify-20261107): tok-wt-* documented dummy smoke tokens"
+  condition = "AND"
+  regexes = [
+    '''tok-wt-[a-z]+''',
+  ]
+  paths = [
+    '''^docs/testing/.*\.log$''',
+  ]
+
+# --- F4 (prose key/secret words, 6) and F7 (40-hex git-SHA provenance, 1)
+# are INTENTIONALLY NOT allowlisted — left as visible one-glance FPs per the
+# proposal (better fixed by default-rule stopwords; keeping the config honest).
