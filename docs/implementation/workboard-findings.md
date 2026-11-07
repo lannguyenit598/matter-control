@@ -203,3 +203,13 @@ MC-OPENCODE-CONFIRM-20261107 RETURNED: **3× CONFIRMED_WITH_NOTES** (independent
 - **FE Next.js review → OpenCode** (batch 2): prompt [MC-OPENCODE-BATCH2-20261107-PROMPT.md](handoffs/MC-OPENCODE-BATCH2-20261107-PROMPT.md) PREPARED_NOT_DISPATCHED — Task 1 execute FE Next.js review prompt nguyên văn (non-author ✓; giữ nguyên RETURN-COI record của attempt trước), Task 2 = FE fix-wave confirmation (6 items + verify D-3 deviation flag; D-23-C out of scope).
 - Formal closure BE fix-wave W1–W4: confirmation đã có (§16) — closure là owner action, thực hiện cùng batch docs này bằng annotation §13 header status.
 - Housekeeping: 4 dispatch prompt file trước đó chưa track được commit cùng batch này (`MC-BE-FIXWAVE`, `MC-FE-NEXTJS-REVIEW`, `MC-OPENCODE-CONFIRM`, `MC-FE-FIXWAVE`) + batch-2 prompt + D-23 disposition.
+
+## 18. Unblocked-work dispatch prompts — 2026-11-07
+
+PO chỉ thị "viết prompt cho các phần không bị chặn" sau khi OpenCode chạy xong batch 2 (return chưa được paste — intake khi có). 3 prompt PREPARED_NOT_DISPATCHED tại `handoffs/`:
+
+1. [MC-FE-FIXWAVE2-20261107-ZCODE-PROMPT.md](handoffs/MC-FE-FIXWAVE2-20261107-ZCODE-PROMPT.md) — FE batch 2: **W1 D-23-C implementation** (field-context-scoped edge ≥3:1, cấm đổi global rim/edge values; amended V-03 wording vào token comment) + **W2 D-3 deviation labels** ("Thủ tục"/"Bảng điều khoản" → terminology-final; term không phủ trong D-3 → flag cho OpenDesign, cấm improvise) + W3–W9 = UX-B-02..08 (fixture borders/shadows defend-or-tune/copy sweep/form width/inline-edit affordance/error precedence/4px normalisation ±2px với exception comments). Priority: W1 → W2 → W3..W9.
+2. [MC-ENABLE-E2-E4-20261107-PROMPT.md](handoffs/MC-ENABLE-E2-E4-20261107-PROMPT.md) — enablement: stub-IdP browser login E-2 (redirect_uri/callback config, loopback-only) + fault-injection E-4 + runbook "walkthrough env up/down" — gỡ block cho D-1(b) on-dialog final measure + V-01..V-14 populated + G1 positive two-actor path. Discovery-first (CO-17 + US-PREP r1 + ops/p0-local). Chỉ scripts/ops-config/docs — cấm product code changes.
+3. [MC-DOCS-GITLEAKS-CLASSIFY-20261107-PROMPT.md](handoffs/MC-DOCS-GITLEAKS-CLASSIFY-20261107-PROMPT.md) — classify 1171 docs/ history prose-FP thành disposition list theo family (rule × path × content shape) + allowlist PROPOSAL (không commit config) + NEEDS_REVIEW list riêng + TRUE_POSITIVE escalate P1 nếu có.
+
+Vẫn bị chặn (không prompt): real-bucket B3 (cần PO bucket/token) · org tenancy (PO product decision) · push origin (PO) · intake return batch-2 OpenCode (chờ paste).
