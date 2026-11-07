@@ -41,6 +41,14 @@ Also reproduced from the review sweep: face vs page background = 1.037 (light) /
 - **Implementation scope (S — fold into the next FE dispatch):** darken `--glass-field-rim`/`--glass-edge` **in field contexts only** to reach edge-vs-composite ≥3:1 per theme (current edge 1.218 light / 1.635 dark); update the token comment + any active V-03 checklist instance to the amended wording at implementation time (this doc is the decision record; the original wording lives in lineage-pruned docs); re-measure with the same compositing method (`fieldface-math.mjs`); the D-1(b) on-dialog final measure stays the open limitation.
 - OpenCode confirmation of the fix-wave (batch 2) must treat the D-23 decision as **post-dating** the wave: W1's no-code-change outcome is confirmed as correct process, not as a criterion closure.
 
+## Post-decision measurement note (2026-11-07 — UNCONFIRMED, pending non-author pass)
+
+Batch-2 W1 (MC-FE-FIXWAVE2-20261107, commit `00707d23`) measured the field's **actual boundary indicator** — the input border token `--input` (`globals.css:1123`), **not** `--glass-edge`, which this document's original math had measured (`--glass-edge` is a panel-decoration token, not the field boundary):
+
+- `--input` vs panel composite: **3.646 (light) / 5.676 (dark)**; vs popover composite: 3.842 / 5.445 — **already ≥3:1 in both themes**.
+
+If a non-author confirmation upholds this reading, the amended V-03 (boundary framing, §Disposition above) is **already satisfied** by the existing `--input` border and the "strengthen field edge" step of Option C is a **no-op** — no darkening was applied (correct per the LANE-A guard). Until confirmed or corrected, **do not implement darkening based on §Disposition alone**; the amended V-03 wording itself is unaffected either way.
+
 ## Known limitation (unchanged)
 
 The final on-dialog measurement (populated dialog on Liquid Glass backdrop) still awaits the walkthrough env (D-1(b) — E-2 stub-IdP browser login, E-4 fault-injection remain unowned gaps). All numbers here are token-level composites, not populated-dialog measurements.
