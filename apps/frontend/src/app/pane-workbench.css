@@ -9,7 +9,12 @@
   --pane-top-light: rgb(255 255 255 / 0.86);
   --pane-rim: rgb(255 255 255 / 0.96);
   --pane-edge: rgb(86 94 111 / 0.22);
-  --pane-shadow: rgb(38 44 57 / 0.1);
+  /* W4 (UX-B-03): tuned 0.1 → 0.08 to sit under the ≤8% panel-shadow ceiling. The
+     Solid-Glass thickness model (panel < card < popover) is kept — the blur/spread
+     specs carry the depth, and the 0.02 delta was not visibly flattening in captures
+     (mc-fe-fixwave2-20261107-r1 evidence). Dark (0.24) is defended as-is: on the
+     near-black ground a ~0.2 black shadow is the studied dark-surface pattern. */
+  --pane-shadow: rgb(38 44 57 / 0.08);
   --pane-inset: rgb(79 88 108 / 0.065);
   --pane-hover: rgb(79 88 108 / 0.1);
   --pane-selected: rgb(255 255 255 / 0.88);
@@ -287,7 +292,7 @@ body:has([data-workbench='pane']) {
 }
 
 [data-workbench='pane'] [data-slot='record-table'][data-density='compact'] :is(th, td) {
-  padding: 6px 12px;
+  padding: 8px 12px;
 }
 
 [data-workbench='pane'] .data-task-layout {
@@ -370,7 +375,7 @@ body:has([data-workbench='pane']) {
     bottom: max(12px, env(safe-area-inset-bottom, 0px));
     transform: translateX(-50%);
     width: min(560px, calc(100% - 24px));
-    padding: 6px;
+    padding: 8px;
     border: 1px solid var(--pane-edge);
     border-radius: 32px;
     background: var(--pane-surface);
