@@ -167,11 +167,11 @@ export function ControlRoomView({
           emphasis
         />
         <Stat
-          label={<LocalizedText en="Open filings" vi="Thủ tục đang mở" />}
+          label={<LocalizedText en="Open filings" vi="Hồ sơ khai đang mở" />}
           value={s.openFilings}
         />
         <Stat
-          label={<LocalizedText en="Rejected filings" vi="Thủ tục bị từ chối" />}
+          label={<LocalizedText en="Rejected filings" vi="Hồ sơ khai bị từ chối" />}
           value={s.negativeFilings}
           emphasis
         />

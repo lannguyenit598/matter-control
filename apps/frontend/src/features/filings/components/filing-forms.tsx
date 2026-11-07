@@ -60,7 +60,7 @@ export function CreateFilingForm({
         <p>
           <LocalizedText
             en="A filing needs a Requirement to serve and an external authority. Add the missing details first, then return here."
-            vi="Thủ tục cần gắn với một Yêu cầu và cơ quan phụ trách. Thêm thông tin còn thiếu rồi quay lại đây."
+            vi="Hồ sơ khai cần gắn với một Yêu cầu và cơ quan phụ trách. Thêm thông tin còn thiếu rồi quay lại đây."
           />
         </p>
         {!requirements.length && (
@@ -86,7 +86,7 @@ export function CreateFilingForm({
       receipted
       draftKey={`matter:${matterId}:new-filing`}
       onSuccess={(r) => r.id && router.push(`/matters/${matterId}/filings/${r.id}`)}
-      submitLabel={<LocalizedText en="Create filing" vi="Tạo thủ tục" />}
+      submitLabel={<LocalizedText en="Create filing" vi="Tạo hồ sơ khai" />}
       run={(v, key) =>
         createFilingAction({
           matterId,
@@ -121,7 +121,7 @@ export function CreateFilingForm({
             legend={
               <LocalizedText
                 en="Requirement this filing serves"
-                vi="Yêu cầu mà thủ tục này phục vụ"
+                vi="Yêu cầu mà hồ sơ khai này phục vụ"
               />
             }
             searchLabel={
@@ -135,7 +135,7 @@ export function CreateFilingForm({
             hint={
               <LocalizedText
                 en="Approval never completes or verifies the Requirement by itself."
-                vi="Phê duyệt thủ tục không tự động hoàn tất hoặc xác minh yêu cầu."
+                vi="Chấp thuận hồ sơ khai không tự động hoàn tất hoặc xác minh yêu cầu."
               />
             }
             error={errors.requirementId?.[0]}

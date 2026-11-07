@@ -35,7 +35,7 @@ const SUBJECT_VI: Record<string, string> = {
   workspace: 'không gian làm việc',
   'workspace list': 'danh sách không gian làm việc',
   document: 'tài liệu',
-  filing: 'thủ tục',
+  filing: 'hồ sơ khai',
   agenda: 'lịch',
   history: 'lịch sử',
   grid: 'bảng công việc',

@@ -14,7 +14,7 @@ import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 import { pageMetadata } from '@/lib/page-metadata'
 
-export const generateMetadata = pageMetadata('New filing', 'Thủ tục mới')
+export const generateMetadata = pageMetadata('New filing', 'Hồ sơ khai mới')
 
 export default function NewFilingPage({ params }: PageProps<'/matters/[matterId]/filings/new'>) {
   return (
@@ -55,10 +55,10 @@ async function NewFiling({ params }: Pick<PageProps<'/matters/[matterId]/filings
     <div className="flex flex-col gap-6">
       <Link href={`/matters/${matterId}/filings`} className="text-sm underline">
         <ArrowLeft aria-hidden className="inline size-4 shrink-0" />{' '}
-        <LocalizedText en="All filings" vi="Tất cả thủ tục" />
+        <LocalizedText en="All filings" vi="Tất cả hồ sơ khai" />
       </Link>
       <PageHeader
-        title={<LocalizedText en="New filing" vi="Thủ tục mới" />}
+        title={<LocalizedText en="New filing" vi="Hồ sơ khai mới" />}
         description={
           <>
             <strong className="break-words">{matter.title}</strong>
@@ -86,7 +86,7 @@ async function NewFiling({ params }: Pick<PageProps<'/matters/[matterId]/filings
         <p role="status" className="text-sm text-muted-foreground">
           <LocalizedText
             en="Only owners and editors of this matter can create a filing."
-            vi="Chỉ chủ sở hữu và biên tập viên của hồ sơ mới tạo được thủ tục."
+            vi="Chỉ chủ sở hữu và biên tập viên của hồ sơ mới tạo được hồ sơ khai."
           />
         </p>
       )}

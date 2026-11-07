@@ -27,7 +27,7 @@ const VI: Record<string, string> = {
   Documents: 'Tài liệu',
   'Term sheet': 'Bảng điều khoản',
   Reviews: 'Rà soát',
-  Filings: 'Thủ tục',
+  Filings: 'Hồ sơ khai',
   Planning: 'Kế hoạch',
   Agenda: 'Lịch',
   Data: 'Dữ liệu',

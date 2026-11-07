@@ -16,7 +16,7 @@ import { getSession } from '@/lib/auth'
 import { attempt } from '@/lib/mc/errors'
 import { pageMetadata } from '@/lib/page-metadata'
 
-export const generateMetadata = pageMetadata('Filings', 'Thủ tục')
+export const generateMetadata = pageMetadata('Filings', 'Hồ sơ khai')
 
 export default function FilingsPage({ params }: PageProps<'/matters/[matterId]/filings'>) {
   return (
@@ -53,11 +53,11 @@ async function Filings({ params }: Pick<PageProps<'/matters/[matterId]/filings'>
     <div className="flex flex-col gap-6">
       <PageHeader
         title={matter.title}
-        description={<LocalizedText en="Regulatory filings" vi="Thủ tục với cơ quan quản lý" />}
+        description={<LocalizedText en="Regulatory filings" vi="Hồ sơ khai với cơ quan quản lý" />}
         actions={
           canEdit && (
             <Link href={`/matters/${matterId}/filings/new`} className={buttonVariants()}>
-              <LocalizedText en="New filing" vi="Thủ tục mới" />
+              <LocalizedText en="New filing" vi="Hồ sơ khai mới" />
             </Link>
           )
         }
@@ -65,7 +65,7 @@ async function Filings({ params }: Pick<PageProps<'/matters/[matterId]/filings'>
       <Card>
         <CardHeader>
           <CardTitle>
-            <LocalizedText en="Filings" vi="Thủ tục" />
+            <LocalizedText en="Filings" vi="Hồ sơ khai" />
           </CardTitle>
           <CardDescription>
             <LocalizedText
@@ -77,7 +77,7 @@ async function Filings({ params }: Pick<PageProps<'/matters/[matterId]/filings'>
         <CardContent>
           {filings.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              <LocalizedText en="No filings yet." vi="Chưa có thủ tục." />
+              <LocalizedText en="No filings yet." vi="Chưa có hồ sơ khai." />
             </p>
           ) : (
             <ul className="flex flex-col divide-y">

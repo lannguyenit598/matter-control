@@ -38,7 +38,7 @@ const icons = {
 const kinds = {
   ACTION: { en: 'Action', vi: 'Hành động' },
   REQUIREMENT: { en: 'Requirement', vi: 'Yêu cầu' },
-  FILING: { en: 'Filing', vi: 'Thủ tục' },
+  FILING: { en: 'Filing', vi: 'Hồ sơ khai' },
   WORKSPACE: labels.workspaces,
   MATTER: labels.matters,
   DOCUMENT: labels.documents,

@@ -39,7 +39,9 @@ export async function generateMetadata({
   params,
 }: PageProps<'/matters/[matterId]/filings/[filingId]'>): Promise<Metadata> {
   const { filingId } = await params
-  return { title: await localizedTitle(`Filing \u00b7 ${filingId}`, `Thủ tục \u00b7 ${filingId}`) }
+  return {
+    title: await localizedTitle(`Filing \u00b7 ${filingId}`, `Hồ sơ khai \u00b7 ${filingId}`),
+  }
 }
 
 type Props = PageProps<'/matters/[matterId]/filings/[filingId]'>
@@ -109,7 +111,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
     <div className="flex flex-col gap-6">
       <Link href={`/matters/${matterId}/filings`} className="text-sm underline">
         <ArrowLeft aria-hidden className="inline size-4 shrink-0" />{' '}
-        <LocalizedText en="All filings" vi="Tất cả thủ tục" />
+        <LocalizedText en="All filings" vi="Tất cả hồ sơ khai" />
       </Link>
       <PageHeader
         title={it.title}
@@ -144,7 +146,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
             <CardDescription>
               <LocalizedText
                 en="Nothing here changes the filing until you submit it. A refused step changes nothing and says why."
-                vi="Không có thao tác nào thay đổi thủ tục cho đến khi bạn gửi. Bước bị từ chối không thay đổi gì và có nêu lý do."
+                vi="Không có thao tác nào thay đổi hồ sơ khai cho đến khi bạn gửi. Bước bị từ chối không thay đổi gì và có nêu lý do."
               />
             </CardDescription>
           </CardHeader>
@@ -167,7 +169,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
                     {'. '}
                     <LocalizedText
                       en="Only what is recorded here changes the filing."
-                      vi="Chỉ những gì được ghi nhận ở đây mới thay đổi thủ tục."
+                      vi="Chỉ những gì được ghi nhận ở đây mới thay đổi hồ sơ khai."
                     />
                   </>
                 }
@@ -209,7 +211,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
                   description={
                     <LocalizedText
                       en="The stage does not change and the filing is not approved by it."
-                      vi="Việc ghi nhận này không đổi giai đoạn và không có nghĩa thủ tục đã được phê duyệt."
+                      vi="Việc ghi nhận này không đổi giai đoạn và không có nghĩa hồ sơ khai đã được chấp thuận."
                     />
                   }
                   successNotice={<LocalizedText en="Outcome recorded." vi="Đã ghi nhận kết quả." />}
@@ -231,7 +233,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
                 description={
                   <LocalizedText
                     en="Only an owner can decide that signatures do not apply to this filing."
-                    vi="Chỉ chủ sở hữu được quyết định thủ tục này không cần chữ ký."
+                    vi="Chỉ chủ sở hữu được quyết định hồ sơ khai này không cần chữ ký."
                   />
                 }
                 successNotice={
@@ -260,7 +262,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
                     vi="Đóng sau kết quả bất lợi"
                   />
                 }
-                successNotice={<LocalizedText en="Filing closed." vi="Đã đóng thủ tục." />}
+                successNotice={<LocalizedText en="Filing closed." vi="Đã đóng hồ sơ khai." />}
               >
                 <OwnerStepForm matterId={matterId} detail={detail} step="closure" />
               </TaskDialog>
@@ -276,7 +278,7 @@ async function FilingDetailView({ params }: Pick<Props, 'params'>) {
                 }
                 triggerVariant="outline"
                 title={<LocalizedText en="Reopen" vi="Mở lại" />}
-                successNotice={<LocalizedText en="Filing reopened." vi="Đã mở lại thủ tục." />}
+                successNotice={<LocalizedText en="Filing reopened." vi="Đã mở lại hồ sơ khai." />}
               >
                 <OwnerStepForm matterId={matterId} detail={detail} step="reopening" />
               </TaskDialog>

@@ -132,7 +132,7 @@ export function changePhrase(type: string): Phrase {
 const TARGET_NOUN: Record<string, Phrase> = {
   ACTION: { en: 'Action', vi: 'Hành động' },
   REQUIREMENT: { en: 'Requirement', vi: 'Yêu cầu' },
-  FILING: { en: 'Filing', vi: 'Thủ tục' },
+  FILING: { en: 'Filing', vi: 'Hồ sơ khai' },
   CRITERION: { en: 'Proof criterion', vi: 'Tiêu chí bằng chứng' },
   EVIDENCE: { en: 'Evidence', vi: 'Bằng chứng' },
   CLAIM: { en: 'Evidence offer', vi: 'Đề nghị bằng chứng' },
