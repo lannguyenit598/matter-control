@@ -1,0 +1,1225 @@
+{
+ "total": 1187,
+ "byTop": {
+  "docs": 1187
+ },
+ "families": {
+  "generic-api-key | docs/testing/be-echo-review-20261106-r1/*.json": {
+   "count": 16,
+   "commits": [
+    "276a1e68"
+   ],
+   "files": [
+    "docs/testing/be-echo-review-20261106-r1/evidence/gitleaks-backend-tree-8fp.json"
+   ],
+   "samples": [
+    {
+     "commit": "276a1e68",
+     "date": "2026-11-06T16:50:00Z",
+     "file": "docs/testing/be-echo-review-20261106-r1/evidence/gitleaks-backend-tree-8fp.json",
+     "line": 9,
+     "rule": "generic-api-key",
+     "secretShape": "6P7Q7y…hEY= (len 44)",
+     "matchShape": "creden…EY=\" (len 69)"
+    },
+    {
+     "commit": "276a1e68",
+     "date": "2026-11-06T16:50:00Z",
+     "file": "docs/testing/be-echo-review-20261106-r1/evidence/gitleaks-backend-tree-8fp.json",
+     "line": 10,
+     "rule": "generic-api-key",
+     "secretShape": "6P7Q7y…hEY= (len 44)",
+     "matchShape": "Secret…EY=\" (len 55)"
+    },
+    {
+     "commit": "276a1e68",
+     "date": "2026-11-06T16:50:00Z",
+     "file": "docs/testing/be-echo-review-20261106-r1/evidence/gitleaks-backend-tree-8fp.json",
+     "line": 29,
+     "rule": "generic-api-key",
+     "secretShape": "6P7Q7y…hEY= (len 44)",
+     "matchShape": "creden…EY=\" (len 69)"
+    },
+    {
+     "commit": "276a1e68",
+     "date": "2026-11-06T16:50:00Z",
+     "file": "docs/testing/be-echo-review-20261106-r1/evidence/gitleaks-backend-tree-8fp.json",
+     "line": 30,
+     "rule": "generic-api-key",
+     "secretShape": "6P7Q7y…hEY= (len 44)",
+     "matchShape": "Secret…EY=\" (len 55)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/implementation/handoffs/*.md": {
+   "count": 3,
+   "commits": [
+    "ecdde647",
+    "0de3e5db",
+    "ca649fe7"
+   ],
+   "files": [
+    "docs/implementation/handoffs/MC-ZCODE-RLF-FINAL-INTEGRATION-ADDENDUM-20261102.md",
+    "docs/implementation/handoffs/MC-CLAUDE-ADR006-FINISH-TO-DEPLOY-CANDIDATE-20261030-PROMPT.md",
+    "docs/implementation/handoffs/MC-002-INTA-MANUAL-PROMPTS.md"
+   ],
+   "samples": [
+    {
+     "commit": "ecdde647",
+     "date": "2026-11-05T03:25:30Z",
+     "file": "docs/implementation/handoffs/MC-ZCODE-RLF-FINAL-INTEGRATION-ADDENDUM-20261102.md",
+     "line": 29,
+     "rule": "generic-api-key",
+     "secretShape": "unique…ency (len 22)",
+     "matchShape": "keys, …ncy  (len 29)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/implementation/handoffs/MC-CLAUDE-ADR006-FINISH-TO-DEPLOY-CANDIDATE-20261030-PROMPT.md",
+     "line": 63,
+     "rule": "generic-api-key",
+     "secretShape": "expiry…gout (len 13)",
+     "matchShape": "key ve…out  (len 30)"
+    },
+    {
+     "commit": "ca649fe7",
+     "date": "2026-10-25T02:47:04Z",
+     "file": "docs/implementation/handoffs/MC-002-INTA-MANUAL-PROMPTS.md",
+     "line": 19,
+     "rule": "generic-api-key",
+     "secretShape": "UTC/ex…derr (len 23)",
+     "matchShape": "secret…err  (len 39)"
+    }
+   ],
+   "fileCount": 3
+  },
+  "generic-api-key | docs/testing/codex-controls-lists-20261101-r1/*.md": {
+   "count": 1,
+   "commits": [
+    "1a30007f"
+   ],
+   "files": [
+    "docs/testing/codex-controls-lists-20261101-r1/return.md"
+   ],
+   "samples": [
+    {
+     "commit": "1a30007f",
+     "date": "2026-11-02T08:17:25Z",
+     "file": "docs/testing/codex-controls-lists-20261101-r1/return.md",
+     "line": 18,
+     "rule": "generic-api-key",
+     "secretShape": "idempo…NOWN (len 19)",
+     "matchShape": "auth, …OWN  (len 26)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "curl-auth-header | docs/testing/mc-enablement-minifix-20261101-r1/*.log": {
+   "count": 1,
+   "commits": [
+    "e1e64ba7"
+   ],
+   "files": [
+    "docs/testing/mc-enablement-minifix-20261101-r1/commands/m2-smoke-milestones.log"
+   ],
+   "samples": [
+    {
+     "commit": "e1e64ba7",
+     "date": "2026-10-31T17:44:35Z",
+     "file": "docs/testing/mc-enablement-minifix-20261101-r1/commands/m2-smoke-milestones.log",
+     "line": 9,
+     "rule": "curl-auth-header",
+     "secretShape": "<short:12>",
+     "matchShape": "curl -…ice\" (len 101)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/mc-enablement-minifix-20261101-r1/*.log": {
+   "count": 1,
+   "commits": [
+    "e1e64ba7"
+   ],
+   "files": [
+    "docs/testing/mc-enablement-minifix-20261101-r1/commands/m2-smoke-milestones.log"
+   ],
+   "samples": [
+    {
+     "commit": "e1e64ba7",
+     "date": "2026-10-31T17:44:35Z",
+     "file": "docs/testing/mc-enablement-minifix-20261101-r1/commands/m2-smoke-milestones.log",
+     "line": 12,
+     "rule": "generic-api-key",
+     "secretShape": "01a193…a8ac (len 36)",
+     "matchShape": "Idempo…8ac\" (len 54)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/uiux-lawyer-experience-audit-20261030-r1/*.json": {
+   "count": 1,
+   "commits": [
+    "4b6a65f3"
+   ],
+   "files": [
+    "docs/testing/uiux-lawyer-experience-audit-20261030-r1/source-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/uiux-lawyer-experience-audit-20261030-r1/source-manifest.json",
+     "line": 12,
+     "rule": "generic-api-key",
+     "secretShape": "da27b1…45fa (len 64)",
+     "matchShape": "auth.t…5fa\" (len 76)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/zcode-ba-flow-completeness-20261030-r1/*.json": {
+   "count": 3,
+   "commits": [
+    "4b6a65f3"
+   ],
+   "files": [
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/http-walkthrough/174150-509-gw01-doc-impact.json",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/http-walkthrough/174151-527-gw01-op-receipt.json",
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/http-walkthrough/174150-516-gw01-cr-read.json"
+   ],
+   "samples": [
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/http-walkthrough/174150-509-gw01-doc-impact.json",
+     "line": 1,
+     "rule": "generic-api-key",
+     "secretShape": "245ccb…02cc (len 64)",
+     "matchShape": "token\"…2cc\" (len 73)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/http-walkthrough/174151-527-gw01-op-receipt.json",
+     "line": 1,
+     "rule": "generic-api-key",
+     "secretShape": "01a18d…9cd2 (len 36)",
+     "matchShape": "idempo…cd2\" (len 54)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/commands/http-walkthrough/174150-516-gw01-cr-read.json",
+     "line": 1,
+     "rule": "generic-api-key",
+     "secretShape": "01a18d…4173 (len 36)",
+     "matchShape": "comman…173\" (len 50)"
+    }
+   ],
+   "fileCount": 3
+  },
+  "generic-api-key | docs/testing/zcode-ba-flow-completeness-20261030-r1/*.md": {
+   "count": 1,
+   "commits": [
+    "4b6a65f3"
+   ],
+   "files": [
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/walkthrough-evidence/gw01-narrative.md"
+   ],
+   "samples": [
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/walkthrough-evidence/gw01-narrative.md",
+     "line": 33,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…83c8 (len 36)",
+     "matchShape": "same-k…3c8  (len 54)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/zcode-deploy-readiness-finish-20261030-r1/*.json": {
+   "count": 105,
+   "commits": [
+    "4b6a65f3"
+   ],
+   "files": [
+    "docs/testing/zcode-deploy-readiness-finish-20261030-r1/source-manifest.json",
+    "docs/testing/zcode-deploy-readiness-finish-20261030-r1/restore/runs/manual-run-20261031T154218Z/readback-source-at-B.json",
+    "docs/testing/zcode-deploy-readiness-finish-20261030-r1/restore/runs/manual-run-20261031T154218Z/readback-restored.json"
+   ],
+   "samples": [
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-deploy-readiness-finish-20261030-r1/source-manifest.json",
+     "line": 17,
+     "rule": "generic-api-key",
+     "secretShape": "519307…ce5d (len 64)",
+     "matchShape": "0010_a…e5d\" (len 97)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-deploy-readiness-finish-20261030-r1/restore/runs/manual-run-20261031T154218Z/readback-source-at-B.json",
+     "line": 629,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…b4ee (len 36)",
+     "matchShape": "Comman…4ee\" (len 51)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-deploy-readiness-finish-20261030-r1/restore/runs/manual-run-20261031T154218Z/readback-source-at-B.json",
+     "line": 1032,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…b4ee (len 36)",
+     "matchShape": "Comman…4ee\" (len 51)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-deploy-readiness-finish-20261030-r1/restore/runs/manual-run-20261031T154218Z/readback-source-at-B.json",
+     "line": 1369,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…90f2 (len 36)",
+     "matchShape": "Comman…0f2\" (len 51)"
+    }
+   ],
+   "fileCount": 3
+  },
+  "generic-api-key | docs/testing/zcode-ba-flow-completeness-20261030-r1/*.jsonl": {
+   "count": 275,
+   "commits": [
+    "4b6a65f3"
+   ],
+   "files": [
+    "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/walkthrough-evidence/calls.jsonl"
+   ],
+   "samples": [
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/walkthrough-evidence/calls.jsonl",
+     "line": 3,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…461a (len 36)",
+     "matchShape": "key\":\"…61a\" (len 43)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/walkthrough-evidence/calls.jsonl",
+     "line": 5,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…8201 (len 36)",
+     "matchShape": "key\":\"…201\" (len 43)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/walkthrough-evidence/calls.jsonl",
+     "line": 7,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…ef34 (len 36)",
+     "matchShape": "key\":\"…f34\" (len 43)"
+    },
+    {
+     "commit": "4b6a65f3",
+     "date": "2026-10-31T16:47:32Z",
+     "file": "docs/testing/zcode-ba-flow-completeness-20261030-r1/r2/walkthrough-evidence/calls.jsonl",
+     "line": 9,
+     "rule": "generic-api-key",
+     "secretShape": "01a192…451d (len 36)",
+     "matchShape": "key\":\"…51d\" (len 43)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/research/eigenwelt-20261029/*.md": {
+   "count": 1,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/research/eigenwelt-20261029/user-guide/PROVENANCE.md"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/research/eigenwelt-20261029/user-guide/PROVENANCE.md",
+     "line": 5,
+     "rule": "generic-api-key",
+     "secretShape": "2b8cb1…819. (len 41)",
+     "matchShape": "API: 2…819. (len 46)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/claude-deployment-portability-20261030-r1/*.json": {
+   "count": 18,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/claude-deployment-portability-20261030-r1/source-pin-before.json"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/claude-deployment-portability-20261030-r1/source-pin-before.json",
+     "line": 110,
+     "rule": "generic-api-key",
+     "secretShape": "523338…7a42 (len 64)",
+     "matchShape": "async-…a42\" (len 88)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/claude-deployment-portability-20261030-r1/source-pin-before.json",
+     "line": 128,
+     "rule": "generic-api-key",
+     "secretShape": "73e474…e311 (len 64)",
+     "matchShape": "js-cac…311\" (len 96)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/claude-deployment-portability-20261030-r1/source-pin-before.json",
+     "line": 167,
+     "rule": "generic-api-key",
+     "secretShape": "a2ca8a…0c23 (len 64)",
+     "matchShape": "server…c23\" (len 91)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/claude-deployment-portability-20261030-r1/source-pin-before.json",
+     "line": 221,
+     "rule": "generic-api-key",
+     "secretShape": "cd0f48…8ef1 (len 64)",
+     "matchShape": "api-in…ef1\" (len 87)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/codex-review-matrix-verification-20261029-r1/*.log": {
+   "count": 2,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/codex-review-matrix-verification-20261029-r1/adversarial-ui-r2.log",
+    "docs/testing/codex-review-matrix-verification-20261029-r1/adversarial-ui-r3.log"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/codex-review-matrix-verification-20261029-r1/adversarial-ui-r2.log",
+     "line": 22,
+     "rule": "generic-api-key",
+     "secretShape": "01a187…bb2e (len 36)",
+     "matchShape": "idempo…b2e\" (len 55)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/codex-review-matrix-verification-20261029-r1/adversarial-ui-r3.log",
+     "line": 23,
+     "rule": "generic-api-key",
+     "secretShape": "01a187…0385 (len 36)",
+     "matchShape": "idempo…385\" (len 55)"
+    }
+   ],
+   "fileCount": 2
+  },
+  "generic-api-key | docs/testing/inta-opencode-rounds-consolidation/*.json": {
+   "count": 1,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/inta-opencode-rounds-consolidation/provenance-corrections.json"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/inta-opencode-rounds-consolidation/provenance-corrections.json",
+     "line": 6,
+     "rule": "generic-api-key",
+     "secretShape": "e36b9c…b26b (len 64)",
+     "matchShape": "live_c…26b\" (len 99)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/inta-returns/*.json": {
+   "count": 2,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/inta-returns/frontend/validation-20261026/prerender-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/inta-returns/frontend/validation-20261026/prerender-manifest.json",
+     "line": 185,
+     "rule": "generic-api-key",
+     "secretShape": "12b191…4df1 (len 64)",
+     "matchShape": "previe…df1\" (len 90)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/inta-returns/frontend/validation-20261026/prerender-manifest.json",
+     "line": 186,
+     "rule": "generic-api-key",
+     "secretShape": "10bc4e…3d85 (len 64)",
+     "matchShape": "previe…d85\" (len 93)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/opencode-adr006-test-plan-20261030-r1/*.md": {
+   "count": 1,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/opencode-adr006-test-plan-20261030-r1/plan.md"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/opencode-adr006-test-plan-20261030-r1/plan.md",
+     "line": 49,
+     "rule": "generic-api-key",
+     "secretShape": "lost/d…ated (len 15)",
+     "matchShape": "secret…ted  (len 33)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/p0-codex-implementation-20261028/*.md": {
+   "count": 1,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/p0-codex-implementation-20261028/prompts/02-CODEX-FRONTEND-RESUME.md"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-codex-implementation-20261028/prompts/02-CODEX-FRONTEND-RESUME.md",
+     "line": 27,
+     "rule": "generic-api-key",
+     "secretShape": "missin…cate (len 17)",
+     "matchShape": "key UN…ate  (len 40)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/p0-codex-implementation-20261028/*.json": {
+   "count": 8,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/p0-codex-implementation-20261028/frontend/evidence/corrected-env-20261028T034105457961Z-summary.json"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-codex-implementation-20261028/frontend/evidence/corrected-env-20261028T034105457961Z-summary.json",
+     "line": 143,
+     "rule": "generic-api-key",
+     "secretShape": "523338…7a42 (len 64)",
+     "matchShape": "async-…a42\" (len 88)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-codex-implementation-20261028/frontend/evidence/corrected-env-20261028T034105457961Z-summary.json",
+     "line": 154,
+     "rule": "generic-api-key",
+     "secretShape": "73e474…e311 (len 64)",
+     "matchShape": "js-cac…311\" (len 96)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-codex-implementation-20261028/frontend/evidence/corrected-env-20261028T034105457961Z-summary.json",
+     "line": 185,
+     "rule": "generic-api-key",
+     "secretShape": "a2ca8a…0c23 (len 64)",
+     "matchShape": "server…c23\" (len 91)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-codex-implementation-20261028/frontend/evidence/corrected-env-20261028T034105457961Z-summary.json",
+     "line": 241,
+     "rule": "generic-api-key",
+     "secretShape": "cd0f48…8ef1 (len 64)",
+     "matchShape": "api-in…ef1\" (len 87)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/p0-final-parallel-20261028/*.json": {
+   "count": 234,
+   "commits": [
+    "0de3e5db",
+    "2d410816"
+   ],
+   "files": [
+    "docs/testing/p0-final-parallel-20261028/claude-backend-hardening-r1/s0-pre-manifest.json",
+    "docs/testing/p0-final-parallel-20261028/claude-backend-hardening-r1/s6-post-manifest.json",
+    "docs/testing/p0-final-parallel-20261028/claude-action-entry-ux-r1/source-manifest.json",
+    "docs/testing/p0-final-parallel-20261028/claude-focused-workbench-r1/source-manifest.json",
+    "docs/testing/p0-final-parallel-20261028/claude-people-membership-matter-ux-r1/start-state.json",
+    "docs/testing/p0-final-parallel-20261028/claude-people-membership-matter-ux-r1/source-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-final-parallel-20261028/claude-backend-hardening-r1/s0-pre-manifest.json",
+     "line": 34,
+     "rule": "generic-api-key",
+     "secretShape": "93e5b8…f232 (len 64)",
+     "matchShape": "api.md…232\" (len 75)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-final-parallel-20261028/claude-backend-hardening-r1/s0-pre-manifest.json",
+     "line": 35,
+     "rule": "generic-api-key",
+     "secretShape": "552911…11c7 (len 64)",
+     "matchShape": "api.md…1c7\" (len 80)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-final-parallel-20261028/claude-backend-hardening-r1/s0-pre-manifest.json",
+     "line": 145,
+     "rule": "generic-api-key",
+     "secretShape": "4c6701…3c45 (len 64)",
+     "matchShape": "access…c45\" (len 78)"
+    },
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/p0-final-parallel-20261028/claude-backend-hardening-r1/s6-post-manifest.json",
+     "line": 33,
+     "rule": "generic-api-key",
+     "secretShape": "93e5b8…f232 (len 64)",
+     "matchShape": "api.md…232\" (len 75)"
+    }
+   ],
+   "fileCount": 12
+  },
+  "generic-api-key | docs/testing/zcode-review-matrix-rework-20261029-r1/*.log": {
+   "count": 1,
+   "commits": [
+    "0de3e5db"
+   ],
+   "files": [
+    "docs/testing/zcode-review-matrix-rework-20261029-r1/step01-red.log"
+   ],
+   "samples": [
+    {
+     "commit": "0de3e5db",
+     "date": "2026-10-30T03:49:44Z",
+     "file": "docs/testing/zcode-review-matrix-rework-20261029-r1/step01-red.log",
+     "line": 31,
+     "rule": "generic-api-key",
+     "secretShape": "01a187…704c (len 36)",
+     "matchShape": "idempo…04c\" (len 55)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/opencode-verify-wave-20261031-r1/*.json": {
+   "count": 108,
+   "commits": [
+    "783d7988"
+   ],
+   "files": [
+    "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R11-restore-rehearsal/evidence/readback-source-at-B.json",
+    "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R11-restore-rehearsal/evidence/readback-restored.json"
+   ],
+   "samples": [
+    {
+     "commit": "783d7988",
+     "date": "2026-11-01T01:36:36Z",
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R11-restore-rehearsal/evidence/readback-source-at-B.json",
+     "line": 629,
+     "rule": "generic-api-key",
+     "secretShape": "01a194…a793 (len 36)",
+     "matchShape": "Comman…793\" (len 51)"
+    },
+    {
+     "commit": "783d7988",
+     "date": "2026-11-01T01:36:36Z",
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R11-restore-rehearsal/evidence/readback-source-at-B.json",
+     "line": 1032,
+     "rule": "generic-api-key",
+     "secretShape": "01a194…a793 (len 36)",
+     "matchShape": "Comman…793\" (len 51)"
+    },
+    {
+     "commit": "783d7988",
+     "date": "2026-11-01T01:36:36Z",
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R11-restore-rehearsal/evidence/readback-source-at-B.json",
+     "line": 1369,
+     "rule": "generic-api-key",
+     "secretShape": "01a194…92f1 (len 36)",
+     "matchShape": "Comman…2f1\" (len 51)"
+    },
+    {
+     "commit": "783d7988",
+     "date": "2026-11-01T01:36:36Z",
+     "file": "docs/testing/opencode-verify-wave-20261031-r1/commands/verify-R11-restore-rehearsal/evidence/readback-source-at-B.json",
+     "line": 1392,
+     "rule": "generic-api-key",
+     "secretShape": "01a194…92f1 (len 36)",
+     "matchShape": "Comman…2f1\" (len 51)"
+    }
+   ],
+   "fileCount": 2
+  },
+  "generic-api-key | docs/design/step-03a/*.json": {
+   "count": 14,
+   "commits": [
+    "da7be11a",
+    "cb396653",
+    "89416749",
+    "68b5586c",
+    "b02aa791",
+    "16c9b5d1",
+    "2c14cbb6"
+   ],
+   "files": [
+    "docs/design/step-03a/handoff/ux-acceleration-20261026/input-manifest.json",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-provenance-return-r3/intake.json",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-binding-return-r2/intake.json",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-binding-return-r1/document-checks.json",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-remaining-return-r3/document-checks.json",
+    "docs/design/step-03a/handoff/step-03a-8a/zcode-remaining-return-r2/intake.json"
+   ],
+   "samples": [
+    {
+     "commit": "da7be11a",
+     "date": "2026-10-26T00:19:00Z",
+     "file": "docs/design/step-03a/handoff/ux-acceleration-20261026/input-manifest.json",
+     "line": 93,
+     "rule": "generic-api-key",
+     "secretShape": "791d1d…30ec (len 64)",
+     "matchShape": "select…0ec\" (len 88)"
+    },
+    {
+     "commit": "da7be11a",
+     "date": "2026-10-26T00:19:00Z",
+     "file": "docs/design/step-03a/handoff/ux-acceleration-20261026/input-manifest.json",
+     "line": 100,
+     "rule": "generic-api-key",
+     "secretShape": "f74306…128c (len 64)",
+     "matchShape": "design…28c\" (len 87)"
+    },
+    {
+     "commit": "cb396653",
+     "date": "2026-10-25T18:03:29Z",
+     "file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-provenance-return-r3/intake.json",
+     "line": 65,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    },
+    {
+     "commit": "89416749",
+     "date": "2026-10-25T17:55:29Z",
+     "file": "docs/design/step-03a/handoff/step-03a-8a/zcode-f10-binding-return-r2/intake.json",
+     "line": 95,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 7
+  },
+  "generic-api-key | docs/testing/inta-preparation/*.json": {
+   "count": 1,
+   "commits": [
+    "ca649fe7"
+   ],
+   "files": [
+    "docs/testing/inta-preparation/preflight.json"
+   ],
+   "samples": [
+    {
+     "commit": "ca649fe7",
+     "date": "2026-10-25T02:47:04Z",
+     "file": "docs/testing/inta-preparation/preflight.json",
+     "line": 108,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/step-02-4/*.json": {
+   "count": 2,
+   "commits": [
+    "e7dbfbfb"
+   ],
+   "files": [
+    "docs/testing/step-02-4/baseline.json"
+   ],
+   "samples": [
+    {
+     "commit": "e7dbfbfb",
+     "date": "2026-10-25T01:57:43Z",
+     "file": "docs/testing/step-02-4/baseline.json",
+     "line": 12,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    },
+    {
+     "commit": "e7dbfbfb",
+     "date": "2026-10-25T01:57:43Z",
+     "file": "docs/testing/step-02-4/baseline.json",
+     "line": 76,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/step-02-3-opencode-clarification/*.json": {
+   "count": 1,
+   "commits": [
+    "a7e99929"
+   ],
+   "files": [
+    "docs/testing/step-02-3-opencode-clarification/preservation.json"
+   ],
+   "samples": [
+    {
+     "commit": "a7e99929",
+     "date": "2026-10-25T01:43:10Z",
+     "file": "docs/testing/step-02-3-opencode-clarification/preservation.json",
+     "line": 57,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/p0-claude-finish-20261028/*.json": {
+   "count": 158,
+   "commits": [
+    "2d410816"
+   ],
+   "files": [
+    "docs/testing/p0-claude-finish-20261028/restore/20261028T034338Z/readback-restored.json",
+    "docs/testing/p0-claude-finish-20261028/restore/20261028T034456Z/readback-restored.json",
+    "docs/testing/p0-claude-finish-20261028/restore/20261028T034427Z/readback-restored.json"
+   ],
+   "samples": [
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-claude-finish-20261028/restore/20261028T034338Z/readback-restored.json",
+     "line": 608,
+     "rule": "generic-api-key",
+     "secretShape": "01a180…f073 (len 36)",
+     "matchShape": "Comman…073\" (len 51)"
+    },
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-claude-finish-20261028/restore/20261028T034338Z/readback-restored.json",
+     "line": 1011,
+     "rule": "generic-api-key",
+     "secretShape": "01a180…f073 (len 36)",
+     "matchShape": "Comman…073\" (len 51)"
+    },
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-claude-finish-20261028/restore/20261028T034338Z/readback-restored.json",
+     "line": 1346,
+     "rule": "generic-api-key",
+     "secretShape": "01a180…ac68 (len 36)",
+     "matchShape": "Comman…c68\" (len 51)"
+    },
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-claude-finish-20261028/restore/20261028T034338Z/readback-restored.json",
+     "line": 1369,
+     "rule": "generic-api-key",
+     "secretShape": "01a180…ac68 (len 36)",
+     "matchShape": "Comman…c68\" (len 51)"
+    }
+   ],
+   "fileCount": 3
+  },
+  "generic-api-key | docs/testing/step-02-3/*.json": {
+   "count": 17,
+   "commits": [
+    "3ebc0f0e"
+   ],
+   "files": [
+    "docs/testing/step-02-3/artifact-manifest.json",
+    "docs/testing/step-02-3/documentation-research.json",
+    "docs/testing/step-02-3/preservation.json"
+   ],
+   "samples": [
+    {
+     "commit": "3ebc0f0e",
+     "date": "2026-10-25T01:12:12Z",
+     "file": "docs/testing/step-02-3/artifact-manifest.json",
+     "line": 10,
+     "rule": "generic-api-key",
+     "secretShape": "938bed…82d6 (len 64)",
+     "matchShape": "claude…2d6\" (len 92)"
+    },
+    {
+     "commit": "3ebc0f0e",
+     "date": "2026-10-25T01:12:12Z",
+     "file": "docs/testing/step-02-3/documentation-research.json",
+     "line": 20,
+     "rule": "generic-api-key",
+     "secretShape": "jHkWEd…KF0Y (len 43)",
+     "matchShape": "access…0Y\\n (len 58)"
+    },
+    {
+     "commit": "3ebc0f0e",
+     "date": "2026-10-25T01:12:12Z",
+     "file": "docs/testing/step-02-3/documentation-research.json",
+     "line": 20,
+     "rule": "generic-api-key",
+     "secretShape": "eyJraW…ifQ. (len 43)",
+     "matchShape": "id_tok…Q.\\n (len 54)"
+    },
+    {
+     "commit": "3ebc0f0e",
+     "date": "2026-10-25T01:12:12Z",
+     "file": "docs/testing/step-02-3/preservation.json",
+     "line": 42,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 3
+  },
+  "generic-api-key | docs/testing/step-02-2/*.json": {
+   "count": 1,
+   "commits": [
+    "b43dc53e"
+   ],
+   "files": [
+    "docs/testing/step-02-2/preservation.json"
+   ],
+   "samples": [
+    {
+     "commit": "b43dc53e",
+     "date": "2026-10-24T16:28:49Z",
+     "file": "docs/testing/step-02-2/preservation.json",
+     "line": 58,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/step-02-1/*.json": {
+   "count": 3,
+   "commits": [
+    "4a6b8f9c"
+   ],
+   "files": [
+    "docs/testing/step-02-1/antigravity-input-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "4a6b8f9c",
+     "date": "2026-10-24T14:39:20Z",
+     "file": "docs/testing/step-02-1/antigravity-input-manifest.json",
+     "line": 12,
+     "rule": "generic-api-key",
+     "secretShape": "b65001…0341 (len 64)",
+     "matchShape": "auth-p…341\" (len 85)"
+    },
+    {
+     "commit": "4a6b8f9c",
+     "date": "2026-10-24T14:39:20Z",
+     "file": "docs/testing/step-02-1/antigravity-input-manifest.json",
+     "line": 13,
+     "rule": "generic-api-key",
+     "secretShape": "3cfdc9…8192 (len 64)",
+     "matchShape": "auth.t…192\" (len 76)"
+    },
+    {
+     "commit": "4a6b8f9c",
+     "date": "2026-10-24T14:39:20Z",
+     "file": "docs/testing/step-02-1/antigravity-input-manifest.json",
+     "line": 16,
+     "rule": "generic-api-key",
+     "secretShape": "cd0f48…8ef1 (len 64)",
+     "matchShape": "api-in…ef1\" (len 87)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/tooling/step-02-claude-final-input-manifest.json/*.json": {
+   "count": 1,
+   "commits": [
+    "8521c2a0"
+   ],
+   "files": [
+    "docs/tooling/step-02-claude-final-input-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "8521c2a0",
+     "date": "2026-10-24T11:45:20Z",
+     "file": "docs/tooling/step-02-claude-final-input-manifest.json",
+     "line": 3,
+     "rule": "generic-api-key",
+     "secretShape": "1db6b8…2da9 (len 64)",
+     "matchShape": "api-co…da9\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/reviews/step-02-opencode-round2-result.md/*.md": {
+   "count": 1,
+   "commits": [
+    "8521c2a0"
+   ],
+   "files": [
+    "docs/reviews/step-02-opencode-round2-result.md"
+   ],
+   "samples": [
+    {
+     "commit": "8521c2a0",
+     "date": "2026-10-24T11:45:20Z",
+     "file": "docs/reviews/step-02-opencode-round2-result.md",
+     "line": 17,
+     "rule": "generic-api-key",
+     "secretShape": "1db6b8…2da9 (len 64)",
+     "matchShape": "api-co…da9\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/reviews/step-02-opencode-final-result.md/*.md": {
+   "count": 1,
+   "commits": [
+    "8521c2a0"
+   ],
+   "files": [
+    "docs/reviews/step-02-opencode-final-result.md"
+   ],
+   "samples": [
+    {
+     "commit": "8521c2a0",
+     "date": "2026-10-24T11:45:20Z",
+     "file": "docs/reviews/step-02-opencode-final-result.md",
+     "line": 17,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/tooling/step-02-opencode-final-input-manifest.json/*.json": {
+   "count": 1,
+   "commits": [
+    "8521c2a0"
+   ],
+   "files": [
+    "docs/tooling/step-02-opencode-final-input-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "8521c2a0",
+     "date": "2026-10-24T11:45:20Z",
+     "file": "docs/tooling/step-02-opencode-final-input-manifest.json",
+     "line": 10,
+     "rule": "generic-api-key",
+     "secretShape": "49ec8a…6e75 (len 64)",
+     "matchShape": "api-co…e75\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/tooling/step-02-opencode-round2-input-manifest.json/*.json": {
+   "count": 1,
+   "commits": [
+    "3a86ca82"
+   ],
+   "files": [
+    "docs/tooling/step-02-opencode-round2-input-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "3a86ca82",
+     "date": "2026-10-24T11:21:36Z",
+     "file": "docs/tooling/step-02-opencode-round2-input-manifest.json",
+     "line": 10,
+     "rule": "generic-api-key",
+     "secretShape": "1db6b8…2da9 (len 64)",
+     "matchShape": "api-co…da9\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/tooling/step-02-claude-rework-input-manifest.json/*.json": {
+   "count": 1,
+   "commits": [
+    "3a86ca82"
+   ],
+   "files": [
+    "docs/tooling/step-02-claude-rework-input-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "3a86ca82",
+     "date": "2026-10-24T11:21:36Z",
+     "file": "docs/tooling/step-02-claude-rework-input-manifest.json",
+     "line": 10,
+     "rule": "generic-api-key",
+     "secretShape": "b51329…f24e (len 64)",
+     "matchShape": "api-co…24e\" (len 85)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/tooling/step-02-input-manifest.json/*.json": {
+   "count": 4,
+   "commits": [
+    "1516f154"
+   ],
+   "files": [
+    "docs/tooling/step-02-input-manifest.json"
+   ],
+   "samples": [
+    {
+     "commit": "1516f154",
+     "date": "2026-10-24T10:41:41Z",
+     "file": "docs/tooling/step-02-input-manifest.json",
+     "line": 39,
+     "rule": "generic-api-key",
+     "secretShape": "780046…a9a6 (len 64)",
+     "matchShape": "openap…9a6\" (len 79)"
+    },
+    {
+     "commit": "1516f154",
+     "date": "2026-10-24T10:41:41Z",
+     "file": "docs/tooling/step-02-input-manifest.json",
+     "line": 44,
+     "rule": "generic-api-key",
+     "secretShape": "6b246e…3493 (len 64)",
+     "matchShape": "user_a…493\" (len 84)"
+    },
+    {
+     "commit": "1516f154",
+     "date": "2026-10-24T10:41:41Z",
+     "file": "docs/tooling/step-02-input-manifest.json",
+     "line": 148,
+     "rule": "generic-api-key",
+     "secretShape": "b65001…0341 (len 64)",
+     "matchShape": "auth-p…341\" (len 85)"
+    },
+    {
+     "commit": "1516f154",
+     "date": "2026-10-24T10:41:41Z",
+     "file": "docs/tooling/step-02-input-manifest.json",
+     "line": 149,
+     "rule": "generic-api-key",
+     "secretShape": "3cfdc9…8192 (len 64)",
+     "matchShape": "auth.t…192\" (len 76)"
+    }
+   ],
+   "fileCount": 1
+  },
+  "generic-api-key | docs/testing/p0-codex-remediation-20261028/*.json": {
+   "count": 196,
+   "commits": [
+    "2d410816"
+   ],
+   "files": [
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T071518Z/readback-restored.json",
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T071518Z/readback-source-at-B.json",
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T072524Z/readback-source-at-B.json",
+    "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T072524Z/readback-restored.json"
+   ],
+   "samples": [
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T071518Z/readback-restored.json",
+     "line": 608,
+     "rule": "generic-api-key",
+     "secretShape": "01a181…f046 (len 36)",
+     "matchShape": "Comman…046\" (len 51)"
+    },
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T071518Z/readback-restored.json",
+     "line": 1011,
+     "rule": "generic-api-key",
+     "secretShape": "01a181…f046 (len 36)",
+     "matchShape": "Comman…046\" (len 51)"
+    },
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T071518Z/readback-restored.json",
+     "line": 1346,
+     "rule": "generic-api-key",
+     "secretShape": "01a181…44a6 (len 36)",
+     "matchShape": "Comman…4a6\" (len 51)"
+    },
+    {
+     "commit": "2d410816",
+     "date": "2026-10-28T09:11:52Z",
+     "file": "docs/testing/p0-codex-remediation-20261028/restore/runs/20261028T071518Z/readback-restored.json",
+     "line": 1369,
+     "rule": "generic-api-key",
+     "secretShape": "01a181…44a6 (len 36)",
+     "matchShape": "Comman…4a6\" (len 51)"
+    }
+   ],
+   "fileCount": 4
+  }
+ },
+ "nonDocs": []
+}
