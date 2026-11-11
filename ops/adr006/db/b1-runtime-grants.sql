@@ -24,6 +24,10 @@ GRANT SELECT, INSERT ON mcapp.domain_events TO mc_runtime;
 
 GRANT SELECT, INSERT ON mcapp.security_audit_events TO mc_runtime;
 
+-- Append-only capture aid (migration 0019): mail envelopes are written once by the intake
+-- receipt and never updated or deleted; the raw bytes live on the immutable document version.
+GRANT SELECT, INSERT ON mcapp.mail_messages TO mc_runtime;
+
 -- Replace-on-save tables: the only product tables whose contracts DELETE (rebuild row sets).
 GRANT SELECT, INSERT, UPDATE, DELETE ON mcapp.context_links TO mc_runtime;
 
@@ -79,6 +83,8 @@ GRANT SELECT, INSERT, UPDATE ON mcapp.matter_memberships TO mc_runtime;
 GRANT SELECT, INSERT, UPDATE ON mcapp.matters TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.milestones TO mc_runtime;
+
+GRANT SELECT, INSERT, UPDATE ON mcapp.notification_seen TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.parties TO mc_runtime;
 

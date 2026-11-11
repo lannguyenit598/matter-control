@@ -30,6 +30,7 @@ const (
 	hdrIdempotency       = "Idempotency-Key"
 	uploadRoute          = "/matters/:id/documents/:docId/versions"
 	termSheetImportRoute = "/matters/:id/term-lines/import"
+	mailIntakeRoute      = "/matters/:id/mail-intake"
 )
 
 // Deps are the inbound ports and identity collaborators the adapter needs.
@@ -47,6 +48,8 @@ type Deps struct {
 	TermSheets           port.TermSheetService
 	Intakes              port.IntakeService
 	Guidances            port.GuidanceService
+	Notifications        port.NotificationService
+	Mail                 port.MailService
 	DataOps              port.DataOpsService
 	DataOpsCodec         port.SheetCodec
 	Verifier             port.TokenVerifier
@@ -101,6 +104,7 @@ func NewServer(d Deps) *echo.Echo {
 				return false
 			}
 			return c.Path() == apiPrefix+uploadRoute || c.Path() == apiPrefix+termSheetImportRoute ||
+				c.Path() == apiPrefix+mailIntakeRoute ||
 				c.Path() == apiPrefix+"/matters/:id/import/preview" ||
 				c.Path() == apiPrefix+"/matters/:id/import/commit"
 		},
@@ -145,6 +149,10 @@ func NewServer(d Deps) *echo.Echo {
 	v1.GET("/me/actions", s.myActions)
 	v1.GET("/me/agenda", s.myAgenda)
 	v1.GET("/me/reviews", s.myReviews)
+	v1.GET("/me/notifications", s.listNotifications)
+	v1.POST("/me/notifications/seen", s.markNotificationsSeen)
+	v1.GET("/matters/:id/mail", s.listMail)
+	v1.POST(mailIntakeRoute, s.mailIntake)
 	v1.GET("/matters", s.discoverMatters)
 	v1.GET("/workspaces/:id/playbooks", s.listPlaybooks)
 	v1.POST("/workspaces/:id/playbooks", s.createPlaybook)
@@ -246,8 +254,9 @@ func transferRequest(c *echo.Context) bool {
 	switch c.Request().Method {
 	case http.MethodPost:
 		switch c.Path() {
-		case apiPrefix + uploadRoute, apiPrefix + termSheetImportRoute, apiPrefix + "/matters/:id/import/preview",
-			apiPrefix + "/matters/:id/import/commit", apiPrefix + "/matters/:id/bulk/commit":
+		case apiPrefix + uploadRoute, apiPrefix + termSheetImportRoute, apiPrefix + mailIntakeRoute,
+			apiPrefix + "/matters/:id/import/preview", apiPrefix + "/matters/:id/import/commit",
+			apiPrefix + "/matters/:id/bulk/commit":
 			return true
 		}
 	case http.MethodGet:

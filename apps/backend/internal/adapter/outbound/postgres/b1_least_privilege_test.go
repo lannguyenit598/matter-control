@@ -113,27 +113,38 @@ func b1ProfileSQL() []string {
 	}
 }
 
+// Grant classes shared by b1RuntimeGrants (the Go source of the operator file) and the
+// class-probe subtest, so the two uses inside this file cannot drift apart either. The SQL-file
+// sync guard separately pins the operator deliverable to these same classes.
+var (
+	// Append-only legal history: read/append only — no UPDATE, no DELETE, ever.
+	b1AppendOnlyTables = map[string]bool{
+		"domain_events": true, "command_receipts": true, "command_receipt_matters": true,
+		"security_audit_events": true,
+	}
+	// Mail capture envelopes (migration 0019) are append-only capture aids tied to immutable
+	// document versions: the envelope is written once by the intake receipt, never updated.
+	b1ReadAppendTables = map[string]bool{"mail_messages": true}
+	// Replace-on-save tables: the only product tables whose contracts DELETE (rebuild row sets).
+	// RLF-04: a saved view is a private row its owner may remove; DELETE is part of its
+	// discovered contract (DeleteSavedView), granted on that table only.
+	b1DeletableTables = map[string]bool{
+		"context_links": true, "contract_term_lines": true, "dependency_edges": true,
+		"milestone_prerequisites": true, "review_grid_versions": true,
+		"saved_views": true,
+	}
+)
+
 // b1RuntimeGrants returns the per-table-class DML the runtime actually needs (B1: exact grants,
 // not blanket ALL). Append-only legal history gets read/append only. DELETE is limited to the
 // tables whose contracts replace or remove rows.
 func b1RuntimeGrants(schema string, tables []string) []string {
 	var out []string
-	appendOnly := map[string]bool{
-		"domain_events": true, "command_receipts": true, "command_receipt_matters": true,
-		"security_audit_events": true,
-	}
-	deletable := map[string]bool{
-		"context_links": true, "contract_term_lines": true, "dependency_edges": true,
-		"milestone_prerequisites": true, "review_grid_versions": true,
-		// RLF-04: a saved view is a private row its owner may remove; DELETE is part of
-		// its discovered contract (DeleteSavedView), granted on this table only.
-		"saved_views": true,
-	}
 	for _, tb := range tables {
 		switch {
-		case appendOnly[tb]:
+		case b1AppendOnlyTables[tb], b1ReadAppendTables[tb]:
 			out = append(out, fmt.Sprintf("GRANT SELECT, INSERT ON %s.%s TO mc_runtime;", schema, tb))
-		case deletable[tb]:
+		case b1DeletableTables[tb]:
 			out = append(out, fmt.Sprintf("GRANT SELECT, INSERT, UPDATE, DELETE ON %s.%s TO mc_runtime;", schema, tb))
 		default:
 			out = append(out, fmt.Sprintf("GRANT SELECT, INSERT, UPDATE ON %s.%s TO mc_runtime;", schema, tb))
@@ -477,23 +488,12 @@ func TestB1LeastPrivilegeProfile(t *testing.T) {
 	t.Run("every table has its grant class", func(t *testing.T) {
 		// The expectation is the Go class map mirrored in the operator file (sync-guarded): each
 		// migrated table must carry exactly the granted privileges and nothing else.
-		appendOnly := map[string]bool{
-			"domain_events": true, "command_receipts": true, "command_receipt_matters": true,
-			"security_audit_events": true,
-		}
-		deletable := map[string]bool{
-			"context_links": true, "contract_term_lines": true, "dependency_edges": true,
-			"milestone_prerequisites": true, "review_grid_versions": true,
-			// RLF-04: a saved view is a private row its owner may remove; DELETE is part of
-			// its discovered contract (DeleteSavedView), granted on this table only.
-			"saved_views": true,
-		}
 		for _, tb := range tables {
 			want := map[string]bool{"SELECT": true, "INSERT": true, "UPDATE": true}
 			switch {
-			case appendOnly[tb]:
+			case b1AppendOnlyTables[tb], b1ReadAppendTables[tb]:
 				want = map[string]bool{"SELECT": true, "INSERT": true}
-			case deletable[tb]:
+			case b1DeletableTables[tb]:
 				want["DELETE"] = true
 			}
 			for _, priv := range []string{"SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE", "REFERENCES", "TRIGGER"} {

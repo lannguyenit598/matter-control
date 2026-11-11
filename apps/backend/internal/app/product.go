@@ -159,19 +159,21 @@ func newTokenVerifier(cfg config.ProductConfig) (port.TokenVerifier, error) {
 
 type productServices struct {
 	fx.Out
-	Workspaces port.WorkspaceService
-	Matters    port.MatterService
-	Work       port.WorkService
-	Evidence   port.EvidenceService
-	Filings    port.FilingService
-	Control    port.ControlService
-	Review     port.ReviewService
-	SavedViews port.SavedViewService
-	Playbooks  port.PlaybookService
-	TermSheets port.TermSheetService
-	Intakes    port.IntakeService
-	Guidances  port.GuidanceService
-	DataOps    port.DataOpsService
+	Workspaces    port.WorkspaceService
+	Matters       port.MatterService
+	Work          port.WorkService
+	Evidence      port.EvidenceService
+	Filings       port.FilingService
+	Control       port.ControlService
+	Review        port.ReviewService
+	SavedViews    port.SavedViewService
+	Playbooks     port.PlaybookService
+	TermSheets    port.TermSheetService
+	Intakes       port.IntakeService
+	Guidances     port.GuidanceService
+	Notifications port.NotificationService
+	Mail          port.MailService
+	DataOps       port.DataOpsService
 }
 
 // newObjectStore opens the configured document store: a private bucket on Cloudflare R2, or the
@@ -194,27 +196,30 @@ func newObjectStore(lc fx.Lifecycle, cfg config.ProductConfig) (port.ObjectStore
 func newProductServices(store *postgres.MatterStore, objects port.ObjectStore, logger *slog.Logger) productServices {
 	ids := system.RecordIDv7{}
 	work := service.NewWorkService(store, ids, logger, matter.KeyAgePolicy{})
+	evidence := service.NewEvidenceService(work, objects)
 	return productServices{
-		Evidence:   service.NewEvidenceService(work, objects),
-		Filings:    service.NewFilingService(work),
-		Control:    service.NewControlService(work),
-		Review:     service.NewReviewService(work),
-		SavedViews: service.NewSavedViewService(work),
-		Playbooks:  service.NewPlaybookService(store, work, ids),
-		TermSheets: service.NewTermSheetService(work, sheet.Codec{}),
-		Intakes:    service.NewIntakeService(work),
-		Guidances:  service.NewGuidanceService(work),
-		Workspaces: service.NewWorkspaceService(store, ids, logger, matter.KeyAgePolicy{}),
-		Matters:    service.NewMatterService(store, ids, logger, matter.KeyAgePolicy{}),
-		Work:       work,
-		DataOps:    service.NewDataOpsService(store, ids, sheet.Codec{}, logger),
+		Evidence:      evidence,
+		Filings:       service.NewFilingService(work),
+		Control:       service.NewControlService(work),
+		Review:        service.NewReviewService(work),
+		SavedViews:    service.NewSavedViewService(work),
+		Playbooks:     service.NewPlaybookService(store, work, ids),
+		TermSheets:    service.NewTermSheetService(work, sheet.Codec{}),
+		Intakes:       service.NewIntakeService(work),
+		Guidances:     service.NewGuidanceService(work),
+		Notifications: service.NewNotificationService(work, evidence, store, system.Clock{}),
+		Mail:          service.NewMailService(work, objects, ids),
+		Workspaces:    service.NewWorkspaceService(store, ids, logger, matter.KeyAgePolicy{}),
+		Matters:       service.NewMatterService(store, ids, logger, matter.KeyAgePolicy{}),
+		Work:          work,
+		DataOps:       service.NewDataOpsService(store, ids, sheet.Codec{}, logger),
 	}
 }
 
 // newProductHTTPServer mirrors newHTTPServer's lifecycle: synchronous listen, serve in the
 // background, drain on stop, cancel request contexts before the pool closes.
 func newProductHTTPServer(lc fx.Lifecycle, cfg config.ProductConfig, logger *slog.Logger, opts ProductOptions,
-	ws port.WorkspaceService, ms port.MatterService, work port.WorkService, evidence port.EvidenceService, filings port.FilingService, control port.ControlService, dataOps port.DataOpsService, review port.ReviewService, savedViews port.SavedViewService, playbooks port.PlaybookService, termSheets port.TermSheetService, intakes port.IntakeService, guidances port.GuidanceService, verifier port.TokenVerifier, ids port.IdentityResolver, pool *pgxpool.Pool, failed fatal,
+	ws port.WorkspaceService, ms port.MatterService, work port.WorkService, evidence port.EvidenceService, filings port.FilingService, control port.ControlService, dataOps port.DataOpsService, review port.ReviewService, savedViews port.SavedViewService, playbooks port.PlaybookService, termSheets port.TermSheetService, intakes port.IntakeService, guidances port.GuidanceService, notifications port.NotificationService, mail port.MailService, verifier port.TokenVerifier, ids port.IdentityResolver, pool *pgxpool.Pool, failed fatal,
 ) *http.Server {
 	var draining atomic.Bool
 	searchCursors := productapi.NewSearchCursors(cfg.SearchCursorKey, time.Now)
@@ -223,7 +228,7 @@ func newProductHTTPServer(lc fx.Lifecycle, cfg config.ProductConfig, logger *slo
 	}
 	e := productapi.NewServer(productapi.Deps{
 		Search:     service.NewSearchService(postgres.NewMatterStore(pool), searchCursors, logger),
-		Workspaces: ws, Matters: ms, Work: work, Evidence: evidence, Filings: filings, Control: control, Review: review, SavedViews: savedViews, Playbooks: playbooks, TermSheets: termSheets, Intakes: intakes, Guidances: guidances, DataOps: dataOps, DataOpsCodec: sheet.Codec{}, MaxUploadBytes: cfg.MaxUploadBytes, Verifier: verifier, Identities: ids, Logger: logger,
+		Workspaces: ws, Matters: ms, Work: work, Evidence: evidence, Filings: filings, Control: control, Review: review, SavedViews: savedViews, Playbooks: playbooks, TermSheets: termSheets, Intakes: intakes, Guidances: guidances, Notifications: notifications, Mail: mail, DataOps: dataOps, DataOpsCodec: sheet.Codec{}, MaxUploadBytes: cfg.MaxUploadBytes, Verifier: verifier, Identities: ids, Logger: logger,
 		Ready:                readiness(&draining, pool.Ping),
 		RequestTimeout:       cfg.RequestTimeout,
 		TransferTimeout:      cfg.TransferTimeout,

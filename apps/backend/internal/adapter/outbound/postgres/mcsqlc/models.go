@@ -335,6 +335,21 @@ type IntakeRecord struct {
 	Revision     int64
 }
 
+type MailMessage struct {
+	ID         string
+	MatterID   string
+	DocumentID string
+	VersionID  string
+	Direction  string
+	Sender     string
+	Recipients []string
+	Subject    string
+	Excerpt    string
+	SentAt     pgtype.Timestamptz
+	RecordedBy string
+	CreatedAt  time.Time
+}
+
 type Matter struct {
 	ID                     string
 	WorkspaceID            string
@@ -367,6 +382,11 @@ type MilestonePrerequisite struct {
 	MilestoneID   string
 	MatterID      string
 	RequirementID string
+}
+
+type NotificationSeen struct {
+	UserID string
+	SeenAt time.Time
 }
 
 type Party struct {
