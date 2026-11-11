@@ -10,7 +10,7 @@ require (
 	github.com/exaring/otelpgx v0.13.0
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.11.0
-	github.com/labstack/echo/v5 v5.4.1
+	github.com/labstack/echo/v5 v5.4.2
 	github.com/pressly/goose/v3 v3.29.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.72.0
 	go.opentelemetry.io/otel v1.47.0
