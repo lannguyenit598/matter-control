@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Skeleton } from '@/components/atoms/skeleton'
 import { PageHeader } from '@/components/molecules/page-header'
 import { ReadFailure } from '@/components/organisms/read-failure'
+import { mailRepository } from '@/features/mail/repository'
+import { MailPanel } from '@/features/mail/components/mail-panel'
 import { matterRepository } from '@/features/matters/repository'
 import { CreateDocumentForm } from '@/features/proof/components/document-forms'
 import { proofRepository } from '@/features/proof/repository'
@@ -27,6 +29,9 @@ async function Documents({ params }: Pick<PageProps<'/matters/[matterId]/documen
   const { matterId } = await params
   const here = `/matters/${matterId}/documents`
   if (!(await getSession())) return <ReadFailure kind="sign-in" retryHref={here} />
+  // Mail capture starts in parallel with the main read (they are independent), and stays on its
+  // own attempt: a mail endpoint outage must not take the documents page down.
+  const mail = attempt(() => mailRepository.list(matterId))
   const read = await attempt(async () => {
     const [matter, docs] = await Promise.all([
       matterRepository.get(matterId),
@@ -36,6 +41,7 @@ async function Documents({ params }: Pick<PageProps<'/matters/[matterId]/documen
   })
   if (!read.ok) return <ReadFailure kind={read.kind} retryHref={here} subject="matter" />
   const { matter, docs } = read.value
+  const mailRead = await mail
   const canEdit = matter.callerRole === 'OWNER' || matter.callerRole === 'EDITOR'
   return (
     <div className="flex flex-col gap-6">
@@ -85,6 +91,24 @@ async function Documents({ params }: Pick<PageProps<'/matters/[matterId]/documen
           )}
         </CardContent>
       </Card>
+      {mailRead.ok && (
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <LocalizedText en="Email capture (.eml)" vi="Ghi nhận email (.eml)" />
+            </CardTitle>
+            <CardDescription>
+              <LocalizedText
+                en="Every .eml upload becomes an immutable document version of this matter."
+                vi="Mỗi tệp .eml tải lên tạo một phiên bản tài liệu bất biến của hồ sơ này."
+              />
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MailPanel matterId={matterId} items={mailRead.value.items} />
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

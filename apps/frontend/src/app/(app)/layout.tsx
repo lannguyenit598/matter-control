@@ -12,6 +12,7 @@ import { DashboardTemplate } from '@/components/templates/dashboard-template'
 import { mainNavigation, mainDestinations } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
 import { AccountMenu } from '@/features/auth/components/account-menu'
+import { NotificationBell } from '@/features/notifications/components/notification-bell'
 import { ActionAnnouncer } from '@/components/organisms/action-announcer'
 import { DraftScopeProvider } from '@/components/organisms/draft-scope'
 import { FocusProvider } from '@/features/work/focus/provider'
@@ -85,6 +86,9 @@ async function AuthenticatedWorkbench({ children }: { children: React.ReactNode 
                   <div className="app-toolbar-controls flex items-center gap-2">
                     <FocusController epoch={identity?.epoch} />
                     <QuickSearch identity={identity} destinations={mainDestinations} />
+                    <Suspense fallback={null}>
+                      <NotificationBell />
+                    </Suspense>
                     <ThemeToggle />
                     <details className="relative min-[801px]:hidden">
                       <summary className="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center rounded-md hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
