@@ -1,0 +1,37 @@
+Command: rtk proxy pnpm check
+✓ Lockfile passes supply-chain policies (verified 7d ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "/Users/nguyenvanlan/Library/Application
+      Support/orca/codex-accounts/0f9d5b46-d5f4-47b5-80f2-7b5d4b6ce9cd/home/
+      worktrees/14c4/matter-control/apps/frontend/node_modules": workspace
+      hoist directory is not a real directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v5.0.5 /Users/nguyenvanlan/Library/Application Support/orca/codex-accounts/0f9d5b46-d5f4-47b5-80f2-7b5d4b6ce9cd/home/worktrees/14c4/matter-control/apps/frontend
+
+
+ Test Files  132 passed | 1 skipped (133)
+      Tests  987 passed | 12 skipped (999)
+   Start at  21:56:59
+   Duration  13.88s (environment 43%, tests 28%, setup 13%, import 13%, transform 3%, worker 1%)
+
+Environment  jsdom was created 133 times · 47.49s total, 43% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+$ node scripts/sync-agent-config.mjs --check
+agent config OK: 17 skills, 3 scoped rules
+
+Exit: 0

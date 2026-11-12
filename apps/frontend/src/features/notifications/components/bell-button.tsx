@@ -28,7 +28,7 @@ const KIND_LABELS: Record<NotificationKind, { en: string; vi: string }> = {
 }
 
 /**
- * The header bell. The unread count comes from the server read (createdAt against seenAt); the
+ * The header bell. The unread count comes from server-authorized acknowledgement state; the
  * panel is the shared modal Dialog, so Escape-to-close and focus return to the bell are the
  * browser's own behaviour — the same discipline as the command palette.
  */
@@ -54,8 +54,10 @@ export function BellButton({
   function markSeen() {
     start(async () => {
       setFailure(null)
-      const r = await callMcAction(() => markSeenAction(), { receipted: false })
-      // Seen is recomputed from seenAt on the server, so the refresh alone moves the badge.
+      const r = await callMcAction(() => markSeenAction(items.map((item) => item.seenKey)), {
+        receipted: false,
+      })
+      // Refresh the server's persisted acknowledgement state.
       if (r.ok) router.refresh()
       else setFailure(r)
     })
@@ -178,7 +180,9 @@ function BellRow({ item, close }: { item: NotificationItem; close: () => void })
         {item.dueAt ? (
           <LocalizedInstant iso={item.dueAt} />
         ) : (
-          <LocalizedInstant iso={item.createdAt} />
+          <>
+            <LocalizedText en="Computed" vi="Tính lúc" />: <LocalizedInstant iso={item.createdAt} />
+          </>
         )}
       </span>
     </>

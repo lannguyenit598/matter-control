@@ -1,0 +1,11 @@
+--- FAIL: TestReviewSeenNotificationStaysSeenAfterRefresh (0.00s)
+    review_notifications_test.go:18: unchanged notification is unread again: id=OVERDUE:m1:work:i1 createdAt=2026-11-12T00:00:02Z seenAt=2026-11-12T00:00:01Z
+--- FAIL: TestReviewTerminalWorkDoesNotProduceDueSoon (0.00s)
+    --- FAIL: TestReviewTerminalWorkDoesNotProduceDueSoon/COMPLETED (0.00s)
+        review_notifications_test.go:30: terminal work must not need action: state=COMPLETED notifications=[{ID:DUE_SOON:m1:work:i1 Kind:DUE_SOON MatterID:m1 MatterTitle: ItemID:i1 Title: DueAt:2026-11-12 01:00:00 +0000 UTC CreatedAt:2026-11-12 00:00:00 +0000 UTC}]
+    --- FAIL: TestReviewTerminalWorkDoesNotProduceDueSoon/CANCELLED (0.00s)
+        review_notifications_test.go:30: terminal work must not need action: state=CANCELLED notifications=[{ID:DUE_SOON:m1:work:i1 Kind:DUE_SOON MatterID:m1 MatterTitle: ItemID:i1 Title: DueAt:2026-11-12 01:00:00 +0000 UTC CreatedAt:2026-11-12 00:00:00 +0000 UTC}]
+FAIL
+FAIL	leonx.me/matter-control/internal/core/domain/matter	0.417s
+ok  	leonx.me/matter-control/internal/core/service	0.397s
+FAIL

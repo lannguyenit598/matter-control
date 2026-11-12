@@ -1,112 +1,182 @@
-import { act, fireEvent, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
-
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { UiLocaleContext } from '@/hooks/use-locale'
 import { UUID_V7 } from '@/lib/mc/idempotency'
-
+import { MAX_EML_BYTES, type MailItem } from '../schemas'
 import { MailPanel } from './mail-panel'
-import type { MailItem } from '../schemas'
 
+const { refresh } = vi.hoisted(() => ({ refresh: vi.fn() }))
 vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh }) }))
-vi.mock('../actions', () => ({ uploadEmlAction: upload }))
-const { upload, refresh } = vi.hoisted(() => ({ upload: vi.fn(), refresh: vi.fn() }))
-
+const fetchMock = vi.fn()
 const item: MailItem = {
-  id: '01900000-0000-7000-8000-000000000001',
-  documentId: '01900000-0000-7000-8000-000000000002',
-  versionId: '01900000-0000-7000-8000-000000000003',
+  id: 'mail1',
+  documentId: 'doc1',
+  versionId: 'version1',
   direction: 'INBOUND',
-  sender: 'counterparty@example.com',
-  recipients: ['a@example.com', 'b@example.com', 'c@example.com', 'd@example.com', 'e@example.com'],
-  subject: 'Re: Share purchase agreement',
-  sentAt: '2026-11-10T09:30:00Z',
-  excerpt: 'Please find the signed copy attached for your records.',
-  createdAt: '2026-11-10T09:31:00Z',
+  sender: 'synthetic@example.invalid',
+  recipients: [],
+  subject: 'Dated synthetic mail',
+  sentAt: '2026-11-11T00:00:00Z',
+  excerpt: '',
+  createdAt: '2026-11-12T00:00:00Z',
 }
-
-afterEach(() => {
-  vi.clearAllMocks()
-})
-
-describe('MailPanel', () => {
-  it('lists captured email with sender, truncated recipients, direction and a link to the document', () => {
-    render(<MailPanel matterId="m1" items={[item]} />)
-    const link = screen.getByRole('link', { name: item.subject })
-    expect(link).toHaveAttribute('href', '/matters/m1/documents/' + item.documentId)
-    expect(screen.getByText(/counterparty@example.com/)).toBeInTheDocument()
-    expect(screen.getByText(/a@example.com, b@example.com, c@example.com \+2/)).toBeInTheDocument()
-    expect(screen.getByText('Inbound')).toBeInTheDocument()
-    expect(screen.getByText(item.excerpt)).toBeInTheDocument()
-  })
-
-  it('shows the empty state when nothing has been captured', () => {
-    render(<MailPanel matterId="m1" items={[]} />)
-    expect(screen.getByText('No captured email yet')).toBeInTheDocument()
-  })
-
-  it('rejects a non-.eml file on the client before any request', () => {
-    render(<MailPanel matterId="m1" items={[item]} />)
-    fireEvent.change(screen.getByLabelText(/Email file/), {
-      target: { files: [new File(['pdf'], 'term.pdf', { type: 'application/pdf' })] },
-    })
-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
-    expect(screen.getByText('Only .eml files are accepted.')).toBeInTheDocument()
-    expect(upload).not.toHaveBeenCalled()
-  })
-
-  it('uploads the .eml with its FormData and a fresh UUIDv7 idempotency key, then refreshes', async () => {
-    upload.mockResolvedValue({
+const success = () =>
+  new Response(
+    JSON.stringify({
       ok: true,
-      documentId: item.documentId,
-      versionId: item.versionId,
-      mailId: item.id,
+      documentId: 'doc1',
+      versionId: 'version1',
+      mailId: 'mail1',
       replayed: false,
-    })
-    render(<MailPanel matterId="m1" items={[item]} />)
-    fireEvent.change(screen.getByLabelText(/Email file/), {
-      target: { files: [new File(['eml'], 'message.eml', { type: 'message/rfc822' })] },
-    })
-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
-    await act(async () => {})
-    expect(upload).toHaveBeenCalledTimes(1)
-    const [matterId, form, key] = upload.mock.calls[0]
-    expect(matterId).toBe('m1')
-    expect(form).toBeInstanceOf(FormData)
-    expect(form.get('file')).toBeInstanceOf(File)
-    expect((form.get('file') as File).name).toBe('message.eml')
-    expect(form.get('direction')).toBe('INBOUND')
-    expect(key).toMatch(UUID_V7)
-    expect(refresh).toHaveBeenCalledTimes(1)
-  })
-
-  it('keeps the same key for a retry after an unknown outcome and says nothing was assumed', async () => {
-    upload
-      .mockResolvedValueOnce({
-        ok: false,
-        kind: 'outcome-unknown',
-        error: 'We could not confirm whether this was saved.',
-        retrySameKey: true,
-      })
-      .mockResolvedValueOnce({ ok: true, documentId: item.documentId, mailId: item.id })
-    render(<MailPanel matterId="m1" items={[item]} />)
-    const file = new File(['eml'], 'message.eml', { type: 'message/rfc822' })
-    fireEvent.change(screen.getByLabelText(/Email file/), { target: { files: [file] } })
-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
-    await act(async () => {})
-    expect(screen.getByText('Outcome not confirmed')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
-    await act(async () => {})
-    const firstKey = upload.mock.calls[0][2]
-    expect(upload.mock.calls[1][2]).toBe(firstKey)
-  })
-
-  it('renders Vietnamese labels under the vi locale', () => {
-    render(
-      <UiLocaleContext.Provider value="vi">
-        <MailPanel matterId="m1" items={[item]} />
-      </UiLocaleContext.Provider>,
-    )
-    expect(screen.getByText('Thư đến')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Tải lên' })).toBeInTheDocument()
-  })
+    }),
+    { status: 201 },
+  )
+function pick(file: File) {
+  fireEvent.change(screen.getByLabelText(/Email file/), { target: { files: [file] } })
+}
+async function submit() {
+  fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
+  await act(async () => {})
+}
+const key = (n: number) => new Headers(fetchMock.mock.calls[n]![1].headers).get('Idempotency-Key')
+beforeEach(() => {
+  vi.stubGlobal('fetch', fetchMock)
+  fetchMock.mockReset()
+  refresh.mockClear()
 })
+afterEach(() => vi.unstubAllGlobals())
+
+it('renders an explicit unavailable sent date without hiding dated mail', () => {
+  render(
+    <MailPanel
+      matterId="m1"
+      items={[item, { ...item, id: 'mail2', subject: 'Undated synthetic mail', sentAt: null }]}
+    />,
+  )
+  expect(screen.getByRole('link', { name: item.subject })).toBeInTheDocument()
+  expect(
+    within(screen.getByRole('link', { name: 'Undated synthetic mail' }).closest('li')!).getByText(
+      'Sent date unavailable',
+    ),
+  ).toBeInTheDocument()
+})
+it('renders Vietnamese missing-date copy', () => {
+  render(
+    <UiLocaleContext.Provider value="vi">
+      <MailPanel matterId="m1" items={[{ ...item, sentAt: null }]} />
+    </UiLocaleContext.Provider>,
+  )
+  expect(screen.getByText('Không có ngày gửi')).toBeInTheDocument()
+})
+it('uploads directly to the BFF with the selected file, then refreshes', async () => {
+  fetchMock.mockResolvedValue(success())
+  render(<MailPanel matterId="m1" items={[]} />)
+  const file = new File(['synthetic'], 'message.eml')
+  pick(file)
+  await submit()
+  expect(fetchMock).toHaveBeenCalledTimes(1)
+  const [url, req] = fetchMock.mock.calls[0]!
+  expect(url).toBe('/api/matters/m1/mail-intake')
+  expect(req.body.get('file')).toBe(file)
+  expect(req.body.get('direction')).toBe('INBOUND')
+  expect(new Headers(req.headers).has('Content-Type')).toBe(false)
+  expect(key(0)).toMatch(UUID_V7)
+  expect(refresh).toHaveBeenCalledTimes(1)
+})
+it.each([2 * 1024 * 1024, MAX_EML_BYTES])(
+  'accepts a file of %i bytes without a Server Action',
+  async (size) => {
+    fetchMock.mockResolvedValue(success())
+    render(<MailPanel matterId="m1" items={[]} />)
+    pick(new File([new Uint8Array(size)], 'large.eml'))
+    await submit()
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  },
+)
+it('refuses extension and max+1 before sending any request', async () => {
+  render(<MailPanel matterId="m1" items={[]} />)
+  pick(new File(['x'], 'message.pdf'))
+  await submit()
+  expect(screen.getByText('Only .eml files are accepted.')).toBeInTheDocument()
+  pick(new File([new Uint8Array(MAX_EML_BYTES + 1)], 'too-large.eml'))
+  await submit()
+  expect(screen.getByText('That file is larger than the 25 MiB limit.')).toBeInTheDocument()
+  expect(fetchMock).not.toHaveBeenCalled()
+})
+it('retries unknown outcomes with the same key and creates a new key for a new selection', async () => {
+  fetchMock
+    .mockRejectedValueOnce(new TypeError('synthetic transport loss'))
+    .mockResolvedValueOnce(success())
+    .mockResolvedValueOnce(success())
+  render(<MailPanel matterId="m1" items={[]} />)
+  pick(new File(['x'], 'message.eml'))
+  await submit()
+  expect(screen.getByText('Outcome not confirmed')).toBeInTheDocument()
+  await submit()
+  expect(key(1)).toBe(key(0))
+  pick(new File(['y'], 'another.eml'))
+  await submit()
+  expect(key(2)).not.toBe(key(0))
+})
+it('keeps the selected intent locked while the request is pending', async () => {
+  let resolve!: (value: Response) => void
+  fetchMock.mockReturnValue(
+    new Promise<Response>((r) => {
+      resolve = r
+    }),
+  )
+  render(<MailPanel matterId="m1" items={[]} />)
+  pick(new File(['x'], 'message.eml'))
+  await submit()
+  expect(screen.getByLabelText(/Email file/)).toBeDisabled()
+  await act(async () => {
+    resolve(success())
+  })
+  expect(screen.getByLabelText(/Email file/)).not.toBeDisabled()
+})
+it.each([401, 403])('displays structured refusal %i and does not refresh', async (status) => {
+  fetchMock.mockResolvedValue(
+    new Response(
+      JSON.stringify({
+        ok: false,
+        kind: status === 401 ? 'unauthenticated' : 'forbidden',
+        error: 'Synthetic refusal',
+      }),
+      { status },
+    ),
+  )
+  render(<MailPanel matterId="m1" items={[]} />)
+  pick(new File(['x'], 'message.eml'))
+  await submit()
+  expect(screen.getByText('Synthetic refusal')).toBeInTheDocument()
+  expect(refresh).not.toHaveBeenCalled()
+})
+
+it.each([401, 403])(
+  'retains the original request key after an unknown outcome followed by HTTP %i',
+  async (status) => {
+    fetchMock
+      .mockRejectedValueOnce(new TypeError('synthetic lost response'))
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            ok: false,
+            kind: status === 401 ? 'unauthenticated' : 'forbidden',
+            error: 'Synthetic temporary refusal',
+          }),
+          { status },
+        ),
+      )
+      .mockResolvedValueOnce(success())
+    render(<MailPanel matterId="m1" items={[]} />)
+    const file = new File(['same synthetic bytes'], 'message.eml')
+    pick(file)
+    await submit()
+    await submit()
+    await submit()
+    expect(fetchMock).toHaveBeenCalledTimes(3)
+    expect(key(1)).toBe(key(0))
+    expect(key(2)).toBe(key(0))
+    for (const [, request] of fetchMock.mock.calls) expect(request.body.get('file')).toBe(file)
+  },
+)

@@ -85,6 +85,7 @@ GRANT SELECT, INSERT, UPDATE ON mcapp.matters TO mc_runtime;
 GRANT SELECT, INSERT, UPDATE ON mcapp.milestones TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.notification_seen TO mc_runtime;
+GRANT SELECT, INSERT, UPDATE ON mcapp.notification_acknowledgements TO mc_runtime;
 
 GRANT SELECT, INSERT, UPDATE ON mcapp.parties TO mc_runtime;
 

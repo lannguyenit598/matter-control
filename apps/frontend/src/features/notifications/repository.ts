@@ -15,10 +15,10 @@ export const notificationsRepository = {
     (await mcRequest('/me/notifications', { query: { limit }, schema: notificationsPageSchema }))
       .data,
 
-  markSeen: () =>
+  markSeen: (keys: string[]) =>
     mcRequest('/me/notifications/seen', {
       method: 'POST',
-      body: {},
+      body: { keys },
       schema: z.object({ seenAt: z.string() }),
     }),
 }

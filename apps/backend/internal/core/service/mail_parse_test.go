@@ -116,6 +116,15 @@ func TestParseEml(t *testing.T) {
 	}
 }
 
+func TestParseEmlMissingOrInvalidDate(t *testing.T) {
+	for _, header := range []string{"", "Date: not-a-date\r\n"} {
+		got, err := parseEml([]byte("From: synthetic@example.invalid\r\n" + header + "\r\nBody\r\n"))
+		if err != nil || got.SentAt != nil {
+			t.Fatalf("expected accepted mail without sent date: %+v %v", got, err)
+		}
+	}
+}
+
 func TestParseEmlCaps(t *testing.T) {
 	// A subject far beyond the stored cap is truncated, not rejected.
 	got, err := parseEml([]byte("From: a@b.co\r\nTo: c@d.co\r\nSubject: " + strings.Repeat("x", 5000) + "\r\n\r\nbody\r\n"))

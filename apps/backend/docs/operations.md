@@ -66,3 +66,12 @@ Restore has been rehearsed locally with synthetic data only (`ops/p0-local/resto
 ## Metadata Quick Search
 
 `MC_SEARCH_CURSOR_KEY` is optional, with no default secret. Inject a dedicated 32-byte base64 key shared across instances. Missing/invalid configuration leaves POST /api/v1/search unavailable and logs a fixed capability warning; ordinary endpoints retain their existing behavior. Migration0012 requires UTF8, ICU and schema CREATE permission for the migrator. A failed required migration prevents the new candidate from starting: retain the baseline, never fake a migration version. Runtime reads need SELECT on the existing metadata/membership tables and execution of mc_search_key_v1; no legal write privilege is added by Search. Key rotation invalidates five-minute encrypted cursors; the UI explicitly refreshes. Do not log request bodies, query terms, cursor keys or tokens. Local PG17/18 tests do not prove Supabase/provider readiness.
+
+
+## Notification acknowledgement upgrade (2026-11-12 candidate)
+
+Apply the new notification acknowledgement migration before serving the updated frontend, with normal runtime SELECT/INSERT/UPDATE grants on `notification_acknowledgements`. Its keys are per-user UI metadata; they contain no copied titles, mail bodies or legal state. Writes merge key sets and update the existing last-action marker atomically; timestamps never regress.
+
+Existing `notification_seen` timestamps cannot reconstruct which items were actually read. No historical acknowledgement keys are invented: current reminders start unread once after upgrade. Refresh stale clients; their legacy empty seen request is a safe no-op. New clients require `seenKey` and `seen` from the updated backend. Coordinate the backend/frontend rollout; do not use a timestamp fallback.
+
+Acknowledgement keys accumulate when the user explicitly marks a digest seen. This candidate introduces no automatic deletion/expiry or retention policy, because expiry would make old reminders unread again. Growth and a retention decision remain operational follow-up; no storage-cost or production-capacity claim is made. Apply only to a permitted fixture/deployment; source tests alone do not prove migration/runtime readiness.

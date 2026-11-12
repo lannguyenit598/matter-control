@@ -42,6 +42,57 @@ func TestDeriveNotifications(t *testing.T) {
 	}
 }
 
+func TestNotificationSeenKeyIdentity(t *testing.T) {
+	now := time.Date(2026, 11, 12, 0, 0, 0, 0, time.UTC)
+	base := Notification{ID: "OVERDUE:m1:work:i1", Kind: NotificationOverdue, DueAt: &now}
+	key := NotificationSeenKey(base)
+	if len(key) != 64 {
+		t.Fatalf("bad key: %q", key)
+	}
+	same := base
+	same.Title = "Edited"
+	same.CreatedAt = now.Add(time.Hour)
+	zone := now.In(time.FixedZone("offset", 7*3600))
+	same.DueAt = &zone
+	if NotificationSeenKey(same) != key {
+		t.Fatal("read/title/timezone changed identity")
+	}
+	later := now.Add(time.Hour)
+	same.DueAt = &later
+	if NotificationSeenKey(same) == key {
+		t.Fatal("changed deadline reused key")
+	}
+	same = base
+	same.ID = "DUE_SOON:m1:work:i1"
+	if NotificationSeenKey(same) == key {
+		t.Fatal("changed kind reused key")
+	}
+	for _, kind := range []NotificationKind{NotificationOverdue, NotificationDueSoon, NotificationBlocked, NotificationReviewPending} {
+		n := Notification{ID: string(kind) + ":m1:i1"}
+		if NotificationSeenKey(n) == "" {
+			t.Fatal("missing identity")
+		}
+	}
+}
+
+func TestNotificationsTerminalWork(t *testing.T) {
+	now := time.Date(2026, 11, 12, 0, 0, 0, 0, time.UTC)
+	due := now.Add(time.Hour)
+	for _, state := range []ExecutionState{ExecutionCompleted, ExecutionCancelled, ExecutionNotStarted, ExecutionInProgress, ExecutionWaiting} {
+		t.Run(string(state), func(t *testing.T) {
+			work := WorkItem{Execution: state, DueAt: &due}
+			got := DeriveNotifications([]AgendaEntry{{MatterID: MatterID("m1"), Kind: "work", ItemID: "i1", Execution: string(state), DueAt: due, Timing: string(TimingOf(work, now).State)}}, MyActions{}, ReviewQueue{}, now)
+			want := 1
+			if work.Terminal() {
+				want = 0
+			}
+			if len(got) != want {
+				t.Fatalf("state %s: got %d reminders, want %d", state, len(got), want)
+			}
+		})
+	}
+}
+
 func TestDeriveNotificationsEdges(t *testing.T) {
 	now := time.Date(2026, 11, 10, 12, 0, 0, 0, time.UTC)
 	mid := MatterID("m-1")

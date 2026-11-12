@@ -325,3 +325,16 @@ copy had already applied an earlier draft. That retained copy is not evidence of
 conformance: migration-version equality alone cannot detect this difference. Keep it intact;
 use a fresh migrated fixture for verification and explicitly reconcile it before a future
 runtime refresh. No retained database is automatically reset or altered by this addendum.
+
+
+## Notification acknowledgement and captured-mail corrections (2026-11-12 candidate)
+
+The current authorized notification digest is available at `GET /api/v1/me/notifications?limit=50`. Limit is 1..200 (default 200); invalid limits return 400. Rows add `seenKey` (64 lowercase hex characters) and `seen` (boolean); `createdAt` remains the computation time, not an event or unread boundary. `page.total` counts the derived candidate set and is not an unbounded/global notification archive.
+
+`POST /api/v1/me/notifications/seen` accepts `{"keys":["<seenKey from the displayed digest>"]}`. The authenticated principal is server-owned. A batch contains at most 200 unique valid keys; invalid batches return 422. The service re-derives current access and intersects the submitted keys, so newly arriving or hidden rows are not acknowledged. Empty keys and legacy `{}` are safe no-ops. Response retains `{"seenAt":"<request instant>"}`; this is acknowledgement metadata, not permission to infer all earlier rows are seen.
+
+Keys change with the notification identity/kind or due instant (UTC-normalized), not titles or refresh time. Previously acknowledged keys remain seen if they reappear unchanged; changed deadlines/kinds become unread. COMPLETED/CANCELLED work produces no due reminder; milestone rules and the existing 48-hour window remain unchanged.
+
+Mail capture remains a receipted raw-byte `.eml` upload through `POST /api/v1/matters/{id}/mail-intake` and an authorized envelope list at `GET /api/v1/matters/{id}/mail`. `sentAt` may be null for an absent/unparseable Date; the frontend labels its absence instead of substituting capture time. Browser upload uses the same-origin multipart BFF directly, avoiding the Server Action body limit. The configured backend default and UI maximum are 25 MiB (26,214,400 bytes); a lower backend cap still takes precedence. Lost/unusable replies retain the same request key for explicit retry.
+
+These source/unit-tested candidate contracts do not certify live PostgreSQL/IdP/browser behavior; consult the fix task's verification return for executed and blocked gates.

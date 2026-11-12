@@ -16,7 +16,7 @@ export const mailItemSchema = z.object({
   sender: z.string(),
   recipients: z.array(z.string()).catch([]),
   subject: z.string(),
-  sentAt: z.string(),
+  sentAt: z.string().nullable(),
   excerpt: z.string(),
   createdAt: z.string(),
 })
@@ -34,6 +34,31 @@ export const mailIntakeResultSchema = z.object({
   mailId: idSchema,
 })
 export type MailIntakeResult = z.infer<typeof mailIntakeResultSchema>
+
+export const mailUploadOutcomeSchema = z.discriminatedUnion('ok', [
+  mailIntakeResultSchema.extend({ ok: z.literal(true), replayed: z.boolean() }),
+  z.object({
+    ok: z.literal(false),
+    kind: z.enum([
+      'validation',
+      'unauthenticated',
+      'forbidden',
+      'not-found',
+      'stale',
+      'unavailable',
+      'outcome-unknown',
+      'key-conflict',
+      'last-owner',
+      'rejected',
+      'error',
+    ]),
+    error: z.string(),
+    fieldErrors: z.record(z.string(), z.array(z.string())).optional(),
+    retrySameKey: z.boolean().optional(),
+    requiresReread: z.boolean().optional(),
+  }),
+])
+export type MailUploadOutcome = z.infer<typeof mailUploadOutcomeSchema>
 
 /** Only .eml is accepted at intake, up to 25 MiB; the BFF route mirrors both limits server-side. */
 export const MAX_EML_BYTES = 25 * 1024 * 1024

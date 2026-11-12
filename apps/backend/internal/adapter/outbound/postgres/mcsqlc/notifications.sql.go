@@ -12,6 +12,24 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const acknowledgeNotificationKeys = `-- name: AcknowledgeNotificationKeys :exec
+INSERT INTO notification_acknowledgements (user_id, notification_key, seen_at)
+SELECT $1, key, $2::timestamptz FROM unnest($3::text[]) AS key
+ON CONFLICT (user_id, notification_key) DO UPDATE
+SET seen_at = GREATEST(notification_acknowledgements.seen_at, EXCLUDED.seen_at)
+`
+
+type AcknowledgeNotificationKeysParams struct {
+	UserID string
+	SeenAt time.Time
+	Keys   []string
+}
+
+func (q *Queries) AcknowledgeNotificationKeys(ctx context.Context, arg AcknowledgeNotificationKeysParams) error {
+	_, err := q.db.Exec(ctx, acknowledgeNotificationKeys, arg.UserID, arg.SeenAt, arg.Keys)
+	return err
+}
+
 const getMailMessage = `-- name: GetMailMessage :one
 SELECT id, matter_id, document_id, version_id, direction, sender, recipients, subject, excerpt, sent_at, recorded_by, created_at
 FROM mail_messages WHERE id = $1 AND matter_id = $2
@@ -129,9 +147,39 @@ func (q *Queries) ListMailMessagesOfMatter(ctx context.Context, matterID string)
 	return items, nil
 }
 
+const seenNotificationKeys = `-- name: SeenNotificationKeys :many
+SELECT notification_key FROM notification_acknowledgements
+WHERE user_id = $1 AND notification_key = ANY($2::text[])
+`
+
+type SeenNotificationKeysParams struct {
+	UserID string
+	Keys   []string
+}
+
+func (q *Queries) SeenNotificationKeys(ctx context.Context, arg SeenNotificationKeysParams) ([]string, error) {
+	rows, err := q.db.Query(ctx, seenNotificationKeys, arg.UserID, arg.Keys)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var notification_key string
+		if err := rows.Scan(&notification_key); err != nil {
+			return nil, err
+		}
+		items = append(items, notification_key)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const upsertNotificationSeen = `-- name: UpsertNotificationSeen :exec
 INSERT INTO notification_seen (user_id, seen_at) VALUES ($1, $2)
-ON CONFLICT (user_id) DO UPDATE SET seen_at = EXCLUDED.seen_at
+ON CONFLICT (user_id) DO UPDATE SET seen_at = GREATEST(notification_seen.seen_at, EXCLUDED.seen_at)
 `
 
 type UpsertNotificationSeenParams struct {

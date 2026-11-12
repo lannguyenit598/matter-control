@@ -37,11 +37,30 @@ func (s *MatterStore) NotificationSeen(ctx context.Context, userID string) (*tim
 	return &t, nil
 }
 
-// SetNotificationSeen writes the watermark; the upsert makes replays harmless.
-func (s *MatterStore) SetNotificationSeen(ctx context.Context, userID string, at time.Time) error {
-	return mapMatterError(mcsqlc.New(s.pool).UpsertNotificationSeen(ctx, mcsqlc.UpsertNotificationSeenParams{
-		UserID: userID, SeenAt: at,
-	}))
+// SeenNotificationKeys reads only keys in the currently authorized digest.
+func (s *MatterStore) SeenNotificationKeys(ctx context.Context, userID string, keys []string) ([]string, error) {
+	rows, err := mcsqlc.New(s.pool).SeenNotificationKeys(ctx, mcsqlc.SeenNotificationKeysParams{UserID: userID, Keys: keys})
+	return rows, mapMatterError(err)
+}
+
+// SetNotificationSeen merges keys and advances the marker in one transaction.
+func (s *MatterStore) SetNotificationSeen(ctx context.Context, userID string, keys []string, at time.Time) error {
+	if len(keys) == 0 {
+		return nil
+	}
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return mapMatterError(err)
+	}
+	defer func() { _ = tx.Rollback(ctx) }()
+	q := mcsqlc.New(tx)
+	if err = q.AcknowledgeNotificationKeys(ctx, mcsqlc.AcknowledgeNotificationKeysParams{UserID: userID, Keys: keys, SeenAt: at}); err != nil {
+		return mapMatterError(err)
+	}
+	if err = q.UpsertNotificationSeen(ctx, mcsqlc.UpsertNotificationSeenParams{UserID: userID, SeenAt: at}); err != nil {
+		return mapMatterError(err)
+	}
+	return mapMatterError(tx.Commit(ctx))
 }
 
 func mailFromRow(r mcsqlc.MailMessage) matter.MailMessage {

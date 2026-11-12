@@ -17,6 +17,8 @@ import (
 // ---------- notifications ----------
 
 type notificationBody struct {
+	SeenKey     string  `json:"seenKey"`
+	Seen        bool    `json:"seen"`
 	ID          string  `json:"id"`
 	Kind        string  `json:"kind"`
 	MatterID    *string `json:"matterId"`
@@ -45,7 +47,7 @@ func notificationDTO(n matter.Notification) notificationBody {
 		iid = &s
 	}
 	return notificationBody{
-		ID: n.ID, Kind: string(n.Kind), MatterID: mid, MatterTitle: strPtr(n.MatterTitle),
+		ID: n.ID, SeenKey: n.SeenKey, Seen: n.Seen, Kind: string(n.Kind), MatterID: mid, MatterTitle: strPtr(n.MatterTitle),
 		ItemID: iid, Title: n.Title, DueAt: tsPtr(n.DueAt), CreatedAt: ts(n.CreatedAt),
 	}
 }
@@ -60,7 +62,11 @@ type notificationsBody struct {
 // listNotifications derives the caller's notifications at the read instant; nothing here is
 // stored, so the read is as fresh as the views it projects.
 func (s *server) listNotifications(c *echo.Context) error {
-	page, err := s.Notifications.ListNotifications(c.Request().Context(), port.ListNotificationsQuery{ActorID: actorOf(c)})
+	limit, err := parseLimit(c)
+	if err != nil {
+		return err
+	}
+	page, err := s.Notifications.ListNotifications(c.Request().Context(), port.ListNotificationsQuery{ActorID: actorOf(c), Limit: limit})
 	if err != nil {
 		return err
 	}
@@ -68,22 +74,28 @@ func (s *server) listNotifications(c *echo.Context) error {
 	for _, n := range page.Items {
 		items = append(items, notificationDTO(n))
 	}
-	total := len(items)
+	total := page.Total
 	_, err = respond(c, http.StatusOK, notificationsBody{
-		Items: items, Page: pageMeta{Limit: total, MaxLimit: maxPageLimit, Total: &total},
+		Items: items, Page: pageMeta{Limit: limit, MaxLimit: maxPageLimit, Total: &total},
 		SeenAt: tsPtr(page.SeenAt), AsOf: ts(page.AsOf),
 	}, false)
 	return err
 }
 
-// markNotificationsSeen advances the caller's unread watermark. It is not receipted: it records
+// markNotificationsSeen acknowledges the caller's currently authorized displayed keys. It is not receipted: it records
 // no domain fact and is idempotent by construction.
 func (s *server) markNotificationsSeen(c *echo.Context) error {
-	if _, err := readJSON(c, &struct{}{}); err != nil {
+	var body struct {
+		Keys []string `json:"keys"`
+	}
+	if _, err := readJSON(c, &body); err != nil {
+		return err
+	}
+	if err := matter.ValidateNotificationKeys(body.Keys); err != nil {
 		return err
 	}
 	at, err := s.Notifications.MarkNotificationsSeen(c.Request().Context(), port.MarkNotificationsSeenCmd{
-		ActorID: actorOf(c), At: time.Now().UTC(),
+		ActorID: actorOf(c), Keys: body.Keys, At: time.Now().UTC(),
 	})
 	if err != nil {
 		return err

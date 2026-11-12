@@ -1,0 +1,24 @@
+Command: rtk proxy pnpm check
+✓ Lockfile passes supply-chain policies (verified 7d ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+Error:   × installing dependencies
+  ╰─▶ Failed to create directory at "/Users/nguyenvanlan/Library/Application
+      Support/orca/codex-accounts/0f9d5b46-d5f4-47b5-80f2-7b5d4b6ce9cd/home/
+      worktrees/14c4/matter-control/apps/frontend/node_modules": workspace
+      hoist directory is not a real directory
+
+[WARN] The install that runs before scripts failed, so your node_modules may be out of sync with your lockfile. Set "verifyDepsBeforeRun: false" to skip this install.
+$ pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm agents:check
+$ next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+$ eslint .
+$ prettier --check .
+Checking formatting...
+[warn] src/features/mail/components/mail-panel.test.tsx
+[warn] Code style issues found in the above file. Run Prettier with --write to fix.
+[ELIFECYCLE] Command failed with exit code 1.
+[ELIFECYCLE] Command failed with exit code 1.
+
+Exit: 1

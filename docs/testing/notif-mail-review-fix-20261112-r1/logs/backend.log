@@ -1,0 +1,11 @@
+Command: rtk proxy make check
+go mod tidy -diff
+golangci-lint run ./...
+internal/core/domain/matter/notifications.go:10:1: File is not properly formatted (goimports)
+	"leonx.me/matter-control/internal/core/domain"
+^
+1 issues:
+* goimports: 1
+make: *** [check] Error 1
+
+Exit: 2

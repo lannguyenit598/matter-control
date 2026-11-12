@@ -4,6 +4,7 @@ import { mailRepository } from '@/features/mail/repository'
 import { MAX_EML_BYTES, mailDirectionSchema } from '@/features/mail/schemas'
 import { requireSession } from '@/lib/auth'
 import { toMcFailure } from '@/lib/mc/action-result'
+import { pathId } from '@/lib/mc/client'
 import { UUID_V7 } from '@/lib/mc/idempotency'
 import { oidcConfig } from '@/lib/oidc/config'
 
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest, ctx: { params: Promise<{ matter
   try {
     await requireSession()
     const { matterId } = await ctx.params
+    pathId(matterId)
     const key = request.headers.get('idempotency-key') ?? ''
     const contentType = request.headers.get('content-type') ?? ''
     if (!UUID_V7.test(key) || !MULTIPART.test(contentType)) {

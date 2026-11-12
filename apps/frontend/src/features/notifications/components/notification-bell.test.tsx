@@ -12,6 +12,8 @@ const { markSeen, refresh } = vi.hoisted(() => ({ markSeen: vi.fn(), refresh: vi
 
 const item = (over: Partial<NotificationItem>): NotificationItem => ({
   id: 'OVERDUE:m1:i1',
+  seenKey: 'a'.repeat(64),
+  seen: false,
   kind: 'OVERDUE',
   matterId: 'm1',
   matterTitle: 'Atlas',
@@ -80,19 +82,35 @@ describe('BellButton', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Notifications (1)' }))
     fireEvent.click(screen.getByRole('button', { name: 'Mark as seen' }))
     await act(async () => {})
-    expect(markSeen).toHaveBeenCalledTimes(1)
+    expect(markSeen).toHaveBeenCalledWith(['a'.repeat(64)])
     expect(refresh).toHaveBeenCalledTimes(1)
     expect(screen.getByRole('button', { name: 'Notifications (1)' })).toBeInTheDocument()
   })
 
-  it('counts unread items against the seen marker only (null seenAt means everything is unread)', () => {
-    const items = [
-      item({ createdAt: '2026-11-09T09:00:00Z' }),
-      item({ id: 'OVERDUE:m1:i2', createdAt: '2026-11-10T09:00:00Z' }),
-    ]
-    expect(unreadOf(items, null)).toBe(2)
-    expect(unreadOf(items, '2026-11-09T12:00:00Z')).toBe(1)
-    expect(unreadOf(items, '2026-11-10T12:00:00Z')).toBe(0)
+  it('updates the badge from refreshed acknowledgement data and keeps new items unread', () => {
+    const view = render(<BellButton items={[item({})]} seenAt={null} unread={1} />)
+    view.rerender(
+      <BellButton
+        items={[item({ seen: true })]}
+        seenAt="2026-11-10T10:00:00Z"
+        unread={unreadOf([item({ seen: true })])}
+      />,
+    )
+    expect(screen.getByRole('button', { name: 'Notifications' })).toBeInTheDocument()
+    const next = [item({ seen: true }), item({ id: 'new', seen: false, seenKey: 'b'.repeat(64) })]
+    view.rerender(<BellButton items={next} seenAt="2026-11-10T10:00:00Z" unread={unreadOf(next)} />)
+    expect(screen.getByRole('button', { name: 'Notifications (1)' })).toBeInTheDocument()
+  })
+
+  it('keeps the unread badge when acknowledgement fails', async () => {
+    markSeen.mockResolvedValue({ ok: false, kind: 'unavailable', error: 'Synthetic unavailable' })
+    render(<BellButton items={[item({})]} seenAt={null} unread={1} />)
+    fireEvent.click(screen.getByRole('button', { name: 'Notifications (1)' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Mark as seen' }))
+    await act(async () => {})
+    expect(screen.getByText(/Synthetic unavailable/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Notifications (1)' })).toBeInTheDocument()
+    expect(refresh).not.toHaveBeenCalled()
   })
 
   it('renders Vietnamese kind labels and accessible name under the vi locale', () => {

@@ -1,0 +1,28 @@
+Command: rtk proxy make check
+go mod tidy -diff
+golangci-lint run ./...
+0 issues.
+go test -race -count=1 ./...
+?   	leonx.me/matter-control/cmd/mcapi	[no test files]
+?   	leonx.me/matter-control/cmd/mcbffcleanup	[no test files]
+?   	leonx.me/matter-control/internal/adapter/inbound/httpapi	[no test files]
+ok  	leonx.me/matter-control/internal/adapter/inbound/productapi	2.750s
+ok  	leonx.me/matter-control/internal/adapter/outbound/identity/zitadel	2.963s
+ok  	leonx.me/matter-control/internal/adapter/outbound/objectstore	9.953s
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	1.853s
+?   	leonx.me/matter-control/internal/adapter/outbound/postgres/mcsqlc	[no test files]
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres/pgtest	1.788s
+ok  	leonx.me/matter-control/internal/adapter/outbound/repotest/mattercontrol	2.138s
+?   	leonx.me/matter-control/internal/adapter/outbound/repotest/objectcontract	[no test files]
+ok  	leonx.me/matter-control/internal/adapter/outbound/sheet	1.749s
+ok  	leonx.me/matter-control/internal/adapter/outbound/system	1.753s
+ok  	leonx.me/matter-control/internal/app	2.069s
+ok  	leonx.me/matter-control/internal/config	1.721s
+?   	leonx.me/matter-control/internal/core/domain	[no test files]
+ok  	leonx.me/matter-control/internal/core/domain/matter	1.426s
+ok  	leonx.me/matter-control/internal/core/policy	1.405s
+?   	leonx.me/matter-control/internal/core/port	[no test files]
+ok  	leonx.me/matter-control/internal/core/service	1.463s
+ok  	leonx.me/matter-control/internal/observability	1.490s
+
+Exit: 0

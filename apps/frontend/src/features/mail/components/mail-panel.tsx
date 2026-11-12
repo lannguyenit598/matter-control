@@ -13,10 +13,10 @@ import { FormField } from '@/components/molecules/form-field'
 import { LocalizedInstant } from '@/components/molecules/localized-instant'
 import { LocalizedText } from '@/components/molecules/localized-text'
 import { useLocale } from '@/hooks/use-locale'
-import { callMcAction, type McActionResult } from '@/lib/mc/action-result'
+import { type McActionResult } from '@/lib/mc/action-result'
 import { newIdempotencyKey } from '@/lib/mc/idempotency'
 
-import { uploadEmlAction, type MailUploadOutcome } from '../actions'
+import { mailUploadRepository } from '../client-repository'
 import { isEmlFile, MAX_EML_BYTES, type MailItem } from '../schemas'
 
 type UploadState =
@@ -49,7 +49,7 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!file) return
+    if (!file || pending) return
     if (!isEmlFile(file)) {
       setClientError(locale === 'vi' ? 'Chỉ nhận tệp .eml.' : 'Only .eml files are accepted.')
       return
@@ -62,13 +62,8 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
       )
       return
     }
-    const form = new FormData()
-    form.set('file', file)
-    form.set('direction', 'INBOUND')
     start(async () => {
-      const r: MailUploadOutcome = await callMcAction(() => uploadEmlAction(matterId, form, key), {
-        receipted: true,
-      })
+      const r = await mailUploadRepository.intake(matterId, file, key)
       if (r.ok) {
         setState({
           kind: 'done',
@@ -83,8 +78,7 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
         return
       }
       setState({ kind: 'failed', result: r })
-      // An unknown outcome keeps the key: retrying the same file resends the same receipted request.
-      if (!r.retrySameKey) setKey(newIdempotencyKey())
+      // A later refusal cannot resolve an earlier unknown outcome; selection owns the key.
     })
   }
 
@@ -113,6 +107,7 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
           {(c) => (
             <Input
               type="file"
+              disabled={pending}
               name="file"
               accept=".eml"
               onChange={(e) => pick(e.target.files?.[0] ?? null)}
@@ -223,7 +218,13 @@ function MailRow({ matterId, item }: { matterId: string; item: MailItem }) {
               ? 'Inbound'
               : 'Outbound'}
         </Badge>
-        <LocalizedInstant iso={item.sentAt} className="text-xs text-muted-foreground" />
+        {item.sentAt ? (
+          <LocalizedInstant iso={item.sentAt} className="text-xs text-muted-foreground" />
+        ) : (
+          <span className="text-xs text-muted-foreground">
+            <LocalizedText en="Sent date unavailable" vi="Không có ngày gửi" />
+          </span>
+        )}
       </div>
     </li>
   )

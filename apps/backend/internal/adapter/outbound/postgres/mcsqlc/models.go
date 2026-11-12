@@ -384,6 +384,12 @@ type MilestonePrerequisite struct {
 	RequirementID string
 }
 
+type NotificationAcknowledgement struct {
+	UserID          string
+	NotificationKey string
+	SeenAt          time.Time
+}
+
 type NotificationSeen struct {
 	UserID string
 	SeenAt time.Time

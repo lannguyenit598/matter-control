@@ -1,0 +1,8 @@
+Command: rtk proxy go test -v ./internal/adapter/outbound/postgres -run TestNotificationSeenStore -count=1
+=== RUN   TestNotificationSeenStore
+    notification_seen_store_test.go:22: MC_TEST_DATABASE_URL not set; skipping PostgreSQL integration test
+--- SKIP: TestNotificationSeenStore (0.00s)
+PASS
+ok  	leonx.me/matter-control/internal/adapter/outbound/postgres	0.416s
+
+Exit: 0

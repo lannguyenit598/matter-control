@@ -1,8 +1,14 @@
 package matter
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
 	"sort"
+	"strings"
 	"time"
+
+	"leonx.me/matter-control/internal/core/domain"
 )
 
 // In-app notifications (MC-ZCODE-NOTIF-MAILPITCH-20261110): every notification is a
@@ -33,8 +39,10 @@ const DueSoonWindow = 48 * time.Hour
 
 // Notification is one derived row produced at a single read instant. ID is deterministic
 // (kind + matter + subject record) so the same state always yields the same identity; whether a
-// row counts as unread is decided only by the caller's seen watermark against CreatedAt.
+// row counts as unread is decided by its stable acknowledgement key, not read-time metadata.
 type Notification struct {
+	SeenKey     string
+	Seen        bool
 	ID          string
 	Kind        NotificationKind
 	MatterID    *MatterID
@@ -51,6 +59,7 @@ type Notification struct {
 // NotificationPage is one derivation of the caller's notifications with the seen watermark
 // the caller last recorded.
 type NotificationPage struct {
+	Total  int
 	Items  []Notification
 	SeenAt *time.Time
 	AsOf   time.Time
@@ -64,6 +73,9 @@ type NotificationPage struct {
 func DeriveNotifications(agenda []AgendaEntry, actions MyActions, queue ReviewQueue, now time.Time) []Notification {
 	out := make([]Notification, 0, 8)
 	for _, e := range agenda {
+		if e.Kind == agendaKindWork && (WorkItem{Execution: ExecutionState(e.Execution)}).Terminal() {
+			continue
+		}
 		due := e.DueAt
 		switch {
 		case e.Kind == agendaKindWork && e.Timing == string(TimingOverdue):
@@ -77,7 +89,7 @@ func DeriveNotifications(agenda []AgendaEntry, actions MyActions, queue ReviewQu
 		out = append(out, Notification{
 			ID:   notificationID(string(NotificationBlocked), a.MatterID.String(), a.View.Item.ID.String()),
 			Kind: NotificationBlocked, MatterID: &mid, ItemID: a.View.Item.ID.String(),
-			Title: a.View.Item.Title, CreatedAt: now,
+			Title: a.View.Item.Title, DueAt: a.View.Item.DueAt, CreatedAt: now,
 		})
 	}
 	for _, p := range queue.Items {
@@ -105,6 +117,9 @@ func DeriveNotifications(agenda []AgendaEntry, actions MyActions, queue ReviewQu
 		}
 		return a.ID < b.ID
 	})
+	for i := range out {
+		out[i].SeenKey = NotificationSeenKey(out[i])
+	}
 	return out
 }
 
@@ -119,6 +134,39 @@ func notificationFromAgenda(kind NotificationKind, e AgendaEntry, due time.Time,
 		Kind: kind, MatterID: &mid, MatterTitle: e.MatterTitle, ItemID: e.ItemID,
 		Title: e.Title, DueAt: &due, CreatedAt: now,
 	}
+}
+
+// MaxNotificationKeys bounds one acknowledgement batch and notification digest.
+const MaxNotificationKeys = 200
+
+// NotificationSeenKey changes only with the source identity, reminder kind or due instant.
+func NotificationSeenKey(n Notification) string {
+	due := ""
+	if n.DueAt != nil {
+		due = n.DueAt.UTC().Format(time.RFC3339Nano)
+	}
+	encoded, _ := json.Marshal([2]string{n.ID, due}) // A fixed array of strings cannot fail JSON encoding.
+	digest := sha256.Sum256(encoded)
+	return hex.EncodeToString(digest[:])
+}
+
+// ValidateNotificationKeys rejects malformed and duplicate client acknowledgement keys.
+func ValidateNotificationKeys(keys []string) error {
+	v := &domain.ValidationError{}
+	if len(keys) > MaxNotificationKeys {
+		v.Add("keys", "must contain at most 200 keys")
+		return v
+	}
+	seen := make(map[string]bool, len(keys))
+	for _, key := range keys {
+		_, err := hex.DecodeString(key)
+		if len(key) != 64 || err != nil || strings.ToLower(key) != key || seen[key] {
+			v.Add("keys", "must contain unique lowercase SHA-256 keys")
+			return v
+		}
+		seen[key] = true
+	}
+	return nil
 }
 
 func notificationID(kind, matterID, subject string) string {

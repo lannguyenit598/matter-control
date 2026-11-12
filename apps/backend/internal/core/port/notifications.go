@@ -14,20 +14,23 @@ import (
 // derivation instant; zero means the service clock.
 type ListNotificationsQuery struct {
 	ActorID string
+	Limit   int
 	Now     time.Time
 }
 
-// MarkNotificationsSeenCmd moves the caller's unread watermark forward. It is deliberately not
+// MarkNotificationsSeenCmd acknowledges only displayed keys. It is deliberately not
 // receipted: it records no domain fact, changes no matter and is idempotent by construction.
 type MarkNotificationsSeenCmd struct {
 	ActorID string
+	Keys    []string
 	At      time.Time
 }
 
-// NotificationSeenStore keeps the per-user seen watermark. A missing row means "nothing seen".
+// NotificationSeenStore keeps per-user acknowledgement keys and last-action metadata.
 type NotificationSeenStore interface {
 	NotificationSeen(ctx context.Context, userID string) (*time.Time, error)
-	SetNotificationSeen(ctx context.Context, userID string, at time.Time) error
+	SeenNotificationKeys(ctx context.Context, userID string, keys []string) ([]string, error)
+	SetNotificationSeen(ctx context.Context, userID string, keys []string, at time.Time) error
 }
 
 // NotificationService defines the notification use cases.

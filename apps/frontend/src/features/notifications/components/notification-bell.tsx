@@ -16,5 +16,5 @@ export async function NotificationBell() {
   const read = await attempt(() => notificationsRepository.list(BELL_LIMIT))
   if (!read.ok) return null
   const { items, seenAt } = read.value
-  return <BellButton items={items} seenAt={seenAt} unread={unreadOf(items, seenAt)} />
+  return <BellButton items={items} seenAt={seenAt} unread={unreadOf(items)} />
 }

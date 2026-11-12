@@ -1,0 +1,1988 @@
+diff --git a/apps/backend/docs/api.md b/apps/backend/docs/api.md
+index 43702938..7b088615 100644
+--- a/apps/backend/docs/api.md
++++ b/apps/backend/docs/api.md
+@@ -343,3 +343,16 @@ Migrations 0013–0016 add the seven feature tables. Reapply the operator's B1 g
+ migration; `saved_views` needs DELETE as well as SELECT/INSERT/UPDATE. Other feature tables
+ retain their narrower grant classes. Browser, real IdP, load and production acceptance are
+ separate from the local suite results.
++
++
++## Notification acknowledgement and captured-mail corrections (2026-11-12 candidate)
++
++The current authorized notification digest is available at `GET /api/v1/me/notifications?limit=50`. Limit is 1..200 (default 200); invalid limits return 400. Rows add `seenKey` (64 lowercase hex characters) and `seen` (boolean); `createdAt` remains the computation time, not an event or unread boundary. `page.total` counts the derived candidate set and is not an unbounded/global notification archive.
++
++`POST /api/v1/me/notifications/seen` accepts `{"keys":["<seenKey from the displayed digest>"]}`. The authenticated principal is server-owned. A batch contains at most 200 unique valid keys; invalid batches return 422. The service re-derives current access and intersects the submitted keys, so newly arriving or hidden rows are not acknowledged. Empty keys and legacy `{}` are safe no-ops. Response retains `{"seenAt":"<request instant>"}`; this is acknowledgement metadata, not permission to infer all earlier rows are seen.
++
++Keys change with the notification identity/kind or due instant (UTC-normalized), not titles or refresh time. Previously acknowledged keys remain seen if they reappear unchanged; changed deadlines/kinds become unread. COMPLETED/CANCELLED work produces no due reminder; milestone rules and the existing 48-hour window remain unchanged.
++
++Mail capture remains a receipted raw-byte `.eml` upload through `POST /api/v1/matters/{id}/mail-intake` and an authorized envelope list at `GET /api/v1/matters/{id}/mail`. `sentAt` may be null for an absent/unparseable Date; the frontend labels its absence instead of substituting capture time. Browser upload uses the same-origin multipart BFF directly, avoiding the Server Action body limit. The configured backend default and UI maximum are 25 MiB (26,214,400 bytes); a lower backend cap still takes precedence. Lost/unusable replies retain the same request key for explicit retry.
++
++These source/unit-tested candidate contracts do not certify live PostgreSQL/IdP/browser behavior; consult the fix task's verification return for executed and blocked gates.
+diff --git a/apps/backend/docs/operations.md b/apps/backend/docs/operations.md
+index c7d9ef2f..db8c3bc5 100644
+--- a/apps/backend/docs/operations.md
++++ b/apps/backend/docs/operations.md
+@@ -66,3 +66,12 @@ Restore has been rehearsed locally with synthetic data only (`ops/p0-local/resto
+ ## Metadata Quick Search
+ 
+ `MC_SEARCH_CURSOR_KEY` is optional, with no default secret. Inject a dedicated 32-byte base64 key shared across instances. Missing/invalid configuration leaves POST /api/v1/search unavailable and logs a fixed capability warning; ordinary endpoints retain their existing behavior. Migration0012 requires UTF8, ICU and schema CREATE permission for the migrator. A failed required migration prevents the new candidate from starting: retain the baseline, never fake a migration version. Runtime reads need SELECT on the existing metadata/membership tables and execution of mc_search_key_v1; no legal write privilege is added by Search. Key rotation invalidates five-minute encrypted cursors; the UI explicitly refreshes. Do not log request bodies, query terms, cursor keys or tokens. Local PG17/18 tests do not prove Supabase/provider readiness.
++
++
++## Notification acknowledgement upgrade (2026-11-12 candidate)
++
++Apply the new notification acknowledgement migration before serving the updated frontend, with normal runtime SELECT/INSERT/UPDATE grants on `notification_acknowledgements`. Its keys are per-user UI metadata; they contain no copied titles, mail bodies or legal state. Writes merge key sets and update the existing last-action marker atomically; timestamps never regress.
++
++Existing `notification_seen` timestamps cannot reconstruct which items were actually read. No historical acknowledgement keys are invented: current reminders start unread once after upgrade. Refresh stale clients; their legacy empty seen request is a safe no-op. New clients require `seenKey` and `seen` from the updated backend. Coordinate the backend/frontend rollout; do not use a timestamp fallback.
++
++Acknowledgement keys accumulate when the user explicitly marks a digest seen. This candidate introduces no automatic deletion/expiry or retention policy, because expiry would make old reminders unread again. Growth and a retention decision remain operational follow-up; no storage-cost or production-capacity claim is made. Apply only to a permitted fixture/deployment; source tests alone do not prove migration/runtime readiness.
+diff --git a/apps/backend/internal/adapter/inbound/productapi/notification_mail_handlers.go b/apps/backend/internal/adapter/inbound/productapi/notification_mail_handlers.go
+index a408f83d..aaa44369 100644
+--- a/apps/backend/internal/adapter/inbound/productapi/notification_mail_handlers.go
++++ b/apps/backend/internal/adapter/inbound/productapi/notification_mail_handlers.go
+@@ -17,6 +17,8 @@ import (
+ // ---------- notifications ----------
+ 
+ type notificationBody struct {
++	SeenKey     string  `json:"seenKey"`
++	Seen        bool    `json:"seen"`
+ 	ID          string  `json:"id"`
+ 	Kind        string  `json:"kind"`
+ 	MatterID    *string `json:"matterId"`
+@@ -45,7 +47,7 @@ func notificationDTO(n matter.Notification) notificationBody {
+ 		iid = &s
+ 	}
+ 	return notificationBody{
+-		ID: n.ID, Kind: string(n.Kind), MatterID: mid, MatterTitle: strPtr(n.MatterTitle),
++		ID: n.ID, SeenKey: n.SeenKey, Seen: n.Seen, Kind: string(n.Kind), MatterID: mid, MatterTitle: strPtr(n.MatterTitle),
+ 		ItemID: iid, Title: n.Title, DueAt: tsPtr(n.DueAt), CreatedAt: ts(n.CreatedAt),
+ 	}
+ }
+@@ -60,7 +62,11 @@ type notificationsBody struct {
+ // listNotifications derives the caller's notifications at the read instant; nothing here is
+ // stored, so the read is as fresh as the views it projects.
+ func (s *server) listNotifications(c *echo.Context) error {
+-	page, err := s.Notifications.ListNotifications(c.Request().Context(), port.ListNotificationsQuery{ActorID: actorOf(c)})
++	limit, err := parseLimit(c)
++	if err != nil {
++		return err
++	}
++	page, err := s.Notifications.ListNotifications(c.Request().Context(), port.ListNotificationsQuery{ActorID: actorOf(c), Limit: limit})
+ 	if err != nil {
+ 		return err
+ 	}
+@@ -68,22 +74,28 @@ func (s *server) listNotifications(c *echo.Context) error {
+ 	for _, n := range page.Items {
+ 		items = append(items, notificationDTO(n))
+ 	}
+-	total := len(items)
++	total := page.Total
+ 	_, err = respond(c, http.StatusOK, notificationsBody{
+-		Items: items, Page: pageMeta{Limit: total, MaxLimit: maxPageLimit, Total: &total},
++		Items: items, Page: pageMeta{Limit: limit, MaxLimit: maxPageLimit, Total: &total},
+ 		SeenAt: tsPtr(page.SeenAt), AsOf: ts(page.AsOf),
+ 	}, false)
+ 	return err
+ }
+ 
+-// markNotificationsSeen advances the caller's unread watermark. It is not receipted: it records
++// markNotificationsSeen acknowledges the caller's currently authorized displayed keys. It is not receipted: it records
+ // no domain fact and is idempotent by construction.
+ func (s *server) markNotificationsSeen(c *echo.Context) error {
+-	if _, err := readJSON(c, &struct{}{}); err != nil {
++	var body struct {
++		Keys []string `json:"keys"`
++	}
++	if _, err := readJSON(c, &body); err != nil {
++		return err
++	}
++	if err := matter.ValidateNotificationKeys(body.Keys); err != nil {
+ 		return err
+ 	}
+ 	at, err := s.Notifications.MarkNotificationsSeen(c.Request().Context(), port.MarkNotificationsSeenCmd{
+-		ActorID: actorOf(c), At: time.Now().UTC(),
++		ActorID: actorOf(c), Keys: body.Keys, At: time.Now().UTC(),
+ 	})
+ 	if err != nil {
+ 		return err
+diff --git a/apps/backend/internal/adapter/outbound/postgres/mcsqlc/models.go b/apps/backend/internal/adapter/outbound/postgres/mcsqlc/models.go
+index 7dec567f..a37e6251 100644
+--- a/apps/backend/internal/adapter/outbound/postgres/mcsqlc/models.go
++++ b/apps/backend/internal/adapter/outbound/postgres/mcsqlc/models.go
+@@ -384,6 +384,12 @@ type MilestonePrerequisite struct {
+ 	RequirementID string
+ }
+ 
++type NotificationAcknowledgement struct {
++	UserID          string
++	NotificationKey string
++	SeenAt          time.Time
++}
++
+ type NotificationSeen struct {
+ 	UserID string
+ 	SeenAt time.Time
+diff --git a/apps/backend/internal/adapter/outbound/postgres/mcsqlc/notifications.sql.go b/apps/backend/internal/adapter/outbound/postgres/mcsqlc/notifications.sql.go
+index f2086107..7ea99df8 100644
+--- a/apps/backend/internal/adapter/outbound/postgres/mcsqlc/notifications.sql.go
++++ b/apps/backend/internal/adapter/outbound/postgres/mcsqlc/notifications.sql.go
+@@ -12,6 +12,24 @@ import (
+ 	"github.com/jackc/pgx/v5/pgtype"
+ )
+ 
++const acknowledgeNotificationKeys = `-- name: AcknowledgeNotificationKeys :exec
++INSERT INTO notification_acknowledgements (user_id, notification_key, seen_at)
++SELECT $1, key, $2::timestamptz FROM unnest($3::text[]) AS key
++ON CONFLICT (user_id, notification_key) DO UPDATE
++SET seen_at = GREATEST(notification_acknowledgements.seen_at, EXCLUDED.seen_at)
++`
++
++type AcknowledgeNotificationKeysParams struct {
++	UserID string
++	SeenAt time.Time
++	Keys   []string
++}
++
++func (q *Queries) AcknowledgeNotificationKeys(ctx context.Context, arg AcknowledgeNotificationKeysParams) error {
++	_, err := q.db.Exec(ctx, acknowledgeNotificationKeys, arg.UserID, arg.SeenAt, arg.Keys)
++	return err
++}
++
+ const getMailMessage = `-- name: GetMailMessage :one
+ SELECT id, matter_id, document_id, version_id, direction, sender, recipients, subject, excerpt, sent_at, recorded_by, created_at
+ FROM mail_messages WHERE id = $1 AND matter_id = $2
+@@ -129,9 +147,39 @@ func (q *Queries) ListMailMessagesOfMatter(ctx context.Context, matterID string)
+ 	return items, nil
+ }
+ 
++const seenNotificationKeys = `-- name: SeenNotificationKeys :many
++SELECT notification_key FROM notification_acknowledgements
++WHERE user_id = $1 AND notification_key = ANY($2::text[])
++`
++
++type SeenNotificationKeysParams struct {
++	UserID string
++	Keys   []string
++}
++
++func (q *Queries) SeenNotificationKeys(ctx context.Context, arg SeenNotificationKeysParams) ([]string, error) {
++	rows, err := q.db.Query(ctx, seenNotificationKeys, arg.UserID, arg.Keys)
++	if err != nil {
++		return nil, err
++	}
++	defer rows.Close()
++	var items []string
++	for rows.Next() {
++		var notification_key string
++		if err := rows.Scan(&notification_key); err != nil {
++			return nil, err
++		}
++		items = append(items, notification_key)
++	}
++	if err := rows.Err(); err != nil {
++		return nil, err
++	}
++	return items, nil
++}
++
+ const upsertNotificationSeen = `-- name: UpsertNotificationSeen :exec
+ INSERT INTO notification_seen (user_id, seen_at) VALUES ($1, $2)
+-ON CONFLICT (user_id) DO UPDATE SET seen_at = EXCLUDED.seen_at
++ON CONFLICT (user_id) DO UPDATE SET seen_at = GREATEST(notification_seen.seen_at, EXCLUDED.seen_at)
+ `
+ 
+ type UpsertNotificationSeenParams struct {
+diff --git a/apps/backend/internal/adapter/outbound/postgres/notification_mail_store.go b/apps/backend/internal/adapter/outbound/postgres/notification_mail_store.go
+index 89cfe76c..1d2e02af 100644
+--- a/apps/backend/internal/adapter/outbound/postgres/notification_mail_store.go
++++ b/apps/backend/internal/adapter/outbound/postgres/notification_mail_store.go
+@@ -37,11 +37,30 @@ func (s *MatterStore) NotificationSeen(ctx context.Context, userID string) (*tim
+ 	return &t, nil
+ }
+ 
+-// SetNotificationSeen writes the watermark; the upsert makes replays harmless.
+-func (s *MatterStore) SetNotificationSeen(ctx context.Context, userID string, at time.Time) error {
+-	return mapMatterError(mcsqlc.New(s.pool).UpsertNotificationSeen(ctx, mcsqlc.UpsertNotificationSeenParams{
+-		UserID: userID, SeenAt: at,
+-	}))
++// SeenNotificationKeys reads only keys in the currently authorized digest.
++func (s *MatterStore) SeenNotificationKeys(ctx context.Context, userID string, keys []string) ([]string, error) {
++	rows, err := mcsqlc.New(s.pool).SeenNotificationKeys(ctx, mcsqlc.SeenNotificationKeysParams{UserID: userID, Keys: keys})
++	return rows, mapMatterError(err)
++}
++
++// SetNotificationSeen merges keys and advances the marker in one transaction.
++func (s *MatterStore) SetNotificationSeen(ctx context.Context, userID string, keys []string, at time.Time) error {
++	if len(keys) == 0 {
++		return nil
++	}
++	tx, err := s.pool.Begin(ctx)
++	if err != nil {
++		return mapMatterError(err)
++	}
++	defer func() { _ = tx.Rollback(ctx) }()
++	q := mcsqlc.New(tx)
++	if err = q.AcknowledgeNotificationKeys(ctx, mcsqlc.AcknowledgeNotificationKeysParams{UserID: userID, Keys: keys, SeenAt: at}); err != nil {
++		return mapMatterError(err)
++	}
++	if err = q.UpsertNotificationSeen(ctx, mcsqlc.UpsertNotificationSeenParams{UserID: userID, SeenAt: at}); err != nil {
++		return mapMatterError(err)
++	}
++	return mapMatterError(tx.Commit(ctx))
+ }
+ 
+ func mailFromRow(r mcsqlc.MailMessage) matter.MailMessage {
+diff --git a/apps/backend/internal/adapter/outbound/postgres/notification_seen_store_test.go b/apps/backend/internal/adapter/outbound/postgres/notification_seen_store_test.go
+index f9b3af1a..50ca2ebb 100644
+--- a/apps/backend/internal/adapter/outbound/postgres/notification_seen_store_test.go
++++ b/apps/backend/internal/adapter/outbound/postgres/notification_seen_store_test.go
+@@ -8,6 +8,7 @@ package postgres
+ 
+ import (
+ 	"context"
++	"strings"
+ 	"testing"
+ 	"time"
+ 
+@@ -47,7 +48,7 @@ func TestNotificationSeenStore(t *testing.T) {
+ 	}
+ 
+ 	t1 := time.Date(2026, 11, 11, 8, 0, 0, 0, time.UTC)
+-	if err := store.SetNotificationSeen(ctx, userID, t1); err != nil {
++	if err := store.SetNotificationSeen(ctx, userID, []string{strings.Repeat("a", 64)}, t1); err != nil {
+ 		t.Fatalf("set: %v", err)
+ 	}
+ 	seen, err = store.NotificationSeen(ctx, userID)
+@@ -60,7 +61,7 @@ func TestNotificationSeenStore(t *testing.T) {
+ 
+ 	// The upsert replaces the instant: moving the watermark forward is the whole contract.
+ 	t2 := t1.Add(time.Hour)
+-	if err := store.SetNotificationSeen(ctx, userID, t2); err != nil {
++	if err := store.SetNotificationSeen(ctx, userID, []string{strings.Repeat("b", 64)}, t2); err != nil {
+ 		t.Fatalf("reset: %v", err)
+ 	}
+ 	seen, err = store.NotificationSeen(ctx, userID)
+@@ -71,6 +72,52 @@ func TestNotificationSeenStore(t *testing.T) {
+ 		t.Fatalf("seen %v, want %v", seen, t2)
+ 	}
+ 
++	// Reopen the adapter: identity acknowledgements survive instance replacement.
++	reopened := NewMatterStore(pool)
++	aKey, bKey := strings.Repeat("a", 64), strings.Repeat("b", 64)
++	keys, err := reopened.SeenNotificationKeys(ctx, userID, []string{aKey, bKey})
++	if err != nil || len(keys) != 2 {
++		t.Fatalf("persistent keys: %v %v", keys, err)
++	}
++	// A marker from the legacy model must not fabricate identity acknowledgements.
++	legacyID := uuid.NewString()
++	if _, err := pool.Exec(ctx, `INSERT INTO users (id,idp_issuer,idp_subject,display_name) VALUES ($1,'http://localhost:8080',$2,'legacy-notif')`, legacyID, legacyID); err != nil {
++		t.Fatal(err)
++	}
++	if _, err := pool.Exec(ctx, `INSERT INTO notification_seen(user_id,seen_at) VALUES ($1,$2)`, legacyID, t2); err != nil {
++		t.Fatal(err)
++	}
++	keys, err = reopened.SeenNotificationKeys(ctx, legacyID, []string{aKey, bKey})
++	if err != nil || len(keys) != 0 {
++		t.Fatalf("user isolation/legacy: %v %v", keys, err)
++	}
++	// Independent tabs merge their sets without regressing timestamps.
++	errs := make(chan error, 2)
++	for _, k := range []string{aKey, bKey} {
++		go func(k string) { errs <- reopened.SetNotificationSeen(ctx, userID, []string{k}, t1) }(k)
++	}
++	for range 2 {
++		if err := <-errs; err != nil {
++			t.Fatal(err)
++		}
++	}
++	seen, err = reopened.NotificationSeen(ctx, userID)
++	if err != nil || seen == nil || !seen.Equal(t2) {
++		t.Fatalf("marker regressed: %v %v", seen, err)
++	}
++	keys, err = reopened.SeenNotificationKeys(ctx, userID, []string{aKey, bKey})
++	if err != nil || len(keys) != 2 {
++		t.Fatalf("concurrent union: %v %v", keys, err)
++	}
++	// A constraint failure rolls back the key batch and its metadata together.
++	if err := reopened.SetNotificationSeen(ctx, userID, []string{strings.Repeat("c", 64), "invalid"}, t2.Add(time.Hour)); err == nil {
++		t.Fatal("expected constraint failure")
++	}
++	keys, err = reopened.SeenNotificationKeys(ctx, userID, []string{strings.Repeat("c", 64)})
++	if err != nil || len(keys) != 0 {
++		t.Fatal("partially stored a failed batch")
++	}
++
+ 	// An unknown user is "nothing seen", never an error.
+ 	seen, err = store.NotificationSeen(ctx, uuid.NewString())
+ 	if err != nil || seen != nil {
+diff --git a/apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/notifications.sql b/apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/notifications.sql
+index b2fd2702..132cea33 100644
+--- a/apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/notifications.sql
++++ b/apps/backend/internal/adapter/outbound/postgres/queries_mattercontrol/notifications.sql
+@@ -3,7 +3,17 @@ SELECT user_id, seen_at FROM notification_seen WHERE user_id = $1;
+ 
+ -- name: UpsertNotificationSeen :exec
+ INSERT INTO notification_seen (user_id, seen_at) VALUES ($1, $2)
+-ON CONFLICT (user_id) DO UPDATE SET seen_at = EXCLUDED.seen_at;
++ON CONFLICT (user_id) DO UPDATE SET seen_at = GREATEST(notification_seen.seen_at, EXCLUDED.seen_at);
++
++-- name: SeenNotificationKeys :many
++SELECT notification_key FROM notification_acknowledgements
++WHERE user_id = sqlc.arg(user_id) AND notification_key = ANY(sqlc.arg(keys)::text[]);
++
++-- name: AcknowledgeNotificationKeys :exec
++INSERT INTO notification_acknowledgements (user_id, notification_key, seen_at)
++SELECT sqlc.arg(user_id), key, sqlc.arg(seen_at)::timestamptz FROM unnest(sqlc.arg(keys)::text[]) AS key
++ON CONFLICT (user_id, notification_key) DO UPDATE
++SET seen_at = GREATEST(notification_acknowledgements.seen_at, EXCLUDED.seen_at);
+ 
+ -- name: InsertMailMessage :exec
+ INSERT INTO mail_messages (id, matter_id, document_id, version_id, direction, sender, recipients, subject, excerpt, sent_at, recorded_by, created_at)
+diff --git a/apps/backend/internal/core/domain/matter/notifications.go b/apps/backend/internal/core/domain/matter/notifications.go
+index 8e55b3e6..b5eef5f9 100644
+--- a/apps/backend/internal/core/domain/matter/notifications.go
++++ b/apps/backend/internal/core/domain/matter/notifications.go
+@@ -1,8 +1,14 @@
+ package matter
+ 
+ import (
++	"crypto/sha256"
++	"encoding/hex"
++	"encoding/json"
+ 	"sort"
++	"strings"
+ 	"time"
++
++	"leonx.me/matter-control/internal/core/domain"
+ )
+ 
+ // In-app notifications (MC-ZCODE-NOTIF-MAILPITCH-20261110): every notification is a
+@@ -33,8 +39,10 @@ const DueSoonWindow = 48 * time.Hour
+ 
+ // Notification is one derived row produced at a single read instant. ID is deterministic
+ // (kind + matter + subject record) so the same state always yields the same identity; whether a
+-// row counts as unread is decided only by the caller's seen watermark against CreatedAt.
++// row counts as unread is decided by its stable acknowledgement key, not read-time metadata.
+ type Notification struct {
++	SeenKey     string
++	Seen        bool
+ 	ID          string
+ 	Kind        NotificationKind
+ 	MatterID    *MatterID
+@@ -51,6 +59,7 @@ type Notification struct {
+ // NotificationPage is one derivation of the caller's notifications with the seen watermark
+ // the caller last recorded.
+ type NotificationPage struct {
++	Total  int
+ 	Items  []Notification
+ 	SeenAt *time.Time
+ 	AsOf   time.Time
+@@ -64,6 +73,9 @@ type NotificationPage struct {
+ func DeriveNotifications(agenda []AgendaEntry, actions MyActions, queue ReviewQueue, now time.Time) []Notification {
+ 	out := make([]Notification, 0, 8)
+ 	for _, e := range agenda {
++		if e.Kind == agendaKindWork && (WorkItem{Execution: ExecutionState(e.Execution)}).Terminal() {
++			continue
++		}
+ 		due := e.DueAt
+ 		switch {
+ 		case e.Kind == agendaKindWork && e.Timing == string(TimingOverdue):
+@@ -77,7 +89,7 @@ func DeriveNotifications(agenda []AgendaEntry, actions MyActions, queue ReviewQu
+ 		out = append(out, Notification{
+ 			ID:   notificationID(string(NotificationBlocked), a.MatterID.String(), a.View.Item.ID.String()),
+ 			Kind: NotificationBlocked, MatterID: &mid, ItemID: a.View.Item.ID.String(),
+-			Title: a.View.Item.Title, CreatedAt: now,
++			Title: a.View.Item.Title, DueAt: a.View.Item.DueAt, CreatedAt: now,
+ 		})
+ 	}
+ 	for _, p := range queue.Items {
+@@ -105,6 +117,9 @@ func DeriveNotifications(agenda []AgendaEntry, actions MyActions, queue ReviewQu
+ 		}
+ 		return a.ID < b.ID
+ 	})
++	for i := range out {
++		out[i].SeenKey = NotificationSeenKey(out[i])
++	}
+ 	return out
+ }
+ 
+@@ -121,6 +136,39 @@ func notificationFromAgenda(kind NotificationKind, e AgendaEntry, due time.Time,
+ 	}
+ }
+ 
++// MaxNotificationKeys bounds one acknowledgement batch and notification digest.
++const MaxNotificationKeys = 200
++
++// NotificationSeenKey changes only with the source identity, reminder kind or due instant.
++func NotificationSeenKey(n Notification) string {
++	due := ""
++	if n.DueAt != nil {
++		due = n.DueAt.UTC().Format(time.RFC3339Nano)
++	}
++	encoded, _ := json.Marshal([2]string{n.ID, due}) // A fixed array of strings cannot fail JSON encoding.
++	digest := sha256.Sum256(encoded)
++	return hex.EncodeToString(digest[:])
++}
++
++// ValidateNotificationKeys rejects malformed and duplicate client acknowledgement keys.
++func ValidateNotificationKeys(keys []string) error {
++	v := &domain.ValidationError{}
++	if len(keys) > MaxNotificationKeys {
++		v.Add("keys", "must contain at most 200 keys")
++		return v
++	}
++	seen := make(map[string]bool, len(keys))
++	for _, key := range keys {
++		_, err := hex.DecodeString(key)
++		if len(key) != 64 || err != nil || strings.ToLower(key) != key || seen[key] {
++			v.Add("keys", "must contain unique lowercase SHA-256 keys")
++			return v
++		}
++		seen[key] = true
++	}
++	return nil
++}
++
+ func notificationID(kind, matterID, subject string) string {
+ 	return kind + ":" + matterID + ":" + subject
+ }
+diff --git a/apps/backend/internal/core/domain/matter/notifications_test.go b/apps/backend/internal/core/domain/matter/notifications_test.go
+index 6c5aef10..3f4de5f5 100644
+--- a/apps/backend/internal/core/domain/matter/notifications_test.go
++++ b/apps/backend/internal/core/domain/matter/notifications_test.go
+@@ -42,6 +42,57 @@ func TestDeriveNotifications(t *testing.T) {
+ 	}
+ }
+ 
++func TestNotificationSeenKeyIdentity(t *testing.T) {
++	now := time.Date(2026, 11, 12, 0, 0, 0, 0, time.UTC)
++	base := Notification{ID: "OVERDUE:m1:work:i1", Kind: NotificationOverdue, DueAt: &now}
++	key := NotificationSeenKey(base)
++	if len(key) != 64 {
++		t.Fatalf("bad key: %q", key)
++	}
++	same := base
++	same.Title = "Edited"
++	same.CreatedAt = now.Add(time.Hour)
++	zone := now.In(time.FixedZone("offset", 7*3600))
++	same.DueAt = &zone
++	if NotificationSeenKey(same) != key {
++		t.Fatal("read/title/timezone changed identity")
++	}
++	later := now.Add(time.Hour)
++	same.DueAt = &later
++	if NotificationSeenKey(same) == key {
++		t.Fatal("changed deadline reused key")
++	}
++	same = base
++	same.ID = "DUE_SOON:m1:work:i1"
++	if NotificationSeenKey(same) == key {
++		t.Fatal("changed kind reused key")
++	}
++	for _, kind := range []NotificationKind{NotificationOverdue, NotificationDueSoon, NotificationBlocked, NotificationReviewPending} {
++		n := Notification{ID: string(kind) + ":m1:i1"}
++		if NotificationSeenKey(n) == "" {
++			t.Fatal("missing identity")
++		}
++	}
++}
++
++func TestNotificationsTerminalWork(t *testing.T) {
++	now := time.Date(2026, 11, 12, 0, 0, 0, 0, time.UTC)
++	due := now.Add(time.Hour)
++	for _, state := range []ExecutionState{ExecutionCompleted, ExecutionCancelled, ExecutionNotStarted, ExecutionInProgress, ExecutionWaiting} {
++		t.Run(string(state), func(t *testing.T) {
++			work := WorkItem{Execution: state, DueAt: &due}
++			got := DeriveNotifications([]AgendaEntry{{MatterID: MatterID("m1"), Kind: "work", ItemID: "i1", Execution: string(state), DueAt: due, Timing: string(TimingOf(work, now).State)}}, MyActions{}, ReviewQueue{}, now)
++			want := 1
++			if work.Terminal() {
++				want = 0
++			}
++			if len(got) != want {
++				t.Fatalf("state %s: got %d reminders, want %d", state, len(got), want)
++			}
++		})
++	}
++}
++
+ func TestDeriveNotificationsEdges(t *testing.T) {
+ 	now := time.Date(2026, 11, 10, 12, 0, 0, 0, time.UTC)
+ 	mid := MatterID("m-1")
+diff --git a/apps/backend/internal/core/port/notifications.go b/apps/backend/internal/core/port/notifications.go
+index ef3dfcaa..ad4fdabf 100644
+--- a/apps/backend/internal/core/port/notifications.go
++++ b/apps/backend/internal/core/port/notifications.go
+@@ -14,20 +14,23 @@ import (
+ // derivation instant; zero means the service clock.
+ type ListNotificationsQuery struct {
+ 	ActorID string
++	Limit   int
+ 	Now     time.Time
+ }
+ 
+-// MarkNotificationsSeenCmd moves the caller's unread watermark forward. It is deliberately not
++// MarkNotificationsSeenCmd acknowledges only displayed keys. It is deliberately not
+ // receipted: it records no domain fact, changes no matter and is idempotent by construction.
+ type MarkNotificationsSeenCmd struct {
+ 	ActorID string
++	Keys    []string
+ 	At      time.Time
+ }
+ 
+-// NotificationSeenStore keeps the per-user seen watermark. A missing row means "nothing seen".
++// NotificationSeenStore keeps per-user acknowledgement keys and last-action metadata.
+ type NotificationSeenStore interface {
+ 	NotificationSeen(ctx context.Context, userID string) (*time.Time, error)
+-	SetNotificationSeen(ctx context.Context, userID string, at time.Time) error
++	SeenNotificationKeys(ctx context.Context, userID string, keys []string) ([]string, error)
++	SetNotificationSeen(ctx context.Context, userID string, keys []string, at time.Time) error
+ }
+ 
+ // NotificationService defines the notification use cases.
+diff --git a/apps/backend/internal/core/service/mail_parse_test.go b/apps/backend/internal/core/service/mail_parse_test.go
+index c162c6a8..676f11d3 100644
+--- a/apps/backend/internal/core/service/mail_parse_test.go
++++ b/apps/backend/internal/core/service/mail_parse_test.go
+@@ -116,6 +116,15 @@ func TestParseEml(t *testing.T) {
+ 	}
+ }
+ 
++func TestParseEmlMissingOrInvalidDate(t *testing.T) {
++	for _, header := range []string{"", "Date: not-a-date\r\n"} {
++		got, err := parseEml([]byte("From: synthetic@example.invalid\r\n" + header + "\r\nBody\r\n"))
++		if err != nil || got.SentAt != nil {
++			t.Fatalf("expected accepted mail without sent date: %+v %v", got, err)
++		}
++	}
++}
++
+ func TestParseEmlCaps(t *testing.T) {
+ 	// A subject far beyond the stored cap is truncated, not rejected.
+ 	got, err := parseEml([]byte("From: a@b.co\r\nTo: c@d.co\r\nSubject: " + strings.Repeat("x", 5000) + "\r\n\r\nbody\r\n"))
+diff --git a/apps/backend/internal/core/service/notification_service.go b/apps/backend/internal/core/service/notification_service.go
+index 8a40c600..f4318dde 100644
+--- a/apps/backend/internal/core/service/notification_service.go
++++ b/apps/backend/internal/core/service/notification_service.go
+@@ -1,12 +1,8 @@
+ package service
+ 
+-// MC-ZCODE-NOTIF-MAILPITCH-20261110: derived notifications. The service composes the caller's
+-// existing authorized cross-matter reads (agenda, my actions, review queue) and projects them
+-// through the pure domain derivation. No notification state exists outside the seen watermark,
+-// so notifications can never disagree with the views they came from.
+-
+ import (
+ 	"context"
++	"fmt"
+ 	"time"
+ 
+ 	"leonx.me/matter-control/internal/core/domain/matter"
+@@ -14,15 +10,11 @@ import (
+ )
+ 
+ const (
+-	// notificationAgendaPage bounds each agenda window read. The agenda orders rows by due
+-	// instant, so the overdue prefix sits at the front of the past window and a full first page
+-	// covers it; deeper backlogs are the agenda's job, not a notification storm.
+ 	notificationAgendaPage = 100
+-	// notificationReviewPage bounds the pending-review read feeding the projection.
+ 	notificationReviewPage = 100
+ )
+ 
+-// Notifications projects the caller's operational state into in-app notifications.
++// Notifications projects authorized current views; persisted keys acknowledge only seen rows.
+ type Notifications struct {
+ 	w        *WorkService
+ 	evidence port.EvidenceService
+@@ -30,57 +22,113 @@ type Notifications struct {
+ 	clock    port.Clock
+ }
+ 
+-// NewNotificationService builds the projection on the shared spine, the review queue and the
+-// per-user watermark store. The clock is injected so the derivation instant stays testable.
+ func NewNotificationService(w *WorkService, evidence port.EvidenceService, seen port.NotificationSeenStore, clock port.Clock) *Notifications {
+ 	return &Notifications{w: w, evidence: evidence, seen: seen, clock: clock}
+ }
+ 
+-// ListNotifications derives the caller's notifications at one instant. Only the caller's own
+-// authorized reads are consulted; a user without a seen row simply has nothing seen yet.
++func (s *Notifications) derive(ctx context.Context, actor string, now time.Time) ([]matter.Notification, error) {
++	until := now
++	past, err := s.w.MeAgenda(ctx, port.MeAgendaQuery{ActorID: actor, Until: &until, Limit: notificationAgendaPage})
++	if err != nil {
++		return nil, err
++	}
++	soon := now.Add(matter.DueSoonWindow)
++	upcoming, err := s.w.MeAgenda(ctx, port.MeAgendaQuery{ActorID: actor, From: &now, Until: &soon, Limit: notificationAgendaPage})
++	if err != nil {
++		return nil, err
++	}
++	agenda := append(past.Entries, upcoming.Entries...)
++	actions, err := s.w.MyActions(ctx, port.MyActionsQuery{ActorID: actor})
++	if err != nil {
++		return nil, err
++	}
++	queue, err := s.evidence.ReviewQueue(ctx, port.ReviewQueueQuery{ActorID: actor, Limit: notificationReviewPage})
++	if err != nil {
++		return nil, err
++	}
++	return matter.DeriveNotifications(agenda, actions, queue, now), nil
++}
++
++// ListNotifications annotates the returned digest with this user's durable acknowledgement keys.
+ func (s *Notifications) ListNotifications(ctx context.Context, q port.ListNotificationsQuery) (matter.NotificationPage, error) {
++	if _, err := matter.NewActorID(q.ActorID); err != nil {
++		return matter.NotificationPage{}, err
++	}
++	limit := q.Limit
++	if limit == 0 {
++		limit = matter.MaxNotificationKeys
++	}
++	if limit < 1 || limit > matter.MaxNotificationKeys {
++		return matter.NotificationPage{}, rejected("invalid-limit", "notification limit must be between 1 and 200")
++	}
+ 	now := q.Now
+ 	if now.IsZero() {
+ 		now = s.clock.Now().UTC()
+ 	}
+-	seenAt, err := s.seen.NotificationSeen(ctx, q.ActorID)
++	items, err := s.derive(ctx, q.ActorID, now)
+ 	if err != nil {
+-		return matter.NotificationPage{}, err
++		return matter.NotificationPage{}, fmt.Errorf("derive notifications: %w", err)
+ 	}
+-	until := now
+-	past, err := s.w.MeAgenda(ctx, port.MeAgendaQuery{ActorID: q.ActorID, Until: &until, Limit: notificationAgendaPage})
+-	if err != nil {
+-		return matter.NotificationPage{}, err
++	total := len(items)
++	if len(items) > limit {
++		items = items[:limit]
+ 	}
+-	soon := now.Add(matter.DueSoonWindow)
+-	upcoming, err := s.w.MeAgenda(ctx, port.MeAgendaQuery{ActorID: q.ActorID, From: &now, Until: &soon, Limit: notificationAgendaPage})
+-	if err != nil {
+-		return matter.NotificationPage{}, err
++	keys := make([]string, 0, len(items))
++	for _, n := range items {
++		keys = append(keys, n.SeenKey)
+ 	}
+-	agenda := append(append(make([]matter.AgendaEntry, 0, len(past.Entries)+len(upcoming.Entries)), past.Entries...), upcoming.Entries...)
+-	actions, err := s.w.MyActions(ctx, port.MyActionsQuery{ActorID: q.ActorID})
++	acknowledged, err := s.seen.SeenNotificationKeys(ctx, q.ActorID, keys)
+ 	if err != nil {
+-		return matter.NotificationPage{}, err
++		return matter.NotificationPage{}, fmt.Errorf("read notification acknowledgements: %w", err)
+ 	}
+-	queue, err := s.evidence.ReviewQueue(ctx, port.ReviewQueueQuery{ActorID: q.ActorID, Limit: notificationReviewPage})
++	seen := make(map[string]bool, len(acknowledged))
++	for _, key := range acknowledged {
++		seen[key] = true
++	}
++	for i := range items {
++		items[i].Seen = seen[items[i].SeenKey]
++	}
++	at, err := s.seen.NotificationSeen(ctx, q.ActorID)
+ 	if err != nil {
+-		return matter.NotificationPage{}, err
++		return matter.NotificationPage{}, fmt.Errorf("read notification marker: %w", err)
+ 	}
+-	return matter.NotificationPage{
+-		Items:  matter.DeriveNotifications(agenda, actions, queue, now),
+-		SeenAt: seenAt, AsOf: now,
+-	}, nil
++	return matter.NotificationPage{Items: items, Total: total, SeenAt: at, AsOf: now}, nil
+ }
+ 
+-// MarkNotificationsSeen advances the watermark to the command instant; calling it again later
+-// is harmless by construction.
++// MarkNotificationsSeen intersects the displayed keys with freshly authorized current rows.
+ func (s *Notifications) MarkNotificationsSeen(ctx context.Context, cmd port.MarkNotificationsSeenCmd) (time.Time, error) {
++	if _, err := matter.NewActorID(cmd.ActorID); err != nil {
++		return time.Time{}, err
++	}
++	if err := matter.ValidateNotificationKeys(cmd.Keys); err != nil {
++		return time.Time{}, err
++	}
+ 	at := cmd.At
+ 	if at.IsZero() {
+ 		at = s.clock.Now().UTC()
+ 	}
+-	if err := s.seen.SetNotificationSeen(ctx, cmd.ActorID, at); err != nil {
+-		return time.Time{}, err
++	if len(cmd.Keys) == 0 {
++		return at, nil
++	}
++	rows, err := s.derive(ctx, cmd.ActorID, at)
++	if err != nil {
++		return time.Time{}, fmt.Errorf("authorize notification acknowledgements: %w", err)
++	}
++	current := make(map[string]bool, len(rows))
++	for _, n := range rows {
++		current[n.SeenKey] = true
++	}
++	keys := make([]string, 0, len(cmd.Keys))
++	for _, key := range cmd.Keys {
++		if current[key] {
++			keys = append(keys, key)
++		}
++	}
++	if len(keys) == 0 {
++		return at, nil
++	}
++	if err := s.seen.SetNotificationSeen(ctx, cmd.ActorID, keys, at); err != nil {
++		return time.Time{}, fmt.Errorf("acknowledge notifications: %w", err)
+ 	}
+ 	return at, nil
+ }
+diff --git a/apps/frontend/src/app/api/matters/[matterId]/mail-intake/route.ts b/apps/frontend/src/app/api/matters/[matterId]/mail-intake/route.ts
+index 9191534f..9fea6e5f 100644
+--- a/apps/frontend/src/app/api/matters/[matterId]/mail-intake/route.ts
++++ b/apps/frontend/src/app/api/matters/[matterId]/mail-intake/route.ts
+@@ -4,6 +4,7 @@ import { mailRepository } from '@/features/mail/repository'
+ import { MAX_EML_BYTES, mailDirectionSchema } from '@/features/mail/schemas'
+ import { requireSession } from '@/lib/auth'
+ import { toMcFailure } from '@/lib/mc/action-result'
++import { pathId } from '@/lib/mc/client'
+ import { UUID_V7 } from '@/lib/mc/idempotency'
+ import { oidcConfig } from '@/lib/oidc/config'
+ 
+@@ -39,6 +40,7 @@ export async function POST(request: NextRequest, ctx: { params: Promise<{ matter
+   try {
+     await requireSession()
+     const { matterId } = await ctx.params
++    pathId(matterId)
+     const key = request.headers.get('idempotency-key') ?? ''
+     const contentType = request.headers.get('content-type') ?? ''
+     if (!UUID_V7.test(key) || !MULTIPART.test(contentType)) {
+diff --git a/apps/frontend/src/features/mail/actions.ts b/apps/frontend/src/features/mail/actions.ts
+deleted file mode 100644
+index e8abfb02..00000000
+--- a/apps/frontend/src/features/mail/actions.ts
++++ /dev/null
+@@ -1,73 +0,0 @@
+-'use server'
+-
+-import { cookies } from 'next/headers'
+-
+-import { requireSession } from '@/lib/auth'
+-import { MESSAGES, fieldFailure, toMcFailure, type McActionResult } from '@/lib/mc/action-result'
+-import { pathId } from '@/lib/mc/client'
+-import { oidcConfig } from '@/lib/oidc/config'
+-
+-import { isEmlFile, MAX_EML_BYTES, mailDirectionSchema, type MailIntakeResult } from './schemas'
+-
+-export type MailUploadOutcome = McActionResult & Partial<MailIntakeResult>
+-
+-/** An upload whose answer was lost may have committed: the SAME request with the SAME key is safe. */
+-const UNKNOWN_RETRY: Extract<McActionResult, { ok: false }> = {
+-  ok: false,
+-  kind: 'outcome-unknown',
+-  error: MESSAGES['outcome-unknown'],
+-  retrySameKey: true,
+-}
+-
+-/**
+- * Intake of one captured email (.eml). The bytes go to the same-origin BFF upload route — never
+- * through this action's own body — so the route's same-origin guard and header rules stay the one
+- * place that owns the raw backend wire. The key is minted in the browser per intent and resent
+- * unchanged for every retry of the same file.
+- */
+-export async function uploadEmlAction(
+-  matterId: string,
+-  form: FormData,
+-  idempotencyKey: string,
+-): Promise<MailUploadOutcome> {
+-  try {
+-    await requireSession()
+-    const cfg = oidcConfig()
+-    if (!cfg) return { ok: false, kind: 'forbidden', error: MESSAGES.forbidden }
+-    pathId(matterId)
+-    const file = form.get('file')
+-    if (!(file instanceof File)) return fieldFailure('file', 'The upload is incomplete.')
+-    if (!isEmlFile(file)) return fieldFailure('file', 'Only .eml files are accepted.')
+-    if (file.size > MAX_EML_BYTES)
+-      return fieldFailure('file', 'That file is larger than the 25 MiB upload limit.')
+-    const direction = mailDirectionSchema.safeParse(form.get('direction'))
+-    const body = new FormData()
+-    body.set('file', file, file.name)
+-    body.set('direction', direction.success ? direction.data : 'INBOUND')
+-    // The BFF route authenticates the forwarded call from the session cookie and its Origin rule.
+-    const session = (await cookies()).get(cfg.sessionCookie)
+-    if (!session) return { ok: false, kind: 'unauthenticated', error: MESSAGES.unauthenticated }
+-    let res: Response
+-    try {
+-      res = await fetch(`${cfg.appOrigin}/api/matters/${matterId}/mail-intake`, {
+-        method: 'POST',
+-        headers: {
+-          Cookie: `${cfg.sessionCookie}=${session.value}`,
+-          Origin: cfg.appOrigin,
+-          'Idempotency-Key': idempotencyKey,
+-        },
+-        // The multipart boundary belongs to the runtime: no explicit Content-Type here.
+-        body,
+-      })
+-    } catch {
+-      return UNKNOWN_RETRY
+-    }
+-    const json = (await res.json().catch(() => null)) as MailUploadOutcome | null
+-    if (json && json.ok === true) return { ...json, replayed: json.replayed === true }
+-    if (json && json.ok === false) return { ...json, error: json.error ?? MESSAGES.error }
+-    // A 2xx or 5xx whose body is unusable may have committed.
+-    return UNKNOWN_RETRY
+-  } catch (error) {
+-    return toMcFailure(error)
+-  }
+-}
+diff --git a/apps/frontend/src/features/mail/components/mail-panel.test.tsx b/apps/frontend/src/features/mail/components/mail-panel.test.tsx
+index 8d541a08..55a601e0 100644
+--- a/apps/frontend/src/features/mail/components/mail-panel.test.tsx
++++ b/apps/frontend/src/features/mail/components/mail-panel.test.tsx
+@@ -1,112 +1,182 @@
+-import { act, fireEvent, render, screen } from '@testing-library/react'
+-import { afterEach, describe, expect, it, vi } from 'vitest'
+-
++import { act, fireEvent, render, screen, within } from '@testing-library/react'
++import { afterEach, beforeEach, expect, it, vi } from 'vitest'
+ import { UiLocaleContext } from '@/hooks/use-locale'
+ import { UUID_V7 } from '@/lib/mc/idempotency'
+-
++import { MAX_EML_BYTES, type MailItem } from '../schemas'
+ import { MailPanel } from './mail-panel'
+-import type { MailItem } from '../schemas'
+ 
++const { refresh } = vi.hoisted(() => ({ refresh: vi.fn() }))
+ vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh }) }))
+-vi.mock('../actions', () => ({ uploadEmlAction: upload }))
+-const { upload, refresh } = vi.hoisted(() => ({ upload: vi.fn(), refresh: vi.fn() }))
+-
++const fetchMock = vi.fn()
+ const item: MailItem = {
+-  id: '01900000-0000-7000-8000-000000000001',
+-  documentId: '01900000-0000-7000-8000-000000000002',
+-  versionId: '01900000-0000-7000-8000-000000000003',
++  id: 'mail1',
++  documentId: 'doc1',
++  versionId: 'version1',
+   direction: 'INBOUND',
+-  sender: 'counterparty@example.com',
+-  recipients: ['a@example.com', 'b@example.com', 'c@example.com', 'd@example.com', 'e@example.com'],
+-  subject: 'Re: Share purchase agreement',
+-  sentAt: '2026-11-10T09:30:00Z',
+-  excerpt: 'Please find the signed copy attached for your records.',
+-  createdAt: '2026-11-10T09:31:00Z',
++  sender: 'synthetic@example.invalid',
++  recipients: [],
++  subject: 'Dated synthetic mail',
++  sentAt: '2026-11-11T00:00:00Z',
++  excerpt: '',
++  createdAt: '2026-11-12T00:00:00Z',
+ }
+-
+-afterEach(() => {
+-  vi.clearAllMocks()
++const success = () =>
++  new Response(
++    JSON.stringify({
++      ok: true,
++      documentId: 'doc1',
++      versionId: 'version1',
++      mailId: 'mail1',
++      replayed: false,
++    }),
++    { status: 201 },
++  )
++function pick(file: File) {
++  fireEvent.change(screen.getByLabelText(/Email file/), { target: { files: [file] } })
++}
++async function submit() {
++  fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
++  await act(async () => {})
++}
++const key = (n: number) => new Headers(fetchMock.mock.calls[n]![1].headers).get('Idempotency-Key')
++beforeEach(() => {
++  vi.stubGlobal('fetch', fetchMock)
++  fetchMock.mockReset()
++  refresh.mockClear()
+ })
++afterEach(() => vi.unstubAllGlobals())
+ 
+-describe('MailPanel', () => {
+-  it('lists captured email with sender, truncated recipients, direction and a link to the document', () => {
+-    render(<MailPanel matterId="m1" items={[item]} />)
+-    const link = screen.getByRole('link', { name: item.subject })
+-    expect(link).toHaveAttribute('href', '/matters/m1/documents/' + item.documentId)
+-    expect(screen.getByText(/counterparty@example.com/)).toBeInTheDocument()
+-    expect(screen.getByText(/a@example.com, b@example.com, c@example.com \+2/)).toBeInTheDocument()
+-    expect(screen.getByText('Inbound')).toBeInTheDocument()
+-    expect(screen.getByText(item.excerpt)).toBeInTheDocument()
+-  })
+-
+-  it('shows the empty state when nothing has been captured', () => {
++it('renders an explicit unavailable sent date without hiding dated mail', () => {
++  render(
++    <MailPanel
++      matterId="m1"
++      items={[item, { ...item, id: 'mail2', subject: 'Undated synthetic mail', sentAt: null }]}
++    />,
++  )
++  expect(screen.getByRole('link', { name: item.subject })).toBeInTheDocument()
++  expect(
++    within(screen.getByRole('link', { name: 'Undated synthetic mail' }).closest('li')!).getByText(
++      'Sent date unavailable',
++    ),
++  ).toBeInTheDocument()
++})
++it('renders Vietnamese missing-date copy', () => {
++  render(
++    <UiLocaleContext.Provider value="vi">
++      <MailPanel matterId="m1" items={[{ ...item, sentAt: null }]} />
++    </UiLocaleContext.Provider>,
++  )
++  expect(screen.getByText('Không có ngày gửi')).toBeInTheDocument()
++})
++it('uploads directly to the BFF with the selected file, then refreshes', async () => {
++  fetchMock.mockResolvedValue(success())
++  render(<MailPanel matterId="m1" items={[]} />)
++  const file = new File(['synthetic'], 'message.eml')
++  pick(file)
++  await submit()
++  expect(fetchMock).toHaveBeenCalledTimes(1)
++  const [url, req] = fetchMock.mock.calls[0]!
++  expect(url).toBe('/api/matters/m1/mail-intake')
++  expect(req.body.get('file')).toBe(file)
++  expect(req.body.get('direction')).toBe('INBOUND')
++  expect(new Headers(req.headers).has('Content-Type')).toBe(false)
++  expect(key(0)).toMatch(UUID_V7)
++  expect(refresh).toHaveBeenCalledTimes(1)
++})
++it.each([2 * 1024 * 1024, MAX_EML_BYTES])(
++  'accepts a file of %i bytes without a Server Action',
++  async (size) => {
++    fetchMock.mockResolvedValue(success())
+     render(<MailPanel matterId="m1" items={[]} />)
+-    expect(screen.getByText('No captured email yet')).toBeInTheDocument()
+-  })
+-
+-  it('rejects a non-.eml file on the client before any request', () => {
+-    render(<MailPanel matterId="m1" items={[item]} />)
+-    fireEvent.change(screen.getByLabelText(/Email file/), {
+-      target: { files: [new File(['pdf'], 'term.pdf', { type: 'application/pdf' })] },
+-    })
+-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
+-    expect(screen.getByText('Only .eml files are accepted.')).toBeInTheDocument()
+-    expect(upload).not.toHaveBeenCalled()
+-  })
+-
+-  it('uploads the .eml with its FormData and a fresh UUIDv7 idempotency key, then refreshes', async () => {
+-    upload.mockResolvedValue({
+-      ok: true,
+-      documentId: item.documentId,
+-      versionId: item.versionId,
+-      mailId: item.id,
+-      replayed: false,
+-    })
+-    render(<MailPanel matterId="m1" items={[item]} />)
+-    fireEvent.change(screen.getByLabelText(/Email file/), {
+-      target: { files: [new File(['eml'], 'message.eml', { type: 'message/rfc822' })] },
+-    })
+-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
+-    await act(async () => {})
+-    expect(upload).toHaveBeenCalledTimes(1)
+-    const [matterId, form, key] = upload.mock.calls[0]
+-    expect(matterId).toBe('m1')
+-    expect(form).toBeInstanceOf(FormData)
+-    expect(form.get('file')).toBeInstanceOf(File)
+-    expect((form.get('file') as File).name).toBe('message.eml')
+-    expect(form.get('direction')).toBe('INBOUND')
+-    expect(key).toMatch(UUID_V7)
+-    expect(refresh).toHaveBeenCalledTimes(1)
++    pick(new File([new Uint8Array(size)], 'large.eml'))
++    await submit()
++    expect(fetchMock).toHaveBeenCalledTimes(1)
++  },
++)
++it('refuses extension and max+1 before sending any request', async () => {
++  render(<MailPanel matterId="m1" items={[]} />)
++  pick(new File(['x'], 'message.pdf'))
++  await submit()
++  expect(screen.getByText('Only .eml files are accepted.')).toBeInTheDocument()
++  pick(new File([new Uint8Array(MAX_EML_BYTES + 1)], 'too-large.eml'))
++  await submit()
++  expect(screen.getByText('That file is larger than the 25 MiB limit.')).toBeInTheDocument()
++  expect(fetchMock).not.toHaveBeenCalled()
++})
++it('retries unknown outcomes with the same key and creates a new key for a new selection', async () => {
++  fetchMock
++    .mockRejectedValueOnce(new TypeError('synthetic transport loss'))
++    .mockResolvedValueOnce(success())
++    .mockResolvedValueOnce(success())
++  render(<MailPanel matterId="m1" items={[]} />)
++  pick(new File(['x'], 'message.eml'))
++  await submit()
++  expect(screen.getByText('Outcome not confirmed')).toBeInTheDocument()
++  await submit()
++  expect(key(1)).toBe(key(0))
++  pick(new File(['y'], 'another.eml'))
++  await submit()
++  expect(key(2)).not.toBe(key(0))
++})
++it('keeps the selected intent locked while the request is pending', async () => {
++  let resolve!: (value: Response) => void
++  fetchMock.mockReturnValue(
++    new Promise<Response>((r) => {
++      resolve = r
++    }),
++  )
++  render(<MailPanel matterId="m1" items={[]} />)
++  pick(new File(['x'], 'message.eml'))
++  await submit()
++  expect(screen.getByLabelText(/Email file/)).toBeDisabled()
++  await act(async () => {
++    resolve(success())
+   })
+-
+-  it('keeps the same key for a retry after an unknown outcome and says nothing was assumed', async () => {
+-    upload
+-      .mockResolvedValueOnce({
++  expect(screen.getByLabelText(/Email file/)).not.toBeDisabled()
++})
++it.each([401, 403])('displays structured refusal %i and does not refresh', async (status) => {
++  fetchMock.mockResolvedValue(
++    new Response(
++      JSON.stringify({
+         ok: false,
+-        kind: 'outcome-unknown',
+-        error: 'We could not confirm whether this was saved.',
+-        retrySameKey: true,
+-      })
+-      .mockResolvedValueOnce({ ok: true, documentId: item.documentId, mailId: item.id })
+-    render(<MailPanel matterId="m1" items={[item]} />)
+-    const file = new File(['eml'], 'message.eml', { type: 'message/rfc822' })
+-    fireEvent.change(screen.getByLabelText(/Email file/), { target: { files: [file] } })
+-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
+-    await act(async () => {})
+-    expect(screen.getByText('Outcome not confirmed')).toBeInTheDocument()
+-    fireEvent.click(screen.getByRole('button', { name: 'Upload' }))
+-    await act(async () => {})
+-    const firstKey = upload.mock.calls[0][2]
+-    expect(upload.mock.calls[1][2]).toBe(firstKey)
+-  })
+-
+-  it('renders Vietnamese labels under the vi locale', () => {
+-    render(
+-      <UiLocaleContext.Provider value="vi">
+-        <MailPanel matterId="m1" items={[item]} />
+-      </UiLocaleContext.Provider>,
+-    )
+-    expect(screen.getByText('Thư đến')).toBeInTheDocument()
+-    expect(screen.getByRole('button', { name: 'Tải lên' })).toBeInTheDocument()
+-  })
++        kind: status === 401 ? 'unauthenticated' : 'forbidden',
++        error: 'Synthetic refusal',
++      }),
++      { status },
++    ),
++  )
++  render(<MailPanel matterId="m1" items={[]} />)
++  pick(new File(['x'], 'message.eml'))
++  await submit()
++  expect(screen.getByText('Synthetic refusal')).toBeInTheDocument()
++  expect(refresh).not.toHaveBeenCalled()
+ })
++
++it.each([401, 403])(
++  'retains the original request key after an unknown outcome followed by HTTP %i',
++  async (status) => {
++    fetchMock
++      .mockRejectedValueOnce(new TypeError('synthetic lost response'))
++      .mockResolvedValueOnce(
++        new Response(
++          JSON.stringify({
++            ok: false,
++            kind: status === 401 ? 'unauthenticated' : 'forbidden',
++            error: 'Synthetic temporary refusal',
++          }),
++          { status },
++        ),
++      )
++      .mockResolvedValueOnce(success())
++    render(<MailPanel matterId="m1" items={[]} />)
++    const file = new File(['same synthetic bytes'], 'message.eml')
++    pick(file)
++    await submit()
++    await submit()
++    await submit()
++    expect(fetchMock).toHaveBeenCalledTimes(3)
++    expect(key(1)).toBe(key(0))
++    expect(key(2)).toBe(key(0))
++    for (const [, request] of fetchMock.mock.calls) expect(request.body.get('file')).toBe(file)
++  },
++)
+diff --git a/apps/frontend/src/features/mail/components/mail-panel.tsx b/apps/frontend/src/features/mail/components/mail-panel.tsx
+index 4dda3956..ad474dd9 100644
+--- a/apps/frontend/src/features/mail/components/mail-panel.tsx
++++ b/apps/frontend/src/features/mail/components/mail-panel.tsx
+@@ -13,10 +13,10 @@ import { FormField } from '@/components/molecules/form-field'
+ import { LocalizedInstant } from '@/components/molecules/localized-instant'
+ import { LocalizedText } from '@/components/molecules/localized-text'
+ import { useLocale } from '@/hooks/use-locale'
+-import { callMcAction, type McActionResult } from '@/lib/mc/action-result'
++import { type McActionResult } from '@/lib/mc/action-result'
+ import { newIdempotencyKey } from '@/lib/mc/idempotency'
+ 
+-import { uploadEmlAction, type MailUploadOutcome } from '../actions'
++import { mailUploadRepository } from '../client-repository'
+ import { isEmlFile, MAX_EML_BYTES, type MailItem } from '../schemas'
+ 
+ type UploadState =
+@@ -49,7 +49,7 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
+ 
+   function submit(event: FormEvent<HTMLFormElement>) {
+     event.preventDefault()
+-    if (!file) return
++    if (!file || pending) return
+     if (!isEmlFile(file)) {
+       setClientError(locale === 'vi' ? 'Chỉ nhận tệp .eml.' : 'Only .eml files are accepted.')
+       return
+@@ -62,13 +62,8 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
+       )
+       return
+     }
+-    const form = new FormData()
+-    form.set('file', file)
+-    form.set('direction', 'INBOUND')
+     start(async () => {
+-      const r: MailUploadOutcome = await callMcAction(() => uploadEmlAction(matterId, form, key), {
+-        receipted: true,
+-      })
++      const r = await mailUploadRepository.intake(matterId, file, key)
+       if (r.ok) {
+         setState({
+           kind: 'done',
+@@ -83,8 +78,7 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
+         return
+       }
+       setState({ kind: 'failed', result: r })
+-      // An unknown outcome keeps the key: retrying the same file resends the same receipted request.
+-      if (!r.retrySameKey) setKey(newIdempotencyKey())
++      // A later refusal cannot resolve an earlier unknown outcome; selection owns the key.
+     })
+   }
+ 
+@@ -113,6 +107,7 @@ export function MailPanel({ matterId, items }: { matterId: string; items: MailIt
+           {(c) => (
+             <Input
+               type="file"
++              disabled={pending}
+               name="file"
+               accept=".eml"
+               onChange={(e) => pick(e.target.files?.[0] ?? null)}
+@@ -223,7 +218,13 @@ function MailRow({ matterId, item }: { matterId: string; item: MailItem }) {
+               ? 'Inbound'
+               : 'Outbound'}
+         </Badge>
+-        <LocalizedInstant iso={item.sentAt} className="text-xs text-muted-foreground" />
++        {item.sentAt ? (
++          <LocalizedInstant iso={item.sentAt} className="text-xs text-muted-foreground" />
++        ) : (
++          <span className="text-xs text-muted-foreground">
++            <LocalizedText en="Sent date unavailable" vi="Không có ngày gửi" />
++          </span>
++        )}
+       </div>
+     </li>
+   )
+diff --git a/apps/frontend/src/features/mail/schemas.ts b/apps/frontend/src/features/mail/schemas.ts
+index 94497cb1..2e9e02f8 100644
+--- a/apps/frontend/src/features/mail/schemas.ts
++++ b/apps/frontend/src/features/mail/schemas.ts
+@@ -16,7 +16,7 @@ export const mailItemSchema = z.object({
+   sender: z.string(),
+   recipients: z.array(z.string()).catch([]),
+   subject: z.string(),
+-  sentAt: z.string(),
++  sentAt: z.string().nullable(),
+   excerpt: z.string(),
+   createdAt: z.string(),
+ })
+@@ -35,6 +35,31 @@ export const mailIntakeResultSchema = z.object({
+ })
+ export type MailIntakeResult = z.infer<typeof mailIntakeResultSchema>
+ 
++export const mailUploadOutcomeSchema = z.discriminatedUnion('ok', [
++  mailIntakeResultSchema.extend({ ok: z.literal(true), replayed: z.boolean() }),
++  z.object({
++    ok: z.literal(false),
++    kind: z.enum([
++      'validation',
++      'unauthenticated',
++      'forbidden',
++      'not-found',
++      'stale',
++      'unavailable',
++      'outcome-unknown',
++      'key-conflict',
++      'last-owner',
++      'rejected',
++      'error',
++    ]),
++    error: z.string(),
++    fieldErrors: z.record(z.string(), z.array(z.string())).optional(),
++    retrySameKey: z.boolean().optional(),
++    requiresReread: z.boolean().optional(),
++  }),
++])
++export type MailUploadOutcome = z.infer<typeof mailUploadOutcomeSchema>
++
+ /** Only .eml is accepted at intake, up to 25 MiB; the BFF route mirrors both limits server-side. */
+ export const MAX_EML_BYTES = 25 * 1024 * 1024
+ 
+diff --git a/apps/frontend/src/features/notifications/actions.ts b/apps/frontend/src/features/notifications/actions.ts
+index d8f36408..7420eaae 100644
+--- a/apps/frontend/src/features/notifications/actions.ts
++++ b/apps/frontend/src/features/notifications/actions.ts
+@@ -1,17 +1,20 @@
+ 'use server'
+ 
+ import { requireSession } from '@/lib/auth'
+-import { toMcFailure, type McActionResult } from '@/lib/mc/action-result'
++import { fieldFailure, toMcFailure, type McActionResult } from '@/lib/mc/action-result'
+ 
+ import { notificationsRepository } from './repository'
++import { notificationKeysSchema } from './schemas'
+ 
+ export type MarkSeenOutcome = McActionResult & { seenAt?: string }
+ 
+-/** Marks the whole feed seen. The badge is derived from seenAt, so a refresh recomputes it. */
+-export async function markSeenAction(): Promise<MarkSeenOutcome> {
++/** Acknowledges only keys displayed by this browser; current access is rechecked by the API. */
++export async function markSeenAction(keys: string[]): Promise<MarkSeenOutcome> {
+   try {
+     await requireSession()
+-    const res = await notificationsRepository.markSeen()
++    const parsed = notificationKeysSchema.safeParse(keys)
++    if (!parsed.success) return fieldFailure('keys', 'The notification selection is invalid.')
++    const res = await notificationsRepository.markSeen(parsed.data)
+     return { ok: true, seenAt: res.data.seenAt }
+   } catch (error) {
+     return toMcFailure(error)
+diff --git a/apps/frontend/src/features/notifications/components/bell-button.tsx b/apps/frontend/src/features/notifications/components/bell-button.tsx
+index ccf4f8b7..fcd07237 100644
+--- a/apps/frontend/src/features/notifications/components/bell-button.tsx
++++ b/apps/frontend/src/features/notifications/components/bell-button.tsx
+@@ -28,7 +28,7 @@ const KIND_LABELS: Record<NotificationKind, { en: string; vi: string }> = {
+ }
+ 
+ /**
+- * The header bell. The unread count comes from the server read (createdAt against seenAt); the
++ * The header bell. The unread count comes from server-authorized acknowledgement state; the
+  * panel is the shared modal Dialog, so Escape-to-close and focus return to the bell are the
+  * browser's own behaviour — the same discipline as the command palette.
+  */
+@@ -54,8 +54,10 @@ export function BellButton({
+   function markSeen() {
+     start(async () => {
+       setFailure(null)
+-      const r = await callMcAction(() => markSeenAction(), { receipted: false })
+-      // Seen is recomputed from seenAt on the server, so the refresh alone moves the badge.
++      const r = await callMcAction(() => markSeenAction(items.map((item) => item.seenKey)), {
++        receipted: false,
++      })
++      // Refresh the server's persisted acknowledgement state.
+       if (r.ok) router.refresh()
+       else setFailure(r)
+     })
+@@ -178,7 +180,9 @@ function BellRow({ item, close }: { item: NotificationItem; close: () => void })
+         {item.dueAt ? (
+           <LocalizedInstant iso={item.dueAt} />
+         ) : (
+-          <LocalizedInstant iso={item.createdAt} />
++          <>
++            <LocalizedText en="Computed" vi="Tính lúc" />: <LocalizedInstant iso={item.createdAt} />
++          </>
+         )}
+       </span>
+     </>
+diff --git a/apps/frontend/src/features/notifications/components/notification-bell.test.tsx b/apps/frontend/src/features/notifications/components/notification-bell.test.tsx
+index d930a2f0..ab6630a7 100644
+--- a/apps/frontend/src/features/notifications/components/notification-bell.test.tsx
++++ b/apps/frontend/src/features/notifications/components/notification-bell.test.tsx
+@@ -12,6 +12,8 @@ const { markSeen, refresh } = vi.hoisted(() => ({ markSeen: vi.fn(), refresh: vi
+ 
+ const item = (over: Partial<NotificationItem>): NotificationItem => ({
+   id: 'OVERDUE:m1:i1',
++  seenKey: 'a'.repeat(64),
++  seen: false,
+   kind: 'OVERDUE',
+   matterId: 'm1',
+   matterTitle: 'Atlas',
+@@ -80,19 +82,35 @@ describe('BellButton', () => {
+     fireEvent.click(screen.getByRole('button', { name: 'Notifications (1)' }))
+     fireEvent.click(screen.getByRole('button', { name: 'Mark as seen' }))
+     await act(async () => {})
+-    expect(markSeen).toHaveBeenCalledTimes(1)
++    expect(markSeen).toHaveBeenCalledWith(['a'.repeat(64)])
+     expect(refresh).toHaveBeenCalledTimes(1)
+     expect(screen.getByRole('button', { name: 'Notifications (1)' })).toBeInTheDocument()
+   })
+ 
+-  it('counts unread items against the seen marker only (null seenAt means everything is unread)', () => {
+-    const items = [
+-      item({ createdAt: '2026-11-09T09:00:00Z' }),
+-      item({ id: 'OVERDUE:m1:i2', createdAt: '2026-11-10T09:00:00Z' }),
+-    ]
+-    expect(unreadOf(items, null)).toBe(2)
+-    expect(unreadOf(items, '2026-11-09T12:00:00Z')).toBe(1)
+-    expect(unreadOf(items, '2026-11-10T12:00:00Z')).toBe(0)
++  it('updates the badge from refreshed acknowledgement data and keeps new items unread', () => {
++    const view = render(<BellButton items={[item({})]} seenAt={null} unread={1} />)
++    view.rerender(
++      <BellButton
++        items={[item({ seen: true })]}
++        seenAt="2026-11-10T10:00:00Z"
++        unread={unreadOf([item({ seen: true })])}
++      />,
++    )
++    expect(screen.getByRole('button', { name: 'Notifications' })).toBeInTheDocument()
++    const next = [item({ seen: true }), item({ id: 'new', seen: false, seenKey: 'b'.repeat(64) })]
++    view.rerender(<BellButton items={next} seenAt="2026-11-10T10:00:00Z" unread={unreadOf(next)} />)
++    expect(screen.getByRole('button', { name: 'Notifications (1)' })).toBeInTheDocument()
++  })
++
++  it('keeps the unread badge when acknowledgement fails', async () => {
++    markSeen.mockResolvedValue({ ok: false, kind: 'unavailable', error: 'Synthetic unavailable' })
++    render(<BellButton items={[item({})]} seenAt={null} unread={1} />)
++    fireEvent.click(screen.getByRole('button', { name: 'Notifications (1)' }))
++    fireEvent.click(screen.getByRole('button', { name: 'Mark as seen' }))
++    await act(async () => {})
++    expect(screen.getByText(/Synthetic unavailable/)).toBeInTheDocument()
++    expect(screen.getByRole('button', { name: 'Notifications (1)' })).toBeInTheDocument()
++    expect(refresh).not.toHaveBeenCalled()
+   })
+ 
+   it('renders Vietnamese kind labels and accessible name under the vi locale', () => {
+diff --git a/apps/frontend/src/features/notifications/components/notification-bell.tsx b/apps/frontend/src/features/notifications/components/notification-bell.tsx
+index 8b259373..b60d12a2 100644
+--- a/apps/frontend/src/features/notifications/components/notification-bell.tsx
++++ b/apps/frontend/src/features/notifications/components/notification-bell.tsx
+@@ -16,5 +16,5 @@ export async function NotificationBell() {
+   const read = await attempt(() => notificationsRepository.list(BELL_LIMIT))
+   if (!read.ok) return null
+   const { items, seenAt } = read.value
+-  return <BellButton items={items} seenAt={seenAt} unread={unreadOf(items, seenAt)} />
++  return <BellButton items={items} seenAt={seenAt} unread={unreadOf(items)} />
+ }
+diff --git a/apps/frontend/src/features/notifications/repository.ts b/apps/frontend/src/features/notifications/repository.ts
+index bac31725..1de85094 100644
+--- a/apps/frontend/src/features/notifications/repository.ts
++++ b/apps/frontend/src/features/notifications/repository.ts
+@@ -15,10 +15,10 @@ export const notificationsRepository = {
+     (await mcRequest('/me/notifications', { query: { limit }, schema: notificationsPageSchema }))
+       .data,
+ 
+-  markSeen: () =>
++  markSeen: (keys: string[]) =>
+     mcRequest('/me/notifications/seen', {
+       method: 'POST',
+-      body: {},
++      body: { keys },
+       schema: z.object({ seenAt: z.string() }),
+     }),
+ }
+diff --git a/apps/frontend/src/features/notifications/schemas.ts b/apps/frontend/src/features/notifications/schemas.ts
+index 11c51128..b6d44bb0 100644
+--- a/apps/frontend/src/features/notifications/schemas.ts
++++ b/apps/frontend/src/features/notifications/schemas.ts
+@@ -1,13 +1,14 @@
+ import { z } from 'zod'
+ 
+-// The caller's own notification feed. Unread is computed, not stored on items: an item is unread
+-// while createdAt > seenAt, and a null seenAt means everything is unread (first visit).
++// Current authorized notifications carry this user's durable acknowledgement state.
+ 
+ export const NOTIFICATION_KINDS = ['OVERDUE', 'BLOCKED', 'DUE_SOON', 'REVIEW_PENDING'] as const
+ export type NotificationKind = (typeof NOTIFICATION_KINDS)[number]
+ 
+ export const notificationItemSchema = z.object({
+   id: z.string(),
++  seenKey: z.string().regex(/^[0-9a-f]{64}$/),
++  seen: z.boolean(),
+   kind: z.enum(NOTIFICATION_KINDS),
+   matterId: z.string().nullable(),
+   matterTitle: z.string().nullable(),
+@@ -27,9 +28,12 @@ export const notificationsPageSchema = z.object({
+ })
+ export type NotificationsPage = z.infer<typeof notificationsPageSchema>
+ 
+-/** Unread items of one page against the seen marker; the badge caps the display, not this count. */
+-export function unreadOf(items: NotificationItem[], seenAt: string | null): number {
+-  if (seenAt === null) return items.length
+-  const seen = Date.parse(seenAt)
+-  return items.filter((item) => Date.parse(item.createdAt) > seen).length
++export const notificationKeysSchema = z
++  .array(z.string().regex(/^[0-9a-f]{64}$/))
++  .max(200)
++  .refine((keys) => new Set(keys).size === keys.length)
++
++/** The badge counts unread rows in this digest, not a global archive. */
++export function unreadOf(items: NotificationItem[]): number {
++  return items.filter((item) => !item.seen).length
+ }
+diff --git a/docs/implementation/p0-zcode-execution/local-contract.md b/docs/implementation/p0-zcode-execution/local-contract.md
+index c91c53c1..97a86bf7 100644
+--- a/docs/implementation/p0-zcode-execution/local-contract.md
++++ b/docs/implementation/p0-zcode-execution/local-contract.md
+@@ -325,3 +325,16 @@ copy had already applied an earlier draft. That retained copy is not evidence of
+ conformance: migration-version equality alone cannot detect this difference. Keep it intact;
+ use a fresh migrated fixture for verification and explicitly reconcile it before a future
+ runtime refresh. No retained database is automatically reset or altered by this addendum.
++
++
++## Notification acknowledgement and captured-mail corrections (2026-11-12 candidate)
++
++The current authorized notification digest is available at `GET /api/v1/me/notifications?limit=50`. Limit is 1..200 (default 200); invalid limits return 400. Rows add `seenKey` (64 lowercase hex characters) and `seen` (boolean); `createdAt` remains the computation time, not an event or unread boundary. `page.total` counts the derived candidate set and is not an unbounded/global notification archive.
++
++`POST /api/v1/me/notifications/seen` accepts `{"keys":["<seenKey from the displayed digest>"]}`. The authenticated principal is server-owned. A batch contains at most 200 unique valid keys; invalid batches return 422. The service re-derives current access and intersects the submitted keys, so newly arriving or hidden rows are not acknowledged. Empty keys and legacy `{}` are safe no-ops. Response retains `{"seenAt":"<request instant>"}`; this is acknowledgement metadata, not permission to infer all earlier rows are seen.
++
++Keys change with the notification identity/kind or due instant (UTC-normalized), not titles or refresh time. Previously acknowledged keys remain seen if they reappear unchanged; changed deadlines/kinds become unread. COMPLETED/CANCELLED work produces no due reminder; milestone rules and the existing 48-hour window remain unchanged.
++
++Mail capture remains a receipted raw-byte `.eml` upload through `POST /api/v1/matters/{id}/mail-intake` and an authorized envelope list at `GET /api/v1/matters/{id}/mail`. `sentAt` may be null for an absent/unparseable Date; the frontend labels its absence instead of substituting capture time. Browser upload uses the same-origin multipart BFF directly, avoiding the Server Action body limit. The configured backend default and UI maximum are 25 MiB (26,214,400 bytes); a lower backend cap still takes precedence. Lost/unusable replies retain the same request key for explicit retry.
++
++These source/unit-tested candidate contracts do not certify live PostgreSQL/IdP/browser behavior; consult the fix task's verification return for executed and blocked gates.
+diff --git a/ops/adr006/db/b1-runtime-grants.sql b/ops/adr006/db/b1-runtime-grants.sql
+index 14380e46..3c76f891 100644
+--- a/ops/adr006/db/b1-runtime-grants.sql
++++ b/ops/adr006/db/b1-runtime-grants.sql
+@@ -85,6 +85,7 @@ GRANT SELECT, INSERT, UPDATE ON mcapp.matters TO mc_runtime;
+ GRANT SELECT, INSERT, UPDATE ON mcapp.milestones TO mc_runtime;
+ 
+ GRANT SELECT, INSERT, UPDATE ON mcapp.notification_seen TO mc_runtime;
++GRANT SELECT, INSERT, UPDATE ON mcapp.notification_acknowledgements TO mc_runtime;
+ 
+ GRANT SELECT, INSERT, UPDATE ON mcapp.parties TO mc_runtime;
+ 
+diff --git a/apps/backend/internal/adapter/inbound/productapi/notification_mail_handlers_test.go b/apps/backend/internal/adapter/inbound/productapi/notification_mail_handlers_test.go
+new file mode 100644
+index 00000000..db676648
+--- /dev/null
++++ b/apps/backend/internal/adapter/inbound/productapi/notification_mail_handlers_test.go
+@@ -0,0 +1,65 @@
++package productapi
++
++import (
++	"context"
++	"encoding/json"
++	"strings"
++	"testing"
++	"time"
++
++	"leonx.me/matter-control/internal/core/domain/matter"
++	"leonx.me/matter-control/internal/core/port"
++)
++
++type notificationHTTPProbe struct {
++	calls int
++	keys  []string
++	limit int
++}
++
++func (p *notificationHTTPProbe) ListNotifications(_ context.Context, q port.ListNotificationsQuery) (matter.NotificationPage, error) {
++	p.limit = q.Limit
++	return matter.NotificationPage{Items: []matter.Notification{{ID: "synthetic", SeenKey: strings.Repeat("a", 64), Seen: true, Kind: matter.NotificationOverdue}}, Total: 1}, nil
++}
++func (p *notificationHTTPProbe) MarkNotificationsSeen(_ context.Context, cmd port.MarkNotificationsSeenCmd) (time.Time, error) {
++	p.calls++
++	p.keys = cmd.Keys
++	return cmd.At, nil
++}
++func TestNotificationsHTTPContract(t *testing.T) {
++	e := newEnv(t)
++	probe := &notificationHTTPProbe{}
++	e.h = NewServer(Deps{Notifications: probe, Verifier: e.verifier, Identities: fakeResolver{"s-alice": e.alice}})
++	e.expect(e.do("GET", "/api/v1/me/notifications", "", nil, ""), 401, "urn:mc:unauthenticated")
++}
++func TestNotificationsHTTPKeysAndLimits(t *testing.T) {
++	e := newEnv(t)
++	probe := &notificationHTTPProbe{}
++	e.h = NewServer(Deps{Notifications: probe, Verifier: e.verifier, Identities: fakeResolver{"s-alice": e.alice}})
++	read := e.do("GET", "/api/v1/me/notifications?limit=50", "t-alice", nil, "")
++	e.expect(read, 200, "")
++	item := read.json()["items"].([]any)[0].(map[string]any)
++	if item["seen"] != true || item["seenKey"] != strings.Repeat("a", 64) || probe.limit != 50 {
++		t.Fatalf("DTO/limit: %s", read.Body)
++	}
++	e.expect(e.do("GET", "/api/v1/me/notifications?limit=201", "t-alice", nil, ""), 400, "urn:mc:bad-request")
++	for _, body := range []string{`{}`, `{"keys":[]}`, `{"keys":["` + strings.Repeat("a", 64) + `"]}`} {
++		e.expect(e.do("POST", "/api/v1/me/notifications/seen", "t-alice", nil, body), 200, "")
++	}
++	before := probe.calls
++	keys := make([]string, 201)
++	for i := range keys {
++		keys[i] = strings.Repeat("a", 64)
++	}
++	large, err := json.Marshal(map[string]any{"keys": keys})
++	if err != nil {
++		t.Fatal(err)
++	}
++	for _, body := range []string{`{"keys":["bad"]}`, `{"keys":["` + strings.Repeat("a", 64) + `","` + strings.Repeat("a", 64) + `"]}`, string(large)} {
++		e.expect(e.do("POST", "/api/v1/me/notifications/seen", "t-alice", nil, body), 422, "urn:mc:validation")
++	}
++	if probe.calls != before {
++		t.Fatal("invalid keys reached service")
++	}
++	e.expect(e.do("POST", "/api/v1/me/notifications/seen", "t-alice", nil, `{"actorId":"other","keys":[]}`), 400, "urn:mc:malformed-body")
++}
+diff --git a/apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0021_notification_acknowledgements.sql b/apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0021_notification_acknowledgements.sql
+new file mode 100644
+index 00000000..edf23f00
+--- /dev/null
++++ b/apps/backend/internal/adapter/outbound/postgres/migrations_mattercontrol/0021_notification_acknowledgements.sql
+@@ -0,0 +1,11 @@
++-- +goose Up
++-- Acknowledgements are per-user UI metadata; no legal notification content is copied.
++CREATE TABLE notification_acknowledgements (
++ user_id UUID NOT NULL REFERENCES users,
++ notification_key TEXT NOT NULL CHECK (notification_key ~ '^[0-9a-f]{64}$'),
++ seen_at TIMESTAMPTZ NOT NULL,
++ PRIMARY KEY (user_id, notification_key)
++);
++
++-- +goose Down
++DROP TABLE notification_acknowledgements;
+diff --git a/apps/backend/internal/core/service/notification_service_test.go b/apps/backend/internal/core/service/notification_service_test.go
+new file mode 100644
+index 00000000..2533f225
+--- /dev/null
++++ b/apps/backend/internal/core/service/notification_service_test.go
+@@ -0,0 +1,149 @@
++package service_test
++
++import (
++	"context"
++	"strings"
++	"testing"
++	"time"
++
++	"leonx.me/matter-control/internal/adapter/outbound/system"
++	"leonx.me/matter-control/internal/core/domain/matter"
++	"leonx.me/matter-control/internal/core/port"
++	"leonx.me/matter-control/internal/core/service"
++)
++
++type notificationClock struct{ at time.Time }
++
++func (c *notificationClock) Now() time.Time { return c.at }
++
++type notificationSeenMemory struct {
++	keys map[string]map[string]bool
++	at   *time.Time
++}
++
++func (m *notificationSeenMemory) NotificationSeen(_ context.Context, _ string) (*time.Time, error) {
++	return m.at, nil
++}
++func (m *notificationSeenMemory) SeenNotificationKeys(_ context.Context, user string, keys []string) ([]string, error) {
++	var out []string
++	for _, k := range keys {
++		if m.keys[user][k] {
++			out = append(out, k)
++		}
++	}
++	return out, nil
++}
++func (m *notificationSeenMemory) SetNotificationSeen(_ context.Context, user string, keys []string, at time.Time) error {
++	if m.keys[user] == nil {
++		m.keys[user] = map[string]bool{}
++	}
++	for _, k := range keys {
++		m.keys[user][k] = true
++	}
++	if m.at == nil || at.After(*m.at) {
++		m.at = &at
++	}
++	return nil
++}
++
++type notificationQueue struct {
++	port.EvidenceService
++	rows []matter.PendingAssessment
++}
++
++func (q *notificationQueue) ReviewQueue(_ context.Context, query port.ReviewQueueQuery) (matter.ReviewQueue, error) {
++	if query.ActorID != editorID.String() {
++		return matter.ReviewQueue{}, nil
++	}
++	return matter.ReviewQueue{Items: q.rows}, nil
++}
++
++func TestNotificationsReadMarkRead(t *testing.T) {
++	ctx := context.Background()
++	fixture := newMatterSUT(t)
++	work := service.NewWorkService(fixture.store, system.RecordIDv7{}, discardLogger(), matter.KeyAgePolicy{})
++	clock := &notificationClock{at: fixtureBase.Add(time.Minute)}
++	seen := &notificationSeenMemory{keys: map[string]map[string]bool{}}
++	queue := &notificationQueue{rows: []matter.PendingAssessment{{MatterID: matterA, SubjectID: matter.NodeID("review-subject"), ClaimID: matter.ClaimID("claim-1"), SubjectTitle: "Synthetic pending"}}}
++	svc := service.NewNotificationService(work, queue, seen, clock)
++	create := func(due time.Time) matter.WorkItem {
++		t.Helper()
++		made, err := work.CreateAction(ctx, port.CreateActionCmd{ActorID: editorID.String(), MatterID: matterA.String(), IdempotencyKey: newKey(), RequestHash: anyHash, Title: "Synthetic work", Outcome: "Done"})
++		if err != nil {
++			t.Fatal(err)
++		}
++		updated, err := work.UpdateWorkItem(ctx, port.UpdateWorkItemCmd{ActorID: editorID.String(), MatterID: matterA.String(), ItemID: made.Item.ID.String(), ExpectedRevision: 1, Owner: port.OptString{Set: true, Value: editorID.String()}, Due: port.OptString{Set: true, Value: due.Format(time.RFC3339)}})
++		if err != nil {
++			t.Fatal(err)
++		}
++		return updated.Item
++	}
++	overdue := create(fixtureBase.Add(-time.Hour))
++	upcoming := create(fixtureBase.Add(24 * time.Hour))
++	_, err := work.AddDependency(ctx, port.AddDependencyCmd{ActorID: editorID.String(), MatterID: matterA.String(), SourceID: overdue.ID.String(), TargetID: upcoming.ID.String(), Gate: "COMPLETION", Reason: "Synthetic dependency", ExpectedTargetRevision: upcoming.Revision})
++	if err != nil {
++		t.Fatal(err)
++	}
++	read := func(limit int) matter.NotificationPage {
++		t.Helper()
++		page, err := svc.ListNotifications(ctx, port.ListNotificationsQuery{ActorID: editorID.String(), Limit: limit})
++		if err != nil {
++			t.Fatal(err)
++		}
++		return page
++	}
++	first := read(200)
++	if len(first.Items) != 4 {
++		t.Fatalf("want 4 kinds, got %+v", first.Items)
++	}
++	keys := make([]string, 0, len(first.Items))
++	for _, n := range first.Items {
++		if n.Seen {
++			t.Fatal("new item seen")
++		}
++		keys = append(keys, n.SeenKey)
++	}
++	// A new row after reading the batch must remain unread after marking the older batch.
++	create(fixtureBase.Add(-2 * time.Hour))
++	clock.at = clock.at.Add(time.Minute)
++	if _, err := svc.MarkNotificationsSeen(ctx, port.MarkNotificationsSeenCmd{ActorID: editorID.String(), Keys: keys}); err != nil {
++		t.Fatal(err)
++	}
++	clock.at = clock.at.Add(time.Minute)
++	after := read(200)
++	unread := 0
++	for _, n := range after.Items {
++		if !n.Seen {
++			unread++
++		}
++	}
++	if unread != 1 {
++		t.Fatalf("unchanged keys must stay seen, new row unread: %+v", after)
++	}
++	bounded := read(1)
++	if len(bounded.Items) != 1 || bounded.Total != len(after.Items) {
++		t.Fatalf("limit/total %+v", bounded)
++	}
++	// A client cannot acknowledge another user's or an inaccessible/nonexistent key.
++	outsiderKey := strings.Repeat("f", 64)
++	if _, err := svc.MarkNotificationsSeen(ctx, port.MarkNotificationsSeenCmd{ActorID: outsider.String(), Keys: keys}); err != nil {
++		t.Fatal(err)
++	}
++	if len(seen.keys[outsider.String()]) != 0 {
++		t.Fatal("acknowledged unrelated assignment")
++	}
++	queue.rows = nil
++	fixture.world.SetMatterMembership(matterA, editorID, matter.MatterRoleEditor, matter.StatusRevoked)
++	before := len(seen.keys[editorID.String()])
++	if _, err := svc.MarkNotificationsSeen(ctx, port.MarkNotificationsSeenCmd{ActorID: editorID.String(), Keys: append(keys, outsiderKey)}); err != nil {
++		t.Fatal(err)
++	}
++	if len(seen.keys[editorID.String()]) != before {
++		t.Fatal("stored revoked/unknown keys")
++	}
++	for _, keys := range [][]string{{"bad"}, {strings.Repeat("a", 64), strings.Repeat("a", 64)}, make([]string, 201)} {
++		if _, err := svc.MarkNotificationsSeen(ctx, port.MarkNotificationsSeenCmd{ActorID: editorID.String(), Keys: keys}); err == nil {
++			t.Fatal("accepted malformed batch")
++		}
++	}
++}
+diff --git a/apps/frontend/src/app/api/matters/[matterId]/mail-intake/route.test.ts b/apps/frontend/src/app/api/matters/[matterId]/mail-intake/route.test.ts
+new file mode 100644
+index 00000000..5c956ec0
+--- /dev/null
++++ b/apps/frontend/src/app/api/matters/[matterId]/mail-intake/route.test.ts
+@@ -0,0 +1,83 @@
++// @vitest-environment node
++import { createHash } from 'node:crypto'
++import { NextRequest } from 'next/server'
++import { beforeEach, expect, it, vi } from 'vitest'
++import { McError } from '@/lib/mc/errors'
++import { MAX_EML_BYTES } from '@/features/mail/schemas'
++const { session, intake } = vi.hoisted(() => ({ session: vi.fn(), intake: vi.fn() }))
++vi.mock('@/lib/auth', () => ({ requireSession: session }))
++vi.mock('@/lib/oidc/config', () => ({ oidcConfig: () => ({ appOrigin: 'http://app.test' }) }))
++vi.mock('@/features/mail/repository', () => ({ mailRepository: { intake } }))
++import { POST } from './route'
++const key = '01900000-0000-7000-8000-000000000001'
++function request({
++  origin = 'http://app.test',
++  name = 'm.eml',
++  size = 8,
++  k = key,
++  file = true,
++} = {}) {
++  const form = new FormData()
++  if (file) form.set('file', new File([new Uint8Array(size)], name))
++  form.set('direction', 'INBOUND')
++  return new NextRequest('http://app.test/api/matters/m1/mail-intake', {
++    method: 'POST',
++    headers: { Origin: origin, 'Idempotency-Key': k },
++    body: form,
++  })
++}
++const ctx = (matterId = 'm1') => ({ params: Promise.resolve({ matterId }) })
++beforeEach(() => {
++  session.mockReset()
++  intake.mockReset()
++  session.mockResolvedValue({})
++  intake.mockResolvedValue({
++    data: { mailId: 'm1', documentId: 'd1', versionId: 'v1' },
++    replayed: false,
++  })
++})
++it('rejects missing/wrong origin and missing session before backend intake', async () => {
++  expect((await POST(request({ origin: '' }), ctx())).status).toBe(403)
++  expect((await POST(request({ origin: 'http://evil.test' }), ctx())).status).toBe(403)
++  session.mockRejectedValue(new McError('unauthenticated', 401))
++  expect((await POST(request(), ctx())).status).toBe(401)
++  expect(intake).not.toHaveBeenCalled()
++})
++it('rejects invalid path/key/extension/missing file and oversize before intake', async () => {
++  expect((await POST(request(), ctx('../bad'))).status).toBe(404)
++  for (const input of [
++    { k: 'bad' },
++    { name: 'm.pdf' },
++    { file: false },
++    { size: MAX_EML_BYTES + 1 },
++  ]) {
++    expect((await POST(request(input), ctx())).status).toBe(422)
++  }
++  expect(intake).not.toHaveBeenCalled()
++})
++it.each([2 * 1024 * 1024, MAX_EML_BYTES])(
++  'forwards byte-identical file at %i bytes and the same key',
++  async (size) => {
++    const response = await POST(request({ size }), ctx())
++    expect(response.status).toBe(201)
++    const [id, file, direction, k] = intake.mock.calls[0]!
++    expect([id, direction, k]).toEqual(['m1', 'INBOUND', key])
++    expect(file.size).toBe(size)
++    expect(
++      createHash('sha256')
++        .update(new Uint8Array(await file.arrayBuffer()))
++        .digest('hex'),
++    ).toBe(createHash('sha256').update(new Uint8Array(size)).digest('hex'))
++    expect(response.headers.get('Cache-Control')).toBe('no-store')
++  },
++)
++it('retains same-key recovery through the BFF', async () => {
++  intake.mockRejectedValue(new McError('outcome-unknown', 503, { receipted: true }))
++  const response = await POST(request(), ctx())
++  expect(response.status).toBe(503)
++  expect(await response.json()).toMatchObject({
++    ok: false,
++    kind: 'outcome-unknown',
++    retrySameKey: true,
++  })
++})
+diff --git a/apps/frontend/src/features/mail/client-repository.test.ts b/apps/frontend/src/features/mail/client-repository.test.ts
+new file mode 100644
+index 00000000..2513170a
+--- /dev/null
++++ b/apps/frontend/src/features/mail/client-repository.test.ts
+@@ -0,0 +1,43 @@
++// @vitest-environment node
++import { afterEach, expect, it, vi } from 'vitest'
++import { mailUploadRepository } from './client-repository'
++const key = '01900000-0000-7000-8000-000000000001'
++afterEach(() => vi.unstubAllGlobals())
++it.each([200, 500, 503])('keeps same-key recovery for unusable HTTP %i', async (status) => {
++  vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('unusable', { status })))
++  expect(await mailUploadRepository.intake('m1', new File(['x'], 'm.eml'), key)).toMatchObject({
++    ok: false,
++    kind: 'outcome-unknown',
++    retrySameKey: true,
++  })
++})
++it('does not accept a malformed success or a success body on a refusal', async () => {
++  const fetch = vi
++    .fn()
++    .mockResolvedValueOnce(new Response(JSON.stringify({ ok: true }), { status: 201 }))
++    .mockResolvedValueOnce(
++      new Response(
++        JSON.stringify({
++          ok: true,
++          mailId: 'm1',
++          documentId: 'd1',
++          versionId: 'v1',
++          replayed: false,
++        }),
++        { status: 503 },
++      ),
++    )
++  vi.stubGlobal('fetch', fetch)
++  for (let i = 0; i < 2; i++)
++    expect(await mailUploadRepository.intake('m1', new File(['x'], 'm.eml'), key)).toMatchObject({
++      kind: 'outcome-unknown',
++      retrySameKey: true,
++    })
++})
++it('validates the path and key before any request', async () => {
++  const fetch = vi.fn()
++  vi.stubGlobal('fetch', fetch)
++  await mailUploadRepository.intake('../outside', new File(['x'], 'm.eml'), key)
++  await mailUploadRepository.intake('m1', new File(['x'], 'm.eml'), 'invalid')
++  expect(fetch).not.toHaveBeenCalled()
++})
+diff --git a/apps/frontend/src/features/mail/client-repository.ts b/apps/frontend/src/features/mail/client-repository.ts
+new file mode 100644
+index 00000000..1a1469b5
+--- /dev/null
++++ b/apps/frontend/src/features/mail/client-repository.ts
+@@ -0,0 +1,48 @@
++import { MESSAGES, fieldFailure } from '@/lib/mc/action-result'
++import { idSchema } from '@/lib/mc/schemas'
++import { UUID_V7 } from '@/lib/mc/idempotency'
++
++import {
++  isEmlFile,
++  MAX_EML_BYTES,
++  mailUploadOutcomeSchema,
++  type MailUploadOutcome,
++} from './schemas'
++
++const UNKNOWN_RETRY = {
++  ok: false,
++  kind: 'outcome-unknown',
++  error: MESSAGES['outcome-unknown'],
++  retrySameKey: true,
++} as const
++
++export const mailUploadRepository = {
++  async intake(matterId: string, file: File, idempotencyKey: string): Promise<MailUploadOutcome> {
++    if (!idSchema.safeParse(matterId).success || !UUID_V7.test(idempotencyKey))
++      return fieldFailure('file', 'The upload is incomplete.')
++    if (!isEmlFile(file) || file.size > MAX_EML_BYTES)
++      return fieldFailure('file', 'Only .eml files up to 25 MiB are accepted.')
++    const body = new FormData()
++    body.set('file', file)
++    body.set('direction', 'INBOUND')
++    try {
++      const response = await fetch(`/api/matters/${matterId}/mail-intake`, {
++        method: 'POST',
++        headers: { 'Idempotency-Key': idempotencyKey },
++        body,
++      })
++      const json: unknown = await response.json().catch(() => null)
++      const parsed = mailUploadOutcomeSchema.safeParse(json)
++      if (parsed.success && response.ok && parsed.data.ok) return parsed.data
++      if (parsed.success && !response.ok && !parsed.data.ok) {
++        if (parsed.data.kind === 'outcome-unknown') return UNKNOWN_RETRY
++        if (response.status < 500) return parsed.data
++        // A server error may follow a commit even when it carries a structured body.
++      }
++      return UNKNOWN_RETRY
++    } catch {
++      // Transport or body-consumption failure does not prove that intake rolled back.
++      return UNKNOWN_RETRY
++    }
++  },
++}
+diff --git a/apps/frontend/src/features/mail/schemas.test.ts b/apps/frontend/src/features/mail/schemas.test.ts
+new file mode 100644
+index 00000000..7f67582f
+--- /dev/null
++++ b/apps/frontend/src/features/mail/schemas.test.ts
+@@ -0,0 +1,25 @@
++import { expect, it } from 'vitest'
++
++import { mailPageSchema } from './schemas'
++
++it('accepts mixed dated and undated captured mail', () => {
++  const row = {
++    id: 'mail1',
++    documentId: 'doc1',
++    versionId: 'version1',
++    direction: 'INBOUND',
++    sender: 'synthetic@example.invalid',
++    recipients: [],
++    subject: 'Synthetic mail',
++    excerpt: '',
++    createdAt: '2026-11-12T00:00:00Z',
++  }
++  const parsed = mailPageSchema.safeParse({
++    items: [
++      { ...row, sentAt: null },
++      { ...row, id: 'mail2', sentAt: '2026-11-11T00:00:00Z' },
++    ],
++    page: { limit: 2, maxLimit: 200, total: 2 },
++  })
++  expect(parsed.success).toBe(true)
++})
+diff --git a/apps/frontend/src/features/notifications/actions.test.ts b/apps/frontend/src/features/notifications/actions.test.ts
+new file mode 100644
+index 00000000..5f52f797
+--- /dev/null
++++ b/apps/frontend/src/features/notifications/actions.test.ts
+@@ -0,0 +1,28 @@
++import { beforeEach, expect, it, vi } from 'vitest'
++import { McError } from '@/lib/mc/errors'
++const { session, mark } = vi.hoisted(() => ({ session: vi.fn(), mark: vi.fn() }))
++vi.mock('@/lib/auth', () => ({ requireSession: session }))
++vi.mock('./repository', () => ({ notificationsRepository: { markSeen: mark } }))
++import { markSeenAction } from './actions'
++beforeEach(() => {
++  session.mockReset()
++  mark.mockReset()
++  session.mockResolvedValue({})
++  mark.mockResolvedValue({ data: { seenAt: '2026-11-12T00:00:00Z' } })
++})
++it('checks session first and does not forward malformed or duplicate keys', async () => {
++  session.mockRejectedValueOnce(new McError('unauthenticated', 401))
++  expect(await markSeenAction(['a'.repeat(64)])).toMatchObject({
++    ok: false,
++    kind: 'unauthenticated',
++  })
++  for (const keys of [['bad'], ['a'.repeat(64), 'a'.repeat(64)], Array(201).fill('a'.repeat(64))]) {
++    expect(await markSeenAction(keys)).toMatchObject({ ok: false, kind: 'validation' })
++  }
++  expect(mark).not.toHaveBeenCalled()
++})
++it('forwards only displayed keys unchanged', async () => {
++  const keys = ['a'.repeat(64), 'b'.repeat(64)]
++  expect(await markSeenAction(keys)).toMatchObject({ ok: true })
++  expect(mark).toHaveBeenCalledWith(keys)
++})
+diff --git a/apps/frontend/src/features/notifications/schemas.test.ts b/apps/frontend/src/features/notifications/schemas.test.ts
+new file mode 100644
+index 00000000..38f50b3c
+--- /dev/null
++++ b/apps/frontend/src/features/notifications/schemas.test.ts
+@@ -0,0 +1,18 @@
++import { expect, it } from 'vitest'
++import { unreadOf, type NotificationItem } from './schemas'
++it('uses explicit seen state rather than changing computation timestamps', () => {
++  const row: NotificationItem = {
++    id: 'n1',
++    seenKey: 'a'.repeat(64),
++    seen: true,
++    kind: 'OVERDUE',
++    matterId: 'm1',
++    matterTitle: 'Synthetic',
++    itemId: 'i1',
++    title: 'Synthetic reminder',
++    dueAt: null,
++    createdAt: '2099-01-01T00:00:00Z',
++  }
++  expect(unreadOf([row])).toBe(0)
++  expect(unreadOf([row, { ...row, id: 'n2', seen: false }])).toBe(1)
++})
